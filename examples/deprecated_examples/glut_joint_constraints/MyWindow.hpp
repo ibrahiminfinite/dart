@@ -57,7 +57,7 @@ public:
   }
 
   void timeStepping() override;
-  void drawSkels() override;
+  void drawSkeletons() override;
   //  void displayTimer(int _val) override;
   //  void draw() override;
   void keyboard(unsigned char key, int x, int y) override;

@@ -1195,18 +1195,6 @@ const Eigen::Vector6d& BodyNode::getBodyVelocityChange() const
 }
 
 //==============================================================================
-void BodyNode::setColliding(bool _isColliding)
-{
-  mIsColliding = _isColliding;
-}
-
-//==============================================================================
-bool BodyNode::isColliding()
-{
-  return mIsColliding;
-}
-
-//==============================================================================
 void BodyNode::addExtForce(
     const Eigen::Vector3d& _force,
     const Eigen::Vector3d& _offset,
@@ -1291,7 +1279,6 @@ BodyNode::BodyNode(
     Frame(Frame::World()),
     TemplatedJacobianNode<BodyNode>(this),
     mID(BodyNode::msBodyNodeCount++),
-    mIsColliding(false),
     mParentJoint(_parentJoint),
     mParentBodyNode(nullptr),
     mPartialAcceleration(Eigen::Vector6d::Zero()),
