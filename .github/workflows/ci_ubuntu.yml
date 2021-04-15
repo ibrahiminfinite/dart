@@ -42,6 +42,10 @@ jobs:
             platform: linux/ppc64le
             build_type: Release
             codecov: OFF
+          - os: ubuntu-bionic
+            platform: linux/s390x
+            build_type: Release
+            codecov: OFF
     env:
       # Hosted on: https://hub.docker.com/repository/docker/dartsim/dart-dev
       DART_DEV_IMAGE: dartsim/dart-dev
