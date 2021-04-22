@@ -20,7 +20,17 @@ if(DART_IN_SOURCE_BUILD)
   return()
 endif()
 
-find_package(DART7 7.0.0 REQUIRED COMPONENTS ${required_components} CONFIG)
+find_package(DARTSIM7 7.0.0 REQUIRED COMPONENTS ${required_components} CONFIG)
+
+message("[DEBUG] DART_FOUND: ${DART_FOUND}")
+message("[DEBUG] DART7_FOUND: ${DART7_FOUND}")
+message("[DEBUG] DARTSIM_FOUND: ${DARTSIM_FOUND}")
+message("[DEBUG] DARTSIM7_FOUND: ${DARTSIM7_FOUND}")
+
+message("[DEBUG] DART_LIBRARIES: ${DART_LIBRARIES}")
+message("[DEBUG] DART7_LIBRARIES: ${DART7_LIBRARIES}")
+message("[DEBUG] DARTSIM_LIBRARIES: ${DARTSIM_LIBRARIES}")
+message("[DEBUG] DARTSIM7_LIBRARIES: ${DARTSIM7_LIBRARIES}")
 
 file(GLOB srcs "*.cpp" "*.hpp")
 add_executable(${example_name} ${srcs})

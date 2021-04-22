@@ -23,7 +23,9 @@ endif()
 
 project(dart)
 
+set(PACKAGE_NAME dartsim)
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
+string(TOUPPER ${PACKAGE_NAME} PACKAGE_NAME_UPPERCASE)
 
 # Extract version numbers from package.xml
 file(READ package.xml PACKAGE_XML)
@@ -46,7 +48,7 @@ include(GNUInstallDirs)
 # Variables used in Components.cmake
 set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR})
 set(LIBRARY_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR})
-set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}${DART_MAJOR_VERSION}/cmake")
+set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_DATAROOTDIR}/${PACKAGE_NAME}${DART_MAJOR_VERSION}/cmake")
 
 # Set relative location to install additional documentation (sample data,
 # examples, and tutorials)
@@ -371,6 +373,7 @@ endif()
 # Generate and install a Config.cmake file. This file includes the
 # <C>Component.cmake and <C>Targets.cmake created above. It also uses the
 # following variables:
+
 #
 # - PACKAGE_INCLUDE_INSTALL_DIR
 # - PACKAGE_INCLUDE_DIRS
@@ -379,9 +382,9 @@ get_property(PACKAGE_INCLUDE_DIRS GLOBAL
 
 # Generate the DART CMake Config and version files
 include(CMakePackageConfigHelpers)
-set(DART_CONFIG_IN ${DART_SOURCE_DIR}/cmake/${PROJECT_NAME_UPPERCASE}Config.cmake.in)
-set(DART_CONFIG_OUT ${DART_BINARY_DIR}/${PROJECT_NAME_UPPERCASE}${DART_MAJOR_VERSION}Config.cmake)
-set(DART_VERSION_OUT ${DART_BINARY_DIR}/cmake/${PROJECT_NAME_UPPERCASE}${DART_MAJOR_VERSION}ConfigVersion.cmake)
+set(DART_CONFIG_IN ${DART_SOURCE_DIR}/cmake/${PACKAGE_NAME_UPPERCASE}Config.cmake.in)
+set(DART_CONFIG_OUT ${DART_BINARY_DIR}/${PACKAGE_NAME_UPPERCASE}${DART_MAJOR_VERSION}Config.cmake)
+set(DART_VERSION_OUT ${DART_BINARY_DIR}/cmake/${PACKAGE_NAME_UPPERCASE}${DART_MAJOR_VERSION}ConfigVersion.cmake)
 if(DART_VERBOSE)
   message(STATUS ${DART_CONFIG_OUT})
   message(STATUS ${DART_VERSION_OUT})

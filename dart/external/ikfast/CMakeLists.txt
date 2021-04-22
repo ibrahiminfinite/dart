@@ -12,6 +12,6 @@ file(GLOB hdrs "*.h")
 # Install
 install(
   FILES ${hdrs}
-  DESTINATION include/${org_name}/${PROJECT_NAME}${DART_MAJOR_VERSION}/${PROJECT_NAME}/external/ikfast
+  DESTINATION include/${org_name}/${PACKAGE_NAME}${DART_MAJOR_VERSION}/${PROJECT_NAME}/external/ikfast
   COMPONENT headers
 )

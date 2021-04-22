@@ -6,7 +6,7 @@ includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@/dart
 
 Name: @PROJECT_NAME@
 Description: @DART_PKG_DESC@
-Version: @DART_VERSION@
+Version: @DARTSIM_VERSION@
 Requires: @DART_PKG_EXTERNAL_DEPS@
 Libs: -L${libdir} -ldart
 Cflags: @CMAKE_CXX_FLAGS@
