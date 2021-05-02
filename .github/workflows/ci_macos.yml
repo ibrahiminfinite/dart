@@ -14,10 +14,9 @@ on:
     - cron: "0 2 * * 0-6"
 
 jobs:
-  # macOS 10.15 (Catalina)
-  catalina_clang_release:
-    name: macOS 10.15
-    runs-on: macos-10.15
+  macos:
+    name: macOS 11.0
+    runs-on: macos-11.0
     strategy:
       fail-fast: false
       matrix:
