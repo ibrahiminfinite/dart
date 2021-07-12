@@ -40,12 +40,14 @@ InputHandler::InputHandler(
     WamWorld* teleop,
     const SkeletonPtr& wam,
     const WorldPtr& world)
-  : mViewer(viewer), mWamWorld(teleop), mWam(wam), mWorld(world) {
+  : mViewer(viewer), mWamWorld(teleop), mWam(wam), mWorld(world)
+{
   initialize();
 }
 
 //==============================================================================
-void InputHandler::initialize() {
+void InputHandler::initialize()
+{
   mRestConfig = mWam->getPositions();
 
   for (std::size_t i = 0; i < mWam->getNumEndEffectors(); ++i) {
@@ -61,7 +63,8 @@ void InputHandler::initialize() {
 
 //==============================================================================
 bool InputHandler::handle(
-    const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) {
+    const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&)
+{
   if (!mWam)
     return false;
 

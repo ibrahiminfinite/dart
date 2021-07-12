@@ -54,23 +54,27 @@ public:
   using element_type = NodeT;
 
   /// Default constructor
-  TemplateNodePtr() : mNode(nullptr) {
+  TemplateNodePtr() : mNode(nullptr)
+  {
   }
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor
-  TemplateNodePtr(NodeT* _ptr) {
+  TemplateNodePtr(NodeT* _ptr)
+  {
     set(_ptr);
   }
 
   /// Constructor that takes in a strong NodePtr
   template <class OtherNodeT, class OtherBodyNodeT>
-  TemplateNodePtr(const TemplateNodePtr<OtherNodeT, OtherBodyNodeT>& _ptr) {
+  TemplateNodePtr(const TemplateNodePtr<OtherNodeT, OtherBodyNodeT>& _ptr)
+  {
     set(_ptr.get());
   }
 
   /// Assignment operator
-  TemplateNodePtr& operator=(NodeT* _ptr) {
+  TemplateNodePtr& operator=(NodeT* _ptr)
+  {
     set(_ptr);
     return *this;
   }
@@ -78,33 +82,39 @@ public:
   /// Assignment operator for NodePtrs
   template <class OtherNodeT, class OtherBodyNodeT>
   TemplateNodePtr& operator=(
-      const TemplateNodePtr<OtherNodeT, OtherBodyNodeT>& _ptr) {
+      const TemplateNodePtr<OtherNodeT, OtherBodyNodeT>& _ptr)
+  {
     set(_ptr.get());
     return *this;
   }
 
   /// Implicit conversion
-  operator NodeT*() const {
+  operator NodeT*() const
+  {
     return get();
   }
 
   /// Dereferencing operator
-  NodeT& operator*() const {
+  NodeT& operator*() const
+  {
     return *get();
   }
 
   /// Dereferencing operation
-  NodeT* operator->() const {
+  NodeT* operator->() const
+  {
     return get();
   }
 
   /// Get the raw Node pointer
-  NodeT* get() const {
+  NodeT* get() const
+  {
     return mNode;
   }
 
   /// Set the Node for this NodePtr
-  void set(NodeT* _ptr) {
+  void set(NodeT* _ptr)
+  {
     if (nullptr == _ptr) {
       mBodyNodePtr = nullptr;
       mDestructor = nullptr;
@@ -142,31 +152,36 @@ public:
   friend class TemplateWeakNodePtr;
 
   /// Default constructor
-  TemplateWeakNodePtr() : mNode(nullptr) {
+  TemplateWeakNodePtr() : mNode(nullptr)
+  {
   }
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor
-  TemplateWeakNodePtr(NodeT* _ptr) {
+  TemplateWeakNodePtr(NodeT* _ptr)
+  {
     set(_ptr);
   }
 
   /// Constructor that takes in a WeakNodePtr
   template <class OtherNodeT, class OtherBodyNodeT>
   TemplateWeakNodePtr(
-      const TemplateWeakNodePtr<OtherNodeT, OtherBodyNodeT>& _weakPtr) {
+      const TemplateWeakNodePtr<OtherNodeT, OtherBodyNodeT>& _weakPtr)
+  {
     set(_weakPtr);
   }
 
   /// Constructor that takes in a strong NodePtr
   template <class OtherNodeT, class OtherBodyNodeT>
   TemplateWeakNodePtr(
-      const TemplateNodePtr<OtherNodeT, OtherBodyNodeT>& _strongPtr) {
+      const TemplateNodePtr<OtherNodeT, OtherBodyNodeT>& _strongPtr)
+  {
     set(_strongPtr.get());
   }
 
   /// Assignment operator for raw Node pointers
-  TemplateWeakNodePtr& operator=(NodeT* _ptr) {
+  TemplateWeakNodePtr& operator=(NodeT* _ptr)
+  {
     set(_ptr);
     return *this;
   }
@@ -174,7 +189,8 @@ public:
   /// Assignment operator for WeakNodePtrs
   template <class OtherNodeT, class OtherBodyNodeT>
   TemplateWeakNodePtr& operator=(
-      const TemplateWeakNodePtr<OtherNodeT, OtherBodyNodeT>& _weakPtr) {
+      const TemplateWeakNodePtr<OtherNodeT, OtherBodyNodeT>& _weakPtr)
+  {
     set(_weakPtr);
     return *this;
   }
@@ -182,7 +198,8 @@ public:
   /// Assignment operator for strong NodePtrs
   template <class OtherNodeT, class OtherBodyNodeT>
   TemplateWeakNodePtr& operator=(
-      const TemplateNodePtr<OtherNodeT, OtherBodyNodeT>& _strongPtr) {
+      const TemplateNodePtr<OtherNodeT, OtherBodyNodeT>& _strongPtr)
+  {
     set(_strongPtr.get());
     return *this;
   }
@@ -190,7 +207,8 @@ public:
   /// Locks the Node reference to ensure that the referenced Node is currently
   /// still available. If the Node is not available any longer (i.e. has been
   /// deleted), then this will return a nullptr.
-  TemplateNodePtr<NodeT, BodyNodeT> lock() const {
+  TemplateNodePtr<NodeT, BodyNodeT> lock() const
+  {
     TemplateBodyNodePtr<BodyNodeT> bodyNode = mWeakBodyNodePtr.lock();
     if (nullptr == bodyNode)
       return nullptr;
@@ -203,7 +221,8 @@ public:
   }
 
   /// Set the Node for this WeakNodePtr
-  void set(NodeT* _ptr) {
+  void set(NodeT* _ptr)
+  {
     if (nullptr == _ptr) {
       mNode = nullptr;
       mWeakDestructor.reset();
@@ -218,7 +237,8 @@ public:
 
   /// Set the Node for this WeakNodePtr based on another WeakNodePtr
   template <class OtherNodeT, class OtherBodyNodeT>
-  void set(const TemplateWeakNodePtr<OtherNodeT, OtherBodyNodeT>& _weakPtr) {
+  void set(const TemplateWeakNodePtr<OtherNodeT, OtherBodyNodeT>& _weakPtr)
+  {
     mNode = _weakPtr.mNode;
     mWeakDestructor = _weakPtr.mWeakDestructor;
     mWeakBodyNodePtr = _weakPtr.mWeakBodyNodePtr;

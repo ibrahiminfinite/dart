@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void FCLCollisionGroup(py::module& m) {
+void FCLCollisionGroup(py::module& m)
+{
   ::py::class_<
       dart::dynamics::FCLCollisionGroup,
       dart::dynamics::CollisionGroup,

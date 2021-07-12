@@ -39,14 +39,16 @@
 
 #include "MyWindow.hpp"
 
-void MyWindow::draw() {
+void MyWindow::draw()
+{
   glDisable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   drawSkeleton(skel.get());
 }
 
-void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
+void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   static bool inverse = false;
   static const double dDOF = 0.1;
   switch (_key) {

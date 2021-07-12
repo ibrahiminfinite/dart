@@ -37,7 +37,8 @@ namespace dynamics {
 namespace fcl {
 
 //==============================================================================
-double length(const dart::dynamics::fcl::Vector3& t) {
+double length(const dart::dynamics::fcl::Vector3& t)
+{
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return t.norm();
 #else
@@ -46,7 +47,8 @@ double length(const dart::dynamics::fcl::Vector3& t) {
 }
 
 //==============================================================================
-double length2(const dart::dynamics::fcl::Vector3& t) {
+double length2(const dart::dynamics::fcl::Vector3& t)
+{
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return t.squaredNorm();
 #else
@@ -56,7 +58,8 @@ double length2(const dart::dynamics::fcl::Vector3& t) {
 
 //==============================================================================
 dart::dynamics::fcl::Vector3 getTranslation(
-    const dart::dynamics::fcl::Transform3& T) {
+    const dart::dynamics::fcl::Transform3& T)
+{
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return T.translation();
 #else
@@ -66,7 +69,8 @@ dart::dynamics::fcl::Vector3 getTranslation(
 
 //==============================================================================
 void setTranslation(
-    dart::dynamics::fcl::Transform3& T, const dart::dynamics::fcl::Vector3& t) {
+    dart::dynamics::fcl::Transform3& T, const dart::dynamics::fcl::Vector3& t)
+{
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   T.translation() = t;
 #else
@@ -76,7 +80,8 @@ void setTranslation(
 
 //==============================================================================
 dart::dynamics::fcl::Matrix3 getRotation(
-    const dart::dynamics::fcl::Transform3& T) {
+    const dart::dynamics::fcl::Transform3& T)
+{
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return T.linear();
 #else
@@ -86,7 +91,8 @@ dart::dynamics::fcl::Matrix3 getRotation(
 
 //==============================================================================
 void setRotation(
-    dart::dynamics::fcl::Transform3& T, const dart::dynamics::fcl::Matrix3& R) {
+    dart::dynamics::fcl::Transform3& T, const dart::dynamics::fcl::Matrix3& R)
+{
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   T.linear() = R;
 #else
@@ -99,7 +105,8 @@ void setEulerZYX(
     dart::dynamics::fcl::Matrix3& rot,
     double eulerX,
     double eulerY,
-    double eulerZ) {
+    double eulerZ)
+{
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   double ci(cos(eulerX));
   double cj(cos(eulerY));
@@ -125,7 +132,8 @@ void setEulerZYX(
 //==============================================================================
 dart::dynamics::fcl::Vector3 transform(
     const dart::dynamics::fcl::Transform3& t,
-    const dart::dynamics::fcl::Vector3& v) {
+    const dart::dynamics::fcl::Vector3& v)
+{
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return t * v;
 #else

@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void ShapeNode(py::module& m) {
+void ShapeNode(py::module& m)
+{
   ::py::class_<
       dart::dynamics::ShapeNode,
       dart::dynamics::JacobianNode,

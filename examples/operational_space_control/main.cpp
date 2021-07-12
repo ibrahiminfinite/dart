@@ -39,7 +39,8 @@ using namespace dart::math;
 class OperationalSpaceControlWorld : public dart::gui::osg::WorldNode {
 public:
   OperationalSpaceControlWorld(dart::simulation::WorldPtr _world)
-    : dart::gui::osg::WorldNode(_world) {
+    : dart::gui::osg::WorldNode(_world)
+  {
     // Extract the relevant pointers
     mRobot = mWorld->getSkeleton(0);
     mEndEffector = mRobot->getBodyNode(mRobot->getNumBodyNodes() - 1);
@@ -76,7 +77,8 @@ public:
   }
 
   // Triggered at the beginning of each simulation step
-  void customPreStep() override {
+  void customPreStep() override
+  {
     Eigen::MatrixXd M = mRobot->getMassMatrix();
 
     LinearJacobian J = mEndEffector->getLinearJacobian(mOffset);
@@ -108,7 +110,8 @@ public:
 
 protected:
   // Triggered when this node gets added to the Viewer
-  void setupViewer() override {
+  void setupViewer() override
+  {
     if (mViewer) {
       dnd = mViewer->enableDragAndDrop(mTarget.get());
       dnd->setObstructable(false);
@@ -136,20 +139,22 @@ protected:
 
 class ConstraintEventHandler : public ::osgGA::GUIEventHandler {
 public:
-  ConstraintEventHandler(dart::gui::osg::DragAndDrop* dnd = nullptr)
-    : mDnD(dnd) {
+  ConstraintEventHandler(dart::gui::osg::DragAndDrop* dnd = nullptr) : mDnD(dnd)
+  {
     clearConstraints();
     if (mDnD)
       mDnD->unconstrain();
   }
 
-  void clearConstraints() {
+  void clearConstraints()
+  {
     for (std::size_t i = 0; i < 3; ++i)
       mConstrained[i] = false;
   }
 
   virtual bool handle(
-      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override {
+      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override
+  {
     if (nullptr == mDnD) {
       clearConstraints();
       return false;
@@ -235,11 +240,13 @@ class ShadowEventHandler : public osgGA::GUIEventHandler {
 public:
   ShadowEventHandler(
       OperationalSpaceControlWorld* node, dart::gui::osg::Viewer* viewer)
-    : mNode(node), mViewer(viewer) {
+    : mNode(node), mViewer(viewer)
+  {
   }
 
   bool handle(
-      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override {
+      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override
+  {
     if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN) {
       if (ea.getKey() == 's' || ea.getKey() == 'S') {
         if (mNode->isShadowed())
@@ -263,7 +270,8 @@ protected:
   dart::gui::osg::Viewer* mViewer;
 };
 
-int main() {
+int main()
+{
   dart::simulation::WorldPtr world(new dart::simulation::World);
   dart::io::DartLoader loader;
 
@@ -285,8 +293,7 @@ int main() {
   Eigen::Isometry3d ground_tf
       = ground->getJoint(0)->getTransformFromParentBodyNode();
   ground_tf.pretranslate(Eigen::Vector3d(0, 0, 0.5));
-  ground_tf.rotate(
-      Eigen::AngleAxisd(constantsd::pi() / 2, Eigen::Vector3d(1, 0, 0)));
+  ground_tf.rotate(Eigen::AngleAxisd(pi() / 2, Eigen::Vector3d(1, 0, 0)));
   ground->getJoint(0)->setTransformFromParentBodyNode(ground_tf);
 
   // Create an instance of our customized WorldNode

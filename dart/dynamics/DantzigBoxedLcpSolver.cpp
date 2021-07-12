@@ -38,12 +38,14 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-const std::string& DantzigBoxedLcpSolver::getType() const {
+const std::string& DantzigBoxedLcpSolver::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& DantzigBoxedLcpSolver::getStaticType() {
+const std::string& DantzigBoxedLcpSolver::getStaticType()
+{
   static const std::string type = "DantzigBoxedLcpSolver";
   return type;
 }
@@ -58,14 +60,16 @@ bool DantzigBoxedLcpSolver::solve(
     double* lo,
     double* hi,
     int* findex,
-    bool earlyTermination) {
+    bool earlyTermination)
+{
   return external::ode::dSolveLCP(
       n, A, x, b, nullptr, 0, lo, hi, findex, earlyTermination);
 }
 
 #ifndef NDEBUG
 //==============================================================================
-bool DantzigBoxedLcpSolver::canSolve(int /*n*/, const double* /*A*/) {
+bool DantzigBoxedLcpSolver::canSolve(int /*n*/, const double* /*A*/)
+{
   // TODO(JS): Not implemented.
   return true;
 }

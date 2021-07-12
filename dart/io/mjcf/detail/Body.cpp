@@ -48,7 +48,8 @@ Errors Body::read(
     tinyxml2::XMLElement* element,
     const common::optional<Size>& size,
     const Defaults& defaults,
-    const Default* currentDefault) {
+    const Default* currentDefault)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "body") {
@@ -127,7 +128,8 @@ Errors Body::read(
 }
 
 //==============================================================================
-Errors Body::preprocess(const Compiler& compiler) {
+Errors Body::preprocess(const Compiler& compiler)
+{
   Errors errors;
 
   if (mAttributes.mName) {
@@ -166,7 +168,8 @@ Errors Body::preprocess(const Compiler& compiler) {
 }
 
 //==============================================================================
-Errors Body::compile(const Compiler& compiler) {
+Errors Body::compile(const Compiler& compiler)
+{
   Errors errors;
 
   // Set inertial
@@ -214,7 +217,8 @@ Errors Body::compile(const Compiler& compiler) {
 }
 
 //==============================================================================
-Errors Body::postprocess(const Body* parent, const Compiler& compiler) {
+Errors Body::postprocess(const Body* parent, const Compiler& compiler)
+{
   Errors errors;
 
   if (mAttributes.mPos) {
@@ -285,85 +289,101 @@ Errors Body::postprocess(const Body* parent, const Compiler& compiler) {
 }
 
 //==============================================================================
-const std::string& Body::getName() const {
+const std::string& Body::getName() const
+{
   return mName;
 }
 
 //==============================================================================
-bool Body::getMocap() const {
+bool Body::getMocap() const
+{
   return mMocap;
 }
 
 //==============================================================================
-const Inertial& Body::getInertial() const {
+const Inertial& Body::getInertial() const
+{
   return mInertial;
 }
 
 //==============================================================================
-std::size_t Body::getNumJoints() const {
+std::size_t Body::getNumJoints() const
+{
   return mJoints.size();
 }
 
 //==============================================================================
-const Joint& Body::getJoint(std::size_t index) const {
+const Joint& Body::getJoint(std::size_t index) const
+{
   return mJoints[index];
 }
 
 //==============================================================================
-std::size_t Body::getNumChildBodies() const {
+std::size_t Body::getNumChildBodies() const
+{
   return mChildBodies.size();
 }
 
 //==============================================================================
-const Body& Body::getChildBody(std::size_t index) const {
+const Body& Body::getChildBody(std::size_t index) const
+{
   return mChildBodies[index];
 }
 
 //==============================================================================
-std::size_t Body::getNumGeoms() const {
+std::size_t Body::getNumGeoms() const
+{
   return mGeoms.size();
 }
 
 //==============================================================================
-const Geom& Body::getGeom(std::size_t index) const {
+const Geom& Body::getGeom(std::size_t index) const
+{
   return mGeoms[index];
 }
 
 //==============================================================================
-std::size_t Body::getNumSites() const {
+std::size_t Body::getNumSites() const
+{
   return mSites.size();
 }
 
 //==============================================================================
-const Site& Body::getSite(std::size_t index) const {
+const Site& Body::getSite(std::size_t index) const
+{
   return mSites[index];
 }
 
 //==============================================================================
-void Body::setRelativeTransform(const Eigen::Isometry3d& tf) {
+void Body::setRelativeTransform(const Eigen::Isometry3d& tf)
+{
   assert(math::verifyTransform(tf));
   mRelativeTransform = tf;
 }
 
 //==============================================================================
-const Eigen::Isometry3d& Body::getRelativeTransform() const {
+const Eigen::Isometry3d& Body::getRelativeTransform() const
+{
   return mRelativeTransform;
 }
 
 //==============================================================================
-void Body::setWorldTransform(const Eigen::Isometry3d& tf) {
+void Body::setWorldTransform(const Eigen::Isometry3d& tf)
+{
   assert(math::verifyTransform(tf));
   mWorldTransform = tf;
 }
 
 //==============================================================================
-const Eigen::Isometry3d& Body::getWorldTransform() const {
+const Eigen::Isometry3d& Body::getWorldTransform() const
+{
   return mWorldTransform;
 }
 
 //==============================================================================
 Inertial Body::computeInertialFromGeoms(
-    const std::vector<Geom>& geoms, const Compiler& compiler) {
+    const std::vector<Geom>& geoms, const Compiler& compiler)
+{
   Inertial inertial;
 
   // TODO(JS): Handle this error properly instead of seg-faulting

@@ -37,7 +37,8 @@ using namespace dart;
 using namespace dart::math;
 
 //==============================================================================
-TEST(Random, CheckSyntaxValidity) {
+TEST(Random, CheckSyntaxValidity)
+{
   const int rows = 5;
   const int cols = 5;
   const int size = 5;
@@ -177,7 +178,8 @@ TEST(Random, CheckSyntaxValidity) {
 }
 
 //==============================================================================
-TEST(Random, UniformScalar) {
+TEST(Random, UniformScalar)
+{
   double mind = -5.0;
   double maxd = 10.0;
 
@@ -202,7 +204,8 @@ TEST(Random, UniformScalar) {
 
 //==============================================================================
 template <typename I>
-bool testClosedEnds(int maxTry, I min = 0, I max = 2) {
+bool testClosedEnds(int maxTry, I min = 0, I max = 2)
+{
   bool foundMin = false;
   bool foundMax = false;
 
@@ -223,7 +226,8 @@ bool testClosedEnds(int maxTry, I min = 0, I max = 2) {
 }
 
 //==============================================================================
-TEST(Random, UniformClosedEnd) {
+TEST(Random, UniformClosedEnd)
+{
   const int maxTry = 100000;
 
   EXPECT_TRUE(testClosedEnds<short>(maxTry));
@@ -240,7 +244,8 @@ TEST(Random, UniformClosedEnd) {
 }
 
 //==============================================================================
-TEST(Random, NormalScalar) {
+TEST(Random, NormalScalar)
+{
   double meand = 1.0;
   double sigmad = 10.0;
 
@@ -258,7 +263,8 @@ TEST(Random, NormalScalar) {
 }
 
 //==============================================================================
-TEST(Random, UniformVector) {
+TEST(Random, UniformVector)
+{
   const int vectorSize = 5;
 
   Eigen::VectorXd mind = Eigen::VectorXd::Constant(vectorSize, -5.0);
@@ -284,7 +290,8 @@ TEST(Random, UniformVector) {
 }
 
 //==============================================================================
-TEST(Random, SetSeed) {
+TEST(Random, SetSeed)
+{
   unsigned int N = 10;
 
   int min = -10;

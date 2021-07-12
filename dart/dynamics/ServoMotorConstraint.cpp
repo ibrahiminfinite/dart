@@ -52,7 +52,8 @@ ServoMotorConstraint::ServoMotorConstraint(dynamics::Joint* joint)
   : ConstraintBase(),
     mJoint(joint),
     mBodyNode(joint->getChildBodyNode()),
-    mAppliedImpulseIndex(0) {
+    mAppliedImpulseIndex(0)
+{
   assert(joint);
   assert(mBodyNode);
 
@@ -72,22 +73,26 @@ ServoMotorConstraint::ServoMotorConstraint(dynamics::Joint* joint)
 }
 
 //==============================================================================
-ServoMotorConstraint::~ServoMotorConstraint() {
+ServoMotorConstraint::~ServoMotorConstraint()
+{
 }
 
 //==============================================================================
-const std::string& ServoMotorConstraint::getType() const {
+const std::string& ServoMotorConstraint::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& ServoMotorConstraint::getStaticType() {
+const std::string& ServoMotorConstraint::getStaticType()
+{
   static const std::string name = "ServoMotorConstraint";
   return name;
 }
 
 //==============================================================================
-void ServoMotorConstraint::setConstraintForceMixing(double cfm) {
+void ServoMotorConstraint::setConstraintForceMixing(double cfm)
+{
   // Clamp constraint force mixing parameter if it is out of the range
   if (cfm < 1e-9) {
     dtwarn << "[ServoMotorConstraint::setConstraintForceMixing] "
@@ -101,12 +106,14 @@ void ServoMotorConstraint::setConstraintForceMixing(double cfm) {
 }
 
 //==============================================================================
-double ServoMotorConstraint::getConstraintForceMixing() {
+double ServoMotorConstraint::getConstraintForceMixing()
+{
   return mConstraintForceMixing;
 }
 
 //==============================================================================
-void ServoMotorConstraint::update() {
+void ServoMotorConstraint::update()
+{
   // Reset dimention
   mDim = 0;
 
@@ -143,7 +150,8 @@ void ServoMotorConstraint::update() {
 }
 
 //==============================================================================
-void ServoMotorConstraint::getInformation(ConstraintInfo* lcp) {
+void ServoMotorConstraint::getInformation(ConstraintInfo* lcp)
+{
   std::size_t index = 0;
   std::size_t dof = mJoint->getNumDofs();
   for (std::size_t i = 0; i < dof; ++i) {
@@ -168,7 +176,8 @@ void ServoMotorConstraint::getInformation(ConstraintInfo* lcp) {
 }
 
 //==============================================================================
-void ServoMotorConstraint::applyUnitImpulse(std::size_t index) {
+void ServoMotorConstraint::applyUnitImpulse(std::size_t index)
+{
   assert(index < mDim && "Invalid Index.");
 
   std::size_t localIndex = 0;
@@ -194,7 +203,8 @@ void ServoMotorConstraint::applyUnitImpulse(std::size_t index) {
 }
 
 //==============================================================================
-void ServoMotorConstraint::getVelocityChange(double* delVel, bool withCfm) {
+void ServoMotorConstraint::getVelocityChange(double* delVel, bool withCfm)
+{
   assert(delVel != nullptr && "Null pointer is not allowed.");
 
   std::size_t localIndex = 0;
@@ -222,17 +232,20 @@ void ServoMotorConstraint::getVelocityChange(double* delVel, bool withCfm) {
 }
 
 //==============================================================================
-void ServoMotorConstraint::excite() {
+void ServoMotorConstraint::excite()
+{
   mJoint->getSkeleton()->setImpulseApplied(true);
 }
 
 //==============================================================================
-void ServoMotorConstraint::unexcite() {
+void ServoMotorConstraint::unexcite()
+{
   mJoint->getSkeleton()->setImpulseApplied(false);
 }
 
 //==============================================================================
-void ServoMotorConstraint::applyImpulse(double* lambda) {
+void ServoMotorConstraint::applyImpulse(double* lambda)
+{
   std::size_t localIndex = 0;
   std::size_t dof = mJoint->getNumDofs();
   for (std::size_t i = 0; i < dof; ++i) {
@@ -250,12 +263,14 @@ void ServoMotorConstraint::applyImpulse(double* lambda) {
 }
 
 //==============================================================================
-dynamics::SkeletonPtr ServoMotorConstraint::getRootSkeleton() const {
+dynamics::SkeletonPtr ServoMotorConstraint::getRootSkeleton() const
+{
   return mJoint->getSkeleton()->mUnionRootSkeleton.lock();
 }
 
 //==============================================================================
-bool ServoMotorConstraint::isActive() const {
+bool ServoMotorConstraint::isActive() const
+{
   // Since we are not allowed to set the joint actuator type per each
   // DegreeOfFreedom, we just check if the whole joint is SERVO actuator.
   if (mJoint->getActuatorType() == dynamics::Joint::SERVO)

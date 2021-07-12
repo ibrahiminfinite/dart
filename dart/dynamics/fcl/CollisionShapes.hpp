@@ -38,7 +38,7 @@
 #include <assimp/scene.h>
 
 #include "dart/dynamics/fcl/BackwardCompatibility.hpp"
-#include "dart/math/Constants.hpp"
+#include "dart/math/constant.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -49,7 +49,8 @@ template <class BV>
     float _scaleY,
     float _scaleZ,
     const aiScene* _mesh,
-    const dart::dynamics::fcl::Transform3& _transform) {
+    const dart::dynamics::fcl::Transform3& _transform)
+{
   assert(_mesh);
   ::fcl::BVHModel<BV>* model = new ::fcl::BVHModel<BV>;
   model->beginModel();
@@ -78,7 +79,8 @@ template <class BV>
     float _sizeX,
     float _sizeY,
     float _sizeZ,
-    const dart::dynamics::fcl::Transform3& _transform) {
+    const dart::dynamics::fcl::Transform3& _transform)
+{
   float v[59][3] = {{0, 0, 0},
                     {0.135299, -0.461940, -0.135299},
                     {0.000000, -0.461940, -0.191342},
@@ -189,7 +191,8 @@ template <class BV>
     float _sizeX,
     float _sizeY,
     float _sizeZ,
-    const dart::dynamics::fcl::Transform3& _transform) {
+    const dart::dynamics::fcl::Transform3& _transform)
+{
   //  float n[6][3] = {
   //    {-1.0, 0.0, 0.0},
   //    {0.0, 1.0, 0.0},
@@ -250,7 +253,8 @@ template <class BV>
     double _height,
     int _slices,
     int _stacks,
-    const dart::dynamics::fcl::Transform3& _transform) {
+    const dart::dynamics::fcl::Transform3& _transform)
+{
   const int CACHE_SIZE = 240;
 
   int i, j;
@@ -279,7 +283,7 @@ template <class BV>
 
   /* Cache is the vertex locations cache */
   for (i = 0; i < _slices; i++) {
-    angle = 2 * math::constantsd::pi() * i / _slices;
+    angle = 2 * math::pi() * i / _slices;
     sinCache[i] = sin(angle);
     cosCache[i] = cos(angle);
   }

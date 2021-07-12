@@ -55,7 +55,8 @@ using namespace simulation;
 #define LIE_GROUP_OPT_TOL 1e-12
 
 //==============================================================================
-Eigen::Matrix4d toMatrixForm(const Eigen::Vector6d& v) {
+Eigen::Matrix4d toMatrixForm(const Eigen::Vector6d& v)
+{
   Eigen::Matrix4d result = Eigen::Matrix4d::Zero();
 
   result(0, 1) = -v(2);
@@ -73,14 +74,16 @@ Eigen::Matrix4d toMatrixForm(const Eigen::Vector6d& v) {
 }
 
 //==============================================================================
-Eigen::Vector6d fromMatrixForm(const Eigen::Matrix4d& m) {
+Eigen::Vector6d fromMatrixForm(const Eigen::Matrix4d& m)
+{
   Eigen::Vector6d ret;
   ret << m(2, 1), m(0, 2), m(1, 0), m(0, 3), m(1, 3), m(2, 3);
   return ret;
 }
 
 //==============================================================================
-void testEulerAngles(const Eigen::Vector3d& angle) {
+void testEulerAngles(const Eigen::Vector3d& angle)
+{
   Eigen::Matrix3d mat1;
   Eigen::Matrix3d mat2;
 
@@ -218,7 +221,8 @@ void testEulerAngles(const Eigen::Vector3d& angle) {
 }
 
 //==============================================================================
-TEST(LIE_GROUP_OPERATORS, EULER_ANGLES) {
+TEST(LIE_GROUP_OPERATORS, EULER_ANGLES)
+{
   // TODO: Special angles such as (PI, 0, 0)
 
   //
@@ -231,7 +235,8 @@ TEST(LIE_GROUP_OPERATORS, EULER_ANGLES) {
 
 //==============================================================================
 #define EPSILON_EXPMAP_THETA 1.0e-3
-TEST(LIE_GROUP_OPERATORS, EXPONENTIAL_MAPPINGS) {
+TEST(LIE_GROUP_OPERATORS, EXPONENTIAL_MAPPINGS)
+{
   int numTest = 100;
 
   // Exp
@@ -355,7 +360,8 @@ TEST(LIE_GROUP_OPERATORS, EXPONENTIAL_MAPPINGS) {
 }
 
 //==============================================================================
-TEST(LIE_GROUP_OPERATORS, ADJOINT_MAPPINGS) {
+TEST(LIE_GROUP_OPERATORS, ADJOINT_MAPPINGS)
+{
   int numTest = 100;
 
   // AdT(V) == T * V * InvT

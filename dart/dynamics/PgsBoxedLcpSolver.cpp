@@ -39,7 +39,7 @@
 
 #include "dart/external/odelcpsolver/matrix.h"
 #include "dart/external/odelcpsolver/misc.h"
-#include "dart/math/Constants.hpp"
+#include "dart/math/constant.hpp"
 
 #define PGS_EPSILON 10e-9
 
@@ -57,17 +57,20 @@ PgsBoxedLcpSolver::Option::Option(
     mDeltaXThreshold(deltaXTolerance),
     mRelativeDeltaXTolerance(relativeDeltaXTolerance),
     mEpsilonForDivision(epsilonForDivision),
-    mRandomizeConstraintOrder(randomizeConstraintOrder) {
+    mRandomizeConstraintOrder(randomizeConstraintOrder)
+{
   // Do nothing
 }
 
 //==============================================================================
-const std::string& PgsBoxedLcpSolver::getType() const {
+const std::string& PgsBoxedLcpSolver::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& PgsBoxedLcpSolver::getStaticType() {
+const std::string& PgsBoxedLcpSolver::getStaticType()
+{
   static const std::string type = "PgsBoxedLcpSolver";
   return type;
 }
@@ -82,7 +85,8 @@ bool PgsBoxedLcpSolver::solve(
     double* lo,
     double* hi,
     int* findex,
-    bool /*earlyTermination*/) {
+    bool /*earlyTermination*/)
+{
   const int nskip = dPAD(n);
 
   // If all the variables are unbounded then we can just factor, solve, and
@@ -226,7 +230,8 @@ bool PgsBoxedLcpSolver::solve(
 
 #ifndef NDEBUG
 //==============================================================================
-bool PgsBoxedLcpSolver::canSolve(int n, const double* A) {
+bool PgsBoxedLcpSolver::canSolve(int n, const double* A)
+{
   const int nskip = dPAD(n);
 
   // Return false if A has zero-diagonal or A is nonsymmetric matrix
@@ -245,12 +250,14 @@ bool PgsBoxedLcpSolver::canSolve(int n, const double* A) {
 #endif
 
 //==============================================================================
-void PgsBoxedLcpSolver::setOption(const PgsBoxedLcpSolver::Option& option) {
+void PgsBoxedLcpSolver::setOption(const PgsBoxedLcpSolver::Option& option)
+{
   mOption = option;
 }
 
 //==============================================================================
-const PgsBoxedLcpSolver::Option& PgsBoxedLcpSolver::getOption() const {
+const PgsBoxedLcpSolver::Option& PgsBoxedLcpSolver::getOption() const
+{
   return mOption;
 }
 

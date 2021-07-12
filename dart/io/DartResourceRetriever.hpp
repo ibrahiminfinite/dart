@@ -64,7 +64,8 @@ namespace io {
 class DartResourceRetriever : public common::ResourceRetriever {
 public:
   template <typename... Args>
-  static std::shared_ptr<DartResourceRetriever> create(Args&&... args) {
+  static std::shared_ptr<DartResourceRetriever> create(Args&&... args)
+  {
     return std::make_shared<DartResourceRetriever>(std::forward<Args>(args)...);
   }
 

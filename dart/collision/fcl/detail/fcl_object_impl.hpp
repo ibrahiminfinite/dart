@@ -40,103 +40,65 @@ namespace collision {
 
 //==============================================================================
 template <typename S>
-math::Isometry3<S> FclObject<S>::get_pose() const {
-  return toTransform3<S>(m_fcl_collision_object->getTransform());
+math::Isometry3<S> FclObject<S>::get_pose() const
+{
+  return to_pose3<S>(m_fcl_collision_object->getTransform());
 }
 
 //==============================================================================
 template <typename S>
-void FclObject<S>::set_pose(const math::Isometry3<S>& tf) {
-  m_fcl_collision_object->setTransform(toFclTransform3<S>(tf));
+void FclObject<S>::set_pose(const math::Isometry3<S>& tf)
+{
+  m_fcl_collision_object->setTransform(to_fcl_pose3<S>(tf));
 }
 
 //==============================================================================
 template <typename S>
-math::Vector3<S> FclObject<S>::get_position() const {
-  return toVector3<S>(m_fcl_collision_object->getTranslation());
+math::Vector3<S> FclObject<S>::get_position() const
+{
+  return to_vector3<S>(m_fcl_collision_object->getTranslation());
 }
 
 //==============================================================================
 template <typename S>
-void FclObject<S>::set_position(const math::Vector3<S>& pos) {
-  m_fcl_collision_object->setTranslation(toFclVector3<S>(pos));
+void FclObject<S>::set_position(const math::Vector3<S>& pos)
+{
+  m_fcl_collision_object->setTranslation(to_fcl_vector3<S>(pos));
 }
 
 //==============================================================================
 template <typename S>
-FclCollisionObject<S>* FclObject<S>::get_fcl_collision_object() {
+FclCollisionObject<S>* FclObject<S>::get_fcl_collision_object()
+{
   return m_fcl_collision_object.get();
 }
 
 //==============================================================================
 template <typename S>
-const FclCollisionObject<S>* FclObject<S>::get_fcl_collision_object() const {
+const FclCollisionObject<S>* FclObject<S>::get_fcl_collision_object() const
+{
   return m_fcl_collision_object.get();
 }
 
 //==============================================================================
 template <typename S>
 FclObject<S>::FclObject(
-    Group<S>* collisionGroup,
+    Group<S>* collision_group,
     math::GeometryPtr shape,
-    const std::shared_ptr<FclCollisionGeometry<S>>& fclCollGeom)
-  : Object<S>(collisionGroup, shape),
-    m_fcl_collision_object(new FclCollisionObject<S>(fclCollGeom)) {
-  assert(fclCollGeom);
+    const std::shared_ptr<FclCollisionGeometry<S>>& fcl_coll_geom)
+  : Object<S>(collision_group, shape),
+    m_fcl_collision_object(new FclCollisionObject<S>(fcl_coll_geom))
+{
+  assert(fcl_coll_geom);
   m_fcl_collision_object->setUserData(this);
 }
 
 //==============================================================================
 template <typename S>
-void FclObject<S>::update_engine_data() {
-  //  using dart::dynamics::BodyNode;
-  //  using dart::dynamics::Shape;
-  //  using dart::dynamics::SoftMeshShape;
-
-  //  auto shape = mShapeFrame->getShape().get();
-
-  //  // Update soft-body's vertices
-  //  if (shape->getType() == dynamics::SoftMeshShape::getStaticType())
-  //  {
-  //    assert(dynamic_cast<const SoftMeshShape*>(shape));
-  //    auto softMeshShape = static_cast<const SoftMeshShape*>(shape);
-
-  //    const aiMesh* mesh = softMeshShape->getAssimpMesh();
-  //    const_cast<SoftMeshShape*>(softMeshShape)->update();
-  //    // TODO(JS): update function be called by somewhere out of here.
-
-  //    auto collGeom = const_cast<FclCollisionGeometry*>(
-  //        mFCLObject->collisionGeometry().get());
-  //    assert(
-  //        dynamic_cast<::fcl::BVHModel<FclOBBRSS>*>(collGeom));
-  //    auto bvhModel
-  //        =
-  //        static_cast<::fcl::BVHModel<FclOBBRSS>*>(collGeom);
-
-  //    bvhModel->beginUpdateModel();
-  //    for (auto i = 0u; i < mesh->mNumFaces; ++i)
-  //    {
-  //      FclVector3 vertices[3];
-  //      for (auto j = 0u; j < 3; ++j)
-  //      {
-  //        const auto& vertex = mesh->mVertices[mesh->mFaces[i].mIndices[j]];
-  //        vertices[j]
-  //            = FclVector3(vertex.x, vertex.y, vertex.z);
-  //      }
-  //      bvhModel->updateTriangle(vertices[0], vertices[1], vertices[2]);
-  //    }
-  //    bvhModel->endUpdateModel();
-  //  }
-
-  m_fcl_collision_object->setTransform(toFclTransform3(get_pose()));
+void FclObject<S>::update_engine_data()
+{
+  m_fcl_collision_object->setTransform(to_fcl_pose3(get_pose()));
   m_fcl_collision_object->computeAABB();
-}
-
-//==============================================================================
-template <typename S>
-FclObject<S>::FclObject(Group<S>* collisionGroup, math::GeometryPtr shape)
-  : Object<S>(collisionGroup, std::move(shape)) {
-  // Do nothing
 }
 
 } // namespace collision

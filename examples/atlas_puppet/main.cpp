@@ -52,7 +52,8 @@ public:
       mIdeal(idealPosture),
       mLower(lower),
       mUpper(upper),
-      mWeights(weights) {
+      mWeights(weights)
+  {
     int dofs = mIdeal.size();
     if (mLower.size() != dofs || mWeights.size() != dofs
         || mUpper.size() != dofs) {
@@ -65,13 +66,15 @@ public:
     mResultVector.setZero(dofs);
   }
 
-  double eval(const Eigen::VectorXd& _x) override {
+  double eval(const Eigen::VectorXd& _x) override
+  {
     computeResultVector(_x);
     return 0.5 * mResultVector.dot(mResultVector);
   }
 
   void evalGradient(
-      const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) override {
+      const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) override
+  {
     computeResultVector(_x);
 
     _grad.setZero();
@@ -80,7 +83,8 @@ public:
       _grad[i] = mResultVector[i];
   }
 
-  void computeResultVector(const Eigen::VectorXd& _x) {
+  void computeResultVector(const Eigen::VectorXd& _x)
+  {
     mResultVector.setZero();
 
     if (enforceIdealPosture) {
@@ -139,12 +143,14 @@ public:
       mAtlas(_robot),
       iter(0),
       l_foot(_robot->getEndEffector("l_foot")),
-      r_foot(_robot->getEndEffector("r_foot")) {
+      r_foot(_robot->getEndEffector("r_foot"))
+  {
     mMoveComponents.resize(NUM_MOVE, false);
     mAnyMovement = false;
   }
 
-  void setMovement(const std::vector<bool>& moveComponents) {
+  void setMovement(const std::vector<bool>& moveComponents)
+  {
     mMoveComponents = moveComponents;
 
     mAnyMovement = false;
@@ -157,7 +163,8 @@ public:
     }
   }
 
-  void customPreRefresh() override {
+  void customPreRefresh() override
+  {
     if (mAnyMovement) {
       Eigen::Isometry3d old_tf = mAtlas->getBodyNode(0)->getWorldTransform();
       Eigen::Isometry3d new_tf = Eigen::Isometry3d::Identity();
@@ -179,7 +186,7 @@ public:
 
       const double linearStep = 0.01;
       const double elevationStep = 0.2 * linearStep;
-      const double rotationalStep = 2.0 * constantsd::pi() / 180.0;
+      const double rotationalStep = 2.0 * pi() / 180.0;
 
       if (mMoveComponents[MOVE_W])
         new_tf.translate(linearStep * forward);
@@ -244,11 +251,13 @@ public:
       TeleoperationWorld* teleop,
       const SkeletonPtr& atlas,
       const WorldPtr& world)
-    : mViewer(viewer), mTeleop(teleop), mAtlas(atlas), mWorld(world) {
+    : mViewer(viewer), mTeleop(teleop), mAtlas(atlas), mWorld(world)
+  {
     initialize();
   }
 
-  void initialize() {
+  void initialize()
+  {
     mRestConfig = mAtlas->getPositions();
 
     mLegs.reserve(12);
@@ -283,7 +292,8 @@ public:
   }
 
   virtual bool handle(
-      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override {
+      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override
+  {
     if (nullptr == mAtlas) {
       return false;
     }
@@ -482,7 +492,8 @@ protected:
   std::vector<bool> mMoveComponents;
 };
 
-SkeletonPtr createGround() {
+SkeletonPtr createGround()
+{
   // Create a Skeleton to represent the ground
   SkeletonPtr ground = Skeleton::create("ground");
   Eigen::Isometry3d tf(Eigen::Isometry3d::Identity());
@@ -504,7 +515,8 @@ SkeletonPtr createGround() {
   return ground;
 }
 
-SkeletonPtr createAtlas() {
+SkeletonPtr createAtlas()
+{
   // Parse in the atlas model
   DartLoader urdf;
   SkeletonPtr atlas
@@ -526,37 +538,37 @@ SkeletonPtr createAtlas() {
   return atlas;
 }
 
-void setupStartConfiguration(const SkeletonPtr& atlas) {
+void setupStartConfiguration(const SkeletonPtr& atlas)
+{
   // Squat with the right leg
-  atlas->getDof("r_leg_hpy")->setPosition(-45.0 * constantsd::pi() / 180.0);
-  atlas->getDof("r_leg_kny")->setPosition(90.0 * constantsd::pi() / 180.0);
-  atlas->getDof("r_leg_aky")->setPosition(-45.0 * constantsd::pi() / 180.0);
+  atlas->getDof("r_leg_hpy")->setPosition(-45.0 * pi() / 180.0);
+  atlas->getDof("r_leg_kny")->setPosition(90.0 * pi() / 180.0);
+  atlas->getDof("r_leg_aky")->setPosition(-45.0 * pi() / 180.0);
 
   // Squat with the left left
-  atlas->getDof("l_leg_hpy")->setPosition(-45.0 * constantsd::pi() / 180.0);
-  atlas->getDof("l_leg_kny")->setPosition(90.0 * constantsd::pi() / 180.0);
-  atlas->getDof("l_leg_aky")->setPosition(-45.0 * constantsd::pi() / 180.0);
+  atlas->getDof("l_leg_hpy")->setPosition(-45.0 * pi() / 180.0);
+  atlas->getDof("l_leg_kny")->setPosition(90.0 * pi() / 180.0);
+  atlas->getDof("l_leg_aky")->setPosition(-45.0 * pi() / 180.0);
 
   // Get the right arm into a comfortable position
-  atlas->getDof("r_arm_shx")->setPosition(65.0 * constantsd::pi() / 180.0);
-  atlas->getDof("r_arm_ely")->setPosition(90.0 * constantsd::pi() / 180.0);
-  atlas->getDof("r_arm_elx")->setPosition(-90.0 * constantsd::pi() / 180.0);
-  atlas->getDof("r_arm_wry")->setPosition(65.0 * constantsd::pi() / 180.0);
+  atlas->getDof("r_arm_shx")->setPosition(65.0 * pi() / 180.0);
+  atlas->getDof("r_arm_ely")->setPosition(90.0 * pi() / 180.0);
+  atlas->getDof("r_arm_elx")->setPosition(-90.0 * pi() / 180.0);
+  atlas->getDof("r_arm_wry")->setPosition(65.0 * pi() / 180.0);
 
   // Get the left arm into a comfortable position
-  atlas->getDof("l_arm_shx")->setPosition(-65.0 * constantsd::pi() / 180.0);
-  atlas->getDof("l_arm_ely")->setPosition(90.0 * constantsd::pi() / 180.0);
-  atlas->getDof("l_arm_elx")->setPosition(90.0 * constantsd::pi() / 180.0);
-  atlas->getDof("l_arm_wry")->setPosition(65.0 * constantsd::pi() / 180.0);
+  atlas->getDof("l_arm_shx")->setPosition(-65.0 * pi() / 180.0);
+  atlas->getDof("l_arm_ely")->setPosition(90.0 * pi() / 180.0);
+  atlas->getDof("l_arm_elx")->setPosition(90.0 * pi() / 180.0);
+  atlas->getDof("l_arm_wry")->setPosition(65.0 * pi() / 180.0);
 
   // Prevent the knees from bending backwards
-  atlas->getDof("r_leg_kny")
-      ->setPositionLowerLimit(10 * constantsd::pi() / 180.0);
-  atlas->getDof("l_leg_kny")
-      ->setPositionLowerLimit(10 * constantsd::pi() / 180.0);
+  atlas->getDof("r_leg_kny")->setPositionLowerLimit(10 * pi() / 180.0);
+  atlas->getDof("l_leg_kny")->setPositionLowerLimit(10 * pi() / 180.0);
 }
 
-void setupEndEffectors(const SkeletonPtr& atlas) {
+void setupEndEffectors(const SkeletonPtr& atlas)
+{
   // Apply very small weights to the gradient of the root joint in order to
   // encourage the arms to use arm joints instead of only moving around the root
   // joint
@@ -578,8 +590,8 @@ void setupEndEffectors(const SkeletonPtr& atlas) {
   // attached to
   Eigen::Isometry3d tf_hand(Eigen::Isometry3d::Identity());
   tf_hand.translation() = Eigen::Vector3d(0.0009, 0.1254, 0.012);
-  tf_hand.rotate(Eigen::AngleAxisd(
-      90.0 * constantsd::pi() / 180.0, Eigen::Vector3d::UnitZ()));
+  tf_hand.rotate(
+      Eigen::AngleAxisd(90.0 * pi() / 180.0, Eigen::Vector3d::UnitZ()));
 
   // Create the left hand's end effector and set its relative transform
   EndEffector* l_hand
@@ -735,7 +747,8 @@ void setupEndEffectors(const SkeletonPtr& atlas) {
   r_foot->getIK()->getTarget()->setTransform(r_foot->getTransform());
 }
 
-void setupWholeBodySolver(const SkeletonPtr& atlas) {
+void setupWholeBodySolver(const SkeletonPtr& atlas)
+{
   // The default
   std::shared_ptr<dart::optimization::GradientDescentSolver> solver
       = std::dynamic_pointer_cast<dart::optimization::GradientDescentSolver>(
@@ -816,7 +829,8 @@ void setupWholeBodySolver(const SkeletonPtr& atlas) {
 }
 
 void enableDragAndDrops(
-    dart::gui::osg::Viewer& viewer, const SkeletonPtr& atlas) {
+    dart::gui::osg::Viewer& viewer, const SkeletonPtr& atlas)
+{
   // Turn on drag-and-drop for the whole Skeleton
   for (std::size_t i = 0; i < atlas->getNumBodyNodes(); ++i)
     viewer.enableDragAndDrop(atlas->getBodyNode(i), false, false);
@@ -834,7 +848,8 @@ void enableDragAndDrops(
   }
 }
 
-int main() {
+int main()
+{
   WorldPtr world = World::create();
 
   SkeletonPtr atlas = createAtlas();

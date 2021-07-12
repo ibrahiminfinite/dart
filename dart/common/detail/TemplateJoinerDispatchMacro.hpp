@@ -43,7 +43,8 @@
     ReturnType, ClassName, Function, Suffix, SpecializationChecker, Args)      \
   template <class Base1, class Base2>                                          \
   template <class T>                                                           \
-  ReturnType ClassName<Base1, Base2>::Function Suffix {                        \
+  ReturnType ClassName<Base1, Base2>::Function Suffix                          \
+  {                                                                            \
     if (Base1::template SpecializationChecker<T>())                            \
       return Base1::template Function<T> Args;                                 \
                                                                                \

@@ -43,7 +43,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Node(py::module& m) {
+void Node(py::module& m)
+{
   ::py::class_<
       dart::dynamics::Node,
       /*dart::common::VersionCounter,*/ dart::common::Subject,

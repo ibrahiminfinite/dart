@@ -75,7 +75,8 @@ Eigen::Vector4d toVector4d(const std::string& str);
 Eigen::Vector6d toVector6d(const std::string& str);
 Eigen::VectorXd toVectorXd(const std::string& str);
 template <std::size_t N>
-Eigen::Matrix<double, N, 1> toVectorNd(const std::string& str) {
+Eigen::Matrix<double, N, 1> toVectorNd(const std::string& str)
+{
   Eigen::Matrix<double, N, 1> ret = Eigen::Matrix<double, N, 1>::Zero();
 
   std::vector<std::string> pieces;
@@ -197,7 +198,8 @@ Eigen::VectorXd getAttributeVectorXd(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
 template <std::size_t N>
 Eigen::Matrix<double, N, 1> getAttributeVectorNd(
-    const tinyxml2::XMLElement* element, const std::string& attributeName) {
+    const tinyxml2::XMLElement* element, const std::string& attributeName)
+{
   const std::string val = getAttributeString(element, attributeName);
   return toVectorNd<N>(val);
 }
@@ -217,16 +219,19 @@ public:
       ElementPtr parentElement, const std::string& childElementName)
     : mParentElement(parentElement),
       mChildElementName(childElementName),
-      mCurrentElement(nullptr) {
+      mCurrentElement(nullptr)
+  {
   }
 
   /// Destructor
-  ~TemplatedElementEnumerator() {
+  ~TemplatedElementEnumerator()
+  {
   }
 
   /// Set the current element to the next sibling element or to the first child
   /// element of given parent element if it exists; returns success
-  bool next() {
+  bool next()
+  {
     if (!mParentElement)
       return false;
 
@@ -245,22 +250,26 @@ public:
   }
 
   /// Get the current element
-  ElementPtr get() const {
+  ElementPtr get() const
+  {
     return mCurrentElement;
   }
 
   /// Dereference operator
-  ElementPtr operator->() const {
+  ElementPtr operator->() const
+  {
     return mCurrentElement;
   }
 
   /// Dereference operator
-  ElementRef operator*() const {
+  ElementRef operator*() const
+  {
     return *mCurrentElement;
   }
 
   /// Equality operator
-  bool operator==(const TemplatedElementEnumerator<ElementType>& rhs) const {
+  bool operator==(const TemplatedElementEnumerator<ElementType>& rhs) const
+  {
     // If they point at the same node, then the names must match
     return (this->mParentElement == rhs.mParentElement)
            && (this->mCurrentElement == rhs.mCurrentElement)
@@ -270,7 +279,8 @@ public:
 
   /// Assignment operator
   TemplatedElementEnumerator<ElementType>& operator=(
-      const TemplatedElementEnumerator<ElementType>& rhs) {
+      const TemplatedElementEnumerator<ElementType>& rhs)
+  {
     this->mParentElement = rhs.mParentElement;
     this->mChildElementName = rhs.mChildElementName;
     this->mCurrentElement = rhs.mCurrentElement;
@@ -280,7 +290,8 @@ public:
 
 private:
   /// Returns true if the current element is valid (not a nullptr)
-  bool valid() const {
+  bool valid() const
+  {
     return mCurrentElement != nullptr;
   }
 

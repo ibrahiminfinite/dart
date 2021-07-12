@@ -41,7 +41,8 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-std::vector<BodyNode*> Linkage::Criteria::satisfy() const {
+std::vector<BodyNode*> Linkage::Criteria::satisfy() const
+{
   std::vector<BodyNode*> bns;
 
   if (nullptr == mStart.mNode.lock()) {
@@ -102,19 +103,22 @@ std::vector<BodyNode*> Linkage::Criteria::satisfy() const {
 //==============================================================================
 Linkage::Criteria::Target::Target(
     BodyNode* _target, ExpansionPolicy _policy, bool _chain)
-  : mNode(_target), mPolicy(_policy), mChain(_chain) {
+  : mNode(_target), mPolicy(_policy), mChain(_chain)
+{
   // Do nothing
 }
 
 //==============================================================================
 Linkage::Criteria::Terminal::Terminal(BodyNode* _terminal, bool _inclusive)
-  : mTerminal(_terminal), mInclusive(_inclusive) {
+  : mTerminal(_terminal), mInclusive(_inclusive)
+{
   // Do nothing
 }
 
 //==============================================================================
 Linkage::Criteria::Criteria(
-    BodyNode* start, BodyNode* target, bool includeUpstreamParentJoint) {
+    BodyNode* start, BodyNode* target, bool includeUpstreamParentJoint)
+{
   mStart.mNode = start;
   mStart.mPolicy = Linkage::Criteria::INCLUDE;
 
@@ -139,7 +143,8 @@ Linkage::Criteria::Criteria(
 }
 
 //==============================================================================
-void Linkage::Criteria::refreshTerminalMap() const {
+void Linkage::Criteria::refreshTerminalMap() const
+{
   mMapOfTerminals.clear();
   for (std::size_t i = 0; i < mTerminals.size(); ++i) {
     mMapOfTerminals[mTerminals[i].mTerminal.lock()] = mTerminals[i].mInclusive;
@@ -150,7 +155,8 @@ void Linkage::Criteria::refreshTerminalMap() const {
 void Linkage::Criteria::expansionPolicy(
     BodyNode* _start,
     Linkage::Criteria::ExpansionPolicy _policy,
-    std::vector<BodyNode*>& _bns) const {
+    std::vector<BodyNode*>& _bns) const
+{
   if (EXCLUDE != _policy) {
     // If the _start is a terminal, we quit before expanding
     std::unordered_map<BodyNode*, bool>::const_iterator check_start
@@ -172,7 +178,8 @@ void Linkage::Criteria::expansionPolicy(
 //==============================================================================
 struct Recording {
   Recording(BodyNode* _node = nullptr, int _count = 0)
-    : mNode(_node), mCount(_count) {
+    : mNode(_node), mCount(_count)
+  {
   }
 
   BodyNode* mNode;
@@ -185,7 +192,8 @@ void stepToNextChild(
     std::vector<BodyNode*>& _bns,
     Recording& _r,
     const std::unordered_map<BodyNode*, bool>& _terminalMap,
-    int _initValue) {
+    int _initValue)
+{
   BodyNode* bn = _r.mNode->getChildBodyNode(_r.mCount);
   std::unordered_map<BodyNode*, bool>::const_iterator it
       = _terminalMap.find(bn);
@@ -208,7 +216,8 @@ void stepToParent(
     std::vector<Recording>& _recorder,
     std::vector<BodyNode*>& _bns,
     Recording& _r,
-    const std::unordered_map<BodyNode*, bool>& _terminalMap) {
+    const std::unordered_map<BodyNode*, bool>& _terminalMap)
+{
   BodyNode* bn = _r.mNode->getParentBodyNode();
   std::unordered_map<BodyNode*, bool>::const_iterator it
       = _terminalMap.find(bn);
@@ -228,7 +237,8 @@ void stepToParent(
 
 //==============================================================================
 void Linkage::Criteria::expandDownstream(
-    BodyNode* _start, std::vector<BodyNode*>& _bns, bool _includeStart) const {
+    BodyNode* _start, std::vector<BodyNode*>& _bns, bool _includeStart) const
+{
   std::vector<Recording> recorder;
   recorder.reserve(_start->getSkeleton()->getNumBodyNodes());
 
@@ -250,7 +260,8 @@ void Linkage::Criteria::expandDownstream(
 
 //==============================================================================
 void Linkage::Criteria::expandUpstream(
-    BodyNode* _start, std::vector<BodyNode*>& _bns, bool _includeStart) const {
+    BodyNode* _start, std::vector<BodyNode*>& _bns, bool _includeStart) const
+{
   std::vector<Recording> recorder;
   recorder.reserve(_start->getSkeleton()->getNumBodyNodes());
 
@@ -308,7 +319,8 @@ void Linkage::Criteria::expandUpstream(
 void Linkage::Criteria::expandToTarget(
     const Linkage::Criteria::Target& _start,
     const Linkage::Criteria::Target& _target,
-    std::vector<BodyNode*>& _bns) const {
+    std::vector<BodyNode*>& _bns) const
+{
   BodyNode* start_bn = _start.mNode.lock();
   BodyNode* target_bn = _target.mNode.lock();
   std::vector<BodyNode*> newBns;
@@ -346,7 +358,8 @@ void Linkage::Criteria::expandToTarget(
 
 //==============================================================================
 std::vector<BodyNode*> Linkage::Criteria::climbToTarget(
-    BodyNode* _start, BodyNode* _target) const {
+    BodyNode* _start, BodyNode* _target) const
+{
   std::vector<BodyNode*> newBns;
   newBns.reserve(_start->getSkeleton()->getNumBodyNodes());
 
@@ -365,7 +378,8 @@ std::vector<BodyNode*> Linkage::Criteria::climbToTarget(
 
 //==============================================================================
 std::vector<BodyNode*> Linkage::Criteria::climbToCommonRoot(
-    const Target& _start, const Target& _target, bool _chain) const {
+    const Target& _start, const Target& _target, bool _chain) const
+{
   BodyNode* start_bn = _start.mNode.lock();
   BodyNode* target_bn = _target.mNode.lock();
   BodyNode* root = start_bn->getParentBodyNode();
@@ -398,7 +412,8 @@ std::vector<BodyNode*> Linkage::Criteria::climbToCommonRoot(
 
 //==============================================================================
 void Linkage::Criteria::trimBodyNodes(
-    std::vector<BodyNode*>& _bns, bool _chain, bool _movingUpstream) const {
+    std::vector<BodyNode*>& _bns, bool _chain, bool _movingUpstream) const
+{
   std::vector<BodyNode*>::iterator it = _bns.begin();
   while (it != _bns.end()) {
     std::unordered_map<BodyNode*, bool>::const_iterator terminal
@@ -441,8 +456,8 @@ void Linkage::Criteria::trimBodyNodes(
 }
 
 //==============================================================================
-LinkagePtr Linkage::create(
-    const Criteria& _criteria, const std::string& _name) {
+LinkagePtr Linkage::create(const Criteria& _criteria, const std::string& _name)
+{
   LinkagePtr linkage(new Linkage(_criteria, _name));
   linkage->mPtr = linkage;
   return linkage;
@@ -450,7 +465,8 @@ LinkagePtr Linkage::create(
 
 //==============================================================================
 Linkage::Criteria::Target createTargetFromClone(
-    Skeleton& skelClone, const Linkage::Criteria::Target& target) {
+    Skeleton& skelClone, const Linkage::Criteria::Target& target)
+{
   BodyNodePtr bodyNodePtr = target.mNode.lock();
   assert(bodyNodePtr);
   BodyNode* bodyNodeClone = skelClone.getBodyNode(bodyNodePtr->getName());
@@ -463,7 +479,8 @@ Linkage::Criteria::Target createTargetFromClone(
 
 //==============================================================================
 Linkage::Criteria::Terminal createTerminalFromClone(
-    Skeleton& skelClone, const Linkage::Criteria::Terminal& terminal) {
+    Skeleton& skelClone, const Linkage::Criteria::Terminal& terminal)
+{
   BodyNodePtr bodyNodePtr = terminal.mTerminal.lock();
   assert(bodyNodePtr);
   BodyNode* bodyNodeClone = skelClone.getBodyNode(bodyNodePtr->getName());
@@ -474,12 +491,14 @@ Linkage::Criteria::Terminal createTerminalFromClone(
 }
 
 //==============================================================================
-LinkagePtr Linkage::cloneLinkage() const {
+LinkagePtr Linkage::cloneLinkage() const
+{
   return cloneLinkage(getName());
 }
 
 //==============================================================================
-LinkagePtr Linkage::cloneLinkage(const std::string& cloneName) const {
+LinkagePtr Linkage::cloneLinkage(const std::string& cloneName) const
+{
   // Clone the skeleton (assuming one skeleton is involved)
   BodyNodePtr bodyNode = mCriteria.mStart.mNode.lock();
   if (!bodyNode) {
@@ -512,12 +531,14 @@ LinkagePtr Linkage::cloneLinkage(const std::string& cloneName) const {
 }
 
 //==============================================================================
-MetaSkeletonPtr Linkage::cloneMetaSkeleton(const std::string& cloneName) const {
+MetaSkeletonPtr Linkage::cloneMetaSkeleton(const std::string& cloneName) const
+{
   return cloneLinkage(cloneName);
 }
 
 //==============================================================================
-bool Linkage::isAssembled() const {
+bool Linkage::isAssembled() const
+{
   for (std::size_t i = 0; i < mParentBodyNodes.size(); ++i) {
     const BodyNode* bn = mBodyNodes[i];
     if (bn->getParentBodyNode() != mParentBodyNodes[i].lock())
@@ -528,7 +549,8 @@ bool Linkage::isAssembled() const {
 }
 
 //==============================================================================
-void Linkage::reassemble() {
+void Linkage::reassemble()
+{
   for (std::size_t i = 0; i < mBodyNodes.size(); ++i) {
     BodyNode* bn = mBodyNodes[i];
     bn->moveTo(mParentBodyNodes[i].lock());
@@ -536,7 +558,8 @@ void Linkage::reassemble() {
 }
 
 //==============================================================================
-void Linkage::satisfyCriteria() {
+void Linkage::satisfyCriteria()
+{
   std::vector<BodyNode*> bns = mCriteria.satisfy();
   while (getNumBodyNodes() > 0)
     unregisterComponent(mBodyNodes.back());
@@ -550,13 +573,15 @@ void Linkage::satisfyCriteria() {
 
 //==============================================================================
 Linkage::Linkage(const Criteria& _criteria, const std::string& _name)
-  : mCriteria(_criteria) {
+  : mCriteria(_criteria)
+{
   setName(_name);
   satisfyCriteria();
 }
 
 //==============================================================================
-void Linkage::update() {
+void Linkage::update()
+{
   mParentBodyNodes.clear();
   mParentBodyNodes.reserve(mBodyNodes.size());
   for (std::size_t i = 0; i < mBodyNodes.size(); ++i) {

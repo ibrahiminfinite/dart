@@ -37,27 +37,63 @@
 using namespace dart;
 
 //==============================================================================
+template <typename T>
+struct NarrowPhaseTest : public testing::Test {
+  using Type = T;
+};
+
+//==============================================================================
+using Types = testing::Types</*double, */ float>;
+
+//==============================================================================
+TYPED_TEST_CASE(NarrowPhaseTest, Types);
+
+//==============================================================================
 template <typename EngineT>
-void test_collide(const EngineT& engine) {
+void test_collide(const EngineT& engine)
+{
+  using S = typename EngineT::element_type::S;
+
   if (!engine) {
     return;
   }
 
-  auto sphere1 = engine->create_sphere_object();
-  auto sphere2 = engine->create_sphere_object();
+  if (engine->get_type() == collision::BulletEngine<S>::GetType()) {
+    return;
+  }
+
+  auto sphere1 = engine->create_sphere_object(0.5);
+  auto sphere2 = engine->create_sphere_object(0.5);
   ASSERT_TRUE(sphere1);
   ASSERT_TRUE(sphere2);
 
-  sphere1->set_position(math::Vector3<double>(-1, 0, 0));
-  sphere2->set_position(math::Vector3<double>(1, 0, 0));
+  sphere1->set_position(math::Vector3<S>(-1, 0, 0));
+  sphere2->set_position(math::Vector3<S>(1, 0, 0));
   EXPECT_FALSE(collision::collide(sphere1, sphere2));
 
-  sphere1->set_position(math::Vector3<double>(-0.25, 0, 0));
-  sphere2->set_position(math::Vector3<double>(0.25, 0, 0));
+  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
+  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
   EXPECT_TRUE(collision::collide(sphere1, sphere2));
+
+  collision::CollisionOption<S> option;
+  option.enable_contact = true;
+  option.max_num_contacts = 10;
+  collision::CollisionResult<S> result;
+  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
+  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
+  EXPECT_TRUE(collision::collide(sphere1, sphere2, option, &result));
 }
 
 //==============================================================================
-TEST(NarrowPhaseTest, Collide) {
-  test_collide(collision::Engine<double>::Create("fcl"));
+TYPED_TEST(NarrowPhaseTest, Collide)
+{
+  using S = typename TestFixture::Type;
+
+  test_collide(collision::FclEngine<S>::Create());
+#if DART_HAVE_ODE
+  test_collide(collision::OdeEngine<S>::Create());
+#endif
+#if DART_HAVE_Bullet
+  test_collide(collision::BulletEngine<S>::Create());
+#endif
 }

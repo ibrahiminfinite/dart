@@ -60,7 +60,8 @@ template <
     = std::map<std::type_index, std::unique_ptr<ObjectType> >,
     typename DataMap = std::map<std::type_index, std::unique_ptr<DataType> > >
 static void extractDataFromObjectTypeMap(
-    DataMap& dataMap, const ObjectMap& objectMap) {
+    DataMap& dataMap, const ObjectMap& objectMap)
+{
   // This method allows us to avoid dynamic allocation (cloning) whenever
   // possible.
   for (const auto& object : objectMap) {
@@ -115,7 +116,8 @@ template <
     = std::map<std::type_index, std::unique_ptr<ObjectType> >,
     typename DataMap = std::map<std::type_index, std::unique_ptr<DataType> > >
 static void setObjectsFromDataTypeMap(
-    ObjectMap& objectMap, const DataMap& dataMap) {
+    ObjectMap& objectMap, const DataMap& dataMap)
+{
   typename ObjectMap::iterator objects = objectMap.begin();
   typename DataMap::const_iterator data = dataMap.begin();
 
@@ -136,13 +138,15 @@ static void setObjectsFromDataTypeMap(
 }
 
 //==============================================================================
-void Composite::setCompositeState(const State& newStates) {
+void Composite::setCompositeState(const State& newStates)
+{
   setObjectsFromDataTypeMap<Aspect, Aspect::State, &Aspect::setAspectState>(
       mAspectMap, newStates.getMap());
 }
 
 //==============================================================================
-Composite::State Composite::getCompositeState() const {
+Composite::State Composite::getCompositeState() const
+{
   State states;
   copyCompositeStateTo(states);
 
@@ -150,14 +154,16 @@ Composite::State Composite::getCompositeState() const {
 }
 
 //==============================================================================
-void Composite::copyCompositeStateTo(State& outgoingStates) const {
+void Composite::copyCompositeStateTo(State& outgoingStates) const
+{
   auto& states = outgoingStates.getMap();
   extractDataFromObjectTypeMap<Aspect, Aspect::State, &Aspect::getAspectState>(
       states, mAspectMap);
 }
 
 //==============================================================================
-void Composite::setCompositeProperties(const Properties& newProperties) {
+void Composite::setCompositeProperties(const Properties& newProperties)
+{
   setObjectsFromDataTypeMap<
       Aspect,
       Aspect::Properties,
@@ -165,7 +171,8 @@ void Composite::setCompositeProperties(const Properties& newProperties) {
 }
 
 //==============================================================================
-Composite::Properties Composite::getCompositeProperties() const {
+Composite::Properties Composite::getCompositeProperties() const
+{
   Properties properties;
   copyCompositePropertiesTo(properties);
 
@@ -173,8 +180,8 @@ Composite::Properties Composite::getCompositeProperties() const {
 }
 
 //==============================================================================
-void Composite::copyCompositePropertiesTo(
-    Properties& outgoingProperties) const {
+void Composite::copyCompositePropertiesTo(Properties& outgoingProperties) const
+{
   auto& properties = outgoingProperties.getMap();
   extractDataFromObjectTypeMap<
       Aspect,
@@ -183,7 +190,8 @@ void Composite::copyCompositePropertiesTo(
 }
 
 //==============================================================================
-void Composite::duplicateAspects(const Composite* fromComposite) {
+void Composite::duplicateAspects(const Composite* fromComposite)
+{
   if (nullptr == fromComposite) {
     dterr << "[Composite::duplicateAspects] You have asked to duplicate the "
           << "Aspects of a nullptr, which is not allowed!\n";
@@ -223,7 +231,8 @@ void Composite::duplicateAspects(const Composite* fromComposite) {
 }
 
 //==============================================================================
-void Composite::matchAspects(const Composite* otherComposite) {
+void Composite::matchAspects(const Composite* otherComposite)
+{
   if (nullptr == otherComposite) {
     dterr << "[Composite::matchAspects] You have asked to match the Aspects "
           << "of a nullptr, which is not allowed!\n";
@@ -238,19 +247,22 @@ void Composite::matchAspects(const Composite* otherComposite) {
 }
 
 //==============================================================================
-void Composite::addToComposite(Aspect* aspect) {
+void Composite::addToComposite(Aspect* aspect)
+{
   if (aspect)
     aspect->setComposite(this);
 }
 
 //==============================================================================
-void Composite::removeFromComposite(Aspect* aspect) {
+void Composite::removeFromComposite(Aspect* aspect)
+{
   if (aspect)
     aspect->loseComposite(this);
 }
 
 //==============================================================================
-void Composite::_set(std::type_index type_idx, const Aspect* aspect) {
+void Composite::_set(std::type_index type_idx, const Aspect* aspect)
+{
   if (aspect) {
     mAspectMap[type_idx] = aspect->cloneAspect();
     addToComposite(mAspectMap[type_idx].get());
@@ -260,7 +272,8 @@ void Composite::_set(std::type_index type_idx, const Aspect* aspect) {
 }
 
 //==============================================================================
-void Composite::_set(std::type_index type_idx, std::unique_ptr<Aspect> aspect) {
+void Composite::_set(std::type_index type_idx, std::unique_ptr<Aspect> aspect)
+{
   mAspectMap[type_idx] = std::move(aspect);
   addToComposite(mAspectMap[type_idx].get());
 }

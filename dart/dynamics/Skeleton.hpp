@@ -1319,7 +1319,8 @@ public:
   // Union finding
   //--------------------------------------------------------------------------
   ///
-  void resetUnion() {
+  void resetUnion()
+  {
     mUnionRootSkeleton = mPtr;
     mUnionSize = 1;
   }

@@ -45,7 +45,8 @@ namespace detail {
 Errors appendBodyAttributes(
     BodyAttributes& attributes,
     tinyxml2::XMLElement* element,
-    const common::optional<Size>& size) {
+    const common::optional<Size>& size)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "body") {

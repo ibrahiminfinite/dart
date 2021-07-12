@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Observer(py::module& m) {
+void Observer(py::module& m)
+{
   ::py::class_<dart::common::Observer, std::shared_ptr<dart::common::Observer>>(
       m, "Observer");
 }

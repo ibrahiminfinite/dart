@@ -52,16 +52,19 @@ using namespace math;
 
 class EigenSE3 {
 public:
-  explicit EigenSE3(const Eigen::Matrix4d& T) : mT(T) {
+  explicit EigenSE3(const Eigen::Matrix4d& T) : mT(T)
+  {
   }
 
   /// \brief multiplication operator
-  inline EigenSE3 operator*(const EigenSE3& T) const {
+  inline EigenSE3 operator*(const EigenSE3& T) const
+  {
     return EigenSE3(mT * T.mT);
   }
 
   /// \brief multiplication operator
-  inline const EigenSE3& operator*=(const EigenSE3& T) {
+  inline const EigenSE3& operator*=(const EigenSE3& T)
+  {
     mT *= T.mT;
     return *this;
   }
@@ -72,17 +75,20 @@ private:
 };
 
 template <typename T>
-EIGEN_DONT_INLINE void prod(const T& a, const T& b, T& c) {
+EIGEN_DONT_INLINE void prod(const T& a, const T& b, T& c)
+{
   c = a * b;
 }
 
 template <typename T>
-EIGEN_DONT_INLINE void inv(const T& a, T& b) {
+EIGEN_DONT_INLINE void inv(const T& a, T& b)
+{
   b = a.inverse();
 }
 
 EIGEN_DONT_INLINE
-Eigen::Isometry3d Inv2(const Eigen::Isometry3d& I) {
+Eigen::Isometry3d Inv2(const Eigen::Isometry3d& I)
+{
   Eigen::Isometry3d ret;
 
   ret(0, 0) = I(0, 0);
@@ -105,15 +111,15 @@ Eigen::Isometry3d Inv2(const Eigen::Isometry3d& I) {
 }
 
 template <typename T>
-EIGEN_DONT_INLINE void inv_se3(const T& a, T& b) {
+EIGEN_DONT_INLINE void inv_se3(const T& a, T& b)
+{
   b = Inv2(a);
 }
 
 EIGEN_DONT_INLINE
 void concatenate(
-    const Eigen::Affine3d& A1,
-    const Eigen::Affine3d& A2,
-    Eigen::Affine3d& res) {
+    const Eigen::Affine3d& A1, const Eigen::Affine3d& A2, Eigen::Affine3d& res)
+{
   res(0, 0) = A1(0, 0) * A2(0, 0) + A1(0, 1) * A2(1, 0) + A1(0, 2) * A2(2, 0);
   res(1, 0) = A1(1, 0) * A2(0, 0) + A1(1, 1) * A2(1, 0) + A1(1, 2) * A2(2, 0);
   res(2, 0) = A1(2, 0) * A2(0, 0) + A1(2, 1) * A2(1, 0) + A1(2, 2) * A2(2, 0);
@@ -140,7 +146,8 @@ void concatenate(
 }
 
 EIGEN_DONT_INLINE
-void concatenate2(const Affine3d& A1, const Affine3d& A2, Affine3d& res) {
+void concatenate2(const Affine3d& A1, const Affine3d& A2, Affine3d& res)
+{
   res(0, 0) = A1(0, 0) * A2(0, 0) + A1(0, 1) * A2(1, 0) + A1(0, 2) * A2(2, 0);
   res(1, 0) = A1(1, 0) * A2(0, 0) + A1(1, 1) * A2(1, 0) + A1(1, 2) * A2(2, 0);
   res(2, 0) = A1(2, 0) * A2(0, 0) + A1(2, 1) * A2(1, 0) + A1(2, 2) * A2(2, 0);
@@ -168,7 +175,8 @@ void concatenate2(const Affine3d& A1, const Affine3d& A2, Affine3d& res) {
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 1> Ad_Affine3d_1(
-    const Eigen::Affine3d& T, const Eigen::Matrix<double, 6, 1>& s) {
+    const Eigen::Affine3d& T, const Eigen::Matrix<double, 6, 1>& s)
+{
   //--------------------------------------------------------------------------
   // w' = R * w
   // v' = r x R * w + R * v
@@ -195,7 +203,8 @@ Eigen::Matrix<double, 6, 1> Ad_Affine3d_1(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 1> Ad_Affine3d_2(
-    const Eigen::Affine3d& T, const Eigen::Matrix<double, 6, 1>& s) {
+    const Eigen::Affine3d& T, const Eigen::Matrix<double, 6, 1>& s)
+{
   //--------------------------------------------------------------------------
   // w' = R * w
   // v' = r x R * w + R * v
@@ -219,7 +228,8 @@ Eigen::Matrix<double, 6, 1> Ad_Affine3d_2(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 1> Ad_Affine3d_3(
-    const Eigen::Affine3d& T, const Eigen::Matrix<double, 6, 1>& s) {
+    const Eigen::Affine3d& T, const Eigen::Matrix<double, 6, 1>& s)
+{
   //--------------------------------------------------------------------------
   // w' = R * w
   // v' = r x R * w + R * v
@@ -237,7 +247,8 @@ Eigen::Matrix<double, 6, 1> Ad_Affine3d_3(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 1> Ad_Isometry3d(
-    const Eigen::Isometry3d& T, const Eigen::Matrix<double, 6, 1>& s) {
+    const Eigen::Isometry3d& T, const Eigen::Matrix<double, 6, 1>& s)
+{
   //--------------------------------------------------------------------------
   // w' = R * w
   // v' = r x R * w + R * v
@@ -261,7 +272,8 @@ Eigen::Matrix<double, 6, 1> Ad_Isometry3d(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 1> Ad_Matrix4d(
-    const Eigen::Matrix4d& T, const Eigen::Matrix<double, 6, 1>& s) {
+    const Eigen::Matrix4d& T, const Eigen::Matrix<double, 6, 1>& s)
+{
   //--------------------------------------------------------------------------
   // w' = R * w
   // v' = r x R * w + R * v
@@ -285,7 +297,8 @@ Eigen::Matrix<double, 6, 1> Ad_Matrix4d(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 6> Transform_Affine3d(
-    const Eigen::Affine3d& T, const Eigen::Matrix<double, 6, 6>& AI) {
+    const Eigen::Affine3d& T, const Eigen::Matrix<double, 6, 6>& AI)
+{
   // operation count: multiplication = 186, addition = 117, subtract = 21
 
   Eigen::Matrix<double, 6, 6> ret;
@@ -369,7 +382,8 @@ Eigen::Matrix<double, 6, 6> Transform_Affine3d(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 6> Transform_Isometry3d(
-    const Eigen::Isometry3d& T, const Eigen::Matrix<double, 6, 6>& AI) {
+    const Eigen::Isometry3d& T, const Eigen::Matrix<double, 6, 6>& AI)
+{
   // operation count: multiplication = 186, addition = 117, subtract = 21
 
   Eigen::Matrix<double, 6, 6> ret;
@@ -453,7 +467,8 @@ Eigen::Matrix<double, 6, 6> Transform_Isometry3d(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 6> Transform_Isometry3d_2(
-    const Eigen::Isometry3d& T, const Eigen::Matrix<double, 6, 6>& AI) {
+    const Eigen::Isometry3d& T, const Eigen::Matrix<double, 6, 6>& AI)
+{
   // operation count: multiplication = 186, addition = 117, subtract = 21
 
   Eigen::Matrix<double, 6, 6> ret;
@@ -550,7 +565,8 @@ Eigen::Matrix<double, 6, 6> Transform_Isometry3d_2(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 6> Transform_Isometry3d_3(
-    const Eigen::Isometry3d& T, const Eigen::Matrix<double, 6, 6>& AI) {
+    const Eigen::Isometry3d& T, const Eigen::Matrix<double, 6, 6>& AI)
+{
   // operation count: multiplication = 186, addition = 117, subtract = 21
 
   Eigen::Matrix<double, 6, 6> ret;
@@ -632,7 +648,8 @@ Eigen::Matrix<double, 6, 6> Transform_Isometry3d_3(
 
 EIGEN_DONT_INLINE
 Eigen::Matrix<double, 6, 6> Transform_Matrix4d(
-    const Eigen::Matrix4d& T, const Eigen::Matrix<double, 6, 6>& AI) {
+    const Eigen::Matrix4d& T, const Eigen::Matrix<double, 6, 6>& AI)
+{
   // operation count: multiplication = 186, addition = 117, subtract = 21
 
   Eigen::Matrix<double, 6, 6> ret;
@@ -714,7 +731,8 @@ Eigen::Matrix<double, 6, 6> Transform_Matrix4d(
   return ret;
 }
 
-TEST(MATH, ARTICULATED_INERTIA_TRANSFORM) {
+TEST(MATH, ARTICULATED_INERTIA_TRANSFORM)
+{
   const int iterations = 100000;
 
   Eigen::Affine3d A1
@@ -775,7 +793,8 @@ TEST(MATH, ARTICULATED_INERTIA_TRANSFORM) {
   // cout << "result: " << m2 << endl;
 }
 
-TEST(MATH, ADJOINT_MAPPING) {
+TEST(MATH, ADJOINT_MAPPING)
+{
   const int iterations = 10000;
 
   Eigen::Affine3d A1
@@ -848,7 +867,8 @@ TEST(MATH, ADJOINT_MAPPING) {
   // cout << "result: " << im << endl;
 }
 
-TEST(MATH, TRANSFORMATION) {
+TEST(MATH, TRANSFORMATION)
+{
   const int iterations = 10000;
 
   Affine3d A1
@@ -903,7 +923,8 @@ TEST(MATH, TRANSFORMATION) {
             << " s\n";
 }
 
-TEST(MATH, INVERSION) {
+TEST(MATH, INVERSION)
+{
   const int iterations = 10000;
 
   Affine3d A1
@@ -1214,7 +1235,8 @@ TEST(MATH, INVERSION) {
 //}
 
 //==============================================================================
-TEST(MATH, ROTATION) {
+TEST(MATH, ROTATION)
+{
   using namespace dart;
   using namespace math;
 
@@ -1242,7 +1264,8 @@ TEST(MATH, ROTATION) {
 }
 
 //==============================================================================
-TEST(MATH, UTILS) {
+TEST(MATH, UTILS)
+{
   // Test CR Matrix
   EXPECT_DOUBLE_EQ(dart::math::CR(0, 1), -1.0);
 
@@ -1262,7 +1285,8 @@ TEST(MATH, UTILS) {
 }
 
 //==============================================================================
-Jacobian AdTJac1(const Eigen::Isometry3d& _T, const Jacobian& _J) {
+Jacobian AdTJac1(const Eigen::Isometry3d& _T, const Jacobian& _J)
+{
   Jacobian res = Jacobian::Zero(6, _J.cols());
 
   for (int i = 0; i < _J.cols(); ++i)
@@ -1273,7 +1297,8 @@ Jacobian AdTJac1(const Eigen::Isometry3d& _T, const Jacobian& _J) {
 //==============================================================================
 template <typename Derived>
 typename Derived::PlainObject AdTJac2(
-    const Eigen::Isometry3d& _T, const Eigen::MatrixBase<Derived>& _J) {
+    const Eigen::Isometry3d& _T, const Eigen::MatrixBase<Derived>& _J)
+{
   //  EIGEN_STATIC_ASSERT_FIXED_SIZE(Derived);
   EIGEN_STATIC_ASSERT(
       Derived::RowsAtCompileTime == 6,
@@ -1290,7 +1315,8 @@ typename Derived::PlainObject AdTJac2(
 //==============================================================================
 template <typename Derived>
 typename Derived::PlainObject AdTJac3(
-    const Eigen::Isometry3d& _T, const Eigen::MatrixBase<Derived>& _J) {
+    const Eigen::Isometry3d& _T, const Eigen::MatrixBase<Derived>& _J)
+{
   //  EIGEN_STATIC_ASSERT_FIXED_SIZE(Derived);
   EIGEN_STATIC_ASSERT(
       Derived::RowsAtCompileTime == 6,
@@ -1307,7 +1333,8 @@ typename Derived::PlainObject AdTJac3(
 }
 
 //==============================================================================
-TEST(MATH, PerformanceComparisonOfAdTJac) {
+TEST(MATH, PerformanceComparisonOfAdTJac)
+{
 #ifndef NDEBUG
   int testCount = 1e+2;
 #else

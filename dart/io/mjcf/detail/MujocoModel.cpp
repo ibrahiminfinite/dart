@@ -47,7 +47,8 @@ namespace detail {
 Errors MujocoModel::read(
     tinyxml2::XMLElement* element,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "mujoco") {
@@ -169,8 +170,8 @@ Errors MujocoModel::read(
 
 //==============================================================================
 Errors MujocoModel::read(
-    const common::Uri& uri,
-    const common::ResourceRetrieverPtr& retrieverOrNull) {
+    const common::Uri& uri, const common::ResourceRetrieverPtr& retrieverOrNull)
+{
   Errors errors;
 
   // Create DART resource retriever if not passed
@@ -206,37 +207,44 @@ Errors MujocoModel::read(
 }
 
 //==============================================================================
-const std::string& MujocoModel::getModel() const {
+const std::string& MujocoModel::getModel() const
+{
   return mModel;
 }
 
 //==============================================================================
-const Compiler& MujocoModel::getCompiler() const {
+const Compiler& MujocoModel::getCompiler() const
+{
   return mCompiler;
 }
 
 //==============================================================================
-const Option& MujocoModel::getOption() const {
+const Option& MujocoModel::getOption() const
+{
   return mOption;
 }
 
 //==============================================================================
-const Size& MujocoModel::getSize() const {
+const Size& MujocoModel::getSize() const
+{
   return mSize;
 }
 
 //==============================================================================
-const Asset& MujocoModel::getAsset() const {
+const Asset& MujocoModel::getAsset() const
+{
   return mAsset;
 }
 
 //==============================================================================
-const Worldbody& MujocoModel::getWorldbody() const {
+const Worldbody& MujocoModel::getWorldbody() const
+{
   return mWorldbody;
 }
 
 //==============================================================================
-const Equality& MujocoModel::getEquality() const {
+const Equality& MujocoModel::getEquality() const
+{
   return mEquality;
 }
 

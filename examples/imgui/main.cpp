@@ -37,29 +37,34 @@
 class CustomWorldNode : public dart::gui::osg::WorldNode {
 public:
   CustomWorldNode(const dart::simulation::WorldPtr& world = nullptr)
-    : dart::gui::osg::WorldNode(world) {
+    : dart::gui::osg::WorldNode(world)
+  {
     // Set up the customized WorldNode
   }
 
-  void customPreRefresh() {
+  void customPreRefresh()
+  {
     // Use this function to execute custom code before each time that the
     // window is rendered. This function can be deleted if it does not need
     // to be used.
   }
 
-  void customPostRefresh() {
+  void customPostRefresh()
+  {
     // Use this function to execute custom code after each time that the
     // window is rendered. This function can be deleted if it does not need
     // to be used.
   }
 
-  void customPreStep() {
+  void customPreStep()
+  {
     // Use this function to execute custom code before each simulation time
     // step is performed. This function can be deleted if it does not need
     // to be used.
   }
 
-  void customPostStep() {
+  void customPostStep()
+  {
     // Use this function to execute custom code after each simulation time
     // step is performed. This function can be deleted if it does not need
     // to be used.
@@ -69,12 +74,14 @@ public:
 //==============================================================================
 class CustomEventHandler : public osgGA::GUIEventHandler {
 public:
-  CustomEventHandler(/*Pass in any necessary arguments*/) {
+  CustomEventHandler(/*Pass in any necessary arguments*/)
+  {
     // Set up the customized event handler
   }
 
   virtual bool handle(
-      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override {
+      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override
+  {
     if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN) {
       if (ea.getKey() == 'q') {
         std::cout << "Lowercase q pressed" << std::endl;
@@ -123,12 +130,14 @@ public:
       mWorld(std::move(world)),
       mGuiGravity(true),
       mGravity(true),
-      mGuiHeadlights(true) {
+      mGuiHeadlights(true)
+  {
     // Do nothing
   }
 
   // Documentation inherited
-  void render() override {
+  void render() override
+  {
     ImGui::SetNextWindowPos(ImVec2(10, 20));
     ImGui::SetNextWindowSize(ImVec2(240, 320));
     ImGui::SetNextWindowBgAlpha(0.5f);
@@ -210,7 +219,8 @@ public:
   }
 
 protected:
-  void setGravity(bool gravity) {
+  void setGravity(bool gravity)
+  {
     if (mGravity == gravity)
       return;
 
@@ -230,7 +240,8 @@ protected:
 };
 
 //==============================================================================
-int main() {
+int main()
+{
   // Create a world
   dart::simulation::WorldPtr world(new dart::simulation::World);
 

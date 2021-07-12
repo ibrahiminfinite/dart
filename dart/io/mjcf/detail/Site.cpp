@@ -42,7 +42,8 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-Errors Site::read(tinyxml2::XMLElement* element) {
+Errors Site::read(tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "site") {
@@ -152,7 +153,8 @@ Errors Site::read(tinyxml2::XMLElement* element) {
 
 //==============================================================================
 static bool canUseFromTo(
-    GeomType type, const common::optional<Eigen::Vector6d>& fromto) {
+    GeomType type, const common::optional<Eigen::Vector6d>& fromto)
+{
   if (not fromto)
     return false;
 
@@ -168,7 +170,8 @@ static bool canUseFromTo(
 }
 
 //==============================================================================
-Errors Site::preprocess(const Compiler& compiler) {
+Errors Site::preprocess(const Compiler& compiler)
+{
   Errors errors;
 
   if (mData.mName) {
@@ -259,13 +262,15 @@ Errors Site::preprocess(const Compiler& compiler) {
 }
 
 //==============================================================================
-Errors Site::compile(const Compiler& /*compiler*/) {
+Errors Site::compile(const Compiler& /*compiler*/)
+{
   Errors errors;
   return errors;
 }
 
 //==============================================================================
-Errors Site::postprocess(const Body* parent, const Compiler& compiler) {
+Errors Site::postprocess(const Body* parent, const Compiler& compiler)
+{
   Errors errors;
 
   if (compiler.getCoordinate() == Coordinate::LOCAL) {
@@ -287,113 +292,135 @@ Errors Site::postprocess(const Body* parent, const Compiler& compiler) {
 }
 
 //==============================================================================
-const std::string& Site::getName() const {
+const std::string& Site::getName() const
+{
   return mName;
 }
 
 //==============================================================================
-GeomType Site::getType() const {
+GeomType Site::getType() const
+{
   return mType;
 }
 
 //==============================================================================
-int Site::getGroup() const {
+int Site::getGroup() const
+{
   return mGroup;
 }
 
 //==============================================================================
-const Eigen::Vector3d& Site::getSize() const {
+const Eigen::Vector3d& Site::getSize() const
+{
   return mSize;
 }
 
 //==============================================================================
-double Site::getSphereRadius() const {
+double Site::getSphereRadius() const
+{
   return mSize[0];
 }
 
 //==============================================================================
-double Site::getCapsuleRadius() const {
+double Site::getCapsuleRadius() const
+{
   return mSize[0];
 }
 
 //==============================================================================
-double Site::getCapsuleHalfLength() const {
+double Site::getCapsuleHalfLength() const
+{
   return mSize[1];
 }
 
 //==============================================================================
-double Site::getCapsuleLength() const {
+double Site::getCapsuleLength() const
+{
   return 2.0 * mSize[1];
 }
 
 //==============================================================================
-const Eigen::Vector3d& Site::getEllipsoidRadii() const {
+const Eigen::Vector3d& Site::getEllipsoidRadii() const
+{
   return mSize;
 }
 
 //==============================================================================
-Eigen::Vector3d Site::getEllipsoidDiameters() const {
+Eigen::Vector3d Site::getEllipsoidDiameters() const
+{
   return 2.0 * mSize;
 }
 
 //==============================================================================
-double Site::getCylinderRadius() const {
+double Site::getCylinderRadius() const
+{
   return mSize[0];
 }
 
 //==============================================================================
-double Site::getCylinderHalfLength() const {
+double Site::getCylinderHalfLength() const
+{
   return mSize[1];
 }
 
 //==============================================================================
-double Site::getCylinderLength() const {
+double Site::getCylinderLength() const
+{
   return 2.0 * mSize[1];
 }
 
 //==============================================================================
-const Eigen::Vector3d& Site::getBoxHalfSize() const {
+const Eigen::Vector3d& Site::getBoxHalfSize() const
+{
   return mSize;
 }
 
 //==============================================================================
-Eigen::Vector3d Site::getBoxSize() const {
+Eigen::Vector3d Site::getBoxSize() const
+{
   return 2.0 * mSize;
 }
 
 //==============================================================================
-const Eigen::Vector4d& Site::getRGBA() const {
+const Eigen::Vector4d& Site::getRGBA() const
+{
   return mRGBA;
 }
 
 //==============================================================================
-void Site::setRelativeTransform(const Eigen::Isometry3d& tf) {
+void Site::setRelativeTransform(const Eigen::Isometry3d& tf)
+{
   mRelativeTransform = tf;
 }
 
 //==============================================================================
-const Eigen::Isometry3d& Site::getRelativeTransform() const {
+const Eigen::Isometry3d& Site::getRelativeTransform() const
+{
   return mRelativeTransform;
 }
 
 //==============================================================================
-void Site::setWorldTransform(const Eigen::Isometry3d& tf) {
+void Site::setWorldTransform(const Eigen::Isometry3d& tf)
+{
   mWorldTransform = tf;
 }
 
 //==============================================================================
-const Eigen::Isometry3d& Site::getWorldTransform() const {
+const Eigen::Isometry3d& Site::getWorldTransform() const
+{
   return mWorldTransform;
 }
 
 //==============================================================================
-double Site::computeVolume() const {
+double Site::computeVolume() const
+{
   // TODO(JS): Not implemented
   return 1;
 }
 
 //==============================================================================
-Eigen::Matrix3d Site::computeInertia() const {
+Eigen::Matrix3d Site::computeInertia() const
+{
   // TODO(JS): Not implemented
   return Eigen::Matrix3d::Identity();
 }

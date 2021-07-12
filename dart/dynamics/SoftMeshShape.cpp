@@ -40,7 +40,8 @@ namespace dart {
 namespace dynamics {
 
 SoftMeshShape::SoftMeshShape(SoftBodyNode* _softBodyNode)
-  : Shape(SOFT_MESH), mSoftBodyNode(_softBodyNode), mAssimpMesh(nullptr) {
+  : Shape(SOFT_MESH), mSoftBodyNode(_softBodyNode), mAssimpMesh(nullptr)
+{
   assert(_softBodyNode != nullptr);
   // Build mesh here using soft body node
   // TODO(JS): Not implemented.
@@ -48,30 +49,36 @@ SoftMeshShape::SoftMeshShape(SoftBodyNode* _softBodyNode)
   mVariance = DYNAMIC_VERTICES;
 }
 
-SoftMeshShape::~SoftMeshShape() {
+SoftMeshShape::~SoftMeshShape()
+{
   // Do nothing
 }
 
 //==============================================================================
-const std::string& SoftMeshShape::getType() const {
+const std::string& SoftMeshShape::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& SoftMeshShape::getStaticType() {
+const std::string& SoftMeshShape::getStaticType()
+{
   static const std::string type("SoftMeshShape");
   return type;
 }
 
-const aiMesh* SoftMeshShape::getAssimpMesh() const {
+const aiMesh* SoftMeshShape::getAssimpMesh() const
+{
   return mAssimpMesh.get();
 }
 
-const SoftBodyNode* SoftMeshShape::getSoftBodyNode() const {
+const SoftBodyNode* SoftMeshShape::getSoftBodyNode() const
+{
   return mSoftBodyNode;
 }
 
-Eigen::Matrix3d SoftMeshShape::computeInertia(double /*mass*/) const {
+Eigen::Matrix3d SoftMeshShape::computeInertia(double /*mass*/) const
+{
   dtwarn << "[SoftMeshShape::computeInertia] Not implemented yet.\n";
   // TODO(JS): Not implemented.
 
@@ -79,18 +86,21 @@ Eigen::Matrix3d SoftMeshShape::computeInertia(double /*mass*/) const {
 }
 
 //==============================================================================
-void SoftMeshShape::updateBoundingBox() const {
+void SoftMeshShape::updateBoundingBox() const
+{
   // TODO(JS): Not implemented.
   mIsBoundingBoxDirty = false;
 }
 
 //==============================================================================
-void SoftMeshShape::updateVolume() const {
+void SoftMeshShape::updateVolume() const
+{
   // TODO(JS): Not implemented.
   mIsVolumeDirty = false;
 }
 
-void SoftMeshShape::_buildMesh() {
+void SoftMeshShape::_buildMesh()
+{
   // Get number of vertices and faces from soft body node
   int nVertices = mSoftBodyNode->getNumPointMasses();
   int nFaces = mSoftBodyNode->getNumFaces();
@@ -125,7 +135,8 @@ void SoftMeshShape::_buildMesh() {
   }
 }
 
-void SoftMeshShape::update() {
+void SoftMeshShape::update()
+{
   std::size_t nVertices = mSoftBodyNode->getNumPointMasses();
 
   aiVector3D itAIVector3d;

@@ -43,7 +43,8 @@ using namespace dart::dynamics;
 void frameChangeCallback(
     const Entity* _entity,
     const Frame* _oldParentFrame,
-    const Frame* _newParentFrame) {
+    const Frame* _newParentFrame)
+{
   assert(_entity);
 
   std::string oldFrameName
@@ -62,7 +63,8 @@ void frameChangeCallback(
 void nameChangedCallback(
     const Entity* entity,
     const std::string& oldName,
-    const std::string& newName) {
+    const std::string& newName)
+{
   assert(entity);
 
   std::cout << "[" << entity->getName() << "]: Name changed: '" << oldName
@@ -70,7 +72,8 @@ void nameChangedCallback(
 }
 
 //==============================================================================
-TEST(FrameTest, FrameSignals) {
+TEST(FrameTest, FrameSignals)
+{
   Isometry3d tf1(Isometry3d::Identity());
   tf1.translate(Vector3d(0.1, -0.1, 0));
 

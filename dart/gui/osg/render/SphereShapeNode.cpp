@@ -87,13 +87,15 @@ protected:
 //==============================================================================
 SphereShapeNode::SphereShapeNode(
     std::shared_ptr<dart::dynamics::SphereShape> shape, ShapeFrameNode* parent)
-  : ShapeNode(shape, parent, this), mSphereShape(shape), mGeode(nullptr) {
+  : ShapeNode(shape, parent, this), mSphereShape(shape), mGeode(nullptr)
+{
   extractData(true);
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
 }
 
 //==============================================================================
-void SphereShapeNode::refresh() {
+void SphereShapeNode::refresh()
+{
   mUtilized = true;
 
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
@@ -105,7 +107,8 @@ void SphereShapeNode::refresh() {
 }
 
 //==============================================================================
-void SphereShapeNode::extractData(bool /*firstTime*/) {
+void SphereShapeNode::extractData(bool /*firstTime*/)
+{
   if (nullptr == mGeode) {
     mGeode
         = new SphereShapeGeode(mSphereShape.get(), mParentShapeFrameNode, this);
@@ -117,7 +120,8 @@ void SphereShapeNode::extractData(bool /*firstTime*/) {
 }
 
 //==============================================================================
-SphereShapeNode::~SphereShapeNode() {
+SphereShapeNode::~SphereShapeNode()
+{
   // Do nothing
 }
 
@@ -129,7 +133,8 @@ SphereShapeGeode::SphereShapeGeode(
   : ShapeNode(parentNode->getShape(), parentShapeFrame, this),
     mParentNode(parentNode),
     mSphereShape(shape),
-    mDrawable(nullptr) {
+    mDrawable(nullptr)
+{
   getOrCreateStateSet()->setMode(GL_BLEND, ::osg::StateAttribute::ON);
   getOrCreateStateSet()->setRenderingHint(::osg::StateSet::TRANSPARENT_BIN);
   getOrCreateStateSet()->setAttributeAndModes(
@@ -138,14 +143,16 @@ SphereShapeGeode::SphereShapeGeode(
 }
 
 //==============================================================================
-void SphereShapeGeode::refresh() {
+void SphereShapeGeode::refresh()
+{
   mUtilized = true;
 
   extractData();
 }
 
 //==============================================================================
-void SphereShapeGeode::extractData() {
+void SphereShapeGeode::extractData()
+{
   if (nullptr == mDrawable) {
     mDrawable = new SphereShapeDrawable(mSphereShape, mVisualAspect, this);
     addDrawable(mDrawable);
@@ -156,7 +163,8 @@ void SphereShapeGeode::extractData() {
 }
 
 //==============================================================================
-SphereShapeGeode::~SphereShapeGeode() {
+SphereShapeGeode::~SphereShapeGeode()
+{
   // Do nothing
 }
 
@@ -165,12 +173,14 @@ SphereShapeDrawable::SphereShapeDrawable(
     dart::dynamics::SphereShape* shape,
     dart::dynamics::VisualAspect* visualAspect,
     SphereShapeGeode* parent)
-  : mSphereShape(shape), mVisualAspect(visualAspect), mParent(parent) {
+  : mSphereShape(shape), mVisualAspect(visualAspect), mParent(parent)
+{
   refresh(true);
 }
 
 //==============================================================================
-void SphereShapeDrawable::refresh(bool firstTime) {
+void SphereShapeDrawable::refresh(bool firstTime)
+{
   if (mSphereShape->getDataVariance() == dart::dynamics::Shape::STATIC)
     setDataVariance(::osg::Object::STATIC);
   else
@@ -193,7 +203,8 @@ void SphereShapeDrawable::refresh(bool firstTime) {
 }
 
 //==============================================================================
-SphereShapeDrawable::~SphereShapeDrawable() {
+SphereShapeDrawable::~SphereShapeDrawable()
+{
   // Do nothing
 }
 

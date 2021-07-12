@@ -92,14 +92,16 @@ protected:
 //==============================================================================
 PyramidShapeNode::PyramidShapeNode(
     std::shared_ptr<dart::dynamics::PyramidShape> shape, ShapeFrameNode* parent)
-  : ShapeNode(shape, parent, this), mPyramidShape(shape), mGeode(nullptr) {
+  : ShapeNode(shape, parent, this), mPyramidShape(shape), mGeode(nullptr)
+{
   mNode = this;
   extractData(true);
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
 }
 
 //==============================================================================
-void PyramidShapeNode::refresh() {
+void PyramidShapeNode::refresh()
+{
   mUtilized = true;
 
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
@@ -111,7 +113,8 @@ void PyramidShapeNode::refresh() {
 }
 
 //==============================================================================
-void PyramidShapeNode::extractData(bool /*firstTime*/) {
+void PyramidShapeNode::extractData(bool /*firstTime*/)
+{
   if (nullptr == mGeode) {
     mGeode = new PyramidShapeGeode(mPyramidShape, mParentShapeFrameNode);
     addChild(mGeode);
@@ -122,7 +125,8 @@ void PyramidShapeNode::extractData(bool /*firstTime*/) {
 }
 
 //==============================================================================
-PyramidShapeNode::~PyramidShapeNode() {
+PyramidShapeNode::~PyramidShapeNode()
+{
   // Do nothing
 }
 
@@ -132,7 +136,8 @@ PyramidShapeGeode::PyramidShapeGeode(
   : ShapeNode(shape, parent, this),
     mPyramidShape(shape),
     mDrawable(nullptr),
-    mLineWidth(new ::osg::LineWidth) {
+    mLineWidth(new ::osg::LineWidth)
+{
   getOrCreateStateSet()->setMode(GL_BLEND, ::osg::StateAttribute::ON);
   getOrCreateStateSet()->setRenderingHint(::osg::StateSet::TRANSPARENT_BIN);
   getOrCreateStateSet()->setAttributeAndModes(
@@ -142,14 +147,16 @@ PyramidShapeGeode::PyramidShapeGeode(
 }
 
 //==============================================================================
-void PyramidShapeGeode::refresh() {
+void PyramidShapeGeode::refresh()
+{
   mUtilized = true;
 
   extractData(false);
 }
 
 //==============================================================================
-void PyramidShapeGeode::extractData(bool /*firstTime*/) {
+void PyramidShapeGeode::extractData(bool /*firstTime*/)
+{
   if (nullptr == mDrawable) {
     mDrawable = new PyramidShapeDrawable(mPyramidShape.get(), mVisualAspect);
     addDrawable(mDrawable);
@@ -160,7 +167,8 @@ void PyramidShapeGeode::extractData(bool /*firstTime*/) {
 }
 
 //==============================================================================
-PyramidShapeGeode::~PyramidShapeGeode() {
+PyramidShapeGeode::~PyramidShapeGeode()
+{
   // Do nothing
 }
 
@@ -172,7 +180,8 @@ PyramidShapeDrawable::PyramidShapeDrawable(
     mVisualAspect(visualAspect),
     mVertices(new ::osg::Vec3Array),
     mNormals(new ::osg::Vec3Array),
-    mColors(new ::osg::Vec4Array) {
+    mColors(new ::osg::Vec4Array)
+{
   for (auto& e : mElements) {
     e = new ::osg::DrawElementsUInt(::osg::PrimitiveSet::TRIANGLES);
     addPrimitiveSet(e);
@@ -181,7 +190,8 @@ PyramidShapeDrawable::PyramidShapeDrawable(
 }
 
 //==============================================================================
-void PyramidShapeDrawable::refresh(bool firstTime) {
+void PyramidShapeDrawable::refresh(bool firstTime)
+{
   if (mPyramidShape->getDataVariance() == dart::dynamics::Shape::STATIC)
     setDataVariance(::osg::Object::STATIC);
   else
@@ -276,7 +286,8 @@ void PyramidShapeDrawable::refresh(bool firstTime) {
 }
 
 //==============================================================================
-PyramidShapeDrawable::~PyramidShapeDrawable() {
+PyramidShapeDrawable::~PyramidShapeDrawable()
+{
   // Do nothing
 }
 

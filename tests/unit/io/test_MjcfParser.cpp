@@ -45,7 +45,8 @@
 using namespace dart;
 
 //==============================================================================
-common::ResourceRetrieverPtr createRetriever() {
+common::ResourceRetrieverPtr createRetriever()
+{
   auto newRetriever = std::make_shared<io::CompositeResourceRetriever>();
   newRetriever->addSchemaRetriever(
       "file", std::make_shared<common::LocalResourceRetriever>());
@@ -54,7 +55,8 @@ common::ResourceRetrieverPtr createRetriever() {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, ParseDetailMujocoAnt) {
+TEST(MjcfParserTest, ParseDetailMujocoAnt)
+{
   const auto uri = "dart://sample/mjcf/openai/ant.xml";
 
   auto mujoco = io::MjcfParser::detail::MujocoModel();
@@ -90,7 +92,8 @@ TEST(MjcfParserTest, ParseDetailMujocoAnt) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, DefaultSettings) {
+TEST(MjcfParserTest, DefaultSettings)
+{
   // For the details, see http://mujoco.org/book/modeling.html#CDefault
 
   const auto uri = "dart://sample/mjcf/test/default.xml";
@@ -131,7 +134,8 @@ TEST(MjcfParserTest, DefaultSettings) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, IncludeDefaultSettings) {
+TEST(MjcfParserTest, IncludeDefaultSettings)
+{
   // For the details, see http://mujoco.org/book/modeling.html#CDefault
 
   const auto uri = "dart://sample/mjcf/test/include_main.xml";
@@ -172,7 +176,8 @@ TEST(MjcfParserTest, IncludeDefaultSettings) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, Ant) {
+TEST(MjcfParserTest, Ant)
+{
   const auto uri = "dart://sample/mjcf/openai/ant.xml";
   const auto options = io::MjcfParser::Options();
   auto world = io::MjcfParser::readWorld(uri);
@@ -198,7 +203,8 @@ TEST(MjcfParserTest, Ant) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, InvertedPendulum) {
+TEST(MjcfParserTest, InvertedPendulum)
+{
   const auto uri = "dart://sample/mjcf/openai/inverted_pendulum.xml";
   const auto options = io::MjcfParser::Options();
   auto world = io::MjcfParser::readWorld(uri);
@@ -220,7 +226,8 @@ TEST(MjcfParserTest, InvertedPendulum) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, InvertedDoublePendulum) {
+TEST(MjcfParserTest, InvertedDoublePendulum)
+{
   const auto uri = "dart://sample/mjcf/openai/inverted_double_pendulum.xml";
   const auto options = io::MjcfParser::Options();
   auto world = io::MjcfParser::readWorld(uri);
@@ -246,7 +253,8 @@ TEST(MjcfParserTest, InvertedDoublePendulum) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, Reacher) {
+TEST(MjcfParserTest, Reacher)
+{
   const auto uri = "dart://sample/mjcf/openai/reacher.xml";
   const auto options = io::MjcfParser::Options();
   auto world = io::MjcfParser::readWorld(uri);
@@ -275,7 +283,8 @@ TEST(MjcfParserTest, Reacher) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, Striker) {
+TEST(MjcfParserTest, Striker)
+{
   const auto uri = "dart://sample/mjcf/openai/striker.xml";
   const auto options = io::MjcfParser::Options();
   auto world = io::MjcfParser::readWorld(uri);
@@ -302,7 +311,8 @@ TEST(MjcfParserTest, Striker) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, Thrower) {
+TEST(MjcfParserTest, Thrower)
+{
   const auto uri = "dart://sample/mjcf/openai/thrower.xml";
   const auto options = io::MjcfParser::Options();
   auto world = io::MjcfParser::readWorld(uri);
@@ -329,7 +339,8 @@ TEST(MjcfParserTest, Thrower) {
 }
 
 //==============================================================================
-TEST(MjcfParserTest, RoboticsFetch) {
+TEST(MjcfParserTest, RoboticsFetch)
+{
   const common::Uri uri
       = "dart://sample/mjcf/openai/robotics/fetch/pick_and_place.xml";
   auto world = io::MjcfParser::readWorld(uri);

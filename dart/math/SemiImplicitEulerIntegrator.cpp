@@ -36,29 +36,34 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-SemiImplicitEulerIntegrator::SemiImplicitEulerIntegrator() : Integrator() {
+SemiImplicitEulerIntegrator::SemiImplicitEulerIntegrator() : Integrator()
+{
 }
 
 //==============================================================================
-SemiImplicitEulerIntegrator::~SemiImplicitEulerIntegrator() {
+SemiImplicitEulerIntegrator::~SemiImplicitEulerIntegrator()
+{
 }
 
 //==============================================================================
 void SemiImplicitEulerIntegrator::integrate(
-    IntegrableSystem* _system, double _dt) {
+    IntegrableSystem* _system, double _dt)
+{
   _system->integrateGenVels(_system->evalGenAccs(), _dt);
   _system->integrateConfigs(_system->getGenVels(), _dt);
 }
 
 //==============================================================================
 void SemiImplicitEulerIntegrator::integratePos(
-    IntegrableSystem* _system, double _dt) {
+    IntegrableSystem* _system, double _dt)
+{
   _system->integrateConfigs(_system->getGenVels(), _dt);
 }
 
 //==============================================================================
 void SemiImplicitEulerIntegrator::integrateVel(
-    IntegrableSystem* _system, double _dt) {
+    IntegrableSystem* _system, double _dt)
+{
   _system->integrateGenVels(_system->evalGenAccs(), _dt);
 }
 

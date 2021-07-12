@@ -59,7 +59,8 @@ namespace math {
 
 //==============================================================================
 int Lemke(
-    const Eigen::MatrixXd& _M, const Eigen::VectorXd& _q, Eigen::VectorXd* _z) {
+    const Eigen::MatrixXd& _M, const Eigen::VectorXd& _q, Eigen::VectorXd* _z)
+{
   int n = _q.size();
 
   const double zer_tol = 1e-5;
@@ -304,7 +305,8 @@ int Lemke(
 bool validate(
     const Eigen::MatrixXd& _M,
     const Eigen::VectorXd& _z,
-    const Eigen::VectorXd& _q) {
+    const Eigen::VectorXd& _q)
+{
   const double threshold = 1e-4;
   int n = _z.size();
 

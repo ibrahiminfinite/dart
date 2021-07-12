@@ -47,17 +47,20 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-DantzigLCPSolver::DantzigLCPSolver(double _timestep) : LCPSolver(_timestep) {
+DantzigLCPSolver::DantzigLCPSolver(double _timestep) : LCPSolver(_timestep)
+{
   // Do nothing
 }
 
 //==============================================================================
-DantzigLCPSolver::~DantzigLCPSolver() {
+DantzigLCPSolver::~DantzigLCPSolver()
+{
   // Do nothing
 }
 
 //==============================================================================
-void DantzigLCPSolver::solve(ConstrainedGroup* _group) {
+void DantzigLCPSolver::solve(ConstrainedGroup* _group)
+{
   // Build LCP terms by aggregating them from constraints
   std::size_t numConstraints = _group->getNumConstraints();
   std::size_t n = _group->getTotalDimension();
@@ -180,7 +183,8 @@ void DantzigLCPSolver::solve(ConstrainedGroup* _group) {
 
 //==============================================================================
 #ifndef NDEBUG
-bool DantzigLCPSolver::isSymmetric(std::size_t _n, double* _A) {
+bool DantzigLCPSolver::isSymmetric(std::size_t _n, double* _A)
+{
   std::size_t nSkip = dPAD(_n);
   for (std::size_t i = 0; i < _n; ++i) {
     for (std::size_t j = 0; j < _n; ++j) {
@@ -207,7 +211,8 @@ bool DantzigLCPSolver::isSymmetric(std::size_t _n, double* _A) {
 
 //==============================================================================
 bool DantzigLCPSolver::isSymmetric(
-    std::size_t _n, double* _A, std::size_t _begin, std::size_t _end) {
+    std::size_t _n, double* _A, std::size_t _begin, std::size_t _end)
+{
   std::size_t nSkip = dPAD(_n);
   for (std::size_t i = _begin; i <= _end; ++i) {
     for (std::size_t j = _begin; j <= _end; ++j) {
@@ -241,7 +246,8 @@ void DantzigLCPSolver::print(
     double* /*hi*/,
     double* b,
     double* w,
-    int* findex) {
+    int* findex)
+{
   std::size_t nSkip = dPAD(_n);
   std::cout << "A: " << std::endl;
   for (std::size_t i = 0; i < _n; ++i) {

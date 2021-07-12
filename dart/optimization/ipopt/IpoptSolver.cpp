@@ -43,13 +43,15 @@ namespace optimization {
 
 //==============================================================================
 IpoptSolver::IpoptSolver(const Solver::Properties& _properties)
-  : Solver(_properties) {
+  : Solver(_properties)
+{
   mNlp = new DartTNLP(this);
   mIpoptApp = IpoptApplicationFactory();
 }
 
 //==============================================================================
-IpoptSolver::IpoptSolver(std::shared_ptr<Problem> _problem) : Solver(_problem) {
+IpoptSolver::IpoptSolver(std::shared_ptr<Problem> _problem) : Solver(_problem)
+{
   assert(_problem);
 
   // Create a new instance of nlp (use a SmartPtr, not raw)
@@ -65,12 +67,14 @@ IpoptSolver::IpoptSolver(std::shared_ptr<Problem> _problem) : Solver(_problem) {
 }
 
 //==============================================================================
-IpoptSolver::~IpoptSolver() {
+IpoptSolver::~IpoptSolver()
+{
   // Do nothing
 }
 
 //==============================================================================
-bool IpoptSolver::solve() {
+bool IpoptSolver::solve()
+{
   // Change some options
   // Note: The following choices are only examples, they might not be
   //       suitable for your optimization problem.
@@ -103,12 +107,14 @@ bool IpoptSolver::solve() {
 }
 
 //==============================================================================
-std::string IpoptSolver::getType() const {
+std::string IpoptSolver::getType() const
+{
   return "IpoptSolver";
 }
 
 //==============================================================================
-std::shared_ptr<Solver> IpoptSolver::clone() const {
+std::shared_ptr<Solver> IpoptSolver::clone() const
+{
   std::shared_ptr<IpoptSolver> newSolver(
       new IpoptSolver(getSolverProperties(), mIpoptApp->clone()));
 
@@ -116,13 +122,15 @@ std::shared_ptr<Solver> IpoptSolver::clone() const {
 }
 
 //==============================================================================
-const Ipopt::SmartPtr<Ipopt::IpoptApplication>& IpoptSolver::getApplication() {
+const Ipopt::SmartPtr<Ipopt::IpoptApplication>& IpoptSolver::getApplication()
+{
   return mIpoptApp;
 }
 
 //==============================================================================
 Ipopt::SmartPtr<const Ipopt::IpoptApplication> IpoptSolver::getApplication()
-    const {
+    const
+{
   return mIpoptApp;
 }
 
@@ -130,17 +138,20 @@ Ipopt::SmartPtr<const Ipopt::IpoptApplication> IpoptSolver::getApplication()
 IpoptSolver::IpoptSolver(
     const Properties& _properties,
     const Ipopt::SmartPtr<Ipopt::IpoptApplication>& _app)
-  : Solver(_properties) {
+  : Solver(_properties)
+{
   mIpoptApp = _app;
 }
 
 //==============================================================================
-DartTNLP::DartTNLP(IpoptSolver* _solver) : Ipopt::TNLP(), mSolver(_solver) {
+DartTNLP::DartTNLP(IpoptSolver* _solver) : Ipopt::TNLP(), mSolver(_solver)
+{
   assert(_solver && "Null pointer is not allowed.");
 }
 
 //==============================================================================
-DartTNLP::~DartTNLP() {
+DartTNLP::~DartTNLP()
+{
   // Do nothing
 }
 
@@ -150,7 +161,8 @@ bool DartTNLP::get_nlp_info(
     Ipopt::Index& m,
     Ipopt::Index& nnz_jac_g,
     Ipopt::Index& nnz_h_lag,
-    Ipopt::TNLP::IndexStyleEnum& index_style) {
+    Ipopt::TNLP::IndexStyleEnum& index_style)
+{
   const std::shared_ptr<Problem>& problem = mSolver->getProblem();
 
   // Set the number of decision variables
@@ -178,7 +190,8 @@ bool DartTNLP::get_bounds_info(
     Ipopt::Number* x_u,
     Ipopt::Index m,
     Ipopt::Number* g_l,
-    Ipopt::Number* g_u) {
+    Ipopt::Number* g_u)
+{
   const std::shared_ptr<Problem>& problem = mSolver->getProblem();
 
   // here, the n and m we gave IPOPT in get_nlp_info are passed back to us.
@@ -224,7 +237,8 @@ bool DartTNLP::get_starting_point(
     Ipopt::Number* /*z_U*/,
     Ipopt::Index /*m*/,
     bool init_lambda,
-    Ipopt::Number* /*lambda*/) {
+    Ipopt::Number* /*lambda*/)
+{
   const std::shared_ptr<Problem>& problem = mSolver->getProblem();
 
   // If init_x is true, this method must provide an initial value for x.
@@ -257,7 +271,8 @@ bool DartTNLP::eval_f(
     Ipopt::Index _n,
     const Ipopt::Number* _x,
     bool /*_new_x*/,
-    Ipopt::Number& _obj_value) {
+    Ipopt::Number& _obj_value)
+{
   const std::shared_ptr<Problem>& problem = mSolver->getProblem();
 
   Eigen::Map<const Eigen::VectorXd> x(_x, _n);
@@ -273,7 +288,8 @@ bool DartTNLP::eval_grad_f(
     Ipopt::Index _n,
     const Ipopt::Number* _x,
     bool /*_new_x*/,
-    Ipopt::Number* _grad_f) {
+    Ipopt::Number* _grad_f)
+{
   const std::shared_ptr<Problem>& problem = mSolver->getProblem();
 
   Eigen::Map<const Eigen::VectorXd> x(_x, _n);
@@ -289,7 +305,8 @@ bool DartTNLP::eval_g(
     const Ipopt::Number* _x,
     bool _new_x,
     Ipopt::Index _m,
-    Ipopt::Number* _g) {
+    Ipopt::Number* _g)
+{
   const std::shared_ptr<Problem>& problem = mSolver->getProblem();
 
   assert(
@@ -330,7 +347,8 @@ bool DartTNLP::eval_jac_g(
     Ipopt::Index /*_nele_jac*/,
     Ipopt::Index* _iRow,
     Ipopt::Index* _jCol,
-    Ipopt::Number* _values) {
+    Ipopt::Number* _values)
+{
   const std::shared_ptr<Problem>& problem = mSolver->getProblem();
 
   // If the iRow and jCol arguments are not nullptr, then IPOPT wants you to
@@ -386,7 +404,8 @@ bool DartTNLP::eval_h(
     Ipopt::Index _nele_hess,
     Ipopt::Index* _iRow,
     Ipopt::Index* _jCol,
-    Ipopt::Number* _values) {
+    Ipopt::Number* _values)
+{
   // TODO(JS): Not implemented yet.
   dterr << "[DartTNLP::eval_h] Not implemented yet.\n";
 
@@ -416,7 +435,8 @@ void DartTNLP::finalize_solution(
     const Ipopt::Number* /*_lambda*/,
     Ipopt::Number _obj_value,
     const Ipopt::IpoptData* /*_ip_data*/,
-    Ipopt::IpoptCalculatedQuantities* /*_ip_cq*/) {
+    Ipopt::IpoptCalculatedQuantities* /*_ip_cq*/)
+{
   const std::shared_ptr<Problem>& problem = mSolver->getProblem();
 
   // Store optimal and optimum values

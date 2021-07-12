@@ -34,7 +34,8 @@
 
 #include "MyWindow.hpp"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
   // create and initialize the world
   dart::simulation::WorldPtr world(new dart::simulation::World);
   assert(world != nullptr);

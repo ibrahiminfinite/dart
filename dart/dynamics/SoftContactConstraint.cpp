@@ -92,7 +92,8 @@ SoftContactConstraint::SoftContactConstraint(
     mIsFrictionOn(true),
     mAppliedImpulseIndex(-1),
     mIsBounceOn(false),
-    mActive(false) {
+    mActive(false)
+{
   // TODO(JS): Assumed single contact
   mContacts.push_back(&contact);
 
@@ -300,22 +301,26 @@ SoftContactConstraint::SoftContactConstraint(
 }
 
 //==============================================================================
-SoftContactConstraint::~SoftContactConstraint() {
+SoftContactConstraint::~SoftContactConstraint()
+{
 }
 
 //==============================================================================
-const std::string& SoftContactConstraint::getType() const {
+const std::string& SoftContactConstraint::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& SoftContactConstraint::getStaticType() {
+const std::string& SoftContactConstraint::getStaticType()
+{
   static const std::string name = "SoftContactConstraint";
   return name;
 }
 
 //==============================================================================
-void SoftContactConstraint::setErrorAllowance(double _allowance) {
+void SoftContactConstraint::setErrorAllowance(double _allowance)
+{
   // Clamp error reduction parameter if it is out of the range
   if (_allowance < 0.0) {
     dtwarn << "Error reduction parameter[" << _allowance
@@ -328,12 +333,14 @@ void SoftContactConstraint::setErrorAllowance(double _allowance) {
 }
 
 //==============================================================================
-double SoftContactConstraint::getErrorAllowance() {
+double SoftContactConstraint::getErrorAllowance()
+{
   return mErrorAllowance;
 }
 
 //==============================================================================
-void SoftContactConstraint::setErrorReductionParameter(double _erp) {
+void SoftContactConstraint::setErrorReductionParameter(double _erp)
+{
   // Clamp error reduction parameter if it is out of the range [0, 1]
   if (_erp < 0.0) {
     dtwarn << "Error reduction parameter[" << _erp << "] is lower than 0.0. "
@@ -350,12 +357,14 @@ void SoftContactConstraint::setErrorReductionParameter(double _erp) {
 }
 
 //==============================================================================
-double SoftContactConstraint::getErrorReductionParameter() {
+double SoftContactConstraint::getErrorReductionParameter()
+{
   return mErrorReductionParameter;
 }
 
 //==============================================================================
-void SoftContactConstraint::setMaxErrorReductionVelocity(double _erv) {
+void SoftContactConstraint::setMaxErrorReductionVelocity(double _erv)
+{
   // Clamp maximum error reduction velocity if it is out of the range
   if (_erv < 0.0) {
     dtwarn << "Maximum error reduction velocity[" << _erv
@@ -368,12 +377,14 @@ void SoftContactConstraint::setMaxErrorReductionVelocity(double _erv) {
 }
 
 //==============================================================================
-double SoftContactConstraint::getMaxErrorReductionVelocity() {
+double SoftContactConstraint::getMaxErrorReductionVelocity()
+{
   return mMaxErrorReductionVelocity;
 }
 
 //==============================================================================
-void SoftContactConstraint::setConstraintForceMixing(double _cfm) {
+void SoftContactConstraint::setConstraintForceMixing(double _cfm)
+{
   // Clamp constraint force mixing parameter if it is out of the range
   if (_cfm < 1e-9) {
     dtwarn << "Constraint force mixing parameter[" << _cfm
@@ -386,22 +397,26 @@ void SoftContactConstraint::setConstraintForceMixing(double _cfm) {
 }
 
 //==============================================================================
-double SoftContactConstraint::getConstraintForceMixing() {
+double SoftContactConstraint::getConstraintForceMixing()
+{
   return mConstraintForceMixing;
 }
 
 //==============================================================================
-void SoftContactConstraint::setFrictionDirection(const Eigen::Vector3d& _dir) {
+void SoftContactConstraint::setFrictionDirection(const Eigen::Vector3d& _dir)
+{
   mFirstFrictionalDirection = _dir.normalized();
 }
 
 //==============================================================================
-const Eigen::Vector3d& SoftContactConstraint::getFrictionDirection1() const {
+const Eigen::Vector3d& SoftContactConstraint::getFrictionDirection1() const
+{
   return mFirstFrictionalDirection;
 }
 
 //==============================================================================
-void SoftContactConstraint::update() {
+void SoftContactConstraint::update()
+{
   assert(mSoftBodyNode1 || mSoftBodyNode2);
 
   // One of body node is soft body node and soft body node is always active
@@ -409,7 +424,8 @@ void SoftContactConstraint::update() {
 }
 
 //==============================================================================
-void SoftContactConstraint::getInformation(ConstraintInfo* _info) {
+void SoftContactConstraint::getInformation(ConstraintInfo* _info)
+{
   // Fill w, where the LCP form is Ax = b + w (x >= 0, w >= 0, x^T w = 0)
   getRelVelocity(_info->b);
 
@@ -550,7 +566,8 @@ void SoftContactConstraint::getInformation(ConstraintInfo* _info) {
 }
 
 //==============================================================================
-void SoftContactConstraint::applyUnitImpulse(std::size_t _idx) {
+void SoftContactConstraint::applyUnitImpulse(std::size_t _idx)
+{
   assert(_idx < mDim && "Invalid Index.");
   assert(isActive());
   assert(mBodyNode1->isReactive() || mBodyNode2->isReactive());
@@ -616,7 +633,8 @@ void SoftContactConstraint::applyUnitImpulse(std::size_t _idx) {
 }
 
 //==============================================================================
-void SoftContactConstraint::getVelocityChange(double* _vel, bool _withCfm) {
+void SoftContactConstraint::getVelocityChange(double* _vel, bool _withCfm)
+{
   assert(_vel != nullptr && "Null pointer is not allowed.");
 
   for (std::size_t i = 0; i < mDim; ++i) {
@@ -652,7 +670,8 @@ void SoftContactConstraint::getVelocityChange(double* _vel, bool _withCfm) {
 }
 
 //==============================================================================
-void SoftContactConstraint::excite() {
+void SoftContactConstraint::excite()
+{
   if (mBodyNode1->isReactive())
     mBodyNode1->getSkeleton()->setImpulseApplied(true);
 
@@ -661,7 +680,8 @@ void SoftContactConstraint::excite() {
 }
 
 //==============================================================================
-void SoftContactConstraint::unexcite() {
+void SoftContactConstraint::unexcite()
+{
   if (mBodyNode1->isReactive())
     mBodyNode1->getSkeleton()->setImpulseApplied(false);
 
@@ -670,7 +690,8 @@ void SoftContactConstraint::unexcite() {
 }
 
 //==============================================================================
-void SoftContactConstraint::applyImpulse(double* _lambda) {
+void SoftContactConstraint::applyImpulse(double* _lambda)
+{
   // TODO(JS): Need to optimize code
 
   //----------------------------------------------------------------------------
@@ -797,7 +818,8 @@ void SoftContactConstraint::applyImpulse(double* _lambda) {
 }
 
 //==============================================================================
-void SoftContactConstraint::getRelVelocity(double* _vel) {
+void SoftContactConstraint::getRelVelocity(double* _vel)
+{
   assert(_vel != nullptr && "Null pointer is not allowed.");
 
   for (std::size_t i = 0; i < mDim; ++i) {
@@ -818,13 +840,15 @@ void SoftContactConstraint::getRelVelocity(double* _vel) {
 }
 
 //==============================================================================
-bool SoftContactConstraint::isActive() const {
+bool SoftContactConstraint::isActive() const
+{
   return mActive;
 }
 
 //==============================================================================
 double SoftContactConstraint::computeFrictionCoefficient(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -842,7 +866,8 @@ double SoftContactConstraint::computeFrictionCoefficient(
 
 //==============================================================================
 double SoftContactConstraint::computeRestitutionCoefficient(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -859,7 +884,8 @@ double SoftContactConstraint::computeRestitutionCoefficient(
 }
 
 //==============================================================================
-dynamics::SkeletonPtr SoftContactConstraint::getRootSkeleton() const {
+dynamics::SkeletonPtr SoftContactConstraint::getRootSkeleton() const
+{
   if (mSoftBodyNode1 || mBodyNode1->isReactive())
     return mBodyNode1->getSkeleton()->mUnionRootSkeleton.lock();
   else
@@ -867,7 +893,8 @@ dynamics::SkeletonPtr SoftContactConstraint::getRootSkeleton() const {
 }
 
 //==============================================================================
-void SoftContactConstraint::uniteSkeletons() {
+void SoftContactConstraint::uniteSkeletons()
+{
   if (!mBodyNode1->isReactive() || !mBodyNode2->isReactive())
     return;
 
@@ -894,7 +921,8 @@ void SoftContactConstraint::uniteSkeletons() {
 }
 
 //==============================================================================
-void SoftContactConstraint::updateFirstFrictionalDirection() {
+void SoftContactConstraint::updateFirstFrictionalDirection()
+{
   //  std::cout <<
   //  "SoftContactConstraintTEST::_updateFirstFrictionalDirection(): "
   //            << "Not finished implementation."
@@ -908,7 +936,8 @@ void SoftContactConstraint::updateFirstFrictionalDirection() {
 
 //==============================================================================
 Eigen::MatrixXd SoftContactConstraint::getTangentBasisMatrixODE(
-    const Eigen::Vector3d& _n) {
+    const Eigen::Vector3d& _n)
+{
   using namespace math::suffixes;
 
   // TODO(JS): Use mNumFrictionConeBases
@@ -941,7 +970,8 @@ Eigen::MatrixXd SoftContactConstraint::getTangentBasisMatrixODE(
 //==============================================================================
 template <typename PointMassT, typename SoftBodyNodeT>
 static PointMassT selectCollidingPointMassT(
-    SoftBodyNodeT _softBodyNode, const Eigen::Vector3d& _point, int _faceId) {
+    SoftBodyNodeT _softBodyNode, const Eigen::Vector3d& _point, int _faceId)
+{
   PointMassT pointMass = nullptr;
 
   const Eigen::Vector3i& face = _softBodyNode->getFace(_faceId);
@@ -977,7 +1007,8 @@ static PointMassT selectCollidingPointMassT(
 const dynamics::PointMass* SoftContactConstraint::selectCollidingPointMass(
     const dynamics::SoftBodyNode* _softBodyNode,
     const Eigen::Vector3d& _point,
-    int _faceId) const {
+    int _faceId) const
+{
   return selectCollidingPointMassT<
       const dynamics::PointMass*,
       const dynamics::SoftBodyNode*>(_softBodyNode, _point, _faceId);
@@ -987,7 +1018,8 @@ const dynamics::PointMass* SoftContactConstraint::selectCollidingPointMass(
 dynamics::PointMass* SoftContactConstraint::selectCollidingPointMass(
     dynamics::SoftBodyNode* _softBodyNode,
     const Eigen::Vector3d& _point,
-    int _faceId) const {
+    int _faceId) const
+{
   return selectCollidingPointMassT<
       dynamics::PointMass*,
       dynamics::SoftBodyNode*>(_softBodyNode, _point, _faceId);

@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void BulletCollisionDetector(py::module& m) {
+void BulletCollisionDetector(py::module& m)
+{
   ::py::class_<
       dart::dynamics::BulletCollisionDetector,
       std::shared_ptr<dart::dynamics::BulletCollisionDetector>,

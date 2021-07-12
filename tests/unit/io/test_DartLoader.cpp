@@ -44,7 +44,8 @@ using dart::common::Uri;
 using dart::io::DartLoader;
 
 //==============================================================================
-TEST(DartLoader, parseSkeleton_NonExistantPathReturnsNull) {
+TEST(DartLoader, parseSkeleton_NonExistantPathReturnsNull)
+{
   DartLoader loader;
   EXPECT_EQ(
       nullptr,
@@ -52,14 +53,16 @@ TEST(DartLoader, parseSkeleton_NonExistantPathReturnsNull) {
 }
 
 //==============================================================================
-TEST(DartLoader, parseSkeleton_InvalidUrdfReturnsNull) {
+TEST(DartLoader, parseSkeleton_InvalidUrdfReturnsNull)
+{
   DartLoader loader;
   EXPECT_EQ(
       nullptr, loader.parseSkeleton("dart://sample/urdf/test/invalid.urdf)"));
 }
 
 //==============================================================================
-TEST(DartLoader, parseSkeleton_MissingMeshReturnsNull) {
+TEST(DartLoader, parseSkeleton_MissingMeshReturnsNull)
+{
   DartLoader loader;
   EXPECT_EQ(
       nullptr,
@@ -67,7 +70,8 @@ TEST(DartLoader, parseSkeleton_MissingMeshReturnsNull) {
 }
 
 //==============================================================================
-TEST(DartLoader, parseSkeleton_InvalidMeshReturnsNull) {
+TEST(DartLoader, parseSkeleton_InvalidMeshReturnsNull)
+{
   DartLoader loader;
   EXPECT_EQ(
       nullptr,
@@ -75,7 +79,8 @@ TEST(DartLoader, parseSkeleton_InvalidMeshReturnsNull) {
 }
 
 //==============================================================================
-TEST(DartLoader, parseSkeleton_MissingPackageReturnsNull) {
+TEST(DartLoader, parseSkeleton_MissingPackageReturnsNull)
+{
   DartLoader loader;
   EXPECT_EQ(
       nullptr,
@@ -83,7 +88,8 @@ TEST(DartLoader, parseSkeleton_MissingPackageReturnsNull) {
 }
 
 //==============================================================================
-TEST(DartLoader, parseSkeleton_LoadsPrimitiveGeometry) {
+TEST(DartLoader, parseSkeleton_LoadsPrimitiveGeometry)
+{
   DartLoader loader;
   EXPECT_TRUE(
       nullptr
@@ -92,14 +98,16 @@ TEST(DartLoader, parseSkeleton_LoadsPrimitiveGeometry) {
 }
 
 //==============================================================================
-TEST(DartLoader, parseWorld) {
+TEST(DartLoader, parseWorld)
+{
   DartLoader loader;
   EXPECT_TRUE(
       nullptr != loader.parseWorld("dart://sample/urdf/test/testWorld.urdf"));
 }
 
 //==============================================================================
-TEST(DartLoader, parseJointProperties) {
+TEST(DartLoader, parseJointProperties)
+{
   // clang-format off
   std::string urdfStr = R"(
     <robot name="testRobot">
@@ -174,15 +182,14 @@ TEST(DartLoader, parseJointProperties) {
   EXPECT_NEAR(joint1->getCoulombFriction(0), 2.3, 1e-12);
 
   auto joint2 = robot->getJoint(2);
-  EXPECT_DOUBLE_EQ(
-      joint2->getPositionLowerLimit(0), -dart::math::constantsd::inf());
-  EXPECT_DOUBLE_EQ(
-      joint2->getPositionUpperLimit(0), dart::math::constantsd::inf());
+  EXPECT_DOUBLE_EQ(joint2->getPositionLowerLimit(0), -dart::math::inf());
+  EXPECT_DOUBLE_EQ(joint2->getPositionUpperLimit(0), dart::math::inf());
   EXPECT_TRUE(joint2->isCyclic(0));
 }
 
 //==============================================================================
-TEST(DartLoader, parseUrdfWithoutWorldLink) {
+TEST(DartLoader, parseUrdfWithoutWorldLink)
+{
   // clang-format off
   const std::string urdfStr = R"(
     <robot name="testRobot">
@@ -223,7 +230,8 @@ TEST(DartLoader, parseUrdfWithoutWorldLink) {
 }
 
 //==============================================================================
-TEST(DartLoader, mimicJoint) {
+TEST(DartLoader, mimicJoint)
+{
   // clang-format off
   std::string urdfStr = R"(
     <robot name="testRobot">
@@ -299,10 +307,8 @@ TEST(DartLoader, mimicJoint) {
   EXPECT_NEAR(joint1->getCoulombFriction(0), 2.3, 1e-12);
 
   auto joint2 = robot->getJoint(2);
-  EXPECT_DOUBLE_EQ(
-      joint2->getPositionLowerLimit(0), -dart::math::constantsd::inf());
-  EXPECT_DOUBLE_EQ(
-      joint2->getPositionUpperLimit(0), dart::math::constantsd::inf());
+  EXPECT_DOUBLE_EQ(joint2->getPositionLowerLimit(0), -dart::math::inf());
+  EXPECT_DOUBLE_EQ(joint2->getPositionUpperLimit(0), dart::math::inf());
   EXPECT_TRUE(joint2->isCyclic(0));
 
   EXPECT_TRUE(joint2->getActuatorType() == dart::dynamics::Joint::MIMIC);
@@ -312,7 +318,8 @@ TEST(DartLoader, mimicJoint) {
 }
 
 //==============================================================================
-TEST(DartLoader, badMimicJoint) {
+TEST(DartLoader, badMimicJoint)
+{
   // clang-format off
   std::string urdfStr = R"(
     <robot name="testRobot">
@@ -388,10 +395,8 @@ TEST(DartLoader, badMimicJoint) {
   EXPECT_NEAR(joint1->getCoulombFriction(0), 2.3, 1e-12);
 
   auto joint2 = robot->getJoint(2);
-  EXPECT_DOUBLE_EQ(
-      joint2->getPositionLowerLimit(0), -dart::math::constantsd::inf());
-  EXPECT_DOUBLE_EQ(
-      joint2->getPositionUpperLimit(0), dart::math::constantsd::inf());
+  EXPECT_DOUBLE_EQ(joint2->getPositionLowerLimit(0), -dart::math::inf());
+  EXPECT_DOUBLE_EQ(joint2->getPositionUpperLimit(0), dart::math::inf());
   EXPECT_TRUE(joint2->isCyclic(0));
 
   EXPECT_TRUE(joint2->getActuatorType() != dart::dynamics::Joint::MIMIC);
@@ -399,7 +404,8 @@ TEST(DartLoader, badMimicJoint) {
 }
 
 //==============================================================================
-TEST(DartLoader, WorldShouldBeTreatedAsKeyword) {
+TEST(DartLoader, WorldShouldBeTreatedAsKeyword)
+{
   // clang-format off
   const std::string urdfStr = R"(
     <robot name="testRobot">
@@ -427,7 +433,8 @@ TEST(DartLoader, WorldShouldBeTreatedAsKeyword) {
 }
 
 //==============================================================================
-TEST(DartLoader, SingleLinkWithoutJoint) {
+TEST(DartLoader, SingleLinkWithoutJoint)
+{
   // clang-format off
   const std::string urdfStr = R"(
     <robot name="testRobot">
@@ -448,7 +455,8 @@ TEST(DartLoader, SingleLinkWithoutJoint) {
 }
 
 //==============================================================================
-TEST(DartLoader, MultiTreeRobot) {
+TEST(DartLoader, MultiTreeRobot)
+{
   // clang-format off
   const std::string urdfStr = R"(
     <robot name="testRobot">
@@ -486,7 +494,8 @@ TEST(DartLoader, MultiTreeRobot) {
 }
 
 //==============================================================================
-TEST(DartLoader, KR5MeshColor) {
+TEST(DartLoader, KR5MeshColor)
+{
   DartLoader loader;
   auto robot
       = loader.parseSkeleton("dart://sample/urdf/KR5/KR5 sixx R650.urdf");
@@ -507,7 +516,8 @@ TEST(DartLoader, KR5MeshColor) {
 }
 
 //==============================================================================
-TEST(DartLoader, parseVisualCollisionName) {
+TEST(DartLoader, parseVisualCollisionName)
+{
   // clang-format off
   std::string urdfStr = R"(
     <robot name="testRobot">

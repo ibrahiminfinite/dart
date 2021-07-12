@@ -43,29 +43,34 @@ namespace dynamics {
 
 //==============================================================================
 CapsuleShape::CapsuleShape(double radius, double height)
-  : Shape(CAPSULE), mRadius(radius), mHeight(height) {
+  : Shape(CAPSULE), mRadius(radius), mHeight(height)
+{
   assert(0.0 < radius);
   assert(0.0 < height);
 }
 
 //==============================================================================
-const std::string& CapsuleShape::getType() const {
+const std::string& CapsuleShape::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& CapsuleShape::getStaticType() {
+const std::string& CapsuleShape::getStaticType()
+{
   static const std::string type("CapsuleShape");
   return type;
 }
 
 //==============================================================================
-double CapsuleShape::getRadius() const {
+double CapsuleShape::getRadius() const
+{
   return mRadius;
 }
 
 //==============================================================================
-void CapsuleShape::setRadius(double radius) {
+void CapsuleShape::setRadius(double radius)
+{
   assert(0.0 < radius);
   mRadius = radius;
   mIsBoundingBoxDirty = true;
@@ -75,12 +80,14 @@ void CapsuleShape::setRadius(double radius) {
 }
 
 //==============================================================================
-double CapsuleShape::getHeight() const {
+double CapsuleShape::getHeight() const
+{
   return mHeight;
 }
 
 //==============================================================================
-void CapsuleShape::setHeight(double height) {
+void CapsuleShape::setHeight(double height)
+{
   assert(0.0 < height);
   mHeight = height;
   mIsBoundingBoxDirty = true;
@@ -90,14 +97,16 @@ void CapsuleShape::setHeight(double height) {
 }
 
 //==============================================================================
-double CapsuleShape::computeVolume(double radius, double height) {
+double CapsuleShape::computeVolume(double radius, double height)
+{
   return CylinderShape::computeVolume(radius, height)
          + SphereShape::computeVolume(radius);
 }
 
 //==============================================================================
 Eigen::Matrix3d CapsuleShape::computeInertia(
-    double radius, double height, double mass) {
+    double radius, double height, double mass)
+{
   // Reference:
   // http://www.gamedev.net/page/resources/_/technical/math-and-physics/capsule-inertia-tensor-r3856
 
@@ -124,7 +133,8 @@ Eigen::Matrix3d CapsuleShape::computeInertia(
 }
 
 //==============================================================================
-void CapsuleShape::updateBoundingBox() const {
+void CapsuleShape::updateBoundingBox() const
+{
   const Eigen::Vector3d corner(mRadius, mRadius, mRadius + 0.5 * mHeight);
 
   mBoundingBox.setMin(-corner);
@@ -134,13 +144,15 @@ void CapsuleShape::updateBoundingBox() const {
 }
 
 //==============================================================================
-void CapsuleShape::updateVolume() const {
+void CapsuleShape::updateVolume() const
+{
   mVolume = computeVolume(mRadius, mHeight);
   mIsVolumeDirty = false;
 }
 
 //==============================================================================
-Eigen::Matrix3d CapsuleShape::computeInertia(double mass) const {
+Eigen::Matrix3d CapsuleShape::computeInertia(double mass) const
+{
   return computeInertia(mRadius, mHeight, mass);
 }
 

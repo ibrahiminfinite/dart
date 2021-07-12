@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Problem(py::module& m) {
+void Problem(py::module& m)
+{
   ::py::class_<
       dart::optimization::Problem,
       std::shared_ptr<dart::optimization::Problem>>(m, "Problem")

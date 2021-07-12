@@ -43,25 +43,30 @@ using namespace std;
 using namespace dart::dynamics;
 
 //==============================================================================
-TerminalCondition::TerminalCondition(State* _state) : mState(_state) {
+TerminalCondition::TerminalCondition(State* _state) : mState(_state)
+{
   assert(_state != nullptr);
 }
 
 //==============================================================================
-TerminalCondition::~TerminalCondition() {
+TerminalCondition::~TerminalCondition()
+{
 }
 
 //==============================================================================
 TimerCondition::TimerCondition(State* _state, double _duration)
-  : TerminalCondition(_state), mDuration(_duration) {
+  : TerminalCondition(_state), mDuration(_duration)
+{
 }
 
 //==============================================================================
-TimerCondition::~TimerCondition() {
+TimerCondition::~TimerCondition()
+{
 }
 
 //==============================================================================
-bool TimerCondition::isSatisfied() {
+bool TimerCondition::isSatisfied()
+{
   if (mState->getElapsedTime() > mDuration)
     return true;
   else
@@ -70,17 +75,20 @@ bool TimerCondition::isSatisfied() {
 
 //==============================================================================
 BodyContactCondition::BodyContactCondition(State* _state, BodyNode* _body)
-  : TerminalCondition(_state), mBodyNode(_body) {
+  : TerminalCondition(_state), mBodyNode(_body)
+{
   assert(_state != nullptr);
   assert(_body != nullptr);
 }
 
 //==============================================================================
-BodyContactCondition::~BodyContactCondition() {
+BodyContactCondition::~BodyContactCondition()
+{
 }
 
 //==============================================================================
-bool BodyContactCondition::isSatisfied() {
+bool BodyContactCondition::isSatisfied()
+{
   SoftBodyNode* soft = dynamic_cast<SoftBodyNode*>(mBodyNode);
   if (soft) {
     for (std::size_t i = 0; i < soft->getNumPointMasses(); ++i) {
@@ -93,7 +101,8 @@ bool BodyContactCondition::isSatisfied() {
   // TODO(JS): Need more elegant condition check method
   DART_SUPPRESS_DEPRECATED_BEGIN
   if (mBodyNode->isColliding() > 0)
-    DART_SUPPRESS_DEPRECATED_END {
+    DART_SUPPRESS_DEPRECATED_END
+    {
       //    dtmsg << "BodyNode [" << mBodyNode->getName() << "] is in contact."
       //          << std::endl;
       return true;

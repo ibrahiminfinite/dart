@@ -41,13 +41,15 @@ namespace dynamics {
 
 //==============================================================================
 dart::dynamics::fcl::CollisionObject*
-FCLCollisionObject::getFCLCollisionObject() {
+FCLCollisionObject::getFCLCollisionObject()
+{
   return mFCLCollisionObject.get();
 }
 
 //==============================================================================
 const dart::dynamics::fcl::CollisionObject*
-FCLCollisionObject::getFCLCollisionObject() const {
+FCLCollisionObject::getFCLCollisionObject() const
+{
   return mFCLCollisionObject.get();
 }
 
@@ -57,12 +59,14 @@ FCLCollisionObject::FCLCollisionObject(
     const dynamics::ShapeFrame* shapeFrame,
     const std::shared_ptr<dart::dynamics::fcl::CollisionGeometry>& fclCollGeom)
   : CollisionObject(collisionDetector, shapeFrame),
-    mFCLCollisionObject(new dart::dynamics::fcl::CollisionObject(fclCollGeom)) {
+    mFCLCollisionObject(new dart::dynamics::fcl::CollisionObject(fclCollGeom))
+{
   mFCLCollisionObject->setUserData(this);
 }
 
 //==============================================================================
-void FCLCollisionObject::updateEngineData() {
+void FCLCollisionObject::updateEngineData()
+{
   using dart::dynamics::BodyNode;
   using dart::dynamics::Shape;
   using dart::dynamics::SoftMeshShape;

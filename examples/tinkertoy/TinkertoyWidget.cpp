@@ -49,12 +49,14 @@ TinkertoyWidget::TinkertoyWidget(
     mNode(node),
     mGuiGravity(true),
     mGravity(true),
-    mGuiHeadlights(true) {
+    mGuiHeadlights(true)
+{
   // Do nothing
 }
 
 //==============================================================================
-void TinkertoyWidget::render() {
+void TinkertoyWidget::render()
+{
   ImGui::SetNextWindowPos(ImVec2(10, 20));
   ImGui::SetNextWindowSize(ImVec2(360, 640));
   ImGui::SetNextWindowBgAlpha(0.5f);
@@ -194,7 +196,8 @@ void TinkertoyWidget::render() {
 }
 
 //==============================================================================
-void TinkertoyWidget::setGravity(bool gravity) {
+void TinkertoyWidget::setGravity(bool gravity)
+{
   if (mGravity == gravity)
     return;
 

@@ -39,7 +39,8 @@ namespace detail {
 //==============================================================================
 RevoluteJointUniqueProperties::RevoluteJointUniqueProperties(
     const Eigen::Vector3d& _axis)
-  : mAxis(_axis.normalized()) {
+  : mAxis(_axis.normalized())
+{
   // Do nothing
 }
 
@@ -48,7 +49,8 @@ RevoluteJointProperties::RevoluteJointProperties(
     const GenericJoint<math::R1Space>::Properties& genericJointProperties,
     const RevoluteJointUniqueProperties& revoluteProperties)
   : GenericJoint<math::R1Space>::Properties(genericJointProperties),
-    RevoluteJointUniqueProperties(revoluteProperties) {
+    RevoluteJointUniqueProperties(revoluteProperties)
+{
   // Do nothing
 }
 

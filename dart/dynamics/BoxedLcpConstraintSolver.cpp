@@ -54,13 +54,15 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver,
     BoxedLcpSolverPtr secondaryBoxedLcpSolver)
   : BoxedLcpConstraintSolver(
-      std::move(boxedLcpSolver), std::move(secondaryBoxedLcpSolver)) {
+      std::move(boxedLcpSolver), std::move(secondaryBoxedLcpSolver))
+{
   setTimeStep(timeStep);
 }
 
 //==============================================================================
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver()
-  : BoxedLcpConstraintSolver(std::make_shared<DantzigBoxedLcpSolver>()) {
+  : BoxedLcpConstraintSolver(std::make_shared<DantzigBoxedLcpSolver>())
+{
   // Do nothing
 }
 
@@ -68,14 +70,16 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver()
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver)
   : BoxedLcpConstraintSolver(
-      std::move(boxedLcpSolver), std::make_shared<PgsBoxedLcpSolver>()) {
+      std::move(boxedLcpSolver), std::make_shared<PgsBoxedLcpSolver>())
+{
   // Do nothing
 }
 
 //==============================================================================
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver, BoxedLcpSolverPtr secondaryBoxedLcpSolver)
-  : ConstraintSolver() {
+  : ConstraintSolver()
+{
   if (boxedLcpSolver) {
     setBoxedLcpSolver(std::move(boxedLcpSolver));
   } else {
@@ -89,7 +93,8 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
 }
 
 //==============================================================================
-void BoxedLcpConstraintSolver::setBoxedLcpSolver(BoxedLcpSolverPtr lcpSolver) {
+void BoxedLcpConstraintSolver::setBoxedLcpSolver(BoxedLcpSolverPtr lcpSolver)
+{
   if (!lcpSolver) {
     dtwarn << "[BoxedLcpConstraintSolver::setBoxedLcpSolver] "
            << "nullptr for boxed LCP solver is not allowed.\n";
@@ -106,13 +111,15 @@ void BoxedLcpConstraintSolver::setBoxedLcpSolver(BoxedLcpSolverPtr lcpSolver) {
 }
 
 //==============================================================================
-ConstBoxedLcpSolverPtr BoxedLcpConstraintSolver::getBoxedLcpSolver() const {
+ConstBoxedLcpSolverPtr BoxedLcpConstraintSolver::getBoxedLcpSolver() const
+{
   return mBoxedLcpSolver;
 }
 
 //==============================================================================
 void BoxedLcpConstraintSolver::setSecondaryBoxedLcpSolver(
-    BoxedLcpSolverPtr lcpSolver) {
+    BoxedLcpSolverPtr lcpSolver)
+{
   if (lcpSolver == mBoxedLcpSolver) {
     dtwarn << "[BoxedLcpConstraintSolver::setBoxedLcpSolver] Attempting to set "
            << "the secondary LCP solver that is identical to the primary LCP "
@@ -125,12 +132,14 @@ void BoxedLcpConstraintSolver::setSecondaryBoxedLcpSolver(
 
 //==============================================================================
 ConstBoxedLcpSolverPtr BoxedLcpConstraintSolver::getSecondaryBoxedLcpSolver()
-    const {
+    const
+{
   return mSecondaryBoxedLcpSolver;
 }
 
 //==============================================================================
-void BoxedLcpConstraintSolver::solveConstrainedGroup(ConstrainedGroup& group) {
+void BoxedLcpConstraintSolver::solveConstrainedGroup(ConstrainedGroup& group)
+{
   // Build LCP terms by aggregating them from constraints
   const std::size_t numConstraints = group.getNumConstraints();
   const std::size_t n = group.getTotalDimension();
@@ -287,7 +296,8 @@ void BoxedLcpConstraintSolver::solveConstrainedGroup(ConstrainedGroup& group) {
 
 //==============================================================================
 #ifndef NDEBUG
-bool BoxedLcpConstraintSolver::isSymmetric(std::size_t n, double* A) {
+bool BoxedLcpConstraintSolver::isSymmetric(std::size_t n, double* A)
+{
   std::size_t nSkip = dPAD(n);
   for (std::size_t i = 0; i < n; ++i) {
     for (std::size_t j = 0; j < n; ++j) {
@@ -314,7 +324,8 @@ bool BoxedLcpConstraintSolver::isSymmetric(std::size_t n, double* A) {
 
 //==============================================================================
 bool BoxedLcpConstraintSolver::isSymmetric(
-    std::size_t n, double* A, std::size_t begin, std::size_t end) {
+    std::size_t n, double* A, std::size_t begin, std::size_t end)
+{
   std::size_t nSkip = dPAD(n);
   for (std::size_t i = begin; i <= end; ++i) {
     for (std::size_t j = begin; j <= end; ++j) {
@@ -348,7 +359,8 @@ void BoxedLcpConstraintSolver::print(
     double* /*hi*/,
     double* b,
     double* w,
-    int* findex) {
+    int* findex)
+{
   std::size_t nSkip = dPAD(n);
   std::cout << "A: " << std::endl;
   for (std::size_t i = 0; i < n; ++i) {

@@ -120,7 +120,8 @@ void OdeCollisionDetector(py::module& sm);
 void OdeCollisionGroup(py::module& sm);
 #endif // DART_HAVE_ODE
 
-void dart_dynamics(py::module& m) {
+void dart_dynamics(py::module& m)
+{
   auto sm = m.def_submodule("dynamics");
 
   Shape(sm);

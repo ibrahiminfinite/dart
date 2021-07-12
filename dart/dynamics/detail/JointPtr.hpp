@@ -57,18 +57,21 @@ public:
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor
-  TemplateJointPtr(JointT* _ptr) {
+  TemplateJointPtr(JointT* _ptr)
+  {
     set(_ptr);
   }
 
   /// Constructor that takes in a strong JointPtr
   template <class OtherJointT, class OtherBodyNodeT>
-  TemplateJointPtr(const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _jptr) {
+  TemplateJointPtr(const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _jptr)
+  {
     set(_jptr.get());
   }
 
   /// Assignment operator
-  TemplateJointPtr& operator=(JointT* _ptr) {
+  TemplateJointPtr& operator=(JointT* _ptr)
+  {
     set(_ptr);
     return *this;
   }
@@ -76,28 +79,33 @@ public:
   /// Assignment operator for JointPtrs
   template <class OtherJointT, class OtherBodyNodeT>
   TemplateJointPtr& operator=(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _jptr) {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _jptr)
+  {
     set(_jptr.get());
     return *this;
   }
 
   /// Implicit conversion
-  operator JointT*() const {
+  operator JointT*() const
+  {
     return get();
   }
 
   /// Dereferencing operator
-  JointT& operator*() const {
+  JointT& operator*() const
+  {
     return *get();
   }
 
   /// Dereferencing operation
-  JointT* operator->() const {
+  JointT* operator->() const
+  {
     return get();
   }
 
   /// Get the raw Joint pointer
-  JointT* get() const {
+  JointT* get() const
+  {
     if (nullptr == mBodyNodePtr)
       return nullptr;
 
@@ -105,12 +113,14 @@ public:
   }
 
   /// Get the BodyNode that this JointPtr is tied to
-  TemplateBodyNodePtr<BodyNodeT> getBodyNodePtr() const {
+  TemplateBodyNodePtr<BodyNodeT> getBodyNodePtr() const
+  {
     return mBodyNodePtr;
   }
 
   /// Set the Joint for this JointPtr
-  void set(JointT* _ptr) {
+  void set(JointT* _ptr)
+  {
     if (nullptr == _ptr) {
       mBodyNodePtr = nullptr;
       return;
@@ -126,42 +136,48 @@ public:
   /// Equality
   template <class OtherJointT, class OtherBodyNodeT>
   bool operator==(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const
+  {
     return mBodyNodePtr == _rhs.mBodyNodePtr;
   }
 
   /// Inequality
   template <class OtherJointT, class OtherBodyNodeT>
   bool operator!=(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const
+  {
     return !(*this == _rhs);
   }
 
   /// Less than
   template <class OtherJointT, class OtherBodyNodeT>
   bool operator<(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const
+  {
     return (mBodyNodePtr < _rhs.mBodyNodePtr);
   }
 
   /// Greater than
   template <class OtherJointT, class OtherBodyNodeT>
   bool operator>(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const
+  {
     return (mBodyNodePtr > _rhs.mBodyNodePtr);
   }
 
   /// Less than or equal to
   template <class OtherJointT, class OtherBodyNodeT>
   bool operator<=(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const
+  {
     return (*this < _rhs) || (*this == _rhs);
   }
 
   /// Greater than or equal to
   template <class OtherJointT, class OtherBodyNodeT>
   bool operator>=(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _rhs) const
+  {
     return (*this > _rhs) || (*this == _rhs);
   }
 
@@ -188,26 +204,30 @@ public:
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor
-  TemplateWeakJointPtr(JointT* _ptr) {
+  TemplateWeakJointPtr(JointT* _ptr)
+  {
     set(_ptr);
   }
 
   /// Constructor that takes in a WeakJointPtr
   template <class OtherJointT, class OtherBodyNodeT>
   TemplateWeakJointPtr(
-      const TemplateWeakJointPtr<OtherJointT, OtherBodyNodeT>& _weakPtr) {
+      const TemplateWeakJointPtr<OtherJointT, OtherBodyNodeT>& _weakPtr)
+  {
     set(_weakPtr);
   }
 
   /// Constructor that takes in a strong JointPtr
   template <class OtherJointT, class OtherBodyNodeT>
   TemplateWeakJointPtr(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _strongPtr) {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _strongPtr)
+  {
     set(_strongPtr.get());
   }
 
   /// Assignment operator for raw Joint pointers
-  TemplateWeakJointPtr& operator=(JointT* _ptr) {
+  TemplateWeakJointPtr& operator=(JointT* _ptr)
+  {
     set(_ptr);
     return *this;
   }
@@ -215,7 +235,8 @@ public:
   /// Assignment operator for WeakJointPtrs
   template <class OtherJointT, class OtherBodyNodeT>
   TemplateWeakJointPtr& operator=(
-      const TemplateWeakJointPtr<OtherJointT, OtherBodyNodeT>& _weakPtr) {
+      const TemplateWeakJointPtr<OtherJointT, OtherBodyNodeT>& _weakPtr)
+  {
     set(_weakPtr);
     return *this;
   }
@@ -223,7 +244,8 @@ public:
   /// Assignment operator for strong JointPtrs
   template <class OtherJointT, class OtherBodyNodeT>
   TemplateWeakJointPtr& operator=(
-      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _strongPtr) {
+      const TemplateJointPtr<OtherJointT, OtherBodyNodeT>& _strongPtr)
+  {
     set(_strongPtr.get());
     return *this;
   }
@@ -231,7 +253,8 @@ public:
   /// Locks the Joint reference to ensure that the referenced Joint is currently
   /// still available. If the Joint is not available any longer (i.e. has been
   /// deleted), then this will return a nullptr.
-  TemplateJointPtr<JointT, BodyNodeT> lock() const {
+  TemplateJointPtr<JointT, BodyNodeT> lock() const
+  {
     TemplateBodyNodePtr<BodyNodeT> bodyNode = mWeakBodyNode.lock();
     if (nullptr == bodyNode)
       return nullptr;
@@ -240,7 +263,8 @@ public:
   }
 
   /// Set the Joint for this WeakJointPtr
-  void set(JointT* _ptr) {
+  void set(JointT* _ptr)
+  {
     if (nullptr == _ptr) {
       mWeakBodyNode = nullptr;
       return;
@@ -251,7 +275,8 @@ public:
 
   /// Set the Joint for this WeakJointPtr based on another WeakJointPtr
   template <class OtherJointT, class OtherBodyNodeT>
-  void set(const TemplateWeakJointPtr<OtherJointT, OtherBodyNodeT>& _weakPtr) {
+  void set(const TemplateWeakJointPtr<OtherJointT, OtherBodyNodeT>& _weakPtr)
+  {
     mWeakBodyNode = _weakPtr.mWeakBodyNode;
   }
 

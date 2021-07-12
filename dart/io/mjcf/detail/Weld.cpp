@@ -40,42 +40,50 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-const std::string& Weld::getName() const {
+const std::string& Weld::getName() const
+{
   return mName;
 }
 
 //==============================================================================
-bool Weld::getActive() const {
+bool Weld::getActive() const
+{
   return mActive;
 }
 
 //==============================================================================
-const Eigen::Vector2d& Weld::getSolRef() const {
+const Eigen::Vector2d& Weld::getSolRef() const
+{
   return mSolRef;
 }
 
 //==============================================================================
-const Eigen::Matrix<double, 5, 1>& Weld::getSolImp() const {
+const Eigen::Matrix<double, 5, 1>& Weld::getSolImp() const
+{
   return mSolImp;
 }
 
 //==============================================================================
-const std::string& Weld::getBody1() const {
+const std::string& Weld::getBody1() const
+{
   return mBody1;
 }
 
 //==============================================================================
-const std::string& Weld::getBody2() const {
+const std::string& Weld::getBody2() const
+{
   return mBody2;
 }
 
 //==============================================================================
-const common::optional<Eigen::Isometry3d>& Weld::getRelativeTransform() const {
+const common::optional<Eigen::Isometry3d>& Weld::getRelativeTransform() const
+{
   return mRelativeTransfrom;
 }
 
 //==============================================================================
-Errors Weld::read(tinyxml2::XMLElement* element, const Defaults& defaults) {
+Errors Weld::read(tinyxml2::XMLElement* element, const Defaults& defaults)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "weld") {

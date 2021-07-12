@@ -42,7 +42,8 @@ public:
       dart::dynamics::SkeletonPtr biped,
       ::osg::ref_ptr<osgShadow::ShadowTechnique> shadow = nullptr)
     : dart::gui::osg::RealTimeWorldNode(std::move(world), std::move(shadow)),
-      mBiped(std::move(biped)) {
+      mBiped(std::move(biped))
+  {
     mLeftHeel = mBiped->getBodyNode("h_heel_left");
 
     mLeftFoot[0] = mBiped->getDof("j_heel_left_1")->getIndexInSkeleton();
@@ -75,19 +76,22 @@ public:
     mPreOffset = 0.0;
   }
 
-  void customPreRefresh() {
+  void customPreRefresh()
+  {
     // Use this function to execute custom code before each time that the
     // window is rendered. This function can be deleted if it does not need
     // to be used.
   }
 
-  void customPostRefresh() {
+  void customPostRefresh()
+  {
     // Use this function to execute custom code after each time that the
     // window is rendered. This function can be deleted if it does not need
     // to be used.
   }
 
-  void customPreStep() {
+  void customPreStep()
+  {
     const Eigen::VectorXd dof = mBiped->getPositions();
     const Eigen::VectorXd dofVel = mBiped->getVelocities();
     const Eigen::VectorXd constrForces = mBiped->getConstraintForces();
@@ -140,7 +144,8 @@ public:
     mFrame++;
   }
 
-  void customPostStep() {
+  void customPostStep()
+  {
     // Use this function to execute custom code after each simulation time
     // step is performed. This function can be deleted if it does not need
     // to be used.
@@ -164,12 +169,14 @@ protected:
 //==============================================================================
 class CustomEventHandler : public osgGA::GUIEventHandler {
 public:
-  CustomEventHandler(/*Pass in any necessary arguments*/) {
+  CustomEventHandler(/*Pass in any necessary arguments*/)
+  {
     // Set up the customized event handler
   }
 
   bool handle(
-      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override {
+      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override
+  {
     if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN) {
       if (ea.getKey() == 'q') {
         std::cout << "Lowercase q pressed" << std::endl;
@@ -209,7 +216,8 @@ public:
 };
 
 //==============================================================================
-int main() {
+int main()
+{
   // Create a world and add the rigid body
   auto world
       = dart::io::SkelParser::readWorld("dart://sample/skel/fullbody1.skel");

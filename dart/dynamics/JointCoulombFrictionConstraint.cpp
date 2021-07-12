@@ -52,7 +52,8 @@ JointCoulombFrictionConstraint::JointCoulombFrictionConstraint(
   : ConstraintBase(),
     mJoint(_joint),
     mBodyNode(_joint->getChildBodyNode()),
-    mAppliedImpulseIndex(0) {
+    mAppliedImpulseIndex(0)
+{
   assert(_joint);
   assert(mBodyNode);
 
@@ -72,22 +73,26 @@ JointCoulombFrictionConstraint::JointCoulombFrictionConstraint(
 }
 
 //==============================================================================
-JointCoulombFrictionConstraint::~JointCoulombFrictionConstraint() {
+JointCoulombFrictionConstraint::~JointCoulombFrictionConstraint()
+{
 }
 
 //==============================================================================
-const std::string& JointCoulombFrictionConstraint::getType() const {
+const std::string& JointCoulombFrictionConstraint::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& JointCoulombFrictionConstraint::getStaticType() {
+const std::string& JointCoulombFrictionConstraint::getStaticType()
+{
   static const std::string name = "JointCoulombFrictionConstraint";
   return name;
 }
 
 //==============================================================================
-void JointCoulombFrictionConstraint::setConstraintForceMixing(double _cfm) {
+void JointCoulombFrictionConstraint::setConstraintForceMixing(double _cfm)
+{
   // Clamp constraint force mixing parameter if it is out of the range
   if (_cfm < 1e-9) {
     dtwarn << "Constraint force mixing parameter[" << _cfm
@@ -100,12 +105,14 @@ void JointCoulombFrictionConstraint::setConstraintForceMixing(double _cfm) {
 }
 
 //==============================================================================
-double JointCoulombFrictionConstraint::getConstraintForceMixing() {
+double JointCoulombFrictionConstraint::getConstraintForceMixing()
+{
   return mConstraintForceMixing;
 }
 
 //==============================================================================
-void JointCoulombFrictionConstraint::update() {
+void JointCoulombFrictionConstraint::update()
+{
   // Reset dimention
   mDim = 0;
 
@@ -142,7 +149,8 @@ void JointCoulombFrictionConstraint::update() {
 }
 
 //==============================================================================
-void JointCoulombFrictionConstraint::getInformation(ConstraintInfo* _lcp) {
+void JointCoulombFrictionConstraint::getInformation(ConstraintInfo* _lcp)
+{
   std::size_t index = 0;
   std::size_t dof = mJoint->getNumDofs();
   for (std::size_t i = 0; i < dof; ++i) {
@@ -167,7 +175,8 @@ void JointCoulombFrictionConstraint::getInformation(ConstraintInfo* _lcp) {
 }
 
 //==============================================================================
-void JointCoulombFrictionConstraint::applyUnitImpulse(std::size_t _index) {
+void JointCoulombFrictionConstraint::applyUnitImpulse(std::size_t _index)
+{
   assert(_index < mDim && "Invalid Index.");
 
   std::size_t localIndex = 0;
@@ -194,7 +203,8 @@ void JointCoulombFrictionConstraint::applyUnitImpulse(std::size_t _index) {
 
 //==============================================================================
 void JointCoulombFrictionConstraint::getVelocityChange(
-    double* _delVel, bool _withCfm) {
+    double* _delVel, bool _withCfm)
+{
   assert(_delVel != nullptr && "Null pointer is not allowed.");
 
   std::size_t localIndex = 0;
@@ -222,17 +232,20 @@ void JointCoulombFrictionConstraint::getVelocityChange(
 }
 
 //==============================================================================
-void JointCoulombFrictionConstraint::excite() {
+void JointCoulombFrictionConstraint::excite()
+{
   mJoint->getSkeleton()->setImpulseApplied(true);
 }
 
 //==============================================================================
-void JointCoulombFrictionConstraint::unexcite() {
+void JointCoulombFrictionConstraint::unexcite()
+{
   mJoint->getSkeleton()->setImpulseApplied(false);
 }
 
 //==============================================================================
-void JointCoulombFrictionConstraint::applyImpulse(double* _lambda) {
+void JointCoulombFrictionConstraint::applyImpulse(double* _lambda)
+{
   std::size_t localIndex = 0;
   std::size_t dof = mJoint->getNumDofs();
   for (std::size_t i = 0; i < dof; ++i) {
@@ -249,12 +262,14 @@ void JointCoulombFrictionConstraint::applyImpulse(double* _lambda) {
 }
 
 //==============================================================================
-dynamics::SkeletonPtr JointCoulombFrictionConstraint::getRootSkeleton() const {
+dynamics::SkeletonPtr JointCoulombFrictionConstraint::getRootSkeleton() const
+{
   return mJoint->getSkeleton()->mUnionRootSkeleton.lock();
 }
 
 //==============================================================================
-bool JointCoulombFrictionConstraint::isActive() const {
+bool JointCoulombFrictionConstraint::isActive() const
+{
   for (std::size_t i = 0; i < 6; ++i) {
     if (mActive[i])
       return true;

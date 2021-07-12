@@ -50,7 +50,8 @@ using namespace simulation;
 using namespace io;
 
 //==============================================================================
-TEST(VskParser, EmptySkeleton) {
+TEST(VskParser, EmptySkeleton)
+{
   WorldPtr world = World::create();
   EXPECT_TRUE(world != nullptr);
 
@@ -65,7 +66,8 @@ TEST(VskParser, EmptySkeleton) {
 }
 
 //==============================================================================
-TEST(VskParser, LoadFromFileURI) {
+TEST(VskParser, LoadFromFileURI)
+{
   const std::string prefix = "file://" DART_DATA_LOCAL_PATH "vsk/";
 
   EXPECT_EQ(VskParser::readSkeleton(prefix + "test/empty.vsk"), nullptr);
@@ -74,7 +76,8 @@ TEST(VskParser, LoadFromFileURI) {
 }
 
 //==============================================================================
-TEST(VskParser, SingleStepSimulations) {
+TEST(VskParser, SingleStepSimulations)
+{
   WorldPtr world = World::create();
   EXPECT_NE(world, nullptr);
 

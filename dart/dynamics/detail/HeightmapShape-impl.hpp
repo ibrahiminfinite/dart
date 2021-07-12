@@ -45,7 +45,8 @@ namespace dynamics {
 
 //==============================================================================
 template <typename S>
-HeightmapShape<S>::HeightmapShape() : Shape(HEIGHTMAP), mScale(1, 1, 1) {
+HeightmapShape<S>::HeightmapShape() : Shape(HEIGHTMAP), mScale(1, 1, 1)
+{
   static_assert(
       std::is_same<S, float>::value || std::is_same<S, double>::value,
       "Height field needs to be double or float");
@@ -53,13 +54,15 @@ HeightmapShape<S>::HeightmapShape() : Shape(HEIGHTMAP), mScale(1, 1, 1) {
 
 //==============================================================================
 template <typename S>
-const std::string& HeightmapShape<S>::getType() const {
+const std::string& HeightmapShape<S>::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
 template <typename S>
-const std::string& HeightmapShape<S>::getStaticType() {
+const std::string& HeightmapShape<S>::getStaticType()
+{
   static const std::string type
       = "HeightmapShape (" + std::string(typeid(S).name()) + ")";
   return type;
@@ -67,7 +70,8 @@ const std::string& HeightmapShape<S>::getStaticType() {
 
 //==============================================================================
 template <typename S>
-void HeightmapShape<S>::setScale(const Vector3& scale) {
+void HeightmapShape<S>::setScale(const Vector3& scale)
+{
   assert(scale[0] > 0.0);
   assert(scale[1] > 0.0);
   assert(scale[2] > 0.0);
@@ -80,7 +84,8 @@ void HeightmapShape<S>::setScale(const Vector3& scale) {
 
 //==============================================================================
 template <typename S>
-auto HeightmapShape<S>::getScale() const -> const Vector3& {
+auto HeightmapShape<S>::getScale() const -> const Vector3&
+{
   return mScale;
 }
 
@@ -89,7 +94,8 @@ template <typename S>
 void HeightmapShape<S>::setHeightField(
     const std::size_t& width,
     const std::size_t& depth,
-    const std::vector<S>& heights) {
+    const std::vector<S>& heights)
+{
   assert(heights.size() == width * depth);
   if ((width * depth) != heights.size()) {
     dterr << "[HeightmapShape] Size of height field needs to be width*depth="
@@ -109,7 +115,8 @@ void HeightmapShape<S>::setHeightField(
 
 //==============================================================================
 template <typename S>
-void HeightmapShape<S>::setHeightField(const HeightField& heights) {
+void HeightmapShape<S>::setHeightField(const HeightField& heights)
+{
   mHeights = heights;
 
   mMinHeight = heights.minCoeff();
@@ -123,55 +130,64 @@ void HeightmapShape<S>::setHeightField(const HeightField& heights) {
 
 //==============================================================================
 template <typename S>
-auto HeightmapShape<S>::getHeightField() const -> const HeightField& {
+auto HeightmapShape<S>::getHeightField() const -> const HeightField&
+{
   return mHeights;
 }
 
 //==============================================================================
 template <typename S>
-auto HeightmapShape<S>::getHeightFieldModifiable() const -> HeightField& {
+auto HeightmapShape<S>::getHeightFieldModifiable() const -> HeightField&
+{
   return mHeights;
 }
 
 //==============================================================================
 template <typename S>
-void HeightmapShape<S>::flipY() const {
+void HeightmapShape<S>::flipY() const
+{
   mHeights = mHeights.colwise().reverse().eval();
 }
 
 //==============================================================================
 template <typename S>
-auto HeightmapShape<S>::getMaxHeight() const -> S {
+auto HeightmapShape<S>::getMaxHeight() const -> S
+{
   return mMaxHeight;
 }
 
 //==============================================================================
 template <typename S>
-auto HeightmapShape<S>::getMinHeight() const -> S {
+auto HeightmapShape<S>::getMinHeight() const -> S
+{
   return mMinHeight;
 }
 
 //==============================================================================
 template <typename S>
-std::size_t HeightmapShape<S>::getWidth() const {
+std::size_t HeightmapShape<S>::getWidth() const
+{
   return mHeights.cols();
 }
 
 //==============================================================================
 template <typename S>
-std::size_t HeightmapShape<S>::getDepth() const {
+std::size_t HeightmapShape<S>::getDepth() const
+{
   return mHeights.rows();
 }
 
 //==============================================================================
 template <typename S>
-void HeightmapShape<S>::notifyColorUpdated(const Eigen::Vector4d& /*color*/) {
+void HeightmapShape<S>::notifyColorUpdated(const Eigen::Vector4d& /*color*/)
+{
   incrementVersion();
 }
 
 //==============================================================================
 template <typename S>
-Eigen::Matrix3d HeightmapShape<S>::computeInertia(double mass) const {
+Eigen::Matrix3d HeightmapShape<S>::computeInertia(double mass) const
+{
   if (mIsBoundingBoxDirty) {
     updateBoundingBox();
   }
@@ -181,7 +197,8 @@ Eigen::Matrix3d HeightmapShape<S>::computeInertia(double mass) const {
 //==============================================================================
 template <typename S>
 void HeightmapShape<S>::computeBoundingBox(
-    Eigen::Vector3d& min, Eigen::Vector3d& max) const {
+    Eigen::Vector3d& min, Eigen::Vector3d& max) const
+{
   const double dimX = getWidth() * mScale.x();
   const double dimY = getDepth() * mScale.y();
   const double dimZ = (mMaxHeight - mMinHeight) * mScale.z();
@@ -191,7 +208,8 @@ void HeightmapShape<S>::computeBoundingBox(
 
 //==============================================================================
 template <typename S>
-void HeightmapShape<S>::updateBoundingBox() const {
+void HeightmapShape<S>::updateBoundingBox() const
+{
   Eigen::Vector3d min;
   Eigen::Vector3d max;
   computeBoundingBox(min, max);
@@ -202,7 +220,8 @@ void HeightmapShape<S>::updateBoundingBox() const {
 
 //==============================================================================
 template <typename S>
-void HeightmapShape<S>::updateVolume() const {
+void HeightmapShape<S>::updateVolume() const
+{
   updateBoundingBox();
   const Eigen::Vector3d size = mBoundingBox.getMax() - mBoundingBox.getMin();
   mVolume = size.x() * size.y() * size.z();

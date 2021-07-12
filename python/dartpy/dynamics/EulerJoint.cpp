@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void EulerJoint(py::module& m) {
+void EulerJoint(py::module& m)
+{
   ::py::class_<dart::dynamics::EulerJoint::UniqueProperties>(
       m, "EulerJointUniqueProperties")
       .def(::py::init<>())

@@ -42,13 +42,15 @@ namespace dynamics {
 //==============================================================================
 template <class Base>
 void EntityNode<Base>::setAspectProperties(
-    const typename NameAspect::Properties& properties) {
+    const typename NameAspect::Properties& properties)
+{
   setName(properties.mName);
 }
 
 //==============================================================================
 template <class Base>
-const std::string& EntityNode<Base>::setName(const std::string& newName) {
+const std::string& EntityNode<Base>::setName(const std::string& newName)
+{
   using NameImpl = detail::EntityNodeAspectBase<Base>;
 
   if (NameImpl::mAspectProperties.mName == newName && !newName.empty())
@@ -67,7 +69,8 @@ const std::string& EntityNode<Base>::setName(const std::string& newName) {
 
 //==============================================================================
 template <class Base>
-const std::string& EntityNode<Base>::getName() const {
+const std::string& EntityNode<Base>::getName() const
+{
   using NameImpl = detail::EntityNodeAspectBase<Base>;
   return NameImpl::mAspectProperties.mName;
 }

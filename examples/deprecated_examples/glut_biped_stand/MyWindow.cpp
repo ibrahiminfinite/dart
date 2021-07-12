@@ -34,16 +34,19 @@
 
 #include <dart/gui/GLFuncs.hpp>
 
-MyWindow::MyWindow() : SimWindow() {
+MyWindow::MyWindow() : SimWindow()
+{
   mForce = Eigen::Vector3d::Zero();
   mController = nullptr;
   mImpulseDuration = 0;
 }
 
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
 }
 
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   mWorld->getSkeleton(1)->getBodyNode("h_spine")->addExtForce(mForce);
 
   mController->computeTorques();
@@ -59,7 +62,8 @@ void MyWindow::timeStepping() {
   }
 }
 
-void MyWindow::drawWorld() const {
+void MyWindow::drawWorld() const
+{
   SimWindow::drawWorld();
 
   // draw arrow
@@ -73,7 +77,8 @@ void MyWindow::drawWorld() const {
   }
 }
 
-void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
+void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   switch (_key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;
@@ -133,11 +138,13 @@ void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
   glutPostRedisplay();
 }
 
-void MyWindow::setController(Controller* _controller) {
+void MyWindow::setController(Controller* _controller)
+{
   mController = _controller;
 }
 
-void MyWindow::plotCOMX() {
+void MyWindow::plotCOMX()
+{
   int nFrame = mWorld->getRecording()->getNumFrames();
   Eigen::VectorXd data(nFrame);
   for (int i = 0; i < nFrame; i++) {

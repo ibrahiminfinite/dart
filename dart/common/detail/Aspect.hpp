@@ -53,27 +53,31 @@ CompositeTrackingAspect<CompositeType>::CompositeTrackingAspect()
 
 //==============================================================================
 template <class CompositeType>
-CompositeType* CompositeTrackingAspect<CompositeType>::getComposite() {
+CompositeType* CompositeTrackingAspect<CompositeType>::getComposite()
+{
   return mComposite;
 }
 
 //==============================================================================
 template <class CompositeType>
 const CompositeType* CompositeTrackingAspect<CompositeType>::getComposite()
-    const {
+    const
+{
   return mComposite;
 }
 
 //==============================================================================
 template <class CompositeType>
-bool CompositeTrackingAspect<CompositeType>::hasComposite() const {
+bool CompositeTrackingAspect<CompositeType>::hasComposite() const
+{
   return (nullptr != mComposite);
 }
 
 //==============================================================================
 template <class CompositeType>
 void CompositeTrackingAspect<CompositeType>::setComposite(
-    Composite* newComposite) {
+    Composite* newComposite)
+{
   assert(nullptr == mComposite);
 
   mComposite = dynamic_cast<CompositeType*>(newComposite);
@@ -85,7 +89,8 @@ void CompositeTrackingAspect<CompositeType>::setComposite(
 //==============================================================================
 template <class CompositeType>
 void CompositeTrackingAspect<CompositeType>::loseComposite(
-    Composite* oldComposite) {
+    Composite* oldComposite)
+{
   DART_UNUSED(oldComposite);
   assert(oldComposite == mComposite);
   mComposite = nullptr;

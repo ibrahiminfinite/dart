@@ -41,27 +41,32 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-const GeomAttributes& Default::getGeomAttributes() const {
+const GeomAttributes& Default::getGeomAttributes() const
+{
   return mGeomAttributes;
 }
 
 //==============================================================================
-const JointAttributes& Default::getJointAttributes() const {
+const JointAttributes& Default::getJointAttributes() const
+{
   return mJointAttributes;
 }
 
 //==============================================================================
-const MeshAttributes& Default::getMeshAttributes() const {
+const MeshAttributes& Default::getMeshAttributes() const
+{
   return mMeshAttributes;
 }
 
 //==============================================================================
-const WeldAttributes& Default::getWeldAttributes() const {
+const WeldAttributes& Default::getWeldAttributes() const
+{
   return mWeldAttributes;
 }
 
 //==============================================================================
-Errors Default::read(tinyxml2::XMLElement* element, const Default* parent) {
+Errors Default::read(tinyxml2::XMLElement* element, const Default* parent)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "default") {
@@ -118,12 +123,14 @@ Errors Default::read(tinyxml2::XMLElement* element, const Default* parent) {
 }
 
 //==============================================================================
-bool Defaults::hasDefault(const std::string& className) const {
+bool Defaults::hasDefault(const std::string& className) const
+{
   return static_cast<bool>(getDefault(className));
 }
 
 //==============================================================================
-const Default* Defaults::getDefault(const std::string& className) const {
+const Default* Defaults::getDefault(const std::string& className) const
+{
   const auto result = mDefaultMap.find(className);
 
   if (result == mDefaultMap.end()) {
@@ -134,13 +141,15 @@ const Default* Defaults::getDefault(const std::string& className) const {
 }
 
 //==============================================================================
-const Default* Defaults::getRootDefault() const {
+const Default* Defaults::getRootDefault() const
+{
   assert(hasDefault(mRootClassName));
   return getDefault(mRootClassName);
 }
 
 //==============================================================================
-Errors Defaults::read(tinyxml2::XMLElement* element, const Default* parent) {
+Errors Defaults::read(tinyxml2::XMLElement* element, const Default* parent)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "default") {

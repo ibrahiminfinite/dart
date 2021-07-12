@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Composite(py::module& m) {
+void Composite(py::module& m)
+{
   ::py::
       class_<dart::common::Composite, std::shared_ptr<dart::common::Composite>>(
           m, "Composite")

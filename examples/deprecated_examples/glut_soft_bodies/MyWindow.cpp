@@ -43,16 +43,19 @@
 #define FORCE_ON_RIGIDBODY 25.0;
 #define FORCE_ON_VERTEX 1.00;
 
-MyWindow::MyWindow() : SoftSimWindow() {
+MyWindow::MyWindow() : SoftSimWindow()
+{
   mForceOnRigidBody = Eigen::Vector3d::Zero();
   mForceOnVertex = Eigen::Vector3d::Zero();
   mImpulseDuration = 0.0;
 }
 
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
 }
 
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   dart::dynamics::SkeletonPtr Skeleton = mWorld->getSkeleton(1);
   dart::dynamics::SoftBodyNode* softBodyNode = Skeleton->getSoftBodyNode(0);
   softBodyNode->addExtForce(mForceOnRigidBody);
@@ -69,7 +72,8 @@ void MyWindow::timeStepping() {
   mForceOnVertex /= 2.0;
 }
 
-void MyWindow::drawWorld() const {
+void MyWindow::drawWorld() const
+{
   glEnable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   Eigen::Vector4d color;
@@ -92,7 +96,8 @@ void MyWindow::drawWorld() const {
   SimWindow::drawWorld();
 }
 
-void MyWindow::keyboard(unsigned char key, int x, int y) {
+void MyWindow::keyboard(unsigned char key, int x, int y)
+{
   switch (key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;

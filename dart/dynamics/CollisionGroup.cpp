@@ -44,44 +44,52 @@ namespace dynamics {
 
 //==============================================================================
 CollisionGroup::CollisionGroup(const CollisionDetectorPtr& collisionDetector)
-  : mCollisionDetector(collisionDetector), mUpdateAutomatically(true) {
+  : mCollisionDetector(collisionDetector), mUpdateAutomatically(true)
+{
   assert(mCollisionDetector);
 }
 
 //==============================================================================
-CollisionDetectorPtr CollisionGroup::getCollisionDetector() {
+CollisionDetectorPtr CollisionGroup::getCollisionDetector()
+{
   return mCollisionDetector;
 }
 
 //==============================================================================
-ConstCollisionDetectorPtr CollisionGroup::getCollisionDetector() const {
+ConstCollisionDetectorPtr CollisionGroup::getCollisionDetector() const
+{
   return mCollisionDetector;
 }
 
 //==============================================================================
-void CollisionGroup::addShapeFrame(const dynamics::ShapeFrame* shapeFrame) {
+void CollisionGroup::addShapeFrame(const dynamics::ShapeFrame* shapeFrame)
+{
   addShapeFrameImpl(shapeFrame, nullptr);
 }
 
 //==============================================================================
 void CollisionGroup::addShapeFrames(
-    const std::vector<const dynamics::ShapeFrame*>& shapeFrames) {
+    const std::vector<const dynamics::ShapeFrame*>& shapeFrames)
+{
   for (const auto& shapeFrame : shapeFrames)
     addShapeFrame(shapeFrame);
 }
 
 //==============================================================================
-void CollisionGroup::addShapeFramesOf() {
+void CollisionGroup::addShapeFramesOf()
+{
   // Do nothing
 }
 
 //==============================================================================
-void CollisionGroup::subscribeTo() {
+void CollisionGroup::subscribeTo()
+{
   // Do nothing
 }
 
 //==============================================================================
-void CollisionGroup::removeShapeFrame(const dynamics::ShapeFrame* shapeFrame) {
+void CollisionGroup::removeShapeFrame(const dynamics::ShapeFrame* shapeFrame)
+{
   if (!shapeFrame)
     return;
 
@@ -121,18 +129,21 @@ void CollisionGroup::removeShapeFrame(const dynamics::ShapeFrame* shapeFrame) {
 
 //==============================================================================
 void CollisionGroup::removeShapeFrames(
-    const std::vector<const dynamics::ShapeFrame*>& shapeFrames) {
+    const std::vector<const dynamics::ShapeFrame*>& shapeFrames)
+{
   for (const auto& shapeFrame : shapeFrames)
     removeShapeFrame(shapeFrame);
 }
 
 //==============================================================================
-void CollisionGroup::removeShapeFramesOf() {
+void CollisionGroup::removeShapeFramesOf()
+{
   // Do nothing
 }
 
 //==============================================================================
-void CollisionGroup::removeAllShapeFrames() {
+void CollisionGroup::removeAllShapeFrames()
+{
   removeAllCollisionObjectsFromEngine();
 
   mObjectInfoList.clear();
@@ -140,8 +151,8 @@ void CollisionGroup::removeAllShapeFrames() {
 }
 
 //==============================================================================
-bool CollisionGroup::hasShapeFrame(
-    const dynamics::ShapeFrame* shapeFrame) const {
+bool CollisionGroup::hasShapeFrame(const dynamics::ShapeFrame* shapeFrame) const
+{
   return std::find_if(
              mObjectInfoList.begin(),
              mObjectInfoList.end(),
@@ -152,13 +163,15 @@ bool CollisionGroup::hasShapeFrame(
 }
 
 //==============================================================================
-std::size_t CollisionGroup::getNumShapeFrames() const {
+std::size_t CollisionGroup::getNumShapeFrames() const
+{
   return mObjectInfoList.size();
 }
 
 //==============================================================================
 const dynamics::ShapeFrame* CollisionGroup::getShapeFrame(
-    std::size_t index) const {
+    std::size_t index) const
+{
   assert(index < mObjectInfoList.size());
   if (index < mObjectInfoList.size())
     return mObjectInfoList[index]->mFrame;
@@ -168,7 +181,8 @@ const dynamics::ShapeFrame* CollisionGroup::getShapeFrame(
 
 //==============================================================================
 bool CollisionGroup::collide(
-    const CollisionOption& option, CollisionResult* result) {
+    const CollisionOption& option, CollisionResult* result)
+{
   if (mUpdateAutomatically)
     update();
 
@@ -179,7 +193,8 @@ bool CollisionGroup::collide(
 bool CollisionGroup::collide(
     CollisionGroup* otherGroup,
     const CollisionOption& option,
-    CollisionResult* result) {
+    CollisionResult* result)
+{
   if (mUpdateAutomatically)
     update();
 
@@ -188,7 +203,8 @@ bool CollisionGroup::collide(
 
 //==============================================================================
 double CollisionGroup::distance(
-    const DistanceOption& option, DistanceResult* result) {
+    const DistanceOption& option, DistanceResult* result)
+{
   if (mUpdateAutomatically)
     update();
 
@@ -199,7 +215,8 @@ double CollisionGroup::distance(
 double CollisionGroup::distance(
     CollisionGroup* otherGroup,
     const DistanceOption& option,
-    DistanceResult* result) {
+    DistanceResult* result)
+{
   if (mUpdateAutomatically)
     update();
 
@@ -211,7 +228,8 @@ bool CollisionGroup::raycast(
     const Eigen::Vector3d& from,
     const Eigen::Vector3d& to,
     const RaycastOption& option,
-    RaycastResult* result) {
+    RaycastResult* result)
+{
   if (mUpdateAutomatically)
     update();
 
@@ -219,17 +237,20 @@ bool CollisionGroup::raycast(
 }
 
 //==============================================================================
-void CollisionGroup::setAutomaticUpdate(const bool automatic) {
+void CollisionGroup::setAutomaticUpdate(const bool automatic)
+{
   mUpdateAutomatically = automatic;
 }
 
 //==============================================================================
-bool CollisionGroup::getAutomaticUpdate() const {
+bool CollisionGroup::getAutomaticUpdate() const
+{
   return mUpdateAutomatically;
 }
 
 //==============================================================================
-void CollisionGroup::update() {
+void CollisionGroup::update()
+{
   removeDeletedShapeFrames();
 
   for (auto& entry : mSkeletonSources)
@@ -240,7 +261,8 @@ void CollisionGroup::update() {
 }
 
 //==============================================================================
-void CollisionGroup::removeDeletedShapeFrames() {
+void CollisionGroup::removeDeletedShapeFrames()
+{
   for (auto shapeFrame : mObserver.mDeletedFrames) {
     const auto search = std::find_if(
         mObjectInfoList.begin(),
@@ -279,7 +301,8 @@ void CollisionGroup::removeDeletedShapeFrames() {
 }
 
 //==============================================================================
-void CollisionGroup::updateEngineData() {
+void CollisionGroup::updateEngineData()
+{
   for (const auto& info : mObjectInfoList)
     info->mObject->updateEngineData();
 
@@ -288,7 +311,8 @@ void CollisionGroup::updateEngineData() {
 
 //==============================================================================
 void CollisionGroup::ShapeFrameObserver::addShapeFrame(
-    const dynamics::ShapeFrame* shapeFrame) {
+    const dynamics::ShapeFrame* shapeFrame)
+{
   addSubject(shapeFrame);
   mMap.insert(std::make_pair(
       static_cast<const common::Subject*>(shapeFrame), shapeFrame));
@@ -296,26 +320,30 @@ void CollisionGroup::ShapeFrameObserver::addShapeFrame(
 
 //==============================================================================
 void CollisionGroup::ShapeFrameObserver::removeShapeFrame(
-    const dynamics::ShapeFrame* shapeFrame) {
+    const dynamics::ShapeFrame* shapeFrame)
+{
   removeSubject(shapeFrame);
   mMap.erase(shapeFrame);
 }
 
 //==============================================================================
-void CollisionGroup::ShapeFrameObserver::removeAllShapeFrames() {
+void CollisionGroup::ShapeFrameObserver::removeAllShapeFrames()
+{
   removeAllSubjects();
 }
 
 //==============================================================================
 void CollisionGroup::ShapeFrameObserver::handleDestructionNotification(
-    const common::Subject* subject) {
+    const common::Subject* subject)
+{
   mDeletedFrames.insert(mMap[subject]);
   mMap.erase(subject);
 }
 
 //==============================================================================
 auto CollisionGroup::addShapeFrameImpl(
-    const dynamics::ShapeFrame* shapeFrame, const void* source) -> ObjectInfo* {
+    const dynamics::ShapeFrame* shapeFrame, const void* source) -> ObjectInfo*
+{
   if (!shapeFrame)
     return nullptr;
 
@@ -355,7 +383,8 @@ auto CollisionGroup::addShapeFrameImpl(
 
 //==============================================================================
 void CollisionGroup::removeShapeFrameInternal(
-    const dynamics::ShapeFrame* shapeFrame, const void* source) {
+    const dynamics::ShapeFrame* shapeFrame, const void* source)
+{
   if (!shapeFrame)
     return;
 
@@ -380,7 +409,8 @@ void CollisionGroup::removeShapeFrameInternal(
 }
 
 //==============================================================================
-bool CollisionGroup::updateSkeletonSource(SkeletonSources::value_type& entry) {
+bool CollisionGroup::updateSkeletonSource(SkeletonSources::value_type& entry)
+{
   SkeletonSource& source = entry.second;
 
   const dynamics::ConstMetaSkeletonPtr& meta = source.mSource.lock();
@@ -499,7 +529,8 @@ bool CollisionGroup::updateSkeletonSource(SkeletonSources::value_type& entry) {
 }
 
 //==============================================================================
-bool CollisionGroup::updateBodyNodeSource(BodyNodeSources::value_type& entry) {
+bool CollisionGroup::updateBodyNodeSource(BodyNodeSources::value_type& entry)
+{
   BodyNodeSource& source = entry.second;
 
   const dynamics::ConstBodyNodePtr bn = source.mSource.lock();
@@ -557,7 +588,8 @@ bool CollisionGroup::updateBodyNodeSource(BodyNodeSources::value_type& entry) {
 }
 
 //==============================================================================
-bool CollisionGroup::updateShapeFrame(ObjectInfo* object) {
+bool CollisionGroup::updateShapeFrame(ObjectInfo* object)
+{
   const dynamics::ConstShapePtr& shape = object->mFrame->getShape();
   const std::size_t currentID = shape ? shape->getID() : 0;
   const std::size_t currentVersion = shape ? shape->getVersion() : 0;

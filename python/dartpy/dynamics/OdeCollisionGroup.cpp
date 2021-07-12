@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void OdeCollisionGroup(py::module& m) {
+void OdeCollisionGroup(py::module& m)
+{
   ::py::class_<
       dart::dynamics::OdeCollisionGroup,
       dart::dynamics::CollisionGroup,

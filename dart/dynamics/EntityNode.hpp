@@ -51,7 +51,8 @@ public:
   EntityNode(Args&&... args)
     : detail::
           EntityNodeBase<Base, std::is_base_of<common::Composite, Base>::value>(
-              std::forward<Args>(args)...) {
+              std::forward<Args>(args)...)
+  {
     this->template createAspect<NameAspect>();
   }
 

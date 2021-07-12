@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Random(py::module& m) {
+void Random(py::module& m)
+{
   ::py::class_<dart::math::Random>(m, "Random")
       .def(::py::init<>())
       .def_static(

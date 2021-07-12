@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Chain(py::module& m) {
+void Chain(py::module& m)
+{
   ::py::class_<
       dart::dynamics::Chain,
       dart::dynamics::Linkage,

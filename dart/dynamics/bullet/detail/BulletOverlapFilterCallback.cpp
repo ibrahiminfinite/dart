@@ -49,13 +49,15 @@ BulletOverlapFilterCallback::BulletOverlapFilterCallback(
     done(false),
     filter(filter),
     group1(group1),
-    group2(group2) {
+    group2(group2)
+{
   // Do nothing
 }
 
 //==============================================================================
 bool BulletOverlapFilterCallback::needBroadphaseCollision(
-    btBroadphaseProxy* proxy0, btBroadphaseProxy* proxy1) const {
+    btBroadphaseProxy* proxy0, btBroadphaseProxy* proxy1) const
+{
   if (done)
     return false;
 

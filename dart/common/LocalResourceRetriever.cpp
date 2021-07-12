@@ -43,12 +43,14 @@ namespace dart {
 namespace common {
 
 //==============================================================================
-bool LocalResourceRetriever::exists(const Uri& _uri) {
+bool LocalResourceRetriever::exists(const Uri& _uri)
+{
   return !getFilePath(_uri).empty();
 }
 
 //==============================================================================
-common::ResourcePtr LocalResourceRetriever::retrieve(const Uri& _uri) {
+common::ResourcePtr LocalResourceRetriever::retrieve(const Uri& _uri)
+{
   if (_uri.mScheme.get_value_or("file") != "file")
     return nullptr;
   else if (!_uri.mPath)
@@ -64,7 +66,8 @@ common::ResourcePtr LocalResourceRetriever::retrieve(const Uri& _uri) {
 }
 
 //==============================================================================
-std::string LocalResourceRetriever::getFilePath(const Uri& uri) {
+std::string LocalResourceRetriever::getFilePath(const Uri& uri)
+{
   // Open and close the file to check if it exists. It would be more efficient
   // to stat() it, but that is not portable.
   if (uri.mScheme.get_value_or("file") != "file")

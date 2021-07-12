@@ -40,17 +40,20 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-std::size_t Asset::getNumMeshes() const {
+std::size_t Asset::getNumMeshes() const
+{
   return mMeshes.size();
 }
 
 //==============================================================================
-const Mesh& Asset::getMesh(std::size_t index) const {
+const Mesh& Asset::getMesh(std::size_t index) const
+{
   return mMeshes[index];
 }
 
 //==============================================================================
-const Mesh* Asset::getMesh(const std::string& name) const {
+const Mesh* Asset::getMesh(const std::string& name) const
+{
   const auto result = mMeshMap.find(name);
   if (result != mMeshMap.end()) {
     return result->second;
@@ -60,7 +63,8 @@ const Mesh* Asset::getMesh(const std::string& name) const {
 }
 
 //==============================================================================
-Errors Asset::read(tinyxml2::XMLElement* element) {
+Errors Asset::read(tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "asset") {
@@ -86,7 +90,8 @@ Errors Asset::read(tinyxml2::XMLElement* element) {
 }
 
 //==============================================================================
-Errors Asset::preprocess(const Compiler& compiler) {
+Errors Asset::preprocess(const Compiler& compiler)
+{
   Errors errors;
 
   for (Mesh& mesh : mMeshes) {
@@ -98,7 +103,8 @@ Errors Asset::preprocess(const Compiler& compiler) {
 }
 
 //==============================================================================
-Errors Asset::compile(const Compiler& compiler) {
+Errors Asset::compile(const Compiler& compiler)
+{
   Errors errors;
 
   for (Mesh& mesh : mMeshes) {
@@ -112,7 +118,8 @@ Errors Asset::compile(const Compiler& compiler) {
 }
 
 //==============================================================================
-Errors Asset::postprocess(const Compiler& compiler) {
+Errors Asset::postprocess(const Compiler& compiler)
+{
   Errors errors;
 
   for (Mesh& mesh : mMeshes) {

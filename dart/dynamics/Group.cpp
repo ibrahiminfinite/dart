@@ -45,7 +45,8 @@ GroupPtr Group::create(
     const std::string& _name,
     const std::vector<BodyNode*>& _bodyNodes,
     bool _includeJoints,
-    bool _includeDofs) {
+    bool _includeDofs)
+{
   GroupPtr group(new Group(_name, _bodyNodes, _includeJoints, _includeDofs));
   group->mPtr = group;
   return group;
@@ -56,7 +57,8 @@ GroupPtr Group::create(
     const std::string& _name,
     const std::vector<DegreeOfFreedom*>& _dofs,
     bool _includeBodyNodes,
-    bool _includeJoints) {
+    bool _includeJoints)
+{
   GroupPtr group(new Group(_name, _dofs, _includeBodyNodes, _includeJoints));
   group->mPtr = group;
   return group;
@@ -64,19 +66,22 @@ GroupPtr Group::create(
 
 //==============================================================================
 GroupPtr Group::create(
-    const std::string& _name, const MetaSkeletonPtr& _metaSkeleton) {
+    const std::string& _name, const MetaSkeletonPtr& _metaSkeleton)
+{
   GroupPtr group(new Group(_name, _metaSkeleton));
   group->mPtr = group;
   return group;
 }
 
 //==============================================================================
-GroupPtr Group::cloneGroup() const {
+GroupPtr Group::cloneGroup() const
+{
   return cloneGroup(getName());
 }
 
 //==============================================================================
-GroupPtr Group::cloneGroup(const std::string& cloneName) const {
+GroupPtr Group::cloneGroup(const std::string& cloneName) const
+{
   // Create an empty Group
   GroupPtr newGroup = create(cloneName, nullptr);
 
@@ -133,12 +138,14 @@ GroupPtr Group::cloneGroup(const std::string& cloneName) const {
 }
 
 //==============================================================================
-MetaSkeletonPtr Group::cloneMetaSkeleton(const std::string& cloneName) const {
+MetaSkeletonPtr Group::cloneMetaSkeleton(const std::string& cloneName) const
+{
   return cloneGroup(cloneName);
 }
 
 //==============================================================================
-void Group::swapBodyNodeIndices(std::size_t _index1, std::size_t _index2) {
+void Group::swapBodyNodeIndices(std::size_t _index1, std::size_t _index2)
+{
   if (_index1 >= mBodyNodes.size() || _index2 >= mBodyNodes.size()) {
     dterr << "[Group::swapBodyNodeIndices] Trying to swap out-of-bound indices "
           << "for the Group named [" << getName() << "] (" << this << ")! "
@@ -184,7 +191,8 @@ void Group::swapBodyNodeIndices(std::size_t _index1, std::size_t _index2) {
 }
 
 //==============================================================================
-void Group::swapDofIndices(std::size_t _index1, std::size_t _index2) {
+void Group::swapDofIndices(std::size_t _index1, std::size_t _index2)
+{
   if (_index1 >= mDofs.size() || _index2 >= mDofs.size()) {
     dterr << "[Group::swapDofIndices] Trying to swap out-of-bound indices for "
           << "the Group named [" << getName() << "] (" << this << ")! "
@@ -234,7 +242,8 @@ void Group::swapDofIndices(std::size_t _index1, std::size_t _index2) {
 }
 
 //==============================================================================
-bool Group::addComponent(BodyNode* _bn, bool _warning) {
+bool Group::addComponent(BodyNode* _bn, bool _warning)
+{
   if (nullptr == _bn) {
     if (_warning) {
       dtwarn << "[Group::addComponent] Attempting to add a nullptr component "
@@ -264,7 +273,8 @@ bool Group::addComponent(BodyNode* _bn, bool _warning) {
 
 //==============================================================================
 bool Group::addComponents(
-    const std::vector<BodyNode*>& _bodyNodes, bool _warning) {
+    const std::vector<BodyNode*>& _bodyNodes, bool _warning)
+{
   bool added = false;
   for (BodyNode* bn : _bodyNodes)
     added |= addComponent(bn, _warning);
@@ -273,7 +283,8 @@ bool Group::addComponents(
 }
 
 //==============================================================================
-bool Group::removeComponent(BodyNode* _bn, bool _warning) {
+bool Group::removeComponent(BodyNode* _bn, bool _warning)
+{
   if (nullptr == _bn) {
     if (_warning) {
       dtwarn << "[Group::removeComponent] Attempting to remove a nullptr "
@@ -304,7 +315,8 @@ bool Group::removeComponent(BodyNode* _bn, bool _warning) {
 
 //==============================================================================
 bool Group::removeComponents(
-    const std::vector<BodyNode*>& _bodyNodes, bool _warning) {
+    const std::vector<BodyNode*>& _bodyNodes, bool _warning)
+{
   bool removed = false;
   for (BodyNode* bn : _bodyNodes)
     removed |= removeComponent(bn, _warning);
@@ -313,7 +325,8 @@ bool Group::removeComponents(
 }
 
 //==============================================================================
-bool Group::addBodyNode(BodyNode* _bn, bool _warning) {
+bool Group::addBodyNode(BodyNode* _bn, bool _warning)
+{
   if (nullptr == _bn) {
     if (_warning) {
       dtwarn << "[Group::addBodyNode] Attempting to add a nullptr BodyNode "
@@ -341,7 +354,8 @@ bool Group::addBodyNode(BodyNode* _bn, bool _warning) {
 
 //==============================================================================
 bool Group::addBodyNodes(
-    const std::vector<BodyNode*>& _bodyNodes, bool _warning) {
+    const std::vector<BodyNode*>& _bodyNodes, bool _warning)
+{
   bool added = false;
   for (BodyNode* bn : _bodyNodes)
     added |= addBodyNode(bn, _warning);
@@ -350,7 +364,8 @@ bool Group::addBodyNodes(
 }
 
 //==============================================================================
-bool Group::removeBodyNode(BodyNode* _bn, bool _warning) {
+bool Group::removeBodyNode(BodyNode* _bn, bool _warning)
+{
   if (nullptr == _bn) {
     if (_warning) {
       dtwarn << "[Group::removeBodyNode] Attempting to remove a nullptr "
@@ -379,7 +394,8 @@ bool Group::removeBodyNode(BodyNode* _bn, bool _warning) {
 
 //==============================================================================
 bool Group::removeBodyNodes(
-    const std::vector<BodyNode*>& _bodyNodes, bool _warning) {
+    const std::vector<BodyNode*>& _bodyNodes, bool _warning)
+{
   bool removed = false;
   for (BodyNode* bn : _bodyNodes)
     removed |= removeBodyNode(bn, _warning);
@@ -388,7 +404,8 @@ bool Group::removeBodyNodes(
 }
 
 //==============================================================================
-bool Group::addJoint(Joint* _joint, bool _addDofs, bool _warning) {
+bool Group::addJoint(Joint* _joint, bool _addDofs, bool _warning)
+{
   if (nullptr == _joint) {
     if (_warning) {
       dtwarn << "[Group::addJoint] Attempting to add a nullptr Joint to the "
@@ -429,7 +446,8 @@ bool Group::addJoint(Joint* _joint, bool _addDofs, bool _warning) {
 
 //==============================================================================
 bool Group::addJoints(
-    const std::vector<Joint*>& _joints, bool _addDofs, bool _warning) {
+    const std::vector<Joint*>& _joints, bool _addDofs, bool _warning)
+{
   bool added = false;
   for (Joint* joint : _joints)
     added |= addJoint(joint, _addDofs, _warning);
@@ -438,7 +456,8 @@ bool Group::addJoints(
 }
 
 //==============================================================================
-bool Group::removeJoint(Joint* _joint, bool _removeDofs, bool _warning) {
+bool Group::removeJoint(Joint* _joint, bool _removeDofs, bool _warning)
+{
   if (nullptr == _joint) {
     if (_warning) {
       dtwarn << "[Group::removeJoint] Attempting to remove a nullptr Joint "
@@ -482,7 +501,8 @@ bool Group::removeJoint(Joint* _joint, bool _removeDofs, bool _warning) {
 
 //==============================================================================
 bool Group::removeJoints(
-    const std::vector<Joint*>& _joints, bool _removeDofs, bool _warning) {
+    const std::vector<Joint*>& _joints, bool _removeDofs, bool _warning)
+{
   bool removed = false;
   for (Joint* joint : _joints)
     removed |= removeJoint(joint, _removeDofs, _warning);
@@ -491,7 +511,8 @@ bool Group::removeJoints(
 }
 
 //==============================================================================
-bool Group::addDof(DegreeOfFreedom* _dof, bool _addJoint, bool _warning) {
+bool Group::addDof(DegreeOfFreedom* _dof, bool _addJoint, bool _warning)
+{
   if (nullptr == _dof) {
     if (_warning) {
       dtwarn << "[Group::addDof] Attempting to add a nullptr DegreeOfFreedom "
@@ -530,7 +551,8 @@ bool Group::addDof(DegreeOfFreedom* _dof, bool _addJoint, bool _warning) {
 
 //==============================================================================
 bool Group::addDofs(
-    const std::vector<DegreeOfFreedom*>& _dofs, bool _addJoint, bool _warning) {
+    const std::vector<DegreeOfFreedom*>& _dofs, bool _addJoint, bool _warning)
+{
   bool added = false;
   for (DegreeOfFreedom* dof : _dofs)
     added |= addDof(dof, _addJoint, _warning);
@@ -539,8 +561,8 @@ bool Group::addDofs(
 }
 
 //==============================================================================
-bool Group::removeDof(
-    DegreeOfFreedom* _dof, bool _cleanupJoint, bool _warning) {
+bool Group::removeDof(DegreeOfFreedom* _dof, bool _cleanupJoint, bool _warning)
+{
   if (nullptr == _dof) {
     if (_warning) {
       dtwarn << "[Group::removeDof] Attempting to remove a nullptr "
@@ -600,7 +622,8 @@ bool Group::removeDof(
 bool Group::removeDofs(
     const std::vector<DegreeOfFreedom*>& _dofs,
     bool _cleanupJoint,
-    bool _warning) {
+    bool _warning)
+{
   bool removed = false;
   for (DegreeOfFreedom* dof : _dofs)
     removed |= removeDof(dof, _cleanupJoint, _warning);
@@ -613,7 +636,8 @@ Group::Group(
     const std::string& _name,
     const std::vector<BodyNode*>& _bodyNodes,
     bool _includeJoints,
-    bool _includeDofs) {
+    bool _includeDofs)
+{
   setName(_name);
   addBodyNodes(_bodyNodes);
 
@@ -637,7 +661,8 @@ Group::Group(
     const std::string& _name,
     const std::vector<DegreeOfFreedom*>& _dofs,
     bool _includeBodyNodes,
-    bool _includeJoints) {
+    bool _includeJoints)
+{
   setName(_name);
   addDofs(_dofs, _includeJoints);
 
@@ -650,7 +675,8 @@ Group::Group(
 }
 
 //==============================================================================
-Group::Group(const std::string& _name, const MetaSkeletonPtr& _metaSkeleton) {
+Group::Group(const std::string& _name, const MetaSkeletonPtr& _metaSkeleton)
+{
   setName(_name);
 
   if (_metaSkeleton) {

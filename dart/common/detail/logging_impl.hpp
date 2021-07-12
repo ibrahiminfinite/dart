@@ -33,7 +33,6 @@
 #pragma once
 
 #include "dart/common/logging.hpp"
-
 #include "dart/common/macro.hpp"
 
 #if DART_HAVE_spdlog
@@ -47,7 +46,8 @@ namespace common {
 
 //==============================================================================
 template <typename S, typename... Args>
-void trace(const S& format_str, [[maybe_unused]] Args&&... args) {
+void trace(const S& format_str, [[maybe_unused]] Args&&... args)
+{
 #if DART_HAVE_spdlog
   spdlog::trace(format_str, std::forward<Args>(args)...);
 #else
@@ -57,7 +57,8 @@ void trace(const S& format_str, [[maybe_unused]] Args&&... args) {
 
 //==============================================================================
 template <typename S, typename... Args>
-void debug(const S& format_str, [[maybe_unused]] Args&&... args) {
+void debug(const S& format_str, [[maybe_unused]] Args&&... args)
+{
 #if DART_HAVE_spdlog
   spdlog::debug(format_str, std::forward<Args>(args)...);
 #else
@@ -67,7 +68,8 @@ void debug(const S& format_str, [[maybe_unused]] Args&&... args) {
 
 //==============================================================================
 template <typename S, typename... Args>
-void info(const S& format_str, [[maybe_unused]] Args&&... args) {
+void info(const S& format_str, [[maybe_unused]] Args&&... args)
+{
 #if DART_HAVE_spdlog
   spdlog::info(format_str, std::forward<Args>(args)...);
 #else
@@ -77,7 +79,8 @@ void info(const S& format_str, [[maybe_unused]] Args&&... args) {
 
 //==============================================================================
 template <typename S, typename... Args>
-void warn(const S& format_str, [[maybe_unused]] Args&&... args) {
+void warn(const S& format_str, [[maybe_unused]] Args&&... args)
+{
 #if DART_HAVE_spdlog
   spdlog::warn(format_str, std::forward<Args>(args)...);
 #else
@@ -87,7 +90,8 @@ void warn(const S& format_str, [[maybe_unused]] Args&&... args) {
 
 //==============================================================================
 template <typename S, typename... Args>
-void error(const S& format_str, [[maybe_unused]] Args&&... args) {
+void error(const S& format_str, [[maybe_unused]] Args&&... args)
+{
 #if DART_HAVE_spdlog
   spdlog::error(format_str, std::forward<Args>(args)...);
 #else
@@ -97,7 +101,8 @@ void error(const S& format_str, [[maybe_unused]] Args&&... args) {
 
 //==============================================================================
 template <typename S, typename... Args>
-void fatal(const S& format_str, [[maybe_unused]] Args&&... args) {
+void fatal(const S& format_str, [[maybe_unused]] Args&&... args)
+{
 #if DART_HAVE_spdlog
   spdlog::critical(format_str, std::forward<Args>(args)...);
 #else

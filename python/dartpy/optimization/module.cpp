@@ -48,7 +48,8 @@ void Function(py::module& sm);
 
 void Problem(py::module& sm);
 
-void dart_optimization(py::module& m) {
+void dart_optimization(py::module& m)
+{
   auto sm = m.def_submodule("optimization");
 
   Solver(sm);

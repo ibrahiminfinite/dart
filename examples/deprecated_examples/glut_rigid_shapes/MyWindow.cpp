@@ -43,20 +43,24 @@ using namespace Eigen;
 using namespace dart;
 
 //==============================================================================
-MyWindow::MyWindow() : SimWindow() {
+MyWindow::MyWindow() : SimWindow()
+{
 }
 
 //==============================================================================
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
 }
 
 //==============================================================================
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   mWorld->step();
 }
 
 //==============================================================================
-void MyWindow::drawWorld() const {
+void MyWindow::drawWorld() const
+{
   glEnable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -64,11 +68,12 @@ void MyWindow::drawWorld() const {
 }
 
 //==============================================================================
-Isometry3d getRandomTransform() {
+Isometry3d getRandomTransform()
+{
   Isometry3d T = Isometry3d::Identity();
 
-  const Vector3d rotation = math::Random::uniform<Vector3d>(
-      -math::constantsd::pi(), math::constantsd::pi());
+  const Vector3d rotation
+      = math::Random::uniform<Vector3d>(-math::pi(), math::pi());
   const Vector3d position = Vector3d(
       math::Random::uniform(-1.0, 1.0),
       math::Random::uniform(0.5, 1.0),
@@ -81,7 +86,8 @@ Isometry3d getRandomTransform() {
 }
 
 //==============================================================================
-void MyWindow::keyboard(unsigned char key, int x, int y) {
+void MyWindow::keyboard(unsigned char key, int x, int y)
+{
   switch (key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;
@@ -147,7 +153,8 @@ void MyWindow::keyboard(unsigned char key, int x, int y) {
 
 //==============================================================================
 void MyWindow::spawnBox(
-    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _size, double _mass) {
+    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _size, double _mass)
+{
   dynamics::SkeletonPtr newSkeleton = dynamics::Skeleton::create();
 
   dynamics::ShapePtr newShape(new dynamics::BoxShape(_size));
@@ -174,7 +181,8 @@ void MyWindow::spawnBox(
 
 //==============================================================================
 void MyWindow::spawnEllipsoid(
-    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _radii, double _mass) {
+    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _radii, double _mass)
+{
   dynamics::SkeletonPtr newSkeleton = dynamics::Skeleton::create();
 
   dynamics::ShapePtr newShape(new dynamics::EllipsoidShape(_radii * 2.0));
@@ -201,7 +209,8 @@ void MyWindow::spawnEllipsoid(
 
 //==============================================================================
 void MyWindow::spawnCylinder(
-    const Eigen::Isometry3d& _T, double _radius, double _height, double _mass) {
+    const Eigen::Isometry3d& _T, double _radius, double _height, double _mass)
+{
   dynamics::SkeletonPtr newSkeleton = dynamics::Skeleton::create();
 
   dynamics::ShapePtr newShape(new dynamics::CylinderShape(_radius, _height));

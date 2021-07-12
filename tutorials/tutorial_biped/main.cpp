@@ -52,7 +52,8 @@ class Controller {
 public:
   /// Constructor
   Controller(const SkeletonPtr& biped)
-    : mBiped(biped), mPreOffset(0.0), mSpeed(0.0) {
+    : mBiped(biped), mPreOffset(0.0), mSpeed(0.0)
+  {
     int nDofs = mBiped->getNumDofs();
 
     mForces = Eigen::VectorXd::Zero(nDofs);
@@ -74,36 +75,43 @@ public:
   }
 
   /// Reset the desired dof position to the current position
-  void setTargetPositions(const Eigen::VectorXd& pose) {
+  void setTargetPositions(const Eigen::VectorXd& pose)
+  {
     mTargetPositions = pose;
   }
 
   /// Clear commanding forces
-  void clearForces() {
+  void clearForces()
+  {
     mForces.setZero();
   }
 
   /// Add commanding forces from PD controllers
-  void addPDForces() {
+  void addPDForces()
+  {
     // Lesson 2
   }
 
   /// Add commanind forces from Stable-PD controllers
-  void addSPDForces() {
+  void addSPDForces()
+  {
     // Lesson 3
   }
 
   /// add commanding forces from ankle strategy
-  void addAnkleStrategyForces() {
+  void addAnkleStrategyForces()
+  {
     // Lesson 4
   }
 
   // Send velocity commands on wheel actuators
-  void setWheelCommands() {
+  void setWheelCommands()
+  {
     // Lesson 6
   }
 
-  void changeWheelSpeed(double increment) {
+  void changeWheelSpeed(double increment)
+  {
     mSpeed += increment;
     std::cout << "wheel speed = " << mSpeed << std::endl;
   }
@@ -134,14 +142,16 @@ protected:
 class MyWindow : public SimWindow {
 public:
   /// Constructor
-  MyWindow(const WorldPtr& world) : mForceCountDown(0), mPositiveSign(true) {
+  MyWindow(const WorldPtr& world) : mForceCountDown(0), mPositiveSign(true)
+  {
     setWorld(world);
 
     mController = std::make_unique<Controller>(mWorld->getSkeleton("biped"));
   }
 
   /// Handle keyboard input
-  void keyboard(unsigned char key, int x, int y) override {
+  void keyboard(unsigned char key, int x, int y) override
+  {
     switch (key) {
       case ',':
         mForceCountDown = default_countdown;
@@ -162,7 +172,8 @@ public:
     }
   }
 
-  void timeStepping() override {
+  void timeStepping() override
+  {
     mController->clearForces();
 
     // Lesson 3
@@ -211,7 +222,8 @@ protected:
 };
 
 // Load a biped model and enable joint limits and self-collision
-SkeletonPtr loadBiped() {
+SkeletonPtr loadBiped()
+{
   // Lesson 1
 
   // Create the world with a skeleton
@@ -224,23 +236,27 @@ SkeletonPtr loadBiped() {
 }
 
 // Load a skateboard model and connect it to the biped model via an Euler joint
-void modifyBipedWithSkateboard(SkeletonPtr /*biped*/) {
+void modifyBipedWithSkateboard(SkeletonPtr /*biped*/)
+{
   // Lesson 5
 }
 
 // Set the actuator type for four wheel joints to "VELOCITY"
-void setVelocityAccuators(SkeletonPtr /*biped*/) {
+void setVelocityAccuators(SkeletonPtr /*biped*/)
+{
   // Lesson 6
 }
 
 // Solve for a balanced pose using IK
-Eigen::VectorXd solveIK(SkeletonPtr biped) {
+Eigen::VectorXd solveIK(SkeletonPtr biped)
+{
   // Lesson 7
   Eigen::VectorXd newPose = biped->getPositions();
   return newPose;
 }
 
-SkeletonPtr createFloor() {
+SkeletonPtr createFloor()
+{
   SkeletonPtr floor = Skeleton::create("floor");
 
   // Give the floor a body
@@ -266,7 +282,8 @@ SkeletonPtr createFloor() {
   return floor;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
   SkeletonPtr floor = createFloor();
 
   // Lesson 1

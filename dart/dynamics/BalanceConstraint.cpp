@@ -50,18 +50,21 @@ BalanceConstraint::BalanceConstraint(
     mDamping(0.05),
     mLastError(Eigen::Vector3d::Zero()),
     mLastCOM(Eigen::Vector3d::Constant(std::nan(""))),
-    mLastSupportVersion(dynamics::INVALID_INDEX) {
+    mLastSupportVersion(dynamics::INVALID_INDEX)
+{
   // Do nothing
 }
 
 //==============================================================================
 optimization::FunctionPtr BalanceConstraint::clone(
-    const std::shared_ptr<dynamics::HierarchicalIK>& _newIK) const {
+    const std::shared_ptr<dynamics::HierarchicalIK>& _newIK) const
+{
   return std::make_shared<BalanceConstraint>(_newIK, mBalanceMethod);
 }
 
 //==============================================================================
-double BalanceConstraint::eval(const Eigen::VectorXd& _x) {
+double BalanceConstraint::eval(const Eigen::VectorXd& _x)
+{
   const std::shared_ptr<dynamics::HierarchicalIK>& ik = mIK.lock();
 
   if (nullptr == ik) {
@@ -148,7 +151,8 @@ static void addDampedPseudoInverseToGradient(
     const JacType& J,
     const Eigen::MatrixXd& nullspace,
     const Eigen::Vector3d& error,
-    double damping) {
+    double damping)
+{
   int rows = J.rows(), cols = J.cols();
   if (rows <= cols) {
     grad += nullspace * J.transpose()
@@ -167,7 +171,8 @@ static void addDampedPseudoInverseToGradient(
 
 //==============================================================================
 void BalanceConstraint::evalGradient(
-    const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) {
+    const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad)
+{
   _grad.setZero();
   if (eval(_x) == 0.0)
     return;
@@ -291,7 +296,8 @@ void BalanceConstraint::evalGradient(
 }
 
 //==============================================================================
-void BalanceConstraint::setErrorMethod(ErrorMethod_t _method) {
+void BalanceConstraint::setErrorMethod(ErrorMethod_t _method)
+{
   if (mErrorMethod == _method)
     return;
 
@@ -300,12 +306,14 @@ void BalanceConstraint::setErrorMethod(ErrorMethod_t _method) {
 }
 
 //==============================================================================
-BalanceConstraint::ErrorMethod_t BalanceConstraint::getErrorMethod() const {
+BalanceConstraint::ErrorMethod_t BalanceConstraint::getErrorMethod() const
+{
   return mErrorMethod;
 }
 
 //==============================================================================
-void BalanceConstraint::setBalanceMethod(BalanceMethod_t _method) {
+void BalanceConstraint::setBalanceMethod(BalanceMethod_t _method)
+{
   if (mBalanceMethod == _method)
     return;
 
@@ -314,12 +322,14 @@ void BalanceConstraint::setBalanceMethod(BalanceMethod_t _method) {
 }
 
 //==============================================================================
-BalanceConstraint::BalanceMethod_t BalanceConstraint::getBalanceMethod() const {
+BalanceConstraint::BalanceMethod_t BalanceConstraint::getBalanceMethod() const
+{
   return mBalanceMethod;
 }
 
 //==============================================================================
-void BalanceConstraint::setOptimizationTolerance(double _tol) {
+void BalanceConstraint::setOptimizationTolerance(double _tol)
+{
   if (mOptimizationTolerance == _tol)
     return;
 
@@ -328,12 +338,14 @@ void BalanceConstraint::setOptimizationTolerance(double _tol) {
 }
 
 //==============================================================================
-double BalanceConstraint::getOptimizationTolerance() const {
+double BalanceConstraint::getOptimizationTolerance() const
+{
   return mOptimizationTolerance;
 }
 
 //==============================================================================
-void BalanceConstraint::setPseudoInverseDamping(double _damping) {
+void BalanceConstraint::setPseudoInverseDamping(double _damping)
+{
   if (mDamping == _damping)
     return;
 
@@ -342,24 +354,28 @@ void BalanceConstraint::setPseudoInverseDamping(double _damping) {
 }
 
 //==============================================================================
-double BalanceConstraint::getPseudoInverseDamping() const {
+double BalanceConstraint::getPseudoInverseDamping() const
+{
   return mDamping;
 }
 
 //==============================================================================
-const Eigen::Vector3d& BalanceConstraint::getLastError() const {
+const Eigen::Vector3d& BalanceConstraint::getLastError() const
+{
   return mLastError;
 }
 
 //==============================================================================
-void BalanceConstraint::clearCaches() {
+void BalanceConstraint::clearCaches()
+{
   // This will ensure that the comparison test in eval() fails
   mLastCOM = Eigen::Vector3d::Constant(std::nan(""));
 }
 
 //==============================================================================
 void BalanceConstraint::convertJacobianMethodOutputToGradient(
-    Eigen::Map<Eigen::VectorXd>& grad) {
+    Eigen::Map<Eigen::VectorXd>& grad)
+{
   const dart::dynamics::SkeletonPtr& skel = mIK.lock()->getSkeleton();
   skel->setVelocities(grad);
 

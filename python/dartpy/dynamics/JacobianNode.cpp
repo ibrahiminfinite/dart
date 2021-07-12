@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void JacobianNode(py::module& m) {
+void JacobianNode(py::module& m)
+{
   ::py::class_<
       dart::dynamics::JacobianNode,
       dart::dynamics::Frame,

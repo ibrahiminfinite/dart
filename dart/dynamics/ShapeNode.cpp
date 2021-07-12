@@ -38,17 +38,20 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-void ShapeNode::setProperties(const Properties& properties) {
+void ShapeNode::setProperties(const Properties& properties)
+{
   setCompositeProperties(properties);
 }
 
 //==============================================================================
-const ShapeNode::Properties ShapeNode::getShapeNodeProperties() const {
+const ShapeNode::Properties ShapeNode::getShapeNodeProperties() const
+{
   return getCompositeProperties();
 }
 
 //==============================================================================
-void ShapeNode::copy(const ShapeNode& other) {
+void ShapeNode::copy(const ShapeNode& other)
+{
   if (this == &other)
     return;
 
@@ -56,7 +59,8 @@ void ShapeNode::copy(const ShapeNode& other) {
 }
 
 //==============================================================================
-void ShapeNode::copy(const ShapeNode* other) {
+void ShapeNode::copy(const ShapeNode* other)
+{
   if (nullptr == other)
     return;
 
@@ -64,13 +68,15 @@ void ShapeNode::copy(const ShapeNode* other) {
 }
 
 //==============================================================================
-ShapeNode& ShapeNode::operator=(const ShapeNode& other) {
+ShapeNode& ShapeNode::operator=(const ShapeNode& other)
+{
   copy(other);
   return *this;
 }
 
 //==============================================================================
-void ShapeNode::setRelativeTransform(const Eigen::Isometry3d& transform) {
+void ShapeNode::setRelativeTransform(const Eigen::Isometry3d& transform)
+{
   if (transform.matrix() == FixedFrame::mAspectProperties.mRelativeTf.matrix())
     return;
 
@@ -85,7 +91,8 @@ void ShapeNode::setRelativeTransform(const Eigen::Isometry3d& transform) {
 }
 
 //==============================================================================
-void ShapeNode::setRelativeRotation(const Eigen::Matrix3d& rotation) {
+void ShapeNode::setRelativeRotation(const Eigen::Matrix3d& rotation)
+{
   Eigen::Isometry3d transform = getRelativeTransform();
   transform.linear() = rotation;
 
@@ -93,12 +100,14 @@ void ShapeNode::setRelativeRotation(const Eigen::Matrix3d& rotation) {
 }
 
 //==============================================================================
-Eigen::Matrix3d ShapeNode::getRelativeRotation() const {
+Eigen::Matrix3d ShapeNode::getRelativeRotation() const
+{
   return getRelativeTransform().linear();
 }
 
 //==============================================================================
-void ShapeNode::setRelativeTranslation(const Eigen::Vector3d& translation) {
+void ShapeNode::setRelativeTranslation(const Eigen::Vector3d& translation)
+{
   Eigen::Isometry3d transform = getRelativeTransform();
   transform.translation() = translation;
 
@@ -106,27 +115,32 @@ void ShapeNode::setRelativeTranslation(const Eigen::Vector3d& translation) {
 }
 
 //==============================================================================
-void ShapeNode::setOffset(const Eigen::Vector3d& offset) {
+void ShapeNode::setOffset(const Eigen::Vector3d& offset)
+{
   setRelativeTranslation(offset);
 }
 
 //==============================================================================
-Eigen::Vector3d ShapeNode::getRelativeTranslation() const {
+Eigen::Vector3d ShapeNode::getRelativeTranslation() const
+{
   return getRelativeTransform().translation();
 }
 
 //==============================================================================
-Eigen::Vector3d ShapeNode::getOffset() const {
+Eigen::Vector3d ShapeNode::getOffset() const
+{
   return getRelativeTranslation();
 }
 
 //==============================================================================
-ShapeNode* ShapeNode::asShapeNode() {
+ShapeNode* ShapeNode::asShapeNode()
+{
   return this;
 }
 
 //==============================================================================
-const ShapeNode* ShapeNode::asShapeNode() const {
+const ShapeNode* ShapeNode::asShapeNode() const
+{
   return this;
 }
 
@@ -136,9 +150,8 @@ ShapeNode::ShapeNode(BodyNode* bodyNode, const BasicProperties& properties)
     Frame(bodyNode),
     FixedFrame(bodyNode),
     detail::ShapeNodeCompositeBase(
-        std::make_tuple(bodyNode, properties.mRelativeTf),
-        bodyNode,
-        properties) {
+        std::make_tuple(bodyNode, properties.mRelativeTf), bodyNode, properties)
+{
   setProperties(properties);
   mAmShapeNode = true;
 }
@@ -151,14 +164,16 @@ ShapeNode::ShapeNode(
     FixedFrame(bodyNode),
     detail::ShapeNodeCompositeBase(
         std::make_tuple(bodyNode, Eigen::Isometry3d::Identity()),
-        std::make_tuple(bodyNode, ShapeFrame::Properties(shape))) {
+        std::make_tuple(bodyNode, ShapeFrame::Properties(shape)))
+{
   // TODO(MXG): Consider changing this to a delegating constructor instead
   setName(name);
   mAmShapeNode = true;
 }
 
 //==============================================================================
-Node* ShapeNode::cloneNode(BodyNode* parent) const {
+Node* ShapeNode::cloneNode(BodyNode* parent) const
+{
   ShapeNode* shapeNode = new ShapeNode(parent, Properties());
   shapeNode->duplicateAspects(this);
 

@@ -48,7 +48,8 @@ Shape::Shape(ShapeType type)
     mID(mCounter++),
     mVariance(STATIC),
     mType(type),
-    onVersionChanged(mVersionChangedSignal) {
+    onVersionChanged(mVersionChangedSignal)
+{
   mVersion = 1;
 }
 
@@ -59,17 +60,20 @@ Shape::Shape()
     mID(mCounter++),
     mVariance(STATIC),
     mType(UNSUPPORTED),
-    onVersionChanged(mVersionChangedSignal) {
+    onVersionChanged(mVersionChangedSignal)
+{
   mVersion = 1;
 }
 
 //==============================================================================
-Shape::~Shape() {
+Shape::~Shape()
+{
   // Do nothing
 }
 
 //==============================================================================
-const math::BoundingBox& Shape::getBoundingBox() const {
+const math::BoundingBox& Shape::getBoundingBox() const
+{
   if (mIsBoundingBoxDirty)
     updateBoundingBox();
 
@@ -77,17 +81,20 @@ const math::BoundingBox& Shape::getBoundingBox() const {
 }
 
 //==============================================================================
-Eigen::Matrix3d Shape::computeInertiaFromDensity(double density) const {
+Eigen::Matrix3d Shape::computeInertiaFromDensity(double density) const
+{
   return computeInertiaFromMass(density * getVolume());
 }
 
 //==============================================================================
-Eigen::Matrix3d Shape::computeInertiaFromMass(double mass) const {
+Eigen::Matrix3d Shape::computeInertiaFromMass(double mass) const
+{
   return computeInertia(mass);
 }
 
 //==============================================================================
-double Shape::getVolume() const {
+double Shape::getVolume() const
+{
   if (mIsVolumeDirty)
     updateVolume();
 
@@ -95,37 +102,44 @@ double Shape::getVolume() const {
 }
 
 //==============================================================================
-std::size_t Shape::getID() const {
+std::size_t Shape::getID() const
+{
   return mID;
 }
 
 //==============================================================================
-Shape::ShapeType Shape::getShapeType() const {
+Shape::ShapeType Shape::getShapeType() const
+{
   return mType;
 }
 
 //==============================================================================
-void Shape::setDataVariance(unsigned int _variance) {
+void Shape::setDataVariance(unsigned int _variance)
+{
   mVariance = _variance;
 }
 
 //==============================================================================
-void Shape::addDataVariance(unsigned int _variance) {
+void Shape::addDataVariance(unsigned int _variance)
+{
   mVariance |= _variance;
 }
 
 //==============================================================================
-void Shape::removeDataVariance(unsigned int _variance) {
+void Shape::removeDataVariance(unsigned int _variance)
+{
   mVariance &= ~_variance;
 }
 
 //==============================================================================
-unsigned int Shape::getDataVariance() const {
+unsigned int Shape::getDataVariance() const
+{
   return mVariance;
 }
 
 //==============================================================================
-bool Shape::checkDataVariance(DataVariance type) const {
+bool Shape::checkDataVariance(DataVariance type) const
+{
   if (STATIC == type)
     return STATIC == mVariance;
 
@@ -133,32 +147,38 @@ bool Shape::checkDataVariance(DataVariance type) const {
 }
 
 //==============================================================================
-void Shape::refreshData() {
+void Shape::refreshData()
+{
   // Do nothing
 }
 
 //==============================================================================
-void Shape::notifyAlphaUpdate(double alpha) {
+void Shape::notifyAlphaUpdate(double alpha)
+{
   notifyAlphaUpdated(alpha);
 }
 
 //==============================================================================
-void Shape::notifyAlphaUpdated(double /*alpha*/) {
+void Shape::notifyAlphaUpdated(double /*alpha*/)
+{
   // Do nothing
 }
 
 //==============================================================================
-void Shape::notifyColorUpdate(const Eigen::Vector4d& color) {
+void Shape::notifyColorUpdate(const Eigen::Vector4d& color)
+{
   notifyColorUpdated(color);
 }
 
 //==============================================================================
-void Shape::notifyColorUpdated(const Eigen::Vector4d& /*color*/) {
+void Shape::notifyColorUpdated(const Eigen::Vector4d& /*color*/)
+{
   // Do nothing
 }
 
 //==============================================================================
-std::size_t Shape::incrementVersion() {
+std::size_t Shape::incrementVersion()
+{
   ++mVersion;
   mVersionChangedSignal.raise(this, mVersion);
 

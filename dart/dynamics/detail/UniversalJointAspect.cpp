@@ -39,7 +39,8 @@ namespace detail {
 //==============================================================================
 UniversalJointUniqueProperties::UniversalJointUniqueProperties(
     const Eigen::Vector3d& _axis1, const Eigen::Vector3d& _axis2)
-  : mAxis({_axis1.normalized(), _axis2.normalized()}) {
+  : mAxis({_axis1.normalized(), _axis2.normalized()})
+{
   // Do nothing
 }
 
@@ -48,7 +49,8 @@ UniversalJointProperties::UniversalJointProperties(
     const GenericJoint<math::R2Space>::Properties& genericJointProperties,
     const UniversalJointUniqueProperties& universalProperties)
   : GenericJoint<math::R2Space>::Properties(genericJointProperties),
-    UniversalJointUniqueProperties(universalProperties) {
+    UniversalJointUniqueProperties(universalProperties)
+{
   // Do nothing
 }
 

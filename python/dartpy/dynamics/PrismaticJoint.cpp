@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void PrismaticJoint(py::module& m) {
+void PrismaticJoint(py::module& m)
+{
   ::py::class_<dart::dynamics::PrismaticJoint::UniqueProperties>(
       m, "PrismaticJointUniqueProperties")
       .def(::py::init<>())

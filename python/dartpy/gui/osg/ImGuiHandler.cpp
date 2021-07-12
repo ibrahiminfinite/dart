@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void ImGuiHandler(py::module& m) {
+void ImGuiHandler(py::module& m)
+{
   ::pybind11::class_<
       dart::gui::osg::ImGuiHandler,
       osg::ref_ptr<dart::gui::osg::ImGuiHandler> >(m, "ImGuiHandler")

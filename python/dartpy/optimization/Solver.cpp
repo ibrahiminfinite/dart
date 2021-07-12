@@ -40,7 +40,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Solver(py::module& m) {
+void Solver(py::module& m)
+{
   ::py::class_<dart::optimization::Solver::Properties>(m, "SolverProperties")
       .def(::py::init<>())
       .def(
@@ -134,7 +135,8 @@ void Solver(py::module& m) {
     using Solver::Solver;
 
     // Trampoline for virtual function
-    bool solve() override {
+    bool solve() override
+    {
       PYBIND11_OVERLOAD_PURE(
           bool,   // Return type
           Solver, // Parent class
@@ -143,7 +145,8 @@ void Solver(py::module& m) {
     }
 
     // Trampoline for virtual function
-    std::string getType() const override {
+    std::string getType() const override
+    {
       PYBIND11_OVERLOAD_PURE(
           std::string, // Return type
           Solver,      // Parent class
@@ -152,7 +155,8 @@ void Solver(py::module& m) {
     }
 
     // Trampoline for virtual function
-    std::shared_ptr<Solver> clone() const override {
+    std::shared_ptr<Solver> clone() const override
+    {
       PYBIND11_OVERLOAD_PURE(
           std::shared_ptr<Solver>, // Return type
           Solver,                  // Parent class

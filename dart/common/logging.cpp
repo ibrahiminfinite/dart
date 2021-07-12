@@ -44,7 +44,8 @@ namespace dart {
 namespace common {
 
 //==============================================================================
-void set_log_level(LogLevel level) {
+void set_log_level(LogLevel level)
+{
 #if DART_HAVE_spdlog
   switch (level) {
     case LogLevel::LL_TRACE:

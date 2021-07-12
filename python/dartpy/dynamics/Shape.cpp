@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Shape(py::module& m) {
+void Shape(py::module& m)
+{
   auto shape
       = ::py::class_<
             dart::dynamics::Shape,

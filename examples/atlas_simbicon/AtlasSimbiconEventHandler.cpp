@@ -35,13 +35,15 @@
 //==============================================================================
 AtlasSimbiconEventHandler::AtlasSimbiconEventHandler(
     AtlasSimbiconWorldNode* node)
-  : mNode(node) {
+  : mNode(node)
+{
   // Do nothing
 }
 
 //==============================================================================
 bool AtlasSimbiconEventHandler::handle(
-    const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) {
+    const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&)
+{
   if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN) {
     if (ea.getKey() == 'r' || ea.getKey() == 'R') {
       mNode->reset();

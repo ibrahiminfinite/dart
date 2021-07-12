@@ -45,12 +45,14 @@ DistanceResult::DistanceResult()
     shapeFrame1(nullptr),
     shapeFrame2(nullptr),
     nearestPoint1(Eigen::Vector3d::Zero()),
-    nearestPoint2(Eigen::Vector3d::Zero()) {
+    nearestPoint2(Eigen::Vector3d::Zero())
+{
   // Do nothing
 }
 
 //==============================================================================
-void DistanceResult::clear() {
+void DistanceResult::clear()
+{
   minDistance = DART_DEFAULT_MIN_DISTANCE;
   unclampedMinDistance = DART_DEFAULT_UNCLAMPED_MIN_DISTANCE;
 
@@ -62,7 +64,8 @@ void DistanceResult::clear() {
 }
 
 //==============================================================================
-bool DistanceResult::found() const {
+bool DistanceResult::found() const
+{
   if (!shapeFrame1 || !shapeFrame2)
     return false;
 
@@ -70,7 +73,8 @@ bool DistanceResult::found() const {
 }
 
 //==============================================================================
-bool DistanceResult::isMinDistanceClamped() const {
+bool DistanceResult::isMinDistanceClamped() const
+{
   return found() && (minDistance == unclampedMinDistance);
 }
 

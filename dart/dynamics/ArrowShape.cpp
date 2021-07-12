@@ -32,7 +32,7 @@
 
 #include "dart/dynamics/ArrowShape.hpp"
 
-#include "dart/math/Constants.hpp"
+#include "dart/math/constant.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -50,7 +50,8 @@ ArrowShape::Properties::Properties(
     mHeadLengthScale(_headLengthScale),
     mMinHeadLength(_minHeadLength),
     mMaxHeadLength(_maxHeadLength),
-    mDoubleArrow(_doubleArrow) {
+    mDoubleArrow(_doubleArrow)
+{
 }
 
 //==============================================================================
@@ -63,7 +64,8 @@ ArrowShape::ArrowShape(
   : MeshShape(Eigen::Vector3d::Ones(), nullptr),
     mTail(_tail),
     mHead(_head),
-    mProperties(_properties) {
+    mProperties(_properties)
+{
   instantiate(_resolution);
   configureArrow(mTail, mHead, mProperties);
   setColorMode(MeshShape::COLOR_INDEX);
@@ -72,27 +74,32 @@ ArrowShape::ArrowShape(
 
 //==============================================================================
 void ArrowShape::setPositions(
-    const Eigen::Vector3d& _tail, const Eigen::Vector3d& _head) {
+    const Eigen::Vector3d& _tail, const Eigen::Vector3d& _head)
+{
   configureArrow(_tail, _head, mProperties);
 }
 
 //==============================================================================
-const Eigen::Vector3d& ArrowShape::getTail() const {
+const Eigen::Vector3d& ArrowShape::getTail() const
+{
   return mTail;
 }
 
 //==============================================================================
-const Eigen::Vector3d& ArrowShape::getHead() const {
+const Eigen::Vector3d& ArrowShape::getHead() const
+{
   return mHead;
 }
 
 //==============================================================================
-void ArrowShape::setProperties(const Properties& _properties) {
+void ArrowShape::setProperties(const Properties& _properties)
+{
   configureArrow(mTail, mHead, _properties);
 }
 
 //==============================================================================
-void ArrowShape::notifyColorUpdated(const Eigen::Vector4d& _color) {
+void ArrowShape::notifyColorUpdated(const Eigen::Vector4d& _color)
+{
   for (std::size_t i = 0; i < mMesh->mNumMeshes; ++i) {
     aiMesh* mesh = mMesh->mMeshes[i];
     for (std::size_t j = 0; j < mesh->mNumVertices; ++j) {
@@ -103,7 +110,8 @@ void ArrowShape::notifyColorUpdated(const Eigen::Vector4d& _color) {
 }
 
 //==============================================================================
-const ArrowShape::Properties& ArrowShape::getProperties() const {
+const ArrowShape::Properties& ArrowShape::getProperties() const
+{
   return mProperties;
 }
 
@@ -112,11 +120,11 @@ static void constructArrowTip(
     aiMesh* mesh,
     double base,
     double tip,
-    const ArrowShape::Properties& properties) {
+    const ArrowShape::Properties& properties)
+{
   std::size_t resolution = (mesh->mNumVertices - 1) / 2;
   for (std::size_t i = 0; i < resolution; ++i) {
-    double theta
-        = (double)(i) / (double)(resolution)*2 * math::constantsd::pi();
+    double theta = (double)(i) / (double)(resolution)*2 * math::pi();
 
     double R = properties.mRadius;
     double x = R * cos(theta);
@@ -140,11 +148,11 @@ static void constructArrowBody(
     aiMesh* mesh,
     double z1,
     double z2,
-    const ArrowShape::Properties& properties) {
+    const ArrowShape::Properties& properties)
+{
   std::size_t resolution = mesh->mNumVertices / 2;
   for (std::size_t i = 0; i < resolution; ++i) {
-    double theta
-        = (double)(i) / (double)(resolution)*2 * math::constantsd::pi();
+    double theta = (double)(i) / (double)(resolution)*2 * math::pi();
 
     double R = properties.mRadius;
     double x = R * cos(theta);
@@ -161,7 +169,8 @@ static void constructArrowBody(
 void ArrowShape::configureArrow(
     const Eigen::Vector3d& _tail,
     const Eigen::Vector3d& _head,
-    const Properties& _properties) {
+    const Properties& _properties)
+{
   mTail = _tail;
   mHead = _head;
   mProperties = _properties;
@@ -231,7 +240,8 @@ void ArrowShape::configureArrow(
 }
 
 //==============================================================================
-void ArrowShape::instantiate(std::size_t resolution) {
+void ArrowShape::instantiate(std::size_t resolution)
+{
   aiNode* node = new aiNode;
   node->mNumMeshes = 3;
   node->mMeshes = new unsigned int[3];
@@ -275,16 +285,14 @@ void ArrowShape::instantiate(std::size_t resolution) {
   for (std::size_t i = 0; i < resolution; ++i) {
     mesh->mNormals[2 * i].Set(0.0f, 0.0f, 1.0f);
 
-    double theta
-        = (double)(i) / (double)(resolution)*2 * math::constantsd::pi();
+    double theta = (double)(i) / (double)(resolution)*2 * math::pi();
     mesh->mNormals[2 * i + 1].Set(cos(theta), sin(theta), 0.0f);
   }
   mesh->mNormals[mesh->mNumVertices - 1].Set(0.0f, 0.0f, -1.0f);
 
   mesh = scene->mMeshes[1];
   for (std::size_t i = 0; i < resolution; ++i) {
-    double theta
-        = (double)(i) / (double)(resolution)*2 * math::constantsd::pi();
+    double theta = (double)(i) / (double)(resolution)*2 * math::pi();
     mesh->mNormals[2 * i].Set(cos(theta), sin(theta), 0.0f);
     mesh->mNormals[2 * i + 1].Set(cos(theta), sin(theta), 0.0f);
   }
@@ -293,8 +301,7 @@ void ArrowShape::instantiate(std::size_t resolution) {
   for (std::size_t i = 0; i < resolution; ++i) {
     mesh->mNormals[2 * i].Set(0.0f, 0.0f, -1.0f);
 
-    double theta
-        = (double)(i) / (double)(resolution)*2 * math::constantsd::pi();
+    double theta = (double)(i) / (double)(resolution)*2 * math::pi();
     mesh->mNormals[2 * i + 1].Set(cos(theta), sin(theta), 0.0f);
   }
   mesh->mNormals[mesh->mNumVertices - 1].Set(0.0f, 0.0f, 1.0f);

@@ -64,7 +64,8 @@ std::ostream& colorErr(
 } // namespace common
 
 template <class T>
-auto operator<<(std::ostream& os, const T& t) -> decltype(t.print(os), os) {
+auto operator<<(std::ostream& os, const T& t) -> decltype(t.print(os), os)
+{
   t.print(os);
   return os;
 }

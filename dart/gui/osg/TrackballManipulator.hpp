@@ -40,19 +40,24 @@ namespace gui {
 namespace osg {
 
 #define DART_META_Object(library, name)                                        \
-  ::osg::Object* cloneType() const override {                                  \
+  ::osg::Object* cloneType() const override                                    \
+  {                                                                            \
     return new name();                                                         \
   }                                                                            \
-  ::osg::Object* clone(const ::osg::CopyOp& copyop) const override {           \
+  ::osg::Object* clone(const ::osg::CopyOp& copyop) const override             \
+  {                                                                            \
     return new name(*this, copyop);                                            \
   }                                                                            \
-  bool isSameKindAs(const ::osg::Object* obj) const override {                 \
+  bool isSameKindAs(const ::osg::Object* obj) const override                   \
+  {                                                                            \
     return dynamic_cast<const name*>(obj) != NULL;                             \
   }                                                                            \
-  const char* libraryName() const override {                                   \
+  const char* libraryName() const override                                     \
+  {                                                                            \
     return #library;                                                           \
   }                                                                            \
-  const char* className() const override {                                     \
+  const char* className() const override                                       \
+  {                                                                            \
     return #name;                                                              \
   }
 // TODO(JS): Copied from osg/Object. Due to the namespace conflict between osg

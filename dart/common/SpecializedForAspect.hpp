@@ -104,7 +104,8 @@ public:
 
 protected:
   template <class T>
-  struct type {};
+  struct type {
+  };
 
   /// Redirect to Composite::has()
   template <class T>

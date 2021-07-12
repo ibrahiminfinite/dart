@@ -1419,7 +1419,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void GenericJoint(py::module& m) {
+void GenericJoint(py::module& m)
+{
   DARTPY_DEFINE_GENERICJOINT(R1, ::dart::math::RealVectorSpace<1>);
   DARTPY_DEFINE_GENERICJOINT(R2, ::dart::math::RealVectorSpace<2>);
   DARTPY_DEFINE_GENERICJOINT(R3, ::dart::math::RealVectorSpace<3>);

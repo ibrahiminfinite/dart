@@ -461,8 +461,8 @@ private:
 
       /// A constructor that simply accepts a last known version number. Shape
       /// frames can be added later.
-      explicit ChildInfo(const std::size_t version)
-        : mLastKnownVersion(version) {
+      explicit ChildInfo(const std::size_t version) : mLastKnownVersion(version)
+      {
         // Do nothing
       }
     };
@@ -473,7 +473,8 @@ private:
 
     /// Constructor
     CollisionSource(const Source& source, std::size_t lastKnownVersion)
-      : mSource(source), mLastKnownVersion(lastKnownVersion) {
+      : mSource(source), mLastKnownVersion(lastKnownVersion)
+    {
       // Do nothing
     }
   };

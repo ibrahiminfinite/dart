@@ -47,15 +47,18 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-PGSLCPSolver::PGSLCPSolver(double _timestep) : LCPSolver(_timestep) {
+PGSLCPSolver::PGSLCPSolver(double _timestep) : LCPSolver(_timestep)
+{
 }
 
 //==============================================================================
-PGSLCPSolver::~PGSLCPSolver() {
+PGSLCPSolver::~PGSLCPSolver()
+{
 }
 
 //==============================================================================
-void PGSLCPSolver::solve(ConstrainedGroup* _group) {
+void PGSLCPSolver::solve(ConstrainedGroup* _group)
+{
   // If there is no constraint, then just return true.
   std::size_t numConstraints = _group->getNumConstraints();
   if (numConstraints == 0)
@@ -180,7 +183,8 @@ void PGSLCPSolver::solve(ConstrainedGroup* _group) {
 
 //==============================================================================
 #ifndef NDEBUG
-bool PGSLCPSolver::isSymmetric(std::size_t _n, double* _A) {
+bool PGSLCPSolver::isSymmetric(std::size_t _n, double* _A)
+{
   std::size_t nSkip = dPAD(_n);
   for (std::size_t i = 0; i < _n; ++i) {
     for (std::size_t j = 0; j < _n; ++j) {
@@ -207,7 +211,8 @@ bool PGSLCPSolver::isSymmetric(std::size_t _n, double* _A) {
 
 //==============================================================================
 bool PGSLCPSolver::isSymmetric(
-    std::size_t _n, double* _A, std::size_t _begin, std::size_t _end) {
+    std::size_t _n, double* _A, std::size_t _begin, std::size_t _end)
+{
   std::size_t nSkip = dPAD(_n);
   for (std::size_t i = _begin; i <= _end; ++i) {
     for (std::size_t j = _begin; j <= _end; ++j) {
@@ -241,7 +246,8 @@ void PGSLCPSolver::print(
     double* /*hi*/,
     double* b,
     double* w,
-    int* findex) {
+    int* findex)
+{
   std::size_t nSkip = dPAD(_n);
   std::cout << "A: " << std::endl;
   for (std::size_t i = 0; i < _n; ++i) {
@@ -327,7 +333,8 @@ bool solvePGS(
     double* lo,
     double* hi,
     int* findex,
-    PGSOption* option) {
+    PGSOption* option)
+{
   // LDLT solver will work !!!
   // if (nub == n)
   //{
@@ -482,7 +489,8 @@ bool solvePGS(
 #define LCP_PGS_OPTION_DEFAULT_EPS_RESIDUAL 1E-6
 #define LCP_PGS_OPTION_DEFAULT_EPS_DIVIDE 1E-9
 
-void PGSOption::setDefault() {
+void PGSOption::setDefault()
+{
   itermax = LCP_PGS_OPTION_DEFAULT_ITERMAX;
   sor_w = LCP_PGS_OPTION_DEFAULT_SOR_W;
   eps_ea = LCP_PGS_OPTION_DEFAULT_EPS_EA;

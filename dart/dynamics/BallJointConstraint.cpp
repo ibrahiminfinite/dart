@@ -47,7 +47,8 @@ BallJointConstraint::BallJointConstraint(
     mOffset1(_body->getTransform().inverse() * _jointPos),
     mOffset2(_jointPos),
     mViolation(Eigen::Vector3d::Zero()),
-    mAppliedImpulseIndex(0) {
+    mAppliedImpulseIndex(0)
+{
   mDim = 3;
 
   mOldX[0] = 0.0;
@@ -68,7 +69,8 @@ BallJointConstraint::BallJointConstraint(
     mOffset1(_body1->getTransform().inverse() * _jointPos),
     mOffset2(_body2->getTransform().inverse() * _jointPos),
     mViolation(Eigen::Vector3d::Zero()),
-    mAppliedImpulseIndex(0) {
+    mAppliedImpulseIndex(0)
+{
   mDim = 3;
 
   mOldX[0] = 0.0;
@@ -84,22 +86,26 @@ BallJointConstraint::BallJointConstraint(
 }
 
 //==============================================================================
-BallJointConstraint::~BallJointConstraint() {
+BallJointConstraint::~BallJointConstraint()
+{
 }
 
 //==============================================================================
-const std::string& BallJointConstraint::getType() const {
+const std::string& BallJointConstraint::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& BallJointConstraint::getStaticType() {
+const std::string& BallJointConstraint::getStaticType()
+{
   static const std::string name = "BallJointConstraint";
   return name;
 }
 
 //==============================================================================
-void BallJointConstraint::update() {
+void BallJointConstraint::update()
+{
   // mBodyNode1 should not be null pointer ever
   assert(mBodyNode1);
 
@@ -129,7 +135,8 @@ void BallJointConstraint::update() {
 }
 
 //==============================================================================
-void BallJointConstraint::getInformation(ConstraintInfo* _lcp) {
+void BallJointConstraint::getInformation(ConstraintInfo* _lcp)
+{
   assert(_lcp->w[0] == 0.0);
   assert(_lcp->w[1] == 0.0);
   assert(_lcp->w[2] == 0.0);
@@ -165,7 +172,8 @@ void BallJointConstraint::getInformation(ConstraintInfo* _lcp) {
 }
 
 //==============================================================================
-void BallJointConstraint::applyUnitImpulse(std::size_t _index) {
+void BallJointConstraint::applyUnitImpulse(std::size_t _index)
+{
   assert(_index < mDim && "Invalid Index.");
   assert(isActive());
 
@@ -226,7 +234,8 @@ void BallJointConstraint::applyUnitImpulse(std::size_t _index) {
 }
 
 //==============================================================================
-void BallJointConstraint::getVelocityChange(double* _vel, bool _withCfm) {
+void BallJointConstraint::getVelocityChange(double* _vel, bool _withCfm)
+{
   assert(_vel != nullptr && "Null pointer is not allowed.");
 
   for (std::size_t i = 0; i < mDim; ++i)
@@ -258,7 +267,8 @@ void BallJointConstraint::getVelocityChange(double* _vel, bool _withCfm) {
 }
 
 //==============================================================================
-void BallJointConstraint::excite() {
+void BallJointConstraint::excite()
+{
   if (mBodyNode1->isReactive())
     mBodyNode1->getSkeleton()->setImpulseApplied(true);
 
@@ -270,7 +280,8 @@ void BallJointConstraint::excite() {
 }
 
 //==============================================================================
-void BallJointConstraint::unexcite() {
+void BallJointConstraint::unexcite()
+{
   if (mBodyNode1->isReactive())
     mBodyNode1->getSkeleton()->setImpulseApplied(false);
 
@@ -282,7 +293,8 @@ void BallJointConstraint::unexcite() {
 }
 
 //==============================================================================
-void BallJointConstraint::applyImpulse(double* _lambda) {
+void BallJointConstraint::applyImpulse(double* _lambda)
+{
   mOldX[0] = _lambda[0];
   mOldX[1] = _lambda[1];
   mOldX[2] = _lambda[2];
@@ -299,7 +311,8 @@ void BallJointConstraint::applyImpulse(double* _lambda) {
 }
 
 //==============================================================================
-dynamics::SkeletonPtr BallJointConstraint::getRootSkeleton() const {
+dynamics::SkeletonPtr BallJointConstraint::getRootSkeleton() const
+{
   if (mBodyNode1->isReactive())
     return mBodyNode1->getSkeleton()->mUnionRootSkeleton.lock();
 
@@ -317,7 +330,8 @@ dynamics::SkeletonPtr BallJointConstraint::getRootSkeleton() const {
 }
 
 //==============================================================================
-void BallJointConstraint::uniteSkeletons() {
+void BallJointConstraint::uniteSkeletons()
+{
   if (mBodyNode2 == nullptr)
     return;
 
@@ -347,7 +361,8 @@ void BallJointConstraint::uniteSkeletons() {
 }
 
 //==============================================================================
-bool BallJointConstraint::isActive() const {
+bool BallJointConstraint::isActive() const
+{
   if (mBodyNode1->isReactive())
     return true;
 

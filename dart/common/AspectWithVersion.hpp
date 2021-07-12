@@ -115,19 +115,22 @@ public:
   AspectWithStateAndVersionedProperties(
       const StateData& state = StateData(),
       const PropertiesData& properties = PropertiesData())
-    : AspectPropertiesImpl(properties, state) {
+    : AspectPropertiesImpl(properties, state)
+  {
     // Do nothing
   }
 
   /// Construct using a PropertiesData and a StateData instance
   AspectWithStateAndVersionedProperties(
       const PropertiesData& properties, const StateData& state = StateData())
-    : AspectPropertiesImpl(properties, state) {
+    : AspectPropertiesImpl(properties, state)
+  {
     // Do nothing
   }
 
   // Documentation inherited
-  std::unique_ptr<Aspect> cloneAspect() const override {
+  std::unique_ptr<Aspect> cloneAspect() const override
+  {
     return std::make_unique<Derived>(this->getState(), this->getProperties());
   }
 };

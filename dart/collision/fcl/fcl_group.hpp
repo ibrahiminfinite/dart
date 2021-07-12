@@ -33,9 +33,9 @@
 #pragma once
 
 #include "dart/collision/fcl/backward_compatibility.hpp"
-#include "dart/collision/fcl/fcl_types.hpp"
+#include "dart/collision/fcl/fcl_type.hpp"
 #include "dart/collision/group.hpp"
-#include "dart/collision/types.hpp"
+#include "dart/collision/type.hpp"
 
 namespace dart {
 namespace collision {
@@ -52,8 +52,9 @@ public:
   FclGroup(Engine<S>* engine);
 
   /// Destructor
-  virtual ~FclGroup() = default;
+  ~FclGroup() override = default;
 
+  // Documentation inherited
   ObjectPtr<S> create_object(math::GeometryPtr shape) override;
 
 protected:
@@ -67,7 +68,6 @@ protected:
   /// Return FCL collision manager that is also a broad-phase algorithm
   const FCLCollisionManager* get_fcl_collision_manager() const;
 
-protected:
   /// FCL broad-phase algorithm
   std::unique_ptr<FCLCollisionManager> m_broad_phase_alg;
 };

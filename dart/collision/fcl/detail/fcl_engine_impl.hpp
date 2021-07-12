@@ -32,117 +32,176 @@
 
 #pragma once
 
-#include <assimp/scene.h>
-
 #include "dart/collision/collision_result.hpp"
+#include "dart/collision/fcl/backward_compatibility.hpp"
 #include "dart/collision/fcl/fcl_engine.hpp"
 #include "dart/collision/fcl/fcl_group.hpp"
 #include "dart/collision/fcl/fcl_object.hpp"
 #include "dart/collision/fcl/fcl_primitive_shape_utils.hpp"
-#include "dart/common/Console.hpp"
-#include "dart/math/geometry/Sphere.hpp"
+#include "dart/common/logging.hpp"
+#include "dart/math/geometry/sphere.hpp"
 
 namespace dart {
 namespace collision {
 
 //==============================================================================
 template <typename S>
-std::shared_ptr<FclEngine<S>> FclEngine<S>::Create() {
+Contact<S> convert_contact(
+    const FclContact<S>& fcl_contact,
+    FclObject<S>* object1,
+    FclObject<S>* object2,
+    const CollisionOption<S>& option)
+{
+  Contact<S> contact;
+
+  contact.collision_object1 = object1;
+  contact.collision_object2 = object2;
+
+  if (option.enable_contact) {
+    contact.point = to_vector3<S>(fcl_contact.pos);
+    contact.normal = -to_vector3<S>(fcl_contact.normal);
+    contact.depth = fcl_contact.penetration_depth;
+  }
+
+  return contact;
+}
+
+//==============================================================================
+template <typename S>
+void report_contacts(
+    int num_contacts,
+    const FclCollisionResult<S>& fcl_result,
+    FclObject<S>* b1,
+    FclObject<S>* b2,
+    const CollisionOption<S>& option,
+    CollisionResult<S>& result)
+{
+  for (auto i = 0; i < num_contacts; ++i) {
+    result.add_contact(
+        convert_contact(fcl_result.getContact(i), b1, b2, option));
+
+    if (result.get_num_contacts() >= option.max_num_contacts) {
+      return;
+    }
+  }
+}
+
+//==============================================================================
+template <typename S>
+std::shared_ptr<FclEngine<S>> FclEngine<S>::Create()
+{
   return std::shared_ptr<FclEngine>(new FclEngine());
 }
 
 //==============================================================================
 template <typename S>
-FclEngine<S>::~FclEngine() {
+FclEngine<S>::~FclEngine()
+{
   // Do nothing
 }
 
 //==============================================================================
 template <typename S>
-const std::string& FclEngine<S>::get_type() const {
-  return GetStaticType();
+const std::string& FclEngine<S>::get_type() const
+{
+  return GetType();
 }
 
 //==============================================================================
 template <typename S>
-const std::string& FclEngine<S>::GetStaticType() {
+const std::string& FclEngine<S>::GetType()
+{
   static const std::string type = "fcl";
   return type;
 }
 
 //==============================================================================
 template <typename S>
-GroupPtr<S> FclEngine<S>::create_group() {
+GroupPtr<S> FclEngine<S>::create_group()
+{
   return std::make_shared<FclGroup<S>>(this);
 }
 
 //==============================================================================
 template <typename S>
-bool FclEngine<S>::collide(ObjectPtr<S> object1, ObjectPtr<S> object2) {
+bool FclEngine<S>::collide(
+    ObjectPtr<S> object1,
+    ObjectPtr<S> object2,
+    const CollisionOption<S>& option,
+    CollisionResult<S>* result)
+{
   auto derived1 = std::dynamic_pointer_cast<FclObject<S>>(object1);
   if (!derived1) {
-    dterr << "Invalid object\n";
+    DART_ERROR("Invalid object");
     return false;
   }
 
   auto derived2 = std::dynamic_pointer_cast<FclObject<S>>(object2);
   if (!derived2) {
-    dterr << "Invalid object\n";
+    DART_ERROR("Invalid object");
     return false;
   }
 
   auto fcl_collision_object1 = derived1->get_fcl_collision_object();
   if (!fcl_collision_object1) {
-    dterr << "Invalid object\n";
+    DART_ERROR("Invalid object");
     return false;
   }
 
   auto fcl_collision_object2 = derived2->get_fcl_collision_object();
   if (!fcl_collision_object2) {
-    dterr << "Invalid object\n";
+    DART_ERROR("Invalid object");
     return false;
   }
 
-  FclCollisionRequest<S> request;
-  FclCollisionResult<S> result;
+  FclCollisionRequest<S> fcl_request;
+  fcl_request.enable_contact = option.enable_contact;
+  fcl_request.num_max_contacts = option.max_num_contacts;
 
-  return ::fcl::collide(
-      fcl_collision_object1, fcl_collision_object2, request, result);
+  FclCollisionResult<S> fcl_result;
+
+  const auto num_contacts = ::fcl::collide(
+      fcl_collision_object1, fcl_collision_object2, fcl_request, fcl_result);
+
+  if (num_contacts > 0 && result) {
+    report_contacts(
+        num_contacts,
+        fcl_result,
+        derived1.get(),
+        derived2.get(),
+        option,
+        *result);
+  }
+
+  return (num_contacts > 0);
 }
 
 //==============================================================================
 template <typename S>
 std::shared_ptr<FclCollisionGeometry<S>>
-FclEngine<S>::create_fcl_collision_geometry(math::ConstGeometryPtr shape) {
-  return create_fcl_collision_geometry_impl(shape, m_primitive_shape_type);
-}
-
-//==============================================================================
-template <typename S>
-std::shared_ptr<FclCollisionGeometry<S>>
-FclEngine<S>::create_fcl_collision_geometry_impl(
-    const math::ConstGeometryPtr& shape, FclEngine<S>::PrimitiveShape type) {
+FclEngine<S>::create_fcl_collision_geometry(const math::ConstGeometryPtr& shape)
+{
   FclCollisionGeometry<S>* geom = nullptr;
-  const auto& shapeType = shape->getType();
+  const auto& shapeType = shape->get_type();
 
-  if (auto sphere = shape->as<math::Sphered>()) {
-    const auto radius = sphere->getRadius();
+  if (auto sphere = shape->as<math::Sphere<S>>()) {
+    const auto radius = sphere->get_radius();
 
-    if (FclEngine<S>::PRIMITIVE == type) {
+    if (FclEngine<S>::PRIMITIVE == m_primitive_shape_type) {
       geom = new FclSphere<S>(radius);
     } else {
       auto fcl_mesh = new ::fcl::BVHModel<FclOBBRSS<S>>();
       auto fcl_sphere = FclSphere<S>(radius);
       ::fcl::generateBVHModel(
-          *fcl_mesh, fcl_sphere, FclTransform3<S>(), 16, 16);
+          *fcl_mesh, fcl_sphere, get_identity_transform<S>(), 16, 16);
+      // TODO(JS): Consider using icosphere
       geom = fcl_mesh;
     }
   } else {
-    dterr << "[FclEngine<S>::createFCLCollisionGeometry] "
-          << "Attempting to create an unsupported shape type [" << shapeType
-          << "]. Creating a sphere with 0.1 radius "
-          << "instead.\n";
-
+    DART_ERROR(
+        "Attempting to create an unsupported shape type [{}]. Creating a "
+        "sphere with 0.1 radius instead.",
+        shapeType);
     geom = new FclSphere<S>(0.1);
   }
 

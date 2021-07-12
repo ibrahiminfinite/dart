@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Frame(py::module& m) {
+void Frame(py::module& m)
+{
   ::py::class_<
       dart::dynamics::Frame,
       dart::dynamics::Entity,

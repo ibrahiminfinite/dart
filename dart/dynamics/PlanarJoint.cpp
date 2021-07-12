@@ -43,23 +43,27 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-PlanarJoint::~PlanarJoint() {
+PlanarJoint::~PlanarJoint()
+{
   // Do nothing
 }
 
 //==============================================================================
-void PlanarJoint::setProperties(const Properties& _properties) {
+void PlanarJoint::setProperties(const Properties& _properties)
+{
   Base::setProperties(static_cast<const Base::Properties&>(_properties));
   setProperties(static_cast<const UniqueProperties&>(_properties));
 }
 
 //==============================================================================
-void PlanarJoint::setProperties(const UniqueProperties& _properties) {
+void PlanarJoint::setProperties(const UniqueProperties& _properties)
+{
   setAspectProperties(_properties);
 }
 
 //==============================================================================
-void PlanarJoint::setAspectProperties(const AspectProperties& properties) {
+void PlanarJoint::setAspectProperties(const AspectProperties& properties)
+{
   mAspectProperties = properties;
   Joint::notifyPositionUpdated();
   updateRelativeJacobian(true);
@@ -67,12 +71,14 @@ void PlanarJoint::setAspectProperties(const AspectProperties& properties) {
 }
 
 //==============================================================================
-PlanarJoint::Properties PlanarJoint::getPlanarJointProperties() const {
+PlanarJoint::Properties PlanarJoint::getPlanarJointProperties() const
+{
   return Properties(getGenericJointProperties(), mAspectProperties);
 }
 
 //==============================================================================
-void PlanarJoint::copy(const PlanarJoint& _otherJoint) {
+void PlanarJoint::copy(const PlanarJoint& _otherJoint)
+{
   if (this == &_otherJoint)
     return;
 
@@ -80,7 +86,8 @@ void PlanarJoint::copy(const PlanarJoint& _otherJoint) {
 }
 
 //==============================================================================
-void PlanarJoint::copy(const PlanarJoint* _otherJoint) {
+void PlanarJoint::copy(const PlanarJoint* _otherJoint)
+{
   if (nullptr == _otherJoint)
     return;
 
@@ -88,29 +95,34 @@ void PlanarJoint::copy(const PlanarJoint* _otherJoint) {
 }
 
 //==============================================================================
-PlanarJoint& PlanarJoint::operator=(const PlanarJoint& _otherJoint) {
+PlanarJoint& PlanarJoint::operator=(const PlanarJoint& _otherJoint)
+{
   copy(_otherJoint);
   return *this;
 }
 
 //==============================================================================
-const std::string& PlanarJoint::getType() const {
+const std::string& PlanarJoint::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& PlanarJoint::getStaticType() {
+const std::string& PlanarJoint::getStaticType()
+{
   static const std::string name = "PlanarJoint";
   return name;
 }
 
 //==============================================================================
-bool PlanarJoint::isCyclic(std::size_t _index) const {
+bool PlanarJoint::isCyclic(std::size_t _index) const
+{
   return _index == 2 && !hasPositionLimit(_index);
 }
 
 //==============================================================================
-void PlanarJoint::setXYPlane(bool _renameDofs) {
+void PlanarJoint::setXYPlane(bool _renameDofs)
+{
   mAspectProperties.setXYPlane();
 
   if (_renameDofs)
@@ -119,7 +131,8 @@ void PlanarJoint::setXYPlane(bool _renameDofs) {
 }
 
 //==============================================================================
-void PlanarJoint::setYZPlane(bool _renameDofs) {
+void PlanarJoint::setYZPlane(bool _renameDofs)
+{
   mAspectProperties.setYZPlane();
 
   if (_renameDofs)
@@ -128,7 +141,8 @@ void PlanarJoint::setYZPlane(bool _renameDofs) {
 }
 
 //==============================================================================
-void PlanarJoint::setZXPlane(bool _renameDofs) {
+void PlanarJoint::setZXPlane(bool _renameDofs)
+{
   mAspectProperties.setZXPlane();
 
   if (_renameDofs)
@@ -140,7 +154,8 @@ void PlanarJoint::setZXPlane(bool _renameDofs) {
 void PlanarJoint::setArbitraryPlane(
     const Eigen::Vector3d& _transAxis1,
     const Eigen::Vector3d& _transAxis2,
-    bool _renameDofs) {
+    bool _renameDofs)
+{
   mAspectProperties.setArbitraryPlane(_transAxis1, _transAxis2);
 
   if (_renameDofs)
@@ -149,28 +164,33 @@ void PlanarJoint::setArbitraryPlane(
 }
 
 //==============================================================================
-PlanarJoint::PlaneType PlanarJoint::getPlaneType() const {
+PlanarJoint::PlaneType PlanarJoint::getPlaneType() const
+{
   return mAspectProperties.mPlaneType;
 }
 
 //==============================================================================
-const Eigen::Vector3d& PlanarJoint::getRotationalAxis() const {
+const Eigen::Vector3d& PlanarJoint::getRotationalAxis() const
+{
   return mAspectProperties.mRotAxis;
 }
 
 //==============================================================================
-const Eigen::Vector3d& PlanarJoint::getTranslationalAxis1() const {
+const Eigen::Vector3d& PlanarJoint::getTranslationalAxis1() const
+{
   return mAspectProperties.mTransAxis1;
 }
 
 //==============================================================================
-const Eigen::Vector3d& PlanarJoint::getTranslationalAxis2() const {
+const Eigen::Vector3d& PlanarJoint::getTranslationalAxis2() const
+{
   return mAspectProperties.mTransAxis2;
 }
 
 //==============================================================================
 Eigen::Matrix<double, 6, 3> PlanarJoint::getRelativeJacobianStatic(
-    const Eigen::Vector3d& _positions) const {
+    const Eigen::Vector3d& _positions) const
+{
   Eigen::Matrix<double, 6, 3> J = Eigen::Matrix<double, 6, 3>::Zero();
   J.block<3, 1>(3, 0) = mAspectProperties.mTransAxis1;
   J.block<3, 1>(3, 1) = mAspectProperties.mTransAxis2;
@@ -191,7 +211,8 @@ Eigen::Matrix<double, 6, 3> PlanarJoint::getRelativeJacobianStatic(
 
 //==============================================================================
 PlanarJoint::PlanarJoint(const Properties& properties)
-  : detail::PlanarJointBase(properties) {
+  : detail::PlanarJointBase(properties)
+{
   // Inherited Aspects must be created in the final joint class in reverse order
   // or else we get pure virtual function calls
   createPlanarJointAspect(properties);
@@ -200,12 +221,14 @@ PlanarJoint::PlanarJoint(const Properties& properties)
 }
 
 //==============================================================================
-Joint* PlanarJoint::clone() const {
+Joint* PlanarJoint::clone() const
+{
   return new PlanarJoint(getPlanarJointProperties());
 }
 
 //==============================================================================
-void PlanarJoint::updateDegreeOfFreedomNames() {
+void PlanarJoint::updateDegreeOfFreedomNames()
+{
   std::vector<std::string> affixes;
   switch (mAspectProperties.mPlaneType) {
     case PlaneType::XY:
@@ -239,7 +262,8 @@ void PlanarJoint::updateDegreeOfFreedomNames() {
 }
 
 //==============================================================================
-void PlanarJoint::updateRelativeTransform() const {
+void PlanarJoint::updateRelativeTransform() const
+{
   const Eigen::Vector3d& positions = getPositionsStatic();
   mT = Joint::mAspectProperties.mT_ParentBodyToJoint
        * Eigen::Translation3d(mAspectProperties.mTransAxis1 * positions[0])
@@ -252,12 +276,14 @@ void PlanarJoint::updateRelativeTransform() const {
 }
 
 //==============================================================================
-void PlanarJoint::updateRelativeJacobian(bool) const {
+void PlanarJoint::updateRelativeJacobian(bool) const
+{
   mJacobian = getRelativeJacobianStatic(getPositionsStatic());
 }
 
 //==============================================================================
-void PlanarJoint::updateRelativeJacobianTimeDeriv() const {
+void PlanarJoint::updateRelativeJacobianTimeDeriv() const
+{
   Eigen::Matrix<double, 6, 3> J = Eigen::Matrix<double, 6, 3>::Zero();
   J.block<3, 1>(3, 0) = mAspectProperties.mTransAxis1;
   J.block<3, 1>(3, 1) = mAspectProperties.mTransAxis2;

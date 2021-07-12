@@ -36,7 +36,8 @@
 
 //==============================================================================
 MyWindow::MyWindow(Controller* _controller)
-  : SimWindow(), mController(_controller), mCircleTask(false) {
+  : SimWindow(), mController(_controller), mCircleTask(false)
+{
   assert(_controller != nullptr);
 
   // Set the initial target positon to the initial position of the end effector
@@ -44,11 +45,13 @@ MyWindow::MyWindow(Controller* _controller)
 }
 
 //==============================================================================
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
 }
 
 //==============================================================================
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   if (mCircleTask) {
     static double time = 0.0;
     const double dt = 0.0005;
@@ -71,7 +74,8 @@ void MyWindow::timeStepping() {
 }
 
 //==============================================================================
-void MyWindow::drawWorld() const {
+void MyWindow::drawWorld() const
+{
   // Draw the target position
   if (mRI) {
     mRI->setPenColor(Eigen::Vector3d(0.8, 0.2, 0.2));
@@ -86,7 +90,8 @@ void MyWindow::drawWorld() const {
 }
 
 //==============================================================================
-void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
+void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   double incremental = 0.01;
 
   switch (_key) {

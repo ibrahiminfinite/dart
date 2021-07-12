@@ -51,12 +51,14 @@ AtlasSimbiconWidget::AtlasSimbiconWidget(
     mGravityAcc(mGuiGravityAcc),
     mGuiHeadlights(true),
     mGuiControlMode(2),
-    mControlMode(2) {
+    mControlMode(2)
+{
   // Do nothing
 }
 
 //==============================================================================
-void AtlasSimbiconWidget::render() {
+void AtlasSimbiconWidget::render()
+{
   ImGui::SetNextWindowPos(ImVec2(10, 20));
   ImGui::SetNextWindowSize(ImVec2(360, 400));
   ImGui::SetNextWindowBgAlpha(0.5f);
@@ -169,7 +171,8 @@ void AtlasSimbiconWidget::render() {
 }
 
 //==============================================================================
-void AtlasSimbiconWidget::setGravity(float gravity) {
+void AtlasSimbiconWidget::setGravity(float gravity)
+{
   if (mGravityAcc == gravity)
     return;
 

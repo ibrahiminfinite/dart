@@ -49,11 +49,13 @@ StateMachine::StateMachine(const std::string& _name)
     mBeginTime(0.0),
     mEndTime(0.0),
     mFrame(0),
-    mElapsedTime(0.0) {
+    mElapsedTime(0.0)
+{
 }
 
 //==============================================================================
-StateMachine::~StateMachine() {
+StateMachine::~StateMachine()
+{
   for (vector<State*>::iterator it = mStates.begin(); it != mStates.end();
        ++it) {
     delete *it;
@@ -61,17 +63,20 @@ StateMachine::~StateMachine() {
 }
 
 //==============================================================================
-void StateMachine::setName(const std::string& _name) {
+void StateMachine::setName(const std::string& _name)
+{
   mName = _name;
 }
 
 //==============================================================================
-const std::string& StateMachine::getName() const {
+const std::string& StateMachine::getName() const
+{
   return mName;
 }
 
 //==============================================================================
-void StateMachine::addState(State* _state) {
+void StateMachine::addState(State* _state)
+{
   assert(_state != nullptr && "Invalid state");
   assert(!_containState(_state) && "_state shouldn't be in mStates");
 
@@ -79,7 +84,8 @@ void StateMachine::addState(State* _state) {
 }
 
 //==============================================================================
-void StateMachine::setInitialState(State* _state) {
+void StateMachine::setInitialState(State* _state)
+{
   assert(_state != nullptr);
   assert(_containState(_state));
 
@@ -87,7 +93,8 @@ void StateMachine::setInitialState(State* _state) {
 }
 
 //==============================================================================
-void StateMachine::begin(double _currentTime) {
+void StateMachine::begin(double _currentTime)
+{
   //  dtmsg << "StateMachine [" << getName() << "]: begin()." << endl;
 
   mBeginTime = _currentTime;
@@ -96,7 +103,8 @@ void StateMachine::begin(double _currentTime) {
 }
 
 //==============================================================================
-void StateMachine::computeControlForce(double _dt) {
+void StateMachine::computeControlForce(double _dt)
+{
   assert(mCurrentState != nullptr && "Invaild current state.");
 
   // Check transition is needed from current state
@@ -111,24 +119,28 @@ void StateMachine::computeControlForce(double _dt) {
 }
 
 //==============================================================================
-void StateMachine::end(double _currentTime) {
+void StateMachine::end(double _currentTime)
+{
   mEndTime = _currentTime;
 
   //  dtmsg << "StateMachine [" << getName() << "]: end()." << endl;
 }
 
 //==============================================================================
-State* StateMachine::getCurrentState() {
+State* StateMachine::getCurrentState()
+{
   return mCurrentState;
 }
 
 //==============================================================================
-void StateMachine::transiteToNextState(double _currentTime) {
+void StateMachine::transiteToNextState(double _currentTime)
+{
   transiteTo(mCurrentState->getNextState(), _currentTime);
 }
 
 //==============================================================================
-void StateMachine::transiteTo(State* _state, double _currentTime) {
+void StateMachine::transiteTo(State* _state, double _currentTime)
+{
   assert(_containState(_state) && "_state should be in mStates");
 
   string prevStateName = mCurrentState->getName();
@@ -146,7 +158,8 @@ void StateMachine::transiteTo(State* _state, double _currentTime) {
 }
 
 //==============================================================================
-void StateMachine::transiteTo(string& _stateName, double _currentTime) {
+void StateMachine::transiteTo(string& _stateName, double _currentTime)
+{
   // _state should be in mStates
   State* state = _findState(_stateName);
 
@@ -156,14 +169,16 @@ void StateMachine::transiteTo(string& _stateName, double _currentTime) {
 }
 
 //==============================================================================
-void StateMachine::transiteTo(std::size_t _idx, double _currentTime) {
+void StateMachine::transiteTo(std::size_t _idx, double _currentTime)
+{
   assert(_idx <= mStates.size() && "Invalid index of State.");
 
   transiteTo(mStates[_idx], _currentTime);
 }
 
 //==============================================================================
-bool StateMachine::_containState(const State* _state) const {
+bool StateMachine::_containState(const State* _state) const
+{
   for (vector<State*>::const_iterator it = mStates.begin(); it != mStates.end();
        ++it) {
     if (*it == _state)
@@ -174,12 +189,14 @@ bool StateMachine::_containState(const State* _state) const {
 }
 
 //==============================================================================
-bool StateMachine::_containState(const string& _name) const {
+bool StateMachine::_containState(const string& _name) const
+{
   return _containState(_findState(_name));
 }
 
 //==============================================================================
-State* StateMachine::_findState(const string& _name) const {
+State* StateMachine::_findState(const string& _name) const
+{
   State* state = nullptr;
 
   for (vector<State*>::const_iterator it = mStates.begin(); it != mStates.end();

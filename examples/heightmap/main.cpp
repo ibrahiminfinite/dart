@@ -47,7 +47,8 @@ dynamics::ShapePtr createHeightmapShape(
     S xSize = S(2),
     S ySize = S(2),
     S zMin = S(0.0),
-    S zMax = S(0.1)) {
+    S zMax = S(0.1))
+{
   using Vector3 = Eigen::Matrix<S, 3, 1>;
 
   typename HeightmapShape<S>::HeightField data(yResolution, xResolution);
@@ -72,7 +73,8 @@ dynamics::SimpleFramePtr createHeightmapFrame(
     S xSize = S(2),
     S ySize = S(2),
     S zMin = S(0.0),
-    S zMax = S(0.1)) {
+    S zMax = S(0.1))
+{
   auto terrainFrame = SimpleFrame::createShared(Frame::World());
   auto tf = terrainFrame->getRelativeTransform();
   tf.translation()[0] = -static_cast<double>(xSize) / 2.0;
@@ -92,12 +94,14 @@ dynamics::SimpleFramePtr createHeightmapFrame(
 class HeightmapWorld : public gui::osg::WorldNode {
 public:
   explicit HeightmapWorld(simulation::WorldPtr world)
-    : gui::osg::WorldNode(std::move(world)) {
+    : gui::osg::WorldNode(std::move(world))
+  {
     // Do nothing
   }
 
   // Triggered at the beginning of each simulation step
-  void customPreStep() override {
+  void customPreStep() override
+  {
     // Do nothing
   }
 
@@ -118,7 +122,8 @@ public:
       S ySize = S(2),
       S zMin = S(0.0),
       S zMax = S(0.1))
-    : mViewer(viewer), mNode(node), mTerrain(std::move(terrain)), mGrid(grid) {
+    : mViewer(viewer), mNode(node), mTerrain(std::move(terrain)), mGrid(grid)
+  {
     mXResolution = xResolution;
     mYResolution = yResolution;
     mXSize = xSize;
@@ -129,7 +134,8 @@ public:
     updateHeightmapShape();
   }
 
-  void updateHeightmapShape() {
+  void updateHeightmapShape()
+  {
     mTerrain->setShape(createHeightmapShape(
         mXResolution, mYResolution, mXSize, mYSize, mZMin, mZMax));
 
@@ -139,7 +145,8 @@ public:
     mTerrain->setRelativeTransform(tf);
   }
 
-  void render() override {
+  void render() override
+  {
     ImGui::SetNextWindowPos(ImVec2(10, 20));
     ImGui::SetNextWindowSize(ImVec2(360, 600));
     ImGui::SetNextWindowBgAlpha(0.5f);
@@ -400,7 +407,8 @@ protected:
   float mZMax;
 };
 
-int main() {
+int main()
+{
   auto world = dart::simulation::World::create();
   world->setGravity(Eigen::Vector3d::Zero());
 

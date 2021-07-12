@@ -39,7 +39,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void DistanceResult(py::module& m) {
+void DistanceResult(py::module& m)
+{
   ::py::class_<dart::dynamics::DistanceResult>(m, "DistanceResult")
       .def(::py::init<>())
       .def(

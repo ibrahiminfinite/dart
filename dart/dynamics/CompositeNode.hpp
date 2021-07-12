@@ -47,7 +47,8 @@ public:
 
   /// Forwarding constructor
   template <typename... Args>
-  CompositeStateNode(Args&&... args) : Base(std::forward<Args>(args)...) {
+  CompositeStateNode(Args&&... args) : Base(std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
@@ -70,7 +71,8 @@ public:
 
   /// Forwarding constructor
   template <typename... Args>
-  CompositePropertiesNode(Args&&... args) : Base(std::forward<Args>(args)...) {
+  CompositePropertiesNode(Args&&... args) : Base(std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
@@ -94,7 +96,8 @@ public:
   template <typename... Args>
   CompositeNode(Args&&... args)
     : CompositePropertiesNode<CompositeStateNode<Base>>(
-        std::forward<Args>(args)...) {
+        std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 };

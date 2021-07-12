@@ -52,28 +52,33 @@ public:
   /// General constructor
   template <typename... Args>
   ProxyStateAspect(Args&&... args)
-    : Base(std::forward<Args>(args)...), mProxyState() {
+    : Base(std::forward<Args>(args)...), mProxyState()
+  {
     // Do nothing
   }
 
   // Documentation inherited
-  void setAspectState(const Aspect::State& state) override final {
+  void setAspectState(const Aspect::State& state) override final
+  {
     mProxyState.set(static_cast<const State&>(state));
   }
 
   // Documentation inherited
-  const Aspect::State* getAspectState() const override final {
+  const Aspect::State* getAspectState() const override final
+  {
     return &mProxyState;
   }
 
   // Documentation inherited
-  std::unique_ptr<Aspect> cloneAspect() const override {
+  std::unique_ptr<Aspect> cloneAspect() const override
+  {
     return std::make_unique<ProxyStateAspect>();
   }
 
 protected:
   /// Reconfigure the Aspect to link it to this Aspect's new Composite
-  void setComposite(Composite* newComposite) override {
+  void setComposite(Composite* newComposite) override
+  {
     Base::setComposite(newComposite);
 
     // Check if the Composite is the correct Owner type
@@ -87,7 +92,8 @@ protected:
   }
 
   /// Reconfigure the Aspect to unlink it from this Aspect's old Composite
-  void loseComposite(Composite* oldComposite) override {
+  void loseComposite(Composite* oldComposite) override
+  {
     mProxyState = State(mProxyState.get());
     Base::loseComposite(oldComposite);
   }
@@ -109,29 +115,33 @@ public:
   /// General constructor
   template <typename... Args>
   ProxyPropertiesAspect(Args&&... args)
-    : Base(std::forward<Args>(args)...), mProxyProperties() {
+    : Base(std::forward<Args>(args)...), mProxyProperties()
+  {
     // Do nothing
   }
 
   // Documentation inherited
-  void setAspectProperties(
-      const Aspect::Properties& properties) override final {
+  void setAspectProperties(const Aspect::Properties& properties) override final
+  {
     mProxyProperties.set(static_cast<const Properties&>(properties));
   }
 
   // Documentation inherited
-  const Aspect::Properties* getAspectProperties() const override final {
+  const Aspect::Properties* getAspectProperties() const override final
+  {
     return &mProxyProperties;
   }
 
   // Documentation inherited
-  std::unique_ptr<Aspect> cloneAspect() const override {
+  std::unique_ptr<Aspect> cloneAspect() const override
+  {
     return std::make_unique<ProxyPropertiesAspect>();
   }
 
 protected:
   /// Reconfigure the Aspect to link it to this Aspect's new Composite
-  void setComposite(Composite* newComposite) override {
+  void setComposite(Composite* newComposite) override
+  {
     Base::setComposite(newComposite);
     typename Properties::Owner* owner
         = dynamic_cast<typename Properties::Owner*>(newComposite);
@@ -143,7 +153,8 @@ protected:
   }
 
   /// Reconfigure the Aspect to unlink it from this Aspect's old Composite
-  void loseComposite(Composite* oldComposite) override {
+  void loseComposite(Composite* oldComposite) override
+  {
     mProxyProperties = Properties(mProxyProperties.get());
     Base::loseComposite(oldComposite);
   }

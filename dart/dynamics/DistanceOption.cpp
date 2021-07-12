@@ -42,7 +42,8 @@ DistanceOption::DistanceOption(
     const std::shared_ptr<DistanceFilter>& distanceFilter)
   : enableNearestPoints(enableNearestPoints),
     distanceLowerBound(minDistance),
-    distanceFilter(distanceFilter) {
+    distanceFilter(distanceFilter)
+{
   // Do nothing
 }
 

@@ -45,7 +45,8 @@ namespace dart {
 namespace gui {
 namespace glut {
 
-void drawStringOnScreen(float x, float y, const std::string& s, bool bigFont) {
+void drawStringOnScreen(float x, float y, const std::string& s, bool bigFont)
+{
   // draws text on the screen
   GLint oldMode;
   glGetIntegerv(GL_MATRIX_MODE, &oldMode);

@@ -86,7 +86,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void ShapeFrame(py::module& m) {
+void ShapeFrame(py::module& m)
+{
   ::py::class_<
       dart::dynamics::ShapeFrame,
       // dart::common::EmbedPropertiesOnTopOf<

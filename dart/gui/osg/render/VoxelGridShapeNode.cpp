@@ -52,7 +52,8 @@ namespace render {
 //==============================================================================
 class BoxDrawable final : public ::osg::ShapeDrawable {
 public:
-  BoxDrawable(double size, const Eigen::Vector4d& color) {
+  BoxDrawable(double size, const Eigen::Vector4d& color)
+  {
     mShape = new ::osg::Box(::osg::Vec3(), static_cast<float>(size));
     setColor(eigToOsgVec4f(color));
     setShape(mShape);
@@ -63,7 +64,8 @@ public:
         new ::osg::CullFace(::osg::CullFace::BACK));
   }
 
-  void updateSize(double size) {
+  void updateSize(double size)
+  {
     mShape->setHalfLengths(::osg::Vec3(
         static_cast<float>(size * 0.5),
         static_cast<float>(size * 0.5),
@@ -72,7 +74,8 @@ public:
     dirtyDisplayList();
   }
 
-  void updateColor(const Eigen::Vector4d& color) {
+  void updateColor(const Eigen::Vector4d& color)
+  {
     setColor(eigToOsgVec4f(color));
   }
 
@@ -84,7 +87,8 @@ protected:
 class VoxelNode : public ::osg::MatrixTransform {
 public:
   VoxelNode(
-      const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color) {
+      const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color)
+  {
     mDrawable = new BoxDrawable(size, color);
     mGeode = new ::osg::Geode();
 
@@ -94,17 +98,20 @@ public:
     updateCenter(point);
   }
 
-  void updateCenter(const Eigen::Vector3d& point) {
+  void updateCenter(const Eigen::Vector3d& point)
+  {
     Eigen::Isometry3d tf = Eigen::Isometry3d::Identity();
     tf.translation() = point;
     setMatrix(eigToOsgMatrix(tf));
   }
 
-  void updateSize(double size) {
+  void updateSize(double size)
+  {
     mDrawable->updateSize(size);
   }
 
-  void updateColor(const Eigen::Vector4d& color) {
+  void updateColor(const Eigen::Vector4d& color)
+  {
     mDrawable->updateColor(color);
   }
 
@@ -119,13 +126,15 @@ VoxelGridShapeNode::VoxelGridShapeNode(
   : ShapeNode(shape, parent, this),
     mVoxelGridShape(shape),
     mGeode(nullptr),
-    mVoxelGridVersion(dynamics::INVALID_INDEX) {
+    mVoxelGridVersion(dynamics::INVALID_INDEX)
+{
   extractData(true);
   setNodeMask(mVisualAspect->isHidden() ? 0x0u : ~0x0u);
 }
 
 //==============================================================================
-void VoxelGridShapeNode::refresh() {
+void VoxelGridShapeNode::refresh()
+{
   mUtilized = true;
 
   setNodeMask(mVisualAspect->isHidden() ? 0x0u : ~0x0u);
@@ -141,7 +150,8 @@ void VoxelGridShapeNode::refresh() {
 }
 
 //==============================================================================
-Eigen::Vector3d toVector3d(const octomap::point3d& point) {
+Eigen::Vector3d toVector3d(const octomap::point3d& point)
+{
   return Eigen::Vector3d(
       static_cast<double>(point.x()),
       static_cast<double>(point.y()),
@@ -149,7 +159,8 @@ Eigen::Vector3d toVector3d(const octomap::point3d& point) {
 }
 
 //==============================================================================
-void VoxelGridShapeNode::extractData(bool /*firstTime*/) {
+void VoxelGridShapeNode::extractData(bool /*firstTime*/)
+{
   auto tree = mVoxelGridShape->getOctree();
   const auto visualSize = tree->getResolution();
   const auto& color = mVisualAspect->getRGBA();
@@ -193,7 +204,8 @@ void VoxelGridShapeNode::extractData(bool /*firstTime*/) {
 }
 
 //==============================================================================
-VoxelGridShapeNode::~VoxelGridShapeNode() {
+VoxelGridShapeNode::~VoxelGridShapeNode()
+{
   // Do nothing
 }
 

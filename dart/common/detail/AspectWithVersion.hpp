@@ -70,7 +70,8 @@ public:
   /// Construct this Aspect and pass args into the constructor of the Base class
   template <typename... BaseArgs>
   AspectWithState(const StateData& state, BaseArgs&&... args)
-    : Base(std::forward<BaseArgs>(args)...), mState(state) {
+    : Base(std::forward<BaseArgs>(args)...), mState(state)
+  {
     // Do nothing
   }
 
@@ -129,7 +130,8 @@ public:
   template <typename... BaseArgs>
   AspectWithVersionedProperties(
       const PropertiesData& properties, BaseArgs&&... args)
-    : Base(std::forward<BaseArgs>(args)...), mProperties(properties) {
+    : Base(std::forward<BaseArgs>(args)...), mProperties(properties)
+  {
     // Do nothing
   }
 
@@ -190,7 +192,8 @@ template <
     void (*updateState)(DerivedT*)>
 AspectWithState<BaseT, DerivedT, StateDataT, CompositeT, updateState>::
     AspectWithState(const StateDataT& state)
-  : BaseT(), mState(state) {
+  : BaseT(), mState(state)
+{
   // Do nothing
 }
 
@@ -202,7 +205,8 @@ template <
     class CompositeT,
     void (*updateState)(DerivedT*)>
 void AspectWithState<BaseT, DerivedT, StateData, CompositeT, updateState>::
-    setAspectState(const Aspect::State& otherState) {
+    setAspectState(const Aspect::State& otherState)
+{
   setState(static_cast<const State&>(otherState));
 }
 
@@ -215,7 +219,8 @@ template <
     void (*updateState)(DerivedT*)>
 const Aspect::State*
 AspectWithState<BaseT, DerivedT, StateData, CompositeT, updateState>::
-    getAspectState() const {
+    getAspectState() const
+{
   return &mState;
 }
 
@@ -227,7 +232,8 @@ template <
     class CompositeT,
     void (*updateState)(DerivedT*)>
 void AspectWithState<BaseT, DerivedT, StateData, CompositeT, updateState>::
-    setState(const StateData& state) {
+    setState(const StateData& state)
+{
   static_cast<StateData&>(mState) = state;
   UpdateState(static_cast<Derived*>(this));
 }
@@ -240,7 +246,8 @@ template <
     class CompositeT,
     void (*updateState)(DerivedT*)>
 auto AspectWithState<BaseT, DerivedT, StateDataT, CompositeT, updateState>::
-    getState() const -> const State& {
+    getState() const -> const State&
+{
   return mState;
 }
 
@@ -253,7 +260,8 @@ template <
     void (*updateState)(DerivedT*)>
 std::unique_ptr<Aspect>
 AspectWithState<BaseT, DerivedT, StateData, CompositeT, updateState>::
-    cloneAspect() const {
+    cloneAspect() const
+{
   return std::make_unique<Derived>(mState);
 }
 
@@ -291,7 +299,8 @@ AspectWithVersionedProperties<
     CompositeT,
     updateProperties>::AspectWithVersionedProperties(const PropertiesData&
                                                          properties)
-  : BaseT(), mProperties(properties) {
+  : BaseT(), mProperties(properties)
+{
   // Do nothing
 }
 
@@ -308,7 +317,8 @@ void AspectWithVersionedProperties<
     PropertiesData,
     CompositeT,
     updateProperties>::setAspectProperties(const Aspect::Properties&
-                                               someProperties) {
+                                               someProperties)
+{
   setProperties(static_cast<const Properties&>(someProperties));
 }
 
@@ -324,7 +334,8 @@ const Aspect::Properties* AspectWithVersionedProperties<
     DerivedT,
     PropertiesData,
     CompositeT,
-    updateProperties>::getAspectProperties() const {
+    updateProperties>::getAspectProperties() const
+{
   return &mProperties;
 }
 
@@ -340,7 +351,8 @@ void AspectWithVersionedProperties<
     DerivedT,
     PropertiesData,
     CompositeT,
-    updateProperties>::setProperties(const PropertiesData& properties) {
+    updateProperties>::setProperties(const PropertiesData& properties)
+{
   static_cast<PropertiesData&>(mProperties) = properties;
   this->notifyPropertiesUpdated();
 }
@@ -357,7 +369,8 @@ auto AspectWithVersionedProperties<
     DerivedT,
     PropertiesData,
     CompositeT,
-    updateProperties>::getProperties() const -> const Properties& {
+    updateProperties>::getProperties() const -> const Properties&
+{
   return mProperties;
 }
 
@@ -373,7 +386,8 @@ std::unique_ptr<Aspect> AspectWithVersionedProperties<
     DerivedT,
     PropertiesData,
     CompositeT,
-    updateProperties>::cloneAspect() const {
+    updateProperties>::cloneAspect() const
+{
   return std::make_unique<Derived>(mProperties);
 }
 
@@ -389,7 +403,8 @@ std::size_t AspectWithVersionedProperties<
     DerivedT,
     PropertiesData,
     CompositeT,
-    updateProperties>::incrementVersion() {
+    updateProperties>::incrementVersion()
+{
   if (CompositeType* comp = this->getComposite())
     return comp->incrementVersion();
 
@@ -408,7 +423,8 @@ void AspectWithVersionedProperties<
     DerivedT,
     PropertiesData,
     CompositeT,
-    updateProperties>::notifyPropertiesUpdate() {
+    updateProperties>::notifyPropertiesUpdate()
+{
   notifyPropertiesUpdated();
 }
 
@@ -424,7 +440,8 @@ void AspectWithVersionedProperties<
     DerivedT,
     PropertiesData,
     CompositeT,
-    updateProperties>::notifyPropertiesUpdated() {
+    updateProperties>::notifyPropertiesUpdated()
+{
   UpdateProperties(static_cast<Derived*>(this));
   this->incrementVersion();
 }

@@ -57,7 +57,8 @@ namespace urdf_parsing {
 
 namespace {
 
-bool parsePose(urdf::Pose& pose, tinyxml2::XMLElement* xml) {
+bool parsePose(urdf::Pose& pose, tinyxml2::XMLElement* xml)
+{
   pose.clear();
   if (xml) {
     const char* xyz_str = xml->Attribute("xyz");
@@ -86,9 +87,8 @@ bool parsePose(urdf::Pose& pose, tinyxml2::XMLElement* xml) {
 } // namespace
 
 Entity::Entity(const urdf::Entity& urdfEntity)
-  : model(urdfEntity.model),
-    origin(urdfEntity.origin),
-    twist(urdfEntity.twist) {
+  : model(urdfEntity.model), origin(urdfEntity.origin), twist(urdfEntity.twist)
+{
   // Do nothing
 }
 
@@ -98,7 +98,8 @@ Entity::Entity(const urdf::Entity& urdfEntity)
 std::shared_ptr<World> parseWorldURDF(
     const std::string& _xml_string,
     const dart::common::Uri& _baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   tinyxml2::XMLDocument xml_doc;
   const auto result = xml_doc.Parse(&_xml_string.front());
   if (result != tinyxml2::XML_SUCCESS) {

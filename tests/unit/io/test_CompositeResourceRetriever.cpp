@@ -41,12 +41,14 @@ using dart::common::ResourceRetriever;
 using dart::common::Uri;
 using dart::io::CompositeResourceRetriever;
 
-TEST(CompositeResourceRetriever, exists_NothingRegistered_ReturnsFalse) {
+TEST(CompositeResourceRetriever, exists_NothingRegistered_ReturnsFalse)
+{
   CompositeResourceRetriever retriever;
   EXPECT_FALSE(retriever.exists(Uri::createFromString("package://test/foo")));
 }
 
-TEST(CompositeResourceRetriever, exists_AllRetrieversFail_ReturnsFalse) {
+TEST(CompositeResourceRetriever, exists_AllRetrieversFail_ReturnsFalse)
+{
   auto retriever1 = std::make_shared<AbsentResourceRetriever>();
   auto retriever2 = std::make_shared<AbsentResourceRetriever>();
   CompositeResourceRetriever retriever;
@@ -67,7 +69,8 @@ TEST(CompositeResourceRetriever, exists_AllRetrieversFail_ReturnsFalse) {
 
 TEST(
     CompositeResourceRetriever,
-    exists_CompositeResourceRetrieverSucceeds_ReturnsTrue) {
+    exists_CompositeResourceRetrieverSucceeds_ReturnsTrue)
+{
   auto retriever1 = std::make_shared<PresentResourceRetriever>();
   auto retriever2 = std::make_shared<AbsentResourceRetriever>();
   auto retriever3 = std::make_shared<AbsentResourceRetriever>();
@@ -91,7 +94,8 @@ TEST(
 
 TEST(
     CompositeResourceRetriever,
-    exists_DefaultResourceRetrieverSucceeds_ReturnsTrue) {
+    exists_DefaultResourceRetrieverSucceeds_ReturnsTrue)
+{
   auto retriever1 = std::make_shared<AbsentResourceRetriever>();
   auto retriever2 = std::make_shared<PresentResourceRetriever>();
   auto retriever3 = std::make_shared<AbsentResourceRetriever>();
@@ -116,13 +120,15 @@ TEST(
 
 TEST(
     CompositeResourceRetriever,
-    getFilePath_NothingRegistered_ReturnsEmptyString) {
+    getFilePath_NothingRegistered_ReturnsEmptyString)
+{
   CompositeResourceRetriever retriever;
   EXPECT_EQ(
       retriever.getFilePath(Uri::createFromString("package://test/foo")), "");
 }
 
-TEST(CompositeResourceRetriever, getFilePath_AllRetrieversFail_ReturnsFalse) {
+TEST(CompositeResourceRetriever, getFilePath_AllRetrieversFail_ReturnsFalse)
+{
   auto retriever1 = std::make_shared<AbsentResourceRetriever>();
   auto retriever2 = std::make_shared<AbsentResourceRetriever>();
   CompositeResourceRetriever retriever;
@@ -146,7 +152,8 @@ TEST(CompositeResourceRetriever, getFilePath_AllRetrieversFail_ReturnsFalse) {
 
 TEST(
     CompositeResourceRetriever,
-    getFilePath_CompositeResourceRetrieverSucceeds_ReturnsFilePath) {
+    getFilePath_CompositeResourceRetrieverSucceeds_ReturnsFilePath)
+{
   auto retriever1 = std::make_shared<PresentResourceRetriever>();
   auto retriever2 = std::make_shared<AbsentResourceRetriever>();
   auto retriever3 = std::make_shared<AbsentResourceRetriever>();
@@ -175,7 +182,8 @@ TEST(
 
 TEST(
     CompositeResourceRetriever,
-    getFilePath_DefaultResourceRetrieverSucceeds_ReturnsFilePath) {
+    getFilePath_DefaultResourceRetrieverSucceeds_ReturnsFilePath)
+{
   auto retriever1 = std::make_shared<AbsentResourceRetriever>();
   auto retriever2 = std::make_shared<PresentResourceRetriever>();
   auto retriever3 = std::make_shared<AbsentResourceRetriever>();
@@ -204,13 +212,15 @@ TEST(
   EXPECT_TRUE(retriever3->mRetrieve.empty());
 }
 
-TEST(CompositeResourceRetriever, retrieve_NothingRegistered_ReturnsNull) {
+TEST(CompositeResourceRetriever, retrieve_NothingRegistered_ReturnsNull)
+{
   CompositeResourceRetriever retriever;
   EXPECT_EQ(
       nullptr, retriever.retrieve(Uri::createFromString("package://test/foo")));
 }
 
-TEST(CompositeResourceRetriever, retrieve_AllRetrieversFail_ReturnsNull) {
+TEST(CompositeResourceRetriever, retrieve_AllRetrieversFail_ReturnsNull)
+{
   auto retriever1 = std::make_shared<AbsentResourceRetriever>();
   auto retriever2 = std::make_shared<AbsentResourceRetriever>();
   CompositeResourceRetriever retriever;
@@ -232,7 +242,8 @@ TEST(CompositeResourceRetriever, retrieve_AllRetrieversFail_ReturnsNull) {
 
 TEST(
     CompositeResourceRetriever,
-    retrieve_CompositeResourceRetrieverSucceeds_ReturnsNonNull) {
+    retrieve_CompositeResourceRetrieverSucceeds_ReturnsNonNull)
+{
   auto retriever1 = std::make_shared<PresentResourceRetriever>();
   auto retriever2 = std::make_shared<AbsentResourceRetriever>();
   auto retriever3 = std::make_shared<AbsentResourceRetriever>();
@@ -258,7 +269,8 @@ TEST(
 
 TEST(
     CompositeResourceRetriever,
-    retrieve_DefaultResourceRetrieverSucceeds_ReturnsNonNull) {
+    retrieve_DefaultResourceRetrieverSucceeds_ReturnsNonNull)
+{
   auto retriever1 = std::make_shared<AbsentResourceRetriever>();
   auto retriever2 = std::make_shared<PresentResourceRetriever>();
   auto retriever3 = std::make_shared<AbsentResourceRetriever>();

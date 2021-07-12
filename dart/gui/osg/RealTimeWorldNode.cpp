@@ -51,49 +51,58 @@ RealTimeWorldNode::RealTimeWorldNode(
     mTargetSimTimeLapse(targetRealTimeFactor * mTargetRealTimeLapse),
     mLastRealTimeFactor(0.0),
     mLowestRealTimeFactor(std::numeric_limits<double>::infinity()),
-    mHighestRealTimeFactor(0.0) {
+    mHighestRealTimeFactor(0.0)
+{
   // Do nothing
 }
 
 //==============================================================================
-void RealTimeWorldNode::setTargetFrequency(double targetFrequency) {
+void RealTimeWorldNode::setTargetFrequency(double targetFrequency)
+{
   const double targetRTF = mTargetSimTimeLapse / mTargetRealTimeLapse;
   mTargetRealTimeLapse = 1.0 / targetFrequency;
   mTargetSimTimeLapse = targetRTF * mTargetRealTimeLapse;
 }
 
 //==============================================================================
-double RealTimeWorldNode::getTargetFrequency() const {
+double RealTimeWorldNode::getTargetFrequency() const
+{
   return 1.0 / mTargetRealTimeLapse;
 }
 
 //==============================================================================
-void RealTimeWorldNode::setTargetRealTimeFactor(double targetRTF) {
+void RealTimeWorldNode::setTargetRealTimeFactor(double targetRTF)
+{
   mTargetSimTimeLapse = targetRTF * mTargetRealTimeLapse;
 }
 
 //==============================================================================
-double RealTimeWorldNode::getTargetRealTimeFactor() const {
+double RealTimeWorldNode::getTargetRealTimeFactor() const
+{
   return mTargetSimTimeLapse / mTargetRealTimeLapse;
 }
 
 //==============================================================================
-double RealTimeWorldNode::getLastRealTimeFactor() const {
+double RealTimeWorldNode::getLastRealTimeFactor() const
+{
   return mLastRealTimeFactor;
 }
 
 //==============================================================================
-double RealTimeWorldNode::getLowestRealTimeFactor() const {
+double RealTimeWorldNode::getLowestRealTimeFactor() const
+{
   return mLowestRealTimeFactor;
 }
 
 //==============================================================================
-double RealTimeWorldNode::getHighestRealTimeFactor() const {
+double RealTimeWorldNode::getHighestRealTimeFactor() const
+{
   return mHighestRealTimeFactor;
 }
 
 //==============================================================================
-void RealTimeWorldNode::refresh() {
+void RealTimeWorldNode::refresh()
+{
   customPreRefresh();
   clearChildUtilizationFlags();
 

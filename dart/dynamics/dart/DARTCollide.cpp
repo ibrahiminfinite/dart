@@ -64,13 +64,15 @@ typedef double dMatrix4[16];
 typedef double dMatrix6[48];
 typedef double dQuaternion[4];
 
-inline void convVector(const Eigen::Vector3d& p0, dVector3& p1) {
+inline void convVector(const Eigen::Vector3d& p0, dVector3& p1)
+{
   p1[0] = p0[0];
   p1[1] = p0[1];
   p1[2] = p0[2];
 }
 
-inline void convMatrix(const Eigen::Isometry3d& T0, dMatrix3& R0) {
+inline void convMatrix(const Eigen::Isometry3d& T0, dMatrix3& R0)
+{
   R0[0] = T0(0, 0);
   R0[1] = T0(0, 1);
   R0[2] = T0(0, 2);
@@ -90,19 +92,23 @@ struct dContactGeom {
   double depth;
 };
 
-inline double Inner(const double* a, const double* b) {
+inline double Inner(const double* a, const double* b)
+{
   return ((a)[0] * (b)[0] + (a)[1] * (b)[1] + (a)[2] * (b)[2]);
 }
 
-inline double Inner14(const double* a, const double* b) {
+inline double Inner14(const double* a, const double* b)
+{
   return ((a)[0] * (b)[0] + (a)[1] * (b)[4] + (a)[2] * (b)[8]);
 }
 
-inline double Inner41(const double* a, const double* b) {
+inline double Inner41(const double* a, const double* b)
+{
   return ((a)[0] * (b)[0] + (a)[4] * (b)[1] + (a)[8] * (b)[2]);
 }
 
-inline double Inner44(const double* a, const double* b) {
+inline double Inner44(const double* a, const double* b)
+{
   return ((a)[0] * (b)[0] + (a)[4] * (b)[4] + (a)[8] * (b)[8]);
 }
 
@@ -116,11 +122,13 @@ inline double Inner44(const double* a, const double* b) {
   (A)[1] op Inner41((B + 1), (C));                                             \
   (A)[2] op Inner41((B + 2), (C));
 
-inline void dMULTIPLY0_331(double* A, const double* B, const double* C) {
+inline void dMULTIPLY0_331(double* A, const double* B, const double* C)
+{
   dMULTIPLYOP0_331(A, =, B, C)
 }
 
-inline void dMULTIPLY1_331(double* A, const double* B, const double* C) {
+inline void dMULTIPLY1_331(double* A, const double* B, const double* C)
+{
   dMULTIPLYOP1_331(A, =, B, C)
 }
 
@@ -134,7 +142,8 @@ inline void dMULTIPLY1_331(double* A, const double* B, const double* C) {
 // n must be in the range [1..8]. m must be in the range [1..n]. i0 must be
 // in the range [0..n-1].
 
-void cullPoints(int n, double p[], int m, int i0, int iret[]) {
+void cullPoints(int n, double p[], int m, int i0, int iret[])
+{
   // compute the centroid of the polygon in cx,cy
   int i, j;
   double a, cx, cy, q;
@@ -173,15 +182,15 @@ void cullPoints(int n, double p[], int m, int i0, int iret[]) {
   iret[0] = i0;
   iret++;
   for (j = 1; j < m; j++) {
-    a = double(j) * (2 * math::constantsd::pi() / m) + A[i0];
-    if (a > math::constantsd::pi())
-      a -= 2 * math::constantsd::pi();
+    a = double(j) * (2 * math::pi() / m) + A[i0];
+    if (a > math::pi())
+      a -= 2 * math::pi();
     double maxdiff = 1e9, diff;
     for (i = 0; i < n; i++) {
       if (avail[i]) {
         diff = fabs(A[i] - a);
-        if (diff > math::constantsd::pi())
-          diff = 2 * math::constantsd::pi() - diff;
+        if (diff > math::pi())
+          diff = 2 * math::pi() - diff;
         if (diff < maxdiff) {
           maxdiff = diff;
           *iret = i;
@@ -199,7 +208,8 @@ void dLineClosestApproach(
     const dVector3 pb,
     const dVector3 ub,
     double* alpha,
-    double* beta) {
+    double* beta)
+{
   dVector3 p;
   p[0] = pb[0] - pa[0];
   p[1] = pb[1] - pa[1];
@@ -219,7 +229,8 @@ void dLineClosestApproach(
   }
 }
 
-int intersectRectQuad(double h[2], double p[8], double ret[16]) {
+int intersectRectQuad(double h[2], double p[8], double ret[16])
+{
   // q (and r) contain nq (and nr) coordinate points for the current (and
   // chopped) polygons
   int nq = 4, nr = 0;
@@ -302,7 +313,8 @@ void dClosestLineBoxPoints(
     const dMatrix3 R,
     const dVector3 side,
     dVector3 lret,
-    dVector3 bret) {
+    dVector3 bret)
+{
   int i;
 
   // compute the start and delta of the line p1-p2 relative to the box.
@@ -447,7 +459,8 @@ int dBoxBox(
     const dVector3 p2,
     const dMatrix3 R2,
     const dVector3 side2,
-    CollisionResult& result) {
+    CollisionResult& result)
+{
   const double fudge_factor = 1.05;
   dVector3 p, pp, normalC = {0.0, 0.0, 0.0, 0.0};
   const double* normalR = 0;
@@ -915,7 +928,8 @@ int collideBoxBox(
     const Eigen::Isometry3d& T0,
     const Eigen::Vector3d& size1,
     const Eigen::Isometry3d& T1,
-    CollisionResult& result) {
+    CollisionResult& result)
+{
   dVector3 halfSize0;
   dVector3 halfSize1;
 
@@ -943,7 +957,8 @@ int collideBoxSphere(
     const Eigen::Isometry3d& T0,
     const double& r1,
     const Eigen::Isometry3d& T1,
-    CollisionResult& result) {
+    CollisionResult& result)
+{
   Eigen::Vector3d halfSize = 0.5 * size0;
   bool inside_box = true;
 
@@ -1070,7 +1085,8 @@ int collideSphereBox(
     const Eigen::Isometry3d& T0,
     const Eigen::Vector3d& size1,
     const Eigen::Isometry3d& T1,
-    CollisionResult& result) {
+    CollisionResult& result)
+{
   Eigen::Vector3d size = 0.5 * size1;
   bool inside_box = true;
 
@@ -1193,7 +1209,8 @@ int collideSphereSphere(
     const Eigen::Isometry3d& c0,
     const double& _r1,
     const Eigen::Isometry3d& c1,
-    CollisionResult& result) {
+    CollisionResult& result)
+{
   double r0 = _r0;
   double r1 = _r1;
   double rsum = r0 + r1;
@@ -1246,7 +1263,8 @@ int collideCylinderSphere(
     const Eigen::Isometry3d& T0,
     const double& sphere_rad,
     const Eigen::Isometry3d& T1,
-    CollisionResult& result) {
+    CollisionResult& result)
+{
   Eigen::Vector3d center = T0.inverse() * T1.translation();
 
   double dist = sqrt(center[0] * center[0] + center[1] * center[1]);
@@ -1319,7 +1337,8 @@ int collideCylinderPlane(
     const Eigen::Isometry3d& T0,
     const Eigen::Vector3d& plane_normal,
     const Eigen::Isometry3d& T1,
-    CollisionResult& result) {
+    CollisionResult& result)
+{
   Eigen::Vector3d normal = T1.linear() * plane_normal;
   Eigen::Vector3d Rx = T0.linear().rightCols(1);
   Eigen::Vector3d Ry = normal - normal.dot(Rx) * Rx;
@@ -1387,7 +1406,8 @@ int collideCylinderPlane(
 }
 
 //==============================================================================
-int collide(CollisionObject* o1, CollisionObject* o2, CollisionResult& result) {
+int collide(CollisionObject* o1, CollisionObject* o2, CollisionResult& result)
+{
   // TODO(JS): We could make the contact point computation as optional for
   // the case that we want only binary check.
 

@@ -89,7 +89,8 @@ struct OdeCollisionCallbackData {
 
   OdeCollisionCallbackData(
       const CollisionOption& option, CollisionResult* result)
-    : option(option), result(result), done(false), numContacts(0u) {
+    : option(option), result(result), done(false), numContacts(0u)
+  {
     // Do nothing
   }
 };
@@ -105,12 +106,14 @@ OdeCollisionDetector::Registrar<OdeCollisionDetector>
         }};
 
 //==============================================================================
-std::shared_ptr<OdeCollisionDetector> OdeCollisionDetector::create() {
+std::shared_ptr<OdeCollisionDetector> OdeCollisionDetector::create()
+{
   return std::shared_ptr<OdeCollisionDetector>(new OdeCollisionDetector());
 }
 
 //==============================================================================
-OdeCollisionDetector::~OdeCollisionDetector() {
+OdeCollisionDetector::~OdeCollisionDetector()
+{
   dWorldDestroy(mWorldId);
   mWorldId = nullptr;
 
@@ -119,23 +122,27 @@ OdeCollisionDetector::~OdeCollisionDetector() {
 
 //==============================================================================
 std::shared_ptr<CollisionDetector>
-OdeCollisionDetector::cloneWithoutCollisionObjects() const {
+OdeCollisionDetector::cloneWithoutCollisionObjects() const
+{
   return OdeCollisionDetector::create();
 }
 
 //==============================================================================
-const std::string& OdeCollisionDetector::getType() const {
+const std::string& OdeCollisionDetector::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& OdeCollisionDetector::getStaticType() {
+const std::string& OdeCollisionDetector::getStaticType()
+{
   static const std::string type = "ode";
   return type;
 }
 
 //==============================================================================
-std::unique_ptr<CollisionGroup> OdeCollisionDetector::createCollisionGroup() {
+std::unique_ptr<CollisionGroup> OdeCollisionDetector::createCollisionGroup()
+{
   return std::make_unique<OdeCollisionGroup>(shared_from_this());
 }
 
@@ -143,7 +150,8 @@ std::unique_ptr<CollisionGroup> OdeCollisionDetector::createCollisionGroup() {
 bool OdeCollisionDetector::collide(
     CollisionGroup* group,
     const CollisionOption& option,
-    CollisionResult* result) {
+    CollisionResult* result)
+{
   auto odeGroup = static_cast<OdeCollisionGroup*>(group);
   odeGroup->updateEngineData();
 
@@ -160,7 +168,8 @@ bool OdeCollisionDetector::collide(
     CollisionGroup* group1,
     CollisionGroup* group2,
     const CollisionOption& option,
-    CollisionResult* result) {
+    CollisionResult* result)
+{
   auto odeGroup1 = static_cast<OdeCollisionGroup*>(group1);
   odeGroup1->updateEngineData();
 
@@ -183,7 +192,8 @@ bool OdeCollisionDetector::collide(
 double OdeCollisionDetector::distance(
     CollisionGroup* /*group*/,
     const DistanceOption& /*option*/,
-    DistanceResult* /*result*/) {
+    DistanceResult* /*result*/)
+{
   dterr << "[OdeCollisionDetector] Distance query is not supported. "
         << "Returning -1.0 instead.\n";
   return -1.0;
@@ -194,14 +204,16 @@ double OdeCollisionDetector::distance(
     CollisionGroup* /*group1*/,
     CollisionGroup* /*group2*/,
     const DistanceOption& /*option*/,
-    DistanceResult* /*result*/) {
+    DistanceResult* /*result*/)
+{
   dterr << "[OdeCollisionDetector] Distance query is not supported. "
         << "Returning -1.0 instead.\n";
   return -1.0;
 }
 
 //==============================================================================
-OdeCollisionDetector::OdeCollisionDetector() {
+OdeCollisionDetector::OdeCollisionDetector()
+{
   // Initialize ODE. dInitODE is deprecated.
   const auto initialized = dInitODE2(0);
   assert(initialized);
@@ -215,13 +227,15 @@ OdeCollisionDetector::OdeCollisionDetector() {
 
 //==============================================================================
 std::unique_ptr<CollisionObject> OdeCollisionDetector::createCollisionObject(
-    const dynamics::ShapeFrame* shapeFrame) {
+    const dynamics::ShapeFrame* shapeFrame)
+{
   return std::unique_ptr<OdeCollisionObject>(
       new OdeCollisionObject(this, shapeFrame));
 }
 
 //==============================================================================
-void OdeCollisionDetector::refreshCollisionObject(CollisionObject* object) {
+void OdeCollisionDetector::refreshCollisionObject(CollisionObject* object)
+{
   OdeCollisionObject temp(this, object->getShapeFrame());
 
   static_cast<OdeCollisionObject&>(*object) =
@@ -230,14 +244,16 @@ void OdeCollisionDetector::refreshCollisionObject(CollisionObject* object) {
 }
 
 //==============================================================================
-dWorldID OdeCollisionDetector::getOdeWorldId() const {
+dWorldID OdeCollisionDetector::getOdeWorldId() const
+{
   return mWorldId;
 }
 
 namespace {
 
 //==============================================================================
-void CollisionCallback(void* data, dGeomID o1, dGeomID o2) {
+void CollisionCallback(void* data, dGeomID o1, dGeomID o2)
+{
   assert(!dGeomIsSpace(o1));
   assert(!dGeomIsSpace(o2));
 
@@ -279,7 +295,8 @@ void reportContacts(
     OdeCollisionObject* b1,
     OdeCollisionObject* b2,
     const CollisionOption& option,
-    CollisionResult& result) {
+    CollisionResult& result)
+{
   if (0u == numContacts)
     return;
 
@@ -304,7 +321,8 @@ Contact convertContact(
     const dContactGeom& odeContact,
     OdeCollisionObject* b1,
     OdeCollisionObject* b2,
-    const CollisionOption& option) {
+    const CollisionOption& option)
+{
   Contact contact;
 
   contact.collisionObject1 = b1;

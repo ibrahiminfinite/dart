@@ -151,24 +151,30 @@ using namespace std; // necessary to get std math routines
 namespace IKFAST_NAMESPACE {
 #endif
 
-inline float IKabs(float f) {
+inline float IKabs(float f)
+{
   return fabsf(f);
 }
-inline double IKabs(double f) {
+inline double IKabs(double f)
+{
   return fabs(f);
 }
 
-inline float IKsqr(float f) {
+inline float IKsqr(float f)
+{
   return f * f;
 }
-inline double IKsqr(double f) {
+inline double IKsqr(double f)
+{
   return f * f;
 }
 
-inline float IKlog(float f) {
+inline float IKlog(float f)
+{
   return logf(f);
 }
-inline double IKlog(double f) {
+inline double IKlog(double f)
+{
   return log(f);
 }
 
@@ -193,7 +199,8 @@ inline double IKlog(double f) {
   #define IKFAST_EVALCOND_THRESH ((IkReal)0.000005)
 #endif
 
-inline float IKasin(float f) {
+inline float IKasin(float f)
+{
   IKFAST_ASSERT(
       f > -1 - IKFAST_SINCOS_THRESH
       && f < 1 + IKFAST_SINCOS_THRESH); // any more error implies something is
@@ -204,7 +211,8 @@ inline float IKasin(float f) {
     return float(IKPI_2);
   return asinf(f);
 }
-inline double IKasin(double f) {
+inline double IKasin(double f)
+{
   IKFAST_ASSERT(
       f > -1 - IKFAST_SINCOS_THRESH
       && f < 1 + IKFAST_SINCOS_THRESH); // any more error implies something is
@@ -217,7 +225,8 @@ inline double IKasin(double f) {
 }
 
 // return positive value in [0,y)
-inline float IKfmod(float x, float y) {
+inline float IKfmod(float x, float y)
+{
   while (x < 0) {
     x += y;
   }
@@ -225,14 +234,16 @@ inline float IKfmod(float x, float y) {
 }
 
 // return positive value in [0,y)
-inline double IKfmod(double x, double y) {
+inline double IKfmod(double x, double y)
+{
   while (x < 0) {
     x += y;
   }
   return fmod(x, y);
 }
 
-inline float IKacos(float f) {
+inline float IKacos(float f)
+{
   IKFAST_ASSERT(
       f > -1 - IKFAST_SINCOS_THRESH
       && f < 1 + IKFAST_SINCOS_THRESH); // any more error implies something is
@@ -243,7 +254,8 @@ inline float IKacos(float f) {
     return float(0);
   return acosf(f);
 }
-inline double IKacos(double f) {
+inline double IKacos(double f)
+{
   IKFAST_ASSERT(
       f > -1 - IKFAST_SINCOS_THRESH
       && f < 1 + IKFAST_SINCOS_THRESH); // any more error implies something is
@@ -254,38 +266,48 @@ inline double IKacos(double f) {
     return 0;
   return acos(f);
 }
-inline float IKsin(float f) {
+inline float IKsin(float f)
+{
   return sinf(f);
 }
-inline double IKsin(double f) {
+inline double IKsin(double f)
+{
   return sin(f);
 }
-inline float IKcos(float f) {
+inline float IKcos(float f)
+{
   return cosf(f);
 }
-inline double IKcos(double f) {
+inline double IKcos(double f)
+{
   return cos(f);
 }
-inline float IKtan(float f) {
+inline float IKtan(float f)
+{
   return tanf(f);
 }
-inline double IKtan(double f) {
+inline double IKtan(double f)
+{
   return tan(f);
 }
-inline float IKsqrt(float f) {
+inline float IKsqrt(float f)
+{
   if (f <= 0.0f)
     return 0.0f;
   return sqrtf(f);
 }
-inline double IKsqrt(double f) {
+inline double IKsqrt(double f)
+{
   if (f <= 0.0)
     return 0.0;
   return sqrt(f);
 }
-inline float IKatan2Simple(float fy, float fx) {
+inline float IKatan2Simple(float fy, float fx)
+{
   return atan2f(fy, fx);
 }
-inline float IKatan2(float fy, float fx) {
+inline float IKatan2(float fy, float fx)
+{
   if (isnan(fy)) {
     IKFAST_ASSERT(
         !isnan(fx)); // if both are nan, probably wrong value will be returned
@@ -295,10 +317,12 @@ inline float IKatan2(float fy, float fx) {
   }
   return atan2f(fy, fx);
 }
-inline double IKatan2Simple(double fy, double fx) {
+inline double IKatan2Simple(double fy, double fx)
+{
   return atan2(fy, fx);
 }
-inline double IKatan2(double fy, double fx) {
+inline double IKatan2(double fy, double fx)
+{
   if (std::isnan(fy)) {
     IKFAST_ASSERT(!std::isnan(
         fx)); // if both are nan, probably wrong value will be returned
@@ -316,7 +340,8 @@ struct CheckValue {
 };
 
 template <typename T>
-inline CheckValue<T> IKatan2WithCheck(T fy, T fx, T epsilon) {
+inline CheckValue<T> IKatan2WithCheck(T fy, T fx, T epsilon)
+{
   CheckValue<T> ret;
   ret.valid = false;
   ret.value = 0;
@@ -330,7 +355,8 @@ inline CheckValue<T> IKatan2WithCheck(T fy, T fx, T epsilon) {
   return ret;
 }
 
-inline float IKsign(float f) {
+inline float IKsign(float f)
+{
   if (f > 0) {
     return float(1);
   } else if (f < 0) {
@@ -339,7 +365,8 @@ inline float IKsign(float f) {
   return 0;
 }
 
-inline double IKsign(double f) {
+inline double IKsign(double f)
+{
   if (f > 0) {
     return 1.0;
   } else if (f < 0) {
@@ -349,7 +376,8 @@ inline double IKsign(double f) {
 }
 
 template <typename T>
-inline CheckValue<T> IKPowWithIntegerCheck(T f, int n) {
+inline CheckValue<T> IKPowWithIntegerCheck(T f, int n)
+{
   CheckValue<T> ret;
   ret.valid = true;
   if (n == 0) {
@@ -394,7 +422,8 @@ inline CheckValue<T> IKPowWithIntegerCheck(T f, int n) {
 
 /// solves the forward kinematics equations.
 /// \param pfree is an array specifying the free joints of the chain.
-IKFAST_API void ComputeFk(const IkReal* j, IkReal* eetrans, IkReal* eerot) {
+IKFAST_API void ComputeFk(const IkReal* j, IkReal* eetrans, IkReal* eerot)
+{
   IkReal x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15,
       x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30,
       x31, x32, x33, x34, x35, x36, x37, x38, x39, x40, x41, x42, x43, x44, x45,
@@ -496,22 +525,27 @@ IKFAST_API void ComputeFk(const IkReal* j, IkReal* eetrans, IkReal* eerot) {
          + ((x17 * x63)));
 }
 
-IKFAST_API int GetNumFreeParameters() {
+IKFAST_API int GetNumFreeParameters()
+{
   return 1;
 }
-IKFAST_API int* GetFreeParameters() {
+IKFAST_API int* GetFreeParameters()
+{
   static int freeparams[] = {2};
   return freeparams;
 }
-IKFAST_API int GetNumJoints() {
+IKFAST_API int GetNumJoints()
+{
   return 7;
 }
 
-IKFAST_API int GetIkRealSize() {
+IKFAST_API int GetIkRealSize()
+{
   return sizeof(IkReal);
 }
 
-IKFAST_API int GetIkType() {
+IKFAST_API int GetIkType()
+{
   return 0x67000001;
 }
 
@@ -533,7 +567,8 @@ public:
       const IkReal* eetrans,
       const IkReal* eerot,
       const IkReal* pfree,
-      IkSolutionListBase<IkReal>& solutions) {
+      IkSolutionListBase<IkReal>& solutions)
+  {
     j4 = numeric_limits<IkReal>::quiet_NaN();
     _ij4[0] = -1;
     _ij4[1] = -1;
@@ -30567,7 +30602,8 @@ public:
     }
     return solutions.GetNumSolutions() > 0;
   }
-  inline void rotationfunction0(IkSolutionListBase<IkReal>& solutions) {
+  inline void rotationfunction0(IkSolutionListBase<IkReal>& solutions)
+  {
     for (int rotationiter = 0; rotationiter < 1; ++rotationiter) {
       IkReal x158 = ((1.0) * sj9);
       IkReal x159 = (cj9 * sj6);
@@ -36883,7 +36919,8 @@ IKFAST_API bool ComputeIk(
     const IkReal* eetrans,
     const IkReal* eerot,
     const IkReal* pfree,
-    IkSolutionListBase<IkReal>& solutions) {
+    IkSolutionListBase<IkReal>& solutions)
+{
   IKSolver solver;
   return solver.ComputeIk(eetrans, eerot, pfree, solutions);
 }
@@ -36893,16 +36930,19 @@ IKFAST_API bool ComputeIk2(
     const IkReal* eerot,
     const IkReal* pfree,
     IkSolutionListBase<IkReal>& solutions,
-    void* pOpenRAVEManip) {
+    void* pOpenRAVEManip)
+{
   IKSolver solver;
   return solver.ComputeIk(eetrans, eerot, pfree, solutions);
 }
 
-IKFAST_API const char* GetKinematicsHash() {
+IKFAST_API const char* GetKinematicsHash()
+{
   return "268c2c509bc1bb657da055f0ef2eb7e1";
 }
 
-IKFAST_API const char* GetIkFastVersion() {
+IKFAST_API const char* GetIkFastVersion()
+{
   return IKFAST_STRINGIZE(IKFAST_VERSION);
 }
 
@@ -36917,39 +36957,46 @@ SharedLibraryWamIkFast::SharedLibraryWamIkFast(
     const std::vector<std::size_t>& freeDofMap,
     const std::string& methodName,
     const dart::dynamics::InverseKinematics::Analytical::Properties& properties)
-  : IkFast{ik, dofMap, freeDofMap, methodName, properties} {
+  : IkFast{ik, dofMap, freeDofMap, methodName, properties}
+{
   // Do nothing
 }
 
 //==============================================================================
 std::unique_ptr<dart::dynamics::InverseKinematics::GradientMethod>
-SharedLibraryWamIkFast::clone(dart::dynamics::InverseKinematics* newIK) const {
+SharedLibraryWamIkFast::clone(dart::dynamics::InverseKinematics* newIK) const
+{
   return std::make_unique<SharedLibraryWamIkFast>(
       newIK, mDofs, mFreeDofs, getMethodName(), getAnalyticalProperties());
 }
 
 //==============================================================================
-int SharedLibraryWamIkFast::getNumFreeParameters() const {
+int SharedLibraryWamIkFast::getNumFreeParameters() const
+{
   return GetNumFreeParameters();
 }
 
 //==============================================================================
-int* SharedLibraryWamIkFast::getFreeParameters() const {
+int* SharedLibraryWamIkFast::getFreeParameters() const
+{
   return GetFreeParameters();
 }
 
 //==============================================================================
-int SharedLibraryWamIkFast::getNumJoints() const {
+int SharedLibraryWamIkFast::getNumJoints() const
+{
   return GetNumJoints();
 }
 
 //==============================================================================
-int SharedLibraryWamIkFast::getIkRealSize() const {
+int SharedLibraryWamIkFast::getIkRealSize() const
+{
   return GetIkRealSize();
 }
 
 //==============================================================================
-int SharedLibraryWamIkFast::getIkType() const {
+int SharedLibraryWamIkFast::getIkType() const
+{
   return GetIkType();
 }
 
@@ -36958,22 +37005,26 @@ bool SharedLibraryWamIkFast::computeIk(
     const IkReal* targetTranspose,
     const IkReal* targetRotation,
     const IkReal* freeParams,
-    ikfast::IkSolutionListBase<IkReal>& solutions) {
+    ikfast::IkSolutionListBase<IkReal>& solutions)
+{
   return ComputeIk(targetTranspose, targetRotation, freeParams, solutions);
 }
 
 //==============================================================================
 void SharedLibraryWamIkFast::computeFk(
-    const IkReal* parameters, IkReal* targetTranspose, IkReal* targetRotation) {
+    const IkReal* parameters, IkReal* targetTranspose, IkReal* targetRotation)
+{
   ComputeFk(parameters, targetTranspose, targetRotation);
 }
 
 //==============================================================================
-const char* SharedLibraryWamIkFast::getKinematicsHash() {
+const char* SharedLibraryWamIkFast::getKinematicsHash()
+{
   return GetKinematicsHash();
 }
 
 //==============================================================================
-const char* SharedLibraryWamIkFast::getIkFastVersion() {
+const char* SharedLibraryWamIkFast::getIkFastVersion()
+{
   return GetIkFastVersion();
 }

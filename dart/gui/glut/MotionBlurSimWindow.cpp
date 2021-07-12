@@ -26,17 +26,20 @@ namespace gui {
 namespace glut {
 
 //==============================================================================
-MotionBlurSimWindow::MotionBlurSimWindow() : SimWindow() {
+MotionBlurSimWindow::MotionBlurSimWindow() : SimWindow()
+{
   mMotionBlurFrequency = 1;
 }
 
 //==============================================================================
-MotionBlurSimWindow::~MotionBlurSimWindow() {
+MotionBlurSimWindow::~MotionBlurSimWindow()
+{
   // Do nothing
 }
 
 //==============================================================================
-void MotionBlurSimWindow::setMotionBlurQuality(int _val) {
+void MotionBlurSimWindow::setMotionBlurQuality(int _val)
+{
   int numIter = mDisplayTimeout / (mWorld->getTimeStep() * 1000);
   if (_val < 0) {
     std::cout << "setMotionBlurQuality: input should be an int between 0-5, "
@@ -67,7 +70,8 @@ void MotionBlurSimWindow::setMotionBlurQuality(int _val) {
 }
 
 //==============================================================================
-void MotionBlurSimWindow::render() {
+void MotionBlurSimWindow::render()
+{
   int numIter = mDisplayTimeout / (mWorld->getTimeStep() * 1000);
   int numMotionBlurFrames = ceil(
       floor(mDisplayTimeout)
@@ -206,7 +210,8 @@ void MotionBlurSimWindow::render() {
 }
 
 //==============================================================================
-void MotionBlurSimWindow::displayTimer(int _val) {
+void MotionBlurSimWindow::displayTimer(int _val)
+{
   if (mPlay) {
     mPlayFrame += 16;
     if (mPlayFrame >= mWorld->getRecording()->getNumFrames())

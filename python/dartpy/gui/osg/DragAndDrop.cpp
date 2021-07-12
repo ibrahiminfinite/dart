@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void DragAndDrop(py::module& m) {
+void DragAndDrop(py::module& m)
+{
   ::py::class_<
       dart::gui::osg::DragAndDrop,
       dart::common::Observer,

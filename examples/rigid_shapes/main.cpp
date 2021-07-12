@@ -34,7 +34,8 @@
 
 using namespace dart;
 
-int main() {
+int main()
+{
   // Create world by reading a skel file
   auto world = io::SkelParser::readWorld("dart://sample/skel/shapes.skel");
   assert(world != nullptr);

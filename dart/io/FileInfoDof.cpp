@@ -45,18 +45,21 @@ namespace io {
 
 //==============================================================================
 FileInfoDof::FileInfoDof(dynamics::Skeleton* _skel, double _fps)
-  : mSkel(_skel), mFPS(_fps), mNumFrames(0) {
+  : mSkel(_skel), mFPS(_fps), mNumFrames(0)
+{
   std::strcpy(mFileName, "");
 }
 
 //==============================================================================
-FileInfoDof::~FileInfoDof() {
+FileInfoDof::~FileInfoDof()
+{
   mDofs.clear();
   mNumFrames = 0;
 }
 
 //==============================================================================
-bool FileInfoDof::loadFile(const char* _fName) {
+bool FileInfoDof::loadFile(const char* _fName)
+{
   std::ifstream inFile(_fName);
   if (inFile.fail() == 1)
     return false;
@@ -111,7 +114,8 @@ bool FileInfoDof::saveFile(
     const char* _fName,
     std::size_t _start,
     std::size_t _end,
-    double /*_sampleRate*/) {
+    double /*_sampleRate*/)
+{
   if (_end < _start)
     return false;
 
@@ -154,39 +158,46 @@ bool FileInfoDof::saveFile(
 }
 
 //==============================================================================
-void FileInfoDof::addDof(const Eigen::VectorXd& _dofs) {
+void FileInfoDof::addDof(const Eigen::VectorXd& _dofs)
+{
   mDofs.push_back(_dofs);
   mNumFrames++;
 }
 
 //==============================================================================
-double FileInfoDof::getDofAt(std::size_t _frame, std::size_t _id) const {
+double FileInfoDof::getDofAt(std::size_t _frame, std::size_t _id) const
+{
   assert(_frame < mNumFrames);
   return mDofs.at(_frame)[_id];
 }
 
 //==============================================================================
-Eigen::VectorXd FileInfoDof::getPoseAtFrame(int _frame) const {
+Eigen::VectorXd FileInfoDof::getPoseAtFrame(int _frame) const
+{
   return mDofs.at(_frame);
 }
 
 //==============================================================================
-void FileInfoDof::setFPS(double _fps) {
+void FileInfoDof::setFPS(double _fps)
+{
   mFPS = _fps;
 }
 
 //==============================================================================
-double FileInfoDof::getFPS() const {
+double FileInfoDof::getFPS() const
+{
   return mFPS;
 }
 
 //==============================================================================
-int FileInfoDof::getNumFrames() const {
+int FileInfoDof::getNumFrames() const
+{
   return mNumFrames;
 }
 
 //==============================================================================
-dynamics::Skeleton* FileInfoDof::getSkel() const {
+dynamics::Skeleton* FileInfoDof::getSkel() const
+{
   return mSkel;
 }
 

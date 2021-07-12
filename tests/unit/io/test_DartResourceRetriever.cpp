@@ -40,7 +40,8 @@
 using namespace dart;
 
 //==============================================================================
-TEST(DartResourceRetriever, ExistsAndGetFilePathAndRetrieve) {
+TEST(DartResourceRetriever, ExistsAndGetFilePathAndRetrieve)
+{
   auto retriever = io::DartResourceRetriever::create();
 
   EXPECT_FALSE(retriever->exists("unknown://test"));

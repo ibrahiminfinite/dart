@@ -41,7 +41,7 @@
 #include "dart/dynamics/MultiSphereConvexHullShape.hpp"
 #include "dart/dynamics/SimpleFrame.hpp"
 #include "dart/gui/osg/Utils.hpp"
-#include "dart/math/geometry/Icosphere.hpp"
+#include "dart/math/geometry/icosphere.hpp"
 
 namespace dart {
 namespace gui {
@@ -92,13 +92,15 @@ protected:
 MultiSphereShapeNode::MultiSphereShapeNode(
     std::shared_ptr<dart::dynamics::MultiSphereConvexHullShape> shape,
     ShapeFrameNode* parent)
-  : ShapeNode(shape, parent, this), mMultiSphereShape(shape), mGeode(nullptr) {
+  : ShapeNode(shape, parent, this), mMultiSphereShape(shape), mGeode(nullptr)
+{
   extractData(true);
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
 }
 
 //==============================================================================
-void MultiSphereShapeNode::refresh() {
+void MultiSphereShapeNode::refresh()
+{
   mUtilized = true;
 
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
@@ -110,7 +112,8 @@ void MultiSphereShapeNode::refresh() {
 }
 
 //==============================================================================
-void MultiSphereShapeNode::extractData(bool /*firstTime*/) {
+void MultiSphereShapeNode::extractData(bool /*firstTime*/)
+{
   if (nullptr == mGeode) {
     mGeode = new MultiSphereShapeGeode(
         mMultiSphereShape.get(), mParentShapeFrameNode, this);
@@ -122,7 +125,8 @@ void MultiSphereShapeNode::extractData(bool /*firstTime*/) {
 }
 
 //==============================================================================
-MultiSphereShapeNode::~MultiSphereShapeNode() {
+MultiSphereShapeNode::~MultiSphereShapeNode()
+{
   // Do nothing
 }
 
@@ -134,7 +138,8 @@ MultiSphereShapeGeode::MultiSphereShapeGeode(
   : ShapeNode(parentNode->getShape(), parentShapeFrame, this),
     mParentNode(parentNode),
     mMultiSphereShape(shape),
-    mDrawable(nullptr) {
+    mDrawable(nullptr)
+{
   getOrCreateStateSet()->setMode(GL_BLEND, ::osg::StateAttribute::ON);
   getOrCreateStateSet()->setRenderingHint(::osg::StateSet::TRANSPARENT_BIN);
   getOrCreateStateSet()->setAttributeAndModes(
@@ -143,14 +148,16 @@ MultiSphereShapeGeode::MultiSphereShapeGeode(
 }
 
 //==============================================================================
-void MultiSphereShapeGeode::refresh() {
+void MultiSphereShapeGeode::refresh()
+{
   mUtilized = true;
 
   extractData();
 }
 
 //==============================================================================
-void MultiSphereShapeGeode::extractData() {
+void MultiSphereShapeGeode::extractData()
+{
   if (nullptr == mDrawable) {
     mDrawable
         = new MultiSphereShapeDrawable(mMultiSphereShape, mVisualAspect, this);
@@ -162,7 +169,8 @@ void MultiSphereShapeGeode::extractData() {
 }
 
 //==============================================================================
-MultiSphereShapeGeode::~MultiSphereShapeGeode() {
+MultiSphereShapeGeode::~MultiSphereShapeGeode()
+{
   // Do nothing
 }
 
@@ -176,12 +184,14 @@ MultiSphereShapeDrawable::MultiSphereShapeDrawable(
     mParent(parent),
     mVertices(new ::osg::Vec3Array),
     mNormals(new ::osg::Vec3Array),
-    mColors(new ::osg::Vec4Array) {
+    mColors(new ::osg::Vec4Array)
+{
   refresh(true);
 }
 
 //==============================================================================
-void MultiSphereShapeDrawable::refresh(bool firstTime) {
+void MultiSphereShapeDrawable::refresh(bool firstTime)
+{
   if (mMultiSphereShape->getDataVariance() == dart::dynamics::Shape::STATIC)
     setDataVariance(::osg::Object::STATIC);
   else
@@ -209,11 +219,11 @@ void MultiSphereShapeDrawable::refresh(bool firstTime) {
     }
 
     // Create a convex hull from the combined mesh
-    auto convexHull = mesh.generateConvexHull();
-    convexHull->computeVertexNormals();
-    const auto& meshVertices = convexHull->getVertices();
-    const auto& meshNormals = convexHull->getVertexNormals();
-    const auto& meshTriangles = convexHull->getTriangles();
+    auto convexHull = mesh.generate_convex_hull();
+    convexHull->compute_vertex_normals();
+    const auto& meshVertices = convexHull->get_vertices();
+    const auto& meshNormals = convexHull->get_vertex_normals();
+    const auto& meshTriangles = convexHull->get_triangles();
     assert(meshVertices.size() == meshNormals.size());
 
     // Convert the convex hull to OSG data types
@@ -252,7 +262,8 @@ void MultiSphereShapeDrawable::refresh(bool firstTime) {
 }
 
 //==============================================================================
-MultiSphereShapeDrawable::~MultiSphereShapeDrawable() {
+MultiSphereShapeDrawable::~MultiSphereShapeDrawable()
+{
   // Do nothing
 }
 

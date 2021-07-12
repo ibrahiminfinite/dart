@@ -36,7 +36,8 @@
 
 using dart::common::Uri;
 
-TEST(UriHelpers, fromString_ValidUri_ReturnsTrue) {
+TEST(UriHelpers, fromString_ValidUri_ReturnsTrue)
+{
   // These examples are from Section 1.1.2 of RFC 3986.
   Uri uri;
 
@@ -119,7 +120,8 @@ TEST(UriHelpers, fromString_ValidUri_ReturnsTrue) {
   EXPECT_EQ("oasis:names:specification:docbook:dtd:xml:4.1.2", *uri.mPath);
 }
 
-TEST(UriHelpers, fromPath_PathNotUri_ReturnsFileURIwithEmptyAuthority) {
+TEST(UriHelpers, fromPath_PathNotUri_ReturnsFileURIwithEmptyAuthority)
+{
 #ifdef _WIN32
   std::vector<std::string> testPaths = {
       "C:\\foo",
@@ -163,7 +165,8 @@ TEST(UriHelpers, fromPath_PathNotUri_ReturnsFileURIwithEmptyAuthority) {
   EXPECT_EQ(testPaths[2], uri.getFilesystemPath());
 }
 
-TEST(UriHelpers, fromStringOrPath_UriNotPathNorFileUri_ReturnsUriNotFileUri) {
+TEST(UriHelpers, fromStringOrPath_UriNotPathNorFileUri_ReturnsUriNotFileUri)
+{
   std::vector<std::string> testUris
       = {"ftp://ftp.is.co.za/rfc/rfc1808.txt",
          "http://www.ietf.org/rfc/rfc2396.txt",
@@ -184,7 +187,8 @@ TEST(UriHelpers, fromStringOrPath_UriNotPathNorFileUri_ReturnsUriNotFileUri) {
   }
 }
 
-TEST(UriHelpers, fromString_InputIsUri_DoesNotChange) {
+TEST(UriHelpers, fromString_InputIsUri_DoesNotChange)
+{
   Uri uri;
 
   ASSERT_TRUE(uri.fromString("ftp://ftp.is.co.za/rfc/rfc1808.txt"));
@@ -198,7 +202,8 @@ TEST(UriHelpers, fromString_InputIsUri_DoesNotChange) {
   EXPECT_EQ("/rfc/rfc1808.txt", *uri.mPath);
 }
 
-TEST(UriHelpers, getUri_InputIsUri_DoesNotChange) {
+TEST(UriHelpers, getUri_InputIsUri_DoesNotChange)
+{
   std::vector<std::string> testUris
       = {"ftp://ftp.is.co.za/rfc/rfc1808.txt",
          "http://www.ietf.org/rfc/rfc2396.txt",
@@ -213,7 +218,8 @@ TEST(UriHelpers, getUri_InputIsUri_DoesNotChange) {
     EXPECT_EQ(testUri, Uri::createFromString(testUri).toString());
 }
 
-TEST(UriHelpers, getUri_InputIsPath_AppendsFileSchema) {
+TEST(UriHelpers, getUri_InputIsPath_AppendsFileSchema)
+{
 #ifdef _WIN32
   std::vector<std::string> testPaths = {
       "C:\\foo",
@@ -238,7 +244,8 @@ TEST(UriHelpers, getUri_InputIsPath_AppendsFileSchema) {
   }
 }
 
-TEST(UriHelpers, getRelativeUri) {
+TEST(UriHelpers, getRelativeUri)
+{
   std::vector<std::pair<std::string, std::string> > testPairs = {
       // RFC 3986, Section 5.4.1.: Normal Examples
       {"g:h", "g:h"},

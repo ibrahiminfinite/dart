@@ -60,7 +60,8 @@ public:
   using StateData = typename Impl::StateData;
 
   template <typename... Args>
-  EmbeddedStateAspect(Args&&... args) : Impl(std::forward<Args>(args)...) {
+  EmbeddedStateAspect(Args&&... args) : Impl(std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
@@ -97,13 +98,15 @@ public:
 
   // Forwarding constructor
   template <typename... Args>
-  EmbedState(Args&&... args) : Base(std::forward<Args>(args)...) {
+  EmbedState(Args&&... args) : Base(std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
   virtual ~EmbedState() = default;
 
-  const AspectState& getAspectState() const {
+  const AspectState& getAspectState() const
+  {
     return mAspectState;
   }
 
@@ -132,7 +135,8 @@ public:
 
   // Forwarding constructor
   template <typename... Args>
-  EmbedStateOnTopOf(Args&&... args) : Base(NoArg, std::forward<Args>(args)...) {
+  EmbedStateOnTopOf(Args&&... args) : Base(NoArg, std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
@@ -164,7 +168,8 @@ public:
 
   // Forwarding constructor
   template <typename... Args>
-  EmbeddedPropertiesAspect(Args&&... args) : Impl(std::forward<Args>(args)...) {
+  EmbeddedPropertiesAspect(Args&&... args) : Impl(std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
@@ -202,13 +207,15 @@ public:
 
   // Forwarding constructor
   template <typename... Args>
-  EmbedProperties(Args&&... args) : Base(std::forward<Args>(args)...) {
+  EmbedProperties(Args&&... args) : Base(std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
   virtual ~EmbedProperties() = default;
 
-  const AspectProperties& getAspectProperties() const {
+  const AspectProperties& getAspectProperties() const
+  {
     return mAspectProperties;
   }
 
@@ -238,7 +245,8 @@ public:
   // Forwarding constructor
   template <typename... Args>
   EmbedPropertiesOnTopOf(Args&&... args)
-    : Base(NoArg, std::forward<Args>(args)...) {
+    : Base(NoArg, std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
@@ -303,38 +311,44 @@ public:
   virtual ~EmbeddedStateAndPropertiesAspect() = default;
 
   /// Construct using nothing. The object will remain unaffected.
-  EmbeddedStateAndPropertiesAspect() : AspectPropertiesImpl() {
+  EmbeddedStateAndPropertiesAspect() : AspectPropertiesImpl()
+  {
     // Do nothing
   }
 
   /// Construct using a State. The object's Properties will remain unaffected.
   EmbeddedStateAndPropertiesAspect(const StateData& state)
-    : AspectPropertiesImpl(state) {
+    : AspectPropertiesImpl(state)
+  {
     // Do nothing
   }
 
   /// Construct using Properties. The object's State will remain unaffected.
   EmbeddedStateAndPropertiesAspect(const PropertiesData& properties)
-    : AspectPropertiesImpl(properties) {
+    : AspectPropertiesImpl(properties)
+  {
     // Do nothing
   }
 
   /// Construct using a State and Properties instance
   EmbeddedStateAndPropertiesAspect(
       const StateData& state, const PropertiesData& properties)
-    : AspectPropertiesImpl(properties, state) {
+    : AspectPropertiesImpl(properties, state)
+  {
     // Do nothing
   }
 
   /// Construct using a Properties and State instance
   EmbeddedStateAndPropertiesAspect(
       const PropertiesData& properties, const StateData& state)
-    : AspectPropertiesImpl(properties, state) {
+    : AspectPropertiesImpl(properties, state)
+  {
     // Do nothing
   }
 
   // Documentation inherited
-  std::unique_ptr<Aspect> cloneAspect() const override {
+  std::unique_ptr<Aspect> cloneAspect() const override
+  {
     return std::make_unique<Derived>(this->getState(), this->getProperties());
   }
 };
@@ -372,17 +386,20 @@ public:
 
   // Forwarding constructor
   template <typename... Args>
-  EmbedStateAndProperties(Args&&... args) : Base(std::forward<Args>(args)...) {
+  EmbedStateAndProperties(Args&&... args) : Base(std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
   virtual ~EmbedStateAndProperties() = default;
 
-  const AspectState& getAspectState() const {
+  const AspectState& getAspectState() const
+  {
     return mAspectState;
   }
 
-  const AspectProperties& getAspectProperties() const {
+  const AspectProperties& getAspectProperties() const
+  {
     return mAspectProperties;
   }
 
@@ -423,7 +440,8 @@ public:
   // Forwarding constructor
   template <typename... Args>
   EmbedStateAndPropertiesOnTopOf(Args&&... args)
-    : Base(NoArg, std::forward<Args>(args)...) {
+    : Base(NoArg, std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 

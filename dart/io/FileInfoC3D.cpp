@@ -39,11 +39,13 @@
 namespace dart {
 namespace io {
 
-FileInfoC3D::FileInfoC3D() : mNumMarkers(0), mNumFrames(0), mFPS(0) {
+FileInfoC3D::FileInfoC3D() : mNumMarkers(0), mNumFrames(0), mFPS(0)
+{
   std::strcpy(mFileName, "");
 }
 
-bool FileInfoC3D::loadFile(const char* _fName) {
+bool FileInfoC3D::loadFile(const char* _fName)
+{
   if (loadC3DFile(_fName, mData, &mNumFrames, &mNumMarkers, &mFPS)) {
     std::string text = _fName;
     int lastSlash = text.find_last_of("/");
@@ -56,7 +58,8 @@ bool FileInfoC3D::loadFile(const char* _fName) {
 }
 
 bool FileInfoC3D::saveFile(
-    const char* _fName, int _start, int _end, double /*_sampleRate*/) {
+    const char* _fName, int _start, int _end, double /*_sampleRate*/)
+{
   std::vector<std::vector<Eigen::Vector3d>> tmpData = mData;
 
   int first = _start < mNumFrames ? _start : mNumFrames - 1;

@@ -38,7 +38,8 @@ namespace detail {
 
 //==============================================================================
 EulerJointUniqueProperties::EulerJointUniqueProperties(AxisOrder _axisOrder)
-  : mAxisOrder(_axisOrder) {
+  : mAxisOrder(_axisOrder)
+{
   // Do nothing
 }
 
@@ -47,7 +48,8 @@ EulerJointProperties::EulerJointProperties(
     const GenericJoint<math::R3Space>::Properties& geometricProperties,
     const EulerJointUniqueProperties& eulerJointProperties)
   : GenericJoint<math::R3Space>::Properties(geometricProperties),
-    EulerJointUniqueProperties(eulerJointProperties) {
+    EulerJointUniqueProperties(eulerJointProperties)
+{
   // Do nothing
 }
 

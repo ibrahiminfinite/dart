@@ -42,32 +42,38 @@ namespace dart {
 namespace common {
 
 //==============================================================================
-void Aspect::setAspectState(const State& /*otherState*/) {
+void Aspect::setAspectState(const State& /*otherState*/)
+{
   // Do nothing
 }
 
 //==============================================================================
-const Aspect::State* Aspect::getAspectState() const {
+const Aspect::State* Aspect::getAspectState() const
+{
   return nullptr;
 }
 
 //==============================================================================
-void Aspect::setAspectProperties(const Properties& /*someProperties*/) {
+void Aspect::setAspectProperties(const Properties& /*someProperties*/)
+{
   // Do nothing
 }
 
 //==============================================================================
-const Aspect::Properties* Aspect::getAspectProperties() const {
+const Aspect::Properties* Aspect::getAspectProperties() const
+{
   return nullptr;
 }
 
 //==============================================================================
-void Aspect::setComposite(Composite* /*newComposite*/) {
+void Aspect::setComposite(Composite* /*newComposite*/)
+{
   // Do nothing
 }
 
 //==============================================================================
-void Aspect::loseComposite(Composite* /*oldComposite*/) {
+void Aspect::loseComposite(Composite* /*oldComposite*/)
+{
   // Do nothing
 }
 

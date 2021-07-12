@@ -44,35 +44,38 @@ std::unordered_map<std::string, EnginePtr<S>> Engine<S>::m_engines;
 
 //==============================================================================
 template <typename S>
-EnginePtr<S> Engine<S>::Create(const std::string& engine_name) {
+EnginePtr<S> Engine<S>::Create(const std::string& engine_name)
+{
   const auto& result = m_engines.find(engine_name);
   if (result != m_engines.end()) {
     return result->second;
   }
 
   auto factory = SingletonFactory::getSingletonPtr();
-  auto newEngine = factory->create(engine_name);
+  auto new_engine = factory->create(engine_name);
 
-  if (!newEngine) {
+  if (!new_engine) {
     DART_WARN("Failed to create a collision engine [{}].", engine_name);
     return nullptr;
   }
 
-  m_engines[engine_name] = newEngine;
+  m_engines[engine_name] = new_engine;
 
-  return newEngine;
+  return new_engine;
 }
 
 //==============================================================================
 template <typename S>
-Engine<S>::~Engine() {
+Engine<S>::~Engine()
+{
   // Do nothing
 }
 
 //==============================================================================
 template <typename S>
 template <typename GeometryType, typename... Args>
-ObjectPtr<S> Engine<S>::create_object(Args&&... args) {
+ObjectPtr<S> Engine<S>::create_object(Args&&... args)
+{
   return get_default_group()->template create_object<GeometryType>(
       std::forward<Args>(args)...);
 }
@@ -80,13 +83,15 @@ ObjectPtr<S> Engine<S>::create_object(Args&&... args) {
 //==============================================================================
 template <typename S>
 template <typename... Args>
-ObjectPtr<S> Engine<S>::create_sphere_object(Args&&... args) {
+ObjectPtr<S> Engine<S>::create_sphere_object(Args&&... args)
+{
   return get_default_group()->create_sphere_object(std::forward<Args>(args)...);
 }
 
 //==============================================================================
 template <typename S>
-Group<S>* Engine<S>::get_default_group() {
+Group<S>* Engine<S>::get_default_group()
+{
   if (!m_default_group) {
     m_default_group = create_group();
   }

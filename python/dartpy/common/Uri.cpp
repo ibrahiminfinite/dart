@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Uri(py::module& m) {
+void Uri(py::module& m)
+{
   ::py::class_<dart::common::Uri>(m, "Uri")
       .def(::py::init<>())
       .def(::py::init<const std::string&>(), ::py::arg("input"))

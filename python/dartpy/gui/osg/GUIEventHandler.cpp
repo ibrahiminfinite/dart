@@ -46,13 +46,15 @@ public:
   using GUIEventHandler::handle;
 
   virtual bool handle(
-      const osgGA::GUIEventAdapter* /*ea*/, osgGA::GUIActionAdapter* /*aa*/) {
+      const osgGA::GUIEventAdapter* /*ea*/, osgGA::GUIActionAdapter* /*aa*/)
+  {
     return true;
   }
 
 protected:
   bool handle(
-      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& aa) override {
+      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& aa) override
+  {
     return handle(&ea, &aa);
   }
 };
@@ -64,7 +66,8 @@ public:
 
   // Trampoline for virtual function
   bool handle(
-      const osgGA::GUIEventAdapter* ea, osgGA::GUIActionAdapter* aa) override {
+      const osgGA::GUIEventAdapter* ea, osgGA::GUIActionAdapter* aa) override
+  {
     PYBIND11_OVERLOAD(
         bool,                 // Return type
         GUIEventHandlerNoRef, // Parent class
@@ -74,7 +77,8 @@ public:
   }
 };
 
-void GUIEventHandler(py::module& m) {
+void GUIEventHandler(py::module& m)
+{
   auto ea = ::py::class_<
                 osgGA::GUIEventAdapter,
                 ::osg::ref_ptr<osgGA::GUIEventAdapter>>(m, "GUIEventAdapter")

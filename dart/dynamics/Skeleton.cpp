@@ -100,7 +100,8 @@ template <
     std::size_t (Owner::*getNumObjects)() const,
     Object* (Owner::*getObject)(std::size_t),
     void (ObjectBase::*setData)(const Data&)>
-void setAllMemberObjectData(Owner* owner, const std::vector<Data>& data) {
+void setAllMemberObjectData(Owner* owner, const std::vector<Data>& data)
+{
   if (!owner) {
     dterr << "[setAllMemberObjectData] Attempting to set ["
           << typeid(Data).name() << "] of every [" << typeid(Object).name()
@@ -146,7 +147,8 @@ template <
     std::size_t (Owner::*getNumObjects)() const,
     const Object* (Owner::*getObject)(std::size_t) const,
     Data (ObjectBase::*getData)() const>
-std::vector<Data> getAllMemberObjectData(const Owner* owner) {
+std::vector<Data> getAllMemberObjectData(const Owner* owner)
+{
   if (!owner) {
     dterr << "[getAllMemberObjectData] Attempting to get the ["
           << typeid(Data).name() << "] from every [" << typeid(Object).name()
@@ -179,12 +181,14 @@ SkeletonAspectProperties::SkeletonAspectProperties(
     mGravity(_gravity),
     mTimeStep(_timeStep),
     mEnabledSelfCollisionCheck(_enabledSelfCollisionCheck),
-    mEnabledAdjacentBodyCheck(_enableAdjacentBodyCheck) {
+    mEnabledAdjacentBodyCheck(_enableAdjacentBodyCheck)
+{
   // Do nothing
 }
 
 //==============================================================================
-void setAllBodyNodeStates(Skeleton* skel, const BodyNodeStateVector& states) {
+void setAllBodyNodeStates(Skeleton* skel, const BodyNodeStateVector& states)
+{
   setAllMemberObjectData<
       Skeleton,
       BodyNode,
@@ -196,7 +200,8 @@ void setAllBodyNodeStates(Skeleton* skel, const BodyNodeStateVector& states) {
 }
 
 //==============================================================================
-BodyNodeStateVector getAllBodyNodeStates(const Skeleton* skel) {
+BodyNodeStateVector getAllBodyNodeStates(const Skeleton* skel)
+{
   return getAllMemberObjectData<
       Skeleton,
       BodyNode,
@@ -209,7 +214,8 @@ BodyNodeStateVector getAllBodyNodeStates(const Skeleton* skel) {
 
 //==============================================================================
 void setAllBodyNodeProperties(
-    Skeleton* skel, const BodyNodePropertiesVector& properties) {
+    Skeleton* skel, const BodyNodePropertiesVector& properties)
+{
   setAllMemberObjectData<
       Skeleton,
       BodyNode,
@@ -221,7 +227,8 @@ void setAllBodyNodeProperties(
 }
 
 //==============================================================================
-BodyNodePropertiesVector getAllBodyNodeProperties(const Skeleton* skel) {
+BodyNodePropertiesVector getAllBodyNodeProperties(const Skeleton* skel)
+{
   return getAllMemberObjectData<
       Skeleton,
       BodyNode,
@@ -233,7 +240,8 @@ BodyNodePropertiesVector getAllBodyNodeProperties(const Skeleton* skel) {
 }
 
 //==============================================================================
-void setAllJointStates(Skeleton* skel, const BodyNodeStateVector& states) {
+void setAllJointStates(Skeleton* skel, const BodyNodeStateVector& states)
+{
   setAllMemberObjectData<
       Skeleton,
       Joint,
@@ -245,7 +253,8 @@ void setAllJointStates(Skeleton* skel, const BodyNodeStateVector& states) {
 }
 
 //==============================================================================
-BodyNodeStateVector getAllJointStates(const Skeleton* skel) {
+BodyNodeStateVector getAllJointStates(const Skeleton* skel)
+{
   return getAllMemberObjectData<
       Skeleton,
       Joint,
@@ -258,7 +267,8 @@ BodyNodeStateVector getAllJointStates(const Skeleton* skel) {
 
 //==============================================================================
 void setAllJointProperties(
-    Skeleton* skel, const BodyNodePropertiesVector& properties) {
+    Skeleton* skel, const BodyNodePropertiesVector& properties)
+{
   setAllMemberObjectData<
       Skeleton,
       Joint,
@@ -270,7 +280,8 @@ void setAllJointProperties(
 }
 
 //==============================================================================
-BodyNodePropertiesVector getAllJointProperties(const Skeleton* skel) {
+BodyNodePropertiesVector getAllJointProperties(const Skeleton* skel)
+{
   return getAllMemberObjectData<
       Skeleton,
       Joint,
@@ -294,7 +305,8 @@ Skeleton::Configuration::Configuration(
     mVelocities(velocities),
     mAccelerations(accelerations),
     mForces(forces),
-    mCommands(commands) {
+    mCommands(commands)
+{
   std::size_t nonzero_size = INVALID_INDEX;
 
   CHECK_CONFIG_VECTOR_SIZE(positions);
@@ -322,7 +334,8 @@ Skeleton::Configuration::Configuration(
     mVelocities(velocities),
     mAccelerations(accelerations),
     mForces(forces),
-    mCommands(commands) {
+    mCommands(commands)
+{
   std::size_t nonzero_size = indices.size();
 
   CHECK_CONFIG_VECTOR_SIZE(positions);
@@ -340,7 +353,8 @@ Skeleton::Configuration::Configuration(
     return false;
 
 //==============================================================================
-bool Skeleton::Configuration::operator==(const Configuration& other) const {
+bool Skeleton::Configuration::operator==(const Configuration& other) const
+{
   if (mIndices != other.mIndices)
     return false;
 
@@ -354,77 +368,91 @@ bool Skeleton::Configuration::operator==(const Configuration& other) const {
 }
 
 //==============================================================================
-bool Skeleton::Configuration::operator!=(const Configuration& other) const {
+bool Skeleton::Configuration::operator!=(const Configuration& other) const
+{
   return !(*this == other);
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::create(const std::string& _name) {
+SkeletonPtr Skeleton::create(const std::string& _name)
+{
   return create(AspectPropertiesData(_name));
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::create(const AspectPropertiesData& properties) {
+SkeletonPtr Skeleton::create(const AspectPropertiesData& properties)
+{
   SkeletonPtr skel(new Skeleton(properties));
   skel->setPtr(skel);
   return skel;
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::getPtr() {
+SkeletonPtr Skeleton::getPtr()
+{
   return mPtr.lock();
 }
 
 //==============================================================================
-ConstSkeletonPtr Skeleton::getPtr() const {
+ConstSkeletonPtr Skeleton::getPtr() const
+{
   return mPtr.lock();
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::getSkeleton() {
+SkeletonPtr Skeleton::getSkeleton()
+{
   return mPtr.lock();
 }
 
 //==============================================================================
-ConstSkeletonPtr Skeleton::getSkeleton() const {
+ConstSkeletonPtr Skeleton::getSkeleton() const
+{
   return mPtr.lock();
 }
 
 //==============================================================================
-std::mutex& Skeleton::getMutex() const {
+std::mutex& Skeleton::getMutex() const
+{
   return mMutex;
 }
 
 //==============================================================================
 std::unique_ptr<common::LockableReference> Skeleton::getLockableReference()
-    const {
+    const
+{
   return std::make_unique<common::SingleLockableReference<std::mutex>>(
       mPtr, mMutex);
 }
 
 //==============================================================================
-Skeleton::~Skeleton() {
+Skeleton::~Skeleton()
+{
   for (BodyNode* bn : mSkelCache.mBodyNodes)
     delete bn;
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::clone() const {
+SkeletonPtr Skeleton::clone() const
+{
   return cloneSkeleton(getName());
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::clone(const std::string& cloneName) const {
+SkeletonPtr Skeleton::clone(const std::string& cloneName) const
+{
   return cloneSkeleton(cloneName);
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::cloneSkeleton() const {
+SkeletonPtr Skeleton::cloneSkeleton() const
+{
   return cloneSkeleton(getName());
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::cloneSkeleton(const std::string& cloneName) const {
+SkeletonPtr Skeleton::cloneSkeleton(const std::string& cloneName) const
+{
   SkeletonPtr skelClone = Skeleton::create(cloneName);
 
   for (std::size_t i = 0; i < getNumBodyNodes(); ++i) {
@@ -498,8 +526,8 @@ SkeletonPtr Skeleton::cloneSkeleton(const std::string& cloneName) const {
 }
 
 //==============================================================================
-MetaSkeletonPtr Skeleton::cloneMetaSkeleton(
-    const std::string& cloneName) const {
+MetaSkeletonPtr Skeleton::cloneMetaSkeleton(const std::string& cloneName) const
+{
   return cloneSkeleton(cloneName);
 }
 
@@ -517,7 +545,8 @@ MetaSkeletonPtr Skeleton::cloneMetaSkeleton(
   }
 
 //==============================================================================
-void Skeleton::setConfiguration(const Configuration& configuration) {
+void Skeleton::setConfiguration(const Configuration& configuration)
+{
   SET_CONFIG_VECTOR(Positions);
   SET_CONFIG_VECTOR(Velocities);
   SET_CONFIG_VECTOR(Accelerations);
@@ -526,7 +555,8 @@ void Skeleton::setConfiguration(const Configuration& configuration) {
 }
 
 //==============================================================================
-Skeleton::Configuration Skeleton::getConfiguration(int flags) const {
+Skeleton::Configuration Skeleton::getConfiguration(int flags) const
+{
   std::vector<std::size_t> indices;
   for (std::size_t i = 0; i < getNumDofs(); ++i)
     indices.push_back(i);
@@ -536,7 +566,8 @@ Skeleton::Configuration Skeleton::getConfiguration(int flags) const {
 
 //==============================================================================
 Skeleton::Configuration Skeleton::getConfiguration(
-    const std::vector<std::size_t>& indices, int flags) const {
+    const std::vector<std::size_t>& indices, int flags) const
+{
   Configuration config(indices);
   if (flags == CONFIG_NOTHING)
     return config;
@@ -560,32 +591,38 @@ Skeleton::Configuration Skeleton::getConfiguration(
 }
 
 //==============================================================================
-void Skeleton::setState(const State& state) {
+void Skeleton::setState(const State& state)
+{
   setCompositeState(state);
 }
 
 //==============================================================================
-Skeleton::State Skeleton::getState() const {
+Skeleton::State Skeleton::getState() const
+{
   return getCompositeState();
 }
 
 //==============================================================================
-void Skeleton::setProperties(const Properties& properties) {
+void Skeleton::setProperties(const Properties& properties)
+{
   setCompositeProperties(properties);
 }
 
 //==============================================================================
-Skeleton::Properties Skeleton::getProperties() const {
+Skeleton::Properties Skeleton::getProperties() const
+{
   return getCompositeProperties();
 }
 
 //==============================================================================
-void Skeleton::setProperties(const AspectProperties& properties) {
+void Skeleton::setProperties(const AspectProperties& properties)
+{
   setAspectProperties(properties);
 }
 
 //==============================================================================
-void Skeleton::setAspectProperties(const AspectProperties& properties) {
+void Skeleton::setAspectProperties(const AspectProperties& properties)
+{
   setName(properties.mName);
   setMobile(properties.mIsMobile);
   setGravity(properties.mGravity);
@@ -595,12 +632,14 @@ void Skeleton::setAspectProperties(const AspectProperties& properties) {
 }
 
 //==============================================================================
-const Skeleton::AspectProperties& Skeleton::getSkeletonProperties() const {
+const Skeleton::AspectProperties& Skeleton::getSkeletonProperties() const
+{
   return mAspectProperties;
 }
 
 //==============================================================================
-const std::string& Skeleton::setName(const std::string& _name) {
+const std::string& Skeleton::setName(const std::string& _name)
+{
   if (_name == mAspectProperties.mName && !_name.empty())
     return mAspectProperties.mName;
 
@@ -616,12 +655,14 @@ const std::string& Skeleton::setName(const std::string& _name) {
 }
 
 //==============================================================================
-const std::string& Skeleton::getName() const {
+const std::string& Skeleton::getName() const
+{
   return mAspectProperties.mName;
 }
 
 //==============================================================================
-const std::string& Skeleton::addEntryToBodyNodeNameMgr(BodyNode* _newNode) {
+const std::string& Skeleton::addEntryToBodyNodeNameMgr(BodyNode* _newNode)
+{
   _newNode->BodyNode::mAspectProperties.mName
       = mNameMgrForBodyNodes.issueNewNameAndAdd(_newNode->getName(), _newNode);
 
@@ -630,7 +671,8 @@ const std::string& Skeleton::addEntryToBodyNodeNameMgr(BodyNode* _newNode) {
 
 //==============================================================================
 const std::string& Skeleton::addEntryToJointNameMgr(
-    Joint* _newJoint, bool _updateDofNames) {
+    Joint* _newJoint, bool _updateDofNames)
+{
   _newJoint->mAspectProperties.mName
       = mNameMgrForJoints.issueNewNameAndAdd(_newJoint->getName(), _newJoint);
 
@@ -641,7 +683,8 @@ const std::string& Skeleton::addEntryToJointNameMgr(
 }
 
 //==============================================================================
-void Skeleton::addEntryToSoftBodyNodeNameMgr(SoftBodyNode* _newNode) {
+void Skeleton::addEntryToSoftBodyNodeNameMgr(SoftBodyNode* _newNode)
+{
   // Note: This doesn't need the same checks as BodyNode and Joint, because
   // its name has already been resolved against all the BodyNodes, which
   // includes all SoftBodyNodes.
@@ -649,7 +692,8 @@ void Skeleton::addEntryToSoftBodyNodeNameMgr(SoftBodyNode* _newNode) {
 }
 
 //==============================================================================
-void Skeleton::updateNameManagerNames() {
+void Skeleton::updateNameManagerNames()
+{
   mNameMgrForBodyNodes.setManagerName(
       "Skeleton::BodyNode | " + mAspectProperties.mName);
   mNameMgrForSoftBodyNodes.setManagerName(
@@ -667,79 +711,94 @@ void Skeleton::updateNameManagerNames() {
 }
 
 //==============================================================================
-void Skeleton::enableSelfCollision(bool enableAdjacentBodyCheck) {
+void Skeleton::enableSelfCollision(bool enableAdjacentBodyCheck)
+{
   enableSelfCollisionCheck();
   setAdjacentBodyCheck(enableAdjacentBodyCheck);
 }
 
 //==============================================================================
-void Skeleton::disableSelfCollision() {
+void Skeleton::disableSelfCollision()
+{
   disableSelfCollisionCheck();
   setAdjacentBodyCheck(false);
 }
 
 //==============================================================================
-void Skeleton::setSelfCollisionCheck(bool enable) {
+void Skeleton::setSelfCollisionCheck(bool enable)
+{
   mAspectProperties.mEnabledSelfCollisionCheck = enable;
 }
 
 //==============================================================================
-bool Skeleton::getSelfCollisionCheck() const {
+bool Skeleton::getSelfCollisionCheck() const
+{
   return mAspectProperties.mEnabledSelfCollisionCheck;
 }
 
 //==============================================================================
-void Skeleton::enableSelfCollisionCheck() {
+void Skeleton::enableSelfCollisionCheck()
+{
   setSelfCollisionCheck(true);
 }
 
 //==============================================================================
-void Skeleton::disableSelfCollisionCheck() {
+void Skeleton::disableSelfCollisionCheck()
+{
   setSelfCollisionCheck(false);
 }
 
 //==============================================================================
-bool Skeleton::isEnabledSelfCollisionCheck() const {
+bool Skeleton::isEnabledSelfCollisionCheck() const
+{
   return getSelfCollisionCheck();
 }
 
 //==============================================================================
-void Skeleton::setAdjacentBodyCheck(bool enable) {
+void Skeleton::setAdjacentBodyCheck(bool enable)
+{
   mAspectProperties.mEnabledAdjacentBodyCheck = enable;
 }
 
 //==============================================================================
-bool Skeleton::getAdjacentBodyCheck() const {
+bool Skeleton::getAdjacentBodyCheck() const
+{
   return mAspectProperties.mEnabledAdjacentBodyCheck;
 }
 
 //==============================================================================
-void Skeleton::enableAdjacentBodyCheck() {
+void Skeleton::enableAdjacentBodyCheck()
+{
   setAdjacentBodyCheck(true);
 }
 
 //==============================================================================
-void Skeleton::disableAdjacentBodyCheck() {
+void Skeleton::disableAdjacentBodyCheck()
+{
   setAdjacentBodyCheck(false);
 }
 
 //==============================================================================
-bool Skeleton::isEnabledAdjacentBodyCheck() const {
+bool Skeleton::isEnabledAdjacentBodyCheck() const
+{
   return getAdjacentBodyCheck();
 }
 
 //==============================================================================
-void Skeleton::setMobile(bool _isMobile) {
+void Skeleton::setMobile(bool _isMobile)
+{
   mAspectProperties.mIsMobile = _isMobile;
 }
 
 //==============================================================================
-bool Skeleton::isMobile() const {
+bool Skeleton::isMobile() const
+{
   return mAspectProperties.mIsMobile;
 }
 
 //==============================================================================
-void Skeleton::setTimeStep(double _timeStep) {
+void Skeleton::setTimeStep(double _timeStep)
+{
   assert(_timeStep > 0.0);
   mAspectProperties.mTimeStep = _timeStep;
 
@@ -748,12 +807,14 @@ void Skeleton::setTimeStep(double _timeStep) {
 }
 
 //==============================================================================
-double Skeleton::getTimeStep() const {
+double Skeleton::getTimeStep() const
+{
   return mAspectProperties.mTimeStep;
 }
 
 //==============================================================================
-void Skeleton::setGravity(const Eigen::Vector3d& _gravity) {
+void Skeleton::setGravity(const Eigen::Vector3d& _gravity)
+{
   mAspectProperties.mGravity = _gravity;
   SET_ALL_FLAGS(mGravityForces);
   SET_ALL_FLAGS(mCoriolisAndGravityForces);
@@ -761,32 +822,38 @@ void Skeleton::setGravity(const Eigen::Vector3d& _gravity) {
 }
 
 //==============================================================================
-const Eigen::Vector3d& Skeleton::getGravity() const {
+const Eigen::Vector3d& Skeleton::getGravity() const
+{
   return mAspectProperties.mGravity;
 }
 
 //==============================================================================
-std::size_t Skeleton::getNumBodyNodes() const {
+std::size_t Skeleton::getNumBodyNodes() const
+{
   return mSkelCache.mBodyNodes.size();
 }
 
 //==============================================================================
-std::size_t Skeleton::getNumRigidBodyNodes() const {
+std::size_t Skeleton::getNumRigidBodyNodes() const
+{
   return mSkelCache.mBodyNodes.size() - mSoftBodyNodes.size();
 }
 
 //==============================================================================
-std::size_t Skeleton::getNumSoftBodyNodes() const {
+std::size_t Skeleton::getNumSoftBodyNodes() const
+{
   return mSoftBodyNodes.size();
 }
 
 //==============================================================================
-std::size_t Skeleton::getNumTrees() const {
+std::size_t Skeleton::getNumTrees() const
+{
   return mTreeCache.size();
 }
 
 //==============================================================================
-BodyNode* Skeleton::getRootBodyNode(std::size_t _treeIdx) {
+BodyNode* Skeleton::getRootBodyNode(std::size_t _treeIdx)
+{
   if (mTreeCache.size() > _treeIdx)
     return mTreeCache[_treeIdx].mBodyNodes[0];
 
@@ -805,12 +872,14 @@ BodyNode* Skeleton::getRootBodyNode(std::size_t _treeIdx) {
 }
 
 //==============================================================================
-const BodyNode* Skeleton::getRootBodyNode(std::size_t _treeIdx) const {
+const BodyNode* Skeleton::getRootBodyNode(std::size_t _treeIdx) const
+{
   return const_cast<Skeleton*>(this)->getRootBodyNode(_treeIdx);
 }
 
 //==============================================================================
-Joint* Skeleton::getRootJoint(std::size_t treeIdx) {
+Joint* Skeleton::getRootJoint(std::size_t treeIdx)
+{
   auto rootBodyNode = getRootBodyNode(treeIdx);
 
   if (rootBodyNode)
@@ -820,58 +889,68 @@ Joint* Skeleton::getRootJoint(std::size_t treeIdx) {
 }
 
 //==============================================================================
-const Joint* Skeleton::getRootJoint(std::size_t treeIdx) const {
+const Joint* Skeleton::getRootJoint(std::size_t treeIdx) const
+{
   return const_cast<Skeleton*>(this)->getRootJoint(treeIdx);
 }
 
 //==============================================================================
-BodyNode* Skeleton::getBodyNode(std::size_t _idx) {
+BodyNode* Skeleton::getBodyNode(std::size_t _idx)
+{
   return common::getVectorObjectIfAvailable<BodyNode*>(
       _idx, mSkelCache.mBodyNodes);
 }
 
 //==============================================================================
-const BodyNode* Skeleton::getBodyNode(std::size_t _idx) const {
+const BodyNode* Skeleton::getBodyNode(std::size_t _idx) const
+{
   return common::getVectorObjectIfAvailable<BodyNode*>(
       _idx, mSkelCache.mBodyNodes);
 }
 
 //==============================================================================
-SoftBodyNode* Skeleton::getSoftBodyNode(std::size_t _idx) {
+SoftBodyNode* Skeleton::getSoftBodyNode(std::size_t _idx)
+{
   return common::getVectorObjectIfAvailable<SoftBodyNode*>(
       _idx, mSoftBodyNodes);
 }
 
 //==============================================================================
-const SoftBodyNode* Skeleton::getSoftBodyNode(std::size_t _idx) const {
+const SoftBodyNode* Skeleton::getSoftBodyNode(std::size_t _idx) const
+{
   return common::getVectorObjectIfAvailable<SoftBodyNode*>(
       _idx, mSoftBodyNodes);
 }
 
 //==============================================================================
-BodyNode* Skeleton::getBodyNode(const std::string& _name) {
+BodyNode* Skeleton::getBodyNode(const std::string& _name)
+{
   return mNameMgrForBodyNodes.getObject(_name);
 }
 
 //==============================================================================
-const BodyNode* Skeleton::getBodyNode(const std::string& _name) const {
+const BodyNode* Skeleton::getBodyNode(const std::string& _name) const
+{
   return mNameMgrForBodyNodes.getObject(_name);
 }
 
 //==============================================================================
-SoftBodyNode* Skeleton::getSoftBodyNode(const std::string& _name) {
+SoftBodyNode* Skeleton::getSoftBodyNode(const std::string& _name)
+{
   return mNameMgrForSoftBodyNodes.getObject(_name);
 }
 
 //==============================================================================
-const SoftBodyNode* Skeleton::getSoftBodyNode(const std::string& _name) const {
+const SoftBodyNode* Skeleton::getSoftBodyNode(const std::string& _name) const
+{
   return mNameMgrForSoftBodyNodes.getObject(_name);
 }
 
 //==============================================================================
 template <class T>
 static std::vector<const T*>& convertToConstPtrVector(
-    const std::vector<T*>& vec, std::vector<const T*>& const_vec) {
+    const std::vector<T*>& vec, std::vector<const T*>& const_vec)
+{
   const_vec.resize(vec.size());
   for (std::size_t i = 0; i < vec.size(); ++i)
     const_vec[i] = vec[i];
@@ -879,18 +958,21 @@ static std::vector<const T*>& convertToConstPtrVector(
 }
 
 //==============================================================================
-const std::vector<BodyNode*>& Skeleton::getBodyNodes() {
+const std::vector<BodyNode*>& Skeleton::getBodyNodes()
+{
   return mSkelCache.mBodyNodes;
 }
 
 //==============================================================================
-const std::vector<const BodyNode*>& Skeleton::getBodyNodes() const {
+const std::vector<const BodyNode*>& Skeleton::getBodyNodes() const
+{
   return convertToConstPtrVector<BodyNode>(
       mSkelCache.mBodyNodes, mSkelCache.mConstBodyNodes);
 }
 
 //==============================================================================
-std::vector<BodyNode*> Skeleton::getBodyNodes(const std::string& name) {
+std::vector<BodyNode*> Skeleton::getBodyNodes(const std::string& name)
+{
   auto bodyNode = getBodyNode(name);
 
   if (bodyNode)
@@ -901,7 +983,8 @@ std::vector<BodyNode*> Skeleton::getBodyNodes(const std::string& name) {
 
 //==============================================================================
 std::vector<const BodyNode*> Skeleton::getBodyNodes(
-    const std::string& name) const {
+    const std::string& name) const
+{
   const auto bodyNode = getBodyNode(name);
 
   if (bodyNode)
@@ -911,7 +994,8 @@ std::vector<const BodyNode*> Skeleton::getBodyNodes(
 }
 
 //==============================================================================
-bool Skeleton::hasBodyNode(const BodyNode* bodyNode) const {
+bool Skeleton::hasBodyNode(const BodyNode* bodyNode) const
+{
   return std::find(
              mSkelCache.mBodyNodes.begin(),
              mSkelCache.mBodyNodes.end(),
@@ -925,7 +1009,8 @@ static std::size_t templatedGetIndexOf(
     const Skeleton* _skel,
     const ObjectT* _obj,
     const std::string& _type,
-    bool _warning) {
+    bool _warning)
+{
   if (nullptr == _obj) {
     if (_warning) {
       dterr << "[Skeleton::getIndexOf] Requesting the index of a nullptr "
@@ -951,13 +1036,15 @@ static std::size_t templatedGetIndexOf(
 }
 
 //==============================================================================
-std::size_t Skeleton::getIndexOf(const BodyNode* _bn, bool _warning) const {
+std::size_t Skeleton::getIndexOf(const BodyNode* _bn, bool _warning) const
+{
   return templatedGetIndexOf<BodyNode, &BodyNode::getIndexInSkeleton>(
       this, _bn, "BodyNode", _warning);
 }
 
 //==============================================================================
-const std::vector<BodyNode*>& Skeleton::getTreeBodyNodes(std::size_t _treeIdx) {
+const std::vector<BodyNode*>& Skeleton::getTreeBodyNodes(std::size_t _treeIdx)
+{
   if (_treeIdx >= mTreeCache.size()) {
     std::size_t count = mTreeCache.size();
     dterr << "[Skeleton::getTreeBodyNodes] Requesting an invalid tree ("
@@ -974,19 +1061,22 @@ const std::vector<BodyNode*>& Skeleton::getTreeBodyNodes(std::size_t _treeIdx) {
 
 //==============================================================================
 std::vector<const BodyNode*> Skeleton::getTreeBodyNodes(
-    std::size_t _treeIdx) const {
+    std::size_t _treeIdx) const
+{
   return convertToConstPtrVector<BodyNode>(
       mTreeCache[_treeIdx].mBodyNodes, mTreeCache[_treeIdx].mConstBodyNodes);
 }
 
 //==============================================================================
-std::size_t Skeleton::getNumJoints() const {
+std::size_t Skeleton::getNumJoints() const
+{
   // The number of joints and body nodes are identical
   return getNumBodyNodes();
 }
 
 //==============================================================================
-Joint* Skeleton::getJoint(std::size_t _idx) {
+Joint* Skeleton::getJoint(std::size_t _idx)
+{
   BodyNode* bn = common::getVectorObjectIfAvailable<BodyNode*>(
       _idx, mSkelCache.mBodyNodes);
   if (bn)
@@ -996,22 +1086,26 @@ Joint* Skeleton::getJoint(std::size_t _idx) {
 }
 
 //==============================================================================
-const Joint* Skeleton::getJoint(std::size_t _idx) const {
+const Joint* Skeleton::getJoint(std::size_t _idx) const
+{
   return const_cast<Skeleton*>(this)->getJoint(_idx);
 }
 
 //==============================================================================
-Joint* Skeleton::getJoint(const std::string& name) {
+Joint* Skeleton::getJoint(const std::string& name)
+{
   return mNameMgrForJoints.getObject(name);
 }
 
 //==============================================================================
-const Joint* Skeleton::getJoint(const std::string& name) const {
+const Joint* Skeleton::getJoint(const std::string& name) const
+{
   return mNameMgrForJoints.getObject(name);
 }
 
 //==============================================================================
-std::vector<Joint*> Skeleton::getJoints() {
+std::vector<Joint*> Skeleton::getJoints()
+{
   const auto& bodyNodes = getBodyNodes();
 
   std::vector<Joint*> joints;
@@ -1023,7 +1117,8 @@ std::vector<Joint*> Skeleton::getJoints() {
 }
 
 //==============================================================================
-std::vector<const Joint*> Skeleton::getJoints() const {
+std::vector<const Joint*> Skeleton::getJoints() const
+{
   const auto& bodyNodes = getBodyNodes();
 
   std::vector<const Joint*> joints;
@@ -1035,7 +1130,8 @@ std::vector<const Joint*> Skeleton::getJoints() const {
 }
 
 //==============================================================================
-std::vector<Joint*> Skeleton::getJoints(const std::string& name) {
+std::vector<Joint*> Skeleton::getJoints(const std::string& name)
+{
   auto joint = getJoint(name);
 
   if (joint)
@@ -1045,7 +1141,8 @@ std::vector<Joint*> Skeleton::getJoints(const std::string& name) {
 }
 
 //==============================================================================
-std::vector<const Joint*> Skeleton::getJoints(const std::string& name) const {
+std::vector<const Joint*> Skeleton::getJoints(const std::string& name) const
+{
   const auto joint = getJoint(name);
 
   if (joint)
@@ -1055,7 +1152,8 @@ std::vector<const Joint*> Skeleton::getJoints(const std::string& name) const {
 }
 
 //==============================================================================
-bool Skeleton::hasJoint(const Joint* joint) const {
+bool Skeleton::hasJoint(const Joint* joint) const
+{
   return std::find_if(
              mSkelCache.mBodyNodes.begin(),
              mSkelCache.mBodyNodes.end(),
@@ -1066,52 +1164,61 @@ bool Skeleton::hasJoint(const Joint* joint) const {
 }
 
 //==============================================================================
-std::size_t Skeleton::getIndexOf(const Joint* _joint, bool _warning) const {
+std::size_t Skeleton::getIndexOf(const Joint* _joint, bool _warning) const
+{
   return templatedGetIndexOf<Joint, &Joint::getJointIndexInSkeleton>(
       this, _joint, "Joint", _warning);
 }
 
 //==============================================================================
-std::size_t Skeleton::getNumDofs() const {
+std::size_t Skeleton::getNumDofs() const
+{
   return mSkelCache.mDofs.size();
 }
 
 //==============================================================================
-DegreeOfFreedom* Skeleton::getDof(std::size_t _idx) {
+DegreeOfFreedom* Skeleton::getDof(std::size_t _idx)
+{
   return common::getVectorObjectIfAvailable<DegreeOfFreedom*>(
       _idx, mSkelCache.mDofs);
 }
 
 //==============================================================================
-const DegreeOfFreedom* Skeleton::getDof(std::size_t _idx) const {
+const DegreeOfFreedom* Skeleton::getDof(std::size_t _idx) const
+{
   return common::getVectorObjectIfAvailable<DegreeOfFreedom*>(
       _idx, mSkelCache.mDofs);
 }
 
 //==============================================================================
-DegreeOfFreedom* Skeleton::getDof(const std::string& _name) {
+DegreeOfFreedom* Skeleton::getDof(const std::string& _name)
+{
   return mNameMgrForDofs.getObject(_name);
 }
 
 //==============================================================================
-const DegreeOfFreedom* Skeleton::getDof(const std::string& _name) const {
+const DegreeOfFreedom* Skeleton::getDof(const std::string& _name) const
+{
   return mNameMgrForDofs.getObject(_name);
 }
 
 //==============================================================================
-const std::vector<DegreeOfFreedom*>& Skeleton::getDofs() {
+const std::vector<DegreeOfFreedom*>& Skeleton::getDofs()
+{
   return mSkelCache.mDofs;
 }
 
 //==============================================================================
-std::vector<const DegreeOfFreedom*> Skeleton::getDofs() const {
+std::vector<const DegreeOfFreedom*> Skeleton::getDofs() const
+{
   return convertToConstPtrVector<DegreeOfFreedom>(
       mSkelCache.mDofs, mSkelCache.mConstDofs);
 }
 
 //==============================================================================
 std::size_t Skeleton::getIndexOf(
-    const DegreeOfFreedom* _dof, bool _warning) const {
+    const DegreeOfFreedom* _dof, bool _warning) const
+{
   return templatedGetIndexOf<
       DegreeOfFreedom,
       &DegreeOfFreedom::getIndexInSkeleton>(
@@ -1119,20 +1226,22 @@ std::size_t Skeleton::getIndexOf(
 }
 
 //==============================================================================
-const std::vector<DegreeOfFreedom*>& Skeleton::getTreeDofs(
-    std::size_t _treeIdx) {
+const std::vector<DegreeOfFreedom*>& Skeleton::getTreeDofs(std::size_t _treeIdx)
+{
   return mTreeCache[_treeIdx].mDofs;
 }
 
 //==============================================================================
 const std::vector<const DegreeOfFreedom*>& Skeleton::getTreeDofs(
-    std::size_t _treeIdx) const {
+    std::size_t _treeIdx) const
+{
   return convertToConstPtrVector<DegreeOfFreedom>(
       mTreeCache[_treeIdx].mDofs, mTreeCache[_treeIdx].mConstDofs);
 }
 
 //==============================================================================
-bool Skeleton::checkIndexingConsistency() const {
+bool Skeleton::checkIndexingConsistency() const
+{
   bool consistent = true;
 
   // Check each BodyNode in the Skeleton cache
@@ -1350,7 +1459,8 @@ bool Skeleton::checkIndexingConsistency() const {
 }
 
 //==============================================================================
-const std::shared_ptr<WholeBodyIK>& Skeleton::getIK(bool _createIfNull) {
+const std::shared_ptr<WholeBodyIK>& Skeleton::getIK(bool _createIfNull)
+{
   if (nullptr == mWholeBodyIK && _createIfNull)
     createIK();
 
@@ -1358,23 +1468,27 @@ const std::shared_ptr<WholeBodyIK>& Skeleton::getIK(bool _createIfNull) {
 }
 
 //==============================================================================
-const std::shared_ptr<WholeBodyIK>& Skeleton::getOrCreateIK() {
+const std::shared_ptr<WholeBodyIK>& Skeleton::getOrCreateIK()
+{
   return getIK(true);
 }
 
 //==============================================================================
-std::shared_ptr<const WholeBodyIK> Skeleton::getIK() const {
+std::shared_ptr<const WholeBodyIK> Skeleton::getIK() const
+{
   return mWholeBodyIK;
 }
 
 //==============================================================================
-const std::shared_ptr<WholeBodyIK>& Skeleton::createIK() {
+const std::shared_ptr<WholeBodyIK>& Skeleton::createIK()
+{
   mWholeBodyIK = WholeBodyIK::create(mPtr.lock());
   return mWholeBodyIK;
 }
 
 //==============================================================================
-void Skeleton::clearIK() {
+void Skeleton::clearIK()
+{
   mWholeBodyIK = nullptr;
 }
 
@@ -1388,7 +1502,8 @@ DART_BAKE_SPECIALIZED_NODE_SKEL_DEFINITIONS(Skeleton, ShapeNode)
 DART_BAKE_SPECIALIZED_NODE_SKEL_DEFINITIONS(Skeleton, EndEffector)
 
 //==============================================================================
-void Skeleton::integratePositions(double _dt) {
+void Skeleton::integratePositions(double _dt)
+{
   for (std::size_t i = 0; i < mSkelCache.mBodyNodes.size(); ++i)
     mSkelCache.mBodyNodes[i]->getParentJoint()->integratePositions(_dt);
 
@@ -1399,7 +1514,8 @@ void Skeleton::integratePositions(double _dt) {
 }
 
 //==============================================================================
-void Skeleton::integrateVelocities(double _dt) {
+void Skeleton::integrateVelocities(double _dt)
+{
   for (std::size_t i = 0; i < mSkelCache.mBodyNodes.size(); ++i)
     mSkelCache.mBodyNodes[i]->getParentJoint()->integrateVelocities(_dt);
 
@@ -1411,7 +1527,8 @@ void Skeleton::integrateVelocities(double _dt) {
 
 //==============================================================================
 Eigen::VectorXd Skeleton::getPositionDifferences(
-    const Eigen::VectorXd& _q2, const Eigen::VectorXd& _q1) const {
+    const Eigen::VectorXd& _q2, const Eigen::VectorXd& _q1) const
+{
   if (static_cast<std::size_t>(_q2.size()) != getNumDofs()
       || static_cast<std::size_t>(_q1.size()) != getNumDofs()) {
     dterr << "Skeleton::getPositionsDifference: q1's size[" << _q1.size()
@@ -1439,7 +1556,8 @@ Eigen::VectorXd Skeleton::getPositionDifferences(
 
 //==============================================================================
 Eigen::VectorXd Skeleton::getVelocityDifferences(
-    const Eigen::VectorXd& _dq2, const Eigen::VectorXd& _dq1) const {
+    const Eigen::VectorXd& _dq2, const Eigen::VectorXd& _dq1) const
+{
   if (static_cast<std::size_t>(_dq2.size()) != getNumDofs()
       || static_cast<std::size_t>(_dq1.size()) != getNumDofs()) {
     dterr << "Skeleton::getPositionsDifference: dq1's size[" << _dq1.size()
@@ -1456,7 +1574,8 @@ Eigen::VectorXd Skeleton::getVelocityDifferences(
 static bool isValidBodyNode(
     const Skeleton* _skeleton,
     const JacobianNode* _node,
-    const std::string& _fname) {
+    const std::string& _fname)
+{
   if (nullptr == _node) {
     dtwarn << "[Skeleton::" << _fname << "] Invalid BodyNode pointer: "
            << "nullptr. Returning zero Jacobian.\n";
@@ -1482,9 +1601,8 @@ static bool isValidBodyNode(
 //==============================================================================
 template <typename JacobianType>
 void assignJacobian(
-    JacobianType& _J,
-    const JacobianNode* _node,
-    const JacobianType& _JBodyNode) {
+    JacobianType& _J, const JacobianNode* _node, const JacobianType& _JBodyNode)
+{
   // Assign the BodyNode's Jacobian to the result Jacobian.
   std::size_t localIndex = 0;
   const auto& indices = _node->getDependentGenCoordIndices();
@@ -1499,7 +1617,8 @@ void assignJacobian(
 //==============================================================================
 template <typename... Args>
 math::Jacobian variadicGetJacobian(
-    const Skeleton* _skel, const JacobianNode* _node, Args... args) {
+    const Skeleton* _skel, const JacobianNode* _node, Args... args)
+{
   math::Jacobian J = math::Jacobian::Zero(6, _skel->getNumDofs());
 
   if (!isValidBodyNode(_skel, _node, "getJacobian"))
@@ -1513,19 +1632,22 @@ math::Jacobian variadicGetJacobian(
 }
 
 //==============================================================================
-math::Jacobian Skeleton::getJacobian(const JacobianNode* _node) const {
+math::Jacobian Skeleton::getJacobian(const JacobianNode* _node) const
+{
   return variadicGetJacobian(this, _node);
 }
 
 //==============================================================================
 math::Jacobian Skeleton::getJacobian(
-    const JacobianNode* _node, const Frame* _inCoordinatesOf) const {
+    const JacobianNode* _node, const Frame* _inCoordinatesOf) const
+{
   return variadicGetJacobian(this, _node, _inCoordinatesOf);
 }
 
 //==============================================================================
 math::Jacobian Skeleton::getJacobian(
-    const JacobianNode* _node, const Eigen::Vector3d& _localOffset) const {
+    const JacobianNode* _node, const Eigen::Vector3d& _localOffset) const
+{
   return variadicGetJacobian(this, _node, _localOffset);
 }
 
@@ -1533,14 +1655,16 @@ math::Jacobian Skeleton::getJacobian(
 math::Jacobian Skeleton::getJacobian(
     const JacobianNode* _node,
     const Eigen::Vector3d& _localOffset,
-    const Frame* _inCoordinatesOf) const {
+    const Frame* _inCoordinatesOf) const
+{
   return variadicGetJacobian(this, _node, _localOffset, _inCoordinatesOf);
 }
 
 //==============================================================================
 template <typename... Args>
 math::Jacobian variadicGetWorldJacobian(
-    const Skeleton* _skel, const JacobianNode* _node, Args... args) {
+    const Skeleton* _skel, const JacobianNode* _node, Args... args)
+{
   math::Jacobian J = math::Jacobian::Zero(6, _skel->getNumDofs());
 
   if (!isValidBodyNode(_skel, _node, "getWorldJacobian"))
@@ -1554,20 +1678,23 @@ math::Jacobian variadicGetWorldJacobian(
 }
 
 //==============================================================================
-math::Jacobian Skeleton::getWorldJacobian(const JacobianNode* _node) const {
+math::Jacobian Skeleton::getWorldJacobian(const JacobianNode* _node) const
+{
   return variadicGetWorldJacobian(this, _node);
 }
 
 //==============================================================================
 math::Jacobian Skeleton::getWorldJacobian(
-    const JacobianNode* _node, const Eigen::Vector3d& _localOffset) const {
+    const JacobianNode* _node, const Eigen::Vector3d& _localOffset) const
+{
   return variadicGetWorldJacobian(this, _node, _localOffset);
 }
 
 //==============================================================================
 template <typename... Args>
 math::LinearJacobian variadicGetLinearJacobian(
-    const Skeleton* _skel, const JacobianNode* _node, Args... args) {
+    const Skeleton* _skel, const JacobianNode* _node, Args... args)
+{
   math::LinearJacobian J = math::LinearJacobian::Zero(3, _skel->getNumDofs());
 
   if (!isValidBodyNode(_skel, _node, "getLinearJacobian"))
@@ -1582,7 +1709,8 @@ math::LinearJacobian variadicGetLinearJacobian(
 
 //==============================================================================
 math::LinearJacobian Skeleton::getLinearJacobian(
-    const JacobianNode* _node, const Frame* _inCoordinatesOf) const {
+    const JacobianNode* _node, const Frame* _inCoordinatesOf) const
+{
   return variadicGetLinearJacobian(this, _node, _inCoordinatesOf);
 }
 
@@ -1590,14 +1718,16 @@ math::LinearJacobian Skeleton::getLinearJacobian(
 math::LinearJacobian Skeleton::getLinearJacobian(
     const JacobianNode* _node,
     const Eigen::Vector3d& _localOffset,
-    const Frame* _inCoordinatesOf) const {
+    const Frame* _inCoordinatesOf) const
+{
   return variadicGetLinearJacobian(this, _node, _localOffset, _inCoordinatesOf);
 }
 
 //==============================================================================
 template <typename... Args>
 math::AngularJacobian variadicGetAngularJacobian(
-    const Skeleton* _skel, const JacobianNode* _node, Args... args) {
+    const Skeleton* _skel, const JacobianNode* _node, Args... args)
+{
   math::AngularJacobian J = math::AngularJacobian::Zero(3, _skel->getNumDofs());
 
   if (!isValidBodyNode(_skel, _node, "getAngularJacobian"))
@@ -1612,14 +1742,16 @@ math::AngularJacobian variadicGetAngularJacobian(
 
 //==============================================================================
 math::AngularJacobian Skeleton::getAngularJacobian(
-    const JacobianNode* _node, const Frame* _inCoordinatesOf) const {
+    const JacobianNode* _node, const Frame* _inCoordinatesOf) const
+{
   return variadicGetAngularJacobian(this, _node, _inCoordinatesOf);
 }
 
 //==============================================================================
 template <typename... Args>
 math::Jacobian variadicGetJacobianSpatialDeriv(
-    const Skeleton* _skel, const JacobianNode* _node, Args... args) {
+    const Skeleton* _skel, const JacobianNode* _node, Args... args)
+{
   math::Jacobian dJ = math::Jacobian::Zero(6, _skel->getNumDofs());
 
   if (!isValidBodyNode(_skel, _node, "getJacobianSpatialDeriv"))
@@ -1634,19 +1766,22 @@ math::Jacobian variadicGetJacobianSpatialDeriv(
 
 //==============================================================================
 math::Jacobian Skeleton::getJacobianSpatialDeriv(
-    const JacobianNode* _node) const {
+    const JacobianNode* _node) const
+{
   return variadicGetJacobianSpatialDeriv(this, _node);
 }
 
 //==============================================================================
 math::Jacobian Skeleton::getJacobianSpatialDeriv(
-    const JacobianNode* _node, const Frame* _inCoordinatesOf) const {
+    const JacobianNode* _node, const Frame* _inCoordinatesOf) const
+{
   return variadicGetJacobianSpatialDeriv(this, _node, _inCoordinatesOf);
 }
 
 //==============================================================================
 math::Jacobian Skeleton::getJacobianSpatialDeriv(
-    const JacobianNode* _node, const Eigen::Vector3d& _localOffset) const {
+    const JacobianNode* _node, const Eigen::Vector3d& _localOffset) const
+{
   return variadicGetJacobianSpatialDeriv(this, _node, _localOffset);
 }
 
@@ -1654,7 +1789,8 @@ math::Jacobian Skeleton::getJacobianSpatialDeriv(
 math::Jacobian Skeleton::getJacobianSpatialDeriv(
     const JacobianNode* _node,
     const Eigen::Vector3d& _localOffset,
-    const Frame* _inCoordinatesOf) const {
+    const Frame* _inCoordinatesOf) const
+{
   return variadicGetJacobianSpatialDeriv(
       this, _node, _localOffset, _inCoordinatesOf);
 }
@@ -1662,7 +1798,8 @@ math::Jacobian Skeleton::getJacobianSpatialDeriv(
 //==============================================================================
 template <typename... Args>
 math::Jacobian variadicGetJacobianClassicDeriv(
-    const Skeleton* _skel, const JacobianNode* _node, Args... args) {
+    const Skeleton* _skel, const JacobianNode* _node, Args... args)
+{
   math::Jacobian dJ = math::Jacobian::Zero(6, _skel->getNumDofs());
 
   if (!isValidBodyNode(_skel, _node, "getJacobianClassicDeriv"))
@@ -1677,13 +1814,15 @@ math::Jacobian variadicGetJacobianClassicDeriv(
 
 //==============================================================================
 math::Jacobian Skeleton::getJacobianClassicDeriv(
-    const JacobianNode* _node) const {
+    const JacobianNode* _node) const
+{
   return variadicGetJacobianClassicDeriv(this, _node);
 }
 
 //==============================================================================
 math::Jacobian Skeleton::getJacobianClassicDeriv(
-    const JacobianNode* _node, const Frame* _inCoordinatesOf) const {
+    const JacobianNode* _node, const Frame* _inCoordinatesOf) const
+{
   return variadicGetJacobianClassicDeriv(this, _node, _inCoordinatesOf);
 }
 
@@ -1691,7 +1830,8 @@ math::Jacobian Skeleton::getJacobianClassicDeriv(
 math::Jacobian Skeleton::getJacobianClassicDeriv(
     const JacobianNode* _node,
     const Eigen::Vector3d& _localOffset,
-    const Frame* _inCoordinatesOf) const {
+    const Frame* _inCoordinatesOf) const
+{
   return variadicGetJacobianClassicDeriv(
       this, _node, _localOffset, _inCoordinatesOf);
 }
@@ -1699,7 +1839,8 @@ math::Jacobian Skeleton::getJacobianClassicDeriv(
 //==============================================================================
 template <typename... Args>
 math::LinearJacobian variadicGetLinearJacobianDeriv(
-    const Skeleton* _skel, const JacobianNode* _node, Args... args) {
+    const Skeleton* _skel, const JacobianNode* _node, Args... args)
+{
   math::LinearJacobian dJv = math::LinearJacobian::Zero(3, _skel->getNumDofs());
 
   if (!isValidBodyNode(_skel, _node, "getLinearJacobianDeriv"))
@@ -1715,7 +1856,8 @@ math::LinearJacobian variadicGetLinearJacobianDeriv(
 
 //==============================================================================
 math::LinearJacobian Skeleton::getLinearJacobianDeriv(
-    const JacobianNode* _node, const Frame* _inCoordinatesOf) const {
+    const JacobianNode* _node, const Frame* _inCoordinatesOf) const
+{
   return variadicGetLinearJacobianDeriv(this, _node, _inCoordinatesOf);
 }
 
@@ -1723,7 +1865,8 @@ math::LinearJacobian Skeleton::getLinearJacobianDeriv(
 math::LinearJacobian Skeleton::getLinearJacobianDeriv(
     const JacobianNode* _node,
     const Eigen::Vector3d& _localOffset,
-    const Frame* _inCoordinatesOf) const {
+    const Frame* _inCoordinatesOf) const
+{
   return variadicGetLinearJacobianDeriv(
       this, _node, _localOffset, _inCoordinatesOf);
 }
@@ -1731,7 +1874,8 @@ math::LinearJacobian Skeleton::getLinearJacobianDeriv(
 //==============================================================================
 template <typename... Args>
 math::AngularJacobian variadicGetAngularJacobianDeriv(
-    const Skeleton* _skel, const JacobianNode* _node, Args... args) {
+    const Skeleton* _skel, const JacobianNode* _node, Args... args)
+{
   math::AngularJacobian dJw
       = math::AngularJacobian::Zero(3, _skel->getNumDofs());
 
@@ -1748,31 +1892,36 @@ math::AngularJacobian variadicGetAngularJacobianDeriv(
 
 //==============================================================================
 math::AngularJacobian Skeleton::getAngularJacobianDeriv(
-    const JacobianNode* _node, const Frame* _inCoordinatesOf) const {
+    const JacobianNode* _node, const Frame* _inCoordinatesOf) const
+{
   return variadicGetAngularJacobianDeriv(this, _node, _inCoordinatesOf);
 }
 
 //==============================================================================
-double Skeleton::getMass() const {
+double Skeleton::getMass() const
+{
   return mTotalMass;
 }
 
 //==============================================================================
-const Eigen::MatrixXd& Skeleton::getMassMatrix(std::size_t _treeIdx) const {
+const Eigen::MatrixXd& Skeleton::getMassMatrix(std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mMassMatrix)
     updateMassMatrix(_treeIdx);
   return mTreeCache[_treeIdx].mM;
 }
 
 //==============================================================================
-const Eigen::MatrixXd& Skeleton::getMassMatrix() const {
+const Eigen::MatrixXd& Skeleton::getMassMatrix() const
+{
   if (mSkelCache.mDirty.mMassMatrix)
     updateMassMatrix();
   return mSkelCache.mM;
 }
 
 //==============================================================================
-const Eigen::MatrixXd& Skeleton::getAugMassMatrix(std::size_t _treeIdx) const {
+const Eigen::MatrixXd& Skeleton::getAugMassMatrix(std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mAugMassMatrix)
     updateAugMassMatrix(_treeIdx);
 
@@ -1780,7 +1929,8 @@ const Eigen::MatrixXd& Skeleton::getAugMassMatrix(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-const Eigen::MatrixXd& Skeleton::getAugMassMatrix() const {
+const Eigen::MatrixXd& Skeleton::getAugMassMatrix() const
+{
   if (mSkelCache.mDirty.mAugMassMatrix)
     updateAugMassMatrix();
 
@@ -1788,7 +1938,8 @@ const Eigen::MatrixXd& Skeleton::getAugMassMatrix() const {
 }
 
 //==============================================================================
-const Eigen::MatrixXd& Skeleton::getInvMassMatrix(std::size_t _treeIdx) const {
+const Eigen::MatrixXd& Skeleton::getInvMassMatrix(std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mInvMassMatrix)
     updateInvMassMatrix(_treeIdx);
 
@@ -1796,7 +1947,8 @@ const Eigen::MatrixXd& Skeleton::getInvMassMatrix(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-const Eigen::MatrixXd& Skeleton::getInvMassMatrix() const {
+const Eigen::MatrixXd& Skeleton::getInvMassMatrix() const
+{
   if (mSkelCache.mDirty.mInvMassMatrix)
     updateInvMassMatrix();
 
@@ -1804,8 +1956,8 @@ const Eigen::MatrixXd& Skeleton::getInvMassMatrix() const {
 }
 
 //==============================================================================
-const Eigen::MatrixXd& Skeleton::getInvAugMassMatrix(
-    std::size_t _treeIdx) const {
+const Eigen::MatrixXd& Skeleton::getInvAugMassMatrix(std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mInvAugMassMatrix)
     updateInvAugMassMatrix(_treeIdx);
 
@@ -1813,7 +1965,8 @@ const Eigen::MatrixXd& Skeleton::getInvAugMassMatrix(
 }
 
 //==============================================================================
-const Eigen::MatrixXd& Skeleton::getInvAugMassMatrix() const {
+const Eigen::MatrixXd& Skeleton::getInvAugMassMatrix() const
+{
   if (mSkelCache.mDirty.mInvAugMassMatrix)
     updateInvAugMassMatrix();
 
@@ -1821,7 +1974,8 @@ const Eigen::MatrixXd& Skeleton::getInvAugMassMatrix() const {
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getCoriolisForces(std::size_t _treeIdx) const {
+const Eigen::VectorXd& Skeleton::getCoriolisForces(std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mCoriolisForces)
     updateCoriolisForces(_treeIdx);
 
@@ -1829,7 +1983,8 @@ const Eigen::VectorXd& Skeleton::getCoriolisForces(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getCoriolisForces() const {
+const Eigen::VectorXd& Skeleton::getCoriolisForces() const
+{
   if (mSkelCache.mDirty.mCoriolisForces)
     updateCoriolisForces();
 
@@ -1837,7 +1992,8 @@ const Eigen::VectorXd& Skeleton::getCoriolisForces() const {
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getGravityForces(std::size_t _treeIdx) const {
+const Eigen::VectorXd& Skeleton::getGravityForces(std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mGravityForces)
     updateGravityForces(_treeIdx);
 
@@ -1845,7 +2001,8 @@ const Eigen::VectorXd& Skeleton::getGravityForces(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getGravityForces() const {
+const Eigen::VectorXd& Skeleton::getGravityForces() const
+{
   if (mSkelCache.mDirty.mGravityForces)
     updateGravityForces();
 
@@ -1854,7 +2011,8 @@ const Eigen::VectorXd& Skeleton::getGravityForces() const {
 
 //==============================================================================
 const Eigen::VectorXd& Skeleton::getCoriolisAndGravityForces(
-    std::size_t _treeIdx) const {
+    std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mCoriolisAndGravityForces)
     updateCoriolisAndGravityForces(_treeIdx);
 
@@ -1862,7 +2020,8 @@ const Eigen::VectorXd& Skeleton::getCoriolisAndGravityForces(
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getCoriolisAndGravityForces() const {
+const Eigen::VectorXd& Skeleton::getCoriolisAndGravityForces() const
+{
   if (mSkelCache.mDirty.mCoriolisAndGravityForces)
     updateCoriolisAndGravityForces();
 
@@ -1870,7 +2029,8 @@ const Eigen::VectorXd& Skeleton::getCoriolisAndGravityForces() const {
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getExternalForces(std::size_t _treeIdx) const {
+const Eigen::VectorXd& Skeleton::getExternalForces(std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mExternalForces)
     updateExternalForces(_treeIdx);
 
@@ -1878,7 +2038,8 @@ const Eigen::VectorXd& Skeleton::getExternalForces(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getExternalForces() const {
+const Eigen::VectorXd& Skeleton::getExternalForces() const
+{
   if (mSkelCache.mDirty.mExternalForces)
     updateExternalForces();
 
@@ -1886,13 +2047,14 @@ const Eigen::VectorXd& Skeleton::getExternalForces() const {
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getConstraintForces(
-    std::size_t _treeIdx) const {
+const Eigen::VectorXd& Skeleton::getConstraintForces(std::size_t _treeIdx) const
+{
   return computeConstraintForces(mTreeCache[_treeIdx]);
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::getConstraintForces() const {
+const Eigen::VectorXd& Skeleton::getConstraintForces() const
+{
   return computeConstraintForces(mSkelCache);
 }
 
@@ -1905,7 +2067,8 @@ const Eigen::VectorXd& Skeleton::getConstraintForces() const {
 
 //==============================================================================
 Skeleton::Skeleton(const AspectPropertiesData& properties)
-  : mTotalMass(0.0), mIsImpulseApplied(false), mUnionSize(1) {
+  : mTotalMass(0.0), mIsImpulseApplied(false), mUnionSize(1)
+{
   createAspect<Aspect>(properties);
   createAspect<detail::BodyNodeVectorProxyAspect>();
   createAspect<detail::JointVectorProxyAspect>();
@@ -1914,13 +2077,15 @@ Skeleton::Skeleton(const AspectPropertiesData& properties)
 }
 
 //==============================================================================
-void Skeleton::setPtr(const SkeletonPtr& _ptr) {
+void Skeleton::setPtr(const SkeletonPtr& _ptr)
+{
   mPtr = _ptr;
   resetUnion();
 }
 
 //==============================================================================
-void Skeleton::constructNewTree() {
+void Skeleton::constructNewTree()
+{
   mTreeCache.push_back(DataCache());
 
   mTreeNodeMaps.push_back(NodeMap());
@@ -1939,7 +2104,8 @@ void Skeleton::constructNewTree() {
 }
 
 //==============================================================================
-void Skeleton::registerBodyNode(BodyNode* _newBodyNode) {
+void Skeleton::registerBodyNode(BodyNode* _newBodyNode)
+{
 #ifndef NDEBUG // Debug mode
   std::vector<BodyNode*>::iterator repeat = std::find(
       mSkelCache.mBodyNodes.begin(), mSkelCache.mBodyNodes.end(), _newBodyNode);
@@ -2032,7 +2198,8 @@ void Skeleton::registerBodyNode(BodyNode* _newBodyNode) {
 }
 
 //==============================================================================
-void Skeleton::registerJoint(Joint* _newJoint) {
+void Skeleton::registerJoint(Joint* _newJoint)
+{
   if (nullptr == _newJoint) {
     dterr << "[Skeleton::registerJoint] Error: Attempting to add a nullptr "
              "Joint to the Skeleton named ["
@@ -2059,7 +2226,8 @@ void Skeleton::registerJoint(Joint* _newJoint) {
 
 //==============================================================================
 void Skeleton::registerNode(
-    NodeMap& nodeMap, Node* _newNode, std::size_t& _index) {
+    NodeMap& nodeMap, Node* _newNode, std::size_t& _index)
+{
   NodeMap::iterator it = nodeMap.find(typeid(*_newNode));
 
   if (nodeMap.end() == it) {
@@ -2082,7 +2250,8 @@ void Skeleton::registerNode(
 }
 
 //==============================================================================
-void Skeleton::registerNode(Node* _newNode) {
+void Skeleton::registerNode(Node* _newNode)
+{
   registerNode(mNodeMap, _newNode, _newNode->mIndexInSkeleton);
 
   registerNode(
@@ -2106,7 +2275,8 @@ void Skeleton::registerNode(Node* _newNode) {
 }
 
 //==============================================================================
-void Skeleton::destructOldTree(std::size_t tree) {
+void Skeleton::destructOldTree(std::size_t tree)
+{
   mTreeCache.erase(mTreeCache.begin() + tree);
   mTreeNodeMaps.erase(mTreeNodeMaps.begin() + tree);
 
@@ -2126,7 +2296,8 @@ void Skeleton::destructOldTree(std::size_t tree) {
 }
 
 //==============================================================================
-void Skeleton::unregisterBodyNode(BodyNode* _oldBodyNode) {
+void Skeleton::unregisterBodyNode(BodyNode* _oldBodyNode)
+{
   unregisterJoint(_oldBodyNode->getParentJoint());
 
   BodyNode::NodeMap& nodeMap = _oldBodyNode->mNodeMap;
@@ -2192,7 +2363,8 @@ void Skeleton::unregisterBodyNode(BodyNode* _oldBodyNode) {
 }
 
 //==============================================================================
-void Skeleton::unregisterJoint(Joint* _oldJoint) {
+void Skeleton::unregisterJoint(Joint* _oldJoint)
+{
   if (nullptr == _oldJoint) {
     dterr << "[Skeleton::unregisterJoint] Attempting to unregister nullptr "
           << "Joint from Skeleton named [" << getName() << "]. Report this as "
@@ -2235,7 +2407,8 @@ void Skeleton::unregisterJoint(Joint* _oldJoint) {
 
 //==============================================================================
 void Skeleton::unregisterNode(
-    NodeMap& nodeMap, Node* _oldNode, std::size_t& _index) {
+    NodeMap& nodeMap, Node* _oldNode, std::size_t& _index)
+{
   NodeMap::iterator it = nodeMap.find(typeid(*_oldNode));
 
   if (nodeMap.end() == it) {
@@ -2254,7 +2427,8 @@ void Skeleton::unregisterNode(
 }
 
 //==============================================================================
-void Skeleton::unregisterNode(Node* _oldNode) {
+void Skeleton::unregisterNode(Node* _oldNode)
+{
   const std::size_t indexInSkel = _oldNode->mIndexInSkeleton;
   unregisterNode(mNodeMap, _oldNode, _oldNode->mIndexInSkeleton);
 
@@ -2291,7 +2465,8 @@ bool Skeleton::moveBodyNodeTree(
     Joint* _parentJoint,
     BodyNode* _bodyNode,
     SkeletonPtr _newSkeleton,
-    BodyNode* _parentNode) {
+    BodyNode* _parentNode)
+{
   if (nullptr == _bodyNode) {
     dterr << "[Skeleton::moveBodyNodeTree] Skeleton named [" << getName()
           << "] (" << this << ") is attempting to move a nullptr BodyNode. "
@@ -2388,7 +2563,8 @@ std::pair<Joint*, BodyNode*> Skeleton::cloneBodyNodeTree(
     const BodyNode* _bodyNode,
     const SkeletonPtr& _newSkeleton,
     BodyNode* _parentNode,
-    bool _recursive) const {
+    bool _recursive) const
+{
   std::pair<Joint*, BodyNode*> root(nullptr, nullptr);
   std::vector<const BodyNode*> tree;
   if (_recursive)
@@ -2430,7 +2606,8 @@ std::pair<Joint*, BodyNode*> Skeleton::cloneBodyNodeTree(
 //==============================================================================
 template <typename BodyNodeT>
 static void recursiveConstructBodyNodeTree(
-    std::vector<BodyNodeT*>& tree, BodyNodeT* _currentBodyNode) {
+    std::vector<BodyNodeT*>& tree, BodyNodeT* _currentBodyNode)
+{
   tree.push_back(_currentBodyNode);
   for (std::size_t i = 0; i < _currentBodyNode->getNumChildBodyNodes(); ++i)
     recursiveConstructBodyNodeTree(tree, _currentBodyNode->getChildBodyNode(i));
@@ -2438,7 +2615,8 @@ static void recursiveConstructBodyNodeTree(
 
 //==============================================================================
 std::vector<const BodyNode*> Skeleton::constructBodyNodeTree(
-    const BodyNode* _bodyNode) const {
+    const BodyNode* _bodyNode) const
+{
   std::vector<const BodyNode*> tree;
   recursiveConstructBodyNodeTree<const BodyNode>(tree, _bodyNode);
 
@@ -2446,7 +2624,8 @@ std::vector<const BodyNode*> Skeleton::constructBodyNodeTree(
 }
 
 //==============================================================================
-std::vector<BodyNode*> Skeleton::constructBodyNodeTree(BodyNode* _bodyNode) {
+std::vector<BodyNode*> Skeleton::constructBodyNodeTree(BodyNode* _bodyNode)
+{
   std::vector<BodyNode*> tree;
   recursiveConstructBodyNodeTree<BodyNode>(tree, _bodyNode);
 
@@ -2454,7 +2633,8 @@ std::vector<BodyNode*> Skeleton::constructBodyNodeTree(BodyNode* _bodyNode) {
 }
 
 //==============================================================================
-std::vector<BodyNode*> Skeleton::extractBodyNodeTree(BodyNode* _bodyNode) {
+std::vector<BodyNode*> Skeleton::extractBodyNodeTree(BodyNode* _bodyNode)
+{
   std::vector<BodyNode*> tree = constructBodyNodeTree(_bodyNode);
 
   // Go backwards to minimize the number of shifts needed
@@ -2470,20 +2650,23 @@ std::vector<BodyNode*> Skeleton::extractBodyNodeTree(BodyNode* _bodyNode) {
 }
 
 //==============================================================================
-void Skeleton::receiveBodyNodeTree(const std::vector<BodyNode*>& _tree) {
+void Skeleton::receiveBodyNodeTree(const std::vector<BodyNode*>& _tree)
+{
   for (BodyNode* bn : _tree)
     registerBodyNode(bn);
 }
 
 //==============================================================================
-void Skeleton::updateTotalMass() {
+void Skeleton::updateTotalMass()
+{
   mTotalMass = 0.0;
   for (std::size_t i = 0; i < getNumBodyNodes(); ++i)
     mTotalMass += getBodyNode(i)->getMass();
 }
 
 //==============================================================================
-void Skeleton::updateCacheDimensions(Skeleton::DataCache& _cache) {
+void Skeleton::updateCacheDimensions(Skeleton::DataCache& _cache)
+{
   std::size_t dof = _cache.mDofs.size();
   _cache.mM = Eigen::MatrixXd::Zero(dof, dof);
   _cache.mAugM = Eigen::MatrixXd::Zero(dof, dof);
@@ -2497,7 +2680,8 @@ void Skeleton::updateCacheDimensions(Skeleton::DataCache& _cache) {
 }
 
 //==============================================================================
-void Skeleton::updateCacheDimensions(std::size_t _treeIdx) {
+void Skeleton::updateCacheDimensions(std::size_t _treeIdx)
+{
   updateCacheDimensions(mTreeCache[_treeIdx]);
   updateCacheDimensions(mSkelCache);
 
@@ -2505,7 +2689,8 @@ void Skeleton::updateCacheDimensions(std::size_t _treeIdx) {
 }
 
 //==============================================================================
-void Skeleton::updateArticulatedInertia(std::size_t _tree) const {
+void Skeleton::updateArticulatedInertia(std::size_t _tree) const
+{
   DataCache& cache = mTreeCache[_tree];
   for (std::vector<BodyNode*>::const_reverse_iterator it
        = cache.mBodyNodes.rbegin();
@@ -2518,7 +2703,8 @@ void Skeleton::updateArticulatedInertia(std::size_t _tree) const {
 }
 
 //==============================================================================
-void Skeleton::updateArticulatedInertia() const {
+void Skeleton::updateArticulatedInertia() const
+{
   for (std::size_t i = 0; i < mTreeCache.size(); ++i) {
     DataCache& cache = mTreeCache[i];
     if (cache.mDirty.mArticulatedInertia)
@@ -2529,7 +2715,8 @@ void Skeleton::updateArticulatedInertia() const {
 }
 
 //==============================================================================
-void Skeleton::updateMassMatrix(std::size_t _treeIdx) const {
+void Skeleton::updateMassMatrix(std::size_t _treeIdx) const
+{
   DataCache& cache = mTreeCache[_treeIdx];
   std::size_t dof = cache.mDofs.size();
   assert(
@@ -2588,7 +2775,8 @@ void Skeleton::updateMassMatrix(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-void Skeleton::updateMassMatrix() const {
+void Skeleton::updateMassMatrix() const
+{
   std::size_t dof = mSkelCache.mDofs.size();
   assert(
       static_cast<std::size_t>(mSkelCache.mM.cols()) == dof
@@ -2618,7 +2806,8 @@ void Skeleton::updateMassMatrix() const {
 }
 
 //==============================================================================
-void Skeleton::updateAugMassMatrix(std::size_t _treeIdx) const {
+void Skeleton::updateAugMassMatrix(std::size_t _treeIdx) const
+{
   DataCache& cache = mTreeCache[_treeIdx];
   std::size_t dof = cache.mDofs.size();
   assert(
@@ -2678,7 +2867,8 @@ void Skeleton::updateAugMassMatrix(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-void Skeleton::updateAugMassMatrix() const {
+void Skeleton::updateAugMassMatrix() const
+{
   std::size_t dof = mSkelCache.mDofs.size();
   assert(
       static_cast<std::size_t>(mSkelCache.mAugM.cols()) == dof
@@ -2708,7 +2898,8 @@ void Skeleton::updateAugMassMatrix() const {
 }
 
 //==============================================================================
-void Skeleton::updateInvMassMatrix(std::size_t _treeIdx) const {
+void Skeleton::updateInvMassMatrix(std::size_t _treeIdx) const
+{
   DataCache& cache = mTreeCache[_treeIdx];
   std::size_t dof = cache.mDofs.size();
   assert(
@@ -2768,7 +2959,8 @@ void Skeleton::updateInvMassMatrix(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-void Skeleton::updateInvMassMatrix() const {
+void Skeleton::updateInvMassMatrix() const
+{
   std::size_t dof = mSkelCache.mDofs.size();
   assert(
       static_cast<std::size_t>(mSkelCache.mInvM.cols()) == dof
@@ -2798,7 +2990,8 @@ void Skeleton::updateInvMassMatrix() const {
 }
 
 //==============================================================================
-void Skeleton::updateInvAugMassMatrix(std::size_t _treeIdx) const {
+void Skeleton::updateInvAugMassMatrix(std::size_t _treeIdx) const
+{
   DataCache& cache = mTreeCache[_treeIdx];
   std::size_t dof = cache.mDofs.size();
   assert(
@@ -2860,7 +3053,8 @@ void Skeleton::updateInvAugMassMatrix(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-void Skeleton::updateInvAugMassMatrix() const {
+void Skeleton::updateInvAugMassMatrix() const
+{
   std::size_t dof = mSkelCache.mDofs.size();
   assert(
       static_cast<std::size_t>(mSkelCache.mInvAugM.cols()) == dof
@@ -2890,7 +3084,8 @@ void Skeleton::updateInvAugMassMatrix() const {
 }
 
 //==============================================================================
-void Skeleton::updateCoriolisForces(std::size_t _treeIdx) const {
+void Skeleton::updateCoriolisForces(std::size_t _treeIdx) const
+{
   DataCache& cache = mTreeCache[_treeIdx];
   std::size_t dof = cache.mDofs.size();
   assert(static_cast<std::size_t>(cache.mCvec.size()) == dof);
@@ -2918,7 +3113,8 @@ void Skeleton::updateCoriolisForces(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-void Skeleton::updateCoriolisForces() const {
+void Skeleton::updateCoriolisForces() const
+{
   std::size_t dof = mSkelCache.mDofs.size();
   assert(static_cast<std::size_t>(mSkelCache.mCvec.size()) == dof);
   if (dof == 0) {
@@ -2942,7 +3138,8 @@ void Skeleton::updateCoriolisForces() const {
 }
 
 //==============================================================================
-void Skeleton::updateGravityForces(std::size_t _treeIdx) const {
+void Skeleton::updateGravityForces(std::size_t _treeIdx) const
+{
   DataCache& cache = mTreeCache[_treeIdx];
   std::size_t dof = cache.mDofs.size();
   assert(static_cast<std::size_t>(cache.mG.size()) == dof);
@@ -2964,7 +3161,8 @@ void Skeleton::updateGravityForces(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-void Skeleton::updateGravityForces() const {
+void Skeleton::updateGravityForces() const
+{
   std::size_t dof = mSkelCache.mDofs.size();
   assert(static_cast<std::size_t>(mSkelCache.mG.size()) == dof);
   if (dof == 0) {
@@ -2988,7 +3186,8 @@ void Skeleton::updateGravityForces() const {
 }
 
 //==============================================================================
-void Skeleton::updateCoriolisAndGravityForces(std::size_t _treeIdx) const {
+void Skeleton::updateCoriolisAndGravityForces(std::size_t _treeIdx) const
+{
   DataCache& cache = mTreeCache[_treeIdx];
   std::size_t dof = cache.mDofs.size();
   assert(static_cast<std::size_t>(cache.mCg.size()) == dof);
@@ -3016,7 +3215,8 @@ void Skeleton::updateCoriolisAndGravityForces(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-void Skeleton::updateCoriolisAndGravityForces() const {
+void Skeleton::updateCoriolisAndGravityForces() const
+{
   std::size_t dof = mSkelCache.mDofs.size();
   assert(static_cast<std::size_t>(mSkelCache.mCg.size()) == dof);
   if (dof == 0) {
@@ -3040,7 +3240,8 @@ void Skeleton::updateCoriolisAndGravityForces() const {
 }
 
 //==============================================================================
-void Skeleton::updateExternalForces(std::size_t _treeIdx) const {
+void Skeleton::updateExternalForces(std::size_t _treeIdx) const
+{
   DataCache& cache = mTreeCache[_treeIdx];
   std::size_t dof = cache.mDofs.size();
   assert(static_cast<std::size_t>(cache.mFext.size()) == dof);
@@ -3094,7 +3295,8 @@ void Skeleton::updateExternalForces(std::size_t _treeIdx) const {
 }
 
 //==============================================================================
-void Skeleton::updateExternalForces() const {
+void Skeleton::updateExternalForces() const
+{
   std::size_t dof = mSkelCache.mDofs.size();
   assert(static_cast<std::size_t>(mSkelCache.mFext.size()) == dof);
   if (dof == 0) {
@@ -3118,8 +3320,8 @@ void Skeleton::updateExternalForces() const {
 }
 
 //==============================================================================
-const Eigen::VectorXd& Skeleton::computeConstraintForces(
-    DataCache& cache) const {
+const Eigen::VectorXd& Skeleton::computeConstraintForces(DataCache& cache) const
+{
   const std::size_t dof = cache.mDofs.size();
   assert(static_cast<std::size_t>(cache.mFc.size()) == dof);
 
@@ -3150,7 +3352,8 @@ static void computeSupportPolygon(
     Eigen::Vector3d& axis1,
     Eigen::Vector3d& axis2,
     Eigen::Vector2d& centroid,
-    std::size_t treeIndex) {
+    std::size_t treeIndex)
+{
   polygon.clear();
   geometry.clear();
   ee_indices.clear();
@@ -3203,7 +3406,8 @@ static void computeSupportPolygon(
 }
 
 //==============================================================================
-const math::SupportPolygon& Skeleton::getSupportPolygon() const {
+const math::SupportPolygon& Skeleton::getSupportPolygon() const
+{
   math::SupportPolygon& polygon = mSkelCache.mSupportPolygon;
 
   if (!mSkelCache.mDirty.mSupport)
@@ -3226,7 +3430,8 @@ const math::SupportPolygon& Skeleton::getSupportPolygon() const {
 
 //==============================================================================
 const math::SupportPolygon& Skeleton::getSupportPolygon(
-    std::size_t _treeIdx) const {
+    std::size_t _treeIdx) const
+{
   math::SupportPolygon& polygon = mTreeCache[_treeIdx].mSupportPolygon;
 
   if (!mTreeCache[_treeIdx].mDirty.mSupport)
@@ -3248,47 +3453,53 @@ const math::SupportPolygon& Skeleton::getSupportPolygon(
 }
 
 //==============================================================================
-const std::vector<std::size_t>& Skeleton::getSupportIndices() const {
+const std::vector<std::size_t>& Skeleton::getSupportIndices() const
+{
   getSupportPolygon();
   return mSkelCache.mSupportIndices;
 }
 
 //==============================================================================
 const std::vector<std::size_t>& Skeleton::getSupportIndices(
-    std::size_t _treeIdx) const {
+    std::size_t _treeIdx) const
+{
   getSupportPolygon(_treeIdx);
   return mTreeCache[_treeIdx].mSupportIndices;
 }
 
 //==============================================================================
 const std::pair<Eigen::Vector3d, Eigen::Vector3d>& Skeleton::getSupportAxes()
-    const {
+    const
+{
   getSupportPolygon();
   return mSkelCache.mSupportAxes;
 }
 
 //==============================================================================
 const std::pair<Eigen::Vector3d, Eigen::Vector3d>& Skeleton::getSupportAxes(
-    std::size_t _treeIdx) const {
+    std::size_t _treeIdx) const
+{
   getSupportPolygon(_treeIdx);
   return mTreeCache[_treeIdx].mSupportAxes;
 }
 
 //==============================================================================
-const Eigen::Vector2d& Skeleton::getSupportCentroid() const {
+const Eigen::Vector2d& Skeleton::getSupportCentroid() const
+{
   getSupportPolygon();
   return mSkelCache.mSupportCentroid;
 }
 
 //==============================================================================
-const Eigen::Vector2d& Skeleton::getSupportCentroid(
-    std::size_t _treeIdx) const {
+const Eigen::Vector2d& Skeleton::getSupportCentroid(std::size_t _treeIdx) const
+{
   getSupportPolygon(_treeIdx);
   return mTreeCache[_treeIdx].mSupportCentroid;
 }
 
 //==============================================================================
-std::size_t Skeleton::getSupportVersion() const {
+std::size_t Skeleton::getSupportVersion() const
+{
   if (mSkelCache.mDirty.mSupport)
     return mSkelCache.mDirty.mSupportVersion + 1;
 
@@ -3296,7 +3507,8 @@ std::size_t Skeleton::getSupportVersion() const {
 }
 
 //==============================================================================
-std::size_t Skeleton::getSupportVersion(std::size_t _treeIdx) const {
+std::size_t Skeleton::getSupportVersion(std::size_t _treeIdx) const
+{
   if (mTreeCache[_treeIdx].mDirty.mSupport)
     return mTreeCache[_treeIdx].mDirty.mSupportVersion + 1;
 
@@ -3305,7 +3517,8 @@ std::size_t Skeleton::getSupportVersion(std::size_t _treeIdx) const {
 
 //==============================================================================
 void Skeleton::computeForwardKinematics(
-    bool _updateTransforms, bool _updateVels, bool _updateAccs) {
+    bool _updateTransforms, bool _updateVels, bool _updateAccs)
+{
   if (_updateTransforms) {
     for (std::vector<BodyNode*>::iterator it = mSkelCache.mBodyNodes.begin();
          it != mSkelCache.mBodyNodes.end();
@@ -3333,7 +3546,8 @@ void Skeleton::computeForwardKinematics(
 }
 
 //==============================================================================
-void Skeleton::computeForwardDynamics() {
+void Skeleton::computeForwardDynamics()
+{
   // Note: Articulated Inertias will be updated automatically when
   // getArtInertiaImplicit() is called in BodyNode::updateBiasForce()
 
@@ -3353,7 +3567,8 @@ void Skeleton::computeForwardDynamics() {
 
 //==============================================================================
 void Skeleton::computeInverseDynamics(
-    bool _withExternalForces, bool _withDampingForces, bool _withSpringForces) {
+    bool _withExternalForces, bool _withDampingForces, bool _withSpringForces)
+{
   // Skip immobile or 0-dof skeleton
   if (getNumDofs() == 0)
     return;
@@ -3370,24 +3585,28 @@ void Skeleton::computeInverseDynamics(
 }
 
 //==============================================================================
-void Skeleton::clearExternalForces() {
+void Skeleton::clearExternalForces()
+{
   for (auto& bodyNode : mSkelCache.mBodyNodes)
     bodyNode->clearExternalForces();
 }
 
 //==============================================================================
-void Skeleton::clearInternalForces() {
+void Skeleton::clearInternalForces()
+{
   for (auto& bodyNode : mSkelCache.mBodyNodes)
     bodyNode->clearInternalForces();
 }
 
 //==============================================================================
-void Skeleton::notifyArticulatedInertiaUpdate(std::size_t _treeIdx) {
+void Skeleton::notifyArticulatedInertiaUpdate(std::size_t _treeIdx)
+{
   dirtyArticulatedInertia(_treeIdx);
 }
 
 //==============================================================================
-void Skeleton::dirtyArticulatedInertia(std::size_t _treeIdx) {
+void Skeleton::dirtyArticulatedInertia(std::size_t _treeIdx)
+{
   SET_FLAG(_treeIdx, mArticulatedInertia);
   SET_FLAG(_treeIdx, mMassMatrix);
   SET_FLAG(_treeIdx, mAugMassMatrix);
@@ -3399,23 +3618,27 @@ void Skeleton::dirtyArticulatedInertia(std::size_t _treeIdx) {
 }
 
 //==============================================================================
-void Skeleton::notifySupportUpdate(std::size_t _treeIdx) {
+void Skeleton::notifySupportUpdate(std::size_t _treeIdx)
+{
   dirtySupportPolygon(_treeIdx);
 }
 
 //==============================================================================
-void Skeleton::dirtySupportPolygon(std::size_t _treeIdx) {
+void Skeleton::dirtySupportPolygon(std::size_t _treeIdx)
+{
   SET_FLAG(_treeIdx, mSupport);
 }
 
 //==============================================================================
-void Skeleton::clearConstraintImpulses() {
+void Skeleton::clearConstraintImpulses()
+{
   for (auto& bodyNode : mSkelCache.mBodyNodes)
     bodyNode->clearConstraintImpulse();
 }
 
 //==============================================================================
-void Skeleton::updateBiasImpulse(BodyNode* _bodyNode) {
+void Skeleton::updateBiasImpulse(BodyNode* _bodyNode)
+{
   if (nullptr == _bodyNode) {
     dterr << "[Skeleton::updateBiasImpulse] Passed in a nullptr!\n";
     assert(false);
@@ -3445,7 +3668,8 @@ void Skeleton::updateBiasImpulse(BodyNode* _bodyNode) {
 
 //==============================================================================
 void Skeleton::updateBiasImpulse(
-    BodyNode* _bodyNode, const Eigen::Vector6d& _imp) {
+    BodyNode* _bodyNode, const Eigen::Vector6d& _imp)
+{
   if (nullptr == _bodyNode) {
     dterr << "[Skeleton::updateBiasImpulse] Passed in a nullptr!\n";
     assert(false);
@@ -3483,7 +3707,8 @@ void Skeleton::updateBiasImpulse(
     BodyNode* _bodyNode1,
     const Eigen::Vector6d& _imp1,
     BodyNode* _bodyNode2,
-    const Eigen::Vector6d& _imp2) {
+    const Eigen::Vector6d& _imp2)
+{
   // Assertions
   if (nullptr == _bodyNode1) {
     dterr << "[Skeleton::updateBiasImpulse] Passed in nullptr for BodyNode1!\n";
@@ -3533,7 +3758,8 @@ void Skeleton::updateBiasImpulse(
 void Skeleton::updateBiasImpulse(
     SoftBodyNode* _softBodyNode,
     PointMass* _pointMass,
-    const Eigen::Vector3d& _imp) {
+    const Eigen::Vector3d& _imp)
+{
   // Assertions
   assert(_softBodyNode != nullptr);
   assert(getNumDofs() > 0);
@@ -3567,23 +3793,27 @@ void Skeleton::updateBiasImpulse(
 }
 
 //==============================================================================
-void Skeleton::updateVelocityChange() {
+void Skeleton::updateVelocityChange()
+{
   for (auto& bodyNode : mSkelCache.mBodyNodes)
     bodyNode->updateVelocityChangeFD();
 }
 
 //==============================================================================
-void Skeleton::setImpulseApplied(bool _val) {
+void Skeleton::setImpulseApplied(bool _val)
+{
   mIsImpulseApplied = _val;
 }
 
 //==============================================================================
-bool Skeleton::isImpulseApplied() const {
+bool Skeleton::isImpulseApplied() const
+{
   return mIsImpulseApplied;
 }
 
 //==============================================================================
-void Skeleton::computeImpulseForwardDynamics() {
+void Skeleton::computeImpulseForwardDynamics()
+{
   // Skip immobile or 0-dof skeleton
   if (!isMobile() || getNumDofs() == 0)
     return;
@@ -3608,7 +3838,8 @@ void Skeleton::computeImpulseForwardDynamics() {
 }
 
 //==============================================================================
-double Skeleton::computeKineticEnergy() const {
+double Skeleton::computeKineticEnergy() const
+{
   double KE = 0.0;
 
   for (auto* bodyNode : mSkelCache.mBodyNodes)
@@ -3619,7 +3850,8 @@ double Skeleton::computeKineticEnergy() const {
 }
 
 //==============================================================================
-double Skeleton::computePotentialEnergy() const {
+double Skeleton::computePotentialEnergy() const
+{
   double PE = 0.0;
 
   for (auto* bodyNode : mSkelCache.mBodyNodes) {
@@ -3631,7 +3863,8 @@ double Skeleton::computePotentialEnergy() const {
 }
 
 //==============================================================================
-void Skeleton::clearCollidingBodies() {
+void Skeleton::clearCollidingBodies()
+{
   for (auto i = 0u; i < getNumBodyNodes(); ++i) {
     auto bodyNode = getBodyNode(i);
     DART_SUPPRESS_DEPRECATED_BEGIN
@@ -3649,7 +3882,8 @@ void Skeleton::clearCollidingBodies() {
 }
 
 //==============================================================================
-Eigen::Vector3d Skeleton::getCOM(const Frame* _withRespectTo) const {
+Eigen::Vector3d Skeleton::getCOM(const Frame* _withRespectTo) const
+{
   Eigen::Vector3d com = Eigen::Vector3d::Zero();
 
   const std::size_t numBodies = getNumBodyNodes();
@@ -3671,7 +3905,8 @@ template <
 PropertyType getCOMPropertyTemplate(
     const Skeleton* _skel,
     const Frame* _relativeTo,
-    const Frame* _inCoordinatesOf) {
+    const Frame* _inCoordinatesOf)
+{
   PropertyType result(PropertyType::Zero());
 
   const std::size_t numBodies = _skel->getNumBodyNodes();
@@ -3687,7 +3922,8 @@ PropertyType getCOMPropertyTemplate(
 
 //==============================================================================
 Eigen::Vector6d Skeleton::getCOMSpatialVelocity(
-    const Frame* _relativeTo, const Frame* _inCoordinatesOf) const {
+    const Frame* _relativeTo, const Frame* _inCoordinatesOf) const
+{
   return getCOMPropertyTemplate<
       Eigen::Vector6d,
       &BodyNode::getCOMSpatialVelocity>(this, _relativeTo, _inCoordinatesOf);
@@ -3695,7 +3931,8 @@ Eigen::Vector6d Skeleton::getCOMSpatialVelocity(
 
 //==============================================================================
 Eigen::Vector3d Skeleton::getCOMLinearVelocity(
-    const Frame* _relativeTo, const Frame* _inCoordinatesOf) const {
+    const Frame* _relativeTo, const Frame* _inCoordinatesOf) const
+{
   return getCOMPropertyTemplate<
       Eigen::Vector3d,
       &BodyNode::getCOMLinearVelocity>(this, _relativeTo, _inCoordinatesOf);
@@ -3703,7 +3940,8 @@ Eigen::Vector3d Skeleton::getCOMLinearVelocity(
 
 //==============================================================================
 Eigen::Vector6d Skeleton::getCOMSpatialAcceleration(
-    const Frame* _relativeTo, const Frame* _inCoordinatesOf) const {
+    const Frame* _relativeTo, const Frame* _inCoordinatesOf) const
+{
   return getCOMPropertyTemplate<
       Eigen::Vector6d,
       &BodyNode::getCOMSpatialAcceleration>(
@@ -3712,7 +3950,8 @@ Eigen::Vector6d Skeleton::getCOMSpatialAcceleration(
 
 //==============================================================================
 Eigen::Vector3d Skeleton::getCOMLinearAcceleration(
-    const Frame* _relativeTo, const Frame* _inCoordinatesOf) const {
+    const Frame* _relativeTo, const Frame* _inCoordinatesOf) const
+{
   return getCOMPropertyTemplate<
       Eigen::Vector3d,
       &BodyNode::getCOMLinearAcceleration>(this, _relativeTo, _inCoordinatesOf);
@@ -3726,7 +3965,8 @@ template <
     JacType (TemplatedJacobianNode<BodyNode>::*getJacFn)(
         const Eigen::Vector3d&, const Frame*) const>
 JacType getCOMJacobianTemplate(
-    const Skeleton* _skel, const Frame* _inCoordinatesOf) {
+    const Skeleton* _skel, const Frame* _inCoordinatesOf)
+{
   // Initialize the Jacobian to zero
   JacType J = JacType::Zero(JacType::RowsAtCompileTime, _skel->getNumDofs());
 
@@ -3755,7 +3995,8 @@ JacType getCOMJacobianTemplate(
 }
 
 //==============================================================================
-math::Jacobian Skeleton::getCOMJacobian(const Frame* _inCoordinatesOf) const {
+math::Jacobian Skeleton::getCOMJacobian(const Frame* _inCoordinatesOf) const
+{
   return getCOMJacobianTemplate<
       math::Jacobian,
       &TemplatedJacobianNode<BodyNode>::getJacobian>(this, _inCoordinatesOf);
@@ -3763,7 +4004,8 @@ math::Jacobian Skeleton::getCOMJacobian(const Frame* _inCoordinatesOf) const {
 
 //==============================================================================
 math::LinearJacobian Skeleton::getCOMLinearJacobian(
-    const Frame* _inCoordinatesOf) const {
+    const Frame* _inCoordinatesOf) const
+{
   return getCOMJacobianTemplate<
       math::LinearJacobian,
       &TemplatedJacobianNode<BodyNode>::getLinearJacobian>(
@@ -3772,7 +4014,8 @@ math::LinearJacobian Skeleton::getCOMLinearJacobian(
 
 //==============================================================================
 math::Jacobian Skeleton::getCOMJacobianSpatialDeriv(
-    const Frame* _inCoordinatesOf) const {
+    const Frame* _inCoordinatesOf) const
+{
   return getCOMJacobianTemplate<
       math::Jacobian,
       &TemplatedJacobianNode<BodyNode>::getJacobianSpatialDeriv>(
@@ -3781,7 +4024,8 @@ math::Jacobian Skeleton::getCOMJacobianSpatialDeriv(
 
 //==============================================================================
 math::LinearJacobian Skeleton::getCOMLinearJacobianDeriv(
-    const Frame* _inCoordinatesOf) const {
+    const Frame* _inCoordinatesOf) const
+{
   return getCOMJacobianTemplate<
       math::LinearJacobian,
       &TemplatedJacobianNode<BodyNode>::getLinearJacobianDeriv>(
@@ -3801,7 +4045,8 @@ Skeleton::DirtyFlags::DirtyFlags()
     mExternalForces(true),
     mDampingForces(true),
     mSupport(true),
-    mSupportVersion(0) {
+    mSupportVersion(0)
+{
   // Do nothing
 }
 

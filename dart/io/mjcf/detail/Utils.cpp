@@ -42,7 +42,8 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-Errors checkOrientationValidity(const tinyxml2::XMLElement* element) {
+Errors checkOrientationValidity(const tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   std::size_t numOrientationTypes = 0;
@@ -98,7 +99,8 @@ Eigen::Matrix3d compileRotation(
     const common::optional<Eigen::Vector3d>& euler,
     const common::optional<Eigen::Vector6d>& xyAxes,
     const common::optional<Eigen::Vector3d>& zAxis,
-    const Compiler& compiler) {
+    const Compiler& compiler)
+{
   Eigen::Matrix3d rot = Eigen::Matrix3d::Identity();
 
   if (axisAngle) {
@@ -151,7 +153,8 @@ Eigen::Matrix3d compileRotation(
 Errors handleInclude(
     tinyxml2::XMLElement* element,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   Errors errors;
 
   ElementEnumerator includeElements(element, "include");
@@ -186,7 +189,8 @@ Errors handleInclude(
 
 //==============================================================================
 std::vector<dynamics::BodyNode*> getBodyNodes(
-    const simulation::World& world, const std::string& name) {
+    const simulation::World& world, const std::string& name)
+{
   std::vector<dynamics::BodyNode*> bodyNodes;
 
   for (std::size_t i = 0; i < world.getNumSkeletons(); ++i) {

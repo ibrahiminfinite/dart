@@ -39,7 +39,8 @@ using namespace math;
 using namespace dynamics;
 using namespace gui;
 
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   mWorld->getSkeleton(1)->getBodyNode("h_spine")->addExtForce(mForce);
 
   //    mController->setConstrForces(mWorld->getConstraintHandler()->getTotalConstraintForce(1));
@@ -58,7 +59,8 @@ void MyWindow::timeStepping() {
   }
 }
 
-void MyWindow::drawSkels() {
+void MyWindow::drawSkels()
+{
   for (unsigned int i = 0; i < mWorld->getNumSkeletons(); i++)
     drawSkeleton(mWorld->getSkeleton(i).get());
 
@@ -73,7 +75,8 @@ void MyWindow::drawSkels() {
   }
 }
 
-void MyWindow::keyboard(unsigned char key, int x, int y) {
+void MyWindow::keyboard(unsigned char key, int x, int y)
+{
   switch (key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;

@@ -47,7 +47,8 @@ public:
   using WorldNode::WorldNode;
 
   // Trampoline for virtual function
-  void refresh() override {
+  void refresh() override
+  {
     PYBIND11_OVERLOAD(
         void,      // Return type
         WorldNode, // Parent class
@@ -56,7 +57,8 @@ public:
   }
 
   // Trampoline for virtual function
-  void customPreRefresh() override {
+  void customPreRefresh() override
+  {
     PYBIND11_OVERLOAD(
         void,             // Return type
         WorldNode,        // Parent class
@@ -65,7 +67,8 @@ public:
   }
 
   // Trampoline for virtual function
-  void customPostRefresh() override {
+  void customPostRefresh() override
+  {
     PYBIND11_OVERLOAD(
         void,              // Return type
         WorldNode,         // Parent class
@@ -74,7 +77,8 @@ public:
   }
 
   // Trampoline for virtual function
-  void customPreStep() override {
+  void customPreStep() override
+  {
     PYBIND11_OVERLOAD(
         void,          // Return type
         WorldNode,     // Parent class
@@ -83,7 +87,8 @@ public:
   }
 
   // Trampoline for virtual function
-  void customPostStep() override {
+  void customPostStep() override
+  {
     PYBIND11_OVERLOAD(
         void,           // Return type
         WorldNode,      // Parent class
@@ -92,7 +97,8 @@ public:
   }
 };
 
-void WorldNode(py::module& m) {
+void WorldNode(py::module& m)
+{
   ::py::class_<
       dart::gui::osg::WorldNode,
       PyWorldNode,

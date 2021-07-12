@@ -42,7 +42,8 @@
 namespace dart {
 namespace io {
 
-float convertDecToFloat(char _bytes[4]) {
+float convertDecToFloat(char _bytes[4])
+{
   union {
     char theChars[4];
     float theFloat;
@@ -56,7 +57,8 @@ float convertDecToFloat(char _bytes[4]) {
   return p.theFloat;
 }
 
-void convertFloatToDec(float _f, char* _bytes) {
+void convertFloatToDec(float _f, char* _bytes)
+{
   char* p = (char*)&_f;
   _bytes[0] = p[2];
   _bytes[1] = p[3];
@@ -71,7 +73,8 @@ bool loadC3DFile(
     std::vector<std::vector<Eigen::Vector3d>>& _pointData,
     int* _nFrame,
     int* _nMarker,
-    double* _freq) {
+    double* _freq)
+{
   char buf[C3D_REC_SIZE];
   FILE* file;
   Eigen::Vector3d v;
@@ -182,7 +185,8 @@ bool saveC3DFile(
     std::vector<std::vector<Eigen::Vector3d>>& _pointData,
     int _nFrame,
     int _nMarker,
-    double _freq) {
+    double _freq)
+{
   FILE* file;
   Eigen::Vector3d v;
   c3d_head hdr;

@@ -46,7 +46,8 @@ namespace {
 void convertTransform(
     const Eigen::Isometry3d& tf,
     std::array<IkReal, 3>& eetrans,
-    std::array<IkReal, 9>& eerot) {
+    std::array<IkReal, 9>& eerot)
+{
   eerot[0 * 3 + 0] = tf.linear()(0, 0);
   eerot[0 * 3 + 1] = tf.linear()(0, 1);
   eerot[0 * 3 + 2] = tf.linear()(0, 2);
@@ -66,7 +67,8 @@ void convertTransform(
 void convertTransform(
     const std::array<IkReal, 3>& eetrans,
     const std::array<IkReal, 9>& eerot,
-    Eigen::Isometry3d& tf) {
+    Eigen::Isometry3d& tf)
+{
   tf.setIdentity();
 
   tf(0, 0) = eerot[0 * 3 + 0];
@@ -86,7 +88,8 @@ void convertTransform(
 
 //==============================================================================
 std::vector<bool> getFreeJointFlags(
-    int numParams, int numFreeParams, const int* freeParams) {
+    int numParams, int numFreeParams, const int* freeParams)
+{
   std::vector<bool> flags(numParams, false);
 
   for (int i = 0; i < numFreeParams; ++i) {
@@ -104,7 +107,8 @@ void convertIkSolution(
     int numFreeParameters,
     int* freeParameters,
     const ikfast::IkSolutionBase<IkReal>& ikfastSolution,
-    InverseKinematics::Analytical::Solution& solution) {
+    InverseKinematics::Analytical::Solution& solution)
+{
   const auto ik = ikfast->getIK();
   const auto dofIndices = ikfast->getDofs();
   const auto skel = ik->getNode()->getSkeleton();
@@ -174,7 +178,8 @@ void convertIkSolutions(
     int numFreeParameters,
     int* freeParameters,
     const ikfast::IkSolutionList<IkReal>& ikfastSolutions,
-    std::vector<InverseKinematics::Analytical::Solution>& solutions) {
+    std::vector<InverseKinematics::Analytical::Solution>& solutions)
+{
   const auto numSolutions = ikfastSolutions.GetNumSolutions();
 
   solutions.resize(numSolutions);
@@ -195,7 +200,8 @@ void convertIkSolutions(
 bool checkDofMapValidity(
     const InverseKinematics* ik,
     const std::vector<std::size_t>& dofMap,
-    const std::string& dofMapName) {
+    const std::string& dofMapName)
+{
   // dependentDofs are the dependent DOFs of the BodyNode that is associated
   // with ik. This function returns true if all the indices in dofMap are found
   // in dependentDofs. Returns false otherwise.
@@ -232,7 +238,8 @@ IkFast::IkFast(
     const std::vector<std::size_t>& freeDofMap,
     const std::string& methodName,
     const InverseKinematics::Analytical::Properties& properties)
-  : Analytical{ik, methodName, properties}, mConfigured{false} {
+  : Analytical{ik, methodName, properties}, mConfigured{false}
+{
   setExtraDofUtilization(UNUSED);
 
   mDofs = dofMap;
@@ -240,7 +247,8 @@ IkFast::IkFast(
 }
 
 //==============================================================================
-auto IkFast::getDofs() const -> const std::vector<std::size_t>& {
+auto IkFast::getDofs() const -> const std::vector<std::size_t>&
+{
   if (!mConfigured) {
     configure();
 
@@ -256,27 +264,32 @@ auto IkFast::getDofs() const -> const std::vector<std::size_t>& {
 }
 
 //==============================================================================
-const std::vector<std::size_t>& IkFast::getFreeDofs() const {
+const std::vector<std::size_t>& IkFast::getFreeDofs() const
+{
   return mFreeDofs;
 }
 
 //==============================================================================
-bool IkFast::isConfigured() const {
+bool IkFast::isConfigured() const
+{
   return mConfigured;
 }
 
 //==============================================================================
-std::size_t IkFast::getNumFreeParameters2() const {
+std::size_t IkFast::getNumFreeParameters2() const
+{
   return static_cast<std::size_t>(getNumFreeParameters());
 }
 
 //==============================================================================
-std::size_t IkFast::getNumJoints2() const {
+std::size_t IkFast::getNumJoints2() const
+{
   return static_cast<std::size_t>(getNumJoints());
 }
 
 //==============================================================================
-IkFast::IkType IkFast::getIkType2() const {
+IkFast::IkType IkFast::getIkType2() const
+{
   // Following conversion is referred from:
   // https://github.com/rdiankov/openrave/blob/b1ebe135b4217823ebdf56d9af5fe89b29723603/include/openrave/openrave.h#L575-L623
 
@@ -321,17 +334,20 @@ IkFast::IkType IkFast::getIkType2() const {
 }
 
 //==============================================================================
-const std::string IkFast::getKinematicsHash2() const {
+const std::string IkFast::getKinematicsHash2() const
+{
   return const_cast<IkFast*>(this)->getKinematicsHash();
 }
 
 //==============================================================================
-std::string IkFast::getIkFastVersion2() const {
+std::string IkFast::getIkFastVersion2() const
+{
   return const_cast<IkFast*>(this)->getIkFastVersion();
 }
 
 //==============================================================================
-void IkFast::configure() const {
+void IkFast::configure() const
+{
   const auto ikFastNumJoints = getNumJoints();
   const auto ikFastNumFreeJoints = getNumFreeParameters();
   const auto ikFastNumNonFreeJoints = ikFastNumJoints - ikFastNumFreeJoints;
@@ -364,7 +380,8 @@ void IkFast::configure() const {
 
 //==============================================================================
 auto IkFast::computeSolutions(const Eigen::Isometry3d& desiredBodyTf)
-    -> const std::vector<InverseKinematics::Analytical::Solution>& {
+    -> const std::vector<InverseKinematics::Analytical::Solution>&
+{
   mSolutions.clear();
 
   if (!mConfigured) {
@@ -407,7 +424,8 @@ auto IkFast::computeSolutions(const Eigen::Isometry3d& desiredBodyTf)
 }
 
 //==============================================================================
-Eigen::Isometry3d IkFast::computeFk(const Eigen::VectorXd& parameters) {
+Eigen::Isometry3d IkFast::computeFk(const Eigen::VectorXd& parameters)
+{
   const std::size_t ikFastNumNonFreeJoints
       = getNumJoints2() - getNumFreeParameters2();
   if (static_cast<std::size_t>(parameters.size()) != ikFastNumNonFreeJoints) {
@@ -428,11 +446,12 @@ Eigen::Isometry3d IkFast::computeFk(const Eigen::VectorXd& parameters) {
 
 //==============================================================================
 bool wrapCyclicSolution(
-    double currentValue, double lb, double ub, double& solutionValue) {
+    double currentValue, double lb, double ub, double& solutionValue)
+{
   if (lb > ub)
     return false;
 
-  const auto pi2 = math::constantsd::two_pi();
+  const auto pi2 = math::two_pi();
 
   if (currentValue < lb) {
     const auto diff_lb = lb - solutionValue;

@@ -53,11 +53,13 @@ namespace osg {
 
 class SaveScreen : public ::osg::Camera::DrawCallback {
 public:
-  SaveScreen(Viewer* viewer) : mViewer(viewer), mImage(new ::osg::Image) {
+  SaveScreen(Viewer* viewer) : mViewer(viewer), mImage(new ::osg::Image)
+  {
     // Do nothing
   }
 
-  virtual void operator()(::osg::RenderInfo& renderInfo) const {
+  virtual void operator()(::osg::RenderInfo& renderInfo) const
+  {
     ::osg::Camera::DrawCallback::operator()(renderInfo);
 
     if (mViewer->mRecording || mViewer->mScreenCapture) {
@@ -112,7 +114,8 @@ protected:
 //==============================================================================
 class ViewerAttachmentCallback : public ::osg::NodeCallback {
 public:
-  virtual void operator()(::osg::Node* node, ::osg::NodeVisitor* nv) {
+  virtual void operator()(::osg::Node* node, ::osg::NodeVisitor* nv)
+  {
     ::osg::ref_ptr<ViewerAttachment> attachment
         = dynamic_cast<ViewerAttachment*>(node);
 
@@ -124,33 +127,39 @@ public:
 };
 
 //==============================================================================
-ViewerAttachment::ViewerAttachment() : mViewer(nullptr) {
+ViewerAttachment::ViewerAttachment() : mViewer(nullptr)
+{
   setUpdateCallback(new ViewerAttachmentCallback);
 }
 
 //==============================================================================
-ViewerAttachment::~ViewerAttachment() {
+ViewerAttachment::~ViewerAttachment()
+{
   if (mViewer)
     mViewer->removeAttachment(this);
 }
 
 //==============================================================================
-Viewer* ViewerAttachment::getViewer() {
+Viewer* ViewerAttachment::getViewer()
+{
   return mViewer;
 }
 
 //==============================================================================
-const Viewer* ViewerAttachment::getViewer() const {
+const Viewer* ViewerAttachment::getViewer() const
+{
   return mViewer;
 }
 
 //==============================================================================
-void ViewerAttachment::customAttach(Viewer* /*newViewer*/) {
+void ViewerAttachment::customAttach(Viewer* /*newViewer*/)
+{
   // Do nothing
 }
 
 //==============================================================================
-void ViewerAttachment::attach(Viewer* newViewer) {
+void ViewerAttachment::attach(Viewer* newViewer)
+{
   if (mViewer)
     mViewer->getRootGroup()->removeChild(this);
 
@@ -173,7 +182,8 @@ Viewer::Viewer(const ::osg::Vec4& clearColor)
     mOver(::osg::Vec3(0, 1, 0)),
     mSimulating(false),
     mAllowSimulation(true),
-    mHeadlights(true) {
+    mHeadlights(true)
+{
   setCameraManipulator(new osg::TrackballManipulator);
   addInstructionText("Left-click:   Interaction\n");
   addInstructionText("Right-click:  Rotate view\n");
@@ -193,7 +203,8 @@ Viewer::Viewer(const ::osg::Vec4& clearColor)
 }
 
 //==============================================================================
-Viewer::~Viewer() {
+Viewer::~Viewer()
+{
   std::unordered_set<ViewerAttachment*>::iterator it = mAttachments.begin(),
                                                   end = mAttachments.end();
 
@@ -202,7 +213,8 @@ Viewer::~Viewer() {
 }
 
 //==============================================================================
-void Viewer::captureScreen(const std::string& filename) {
+void Viewer::captureScreen(const std::string& filename)
+{
   if (filename.empty()) {
     dtwarn << "[Viewer::captureScreen] Passed in empty filename for screen "
            << "capture. This is not allowed!\n";
@@ -221,7 +233,8 @@ void Viewer::record(
     const std::string& directory,
     const std::string& prefix,
     bool restart,
-    std::size_t digits) {
+    std::size_t digits)
+{
   if (directory.empty()) {
     dtwarn << "[Viewer::record] Passed in empty directory name for screen "
            << "recording. This is not allowed!\n";
@@ -245,7 +258,8 @@ void Viewer::record(
 }
 
 //==============================================================================
-void Viewer::pauseRecording() {
+void Viewer::pauseRecording()
+{
   if (!mRecording)
     return;
 
@@ -255,24 +269,28 @@ void Viewer::pauseRecording() {
 }
 
 //==============================================================================
-bool Viewer::isRecording() const {
+bool Viewer::isRecording() const
+{
   return mRecording;
 }
 
 //==============================================================================
-void Viewer::switchDefaultEventHandler(bool _on) {
+void Viewer::switchDefaultEventHandler(bool _on)
+{
   removeEventHandler(mDefaultEventHandler);
   if (_on)
     addEventHandler(mDefaultEventHandler);
 }
 
 //==============================================================================
-DefaultEventHandler* Viewer::getDefaultEventHandler() const {
+DefaultEventHandler* Viewer::getDefaultEventHandler() const
+{
   return mDefaultEventHandler;
 }
 
 //==============================================================================
-void Viewer::switchHeadlights(bool _on) {
+void Viewer::switchHeadlights(bool _on)
+{
   mHeadlights = _on;
 
   if (_on) {
@@ -315,12 +333,14 @@ void Viewer::switchHeadlights(bool _on) {
 }
 
 //==============================================================================
-bool Viewer::checkHeadlights() const {
+bool Viewer::checkHeadlights() const
+{
   return mHeadlights;
 }
 
 //==============================================================================
-void Viewer::addWorldNode(WorldNode* _newWorldNode, bool _active) {
+void Viewer::addWorldNode(WorldNode* _newWorldNode, bool _active)
+{
   if (mWorldNodes.find(_newWorldNode) != mWorldNodes.end())
     return;
 
@@ -336,7 +356,8 @@ void Viewer::addWorldNode(WorldNode* _newWorldNode, bool _active) {
 }
 
 //==============================================================================
-void Viewer::removeWorldNode(WorldNode* _oldWorldNode) {
+void Viewer::removeWorldNode(WorldNode* _oldWorldNode)
+{
   auto it = mWorldNodes.find(_oldWorldNode);
   if (it == mWorldNodes.end())
     return;
@@ -346,8 +367,8 @@ void Viewer::removeWorldNode(WorldNode* _oldWorldNode) {
 }
 
 //==============================================================================
-void Viewer::removeWorldNode(
-    std::shared_ptr<dart::simulation::World> _oldWorld) {
+void Viewer::removeWorldNode(std::shared_ptr<dart::simulation::World> _oldWorld)
+{
   WorldNode* node = getWorldNode(_oldWorld);
 
   if (nullptr == node)
@@ -359,7 +380,8 @@ void Viewer::removeWorldNode(
 
 //==============================================================================
 WorldNode* Viewer::getWorldNode(
-    std::shared_ptr<dart::simulation::World> _world) const {
+    std::shared_ptr<dart::simulation::World> _world) const
+{
   auto it = mWorldNodes.cbegin();
   auto end = mWorldNodes.cend();
   WorldNode* node = nullptr;
@@ -375,7 +397,8 @@ WorldNode* Viewer::getWorldNode(
 }
 
 //==============================================================================
-void Viewer::addAttachment(ViewerAttachment* _attachment) {
+void Viewer::addAttachment(ViewerAttachment* _attachment)
+{
   Viewer* oldViewer = _attachment->mViewer;
   if (oldViewer)
     oldViewer->removeAttachment(_attachment);
@@ -386,7 +409,8 @@ void Viewer::addAttachment(ViewerAttachment* _attachment) {
 }
 
 //==============================================================================
-void Viewer::removeAttachment(ViewerAttachment* _attachment) {
+void Viewer::removeAttachment(ViewerAttachment* _attachment)
+{
   std::unordered_set<ViewerAttachment*>::iterator it
       = mAttachments.find(_attachment);
 
@@ -398,23 +422,27 @@ void Viewer::removeAttachment(ViewerAttachment* _attachment) {
 }
 
 //==============================================================================
-const std::unordered_set<ViewerAttachment*>& Viewer::getAttachments() const {
+const std::unordered_set<ViewerAttachment*>& Viewer::getAttachments() const
+{
   return mAttachments;
 }
 
 //==============================================================================
-::osg::Group* Viewer::getLightGroup() {
+::osg::Group* Viewer::getLightGroup()
+{
   return mLightGroup;
 }
 
 //==============================================================================
-const ::osg::Group* Viewer::getLightGroup() const {
+const ::osg::Group* Viewer::getLightGroup() const
+{
   return mLightGroup;
 }
 
 //==============================================================================
 const ::osg::ref_ptr<::osg::LightSource>& Viewer::getLightSource(
-    std::size_t index) const {
+    std::size_t index) const
+{
   assert(index < 2);
   if (index == 0)
     return mLightSource1;
@@ -422,7 +450,8 @@ const ::osg::ref_ptr<::osg::LightSource>& Viewer::getLightSource(
 }
 
 //==============================================================================
-void Viewer::setupDefaultLights() {
+void Viewer::setupDefaultLights()
+{
   setUpwardsDirection(mUpwards);
   switchHeadlights(true);
 
@@ -448,7 +477,8 @@ void Viewer::setupDefaultLights() {
 }
 
 //==============================================================================
-void Viewer::setUpwardsDirection(const ::osg::Vec3& _up) {
+void Viewer::setUpwardsDirection(const ::osg::Vec3& _up)
+{
   mUpwards = _up;
   if (mUpwards.length() > 0)
     mUpwards.normalize();
@@ -469,12 +499,14 @@ void Viewer::setUpwardsDirection(const ::osg::Vec3& _up) {
 }
 
 //==============================================================================
-void Viewer::setUpwardsDirection(const Eigen::Vector3d& _up) {
+void Viewer::setUpwardsDirection(const Eigen::Vector3d& _up)
+{
   setUpwardsDirection(eigToOsgVec3(_up));
 }
 
 //==============================================================================
-void Viewer::setWorldNodeActive(WorldNode* _node, bool _active) {
+void Viewer::setWorldNodeActive(WorldNode* _node, bool _active)
+{
   auto it = mWorldNodes.find(_node);
   if (it == mWorldNodes.end())
     return;
@@ -484,12 +516,14 @@ void Viewer::setWorldNodeActive(WorldNode* _node, bool _active) {
 
 //==============================================================================
 void Viewer::setWorldNodeActive(
-    std::shared_ptr<dart::simulation::World> _world, bool _active) {
+    std::shared_ptr<dart::simulation::World> _world, bool _active)
+{
   setWorldNodeActive(getWorldNode(_world), _active);
 }
 
 //==============================================================================
-void Viewer::simulate(bool _on) {
+void Viewer::simulate(bool _on)
+{
   if (!mAllowSimulation && _on)
     return;
 
@@ -502,12 +536,14 @@ void Viewer::simulate(bool _on) {
 }
 
 //==============================================================================
-bool Viewer::isSimulating() const {
+bool Viewer::isSimulating() const
+{
   return mSimulating;
 }
 
 //==============================================================================
-void Viewer::allowSimulation(bool _allow) {
+void Viewer::allowSimulation(bool _allow)
+{
   mAllowSimulation = _allow;
 
   if (!mAllowSimulation && mSimulating)
@@ -515,12 +551,14 @@ void Viewer::allowSimulation(bool _allow) {
 }
 
 //==============================================================================
-bool Viewer::isAllowingSimulation() const {
+bool Viewer::isAllowingSimulation() const
+{
   return mAllowSimulation;
 }
 
 //==============================================================================
-DragAndDrop* Viewer::enableDragAndDrop(dart::dynamics::Entity* _entity) {
+DragAndDrop* Viewer::enableDragAndDrop(dart::dynamics::Entity* _entity)
+{
   if (dart::dynamics::BodyNode* bn
       = dynamic_cast<dart::dynamics::BodyNode*>(_entity))
     return enableDragAndDrop(bn);
@@ -533,7 +571,8 @@ DragAndDrop* Viewer::enableDragAndDrop(dart::dynamics::Entity* _entity) {
 }
 
 //==============================================================================
-SimpleFrameDnD* Viewer::enableDragAndDrop(dart::dynamics::SimpleFrame* _frame) {
+SimpleFrameDnD* Viewer::enableDragAndDrop(dart::dynamics::SimpleFrame* _frame)
+{
   if (nullptr == _frame)
     return nullptr;
 
@@ -558,7 +597,8 @@ typedef std::multimap<dart::dynamics::Shape*, SimpleFrameShapeDnD*>::iterator
 static sfs_dnd::iterator getSimpleFrameShapeDnDFromMultimap(
     dart::dynamics::SimpleFrame* _frame,
     dart::dynamics::Shape* _shape,
-    std::multimap<dart::dynamics::Shape*, SimpleFrameShapeDnD*>& map) {
+    std::multimap<dart::dynamics::Shape*, SimpleFrameShapeDnD*>& map)
+{
   using namespace sfs_dnd;
 
   std::pair<iterator, iterator> range = map.equal_range(_shape);
@@ -579,7 +619,8 @@ static sfs_dnd::iterator getSimpleFrameShapeDnDFromMultimap(
 
 //==============================================================================
 SimpleFrameShapeDnD* Viewer::enableDragAndDrop(
-    dart::dynamics::SimpleFrame* _frame, dart::dynamics::Shape* _shape) {
+    dart::dynamics::SimpleFrame* _frame, dart::dynamics::Shape* _shape)
+{
   if (nullptr == _frame || nullptr == _shape)
     return nullptr;
 
@@ -599,7 +640,8 @@ SimpleFrameShapeDnD* Viewer::enableDragAndDrop(
 
 //==============================================================================
 InteractiveFrameDnD* Viewer::enableDragAndDrop(
-    dart::gui::osg::InteractiveFrame* _frame) {
+    dart::gui::osg::InteractiveFrame* _frame)
+{
   if (nullptr == _frame)
     return nullptr;
 
@@ -615,7 +657,8 @@ InteractiveFrameDnD* Viewer::enableDragAndDrop(
 
 //==============================================================================
 BodyNodeDnD* Viewer::enableDragAndDrop(
-    dart::dynamics::BodyNode* _bn, bool _useExternalIK, bool _useWholeBody) {
+    dart::dynamics::BodyNode* _bn, bool _useExternalIK, bool _useWholeBody)
+{
   if (nullptr == _bn)
     return nullptr;
 
@@ -630,7 +673,8 @@ BodyNodeDnD* Viewer::enableDragAndDrop(
 }
 
 //==============================================================================
-bool Viewer::disableDragAndDrop(DragAndDrop* _dnd) {
+bool Viewer::disableDragAndDrop(DragAndDrop* _dnd)
+{
   if (disableDragAndDrop(dynamic_cast<SimpleFrameShapeDnD*>(_dnd)))
     return true;
 
@@ -647,7 +691,8 @@ bool Viewer::disableDragAndDrop(DragAndDrop* _dnd) {
 }
 
 //==============================================================================
-bool Viewer::disableDragAndDrop(SimpleFrameDnD* _dnd) {
+bool Viewer::disableDragAndDrop(SimpleFrameDnD* _dnd)
+{
   if (nullptr == _dnd)
     return false;
 
@@ -663,7 +708,8 @@ bool Viewer::disableDragAndDrop(SimpleFrameDnD* _dnd) {
 }
 
 //==============================================================================
-bool Viewer::disableDragAndDrop(SimpleFrameShapeDnD* _dnd) {
+bool Viewer::disableDragAndDrop(SimpleFrameShapeDnD* _dnd)
+{
   if (nullptr == _dnd)
     return false;
 
@@ -682,7 +728,8 @@ bool Viewer::disableDragAndDrop(SimpleFrameShapeDnD* _dnd) {
 }
 
 //==============================================================================
-bool Viewer::disableDragAndDrop(InteractiveFrameDnD* _dnd) {
+bool Viewer::disableDragAndDrop(InteractiveFrameDnD* _dnd)
+{
   if (nullptr == _dnd)
     return false;
 
@@ -698,7 +745,8 @@ bool Viewer::disableDragAndDrop(InteractiveFrameDnD* _dnd) {
 }
 
 //==============================================================================
-bool Viewer::disableDragAndDrop(BodyNodeDnD* _dnd) {
+bool Viewer::disableDragAndDrop(BodyNodeDnD* _dnd)
+{
   if (nullptr == _dnd)
     return false;
 
@@ -714,22 +762,26 @@ bool Viewer::disableDragAndDrop(BodyNodeDnD* _dnd) {
 }
 
 //==============================================================================
-const std::string& Viewer::getInstructions() const {
+const std::string& Viewer::getInstructions() const
+{
   return mInstructions;
 }
 
 //==============================================================================
-void Viewer::addInstructionText(const std::string& _instruction) {
+void Viewer::addInstructionText(const std::string& _instruction)
+{
   mInstructions.append(_instruction);
 }
 
 //==============================================================================
-void Viewer::updateViewer() {
+void Viewer::updateViewer()
+{
   updateDragAndDrops();
 }
 
 //==============================================================================
-void Viewer::updateDragAndDrops() {
+void Viewer::updateDragAndDrops()
+{
   for (auto& dnd_pair : mSimpleFrameDnDMap) {
     SimpleFrameDnD* dnd = dnd_pair.second;
     dnd->update();
@@ -752,12 +804,14 @@ void Viewer::updateDragAndDrops() {
 }
 
 //==============================================================================
-const ::osg::ref_ptr<::osg::Group>& Viewer::getRootGroup() const {
+const ::osg::ref_ptr<::osg::Group>& Viewer::getRootGroup() const
+{
   return mRootGroup;
 }
 
 //==============================================================================
-void Viewer::setVerticalFieldOfView(const double fov) {
+void Viewer::setVerticalFieldOfView(const double fov)
+{
   double fovy;
   double aspectRatio;
   double zNear;
@@ -785,7 +839,8 @@ void Viewer::setVerticalFieldOfView(const double fov) {
 }
 
 //==============================================================================
-double Viewer::getVerticalFieldOfView() const {
+double Viewer::getVerticalFieldOfView() const
+{
   double fovy;
   double aspectRatio;
   double zNear;

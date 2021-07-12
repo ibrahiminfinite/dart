@@ -39,7 +39,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void py_fcl_engine(py::module& m) {
+void py_fcl_engine(py::module& m)
+{
   ::py::class_<
       collision::FclEngined,
       std::shared_ptr<collision::FclEngined>,

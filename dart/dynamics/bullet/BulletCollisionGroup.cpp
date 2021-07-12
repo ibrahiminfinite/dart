@@ -50,17 +50,20 @@ BulletCollisionGroup::BulletCollisionGroup(
     mBulletCollisionWorld(new btCollisionWorld(
         mBulletDispatcher.get(),
         mBulletProadphaseAlg.get(),
-        mBulletCollisionConfiguration.get())) {
+        mBulletCollisionConfiguration.get()))
+{
   // Do nothing
 }
 
 //==============================================================================
-void BulletCollisionGroup::initializeEngineData() {
+void BulletCollisionGroup::initializeEngineData()
+{
   // Do nothing
 }
 
 //==============================================================================
-void BulletCollisionGroup::addCollisionObjectToEngine(CollisionObject* object) {
+void BulletCollisionGroup::addCollisionObjectToEngine(CollisionObject* object)
+{
   auto casted = static_cast<BulletCollisionObject*>(object);
 
   mBulletCollisionWorld->addCollisionObject(casted->getBulletCollisionObject());
@@ -70,7 +73,8 @@ void BulletCollisionGroup::addCollisionObjectToEngine(CollisionObject* object) {
 
 //==============================================================================
 void BulletCollisionGroup::addCollisionObjectsToEngine(
-    const std::vector<CollisionObject*>& collObjects) {
+    const std::vector<CollisionObject*>& collObjects)
+{
   for (auto collObj : collObjects) {
     auto casted = static_cast<BulletCollisionObject*>(collObj);
 
@@ -83,7 +87,8 @@ void BulletCollisionGroup::addCollisionObjectsToEngine(
 
 //==============================================================================
 void BulletCollisionGroup::removeCollisionObjectFromEngine(
-    CollisionObject* object) {
+    CollisionObject* object)
+{
   auto casted = static_cast<BulletCollisionObject*>(object);
 
   mBulletCollisionWorld->removeCollisionObject(
@@ -93,7 +98,8 @@ void BulletCollisionGroup::removeCollisionObjectFromEngine(
 }
 
 //==============================================================================
-void BulletCollisionGroup::removeAllCollisionObjectsFromEngine() {
+void BulletCollisionGroup::removeAllCollisionObjectsFromEngine()
+{
   for (const auto& info : mObjectInfoList)
     removeCollisionObjectFromEngine(info->mObject.get());
 
@@ -101,17 +107,20 @@ void BulletCollisionGroup::removeAllCollisionObjectsFromEngine() {
 }
 
 //==============================================================================
-void BulletCollisionGroup::updateCollisionGroupEngineData() {
+void BulletCollisionGroup::updateCollisionGroupEngineData()
+{
   mBulletCollisionWorld->updateAabbs();
 }
 
 //==============================================================================
-btCollisionWorld* BulletCollisionGroup::getBulletCollisionWorld() {
+btCollisionWorld* BulletCollisionGroup::getBulletCollisionWorld()
+{
   return mBulletCollisionWorld.get();
 }
 
 //==============================================================================
-const btCollisionWorld* BulletCollisionGroup::getBulletCollisionWorld() const {
+const btCollisionWorld* BulletCollisionGroup::getBulletCollisionWorld() const
+{
   return mBulletCollisionWorld.get();
 }
 

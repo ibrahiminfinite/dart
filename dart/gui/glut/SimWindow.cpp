@@ -69,7 +69,8 @@ namespace dart {
 namespace gui {
 namespace glut {
 
-SimWindow::SimWindow() : Win3D() {
+SimWindow::SimWindow() : Win3D()
+{
   mWorld = std::make_shared<simulation::World>();
 
   mBackground[0] = 1.0;
@@ -86,17 +87,20 @@ SimWindow::SimWindow() : Win3D() {
   mTrans[1] = 300.f;
 }
 
-SimWindow::~SimWindow() {
+SimWindow::~SimWindow()
+{
   for (const auto& graphWindow : mGraphWindows)
     delete graphWindow;
 }
 
-void SimWindow::timeStepping() {
+void SimWindow::timeStepping()
+{
   mWorld->step();
 }
 
 //==============================================================================
-void SimWindow::drawWorld() const {
+void SimWindow::drawWorld() const
+{
   drawSkeletons();
 
   for (auto i = 0u; i < mWorld->getNumSimpleFrames(); ++i)
@@ -104,23 +108,27 @@ void SimWindow::drawWorld() const {
 }
 
 //==============================================================================
-void SimWindow::drawSkeletons() const {
+void SimWindow::drawSkeletons() const
+{
   for (auto i = 0u; i < mWorld->getNumSkeletons(); ++i)
     drawSkeleton(mWorld->getSkeleton(i).get());
 }
 
 //==============================================================================
-void SimWindow::drawSkels() {
+void SimWindow::drawSkels()
+{
   drawSkeletons();
 }
 
 //==============================================================================
-void SimWindow::drawEntities() {
+void SimWindow::drawEntities()
+{
   for (std::size_t i = 0; i < mWorld->getNumSimpleFrames(); ++i)
     drawShapeFrame(mWorld->getSimpleFrame(i).get());
 }
 
-void SimWindow::displayTimer(int _val) {
+void SimWindow::displayTimer(int _val)
+{
   int numIter = mDisplayTimeout / (mWorld->getTimeStep() * 1000);
   if (mPlay) {
     mPlayFrame += 16;
@@ -136,7 +144,8 @@ void SimWindow::displayTimer(int _val) {
   glutTimerFunc(mDisplayTimeout, refreshTimer, _val);
 }
 
-void SimWindow::draw() {
+void SimWindow::draw()
+{
   glDisable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   if (!mSimulating) {
@@ -211,7 +220,8 @@ void SimWindow::draw() {
   glEnable(GL_LIGHTING);
 }
 
-void SimWindow::keyboard(unsigned char _key, int _x, int _y) {
+void SimWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   switch (_key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;
@@ -252,18 +262,21 @@ void SimWindow::keyboard(unsigned char _key, int _x, int _y) {
   glutPostRedisplay();
 }
 
-void SimWindow::setWorld(simulation::WorldPtr _world) {
+void SimWindow::setWorld(simulation::WorldPtr _world)
+{
   mWorld = _world;
 }
 
-void SimWindow::saveWorld() {
+void SimWindow::saveWorld()
+{
   if (!mWorld)
     return;
   dart::io::FileInfoWorld worldFile;
   worldFile.saveFile("tempWorld.txt", mWorld->getRecording());
 }
 
-void SimWindow::plot(Eigen::VectorXd& _data) {
+void SimWindow::plot(Eigen::VectorXd& _data)
+{
   GraphWindow* figure = new GraphWindow();
   figure->setData(_data);
   figure->initWindow(480, 240, "figure");
@@ -274,7 +287,8 @@ void SimWindow::plot(Eigen::VectorXd& _data) {
 void SimWindow::drawSkeleton(
     const dynamics::Skeleton* skeleton,
     const Eigen::Vector4d& color,
-    bool useDefaultColor) const {
+    bool useDefaultColor) const
+{
   if (!skeleton)
     return;
 
@@ -286,7 +300,8 @@ void SimWindow::drawSkeleton(
 void SimWindow::drawEntity(
     const dynamics::Entity* entity,
     const Eigen::Vector4d& color,
-    bool useDefaultColor) const {
+    bool useDefaultColor) const
+{
   if (!entity)
     return;
 
@@ -308,7 +323,8 @@ void SimWindow::drawBodyNode(
     const dynamics::BodyNode* bodyNode,
     const Eigen::Vector4d& color,
     bool useDefaultColor,
-    bool recursive) const {
+    bool recursive) const
+{
   if (!bodyNode)
     return;
 
@@ -354,7 +370,8 @@ void SimWindow::drawBodyNode(
 void SimWindow::drawShapeFrame(
     const dynamics::ShapeFrame* shapeFrame,
     const Eigen::Vector4d& color,
-    bool useDefaultColor) const {
+    bool useDefaultColor) const
+{
   if (!shapeFrame)
     return;
 
@@ -379,7 +396,8 @@ void SimWindow::drawShapeFrame(
 
 //==============================================================================
 void SimWindow::drawShape(
-    const dynamics::Shape* shape, const Eigen::Vector4d& color) const {
+    const dynamics::Shape* shape, const Eigen::Vector4d& color) const
+{
   if (!shape)
     return;
 
@@ -459,7 +477,8 @@ void SimWindow::drawShape(
 void SimWindow::drawPointMasses(
     const std::vector<dynamics::PointMass*> pointMasses,
     const Eigen::Vector4d& color,
-    bool useDefaultColor) const {
+    bool useDefaultColor) const
+{
   if (!mRI)
     return;
 
@@ -494,7 +513,8 @@ void SimWindow::drawPointMasses(
 void SimWindow::drawMarker(
     const dynamics::Marker* marker,
     const Eigen::Vector4d& color,
-    bool useDefaultColor) const {
+    bool useDefaultColor) const
+{
   if (!marker)
     return;
 

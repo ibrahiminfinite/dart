@@ -41,17 +41,20 @@ namespace dart {
 namespace io {
 
 //==============================================================================
-FileInfoWorld::FileInfoWorld() : mRecord(nullptr) {
+FileInfoWorld::FileInfoWorld() : mRecord(nullptr)
+{
   std::strcpy(mFileName, "");
 }
 
 //==============================================================================
-FileInfoWorld::~FileInfoWorld() {
+FileInfoWorld::~FileInfoWorld()
+{
   delete mRecord;
 }
 
 //==============================================================================
-bool FileInfoWorld::loadFile(const char* _fName) {
+bool FileInfoWorld::loadFile(const char* _fName)
+{
   std::ifstream inFile(_fName);
   if (inFile.fail() == 1)
     return false;
@@ -115,8 +118,8 @@ bool FileInfoWorld::loadFile(const char* _fName) {
 }
 
 //==============================================================================
-bool FileInfoWorld::saveFile(
-    const char* _fName, simulation::Recording* _record) {
+bool FileInfoWorld::saveFile(const char* _fName, simulation::Recording* _record)
+{
   std::ofstream outFile(_fName, std::ios::out);
   if (outFile.fail())
     return false;
@@ -153,7 +156,8 @@ bool FileInfoWorld::saveFile(
 }
 
 //==============================================================================
-simulation::Recording* FileInfoWorld::getRecording() const {
+simulation::Recording* FileInfoWorld::getRecording() const
+{
   return mRecord;
 }
 

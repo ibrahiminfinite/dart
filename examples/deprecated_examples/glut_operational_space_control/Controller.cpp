@@ -35,7 +35,8 @@
 //==============================================================================
 Controller::Controller(
     dart::dynamics::SkeletonPtr _robot, dart::dynamics::BodyNode* _endEffector)
-  : mRobot(_robot), mEndEffector(_endEffector) {
+  : mRobot(_robot), mEndEffector(_endEffector)
+{
   assert(_robot != nullptr);
   assert(_endEffector != nullptr);
 
@@ -61,11 +62,13 @@ Controller::Controller(
 }
 
 //==============================================================================
-Controller::~Controller() {
+Controller::~Controller()
+{
 }
 
 //==============================================================================
-void Controller::update(const Eigen::Vector3d& _targetPosition) {
+void Controller::update(const Eigen::Vector3d& _targetPosition)
+{
   using namespace dart;
 
   // Get equation of motions
@@ -100,15 +103,18 @@ void Controller::update(const Eigen::Vector3d& _targetPosition) {
 }
 
 //==============================================================================
-dart::dynamics::SkeletonPtr Controller::getRobot() const {
+dart::dynamics::SkeletonPtr Controller::getRobot() const
+{
   return mRobot;
 }
 
 //==============================================================================
-dart::dynamics::BodyNode* Controller::getEndEffector() const {
+dart::dynamics::BodyNode* Controller::getEndEffector() const
+{
   return mEndEffector;
 }
 
 //==============================================================================
-void Controller::keyboard(unsigned char /*_key*/, int /*_x*/, int /*_y*/) {
+void Controller::keyboard(unsigned char /*_key*/, int /*_x*/, int /*_y*/)
+{
 }

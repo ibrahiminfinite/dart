@@ -43,22 +43,26 @@ namespace dynamics {
 
 //==============================================================================
 FreeJoint::Properties::Properties(const Base::Properties& properties)
-  : Base::Properties(properties) {
+  : Base::Properties(properties)
+{
   // Do nothing
 }
 
 //==============================================================================
-FreeJoint::~FreeJoint() {
+FreeJoint::~FreeJoint()
+{
   // Do nothing
 }
 
 //==============================================================================
-FreeJoint::Properties FreeJoint::getFreeJointProperties() const {
+FreeJoint::Properties FreeJoint::getFreeJointProperties() const
+{
   return getGenericJointProperties();
 }
 
 //==============================================================================
-Eigen::Vector6d FreeJoint::convertToPositions(const Eigen::Isometry3d& _tf) {
+Eigen::Vector6d FreeJoint::convertToPositions(const Eigen::Isometry3d& _tf)
+{
   Eigen::Vector6d x;
   x.head<3>() = math::logMap(_tf.linear());
   x.tail<3>() = _tf.translation();
@@ -67,7 +71,8 @@ Eigen::Vector6d FreeJoint::convertToPositions(const Eigen::Isometry3d& _tf) {
 
 //==============================================================================
 Eigen::Isometry3d FreeJoint::convertToTransform(
-    const Eigen::Vector6d& _positions) {
+    const Eigen::Vector6d& _positions)
+{
   Eigen::Isometry3d tf(Eigen::Isometry3d::Identity());
   tf.linear() = math::expMapRot(_positions.head<3>());
   tf.translation() = _positions.tail<3>();
@@ -76,13 +81,15 @@ Eigen::Isometry3d FreeJoint::convertToTransform(
 
 //==============================================================================
 void FreeJoint::setTransform(
-    Joint* joint, const Eigen::Isometry3d& tf, const Frame* withRespectTo) {
+    Joint* joint, const Eigen::Isometry3d& tf, const Frame* withRespectTo)
+{
   return setTransformOf(joint, tf, withRespectTo);
 }
 
 //==============================================================================
 void FreeJoint::setTransformOf(
-    Joint* joint, const Eigen::Isometry3d& tf, const Frame* withRespectTo) {
+    Joint* joint, const Eigen::Isometry3d& tf, const Frame* withRespectTo)
+{
   if (nullptr == joint)
     return;
 
@@ -100,17 +107,15 @@ void FreeJoint::setTransformOf(
 
 //==============================================================================
 void FreeJoint::setTransform(
-    BodyNode* bodyNode,
-    const Eigen::Isometry3d& tf,
-    const Frame* withRespectTo) {
+    BodyNode* bodyNode, const Eigen::Isometry3d& tf, const Frame* withRespectTo)
+{
   setTransformOf(bodyNode, tf, withRespectTo);
 }
 
 //==============================================================================
 void FreeJoint::setTransformOf(
-    BodyNode* bodyNode,
-    const Eigen::Isometry3d& tf,
-    const Frame* withRespectTo) {
+    BodyNode* bodyNode, const Eigen::Isometry3d& tf, const Frame* withRespectTo)
+{
   if (nullptr == bodyNode)
     return;
 
@@ -122,7 +127,8 @@ void FreeJoint::setTransform(
     Skeleton* skeleton,
     const Eigen::Isometry3d& tf,
     const Frame* withRespectTo,
-    bool applyToAllRootBodies) {
+    bool applyToAllRootBodies)
+{
   setTransformOf(skeleton, tf, withRespectTo, applyToAllRootBodies);
 }
 
@@ -131,7 +137,8 @@ void FreeJoint::setTransformOf(
     Skeleton* skeleton,
     const Eigen::Isometry3d& tf,
     const Frame* withRespectTo,
-    bool applyToAllRootBodies) {
+    bool applyToAllRootBodies)
+{
   if (nullptr == skeleton)
     return;
 
@@ -158,7 +165,8 @@ void FreeJoint::setSpatialMotion(
     const Frame* velInCoordinatesOf,
     const Eigen::Vector6d* newSpatialAcceleration,
     const Frame* accRelativeTo,
-    const Frame* accInCoordinatesOf) {
+    const Frame* accInCoordinatesOf)
+{
   if (newTransform)
     setTransform(*newTransform, withRespectTo);
 
@@ -172,7 +180,8 @@ void FreeJoint::setSpatialMotion(
 }
 
 //==============================================================================
-void FreeJoint::setRelativeTransform(const Eigen::Isometry3d& newTransform) {
+void FreeJoint::setRelativeTransform(const Eigen::Isometry3d& newTransform)
+{
   setPositionsStatic(convertToPositions(
       Joint::mAspectProperties.mT_ParentBodyToJoint.inverse() * newTransform
       * Joint::mAspectProperties.mT_ChildBodyToJoint));
@@ -180,7 +189,8 @@ void FreeJoint::setRelativeTransform(const Eigen::Isometry3d& newTransform) {
 
 //==============================================================================
 void FreeJoint::setTransform(
-    const Eigen::Isometry3d& newTransform, const Frame* withRespectTo) {
+    const Eigen::Isometry3d& newTransform, const Frame* withRespectTo)
+{
   assert(nullptr != withRespectTo);
 
   setRelativeTransform(
@@ -190,14 +200,16 @@ void FreeJoint::setTransform(
 
 //==============================================================================
 void FreeJoint::setRelativeSpatialVelocity(
-    const Eigen::Vector6d& newSpatialVelocity) {
+    const Eigen::Vector6d& newSpatialVelocity)
+{
   setVelocitiesStatic(
       getRelativeJacobianStatic().inverse() * newSpatialVelocity);
 }
 
 //==============================================================================
 void FreeJoint::setRelativeSpatialVelocity(
-    const Eigen::Vector6d& newSpatialVelocity, const Frame* inCoordinatesOf) {
+    const Eigen::Vector6d& newSpatialVelocity, const Frame* inCoordinatesOf)
+{
   assert(nullptr != inCoordinatesOf);
 
   if (getChildBodyNode() == inCoordinatesOf) {
@@ -212,7 +224,8 @@ void FreeJoint::setRelativeSpatialVelocity(
 void FreeJoint::setSpatialVelocity(
     const Eigen::Vector6d& newSpatialVelocity,
     const Frame* relativeTo,
-    const Frame* inCoordinatesOf) {
+    const Frame* inCoordinatesOf)
+{
   assert(nullptr != relativeTo);
   assert(nullptr != inCoordinatesOf);
 
@@ -258,7 +271,8 @@ void FreeJoint::setSpatialVelocity(
 void FreeJoint::setLinearVelocity(
     const Eigen::Vector3d& newLinearVelocity,
     const Frame* relativeTo,
-    const Frame* inCoordinatesOf) {
+    const Frame* inCoordinatesOf)
+{
   assert(nullptr != relativeTo);
   assert(nullptr != inCoordinatesOf);
 
@@ -291,7 +305,8 @@ void FreeJoint::setLinearVelocity(
 void FreeJoint::setAngularVelocity(
     const Eigen::Vector3d& newAngularVelocity,
     const Frame* relativeTo,
-    const Frame* inCoordinatesOf) {
+    const Frame* inCoordinatesOf)
+{
   assert(nullptr != relativeTo);
   assert(nullptr != inCoordinatesOf);
 
@@ -322,7 +337,8 @@ void FreeJoint::setAngularVelocity(
 
 //==============================================================================
 void FreeJoint::setRelativeSpatialAcceleration(
-    const Eigen::Vector6d& newSpatialAcceleration) {
+    const Eigen::Vector6d& newSpatialAcceleration)
+{
   const Eigen::Matrix6d& J = getRelativeJacobianStatic();
   const Eigen::Matrix6d& dJ = getRelativeJacobianTimeDerivStatic();
 
@@ -332,8 +348,8 @@ void FreeJoint::setRelativeSpatialAcceleration(
 
 //==============================================================================
 void FreeJoint::setRelativeSpatialAcceleration(
-    const Eigen::Vector6d& newSpatialAcceleration,
-    const Frame* inCoordinatesOf) {
+    const Eigen::Vector6d& newSpatialAcceleration, const Frame* inCoordinatesOf)
+{
   assert(nullptr != inCoordinatesOf);
 
   if (getChildBodyNode() == inCoordinatesOf) {
@@ -349,7 +365,8 @@ void FreeJoint::setRelativeSpatialAcceleration(
 void FreeJoint::setSpatialAcceleration(
     const Eigen::Vector6d& newSpatialAcceleration,
     const Frame* relativeTo,
-    const Frame* inCoordinatesOf) {
+    const Frame* inCoordinatesOf)
+{
   assert(nullptr != relativeTo);
   assert(nullptr != inCoordinatesOf);
 
@@ -411,7 +428,8 @@ void FreeJoint::setSpatialAcceleration(
 void FreeJoint::setLinearAcceleration(
     const Eigen::Vector3d& newLinearAcceleration,
     const Frame* relativeTo,
-    const Frame* inCoordinatesOf) {
+    const Frame* inCoordinatesOf)
+{
   assert(nullptr != relativeTo);
   assert(nullptr != inCoordinatesOf);
 
@@ -448,7 +466,8 @@ void FreeJoint::setLinearAcceleration(
 void FreeJoint::setAngularAcceleration(
     const Eigen::Vector3d& newAngularAcceleration,
     const Frame* relativeTo,
-    const Frame* inCoordinatesOf) {
+    const Frame* inCoordinatesOf)
+{
   assert(nullptr != relativeTo);
   assert(nullptr != inCoordinatesOf);
 
@@ -481,13 +500,15 @@ void FreeJoint::setAngularAcceleration(
 
 //==============================================================================
 Eigen::Matrix6d FreeJoint::getRelativeJacobianStatic(
-    const Eigen::Vector6d& /*positions*/) const {
+    const Eigen::Vector6d& /*positions*/) const
+{
   return mJacobian;
 }
 
 //==============================================================================
 Eigen::Vector6d FreeJoint::getPositionDifferencesStatic(
-    const Eigen::Vector6d& _q2, const Eigen::Vector6d& _q1) const {
+    const Eigen::Vector6d& _q2, const Eigen::Vector6d& _q1) const
+{
   const Eigen::Isometry3d T1 = convertToTransform(_q1);
   const Eigen::Isometry3d T2 = convertToTransform(_q2);
 
@@ -496,7 +517,8 @@ Eigen::Vector6d FreeJoint::getPositionDifferencesStatic(
 
 //==============================================================================
 FreeJoint::FreeJoint(const Properties& properties)
-  : Base(properties), mQ(Eigen::Isometry3d::Identity()) {
+  : Base(properties), mQ(Eigen::Isometry3d::Identity())
+{
   mJacobianDeriv = Eigen::Matrix6d::Zero();
 
   // Inherited Aspects must be created in the final joint class in reverse order
@@ -506,29 +528,34 @@ FreeJoint::FreeJoint(const Properties& properties)
 }
 
 //==============================================================================
-Joint* FreeJoint::clone() const {
+Joint* FreeJoint::clone() const
+{
   return new FreeJoint(getFreeJointProperties());
 }
 
 //==============================================================================
-const std::string& FreeJoint::getType() const {
+const std::string& FreeJoint::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& FreeJoint::getStaticType() {
+const std::string& FreeJoint::getStaticType()
+{
   static const std::string name = "FreeJoint";
   return name;
 }
 
 //==============================================================================
-bool FreeJoint::isCyclic(std::size_t _index) const {
+bool FreeJoint::isCyclic(std::size_t _index) const
+{
   return _index < 3 && !hasPositionLimit(0) && !hasPositionLimit(1)
          && !hasPositionLimit(2);
 }
 
 //==============================================================================
-void FreeJoint::integratePositions(double _dt) {
+void FreeJoint::integratePositions(double _dt)
+{
   const Eigen::Isometry3d Qnext
       = getQ() * convertToTransform(getVelocitiesStatic() * _dt);
 
@@ -536,7 +563,8 @@ void FreeJoint::integratePositions(double _dt) {
 }
 
 //==============================================================================
-void FreeJoint::updateDegreeOfFreedomNames() {
+void FreeJoint::updateDegreeOfFreedomNames()
+{
   if (!mDofs[0]->isNamePreserved())
     mDofs[0]->setName(Joint::mAspectProperties.mName + "_rot_x", false);
   if (!mDofs[1]->isNamePreserved())
@@ -552,7 +580,8 @@ void FreeJoint::updateDegreeOfFreedomNames() {
 }
 
 //==============================================================================
-void FreeJoint::updateRelativeTransform() const {
+void FreeJoint::updateRelativeTransform() const
+{
   mQ = convertToTransform(getPositionsStatic());
 
   mT = Joint::mAspectProperties.mT_ParentBodyToJoint * mQ
@@ -562,19 +591,22 @@ void FreeJoint::updateRelativeTransform() const {
 }
 
 //==============================================================================
-void FreeJoint::updateRelativeJacobian(bool _mandatory) const {
+void FreeJoint::updateRelativeJacobian(bool _mandatory) const
+{
   if (_mandatory)
     mJacobian
         = math::getAdTMatrix(Joint::mAspectProperties.mT_ChildBodyToJoint);
 }
 
 //==============================================================================
-void FreeJoint::updateRelativeJacobianTimeDeriv() const {
+void FreeJoint::updateRelativeJacobianTimeDeriv() const
+{
   assert(Eigen::Matrix6d::Zero() == mJacobianDeriv);
 }
 
 //==============================================================================
-const Eigen::Isometry3d& FreeJoint::getQ() const {
+const Eigen::Isometry3d& FreeJoint::getQ() const
+{
   if (mNeedTransformUpdate) {
     updateRelativeTransform();
     mNeedTransformUpdate = false;

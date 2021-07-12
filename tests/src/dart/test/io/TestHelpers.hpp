@@ -39,36 +39,43 @@
 
 //==============================================================================
 struct TestResource : public dart::common::Resource {
-  size_t getSize() override {
+  size_t getSize() override
+  {
     return 0;
   }
 
-  size_t tell() override {
+  size_t tell() override
+  {
     return 0;
   }
 
-  bool seek(ptrdiff_t /*_offset*/, SeekType /*_origin*/) override {
+  bool seek(ptrdiff_t /*_offset*/, SeekType /*_origin*/) override
+  {
     return false;
   }
 
-  size_t read(void* /*_buffer*/, size_t /*_size*/, size_t /*_count*/) override {
+  size_t read(void* /*_buffer*/, size_t /*_size*/, size_t /*_count*/) override
+  {
     return 0;
   }
 };
 
 //==============================================================================
 struct PresentResourceRetriever : public dart::common::ResourceRetriever {
-  bool exists(const dart::common::Uri& _uri) override {
+  bool exists(const dart::common::Uri& _uri) override
+  {
     mExists.push_back(_uri.toString());
     return true;
   }
 
-  std::string getFilePath(const dart::common::Uri& _uri) override {
+  std::string getFilePath(const dart::common::Uri& _uri) override
+  {
     mGetFilePath.push_back(_uri.toString());
     return _uri.toString();
   }
 
-  dart::common::ResourcePtr retrieve(const dart::common::Uri& _uri) override {
+  dart::common::ResourcePtr retrieve(const dart::common::Uri& _uri) override
+  {
     mRetrieve.push_back(_uri.toString());
     return std::make_shared<TestResource>();
   }
@@ -80,17 +87,20 @@ struct PresentResourceRetriever : public dart::common::ResourceRetriever {
 
 //==============================================================================
 struct AbsentResourceRetriever : public dart::common::ResourceRetriever {
-  bool exists(const dart::common::Uri& _uri) override {
+  bool exists(const dart::common::Uri& _uri) override
+  {
     mExists.push_back(_uri.toString());
     return false;
   }
 
-  std::string getFilePath(const dart::common::Uri& _uri) override {
+  std::string getFilePath(const dart::common::Uri& _uri) override
+  {
     mGetFilePath.push_back(_uri.toString());
     return "";
   }
 
-  dart::common::ResourcePtr retrieve(const dart::common::Uri& _uri) override {
+  dart::common::ResourcePtr retrieve(const dart::common::Uri& _uri) override
+  {
     mRetrieve.push_back(_uri.toString());
     return nullptr;
   }

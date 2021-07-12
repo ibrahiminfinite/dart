@@ -42,7 +42,8 @@ namespace detail {
 
 //==============================================================================
 Errors appendGeomAttributes(
-    GeomAttributes& attributes, tinyxml2::XMLElement* element) {
+    GeomAttributes& attributes, tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "geom") {

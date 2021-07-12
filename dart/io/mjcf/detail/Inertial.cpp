@@ -41,7 +41,8 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-Errors Inertial::read(tinyxml2::XMLElement* element) {
+Errors Inertial::read(tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "inertial") {
@@ -131,7 +132,8 @@ Errors Inertial::read(tinyxml2::XMLElement* element) {
 }
 
 //==============================================================================
-Errors Inertial::compile(const Compiler& compiler) {
+Errors Inertial::compile(const Compiler& compiler)
+{
   Errors errors;
 
   mPos = mData.mPos;
@@ -171,52 +173,62 @@ Errors Inertial::compile(const Compiler& compiler) {
 }
 
 //==============================================================================
-void Inertial::setMass(double mass) {
+void Inertial::setMass(double mass)
+{
   mMass = mass;
 }
 
 //==============================================================================
-double Inertial::getMass() const {
+double Inertial::getMass() const
+{
   return mMass;
 }
 
 //==============================================================================
-void Inertial::setDiagInertia(const Eigen::Vector3d& inertia) {
+void Inertial::setDiagInertia(const Eigen::Vector3d& inertia)
+{
   mDiagonalInertia = inertia;
 }
 
 //==============================================================================
-const Eigen::Vector3d& Inertial::getDiagInertia() const {
+const Eigen::Vector3d& Inertial::getDiagInertia() const
+{
   return mDiagonalInertia;
 }
 
 //==============================================================================
-void Inertial::setOffDiagInertia(const Eigen::Vector3d& inertia) {
+void Inertial::setOffDiagInertia(const Eigen::Vector3d& inertia)
+{
   mOffDiagonalInertia = inertia;
 }
 
 //==============================================================================
-const Eigen::Vector3d& Inertial::getOffDiagInertia() const {
+const Eigen::Vector3d& Inertial::getOffDiagInertia() const
+{
   return mOffDiagonalInertia;
 }
 
 //==============================================================================
-void Inertial::setRelativeTransform(const Eigen::Isometry3d& tf) {
+void Inertial::setRelativeTransform(const Eigen::Isometry3d& tf)
+{
   mRelativeTransform = tf;
 }
 
 //==============================================================================
-const Eigen::Isometry3d& Inertial::getRelativeTransform() const {
+const Eigen::Isometry3d& Inertial::getRelativeTransform() const
+{
   return mRelativeTransform;
 }
 
 //==============================================================================
-void Inertial::setWorldTransform(const Eigen::Isometry3d& tf) {
+void Inertial::setWorldTransform(const Eigen::Isometry3d& tf)
+{
   mWorldTransform = tf;
 }
 
 //==============================================================================
-const Eigen::Isometry3d& Inertial::getWorldTransform() const {
+const Eigen::Isometry3d& Inertial::getWorldTransform() const
+{
   return mWorldTransform;
 }
 

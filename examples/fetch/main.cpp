@@ -45,11 +45,13 @@ public:
     : gui::osg::RealTimeWorldNode(std::move(world)),
       mRobot(std::move(robot)),
       mMocap(mocap),
-      mInteractiveFrame(interactiveFrame) {
+      mInteractiveFrame(interactiveFrame)
+  {
     // Do nothing
   }
 
-  void customPreStep() override {
+  void customPreStep() override
+  {
     if (!mRobot || !mMocap || !mInteractiveFrame)
       return;
 
@@ -69,11 +71,13 @@ public:
       dart::gui::osg::ImGuiViewer* viewer,
       FetchWorldNode* node,
       gui::osg::GridVisual* grid)
-    : mViewer(viewer), mNode(node), mGrid(grid) {
+    : mViewer(viewer), mNode(node), mGrid(grid)
+  {
     // Do nothing
   }
 
-  void render() override {
+  void render() override
+  {
     ImGui::SetNextWindowPos(ImVec2(10, 20));
     ImGui::SetNextWindowSize(ImVec2(360, 600));
     ImGui::SetNextWindowBgAlpha(0.5f);
@@ -136,7 +140,8 @@ protected:
   osg::ref_ptr<gui::osg::GridVisual> mGrid;
 };
 
-int main() {
+int main()
+{
   using namespace math::suffixes;
 
   // Create a world from ant.xml

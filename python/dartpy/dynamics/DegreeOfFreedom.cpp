@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void DegreeOfFreedom(py::module& m) {
+void DegreeOfFreedom(py::module& m)
+{
   ::py::class_<
       dart::dynamics::DegreeOfFreedom,
       dart::common::Subject,

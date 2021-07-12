@@ -55,7 +55,8 @@ namespace render {
 //==============================================================================
 class BoxDrawable final : public ::osg::ShapeDrawable {
 public:
-  BoxDrawable(double size, const Eigen::Vector4d& color) {
+  BoxDrawable(double size, const Eigen::Vector4d& color)
+  {
     mShape = new ::osg::Box(::osg::Vec3(), static_cast<float>(size));
     setColor(eigToOsgVec4f(color));
     setShape(mShape);
@@ -66,7 +67,8 @@ public:
         new ::osg::CullFace(::osg::CullFace::BACK));
   }
 
-  void updateSize(double size) {
+  void updateSize(double size)
+  {
     mShape->setHalfLengths(::osg::Vec3(
         static_cast<float>(size * 0.5),
         static_cast<float>(size * 0.5),
@@ -75,7 +77,8 @@ public:
     dirtyDisplayList();
   }
 
-  void updateColor(const Eigen::Vector4d& color) {
+  void updateColor(const Eigen::Vector4d& color)
+  {
     setColor(eigToOsgVec4f(color));
   }
 
@@ -86,7 +89,8 @@ protected:
 //==============================================================================
 class SquareDrawable final : public ::osg::Geometry {
 public:
-  SquareDrawable(double size, const Eigen::Vector4d& color) {
+  SquareDrawable(double size, const Eigen::Vector4d& color)
+  {
     mVertices = new ::osg::Vec3Array(4);
     mNormals = new ::osg::Vec3Array(1);
     mColors = new ::osg::Vec4Array(1);
@@ -103,7 +107,8 @@ public:
         new ::osg::CullFace(::osg::CullFace::BACK));
   }
 
-  void updateSize(double size) {
+  void updateSize(double size)
+  {
     mHalfSize = static_cast<float>(size) / 2.0f;
 
     mVertices->at(0) = ::osg::Vec3(-mHalfSize, 0, -mHalfSize);
@@ -116,7 +121,8 @@ public:
     setNormalArray(mNormals, ::osg::Array::BIND_OVERALL);
   }
 
-  void updateColor(const Eigen::Vector4d& color) {
+  void updateColor(const Eigen::Vector4d& color)
+  {
     mColors->at(0) = eigToOsgVec4f(color);
     setColorArray(mColors);
     setColorBinding(::osg::Geometry::BIND_OVERALL);
@@ -132,7 +138,8 @@ protected:
 //==============================================================================
 class CircleDrawable final : public ::osg::Geometry {
 public:
-  CircleDrawable(double size, const Eigen::Vector4d& color) {
+  CircleDrawable(double size, const Eigen::Vector4d& color)
+  {
     mVertices = new ::osg::Vec3Array(4);
     mNormals = new ::osg::Vec3Array(1);
     mColors = new ::osg::Vec4Array(1);
@@ -149,12 +156,12 @@ public:
         new ::osg::CullFace(::osg::CullFace::BACK));
   }
 
-  void updateSize(double size) {
+  void updateSize(double size)
+  {
     mRadius = static_cast<float>(size) / 2.0f;
 
     const auto segmentCount = 16u;
-    const auto pi = math::constantsf::pi();
-    const auto ratio = 2.0f * pi / segmentCount;
+    const auto ratio = 2.0f * math::pi<float>() / segmentCount;
 
     mVertices->resize(segmentCount);
     for (auto i = 0u; i < segmentCount; ++i) {
@@ -172,7 +179,8 @@ public:
         new ::osg::DrawArrays(::osg::PrimitiveSet::POLYGON, 0, segmentCount));
   }
 
-  void updateColor(const Eigen::Vector4d& color) {
+  void updateColor(const Eigen::Vector4d& color)
+  {
     mColors->at(0) = eigToOsgVec4f(color);
     setColorArray(mColors);
     setColorBinding(::osg::Geometry::BIND_OVERALL);
@@ -190,7 +198,8 @@ class PointNode : public ::osg::MatrixTransform {
 public:
   PointNode() = default;
 
-  void updateCenter(const Eigen::Vector3d& point) {
+  void updateCenter(const Eigen::Vector3d& point)
+  {
     ::osg::Matrix mat = getMatrix();
     mat.setTrans(point[0], point[1], point[2]);
     setMatrix(mat);
@@ -204,7 +213,8 @@ public:
 class BoxPointNode final : public PointNode {
 public:
   BoxPointNode(
-      const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color) {
+      const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color)
+  {
     mDrawable = new BoxDrawable(size, color);
     mGeode = new ::osg::Geode();
 
@@ -214,11 +224,13 @@ public:
     updateCenter(point);
   }
 
-  void updateSize(double size) override {
+  void updateSize(double size) override
+  {
     mDrawable->updateSize(size);
   }
 
-  void updateColor(const Eigen::Vector4d& color) override {
+  void updateColor(const Eigen::Vector4d& color) override
+  {
     mDrawable->updateColor(color);
   }
 
@@ -232,7 +244,8 @@ template <typename T>
 class BillboardPointNode final : public PointNode {
 public:
   BillboardPointNode(
-      const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color) {
+      const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color)
+  {
     mDrawable = new T(size, color);
     mGeode = new ::osg::Billboard();
     mGeode->setMode(::osg::Billboard::POINT_ROT_EYE);
@@ -243,11 +256,13 @@ public:
     updateCenter(point);
   }
 
-  void updateSize(double size) override {
+  void updateSize(double size) override
+  {
     mDrawable->updateSize(size);
   }
 
-  void updateColor(const Eigen::Vector4d& color) override {
+  void updateColor(const Eigen::Vector4d& color) override
+  {
     mDrawable->updateColor(color);
   }
 
@@ -272,7 +287,8 @@ bool shouldUseVisualAspectColor(
     const std::vector<
         Eigen::Vector4d,
         Eigen::aligned_allocator<Eigen::Vector4d>>& colors,
-    dynamics::PointCloudShape::ColorMode colorMode) {
+    dynamics::PointCloudShape::ColorMode colorMode)
+{
   if (colorMode == dynamics::PointCloudShape::USE_SHAPE_COLOR) {
     return true;
   } else if (colorMode == dynamics::PointCloudShape::BIND_OVERALL) {
@@ -305,7 +321,8 @@ bool shouldUseVisualAspectColor(
     dynamics::PointCloudShape::PointShapeType pointShapeType,
     const Eigen::Vector3d& point,
     double size,
-    const Eigen::Vector4d& color) {
+    const Eigen::Vector4d& color)
+{
   if (pointShapeType == dynamics::PointCloudShape::PointShapeType::BOX) {
     return new BoxPointNode(point, size, color);
   } else if (
@@ -331,11 +348,13 @@ public:
       dart::dynamics::VisualAspect* visualAspect)
     : mPointCloudShape(std::move(pointCloudShape)),
       mVisualAspect(visualAspect),
-      mPointShapeType(mPointCloudShape->getPointShapeType()) {
+      mPointShapeType(mPointCloudShape->getPointShapeType())
+  {
     // Do nothing
   }
 
-  void refresh(bool firstTime) override {
+  void refresh(bool firstTime) override
+  {
     if (firstTime) {
       mPointShapeType = mPointCloudShape->getPointShapeType();
     } else if (mPointShapeType != mPointCloudShape->getPointShapeType()) {
@@ -415,12 +434,13 @@ public:
   VertexPointNodes(
       std::shared_ptr<dart::dynamics::PointCloudShape> pointCloudShape,
       dart::dynamics::VisualAspect* visualAspect)
-    : mPointCloudShape(std::move(pointCloudShape)),
-      mVisualAspect(visualAspect) {
+    : mPointCloudShape(std::move(pointCloudShape)), mVisualAspect(visualAspect)
+  {
     // Do nothing
   }
 
-  void refresh(bool firstTime) override {
+  void refresh(bool firstTime) override
+  {
     if (firstTime) {
       mVertices = new ::osg::Vec3Array;
       mColors = new ::osg::Vec4Array;
@@ -529,14 +549,16 @@ PointCloudShapeNode::PointCloudShapeNode(
     mPointCloudShape(shape),
     mPointNodes(nullptr),
     mPointCloudVersion(dynamics::INVALID_INDEX),
-    mPointShapeType(shape->getPointShapeType()) {
+    mPointShapeType(shape->getPointShapeType())
+{
   mNode = this;
   extractData(true);
   setNodeMask(mVisualAspect->isHidden() ? 0x0u : ~0x0u);
 }
 
 //==============================================================================
-void PointCloudShapeNode::refresh() {
+void PointCloudShapeNode::refresh()
+{
   mUtilized = true;
 
   setNodeMask(mVisualAspect->isHidden() ? 0x0u : ~0x0u);
@@ -552,7 +574,8 @@ void PointCloudShapeNode::refresh() {
 }
 
 //==============================================================================
-void PointCloudShapeNode::extractData(bool /*firstTime*/) {
+void PointCloudShapeNode::extractData(bool /*firstTime*/)
+{
   if (mPointNodes == nullptr) {
     mPointNodes = createPointNodes();
     addChild(mPointNodes);
@@ -571,12 +594,14 @@ void PointCloudShapeNode::extractData(bool /*firstTime*/) {
 }
 
 //==============================================================================
-PointCloudShapeNode::~PointCloudShapeNode() {
+PointCloudShapeNode::~PointCloudShapeNode()
+{
   // Do nothing
 }
 
 //==============================================================================
-::osg::ref_ptr<PointNodes> PointCloudShapeNode::createPointNodes() {
+::osg::ref_ptr<PointNodes> PointCloudShapeNode::createPointNodes()
+{
   if (mPointShapeType == dynamics::PointCloudShape::PointShapeType::BOX
       || mPointShapeType
              == dynamics::PointCloudShape::PointShapeType::BILLBOARD_SQUARE

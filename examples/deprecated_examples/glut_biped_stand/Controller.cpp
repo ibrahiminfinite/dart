@@ -32,7 +32,8 @@
 
 #include "Controller.hpp"
 
-Controller::Controller(dart::dynamics::SkeletonPtr _skel, double _t) {
+Controller::Controller(dart::dynamics::SkeletonPtr _skel, double _t)
+{
   mSkel = _skel;
   mLeftHeel = _skel->getBodyNode("h_heel_left");
 
@@ -66,22 +67,27 @@ Controller::Controller(dart::dynamics::SkeletonPtr _skel, double _t) {
   mPreOffset = 0.0;
 }
 
-Controller::~Controller() {
+Controller::~Controller()
+{
 }
 
-Eigen::VectorXd Controller::getTorques() {
+Eigen::VectorXd Controller::getTorques()
+{
   return mTorques;
 }
 
-double Controller::getTorque(int _index) {
+double Controller::getTorque(int _index)
+{
   return mTorques[_index];
 }
 
-void Controller::setDesiredDof(int _index, double _val) {
+void Controller::setDesiredDof(int _index, double _val)
+{
   mDesiredDofs[_index] = _val;
 }
 
-void Controller::computeTorques() {
+void Controller::computeTorques()
+{
   Eigen::VectorXd _dof = mSkel->getPositions();
   Eigen::VectorXd _dofVel = mSkel->getVelocities();
   Eigen::VectorXd constrForces = mSkel->getConstraintForces();
@@ -128,18 +134,22 @@ void Controller::computeTorques() {
   mFrame++;
 }
 
-dart::dynamics::MetaSkeletonPtr Controller::getSkel() {
+dart::dynamics::MetaSkeletonPtr Controller::getSkel()
+{
   return mSkel;
 }
 
-Eigen::VectorXd Controller::getDesiredDofs() {
+Eigen::VectorXd Controller::getDesiredDofs()
+{
   return mDesiredDofs;
 }
 
-Eigen::MatrixXd Controller::getKp() {
+Eigen::MatrixXd Controller::getKp()
+{
   return mKp;
 }
 
-Eigen::MatrixXd Controller::getKd() {
+Eigen::MatrixXd Controller::getKd()
+{
   return mKd;
 }

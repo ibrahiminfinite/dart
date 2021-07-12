@@ -53,7 +53,8 @@ namespace dart {
 namespace simulation {
 
 //==============================================================================
-std::shared_ptr<World> World::create(const std::string& name) {
+std::shared_ptr<World> World::create(const std::string& name)
+{
   return std::make_shared<World>(name);
 }
 
@@ -67,7 +68,8 @@ World::World(const std::string& _name)
     mTime(0.0),
     mFrame(0),
     mRecording(new Recording(mSkeletons)),
-    onNameChanged(mNameChangedSignal) {
+    onNameChanged(mNameChangedSignal)
+{
   mIndices.push_back(0);
 
   auto solver = std::make_unique<dynamics::BoxedLcpConstraintSolver>();
@@ -75,7 +77,8 @@ World::World(const std::string& _name)
 }
 
 //==============================================================================
-World::~World() {
+World::~World()
+{
   delete mRecording;
 
   for (common::Connection& connection : mNameConnectionsForSkeletons)
@@ -86,7 +89,8 @@ World::~World() {
 }
 
 //==============================================================================
-WorldPtr World::clone() const {
+WorldPtr World::clone() const
+{
   WorldPtr worldClone = World::create(mName);
 
   worldClone->setGravity(mGravity);
@@ -125,7 +129,8 @@ WorldPtr World::clone() const {
 }
 
 //==============================================================================
-void World::setTimeStep(double _timeStep) {
+void World::setTimeStep(double _timeStep)
+{
   if (_timeStep <= 0.0) {
     dtwarn << "[World] Attempting to set negative timestep. Ignoring this "
            << "request because it can lead to undefined behavior.\n";
@@ -140,12 +145,14 @@ void World::setTimeStep(double _timeStep) {
 }
 
 //==============================================================================
-double World::getTimeStep() const {
+double World::getTimeStep() const
+{
   return mTimeStep;
 }
 
 //==============================================================================
-void World::reset() {
+void World::reset()
+{
   mTime = 0.0;
   mFrame = 0;
   mRecording->clear();
@@ -153,7 +160,8 @@ void World::reset() {
 }
 
 //==============================================================================
-void World::step(bool _resetCommand) {
+void World::step(bool _resetCommand)
+{
   // Integrate velocity for unconstrained skeletons
   for (auto& skel : mSkeletons) {
     if (!skel->isMobile())
@@ -190,22 +198,26 @@ void World::step(bool _resetCommand) {
 }
 
 //==============================================================================
-void World::setTime(double _time) {
+void World::setTime(double _time)
+{
   mTime = _time;
 }
 
 //==============================================================================
-double World::getTime() const {
+double World::getTime() const
+{
   return mTime;
 }
 
 //==============================================================================
-int World::getSimFrames() const {
+int World::getSimFrames() const
+{
   return mFrame;
 }
 
 //==============================================================================
-const std::string& World::setName(const std::string& _newName) {
+const std::string& World::setName(const std::string& _newName)
+{
   if (_newName == mName)
     return mName;
 
@@ -221,12 +233,14 @@ const std::string& World::setName(const std::string& _newName) {
 }
 
 //==============================================================================
-const std::string& World::getName() const {
+const std::string& World::getName() const
+{
   return mName;
 }
 
 //==============================================================================
-void World::setGravity(const Eigen::Vector3d& _gravity) {
+void World::setGravity(const Eigen::Vector3d& _gravity)
+{
   mGravity = _gravity;
   for (std::vector<dynamics::SkeletonPtr>::iterator it = mSkeletons.begin();
        it != mSkeletons.end();
@@ -236,12 +250,14 @@ void World::setGravity(const Eigen::Vector3d& _gravity) {
 }
 
 //==============================================================================
-const Eigen::Vector3d& World::getGravity() const {
+const Eigen::Vector3d& World::getGravity() const
+{
   return mGravity;
 }
 
 //==============================================================================
-dynamics::SkeletonPtr World::getSkeleton(std::size_t _index) const {
+dynamics::SkeletonPtr World::getSkeleton(std::size_t _index) const
+{
   if (_index < mSkeletons.size())
     return mSkeletons[_index];
 
@@ -249,17 +265,20 @@ dynamics::SkeletonPtr World::getSkeleton(std::size_t _index) const {
 }
 
 //==============================================================================
-dynamics::SkeletonPtr World::getSkeleton(const std::string& _name) const {
+dynamics::SkeletonPtr World::getSkeleton(const std::string& _name) const
+{
   return mNameMgrForSkeletons.getObject(_name);
 }
 
 //==============================================================================
-std::size_t World::getNumSkeletons() const {
+std::size_t World::getNumSkeletons() const
+{
   return mSkeletons.size();
 }
 
 //==============================================================================
-std::string World::addSkeleton(const dynamics::SkeletonPtr& _skeleton) {
+std::string World::addSkeleton(const dynamics::SkeletonPtr& _skeleton)
+{
   if (nullptr == _skeleton) {
     dtwarn << "[World::addSkeleton] Attempting to add a nullptr Skeleton to "
            << "the world!\n";
@@ -300,7 +319,8 @@ std::string World::addSkeleton(const dynamics::SkeletonPtr& _skeleton) {
 }
 
 //==============================================================================
-void World::removeSkeleton(const dynamics::SkeletonPtr& _skeleton) {
+void World::removeSkeleton(const dynamics::SkeletonPtr& _skeleton)
+{
   assert(
       _skeleton != nullptr
       && "Attempted to remove nullptr Skeleton from world");
@@ -355,7 +375,8 @@ void World::removeSkeleton(const dynamics::SkeletonPtr& _skeleton) {
 }
 
 //==============================================================================
-std::set<dynamics::SkeletonPtr> World::removeAllSkeletons() {
+std::set<dynamics::SkeletonPtr> World::removeAllSkeletons()
+{
   std::set<dynamics::SkeletonPtr> ptrs;
   for (std::vector<dynamics::SkeletonPtr>::iterator it = mSkeletons.begin(),
                                                     end = mSkeletons.end();
@@ -370,23 +391,27 @@ std::set<dynamics::SkeletonPtr> World::removeAllSkeletons() {
 }
 
 //==============================================================================
-bool World::hasSkeleton(const dynamics::ConstSkeletonPtr& skeleton) const {
+bool World::hasSkeleton(const dynamics::ConstSkeletonPtr& skeleton) const
+{
   return std::find(mSkeletons.begin(), mSkeletons.end(), skeleton)
          != mSkeletons.end();
 }
 
 //==============================================================================
-bool World::hasSkeleton(const std::string& skeletonName) const {
+bool World::hasSkeleton(const std::string& skeletonName) const
+{
   return mNameMgrForSkeletons.hasName(skeletonName);
 }
 
 //==============================================================================
-int World::getIndex(int _index) const {
+int World::getIndex(int _index) const
+{
   return mIndices[_index];
 }
 
 //==============================================================================
-dynamics::SimpleFramePtr World::getSimpleFrame(std::size_t _index) const {
+dynamics::SimpleFramePtr World::getSimpleFrame(std::size_t _index) const
+{
   if (_index < mSimpleFrames.size())
     return mSimpleFrames[_index];
 
@@ -394,17 +419,20 @@ dynamics::SimpleFramePtr World::getSimpleFrame(std::size_t _index) const {
 }
 
 //==============================================================================
-dynamics::SimpleFramePtr World::getSimpleFrame(const std::string& _name) const {
+dynamics::SimpleFramePtr World::getSimpleFrame(const std::string& _name) const
+{
   return mNameMgrForSimpleFrames.getObject(_name);
 }
 
 //==============================================================================
-std::size_t World::getNumSimpleFrames() const {
+std::size_t World::getNumSimpleFrames() const
+{
   return mSimpleFrames.size();
 }
 
 //==============================================================================
-std::string World::addSimpleFrame(const dynamics::SimpleFramePtr& _frame) {
+std::string World::addSimpleFrame(const dynamics::SimpleFramePtr& _frame)
+{
   assert(_frame != nullptr && "Attempted to add nullptr SimpleFrame to world");
 
   if (nullptr == _frame) {
@@ -437,7 +465,8 @@ std::string World::addSimpleFrame(const dynamics::SimpleFramePtr& _frame) {
 }
 
 //==============================================================================
-void World::removeSimpleFrame(const dynamics::SimpleFramePtr& _frame) {
+void World::removeSimpleFrame(const dynamics::SimpleFramePtr& _frame)
+{
   assert(
       _frame != nullptr
       && "Attempted to remove nullptr SimpleFrame from world");
@@ -469,7 +498,8 @@ void World::removeSimpleFrame(const dynamics::SimpleFramePtr& _frame) {
 }
 
 //==============================================================================
-std::set<dynamics::SimpleFramePtr> World::removeAllSimpleFrames() {
+std::set<dynamics::SimpleFramePtr> World::removeAllSimpleFrames()
+{
   std::set<dynamics::SimpleFramePtr> ptrs;
   for (std::vector<dynamics::SimpleFramePtr>::iterator it
        = mSimpleFrames.begin(),
@@ -485,7 +515,8 @@ std::set<dynamics::SimpleFramePtr> World::removeAllSimpleFrames() {
 }
 
 //==============================================================================
-bool World::checkCollision(bool checkAllCollisions) {
+bool World::checkCollision(bool checkAllCollisions)
+{
   dynamics::CollisionOption option;
 
   if (checkAllCollisions)
@@ -498,18 +529,20 @@ bool World::checkCollision(bool checkAllCollisions) {
 
 //==============================================================================
 bool World::checkCollision(
-    const dynamics::CollisionOption& option,
-    dynamics::CollisionResult* result) {
+    const dynamics::CollisionOption& option, dynamics::CollisionResult* result)
+{
   return mConstraintSolver->getCollisionGroup()->collide(option, result);
 }
 
 //==============================================================================
-const dynamics::CollisionResult& World::getLastCollisionResult() const {
+const dynamics::CollisionResult& World::getLastCollisionResult() const
+{
   return mConstraintSolver->getLastCollisionResult();
 }
 
 //==============================================================================
-void World::setConstraintSolver(dynamics::UniqueConstraintSolverPtr solver) {
+void World::setConstraintSolver(dynamics::UniqueConstraintSolverPtr solver)
+{
   if (!solver) {
     dtwarn << "[World::setConstraintSolver] nullptr for constraint solver is "
            << "not allowed. Doing nothing.";
@@ -524,17 +557,20 @@ void World::setConstraintSolver(dynamics::UniqueConstraintSolverPtr solver) {
 }
 
 //==============================================================================
-dynamics::ConstraintSolver* World::getConstraintSolver() {
+dynamics::ConstraintSolver* World::getConstraintSolver()
+{
   return mConstraintSolver.get();
 }
 
 //==============================================================================
-const dynamics::ConstraintSolver* World::getConstraintSolver() const {
+const dynamics::ConstraintSolver* World::getConstraintSolver() const
+{
   return mConstraintSolver.get();
 }
 
 //==============================================================================
-void World::bake() {
+void World::bake()
+{
   const auto collisionResult = getConstraintSolver()->getLastCollisionResult();
   const auto nContacts = static_cast<int>(collisionResult.getNumContacts());
   const auto nSkeletons = getNumSkeletons();
@@ -555,13 +591,15 @@ void World::bake() {
 }
 
 //==============================================================================
-Recording* World::getRecording() {
+Recording* World::getRecording()
+{
   return mRecording;
 }
 
 //==============================================================================
 void World::handleSkeletonNameChange(
-    const dynamics::ConstMetaSkeletonPtr& _skeleton) {
+    const dynamics::ConstMetaSkeletonPtr& _skeleton)
+{
   if (nullptr == _skeleton) {
     dterr << "[World::handleSkeletonNameChange] Received a name change "
           << "callback for a nullptr Skeleton. This is most likely a bug. "
@@ -604,7 +642,8 @@ void World::handleSkeletonNameChange(
 }
 
 //==============================================================================
-void World::handleSimpleFrameNameChange(const dynamics::Entity* _entity) {
+void World::handleSimpleFrameNameChange(const dynamics::Entity* _entity)
+{
   // Check that this is actually a SimpleFrame
   const dynamics::SimpleFrame* frame
       = dynamic_cast<const dynamics::SimpleFrame*>(_entity);

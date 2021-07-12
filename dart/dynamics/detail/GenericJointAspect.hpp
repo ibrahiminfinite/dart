@@ -142,23 +142,17 @@ struct GenericJointUniqueProperties {
   /// Default constructor
   GenericJointUniqueProperties(
       const EuclideanPoint& positionLowerLimits
-      = EuclideanPoint::Constant(-math::constantsd::inf()),
+      = EuclideanPoint::Constant(-math::inf()),
       const EuclideanPoint& positionUpperLimits
-      = EuclideanPoint::Constant(math::constantsd::inf()),
+      = EuclideanPoint::Constant(math::inf()),
       const EuclideanPoint& initialPositions = EuclideanPoint::Zero(),
-      const Vector& velocityLowerLimits
-      = Vector::Constant(-math::constantsd::inf()),
-      const Vector& velocityUpperLimits
-      = Vector::Constant(math::constantsd::inf()),
+      const Vector& velocityLowerLimits = Vector::Constant(-math::inf()),
+      const Vector& velocityUpperLimits = Vector::Constant(math::inf()),
       const Vector& initialVelocities = Vector::Zero(),
-      const Vector& accelerationLowerLimits
-      = Vector::Constant(-math::constantsd::inf()),
-      const Vector& accelerationUpperLimits
-      = Vector::Constant(math::constantsd::inf()),
-      const Vector& forceLowerLimits
-      = Vector::Constant(-math::constantsd::inf()),
-      const Vector& forceUpperLimits
-      = Vector::Constant(math::constantsd::inf()),
+      const Vector& accelerationLowerLimits = Vector::Constant(-math::inf()),
+      const Vector& accelerationUpperLimits = Vector::Constant(math::inf()),
+      const Vector& forceLowerLimits = Vector::Constant(-math::inf()),
+      const Vector& forceUpperLimits = Vector::Constant(math::inf()),
       const Vector& springStiffness = Vector::Zero(),
       const EuclideanPoint& restPosition = EuclideanPoint::Zero(),
       const Vector& dampingCoefficient = Vector::Zero(),
@@ -223,7 +217,8 @@ GenericJointState<ConfigSpaceT>::GenericJointState(
     mVelocities(velocities),
     mAccelerations(accelerations),
     mForces(forces),
-    mCommands(commands) {
+    mCommands(commands)
+{
   // Do nothing
 }
 
@@ -257,7 +252,8 @@ GenericJointUniqueProperties<ConfigSpaceT>::GenericJointUniqueProperties(
     mSpringStiffnesses(springStiffness),
     mRestPositions(restPosition),
     mDampingCoefficients(dampingCoefficient),
-    mFrictions(coulombFrictions) {
+    mFrictions(coulombFrictions)
+{
   for (auto i = 0u; i < NumDofs; ++i) {
     mPreserveDofNames[i] = false;
     mDofNames[i] = std::string();
@@ -281,7 +277,8 @@ GenericJointUniqueProperties<ConfigSpaceT>::GenericJointUniqueProperties(
     mSpringStiffnesses(_other.mSpringStiffnesses),
     mRestPositions(_other.mRestPositions),
     mDampingCoefficients(_other.mDampingCoefficients),
-    mFrictions(_other.mFrictions) {
+    mFrictions(_other.mFrictions)
+{
   for (auto i = 0u; i < NumDofs; ++i) {
     mPreserveDofNames[i] = _other.mPreserveDofNames[i];
     mDofNames[i] = _other.mDofNames[i];
@@ -292,7 +289,8 @@ GenericJointUniqueProperties<ConfigSpaceT>::GenericJointUniqueProperties(
 template <class ConfigSpaceT>
 GenericJointUniqueProperties<ConfigSpaceT>&
 GenericJointUniqueProperties<ConfigSpaceT>::operator=(
-    const GenericJointUniqueProperties& other) {
+    const GenericJointUniqueProperties& other)
+{
   if (this != &other) {
     mPositionLowerLimits = other.mPositionLowerLimits;
     mPositionUpperLimits = other.mPositionUpperLimits;
@@ -323,7 +321,8 @@ GenericJointProperties<ConfigSpaceT>::GenericJointProperties(
     const Joint::Properties& jointProperties,
     const GenericJointUniqueProperties<ConfigSpaceT>& genericProperties)
   : Joint::Properties(jointProperties),
-    GenericJointUniqueProperties<ConfigSpaceT>(genericProperties) {
+    GenericJointUniqueProperties<ConfigSpaceT>(genericProperties)
+{
   // Do nothing
 }
 

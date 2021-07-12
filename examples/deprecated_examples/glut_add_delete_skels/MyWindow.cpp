@@ -32,20 +32,24 @@
 
 #include "MyWindow.hpp"
 
-MyWindow::MyWindow() : SimWindow() {
+MyWindow::MyWindow() : SimWindow()
+{
 }
 
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
 }
 
-void MyWindow::drawWorld() const {
+void MyWindow::drawWorld() const
+{
   glEnable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
   SimWindow::drawWorld();
 }
 
-void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
+void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   switch (_key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;
@@ -81,7 +85,8 @@ void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
 void MyWindow::spawnCube(
     const Eigen::Vector3d& _position,
     const Eigen::Vector3d& _size,
-    double _mass) {
+    double _mass)
+{
   dart::dynamics::SkeletonPtr newCubeSkeleton
       = dart::dynamics::Skeleton::create();
 

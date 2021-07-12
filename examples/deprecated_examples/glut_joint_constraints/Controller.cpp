@@ -39,7 +39,8 @@ using namespace math;
 Controller::Controller(
     const dynamics::SkeletonPtr& _skel,
     dynamics::ConstraintSolver* _collisionSolver,
-    double _t) {
+    double _t)
+{
   mSkel = _skel;
   mCollisionHandle = _collisionSolver;
   mTimestep = _t;
@@ -74,7 +75,8 @@ Controller::Controller(
 }
 
 void Controller::computeTorques(
-    const Eigen::VectorXd& _dof, const Eigen::VectorXd& _dofVel) {
+    const Eigen::VectorXd& _dof, const Eigen::VectorXd& _dofVel)
+{
   // SPD tracking
   // std::size_t nDof = mSkel->getNumDofs();
   Eigen::MatrixXd invM = (mSkel->getMassMatrix() + mKd * mTimestep).inverse();

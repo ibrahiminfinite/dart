@@ -35,7 +35,8 @@
 #include "dart/math/Lemke.hpp"
 
 //==============================================================================
-TEST(Lemke, Lemke_1D) {
+TEST(Lemke, Lemke_1D)
+{
   Eigen::MatrixXd A;
   Eigen::VectorXd b;
   Eigen::VectorXd* f;
@@ -53,7 +54,8 @@ TEST(Lemke, Lemke_1D) {
 }
 
 //==============================================================================
-TEST(Lemke, Lemke_2D) {
+TEST(Lemke, Lemke_2D)
+{
   Eigen::MatrixXd A;
   Eigen::VectorXd b;
   Eigen::VectorXd* f;
@@ -71,7 +73,8 @@ TEST(Lemke, Lemke_2D) {
 }
 
 //==============================================================================
-TEST(Lemke, Lemke_4D) {
+TEST(Lemke, Lemke_4D)
+{
   Eigen::MatrixXd A;
   Eigen::VectorXd b;
   Eigen::VectorXd* f;
@@ -92,7 +95,8 @@ TEST(Lemke, Lemke_4D) {
 }
 
 //==============================================================================
-TEST(Lemke, Lemke_6D) {
+TEST(Lemke, Lemke_6D)
+{
   Eigen::MatrixXd A;
   Eigen::VectorXd b;
   Eigen::VectorXd* f;
@@ -116,7 +120,8 @@ TEST(Lemke, Lemke_6D) {
 }
 
 //==============================================================================
-TEST(Lemke, Lemke_12D) {
+TEST(Lemke, Lemke_12D)
+{
   Eigen::MatrixXd A;
   Eigen::VectorXd b;
   Eigen::VectorXd* f;
@@ -151,7 +156,8 @@ TEST(Lemke, Lemke_12D) {
 }
 
 //==============================================================================
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

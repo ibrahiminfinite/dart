@@ -66,7 +66,8 @@ struct SupportStateData {
   /// weight of the robot.
   bool mActive;
 
-  inline SupportStateData(bool active = false) : mActive(active) {
+  inline SupportStateData(bool active = false) : mActive(active)
+  {
   }
 
   // To get byte-aligned Eigen vectors
@@ -82,7 +83,8 @@ struct SupportPropertiesData {
 
   inline SupportPropertiesData(
       const math::SupportGeometry& geometry = math::SupportGeometry())
-    : mGeometry(geometry) {
+    : mGeometry(geometry)
+  {
   }
 
   // To get byte-aligned Eigen vectors

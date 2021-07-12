@@ -39,12 +39,14 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-constexpr double Contact::getNormalEpsilon() {
+constexpr double Contact::getNormalEpsilon()
+{
   return 1e-6;
 }
 
 //==============================================================================
-constexpr double Contact::getNormalEpsilonSquared() {
+constexpr double Contact::getNormalEpsilonSquared()
+{
   return 1e-12;
 }
 

@@ -48,7 +48,8 @@ public:
       mIdeal(idealPosture),
       mLower(lower),
       mUpper(upper),
-      mWeights(weights) {
+      mWeights(weights)
+  {
     int dofs = mIdeal.size();
     if (mLower.size() != dofs || mWeights.size() != dofs
         || mUpper.size() != dofs) {
@@ -61,13 +62,15 @@ public:
     mResultVector.setZero(dofs);
   }
 
-  double eval(const Eigen::VectorXd& _x) override {
+  double eval(const Eigen::VectorXd& _x) override
+  {
     computeResultVector(_x);
     return 0.5 * mResultVector.dot(mResultVector);
   }
 
   void evalGradient(
-      const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) override {
+      const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) override
+  {
     computeResultVector(_x);
 
     _grad.setZero();
@@ -76,7 +79,8 @@ public:
       _grad[i] = mResultVector[i];
   }
 
-  void computeResultVector(const Eigen::VectorXd& _x) {
+  void computeResultVector(const Eigen::VectorXd& _x)
+  {
     mResultVector.setZero();
 
     if (enforceIdealPosture) {
@@ -113,7 +117,8 @@ protected:
   Eigen::VectorXd mWeights;
 };
 
-static inline bool checkDist(Eigen::Vector3d& p, double a, double b) {
+static inline bool checkDist(Eigen::Vector3d& p, double a, double b)
+{
   double d = p.norm();
   double dmax = a + b;
   double dmin = fabs(a - b);
@@ -129,7 +134,8 @@ static inline bool checkDist(Eigen::Vector3d& p, double a, double b) {
   }
 }
 
-static inline void clamp_sincos(double& sincos, bool& valid) {
+static inline void clamp_sincos(double& sincos, bool& valid)
+{
   if (sincos < -1) {
     valid = false;
     sincos = -1;
@@ -139,11 +145,12 @@ static inline void clamp_sincos(double& sincos, bool& valid) {
   }
 }
 
-static inline Eigen::Vector3d flipEuler3Axis(const Eigen::Vector3d& u) {
+static inline Eigen::Vector3d flipEuler3Axis(const Eigen::Vector3d& u)
+{
   Eigen::Vector3d v;
-  v[0] = u[0] - constantsd::pi();
-  v[1] = constantsd::pi() - u[1];
-  v[2] = u[2] - constantsd::pi();
+  v[0] = u[0] - pi();
+  v[1] = pi() - u[1];
+  v[2] = u[2] - pi();
   return v;
 }
 
@@ -156,18 +163,21 @@ public:
       const Analytical::Properties& properties = Analytical::Properties())
     : Analytical(_ik, "HuboArmIK_" + baseLinkName, properties),
       configured(false),
-      mBaseLinkName(baseLinkName) {
+      mBaseLinkName(baseLinkName)
+  {
     // Do nothing
   }
 
   std::unique_ptr<GradientMethod> clone(
-      InverseKinematics* _newIK) const override {
+      InverseKinematics* _newIK) const override
+  {
     return std::make_unique<HuboArmIK>(
         _newIK, mBaseLinkName, getAnalyticalProperties());
   }
 
   const std::vector<Solution>& computeSolutions(
-      const Eigen::Isometry3d& _desiredBodyTf) override {
+      const Eigen::Isometry3d& _desiredBodyTf) override
+  {
     mSolutions.clear();
     mSolutions.reserve(8);
 
@@ -241,7 +251,7 @@ public:
       clamp_sincos(cosGamma, isValid);
 
       double gamma = flipEP * acos(cosGamma);
-      double theta3 = alpha + beta + gamma - 2 * constantsd::pi();
+      double theta3 = alpha + beta + gamma - 2 * pi();
 
       testQ(EP) = theta3;
 
@@ -256,12 +266,12 @@ public:
       if (std::abs(denom) < zeroSize) {
         isValid = false;
         const double& prevWY = skel->getPosition(mDofs[WY]);
-        theta2 = incWY ? prevWY : constantsd::pi() - prevWY;
+        theta2 = incWY ? prevWY : pi() - prevWY;
         s2 = sin(theta2);
       } else {
         s2 = numer / denom;
         clamp_sincos(s2, isValid);
-        theta2 = incWY ? constantsd::pi() - asin(s2) : asin(s2);
+        theta2 = incWY ? pi() - asin(s2) : asin(s2);
       }
 
       testQ(WY) = theta2;
@@ -317,7 +327,8 @@ public:
     return mSolutions;
   }
 
-  const std::vector<std::size_t>& getDofs() const override {
+  const std::vector<std::size_t>& getDofs() const override
+  {
     if (!configured)
       configure();
 
@@ -327,7 +338,8 @@ public:
   const double zeroSize = 1e-8;
 
 protected:
-  void configure() const {
+  void configure() const
+  {
     configured = false;
 
     mBaseLink = mIK->getNode()->getSkeleton()->getBodyNode(mBaseLinkName);
@@ -428,18 +440,21 @@ public:
       const Analytical::Properties& properties = Analytical::Properties())
     : Analytical(_ik, "HuboLegIK_" + baseLinkName, properties),
       configured(false),
-      mBaseLinkName(baseLinkName) {
+      mBaseLinkName(baseLinkName)
+  {
     // Do nothing
   }
 
   std::unique_ptr<GradientMethod> clone(
-      InverseKinematics* _newIK) const override {
+      InverseKinematics* _newIK) const override
+  {
     return std::make_unique<HuboLegIK>(
         _newIK, mBaseLinkName, getAnalyticalProperties());
   }
 
   const std::vector<Solution>& computeSolutions(
-      const Eigen::Isometry3d& _desiredBodyTf) override {
+      const Eigen::Isometry3d& _desiredBodyTf) override
+  {
     mSolutions.clear();
     mSolutions.reserve(8);
 
@@ -514,7 +529,7 @@ public:
       C45 = cos(q4 + q5);
       C5 = cos(q5);
       if (C45 * L4 + C5 * L5 < 0)
-        q6 = dart::math::wrapToPi(q6 + constantsd::pi());
+        q6 = dart::math::wrapToPi(q6 + pi());
 
       S6 = sin(q6);
       C6 = cos(q6);
@@ -529,7 +544,7 @@ public:
       q1 = atan2(C6 * sy + S6 * sx, C6 * ny + S6 * nx);
       C2 = cos(q2);
       if (C2 < 0)
-        q1 = dart::math::wrapToPi(q1 + constantsd::pi());
+        q1 = dart::math::wrapToPi(q1 + pi());
 
       q345 = atan2(-az / C2, -(C6 * ax - S6 * ay) / C2);
       q3 = dart::math::wrapToPi(q345 - q4 - q5);
@@ -554,7 +569,8 @@ public:
     return mSolutions;
   }
 
-  const std::vector<std::size_t>& getDofs() const override {
+  const std::vector<std::size_t>& getDofs() const override
+  {
     if (!configured)
       configure();
 
@@ -564,7 +580,8 @@ public:
   const double zeroSize = 1e-8;
 
 protected:
-  void configure() const {
+  void configure() const
+  {
     configured = false;
 
     mBaseLink = mIK->getNode()->getSkeleton()->getBodyNode(mBaseLinkName);
@@ -617,16 +634,16 @@ protected:
     L6 = 0.0;
 
     hipRotation = Eigen::Isometry3d::Identity();
-    hipRotation.rotate(Eigen::AngleAxisd(
-        90 * constantsd::pi() / 180.0, Eigen::Vector3d::UnitZ()));
+    hipRotation.rotate(
+        Eigen::AngleAxisd(90 * pi() / 180.0, Eigen::Vector3d::UnitZ()));
 
     waist = dofs[2]->getChildBodyNode()->getTransform(
                 dofs[0]->getParentBodyNode())
             * hipRotation;
 
     footTfInv = Eigen::Isometry3d::Identity();
-    footTfInv.rotate(Eigen::AngleAxisd(
-        -90 * constantsd::pi() / 180.0, Eigen::Vector3d::UnitY()));
+    footTfInv.rotate(
+        Eigen::AngleAxisd(-90 * pi() / 180.0, Eigen::Vector3d::UnitY()));
     footTfInv
         = footTfInv * mIK->getNode()->getTransform(dofs[5]->getChildBodyNode());
     footTfInv = footTfInv.inverse();
@@ -679,13 +696,15 @@ public:
       l_foot(_robot->getEndEffector("l_foot")),
       r_foot(_robot->getEndEffector("r_foot")),
       l_hand(_robot->getEndEffector("l_hand")),
-      r_hand(_robot->getEndEffector("r_hand")) {
+      r_hand(_robot->getEndEffector("r_hand"))
+  {
     mMoveComponents.resize(NUM_MOVE, false);
     mAnyMovement = false;
     mAmplifyMovement = false;
   }
 
-  void setMovement(const std::vector<bool>& moveComponents) {
+  void setMovement(const std::vector<bool>& moveComponents)
+  {
     mMoveComponents = moveComponents;
 
     mAnyMovement = false;
@@ -698,7 +717,8 @@ public:
     }
   }
 
-  void customPreRefresh() override {
+  void customPreRefresh() override
+  {
     if (mAnyMovement) {
       Eigen::Isometry3d old_tf = mHubo->getBodyNode(0)->getWorldTransform();
       Eigen::Isometry3d new_tf = Eigen::Isometry3d::Identity();
@@ -720,7 +740,7 @@ public:
 
       double linearStep = 0.01;
       double elevationStep = 0.2 * linearStep;
-      double rotationalStep = 2.0 * constantsd::pi() / 180.0;
+      double rotationalStep = 2.0 * pi() / 180.0;
 
       if (mAmplifyMovement) {
         linearStep *= 2.0;
@@ -790,11 +810,13 @@ public:
       TeleoperationWorld* teleop,
       const SkeletonPtr& hubo,
       const WorldPtr& world)
-    : mViewer(viewer), mTeleop(teleop), mHubo(hubo), mWorld(world) {
+    : mViewer(viewer), mTeleop(teleop), mHubo(hubo), mWorld(world)
+  {
     initialize();
   }
 
-  void initialize() {
+  void initialize()
+  {
     mRestConfig = mHubo->getPositions();
 
     for (std::size_t i = 0; i < mHubo->getNumEndEffectors(); ++i) {
@@ -819,7 +841,8 @@ public:
   }
 
   bool handle(
-      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override {
+      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override
+  {
     if (nullptr == mHubo) {
       return false;
     }
@@ -1053,7 +1076,8 @@ protected:
   std::vector<bool> mMoveComponents;
 };
 
-SkeletonPtr createGround() {
+SkeletonPtr createGround()
+{
   // Create a Skeleton to represent the ground
   SkeletonPtr ground = Skeleton::create("ground");
   Eigen::Isometry3d tf(Eigen::Isometry3d::Identity());
@@ -1075,7 +1099,8 @@ SkeletonPtr createGround() {
   return ground;
 }
 
-SkeletonPtr createHubo() {
+SkeletonPtr createHubo()
+{
   dart::io::DartLoader loader;
   loader.addPackageDirectory("drchubo", DART_DATA_PATH "/urdf/drchubo");
   SkeletonPtr hubo
@@ -1093,7 +1118,8 @@ SkeletonPtr createHubo() {
   return hubo;
 }
 
-void setStartupConfiguration(const SkeletonPtr& hubo) {
+void setStartupConfiguration(const SkeletonPtr& hubo)
+{
   hubo->getDof("LHP")->setPosition(toRadian(-45.0));
   hubo->getDof("LKP")->setPosition(toRadian(90.0));
   hubo->getDof("LAP")->setPosition(toRadian(-45.0));
@@ -1119,7 +1145,8 @@ void setStartupConfiguration(const SkeletonPtr& hubo) {
   hubo->getDof("RWY")->setPositionUpperLimit(toRadian(90.0));
 }
 
-void setupEndEffectors(const SkeletonPtr& hubo) {
+void setupEndEffectors(const SkeletonPtr& hubo)
+{
   Eigen::VectorXd rootjoint_weights = Eigen::VectorXd::Ones(7);
   rootjoint_weights = 0.01 * rootjoint_weights;
 
@@ -1294,8 +1321,8 @@ void setupEndEffectors(const SkeletonPtr& hubo) {
   r_foot->getIK()->getTarget()->setTransform(r_foot->getTransform());
 }
 
-void enableDragAndDrops(
-    dart::gui::osg::Viewer& viewer, const SkeletonPtr& hubo) {
+void enableDragAndDrops(dart::gui::osg::Viewer& viewer, const SkeletonPtr& hubo)
+{
   // Turn on drag-and-drop for the whole Skeleton
   for (std::size_t i = 0; i < hubo->getNumBodyNodes(); ++i)
     viewer.enableDragAndDrop(hubo->getBodyNode(i), false, false);
@@ -1313,7 +1340,8 @@ void enableDragAndDrops(
   }
 }
 
-void setupWholeBodySolver(const SkeletonPtr& hubo) {
+void setupWholeBodySolver(const SkeletonPtr& hubo)
+{
   std::shared_ptr<dart::optimization::GradientDescentSolver> solver
       = std::dynamic_pointer_cast<dart::optimization::GradientDescentSolver>(
           hubo->getIK(true)->getSolver());
@@ -1353,7 +1381,8 @@ void setupWholeBodySolver(const SkeletonPtr& hubo) {
   solver->setNumMaxIterations(5);
 }
 
-int main() {
+int main()
+{
   dart::simulation::WorldPtr world(new dart::simulation::World);
 
   SkeletonPtr hubo = createHubo();

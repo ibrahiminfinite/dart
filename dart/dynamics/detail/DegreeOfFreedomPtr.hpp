@@ -59,7 +59,8 @@ public:
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor
-  TemplateDegreeOfFreedomPtr(DegreeOfFreedomT* _ptr) {
+  TemplateDegreeOfFreedomPtr(DegreeOfFreedomT* _ptr)
+  {
     set(_ptr);
   }
 
@@ -67,12 +68,14 @@ public:
   template <class OtherDegreeOfFreedomT, class OtherBodyNodeT>
   TemplateDegreeOfFreedomPtr(
       const TemplateDegreeOfFreedomPtr<OtherDegreeOfFreedomT, OtherBodyNodeT>&
-          _dofp) {
+          _dofp)
+  {
     set(_dofp.get());
   }
 
   /// Assignment operator
-  TemplateDegreeOfFreedomPtr& operator=(DegreeOfFreedomT* _ptr) {
+  TemplateDegreeOfFreedomPtr& operator=(DegreeOfFreedomT* _ptr)
+  {
     set(_ptr);
     return *this;
   }
@@ -81,28 +84,33 @@ public:
   template <class OtherDegreeOfFreedomT, class OtherBodyNodeT>
   TemplateDegreeOfFreedomPtr& operator=(
       const TemplateDegreeOfFreedomPtr<OtherDegreeOfFreedomT, OtherBodyNodeT>&
-          _dofp) {
+          _dofp)
+  {
     set(_dofp.get());
     return *this;
   }
 
   /// Implicit conversion
-  operator DegreeOfFreedomT*() const {
+  operator DegreeOfFreedomT*() const
+  {
     return get();
   }
 
   /// Dereferencing operator
-  DegreeOfFreedomT& operator*() const {
+  DegreeOfFreedomT& operator*() const
+  {
     return *get();
   }
 
   /// Dereferencing operation
-  DegreeOfFreedomT* operator->() const {
+  DegreeOfFreedomT* operator->() const
+  {
     return get();
   }
 
   /// Get the raw DegreeOfFreedom pointer
-  DegreeOfFreedomT* get() const {
+  DegreeOfFreedomT* get() const
+  {
     if (nullptr == mBodyNodePtr)
       return nullptr;
 
@@ -110,13 +118,15 @@ public:
   }
 
   /// Get the BodyNode that this DegreeOfFreedomPtr is tied to
-  TemplateBodyNodePtr<BodyNodeT> getBodyNodePtr() const {
+  TemplateBodyNodePtr<BodyNodeT> getBodyNodePtr() const
+  {
     return mBodyNodePtr;
   }
 
   /// Get the local generalized coordinate index that this DegreeOfFreedomPtr is
   /// tied to
-  std::size_t getLocalIndex() const {
+  std::size_t getLocalIndex() const
+  {
     if (nullptr == mBodyNodePtr)
       return INVALID_INDEX;
 
@@ -124,7 +134,8 @@ public:
   }
 
   /// Set the DegreeOfFreedom for this DegreeOfFreedomPtr
-  void set(DegreeOfFreedomT* _ptr) {
+  void set(DegreeOfFreedomT* _ptr)
+  {
     if (nullptr == _ptr) {
       mBodyNodePtr = nullptr;
       return;
@@ -141,7 +152,8 @@ public:
   /// Equality
   template <class OtherDofT, class OtherBodyNodeT>
   bool operator==(
-      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const {
+      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const
+  {
     if (nullptr == mBodyNodePtr && nullptr == _rhs.mBodyNodePtr)
       return true;
 
@@ -154,14 +166,16 @@ public:
   /// Inequality
   template <class OtherDofT, class OtherBodyNodeT>
   bool operator!=(
-      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const {
+      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const
+  {
     return !(*this == _rhs);
   }
 
   /// Less than
   template <class OtherDofT, class OtherBodyNodeT>
   bool operator<(
-      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const {
+      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const
+  {
     if (mBodyNodePtr == _rhs.mBodyNodePtr)
       return (mIndex < _rhs.mIndex);
 
@@ -171,7 +185,8 @@ public:
   /// Greater than
   template <class OtherDofT, class OtherBodyNodeT>
   bool operator>(
-      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const {
+      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const
+  {
     if (mBodyNodePtr == _rhs.mBodyNodePtr)
       return (mIndex > _rhs.mIndex);
 
@@ -181,14 +196,16 @@ public:
   /// Less than or equal to
   template <class OtherDofT, class OtherBodyNodeT>
   bool operator<=(
-      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const {
+      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const
+  {
     return (*this < _rhs) || (*this == _rhs);
   }
 
   /// Greater than or equal to
   template <class OtherDofT, class OtherBodyNodeT>
   bool operator>=(
-      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const {
+      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _rhs) const
+  {
     return (*this > _rhs) || (*this == _rhs);
   }
 
@@ -215,33 +232,37 @@ public:
   friend class TemplateWeakDegreeOfFreedomPtr;
 
   /// Default constructor
-  TemplateWeakDegreeOfFreedomPtr() {
+  TemplateWeakDegreeOfFreedomPtr()
+  {
     set(nullptr);
   }
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor
-  TemplateWeakDegreeOfFreedomPtr(DegreeOfFreedomT* _ptr) {
+  TemplateWeakDegreeOfFreedomPtr(DegreeOfFreedomT* _ptr)
+  {
     set(_ptr);
   }
 
   /// Constructor that takes in a WeakDegreeOfFreedomPtr
   template <class OtherDofT, class OtherBodyNodeT>
   TemplateWeakDegreeOfFreedomPtr(
-      const TemplateWeakDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>&
-          _weakPtr) {
+      const TemplateWeakDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _weakPtr)
+  {
     set(_weakPtr);
   }
 
   /// Constructor that takes in a strong DegreeOfFreedomPtr
   template <class OtherDofT, class OtherBodyNodeT>
   TemplateWeakDegreeOfFreedomPtr(
-      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _strongPtr) {
+      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _strongPtr)
+  {
     set(_strongPtr.get());
   }
 
   /// Assignment operator for raw DegreeOfFreedom pointers
-  TemplateWeakDegreeOfFreedomPtr& operator=(DegreeOfFreedomT* _ptr) {
+  TemplateWeakDegreeOfFreedomPtr& operator=(DegreeOfFreedomT* _ptr)
+  {
     set(_ptr);
     return *this;
   }
@@ -249,8 +270,8 @@ public:
   /// Assignemnt operator for WeakDegreeOfFreedomPtrs
   template <class OtherDofT, class OtherBodyNodeT>
   TemplateWeakDegreeOfFreedomPtr& operator=(
-      const TemplateWeakDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>&
-          _weakPtr) {
+      const TemplateWeakDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _weakPtr)
+  {
     set(_weakPtr);
     return *this;
   }
@@ -258,7 +279,8 @@ public:
   /// Assignment operator for strong DegreeOfFreedomPtrs
   template <class OtherDofT, class OtherBodyNodeT>
   TemplateWeakDegreeOfFreedomPtr& operator=(
-      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _strongPtr) {
+      const TemplateDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _strongPtr)
+  {
     set(_strongPtr.get());
     return *this;
   }
@@ -267,7 +289,8 @@ public:
   /// DegreeOfFreedom is currently still available. If the DegreeOfFreedom
   /// is not available any longer (i.e. has been deleted), then this will return
   /// a nullptr.
-  TemplateDegreeOfFreedomPtr<DegreeOfFreedomT, BodyNodeT> lock() const {
+  TemplateDegreeOfFreedomPtr<DegreeOfFreedomT, BodyNodeT> lock() const
+  {
     TemplateBodyNodePtr<BodyNodeT> bodyNode = mWeakBodyNode.lock();
     if (nullptr == bodyNode)
       return nullptr;
@@ -277,7 +300,8 @@ public:
   }
 
   /// Set the DegreeOfFreedom for this WeakDegreeOfFreedomPtr
-  void set(DegreeOfFreedomT* _ptr) {
+  void set(DegreeOfFreedomT* _ptr)
+  {
     if (nullptr == _ptr) {
       mWeakBodyNode = nullptr;
       mIndex = 0;
@@ -291,8 +315,9 @@ public:
   /// Attempt to set the DegreeOfFreedom for this WeakDegreeOfFreedomPtr based
   /// on another WeakDegreeOfFreedomPtr
   template <class OtherDofT, class OtherBodyNodeT>
-  void set(const TemplateWeakDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>&
-               _weakPtr) {
+  void set(
+      const TemplateWeakDegreeOfFreedomPtr<OtherDofT, OtherBodyNodeT>& _weakPtr)
+  {
     mWeakBodyNode = _weakPtr.mWeakBodyNode;
     mIndex = _weakPtr.mIndex;
   }

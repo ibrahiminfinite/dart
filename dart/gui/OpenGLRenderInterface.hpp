@@ -55,9 +55,11 @@ public:
     : mViewportX(0.0),
       mViewportY(0.0),
       mViewportWidth(0.0),
-      mViewportHeight(0.0) {
+      mViewportHeight(0.0)
+  {
   }
-  virtual ~OpenGLRenderInterface() {
+  virtual ~OpenGLRenderInterface()
+  {
   }
 
   void initialize() override;

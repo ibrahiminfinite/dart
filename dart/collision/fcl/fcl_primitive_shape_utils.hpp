@@ -41,7 +41,8 @@ namespace collision {
 
 //==============================================================================
 template <typename BV, typename S>
-::fcl::BVHModel<BV>* createEllipsoid(S sizeX, S sizeY, S sizeZ) {
+::fcl::BVHModel<BV>* createEllipsoid(S sizeX, S sizeY, S sizeZ)
+{
   S v[59][3] = {{0, 0, 0},
                 {0.135299, -0.461940, -0.135299},
                 {0.000000, -0.461940, -0.191342},

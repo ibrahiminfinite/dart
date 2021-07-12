@@ -47,7 +47,8 @@
 namespace dart {
 namespace math {
 
-Eigen::Quaterniond expToQuat(const Eigen::Vector3d& _v) {
+Eigen::Quaterniond expToQuat(const Eigen::Vector3d& _v)
+{
   double mag = _v.norm();
 
   if (mag > 1e-10) {
@@ -59,7 +60,8 @@ Eigen::Quaterniond expToQuat(const Eigen::Vector3d& _v) {
   }
 }
 
-Eigen::Vector3d quatToExp(const Eigen::Quaterniond& _q) {
+Eigen::Vector3d quatToExp(const Eigen::Quaterniond& _q)
+{
   Eigen::AngleAxisd aa(_q);
   Eigen::Vector3d v = aa.axis();
   return v * aa.angle();
@@ -67,7 +69,8 @@ Eigen::Vector3d quatToExp(const Eigen::Quaterniond& _q) {
 
 // Reference:
 // http://www.geometrictools.com/LibMathematics/Algebra/Wm5Matrix3.inl
-Eigen::Vector3d matrixToEulerXYX(const Eigen::Matrix3d& _R) {
+Eigen::Vector3d matrixToEulerXYX(const Eigen::Matrix3d& _R)
+{
   // +-           -+   +-                                                -+
   // | r00 r01 r02 |   |  cy      sy*sx1               sy*cx1             |
   // | r10 r11 r12 | = |  sy*sx0  cx0*cx1-cy*sx0*sx1  -cy*cx1*sx0-cx0*sx1 |
@@ -86,7 +89,7 @@ Eigen::Vector3d matrixToEulerXYX(const Eigen::Matrix3d& _R) {
       return Eigen::Vector3d(x0, y, x1);
     } else {
       // Not a unique solution:  x1_angle - x0_angle = atan2(-r12,r11)
-      double y = constantsd::pi();
+      double y = pi();
       double x0 = -atan2(-_R(1, 2), _R(1, 1));
       double x1 = 0.0;
       // return EA_NOT_UNIQUE_DIF;
@@ -102,7 +105,8 @@ Eigen::Vector3d matrixToEulerXYX(const Eigen::Matrix3d& _R) {
   }
 }
 
-Eigen::Vector3d matrixToEulerXYZ(const Eigen::Matrix3d& _R) {
+Eigen::Vector3d matrixToEulerXYZ(const Eigen::Matrix3d& _R)
+{
   // +-           -+   +-                                        -+
   // | r00 r01 r02 |   |  cy*cz           -cy*sz            sy    |
   // | r10 r11 r12 | = |  cz*sx*sy+cx*sz   cx*cz-sx*sy*sz  -cy*sx |
@@ -113,14 +117,14 @@ Eigen::Vector3d matrixToEulerXYZ(const Eigen::Matrix3d& _R) {
 
   if (_R(0, 2) > (1.0 - DART_EPSILON)) {
     z = atan2(_R(1, 0), _R(1, 1));
-    y = constantsd::half_pi();
+    y = half_pi();
     x = 0.0;
     return Eigen::Vector3d(x, y, z);
   }
 
   if (_R(0, 2) < -(1.0 - DART_EPSILON)) {
     z = atan2(_R(1, 0), _R(1, 1));
-    y = -constantsd::half_pi();
+    y = -half_pi();
     x = 0.0;
     return Eigen::Vector3d(x, y, z);
   }
@@ -133,19 +137,20 @@ Eigen::Vector3d matrixToEulerXYZ(const Eigen::Matrix3d& _R) {
   return Eigen::Vector3d(x, y, z);
 }
 
-Eigen::Vector3d matrixToEulerZYX(const Eigen::Matrix3d& _R) {
+Eigen::Vector3d matrixToEulerZYX(const Eigen::Matrix3d& _R)
+{
   double x, y, z;
 
   if (_R(2, 0) > (1.0 - DART_EPSILON)) {
     x = atan2(_R(0, 1), _R(0, 2));
-    y = -constantsd::half_pi();
+    y = -half_pi();
     z = 0.0;
     return Eigen::Vector3d(z, y, x);
   }
 
   if (_R(2, 0) < -(1.0 - DART_EPSILON)) {
     x = atan2(_R(0, 1), _R(0, 2));
-    y = constantsd::half_pi();
+    y = half_pi();
     z = 0.0;
     return Eigen::Vector3d(z, y, x);
   }
@@ -158,19 +163,20 @@ Eigen::Vector3d matrixToEulerZYX(const Eigen::Matrix3d& _R) {
   return Eigen::Vector3d(z, y, x);
 }
 
-Eigen::Vector3d matrixToEulerXZY(const Eigen::Matrix3d& _R) {
+Eigen::Vector3d matrixToEulerXZY(const Eigen::Matrix3d& _R)
+{
   double x, y, z;
 
   if (_R(0, 1) > (1.0 - DART_EPSILON)) {
     y = atan2(_R(1, 2), _R(1, 0));
-    z = -constantsd::half_pi();
+    z = -half_pi();
     x = 0.0;
     return Eigen::Vector3d(x, z, y);
   }
 
   if (_R(0, 1) < -(1.0 - DART_EPSILON)) {
     y = atan2(_R(1, 2), _R(1, 0));
-    z = constantsd::half_pi();
+    z = half_pi();
     x = 0.0;
     return Eigen::Vector3d(x, z, y);
   }
@@ -183,19 +189,20 @@ Eigen::Vector3d matrixToEulerXZY(const Eigen::Matrix3d& _R) {
   return Eigen::Vector3d(x, z, y);
 }
 
-Eigen::Vector3d matrixToEulerYZX(const Eigen::Matrix3d& _R) {
+Eigen::Vector3d matrixToEulerYZX(const Eigen::Matrix3d& _R)
+{
   double x, y, z;
 
   if (_R(1, 0) > (1.0 - DART_EPSILON)) {
     x = -atan2(_R(0, 2), _R(0, 1));
-    z = constantsd::half_pi();
+    z = half_pi();
     y = 0.0;
     return Eigen::Vector3d(y, z, x);
   }
 
   if (_R(1, 0) < -(1.0 - DART_EPSILON)) {
     x = -atan2(_R(0, 2), _R(0, 1));
-    z = -constantsd::half_pi();
+    z = -half_pi();
     y = 0.0;
     return Eigen::Vector3d(y, z, x);
   }
@@ -208,19 +215,20 @@ Eigen::Vector3d matrixToEulerYZX(const Eigen::Matrix3d& _R) {
   return Eigen::Vector3d(y, z, x);
 }
 
-Eigen::Vector3d matrixToEulerZXY(const Eigen::Matrix3d& _R) {
+Eigen::Vector3d matrixToEulerZXY(const Eigen::Matrix3d& _R)
+{
   double x, y, z;
 
   if (_R(2, 1) > (1.0 - DART_EPSILON)) {
     y = atan2(_R(0, 2), _R(0, 0));
-    x = constantsd::half_pi();
+    x = half_pi();
     z = 0.0;
     return Eigen::Vector3d(z, x, y);
   }
 
   if (_R(2, 1) < -(1.0 - DART_EPSILON)) {
     y = atan2(_R(0, 2), _R(0, 0));
-    x = -constantsd::half_pi();
+    x = -half_pi();
     z = 0.0;
     return Eigen::Vector3d(z, x, y);
   }
@@ -233,19 +241,20 @@ Eigen::Vector3d matrixToEulerZXY(const Eigen::Matrix3d& _R) {
   return Eigen::Vector3d(z, x, y);
 }
 
-Eigen::Vector3d matrixToEulerYXZ(const Eigen::Matrix3d& _R) {
+Eigen::Vector3d matrixToEulerYXZ(const Eigen::Matrix3d& _R)
+{
   double x, y, z;
 
   if (_R(1, 2) > (1.0 - DART_EPSILON)) {
     z = -atan2(_R(0, 1), _R(0, 0));
-    x = -constantsd::half_pi();
+    x = -half_pi();
     y = 0.0;
     return Eigen::Vector3d(y, x, z);
   }
 
   if (_R(1, 2) < -(1.0 - DART_EPSILON)) {
     z = -atan2(_R(0, 1), _R(0, 0));
-    x = constantsd::half_pi();
+    x = half_pi();
     y = 0.0;
     return Eigen::Vector3d(y, x, z);
   }
@@ -259,7 +268,8 @@ Eigen::Vector3d matrixToEulerYXZ(const Eigen::Matrix3d& _R) {
 }
 
 // get the derivative of rotation matrix wrt el no.
-Eigen::Matrix3d quatDeriv(const Eigen::Quaterniond& _q, int _el) {
+Eigen::Matrix3d quatDeriv(const Eigen::Quaterniond& _q, int _el)
+{
   Eigen::Matrix3d mat = Eigen::Matrix3d::Zero();
 
   switch (_el) {
@@ -315,7 +325,8 @@ Eigen::Matrix3d quatDeriv(const Eigen::Quaterniond& _q, int _el) {
 }
 
 Eigen::Matrix3d quatSecondDeriv(
-    const Eigen::Quaterniond& /*_q*/, int _el1, int _el2) {
+    const Eigen::Quaterniond& /*_q*/, int _el1, int _el2)
+{
   Eigen::Matrix3d mat = Eigen::Matrix3d::Zero();
 
   if (_el1 == _el2) { // wrt same dof
@@ -393,7 +404,8 @@ Eigen::Matrix3d quatSecondDeriv(
 }
 
 Eigen::Vector3d rotatePoint(
-    const Eigen::Quaterniond& _q, const Eigen::Vector3d& _pt) {
+    const Eigen::Quaterniond& _q, const Eigen::Vector3d& _pt)
+{
   Eigen::Quaterniond quat_pt(0, _pt[0], _pt[1], _pt[2]);
   Eigen::Quaterniond qinv = _q.inverse();
 
@@ -415,7 +427,8 @@ Eigen::Vector3d rotatePoint(
 }
 
 Eigen::Vector3d rotatePoint(
-    const Eigen::Quaterniond& _q, double _x, double _y, double _z) {
+    const Eigen::Quaterniond& _q, double _x, double _y, double _z)
+{
   Eigen::Vector3d pt(_x, _y, _z);
   return rotatePoint(_q, pt);
 }
@@ -424,7 +437,8 @@ Eigen::Vector3d rotatePoint(
 
 #define EPSILON_EXPMAP_THETA 1.0e-3
 
-Eigen::Matrix3d expMapRot(const Eigen::Vector3d& _q) {
+Eigen::Matrix3d expMapRot(const Eigen::Vector3d& _q)
+{
   double theta = _q.norm();
 
   Eigen::Matrix3d R = Eigen::Matrix3d::Zero();
@@ -440,7 +454,8 @@ Eigen::Matrix3d expMapRot(const Eigen::Vector3d& _q) {
   return R;
 }
 
-Eigen::Matrix3d expMapJac(const Eigen::Vector3d& _q) {
+Eigen::Matrix3d expMapJac(const Eigen::Vector3d& _q)
+{
   double theta = _q.norm();
 
   Eigen::Matrix3d J = Eigen::Matrix3d::Zero();
@@ -457,7 +472,8 @@ Eigen::Matrix3d expMapJac(const Eigen::Vector3d& _q) {
 }
 
 Eigen::Matrix3d expMapJacDot(
-    const Eigen::Vector3d& _q, const Eigen::Vector3d& _qdot) {
+    const Eigen::Vector3d& _q, const Eigen::Vector3d& _qdot)
+{
   double theta = _q.norm();
 
   Eigen::Matrix3d Jdot = Eigen::Matrix3d::Zero();
@@ -485,7 +501,8 @@ Eigen::Matrix3d expMapJacDot(
   return Jdot;
 }
 
-Eigen::Matrix3d expMapJacDeriv(const Eigen::Vector3d& _q, int _qi) {
+Eigen::Matrix3d expMapJacDeriv(const Eigen::Vector3d& _q, int _qi)
+{
   assert(_qi >= 0 && _qi <= 2);
 
   Eigen::Vector3d qdot = Eigen::Vector3d::Zero();
@@ -511,7 +528,8 @@ Eigen::Matrix3d expMapJacDeriv(const Eigen::Vector3d& _q, int _qi) {
 //     return ret;
 // }
 
-Eigen::Vector3d logMap(const Eigen::Matrix3d& _R) {
+Eigen::Vector3d logMap(const Eigen::Matrix3d& _R)
+{
   //--------------------------------------------------------------------------
   // T = (R, p) = exp([w, v]), t = ||w||
   // v = beta*p + gamma*w + 1 / 2*cross(p, w)
@@ -523,8 +541,8 @@ Eigen::Vector3d logMap(const Eigen::Matrix3d& _R) {
   //          std::min(0.5 * (_R(0, 0) + _R(1, 1) + _R(2, 2) - 1.0), 1.0),
   //          -1.0));
 
-  //  if (theta > constantsd::pi() - DART_EPSILON) {
-  //    double delta = 0.5 + 0.125*(constantsd::pi() - theta)*(constantsd::pi()
+  //  if (theta > pi() - DART_EPSILON) {
+  //    double delta = 0.5 + 0.125*(pi() - theta)*(pi()
   //    - theta);
 
   //    return Eigen::Vector3d(
@@ -551,7 +569,8 @@ Eigen::Vector3d logMap(const Eigen::Matrix3d& _R) {
   return aa.angle() * aa.axis();
 }
 
-Eigen::Vector6d logMap(const Eigen::Isometry3d& _T) {
+Eigen::Vector6d logMap(const Eigen::Isometry3d& _T)
+{
   //--------------------------------------------------------------------------
   // T = (R, p) = exp([w, v]), t = ||w||
   // v = beta*p + gamma*w + 1 / 2*cross(p, w)
@@ -563,12 +582,12 @@ Eigen::Vector6d logMap(const Eigen::Isometry3d& _T) {
   double gamma;
   Eigen::Vector6d ret;
 
-  if (theta > constantsd::pi() - DART_EPSILON) {
+  if (theta > pi() - DART_EPSILON) {
     const double c1 = 0.10132118364234; // 1 / pi^2
     const double c2 = 0.01507440267955; // 1 / 4 / pi - 2 / pi^3
     const double c3 = 0.00546765085347; // 3 / pi^4 - 1 / 4 / pi^2
 
-    double phi = constantsd::pi() - theta;
+    double phi = pi() - theta;
     double delta = 0.5 + 0.125 * phi * phi;
 
     double w[]
@@ -579,7 +598,7 @@ Eigen::Vector6d logMap(const Eigen::Isometry3d& _T) {
            _T(1, 0) > _T(0, 1) ? theta * sqrt(1.0 + (_T(2, 2) - 1.0) * delta)
                                : -theta * sqrt(1.0 + (_T(2, 2) - 1.0) * delta)};
 
-    beta = 0.25 * theta * (constantsd::pi() - theta);
+    beta = 0.25 * theta * (pi() - theta);
     gamma = (w[0] * _T(0, 3) + w[1] * _T(1, 3) + w[2] * _T(2, 3))
             * (c1 - c2 * phi + c3 * phi * phi);
 
@@ -620,7 +639,8 @@ Eigen::Vector6d logMap(const Eigen::Isometry3d& _T) {
 }
 
 // res = T * s * Inv(T)
-Eigen::Vector6d AdT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V) {
+Eigen::Vector6d AdT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V)
+{
   //--------------------------------------------------------------------------
   // w' = R*w
   // v' = p x R*w + R*v
@@ -633,7 +653,8 @@ Eigen::Vector6d AdT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V) {
 }
 
 //==============================================================================
-Eigen::Matrix6d getAdTMatrix(const Eigen::Isometry3d& T) {
+Eigen::Matrix6d getAdTMatrix(const Eigen::Isometry3d& T)
+{
   Eigen::Matrix6d AdT;
 
   AdT.topLeftCorner<3, 3>() = T.linear();
@@ -645,7 +666,8 @@ Eigen::Matrix6d getAdTMatrix(const Eigen::Isometry3d& T) {
   return AdT;
 }
 
-Eigen::Vector6d AdR(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V) {
+Eigen::Vector6d AdR(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V)
+{
   //--------------------------------------------------------------------------
   // w' = R*w
   // v' = R*v
@@ -657,7 +679,8 @@ Eigen::Vector6d AdR(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V) {
 }
 
 Eigen::Vector6d AdTAngular(
-    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _w) {
+    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _w)
+{
   //--------------------------------------------------------------------------
   // w' = R*w
   // v' = p x R*w
@@ -669,7 +692,8 @@ Eigen::Vector6d AdTAngular(
 }
 
 Eigen::Vector6d AdTLinear(
-    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _v) {
+    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _v)
+{
   //--------------------------------------------------------------------------
   // w' = 0
   // v' = R*v
@@ -709,7 +733,8 @@ Eigen::Vector6d AdTLinear(
 // }
 
 // re = Inv(T)*s*T
-Eigen::Vector6d AdInvT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V) {
+Eigen::Vector6d AdInvT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V)
+{
   Eigen::Vector6d res;
   res.head<3>().noalias() = _T.linear().transpose() * _V.head<3>();
   res.tail<3>().noalias()
@@ -733,13 +758,15 @@ Eigen::Vector6d AdInvT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _V) {
 // }
 
 Eigen::Vector6d AdInvRLinear(
-    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _v) {
+    const Eigen::Isometry3d& _T, const Eigen::Vector3d& _v)
+{
   Eigen::Vector6d res = Eigen::Vector6d::Zero();
   res.tail<3>().noalias() = _T.linear().transpose() * _v;
   return res;
 }
 
-Eigen::Vector6d ad(const Eigen::Vector6d& _X, const Eigen::Vector6d& _Y) {
+Eigen::Vector6d ad(const Eigen::Vector6d& _X, const Eigen::Vector6d& _Y)
+{
   //--------------------------------------------------------------------------
   // ad(s1, s2) = | [w1]    0 | | w2 |
   //              | [v1] [w1] | | v2 |
@@ -754,7 +781,8 @@ Eigen::Vector6d ad(const Eigen::Vector6d& _X, const Eigen::Vector6d& _Y) {
   return res;
 }
 
-Eigen::Vector6d dAdT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _F) {
+Eigen::Vector6d dAdT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _F)
+{
   Eigen::Vector6d res;
   res.head<3>().noalias()
       = _T.linear().transpose()
@@ -779,8 +807,8 @@ Eigen::Vector6d dAdT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _F) {
 //     return ret;
 // }
 
-Eigen::Vector6d dAdInvT(
-    const Eigen::Isometry3d& _T, const Eigen::Vector6d& _F) {
+Eigen::Vector6d dAdInvT(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _F)
+{
   Eigen::Vector6d res;
   res.tail<3>().noalias() = _T.linear() * _F.tail<3>();
   res.head<3>().noalias() = _T.linear() * _F.head<3>();
@@ -788,8 +816,8 @@ Eigen::Vector6d dAdInvT(
   return res;
 }
 
-Eigen::Vector6d dAdInvR(
-    const Eigen::Isometry3d& _T, const Eigen::Vector6d& _F) {
+Eigen::Vector6d dAdInvR(const Eigen::Isometry3d& _T, const Eigen::Vector6d& _F)
+{
   Eigen::Vector6d res;
   res.head<3>().noalias() = _T.linear() * _F.head<3>();
   res.tail<3>().noalias() = _T.linear() * _F.tail<3>();
@@ -812,7 +840,8 @@ Eigen::Vector6d dAdInvR(
 
 // Reference:
 // http://www.geometrictools.com/LibMathematics/Algebra/Wm5Matrix3.inl
-Eigen::Matrix3d eulerXYXToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerXYXToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                                -+
   // | r00 r01 r02 |   |  cy      sy*sx1               sy*cx1             |
   // | r10 r11 r12 | = |  sy*sx0  cx0*cx1-cy*sx0*sx1  -cy*cx1*sx0-cx0*sx1 |
@@ -843,7 +872,8 @@ Eigen::Matrix3d eulerXYXToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerXYZToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerXYZToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                        -+
   // | r00 r01 r02 |   |  cy*cz           -cy*sz            sy    |
   // | r10 r11 r12 | = |  cz*sx*sy+cx*sz   cx*cz-sx*sy*sz  -cy*sx |
@@ -874,7 +904,8 @@ Eigen::Matrix3d eulerXYZToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerXZXToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerXZXToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                                -+
   // | r00 r01 r02 |   | cz      -sz*cx1               sz*sx1             |
   // | r10 r11 r12 | = | sz*cx0   cz*cx0*cx1-sx0*sx1  -cx1*sx0-cz*cx0*sx1 |
@@ -905,7 +936,8 @@ Eigen::Matrix3d eulerXZXToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerXZYToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerXZYToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                        -+
   // | r00 r01 r02 |   |  cy*cz           -sz      cz*sy          |
   // | r10 r11 r12 | = |  sx*sy+cx*cy*sz   cx*cz  -cy*sx+cx*sy*sz |
@@ -936,7 +968,8 @@ Eigen::Matrix3d eulerXZYToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerYXYToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerYXYToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                                -+
   // | r00 r01 r02 |   |  cy0*cy1-cx*sy0*sy1  sx*sy0   cx*cy1*sy0+cy0*sy1 |
   // | r10 r11 r12 | = |  sx*sy1              cx      -sx*cy1             |
@@ -967,7 +1000,8 @@ Eigen::Matrix3d eulerYXYToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerYXZToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerYXZToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                       -+
   // | r00 r01 r02 |   |  cy*cz+sx*sy*sz  cz*sx*sy-cy*sz   cx*sy |
   // | r10 r11 r12 | = |  cx*sz           cx*cz           -sx    |
@@ -996,7 +1030,8 @@ Eigen::Matrix3d eulerYXZToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerYZXToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerYZXToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                       -+
   // | r00 r01 r02 |   |  cy*cz  sx*sy-cx*cy*sz   cx*sy+cy*sx*sz |
   // | r10 r11 r12 | = |  sz     cx*cz           -cz*sx          |
@@ -1025,7 +1060,8 @@ Eigen::Matrix3d eulerYZXToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerYZYToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerYZYToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                                -+
   // | r00 r01 r02 |   |  cz*cy0*cy1-sy0*sy1  -sz*cy0  cy1*sy0+cz*cy0*sy1 |
   // | r10 r11 r12 | = |  sz*cy1               cz      sz*sy1             |
@@ -1056,7 +1092,8 @@ Eigen::Matrix3d eulerYZYToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerZXYToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerZXYToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                        -+
   // | r00 r01 r02 |   |  cy*cz-sx*sy*sz  -cx*sz   cz*sy+cy*sx*sz |
   // | r10 r11 r12 | = |  cz*sx*sy+cy*sz   cx*cz  -cy*cz*sx+sy*sz |
@@ -1087,7 +1124,8 @@ Eigen::Matrix3d eulerZXYToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerZYXToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerZYXToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                      -+
   // | r00 r01 r02 |   |  cy*cz  cz*sx*sy-cx*sz  cx*cz*sy+sx*sz |
   // | r10 r11 r12 | = |  cy*sz  cx*cz+sx*sy*sz -cz*sx+cx*sy*sz |
@@ -1118,7 +1156,8 @@ Eigen::Matrix3d eulerZYXToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerZXZToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerZXZToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                                -+
   // | r00 r01 r02 |   | cz0*cz1-cx*sz0*sz1  -cx*cz1*sz0-cz0*sz1   sx*sz0 |
   // | r10 r11 r12 | = | cz1*sz0+cx*cz0*sz1   cx*cz0*cz1-sz0*sz1  -sz*cz0 |
@@ -1149,7 +1188,8 @@ Eigen::Matrix3d eulerZXZToMatrix(const Eigen::Vector3d& _angle) {
   return ret;
 }
 
-Eigen::Matrix3d eulerZYZToMatrix(const Eigen::Vector3d& _angle) {
+Eigen::Matrix3d eulerZYZToMatrix(const Eigen::Vector3d& _angle)
+{
   // +-           -+   +-                                                -+
   // | r00 r01 r02 |   |  cy*cz0*cz1-sz0*sz1  -cz1*sz0-cy*cz0*sz1  sy*cz0 |
   // | r10 r11 r12 | = |  cy*cz1*sz0+cz0*sz1   cz0*cz1-cy*sz0*sz1  sy*sz0 |
@@ -1183,7 +1223,8 @@ Eigen::Matrix3d eulerZYZToMatrix(const Eigen::Vector3d& _angle) {
 // R = Exp(w)
 // p = sin(t) / t*v + (t - sin(t)) / t^3*<w, v>*w + (1 - cos(t)) / t^2*(w X v)
 // , when S = (w, v), t = |w|
-Eigen::Isometry3d expMap(const Eigen::Vector6d& _S) {
+Eigen::Isometry3d expMap(const Eigen::Vector6d& _S)
+{
   Eigen::Isometry3d ret = Eigen::Isometry3d::Identity();
   double s2[] = {_S[0] * _S[0], _S[1] * _S[1], _S[2] * _S[2]};
   double s3[] = {_S[0] * _S[1], _S[1] * _S[2], _S[2] * _S[0]};
@@ -1226,7 +1267,8 @@ Eigen::Isometry3d expMap(const Eigen::Vector6d& _S) {
 }
 
 // I + sin(t) / t*[S] + (1 - cos(t)) / t^2*[S]^2, where t = |S|
-Eigen::Isometry3d expAngular(const Eigen::Vector3d& _s) {
+Eigen::Isometry3d expAngular(const Eigen::Vector3d& _s)
+{
   Eigen::Isometry3d ret = Eigen::Isometry3d::Identity();
   double s2[] = {_s[0] * _s[0], _s[1] * _s[1], _s[2] * _s[2]};
   double s3[] = {_s[0] * _s[1], _s[1] * _s[2], _s[2] * _s[0]};
@@ -1314,7 +1356,8 @@ Eigen::Isometry3d expAngular(const Eigen::Vector3d& _s) {
 //                s2[1]*s1[0] - s2[0]*s1[1]);
 // }
 
-Eigen::Vector6d dad(const Eigen::Vector6d& _s, const Eigen::Vector6d& _t) {
+Eigen::Vector6d dad(const Eigen::Vector6d& _s, const Eigen::Vector6d& _t)
+{
   Eigen::Vector6d res;
   res.head<3>()
       = _t.head<3>().cross(_s.head<3>()) + _t.tail<3>().cross(_s.tail<3>());
@@ -1322,7 +1365,8 @@ Eigen::Vector6d dad(const Eigen::Vector6d& _s, const Eigen::Vector6d& _t) {
   return res;
 }
 
-Inertia transformInertia(const Eigen::Isometry3d& _T, const Inertia& _I) {
+Inertia transformInertia(const Eigen::Isometry3d& _T, const Inertia& _I)
+{
   // operation count: multiplication = 186, addition = 117, subtract = 21
 
   Inertia ret = Inertia::Identity();
@@ -1408,7 +1452,8 @@ Inertia transformInertia(const Eigen::Isometry3d& _T, const Inertia& _I) {
 Eigen::Matrix3d parallelAxisTheorem(
     const Eigen::Matrix3d& _original,
     const Eigen::Vector3d& _comShift,
-    double _mass) {
+    double _mass)
+{
   const Eigen::Vector3d& p = _comShift;
   Eigen::Matrix3d result(_original);
   for (std::size_t i = 0; i < 3; ++i)
@@ -1418,16 +1463,19 @@ Eigen::Matrix3d parallelAxisTheorem(
   return result;
 }
 
-bool verifyRotation(const Eigen::Matrix3d& _T) {
+bool verifyRotation(const Eigen::Matrix3d& _T)
+{
   return !isNan(_T) && std::abs(_T.determinant() - 1.0) <= DART_EPSILON;
 }
 
-bool verifyTransform(const Eigen::Isometry3d& _T) {
+bool verifyTransform(const Eigen::Isometry3d& _T)
+{
   return !isNan(_T.matrix().topRows<3>())
          && std::abs(_T.linear().determinant() - 1.0) <= DART_EPSILON;
 }
 
-Eigen::Vector3d fromSkewSymmetric(const Eigen::Matrix3d& _m) {
+Eigen::Vector3d fromSkewSymmetric(const Eigen::Matrix3d& _m)
+{
 #ifndef NDEBUG
   if (std::abs(_m(0, 0)) > DART_EPSILON || std::abs(_m(1, 1)) > DART_EPSILON
       || std::abs(_m(2, 2)) > DART_EPSILON) {
@@ -1441,7 +1489,8 @@ Eigen::Vector3d fromSkewSymmetric(const Eigen::Matrix3d& _m) {
   return ret;
 }
 
-Eigen::Matrix3d makeSkewSymmetric(const Eigen::Vector3d& _v) {
+Eigen::Matrix3d makeSkewSymmetric(const Eigen::Vector3d& _v)
+{
   Eigen::Matrix3d result = Eigen::Matrix3d::Zero();
 
   result(0, 1) = -_v(2);
@@ -1456,7 +1505,8 @@ Eigen::Matrix3d makeSkewSymmetric(const Eigen::Vector3d& _v) {
 
 //==============================================================================
 Eigen::Matrix3d computeRotation(
-    const Eigen::Vector3d& axis, const AxisType axisType) {
+    const Eigen::Vector3d& axis, const AxisType axisType)
+{
   assert(axis != Eigen::Vector3d::Zero());
 
   // First axis
@@ -1487,7 +1537,8 @@ Eigen::Matrix3d computeRotation(
 Eigen::Isometry3d computeTransform(
     const Eigen::Vector3d& axis,
     const Eigen::Vector3d& translation,
-    AxisType axisType) {
+    AxisType axisType)
+{
   Eigen::Isometry3d result = Eigen::Isometry3d::Identity();
 
   result.linear() = computeRotation(axis, axisType);
@@ -1501,7 +1552,8 @@ Eigen::Isometry3d computeTransform(
 
 //==============================================================================
 Eigen::Isometry3d getFrameOriginAxisZ(
-    const Eigen::Vector3d& _origin, const Eigen::Vector3d& _axisZ) {
+    const Eigen::Vector3d& _origin, const Eigen::Vector3d& _axisZ)
+{
   return computeTransform(_axisZ, _origin, AxisType::AXIS_Z);
 }
 
@@ -1509,7 +1561,8 @@ Eigen::Isometry3d getFrameOriginAxisZ(
 SupportPolygon computeSupportPolgyon(
     const SupportGeometry& _geometry,
     const Eigen::Vector3d& _axis1,
-    const Eigen::Vector3d& _axis2) {
+    const Eigen::Vector3d& _axis2)
+{
   std::vector<std::size_t> indices;
   indices.reserve(_geometry.size());
   return computeSupportPolgyon(indices, _geometry, _axis1, _axis2);
@@ -1520,7 +1573,8 @@ SupportPolygon computeSupportPolgyon(
     std::vector<std::size_t>& _originalIndices,
     const SupportGeometry& _geometry,
     const Eigen::Vector3d& _axis1,
-    const Eigen::Vector3d& _axis2) {
+    const Eigen::Vector3d& _axis2)
+{
   SupportPolygon polygon;
   polygon.reserve(_geometry.size());
   for (const Eigen::Vector3d& v : _geometry)
@@ -1534,7 +1588,8 @@ SupportPolygon computeSupportPolgyon(
 // convex hulls
 struct HullAngle {
   HullAngle(double angle, double distance, std::size_t index)
-    : mAngle(angle), mDistance(distance), mIndex(index) {
+    : mAngle(angle), mDistance(distance), mIndex(index)
+  {
     // Do nothing
   }
 
@@ -1545,19 +1600,22 @@ struct HullAngle {
 
 //==============================================================================
 // Comparison function to allow hull angles to be sorted
-static bool HullAngleComparison(const HullAngle& a, const HullAngle& b) {
+static bool HullAngleComparison(const HullAngle& a, const HullAngle& b)
+{
   return a.mAngle < b.mAngle;
 }
 
 //==============================================================================
-SupportPolygon computeConvexHull(const SupportPolygon& _points) {
+SupportPolygon computeConvexHull(const SupportPolygon& _points)
+{
   std::vector<std::size_t> indices;
   indices.reserve(_points.size());
   return computeConvexHull(indices, _points);
 }
 
 //==============================================================================
-Eigen::Vector2d computeCentroidOfHull(const SupportPolygon& _convexHull) {
+Eigen::Vector2d computeCentroidOfHull(const SupportPolygon& _convexHull)
+{
   if (_convexHull.size() == 0) {
     Eigen::Vector2d invalid = Eigen::Vector2d::Constant(std::nan(""));
     dtwarn << "[computeCentroidOfHull] Requesting the centroid of an empty set "
@@ -1593,8 +1651,8 @@ Eigen::Vector2d computeCentroidOfHull(const SupportPolygon& _convexHull) {
         = computeIntersection(intersect, p0, midp12, p2, midp01);
 
     if (BEYOND_ENDPOINTS == result) {
-      double a1 = atan2((p1 - p0)[1], (p1 - p0)[0]) * 180.0 / constantsd::pi();
-      double a2 = atan2((p2 - p0)[1], (p2 - p0)[0]) * 180.0 / constantsd::pi();
+      double a1 = atan2((p1 - p0)[1], (p1 - p0)[0]) * 180.0 / pi();
+      double a2 = atan2((p2 - p0)[1], (p2 - p0)[0]) * 180.0 / pi();
       double diff = a1 - a2;
       dtwarn << "[computeCentroidOfHull] You have passed in a set of points "
              << "which is not a proper convex hull! The invalid segment "
@@ -1630,13 +1688,15 @@ Eigen::Vector2d computeCentroidOfHull(const SupportPolygon& _convexHull) {
 static bool isLeftTurn(
     const Eigen::Vector2d& p1,
     const Eigen::Vector2d& p2,
-    const Eigen::Vector2d& p3) {
+    const Eigen::Vector2d& p3)
+{
   return (cross(p2 - p1, p3 - p1) > 0);
 }
 
 //==============================================================================
 SupportPolygon computeConvexHull(
-    std::vector<std::size_t>& _originalIndices, const SupportPolygon& _points) {
+    std::vector<std::size_t>& _originalIndices, const SupportPolygon& _points)
+{
   _originalIndices.clear();
 
   if (_points.size() <= 3) {
@@ -1752,7 +1812,8 @@ IntersectionResult computeIntersection(
     const Eigen::Vector2d& a1,
     const Eigen::Vector2d& a2,
     const Eigen::Vector2d& b1,
-    const Eigen::Vector2d& b2) {
+    const Eigen::Vector2d& b2)
+{
   double dx_a = a2[0] - a1[0];
   double dy_a = a2[1] - a1[1];
 
@@ -1792,7 +1853,8 @@ IntersectionResult computeIntersection(
 }
 
 //==============================================================================
-double cross(const Eigen::Vector2d& _v1, const Eigen::Vector2d& _v2) {
+double cross(const Eigen::Vector2d& _v1, const Eigen::Vector2d& _v2)
+{
   return _v1[0] * _v2[1] - _v1[1] * _v2[0];
 }
 
@@ -1800,7 +1862,8 @@ double cross(const Eigen::Vector2d& _v1, const Eigen::Vector2d& _v2) {
 bool isInsideSupportPolygon(
     const Eigen::Vector2d& _p,
     const SupportPolygon& _support,
-    bool _includeEdge) {
+    bool _includeEdge)
+{
   if (_support.size() == 0)
     return false;
 
@@ -1858,7 +1921,8 @@ bool isInsideSupportPolygon(
 Eigen::Vector2d computeClosestPointOnLineSegment(
     const Eigen::Vector2d& _p,
     const Eigen::Vector2d& _s1,
-    const Eigen::Vector2d& _s2) {
+    const Eigen::Vector2d& _s2)
+{
   Eigen::Vector2d result;
 
   if (_s1[0] - _s2[0] == 0) {
@@ -1892,7 +1956,8 @@ Eigen::Vector2d computeClosestPointOnLineSegment(
 
 //==============================================================================
 Eigen::Vector2d computeClosestPointOnSupportPolygon(
-    const Eigen::Vector2d& _p, const SupportPolygon& _support) {
+    const Eigen::Vector2d& _p, const SupportPolygon& _support)
+{
   std::size_t _index1;
   std::size_t _index2;
   return computeClosestPointOnSupportPolygon(_index1, _index2, _p, _support);
@@ -1903,7 +1968,8 @@ Eigen::Vector2d computeClosestPointOnSupportPolygon(
     std::size_t& _index1,
     std::size_t& _index2,
     const Eigen::Vector2d& _p,
-    const SupportPolygon& _support) {
+    const SupportPolygon& _support)
+{
   if (_support.size() == 0) {
     _index1 = static_cast<std::size_t>(-1);
     _index2 = _index1;
@@ -1941,10 +2007,12 @@ Eigen::Vector2d computeClosestPointOnSupportPolygon(
   return result;
 }
 
-BoundingBox::BoundingBox() : mMin(0, 0, 0), mMax(0, 0, 0) {
+BoundingBox::BoundingBox() : mMin(0, 0, 0), mMax(0, 0, 0)
+{
 }
 BoundingBox::BoundingBox(const Eigen::Vector3d& min, const Eigen::Vector3d& max)
-  : mMin(min), mMax(max) {
+  : mMin(min), mMax(max)
+{
 }
 
 } // namespace math

@@ -37,7 +37,8 @@
 using namespace dart;
 
 //==============================================================================
-TEST(Inertia, Verification) {
+TEST(Inertia, Verification)
+{
   const int numIter = 10;
 
   for (int i = 0; i < numIter; ++i) {

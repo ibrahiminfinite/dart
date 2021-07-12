@@ -42,7 +42,8 @@ CollisionOption::CollisionOption(
     const std::shared_ptr<CollisionFilter>& collisionFilter)
   : enableContact(enableContact),
     maxNumContacts(maxNumContacts),
-    collisionFilter(collisionFilter) {
+    collisionFilter(collisionFilter)
+{
   // Do nothing
 }
 

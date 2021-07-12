@@ -7,6 +7,8 @@
 # This file is provided under the "BSD-style" License
 
 dart_add_component_sub_directory(
+  SUB_COMPONENT_NAME
+    fcl
   COMPONENT_DEPENDENCY_PACKAGES
     ccd fcl
   TARGET_LINK_LIBRARIES_PUBLIC

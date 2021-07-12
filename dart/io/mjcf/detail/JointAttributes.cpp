@@ -42,7 +42,8 @@ namespace detail {
 
 //==============================================================================
 Errors appendJointAttributes(
-    JointAttributes& attributes, tinyxml2::XMLElement* element) {
+    JointAttributes& attributes, tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "joint") {

@@ -39,22 +39,26 @@ namespace detail {
 
 //==============================================================================
 Error::Error(ErrorCode code, const std::string& message)
-  : mCode(code), mMessage(message) {
+  : mCode(code), mMessage(message)
+{
   // Do nothing
 }
 
 //==============================================================================
-Error::operator bool() const {
+Error::operator bool() const
+{
   return mCode != ErrorCode::NONE;
 }
 
 //==============================================================================
-ErrorCode Error::getCode() const {
+ErrorCode Error::getCode() const
+{
   return mCode;
 }
 
 //==============================================================================
-const std::string& Error::getMessage() const {
+const std::string& Error::getMessage() const
+{
   return mMessage;
 }
 

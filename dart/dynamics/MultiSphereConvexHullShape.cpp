@@ -41,29 +41,34 @@ namespace dynamics {
 
 //==============================================================================
 MultiSphereConvexHullShape::MultiSphereConvexHullShape(const Spheres& spheres)
-  : Shape(MULTISPHERE) {
+  : Shape(MULTISPHERE)
+{
   addSpheres(spheres);
 }
 
 //==============================================================================
-MultiSphereConvexHullShape::~MultiSphereConvexHullShape() {
+MultiSphereConvexHullShape::~MultiSphereConvexHullShape()
+{
   // Do nothing
 }
 
 //==============================================================================
-const std::string& MultiSphereConvexHullShape::getType() const {
+const std::string& MultiSphereConvexHullShape::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& MultiSphereConvexHullShape::getStaticType() {
+const std::string& MultiSphereConvexHullShape::getStaticType()
+{
   static const std::string type("MultiSphereConvexHullShape");
   return type;
 }
 
 //==============================================================================
 void MultiSphereConvexHullShape::addSpheres(
-    const MultiSphereConvexHullShape::Spheres& spheres) {
+    const MultiSphereConvexHullShape::Spheres& spheres)
+{
   mSpheres.insert(mSpheres.end(), spheres.begin(), spheres.end());
 
   mIsBoundingBoxDirty = true;
@@ -74,7 +79,8 @@ void MultiSphereConvexHullShape::addSpheres(
 
 //==============================================================================
 void MultiSphereConvexHullShape::addSphere(
-    const MultiSphereConvexHullShape::Sphere& sphere) {
+    const MultiSphereConvexHullShape::Sphere& sphere)
+{
   mSpheres.push_back(sphere);
 
   mIsBoundingBoxDirty = true;
@@ -85,12 +91,14 @@ void MultiSphereConvexHullShape::addSphere(
 
 //==============================================================================
 void MultiSphereConvexHullShape::addSphere(
-    double radius, const Eigen::Vector3d& position) {
+    double radius, const Eigen::Vector3d& position)
+{
   addSphere(std::make_pair(radius, position));
 }
 
 //==============================================================================
-void MultiSphereConvexHullShape::removeAllSpheres() {
+void MultiSphereConvexHullShape::removeAllSpheres()
+{
   mSpheres.clear();
 
   mIsBoundingBoxDirty = true;
@@ -100,24 +108,28 @@ void MultiSphereConvexHullShape::removeAllSpheres() {
 }
 
 //==============================================================================
-std::size_t MultiSphereConvexHullShape::getNumSpheres() const {
+std::size_t MultiSphereConvexHullShape::getNumSpheres() const
+{
   return mSpheres.size();
 }
 
 //==============================================================================
 const MultiSphereConvexHullShape::Spheres&
-MultiSphereConvexHullShape::getSpheres() const {
+MultiSphereConvexHullShape::getSpheres() const
+{
   return mSpheres;
 }
 
 //==============================================================================
-Eigen::Matrix3d MultiSphereConvexHullShape::computeInertia(double mass) const {
+Eigen::Matrix3d MultiSphereConvexHullShape::computeInertia(double mass) const
+{
   // Use bounding box to represent the mesh
   return BoxShape::computeInertia(getBoundingBox().computeFullExtents(), mass);
 }
 
 //==============================================================================
-void MultiSphereConvexHullShape::updateBoundingBox() const {
+void MultiSphereConvexHullShape::updateBoundingBox() const
+{
   Eigen::Vector3d min
       = Eigen::Vector3d::Constant(std::numeric_limits<double>::max());
   Eigen::Vector3d max = -min;
@@ -138,7 +150,8 @@ void MultiSphereConvexHullShape::updateBoundingBox() const {
 }
 
 //==============================================================================
-void MultiSphereConvexHullShape::updateVolume() const {
+void MultiSphereConvexHullShape::updateVolume() const
+{
   mVolume = BoxShape::computeVolume(mBoundingBox.computeFullExtents());
   mIsVolumeDirty = false;
 }

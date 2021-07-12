@@ -46,7 +46,8 @@ namespace python {
   #define DARTPY_DEFINE_ALGORITHM(alg_name)                                    \
     .value(#alg_name, dart::optimization::NloptSolver::Algorithm::alg_name)
 
-void NloptSolver(py::module& m) {
+void NloptSolver(py::module& m)
+{
   ::py::class_<
       dart::optimization::NloptSolver,
       dart::optimization::Solver,

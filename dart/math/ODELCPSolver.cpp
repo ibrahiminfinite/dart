@@ -43,12 +43,14 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-ODELCPSolver::ODELCPSolver() {
+ODELCPSolver::ODELCPSolver()
+{
   // Do nothing
 }
 
 //==============================================================================
-ODELCPSolver::~ODELCPSolver() {
+ODELCPSolver::~ODELCPSolver()
+{
   // Do nothing
 }
 
@@ -60,7 +62,8 @@ bool ODELCPSolver::Solve(
     int _numContacts,
     double _mu,
     int _numDir,
-    bool _bUseODESolver) {
+    bool _bUseODESolver)
+{
   if (!_bUseODESolver) {
     int err = Lemke(_A, _b, _x);
     return (err == 0);
@@ -141,7 +144,8 @@ void ODELCPSolver::transferToODEFormulation(
     Eigen::MatrixXd* _AOut,
     Eigen::VectorXd* _bOut,
     int _numDir,
-    int _numContacts) {
+    int _numContacts)
+{
   int numOtherConstrs = _A.rows() - _numContacts * (2 + _numDir);
   int n = _numContacts * 3 + numOtherConstrs;
   Eigen::MatrixXd AIntermediate = Eigen::MatrixXd::Zero(n, _A.cols());
@@ -182,7 +186,8 @@ void ODELCPSolver::transferSolFromODEFormulation(
     const Eigen::VectorXd& _x,
     Eigen::VectorXd* _xOut,
     int _numDir,
-    int _numContacts) {
+    int _numContacts)
+{
   int numOtherConstrs = _x.size() - _numContacts * 3;
   *_xOut
       = Eigen::VectorXd::Zero(_numContacts * (2 + _numDir) + numOtherConstrs);
@@ -203,7 +208,8 @@ void ODELCPSolver::transferSolFromODEFormulation(
 bool ODELCPSolver::checkIfSolution(
     const Eigen::MatrixXd& _A,
     const Eigen::VectorXd& _b,
-    const Eigen::VectorXd& _x) {
+    const Eigen::VectorXd& _x)
+{
   const double threshold = 1e-4;
   int n = _x.size();
 

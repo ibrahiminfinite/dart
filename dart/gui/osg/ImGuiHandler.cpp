@@ -86,7 +86,8 @@ enum ConvertedKey : int {
 //==============================================================================
 // Check for a special key and return the converted code (range [257, 511]) if
 // so. Otherwise returns -1
-int convertFromOSGKey(int key) {
+int convertFromOSGKey(int key)
+{
   using KeySymbol = osgGA::GUIEventAdapter::KeySymbol;
 
   switch (key) {
@@ -139,11 +140,13 @@ int convertFromOSGKey(int key) {
 
 //==============================================================================
 struct ImGuiNewFrameCallback : public ::osg::Camera::DrawCallback {
-  ImGuiNewFrameCallback(ImGuiHandler* handler) : mHandler(handler) {
+  ImGuiNewFrameCallback(ImGuiHandler* handler) : mHandler(handler)
+  {
     // Do nothing
   }
 
-  virtual void operator()(::osg::RenderInfo& renderInfo) const {
+  virtual void operator()(::osg::RenderInfo& renderInfo) const
+  {
     mHandler->newFrame(renderInfo);
   }
 
@@ -153,11 +156,13 @@ private:
 
 //==============================================================================
 struct ImGuiDrawCallback : public ::osg::Camera::DrawCallback {
-  ImGuiDrawCallback(ImGuiHandler* handler) : mHandler(handler) {
+  ImGuiDrawCallback(ImGuiHandler* handler) : mHandler(handler)
+  {
     // Do nothing
   }
 
-  virtual void operator()(::osg::RenderInfo& renderInfo) const {
+  virtual void operator()(::osg::RenderInfo& renderInfo) const
+  {
     mHandler->render(renderInfo);
   }
 
@@ -167,7 +172,8 @@ private:
 
 //==============================================================================
 ImGuiHandler::ImGuiHandler()
-  : mTime{0.0}, mMousePressed{false, false, false}, mMouseWheel{0.0f} {
+  : mTime{0.0}, mMousePressed{false, false, false}, mMouseWheel{0.0f}
+{
   ImGui::CreateContext();
 
   ImGui::StyleColorsDark();
@@ -199,12 +205,14 @@ ImGuiHandler::ImGuiHandler()
 }
 
 //==============================================================================
-ImGuiHandler::~ImGuiHandler() {
+ImGuiHandler::~ImGuiHandler()
+{
   // Do nothing
 }
 
 //==============================================================================
-void ImGuiHandler::setCameraCallbacks(::osg::Camera* camera) {
+void ImGuiHandler::setCameraCallbacks(::osg::Camera* camera)
+{
   if (nullptr == camera)
     return;
 
@@ -216,13 +224,15 @@ void ImGuiHandler::setCameraCallbacks(::osg::Camera* camera) {
 }
 
 //==============================================================================
-bool ImGuiHandler::hasWidget(const std::shared_ptr<ImGuiWidget>& widget) const {
+bool ImGuiHandler::hasWidget(const std::shared_ptr<ImGuiWidget>& widget) const
+{
   return std::find(mWidgets.begin(), mWidgets.end(), widget) != mWidgets.end();
 }
 
 //==============================================================================
 void ImGuiHandler::addWidget(
-    const std::shared_ptr<ImGuiWidget>& widget, bool visible) {
+    const std::shared_ptr<ImGuiWidget>& widget, bool visible)
+{
   if (hasWidget(widget)) {
     dtwarn
         << "[ImGuiHandler::addWidget] Attempting to add existing widget to the "
@@ -235,7 +245,8 @@ void ImGuiHandler::addWidget(
 }
 
 //==============================================================================
-void ImGuiHandler::removeWidget(const std::shared_ptr<ImGuiWidget>& widget) {
+void ImGuiHandler::removeWidget(const std::shared_ptr<ImGuiWidget>& widget)
+{
   if (!hasWidget(widget)) {
     dtwarn << "[ImGuiHandler::removeWidget] Attempting to remove not existing "
               "widget from the viewer. Ignoring this action.\n";
@@ -247,7 +258,8 @@ void ImGuiHandler::removeWidget(const std::shared_ptr<ImGuiWidget>& widget) {
 }
 
 //==============================================================================
-void ImGuiHandler::removeAllWidget() {
+void ImGuiHandler::removeAllWidget()
+{
   mWidgets.clear();
 }
 
@@ -256,7 +268,8 @@ bool ImGuiHandler::handle(
     const osgGA::GUIEventAdapter& eventAdapter,
     osgGA::GUIActionAdapter& /*actionAdapter*/,
     ::osg::Object* /*object*/,
-    ::osg::NodeVisitor* /*nodeVisitor*/) {
+    ::osg::NodeVisitor* /*nodeVisitor*/)
+{
   auto& io = ImGui::GetIO();
   const auto wantCapureMouse = io.WantCaptureMouse;
   const auto wantCapureKeyboard = io.WantCaptureKeyboard;
@@ -384,7 +397,8 @@ bool ImGuiHandler::handle(
 }
 
 //==============================================================================
-void ImGuiHandler::newFrame(::osg::RenderInfo& renderInfo) {
+void ImGuiHandler::newFrame(::osg::RenderInfo& renderInfo)
+{
   ImGui_ImplOpenGL2_NewFrame();
 
   auto& io = ImGui::GetIO();
@@ -411,7 +425,8 @@ void ImGuiHandler::newFrame(::osg::RenderInfo& renderInfo) {
 }
 
 //==============================================================================
-void ImGuiHandler::render(::osg::RenderInfo& /*renderInfo*/) {
+void ImGuiHandler::render(::osg::RenderInfo& /*renderInfo*/)
+{
   for (const auto& widget : mWidgets) {
     if (widget->isVisible())
       widget->render();

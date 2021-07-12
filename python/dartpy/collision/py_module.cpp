@@ -40,15 +40,22 @@ namespace python {
 
 void py_engine(py::module& m);
 void py_fcl_engine(py::module& m);
+#if DART_HAVE_ODE
+void py_ode_engine(py::module& m);
+#endif
 void py_object(py::module& m);
 void py_collision_option(py::module& m);
 void py_narrow_phase_interface(py::module& m);
 
-void dart_collision(py::module& m) {
+void dart_collision(py::module& m)
+{
   auto sm = m.def_submodule("collision");
 
   py_engine(sm);
   py_fcl_engine(sm);
+#if DART_HAVE_ODE
+  py_ode_engine(sm);
+#endif
   py_object(sm);
   py_collision_option(sm);
   py_narrow_phase_interface(sm);

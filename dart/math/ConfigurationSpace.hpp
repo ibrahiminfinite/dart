@@ -101,7 +101,8 @@ struct SE3Space {
   using JacobianMatrix = Eigen::Matrix6d;
 };
 
-struct MapsToManifoldPoint {};
+struct MapsToManifoldPoint {
+};
 
 //==============================================================================
 template <typename SpaceT>

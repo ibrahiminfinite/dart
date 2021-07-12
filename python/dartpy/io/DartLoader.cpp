@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void DartLoader(py::module& m) {
+void DartLoader(py::module& m)
+{
   ::py::class_<dart::io::DartLoader>(m, "DartLoader")
       .def(::py::init<>())
       .def(

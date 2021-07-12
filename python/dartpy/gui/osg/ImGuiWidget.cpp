@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void ImGuiWidget(py::module& m) {
+void ImGuiWidget(py::module& m)
+{
   ::pybind11::class_<dart::gui::osg::ImGuiWidget>(m, "ImGuiWidget")
       .def(
           "render",

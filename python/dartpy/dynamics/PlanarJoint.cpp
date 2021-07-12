@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void PlanarJoint(py::module& m) {
+void PlanarJoint(py::module& m)
+{
   ::py::class_<dart::dynamics::PlanarJoint::UniqueProperties>(
       m, "PlanarJointUniqueProperties")
       .def(::py::init<>());

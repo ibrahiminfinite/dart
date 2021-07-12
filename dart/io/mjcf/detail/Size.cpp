@@ -40,7 +40,8 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-Errors Size::read(tinyxml2::XMLElement* element) {
+Errors Size::read(tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "size") {
@@ -119,67 +120,80 @@ Errors Size::read(tinyxml2::XMLElement* element) {
 }
 
 //==============================================================================
-int Size::getMJMax() const {
+int Size::getMJMax() const
+{
   return mMJMax;
 }
 
 //==============================================================================
-int Size::getNConMax() const {
+int Size::getNConMax() const
+{
   return mNConMax;
 }
 
 //==============================================================================
-int Size::getNStack() const {
+int Size::getNStack() const
+{
   return mNStack;
 }
 
 //==============================================================================
-int Size::getNUserData() const {
+int Size::getNUserData() const
+{
   return mNUserData;
 }
 
 //==============================================================================
-int Size::getNKey() const {
+int Size::getNKey() const
+{
   return mNKey;
 }
 
 //==============================================================================
-int Size::getNUserBody() const {
+int Size::getNUserBody() const
+{
   return mNUserBody;
 }
 
 //==============================================================================
-int Size::getNUserJnt() const {
+int Size::getNUserJnt() const
+{
   return mNUserJnt;
 }
 
 //==============================================================================
-int Size::getNUserGeom() const {
+int Size::getNUserGeom() const
+{
   return mNUserGeom;
 }
 
 //==============================================================================
-int Size::getNUserSite() const {
+int Size::getNUserSite() const
+{
   return mNUserSite;
 }
 
 //==============================================================================
-int Size::getNUserCam() const {
+int Size::getNUserCam() const
+{
   return mNUserCam;
 }
 
 //==============================================================================
-int Size::getNUserTendon() const {
+int Size::getNUserTendon() const
+{
   return mNUserTendon;
 }
 
 //==============================================================================
-int Size::getNUserActuator() const {
+int Size::getNUserActuator() const
+{
   return mNUserActuator;
 }
 
 //==============================================================================
-int Size::getNUserSensor() const {
+int Size::getNUserSensor() const
+{
   return mNUserSensor;
 }
 

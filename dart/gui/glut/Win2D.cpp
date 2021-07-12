@@ -40,13 +40,15 @@ namespace dart {
 namespace gui {
 namespace glut {
 
-Win2D::Win2D() : glut::Window() {
+Win2D::Win2D() : glut::Window()
+{
   mTransX = 0;
   mTransY = 0;
   mTranslate = false;
 }
 
-void Win2D::resize(int _w, int _h) {
+void Win2D::resize(int _w, int _h)
+{
   mWinWidth = _w;
   mWinHeight = _h;
 
@@ -61,7 +63,8 @@ void Win2D::resize(int _w, int _h) {
   glutPostRedisplay();
 }
 
-void Win2D::keyboard(unsigned char _key, int /*_x*/, int /*_y*/) {
+void Win2D::keyboard(unsigned char _key, int /*_x*/, int /*_y*/)
+{
   switch (_key) {
     case ',': // slow down
       mDisplayTimeout += 2;
@@ -83,7 +86,8 @@ void Win2D::keyboard(unsigned char _key, int /*_x*/, int /*_y*/) {
   // printf("ascii key: %lu\n", key);
 }
 
-void Win2D::click(int /*_button*/, int /*_state*/, int _x, int _y) {
+void Win2D::click(int /*_button*/, int /*_state*/, int _x, int _y)
+{
   mMouseDown = !mMouseDown;
   if (mMouseDown) {
     mTranslate = true;
@@ -96,7 +100,8 @@ void Win2D::click(int /*_button*/, int /*_state*/, int _x, int _y) {
   glutPostRedisplay();
 }
 
-void Win2D::drag(int _x, int _y) {
+void Win2D::drag(int _x, int _y)
+{
   if (mMouseDown) {
     mTransX += (_x - mMouseX);
     mTransY += (_y - mMouseY);
@@ -107,7 +112,8 @@ void Win2D::drag(int _x, int _y) {
   glutPostRedisplay();
 }
 
-void Win2D::render() {
+void Win2D::render()
+{
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(
@@ -152,7 +158,8 @@ void Win2D::render() {
   glutSwapBuffers();
 }
 
-void Win2D::initGL() {
+void Win2D::initGL()
+{
   glClearColor(mBackground[0], mBackground[1], mBackground[2], mBackground[3]);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_BLEND);

@@ -56,7 +56,8 @@ class MyWindow : public dart::gui::glut::SimWindow {
 public:
   /// Constructor
   MyWindow(WorldPtr world)
-    : mBallConstraint(nullptr), mPositiveSign(true), mBodyForce(false) {
+    : mBallConstraint(nullptr), mPositiveSign(true), mBodyForce(false)
+  {
     setWorld(world);
 
     // Find the Skeleton named "pendulum" within the World
@@ -76,7 +77,8 @@ public:
         dart::Color::Orange(1.0)));
   }
 
-  void changeDirection() {
+  void changeDirection()
+  {
     mPositiveSign = !mPositiveSign;
     if (mPositiveSign) {
       mArrow->setPositions(
@@ -89,35 +91,42 @@ public:
     }
   }
 
-  void applyForce(std::size_t index) {
+  void applyForce(std::size_t index)
+  {
     if (index < mForceCountDown.size())
       mForceCountDown[index] = default_countdown;
   }
 
-  void changeRestPosition(double /*delta*/) {
+  void changeRestPosition(double /*delta*/)
+  {
     // Lesson 2a
   }
 
-  void changeStiffness(double /*delta*/) {
+  void changeStiffness(double /*delta*/)
+  {
     // Lesson 2b
   }
 
-  void changeDamping(double /*delta*/) {
+  void changeDamping(double /*delta*/)
+  {
     // Lesson 2c
   }
 
   /// Add a constraint to attach the final link to the world
-  void addConstraint() {
+  void addConstraint()
+  {
     // Lesson 3
   }
 
   /// Remove any existing constraint, allowing the pendulum to flail freely
-  void removeConstraint() {
+  void removeConstraint()
+  {
     // Lesson 3
   }
 
   /// Handle keyboard input
-  void keyboard(unsigned char key, int x, int y) override {
+  void keyboard(unsigned char key, int x, int y) override
+  {
     switch (key) {
       case '-':
         changeDirection();
@@ -192,7 +201,8 @@ public:
     }
   }
 
-  void timeStepping() override {
+  void timeStepping() override
+  {
     // Reset all the shapes to be Blue
     // Lesson 1a
 
@@ -241,7 +251,8 @@ protected:
   bool mBodyForce;
 };
 
-void setGeometry(const BodyNodePtr& bn) {
+void setGeometry(const BodyNodePtr& bn)
+{
   // Create a BoxShape to be used for both visualization and collision checking
   std::shared_ptr<BoxShape> box(new BoxShape(
       Eigen::Vector3d(default_width, default_depth, default_height)));
@@ -262,7 +273,8 @@ void setGeometry(const BodyNodePtr& bn) {
   bn->setLocalCOM(center);
 }
 
-BodyNode* makeRootBody(const SkeletonPtr& pendulum, const std::string& name) {
+BodyNode* makeRootBody(const SkeletonPtr& pendulum, const std::string& name)
+{
   BallJoint::Properties properties;
   properties.mName = name + "_joint";
   properties.mRestPositions = Eigen::Vector3d::Constant(default_rest_position);
@@ -289,7 +301,8 @@ BodyNode* makeRootBody(const SkeletonPtr& pendulum, const std::string& name) {
 }
 
 BodyNode* addBody(
-    const SkeletonPtr& pendulum, BodyNode* parent, const std::string& name) {
+    const SkeletonPtr& pendulum, BodyNode* parent, const std::string& name)
+{
   // Set up the properties for the Joint
   RevoluteJoint::Properties properties;
   properties.mName = name + "_joint";
@@ -326,7 +339,8 @@ BodyNode* addBody(
   return bn;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
   // Create an empty Skeleton with the name "pendulum"
   SkeletonPtr pendulum = Skeleton::create("pendulum");
 

@@ -43,7 +43,8 @@ const Eigen::Vector3d LineSegmentShape::mDummyVertex = Eigen::Vector3d::Zero();
 
 //==============================================================================
 LineSegmentShape::LineSegmentShape(float _thickness)
-  : Shape(LINE_SEGMENT), mThickness(_thickness) {
+  : Shape(LINE_SEGMENT), mThickness(_thickness)
+{
   if (_thickness <= 0.0f) {
     dtwarn << "[LineSegmentShape::LineSegmentShape] Attempting to set "
            << "non-positive thickness. We set the thickness to 1.0f instead."
@@ -57,7 +58,8 @@ LineSegmentShape::LineSegmentShape(float _thickness)
 //==============================================================================
 LineSegmentShape::LineSegmentShape(
     const Eigen::Vector3d& _v1, const Eigen::Vector3d& _v2, float _thickness)
-  : Shape(), mThickness(_thickness) {
+  : Shape(), mThickness(_thickness)
+{
   if (_thickness <= 0.0f) {
     dtwarn << "[LineSegmentShape::LineSegmentShape] Attempting to set "
            << "non-positive thickness. We set the thickness to 1.0f instead."
@@ -71,18 +73,21 @@ LineSegmentShape::LineSegmentShape(
 }
 
 //==============================================================================
-const std::string& LineSegmentShape::getType() const {
+const std::string& LineSegmentShape::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& LineSegmentShape::getStaticType() {
+const std::string& LineSegmentShape::getStaticType()
+{
   static const std::string type("LineSegmentShape");
   return type;
 }
 
 //==============================================================================
-void LineSegmentShape::setThickness(float _thickness) {
+void LineSegmentShape::setThickness(float _thickness)
+{
   if (_thickness <= 0.0f) {
     dtwarn << "[LineSegmentShape::setThickness] Attempting to set non-positive "
            << "thickness. We set the thickness to 1.0f instead." << std::endl;
@@ -94,12 +99,14 @@ void LineSegmentShape::setThickness(float _thickness) {
 }
 
 //==============================================================================
-float LineSegmentShape::getThickness() const {
+float LineSegmentShape::getThickness() const
+{
   return mThickness;
 }
 
 //==============================================================================
-std::size_t LineSegmentShape::addVertex(const Eigen::Vector3d& _v) {
+std::size_t LineSegmentShape::addVertex(const Eigen::Vector3d& _v)
+{
   std::size_t parent = mVertices.size();
   if (parent > 0)
     return addVertex(_v, parent - 1);
@@ -110,7 +117,8 @@ std::size_t LineSegmentShape::addVertex(const Eigen::Vector3d& _v) {
 
 //==============================================================================
 std::size_t LineSegmentShape::addVertex(
-    const Eigen::Vector3d& _v, std::size_t _parent) {
+    const Eigen::Vector3d& _v, std::size_t _parent)
+{
   std::size_t index = mVertices.size();
   mVertices.push_back(_v);
 
@@ -137,7 +145,8 @@ std::size_t LineSegmentShape::addVertex(
 }
 
 //==============================================================================
-void LineSegmentShape::removeVertex(std::size_t _idx) {
+void LineSegmentShape::removeVertex(std::size_t _idx)
+{
   if (_idx >= mVertices.size()) {
     if (mVertices.size() == 0)
       dtwarn << "[LineSegmentShape::removeVertex] Attempting to remove vertex #"
@@ -157,7 +166,8 @@ void LineSegmentShape::removeVertex(std::size_t _idx) {
 }
 
 //==============================================================================
-void LineSegmentShape::setVertex(std::size_t _idx, const Eigen::Vector3d& _v) {
+void LineSegmentShape::setVertex(std::size_t _idx, const Eigen::Vector3d& _v)
+{
   if (_idx >= mVertices.size()) {
     if (mVertices.size() == 0)
       dtwarn << "[LineSegmentShape::setVertex] Attempting to set vertex #"
@@ -175,7 +185,8 @@ void LineSegmentShape::setVertex(std::size_t _idx, const Eigen::Vector3d& _v) {
 }
 
 //==============================================================================
-const Eigen::Vector3d& LineSegmentShape::getVertex(std::size_t _idx) const {
+const Eigen::Vector3d& LineSegmentShape::getVertex(std::size_t _idx) const
+{
   if (_idx < mVertices.size())
     return mVertices[_idx];
 
@@ -192,12 +203,14 @@ const Eigen::Vector3d& LineSegmentShape::getVertex(std::size_t _idx) const {
 }
 
 //==============================================================================
-const std::vector<Eigen::Vector3d>& LineSegmentShape::getVertices() const {
+const std::vector<Eigen::Vector3d>& LineSegmentShape::getVertices() const
+{
   return mVertices;
 }
 
 //==============================================================================
-void LineSegmentShape::addConnection(std::size_t _idx1, std::size_t _idx2) {
+void LineSegmentShape::addConnection(std::size_t _idx1, std::size_t _idx2)
+{
   if (_idx1 >= mVertices.size() || _idx2 >= mVertices.size()) {
     if (mVertices.size() == 0)
       dtwarn << "[LineSegmentShape::createConnection] Attempted to create a "
@@ -220,7 +233,8 @@ void LineSegmentShape::addConnection(std::size_t _idx1, std::size_t _idx2) {
 
 //==============================================================================
 void LineSegmentShape::removeConnection(
-    std::size_t _vertexIdx1, std::size_t _vertexIdx2) {
+    std::size_t _vertexIdx1, std::size_t _vertexIdx2)
+{
   // Search through all connections to remove any that match the request
   common::aligned_vector<Eigen::Vector2i>::iterator it = mConnections.begin();
   while (it != mConnections.end()) {
@@ -236,7 +250,8 @@ void LineSegmentShape::removeConnection(
 }
 
 //==============================================================================
-void LineSegmentShape::removeConnection(std::size_t _connectionIdx) {
+void LineSegmentShape::removeConnection(std::size_t _connectionIdx)
+{
   if (_connectionIdx >= mConnections.size()) {
     if (mConnections.size() == 0)
       dtwarn
@@ -260,12 +275,14 @@ void LineSegmentShape::removeConnection(std::size_t _connectionIdx) {
 
 //==============================================================================
 const common::aligned_vector<Eigen::Vector2i>&
-LineSegmentShape::getConnections() const {
+LineSegmentShape::getConnections() const
+{
   return mConnections;
 }
 
 //==============================================================================
-Eigen::Matrix3d LineSegmentShape::computeInertia(double _mass) const {
+Eigen::Matrix3d LineSegmentShape::computeInertia(double _mass) const
+{
   Eigen::Matrix3d inertia = Eigen::Matrix3d::Zero();
 
   double totalLength = 0;
@@ -320,7 +337,8 @@ Eigen::Matrix3d LineSegmentShape::computeInertia(double _mass) const {
 }
 
 //==============================================================================
-void LineSegmentShape::updateBoundingBox() const {
+void LineSegmentShape::updateBoundingBox() const
+{
   if (mVertices.empty()) {
     mBoundingBox.setMin(Eigen::Vector3d::Zero());
     mBoundingBox.setMax(Eigen::Vector3d::Zero());
@@ -345,7 +363,8 @@ void LineSegmentShape::updateBoundingBox() const {
 }
 
 //==============================================================================
-void LineSegmentShape::updateVolume() const {
+void LineSegmentShape::updateVolume() const
+{
   mVolume = 0.0;
   mIsVolumeDirty = false;
 }

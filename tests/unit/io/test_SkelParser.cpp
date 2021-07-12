@@ -46,7 +46,8 @@ using namespace simulation;
 using namespace io;
 
 //==============================================================================
-TEST(SkelParser, DataStructure) {
+TEST(SkelParser, DataStructure)
+{
   bool valBool = true;
   int valInt = -3;
   unsigned int valUInt = 1;
@@ -88,7 +89,8 @@ TEST(SkelParser, DataStructure) {
 }
 
 //==============================================================================
-TEST(SkelParser, EmptyWorld) {
+TEST(SkelParser, EmptyWorld)
+{
   WorldPtr world = SkelParser::readWorld("dart://sample/skel/test/empty.skel");
 
   EXPECT_TRUE(world != nullptr);
@@ -104,7 +106,8 @@ TEST(SkelParser, EmptyWorld) {
 }
 
 //==============================================================================
-TEST(SkelParser, SinglePendulum) {
+TEST(SkelParser, SinglePendulum)
+{
   WorldPtr world
       = SkelParser::readWorld("dart://sample/skel/test/single_pendulum.skel");
 
@@ -123,7 +126,8 @@ TEST(SkelParser, SinglePendulum) {
 }
 
 //==============================================================================
-TEST(SkelParser, SerialChain) {
+TEST(SkelParser, SerialChain)
+{
   WorldPtr world = SkelParser::readWorld(
       "dart://sample/skel/test/serial_chain_ball_joint.skel");
 
@@ -142,7 +146,8 @@ TEST(SkelParser, SerialChain) {
 }
 
 //==============================================================================
-TEST(SkelParser, VariousShapes) {
+TEST(SkelParser, VariousShapes)
+{
   // Check if the parser can load various shapes without any problems and the
   // world can simulate it successfully.
 
@@ -154,7 +159,8 @@ TEST(SkelParser, VariousShapes) {
 }
 
 //==============================================================================
-TEST(SkelParser, RigidAndSoftBodies) {
+TEST(SkelParser, RigidAndSoftBodies)
+{
   using namespace dart;
   using namespace math;
   using namespace dynamics;
@@ -178,7 +184,8 @@ TEST(SkelParser, RigidAndSoftBodies) {
 }
 
 //==============================================================================
-TEST(SkelParser, PlanarJoint) {
+TEST(SkelParser, PlanarJoint)
+{
   using namespace dart;
   using namespace math;
   using namespace dynamics;
@@ -293,7 +300,8 @@ TEST(SkelParser, PlanarJoint) {
 }
 
 //==============================================================================
-TEST(SKEL_PARSER, JointActuatorType) {
+TEST(SKEL_PARSER, JointActuatorType)
+{
   WorldPtr world = SkelParser::readWorld(
       "dart://sample/skel/test/joint_actuator_type_test.skel");
   EXPECT_TRUE(world != nullptr);
@@ -326,7 +334,8 @@ TEST(SKEL_PARSER, JointActuatorType) {
 }
 
 //==============================================================================
-TEST(SkelParser, DofAttributes) {
+TEST(SkelParser, DofAttributes)
+{
   WorldPtr world = SkelParser::readWorld(
       "dart://sample/skel/test/dof_attribute_test.skel");
   EXPECT_TRUE(world != nullptr);
@@ -335,12 +344,12 @@ TEST(SkelParser, DofAttributes) {
 
   // Test for no dof elements being specified
   Joint* joint0 = skel1->getJoint("joint0");
-  EXPECT_EQ(joint0->getDof(0)->getPositionLowerLimit(), -constantsd::inf());
-  EXPECT_EQ(joint0->getDof(0)->getPositionUpperLimit(), constantsd::inf());
+  EXPECT_EQ(joint0->getDof(0)->getPositionLowerLimit(), -inf());
+  EXPECT_EQ(joint0->getDof(0)->getPositionUpperLimit(), inf());
   EXPECT_EQ(joint0->getDof(0)->getPosition(), 0);
 
-  EXPECT_EQ(joint0->getDof(0)->getVelocityLowerLimit(), -constantsd::inf());
-  EXPECT_EQ(joint0->getDof(0)->getVelocityUpperLimit(), constantsd::inf());
+  EXPECT_EQ(joint0->getDof(0)->getVelocityLowerLimit(), -inf());
+  EXPECT_EQ(joint0->getDof(0)->getVelocityUpperLimit(), inf());
   EXPECT_EQ(joint0->getDof(0)->getVelocity(), 0);
 
   EXPECT_EQ(joint0->getDof(0)->getName(), joint0->getName());
@@ -402,7 +411,8 @@ TEST(SkelParser, DofAttributes) {
 }
 
 //==============================================================================
-TEST(SkelParser, JointDynamicsElements) {
+TEST(SkelParser, JointDynamicsElements)
+{
   WorldPtr world = SkelParser::readWorld(
       "dart://sample/skel/test/joint_dynamics_elements_test.skel");
   EXPECT_TRUE(world != nullptr);
@@ -433,7 +443,8 @@ TEST(SkelParser, JointDynamicsElements) {
 }
 
 //==============================================================================
-TEST(SkelParser, Shapes) {
+TEST(SkelParser, Shapes)
+{
   WorldPtr world
       = SkelParser::readWorld("dart://sample//skel/test/test_shapes.skel");
   EXPECT_NE(world, nullptr);

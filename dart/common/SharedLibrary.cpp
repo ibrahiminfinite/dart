@@ -57,26 +57,30 @@ namespace common {
 
 //==============================================================================
 std::shared_ptr<SharedLibrary> SharedLibrary::create(
-    const boost::filesystem::path& path) {
+    const boost::filesystem::path& path)
+{
   return create(path.string());
 }
 
 //==============================================================================
-std::shared_ptr<SharedLibrary> SharedLibrary::create(const std::string& path) {
+std::shared_ptr<SharedLibrary> SharedLibrary::create(const std::string& path)
+{
   return detail::SharedLibraryManager::getSingleton().load(path);
 }
 
 //==============================================================================
 SharedLibrary::SharedLibrary(
     ProtectedConstructionTag, const boost::filesystem::path& canonicalPath)
-  : SharedLibrary(ProtectedConstruction, canonicalPath.string()) {
+  : SharedLibrary(ProtectedConstruction, canonicalPath.string())
+{
   // Do nothing
 }
 
 //==============================================================================
 SharedLibrary::SharedLibrary(
     ProtectedConstructionTag, const std::string& canonicalPath)
-  : mCanonicalPath(canonicalPath), mPath(canonicalPath), mInstance(nullptr) {
+  : mCanonicalPath(canonicalPath), mPath(canonicalPath), mInstance(nullptr)
+{
   mInstance = static_cast<DYNLIB_HANDLE>(DYNLIB_LOAD(canonicalPath.c_str()));
 
   if (!mInstance) {
@@ -86,7 +90,8 @@ SharedLibrary::SharedLibrary(
 }
 
 //==============================================================================
-SharedLibrary::~SharedLibrary() {
+SharedLibrary::~SharedLibrary()
+{
   if (!isValid())
     return;
 
@@ -97,22 +102,26 @@ SharedLibrary::~SharedLibrary() {
 }
 
 //==============================================================================
-const boost::filesystem::path& SharedLibrary::getCanonicalPath() const {
+const boost::filesystem::path& SharedLibrary::getCanonicalPath() const
+{
   return mCanonicalPath;
 }
 
 //==============================================================================
-const std::string& SharedLibrary::path() const {
+const std::string& SharedLibrary::path() const
+{
   return mPath;
 }
 
 //==============================================================================
-bool SharedLibrary::isValid() const {
+bool SharedLibrary::isValid() const
+{
   return (mInstance != nullptr);
 }
 
 //==============================================================================
-void* SharedLibrary::getSymbol(const std::string& symbolName) const {
+void* SharedLibrary::getSymbol(const std::string& symbolName) const
+{
   if (!isValid())
     return nullptr;
 
@@ -128,7 +137,8 @@ void* SharedLibrary::getSymbol(const std::string& symbolName) const {
 }
 
 //==============================================================================
-std::string SharedLibrary::getLastError() const {
+std::string SharedLibrary::getLastError() const
+{
 #if DART_OS_LINUX || DART_OS_MACOS
   return std::string(dlerror());
 #elif DART_OS_WINDOWS

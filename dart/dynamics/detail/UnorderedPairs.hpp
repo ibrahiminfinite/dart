@@ -66,7 +66,8 @@ private:
 
 //==============================================================================
 template <class T>
-void UnorderedPairs<T>::addPair(const T* left, const T* right) {
+void UnorderedPairs<T>::addPair(const T* left, const T* right)
+{
   if (!left || !right)
     return;
 
@@ -90,7 +91,8 @@ void UnorderedPairs<T>::addPair(const T* left, const T* right) {
 
 //==============================================================================
 template <class T>
-void UnorderedPairs<T>::removePair(const T* left, const T* right) {
+void UnorderedPairs<T>::removePair(const T* left, const T* right)
+{
   if (!left || !right)
     return;
 
@@ -114,13 +116,15 @@ void UnorderedPairs<T>::removePair(const T* left, const T* right) {
 
 //==============================================================================
 template <class T>
-void UnorderedPairs<T>::removeAllPairs() {
+void UnorderedPairs<T>::removeAllPairs()
+{
   mList.clear();
 }
 
 //==============================================================================
 template <class T>
-bool UnorderedPairs<T>::contains(const T* left, const T* right) const {
+bool UnorderedPairs<T>::contains(const T* left, const T* right) const
+{
   const auto* less = left;
   const auto* greater = right;
 

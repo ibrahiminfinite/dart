@@ -40,7 +40,8 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-Errors Option::read(tinyxml2::XMLElement* element) {
+Errors Option::read(tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "option") {
@@ -206,97 +207,116 @@ Errors Option::read(tinyxml2::XMLElement* element) {
 }
 
 //==============================================================================
-double Option::getTimestep() const {
+double Option::getTimestep() const
+{
   return mTimestep;
 }
 
 //==============================================================================
-double Option::getApiRate() const {
+double Option::getApiRate() const
+{
   return mTimestep;
 }
 
 //==============================================================================
-double Option::getImpRatio() const {
+double Option::getImpRatio() const
+{
   return mTimestep;
 }
 
 //==============================================================================
-const Eigen::Vector3d& Option::getGravity() const {
+const Eigen::Vector3d& Option::getGravity() const
+{
   return mGravity;
 }
 
 //==============================================================================
-const Eigen::Vector3d& Option::getWind() const {
+const Eigen::Vector3d& Option::getWind() const
+{
   return mWind;
 }
 
 //==============================================================================
-const Eigen::Vector3d& Option::getMagnetic() const {
+const Eigen::Vector3d& Option::getMagnetic() const
+{
   return mMagnetic;
 }
 
 //==============================================================================
-double Option::getDensity() const {
+double Option::getDensity() const
+{
   return mDensity;
 }
 
 //==============================================================================
-double Option::getViscosity() const {
+double Option::getViscosity() const
+{
   return mViscosity;
 }
 
 //==============================================================================
-Integrator Option::getIntegrator() const {
+Integrator Option::getIntegrator() const
+{
   return mIntegrator;
 }
 
 //==============================================================================
-CollisionType Option::getCollision() const {
+CollisionType Option::getCollision() const
+{
   return mCollision;
 }
 
 //==============================================================================
-ConeType Option::getCone() const {
+ConeType Option::getCone() const
+{
   return mCone;
 }
 
 //==============================================================================
-JacobianType Option::getJacobian() const {
+JacobianType Option::getJacobian() const
+{
   return mJacobian;
 }
 
 //==============================================================================
-SolverType Option::getSolver() const {
+SolverType Option::getSolver() const
+{
   return mSolver;
 }
 
 //==============================================================================
-int Option::getIterations() const {
+int Option::getIterations() const
+{
   return mIterations;
 }
 
 //==============================================================================
-double Option::getTolerance() const {
+double Option::getTolerance() const
+{
   return mTolerance;
 }
 
 //==============================================================================
-int Option::getNoSlipIterations() const {
+int Option::getNoSlipIterations() const
+{
   return mNoSlipIterations;
 }
 
 //==============================================================================
-double Option::getNoSlipTolerance() const {
+double Option::getNoSlipTolerance() const
+{
   return mNoSlipTolerance;
 }
 
 //==============================================================================
-int Option::getMprIterations() const {
+int Option::getMprIterations() const
+{
   return mMprIterations;
 }
 
 //==============================================================================
-double Option::getMprTolerance() const {
+double Option::getMprTolerance() const
+{
   return mMprTolerance;
 }
 

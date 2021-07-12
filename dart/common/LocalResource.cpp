@@ -43,7 +43,8 @@ namespace common {
 
 //==============================================================================
 LocalResource::LocalResource(const std::string& _path)
-  : mFile(std::fopen(_path.c_str(), "rb")) {
+  : mFile(std::fopen(_path.c_str(), "rb"))
+{
   if (!mFile) {
     dtwarn << "[LocalResource::constructor] Failed opening file '" << _path
            << "' for reading: " << std::strerror(errno) << "\n";
@@ -51,7 +52,8 @@ LocalResource::LocalResource(const std::string& _path)
 }
 
 //==============================================================================
-LocalResource::~LocalResource() {
+LocalResource::~LocalResource()
+{
   if (!mFile)
     return;
 
@@ -62,12 +64,14 @@ LocalResource::~LocalResource() {
 }
 
 //==============================================================================
-bool LocalResource::isGood() const {
+bool LocalResource::isGood() const
+{
   return !!mFile;
 }
 
 //==============================================================================
-std::size_t LocalResource::getSize() {
+std::size_t LocalResource::getSize()
+{
   if (!mFile)
     return 0;
 
@@ -117,7 +121,8 @@ std::size_t LocalResource::getSize() {
 }
 
 //==============================================================================
-std::size_t LocalResource::tell() {
+std::size_t LocalResource::tell()
+{
   if (!mFile)
     return 0;
 
@@ -142,7 +147,8 @@ std::size_t LocalResource::tell() {
 }
 
 //==============================================================================
-bool LocalResource::seek(ptrdiff_t _offset, SeekType _mode) {
+bool LocalResource::seek(ptrdiff_t _offset, SeekType _mode)
+{
   int origin;
   switch (_mode) {
     case Resource::SEEKTYPE_CUR:
@@ -174,7 +180,8 @@ bool LocalResource::seek(ptrdiff_t _offset, SeekType _mode) {
 
 //==============================================================================
 std::size_t LocalResource::read(
-    void* _buffer, std::size_t _size, std::size_t _count) {
+    void* _buffer, std::size_t _size, std::size_t _count)
+{
   if (!mFile)
     return 0;
 

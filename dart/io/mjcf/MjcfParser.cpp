@@ -54,7 +54,8 @@ namespace MjcfParser {
 
 //==============================================================================
 dynamics::BodyNode::Properties createBodyProperties(
-    dart::dynamics::SkeletonPtr skel, const detail::Body& mjcfBody) {
+    dart::dynamics::SkeletonPtr skel, const detail::Body& mjcfBody)
+{
   dynamics::BodyNode::Properties bodyProps;
 
   // Name
@@ -82,7 +83,8 @@ void createJointCommonProperties(
     dynamics::Joint::Properties& props,
     const dynamics::BodyNode* parentBodyNode,
     const detail::Body& /*mjcfBody*/,
-    const detail::Joint& mjcfJoint) {
+    const detail::Joint& mjcfJoint)
+{
   // Name
   if (not mjcfJoint.getName().empty()) {
     props.mName = mjcfJoint.getName();
@@ -95,7 +97,8 @@ void createJointCommonProperties(
 dynamics::WeldJoint::Properties createWeldJointProperties(
     const dynamics::BodyNode* parentBodyNode,
     const dynamics::BodyNode::Properties& bodyNodeProps,
-    const detail::Body& mjcfBody) {
+    const detail::Body& mjcfBody)
+{
   dynamics::WeldJoint::Properties props;
 
   // Name
@@ -121,7 +124,8 @@ dynamics::FreeJoint::Properties createFreeJointProperties(
     const dynamics::BodyNode* parentBodyNode,
     const dynamics::BodyNode::Properties& /*bodyNodeProps*/,
     const detail::Body& mjcfBody,
-    const detail::Joint& mjcfJoint) {
+    const detail::Joint& mjcfJoint)
+{
   dynamics::FreeJoint::Properties props;
 
   // Common joint properties
@@ -142,7 +146,8 @@ dynamics::BallJoint::Properties createBallJointProperties(
     const dynamics::BodyNode* parentBodyNode,
     const dynamics::BodyNode::Properties& /*bodyNodeProps*/,
     const detail::Body& mjcfBody,
-    const detail::Joint& mjcfJoint) {
+    const detail::Joint& mjcfJoint)
+{
   dynamics::BallJoint::Properties props;
 
   // Common joint properties
@@ -168,7 +173,8 @@ dynamics::PrismaticJoint::Properties createPrismaticJointProperties(
     const dynamics::BodyNode* parentBodyNode,
     const dynamics::BodyNode::Properties& /*bodyNodeProps*/,
     const detail::Body& mjcfBody,
-    const detail::Joint& mjcfJoint) {
+    const detail::Joint& mjcfJoint)
+{
   dynamics::PrismaticJoint::Properties props;
 
   // Common joint properties
@@ -208,7 +214,8 @@ dynamics::RevoluteJoint::Properties createRevoluteJointProperties(
     const dynamics::BodyNode* parentBodyNode,
     const dynamics::BodyNode::Properties& /*bodyNodeProps*/,
     const detail::Body& mjcfBody,
-    const detail::Joint& mjcfJoint) {
+    const detail::Joint& mjcfJoint)
+{
   dynamics::RevoluteJoint::Properties props;
 
   // Common joint properties
@@ -249,7 +256,8 @@ createJointAndBodyNodePairForMultipleJoints(
     dynamics::SkeletonPtr skel,
     dynamics::BodyNode* parentBodyNode,
     const dynamics::BodyNode::Properties& bodyProps,
-    const detail::Body& mjcfBody) {
+    const detail::Body& mjcfBody)
+{
   // TODO(JS): This should be replaced with CompositeJoint once supported in
   // DART. As an workaround, we only allow to create predefined multi dofs
   // joints for some supported combination of MJCF joint types.
@@ -378,7 +386,8 @@ createJointAndBodyNodePairForMultipleJoints(
 
 //==============================================================================
 template <typename GeomOrSite>
-dynamics::ShapePtr createShape(const GeomOrSite& geomOrSite) {
+dynamics::ShapePtr createShape(const GeomOrSite& geomOrSite)
+{
   dynamics::ShapePtr shape = nullptr;
 
   switch (geomOrSite.getType()) {
@@ -418,7 +427,8 @@ dynamics::ShapePtr createShape(const GeomOrSite& geomOrSite) {
 
 //==============================================================================
 dynamics::ShapePtr createShape(
-    const detail::Geom& geom, const detail::Asset& mjcfAsset) {
+    const detail::Geom& geom, const detail::Asset& mjcfAsset)
+{
   dynamics::ShapePtr shape = nullptr;
 
   switch (geom.getType()) {
@@ -453,7 +463,8 @@ dynamics::ShapePtr createShape(
 bool createShapeNodes(
     dynamics::BodyNode* bodyNode,
     const detail::Body& mjcfBody,
-    const detail::Asset& mjcfAsset) {
+    const detail::Asset& mjcfAsset)
+{
   // Create ShapeNodes for <geom>s
   for (std::size_t i = 0u; i < mjcfBody.getNumGeoms(); ++i) {
     const detail::Geom& geom = mjcfBody.getGeom(i);
@@ -522,7 +533,8 @@ bool populateSkeletonRecurse(
     dynamics::SkeletonPtr skel,
     dynamics::BodyNode* parentBodyNode,
     const detail::Body& mjcfBody,
-    const detail::Asset& mjcfAsset) {
+    const detail::Asset& mjcfAsset)
+{
   dynamics::BodyNode* bodyNode = nullptr;
   dynamics::Joint* joint = nullptr;
 
@@ -593,7 +605,8 @@ bool populateSkeletonRecurse(
 
 //==============================================================================
 dynamics::SkeletonPtr createSkeleton(
-    const detail::Body& mjcfBody, const detail::Asset& mjcfAsset) {
+    const detail::Body& mjcfBody, const detail::Asset& mjcfAsset)
+{
   dynamics::SkeletonPtr skel = dynamics::Skeleton::create();
 
   const bool success
@@ -611,7 +624,8 @@ dynamics::SkeletonPtr createSkeleton(
 
 //==============================================================================
 simulation::WorldPtr createWorld(
-    const detail::MujocoModel& mujoco, const Options& options) {
+    const detail::MujocoModel& mujoco, const Options& options)
+{
   simulation::WorldPtr world = simulation::World::create();
   world->setName(mujoco.getModel());
 
@@ -721,13 +735,15 @@ Options::Options(
     const std::string& siteSkeletonNamePrefix)
   : mRetriever(retrieverOrNullptr),
     mGeomSkeletonNamePrefix(geomSkeletonNamePrefix),
-    mSiteSkeletonNamePrefix(siteSkeletonNamePrefix) {
+    mSiteSkeletonNamePrefix(siteSkeletonNamePrefix)
+{
   // Do nothing
 }
 
 //==============================================================================
 dynamics::BodyNode* getUniqueBodyOrNull(
-    const simulation::World& world, const std::string& name) {
+    const simulation::World& world, const std::string& name)
+{
   const auto& bodyNodes = detail::getBodyNodes(world, name);
 
   if (bodyNodes.empty()) {
@@ -742,7 +758,8 @@ dynamics::BodyNode* getUniqueBodyOrNull(
 }
 
 //==============================================================================
-simulation::WorldPtr readWorld(const common::Uri& uri, const Options& options) {
+simulation::WorldPtr readWorld(const common::Uri& uri, const Options& options)
+{
   auto mujoco = detail::MujocoModel();
   const detail::Errors errors = mujoco.read(uri, options.mRetriever);
   if (not errors.empty()) {

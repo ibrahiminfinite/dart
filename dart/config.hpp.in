@@ -49,12 +49,9 @@
 #cmakedefine01 BUILD_TYPE_RELWITHDEBINFO
 #cmakedefine01 BUILD_TYPE_MINSIZEREL
 
-#cmakedefine01 DART_HAVE_NLOPT
-#cmakedefine01 DART_HAVE_IPOPT
 #cmakedefine01 DART_HAVE_PAGMO
 #cmakedefine01 DART_HAVE_SNOPT
 #cmakedefine01 DART_HAVE_BULLET
-#cmakedefine01 DART_HAVE_ODE
 #cmakedefine01 DART_HAVE_FLANN
 #cmakedefine01 DART_HAVE_OCTOMAP
 

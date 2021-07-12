@@ -46,7 +46,8 @@ using namespace simulation;
 using namespace io;
 
 //==============================================================================
-TEST(SdfParser, SDFSingleBodyWithoutJoint) {
+TEST(SdfParser, SDFSingleBodyWithoutJoint)
+{
   // Regression test for #444
   WorldPtr world = SdfParser::readWorld(
       "dart://sample/sdf/test/single_bodynode_skeleton.world");
@@ -68,7 +69,8 @@ TEST(SdfParser, SDFSingleBodyWithoutJoint) {
 }
 
 //==============================================================================
-TEST(SdfParser, SDFJointProperties) {
+TEST(SdfParser, SDFJointProperties)
+{
   WorldPtr world = SdfParser::readWorld(
       "dart://sample/sdf/test/test_skeleton_joint.world");
   EXPECT_TRUE(world != nullptr);
@@ -102,7 +104,8 @@ TEST(SdfParser, SDFJointProperties) {
 }
 
 //==============================================================================
-TEST(SdfParser, ParsingSDFFiles) {
+TEST(SdfParser, ParsingSDFFiles)
+{
   const auto numSteps = 10u;
 
   // Create a list of sdf files to test with where the sdf files contains World
@@ -149,7 +152,8 @@ TEST(SdfParser, ParsingSDFFiles) {
 }
 
 //==============================================================================
-TEST(SdfParser, ReadMaterial) {
+TEST(SdfParser, ReadMaterial)
+{
   std::string sdf_filename = "dart://sample/sdf/quad.sdf";
   SkeletonPtr skeleton = SdfParser::readSkeleton(sdf_filename);
   EXPECT_TRUE(nullptr != skeleton);

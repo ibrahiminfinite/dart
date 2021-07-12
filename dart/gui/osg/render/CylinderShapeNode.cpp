@@ -85,13 +85,15 @@ protected:
 CylinderShapeNode::CylinderShapeNode(
     std::shared_ptr<dart::dynamics::CylinderShape> shape,
     ShapeFrameNode* parent)
-  : ShapeNode(shape, parent, this), mCylinderShape(shape), mGeode(nullptr) {
+  : ShapeNode(shape, parent, this), mCylinderShape(shape), mGeode(nullptr)
+{
   extractData(true);
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
 }
 
 //==============================================================================
-void CylinderShapeNode::refresh() {
+void CylinderShapeNode::refresh()
+{
   mUtilized = true;
 
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
@@ -103,7 +105,8 @@ void CylinderShapeNode::refresh() {
 }
 
 //==============================================================================
-void CylinderShapeNode::extractData(bool /*firstTime*/) {
+void CylinderShapeNode::extractData(bool /*firstTime*/)
+{
   if (nullptr == mGeode) {
     mGeode = new CylinderShapeGeode(
         mCylinderShape.get(), mParentShapeFrameNode, this);
@@ -115,7 +118,8 @@ void CylinderShapeNode::extractData(bool /*firstTime*/) {
 }
 
 //==============================================================================
-CylinderShapeNode::~CylinderShapeNode() {
+CylinderShapeNode::~CylinderShapeNode()
+{
   // Do nothing
 }
 
@@ -126,7 +130,8 @@ CylinderShapeGeode::CylinderShapeGeode(
     CylinderShapeNode* parentNode)
   : ShapeNode(parentNode->getShape(), parent, this),
     mCylinderShape(shape),
-    mDrawable(nullptr) {
+    mDrawable(nullptr)
+{
   getOrCreateStateSet()->setMode(GL_BLEND, ::osg::StateAttribute::ON);
   getOrCreateStateSet()->setRenderingHint(::osg::StateSet::TRANSPARENT_BIN);
   getOrCreateStateSet()->setAttributeAndModes(
@@ -135,14 +140,16 @@ CylinderShapeGeode::CylinderShapeGeode(
 }
 
 //==============================================================================
-void CylinderShapeGeode::refresh() {
+void CylinderShapeGeode::refresh()
+{
   mUtilized = true;
 
   extractData();
 }
 
 //==============================================================================
-void CylinderShapeGeode::extractData() {
+void CylinderShapeGeode::extractData()
+{
   if (nullptr == mDrawable) {
     mDrawable = new CylinderShapeDrawable(mCylinderShape, mVisualAspect, this);
     addDrawable(mDrawable);
@@ -153,7 +160,8 @@ void CylinderShapeGeode::extractData() {
 }
 
 //==============================================================================
-CylinderShapeGeode::~CylinderShapeGeode() {
+CylinderShapeGeode::~CylinderShapeGeode()
+{
   // Do nothing
 }
 
@@ -162,12 +170,14 @@ CylinderShapeDrawable::CylinderShapeDrawable(
     dart::dynamics::CylinderShape* shape,
     dart::dynamics::VisualAspect* visualAspect,
     CylinderShapeGeode* parent)
-  : mCylinderShape(shape), mVisualAspect(visualAspect), mParent(parent) {
+  : mCylinderShape(shape), mVisualAspect(visualAspect), mParent(parent)
+{
   refresh(true);
 }
 
 //==============================================================================
-void CylinderShapeDrawable::refresh(bool firstTime) {
+void CylinderShapeDrawable::refresh(bool firstTime)
+{
   if (mCylinderShape->getDataVariance() == dart::dynamics::Shape::STATIC)
     setDataVariance(::osg::Object::STATIC);
   else
@@ -191,7 +201,8 @@ void CylinderShapeDrawable::refresh(bool firstTime) {
 }
 
 //==============================================================================
-CylinderShapeDrawable::~CylinderShapeDrawable() {
+CylinderShapeDrawable::~CylinderShapeDrawable()
+{
   // Do nothing
 }
 

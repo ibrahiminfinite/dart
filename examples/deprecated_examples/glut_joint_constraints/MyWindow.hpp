@@ -41,14 +41,16 @@
 
 class MyWindow : public dart::gui::glut::SimWindow {
 public:
-  MyWindow() : SimWindow() {
+  MyWindow() : SimWindow()
+  {
     mForce = Eigen::Vector3d::Zero();
     mController = nullptr;
     mWeldJoint = nullptr;
     mImpulseDuration = 0;
     mHarnessOn = false;
   }
-  virtual ~MyWindow() {
+  virtual ~MyWindow()
+  {
   }
 
   void timeStepping() override;
@@ -57,7 +59,8 @@ public:
   //  void draw() override;
   void keyboard(unsigned char key, int x, int y) override;
 
-  void setController(Controller* _controller) {
+  void setController(Controller* _controller)
+  {
     mController = _controller;
   }
 

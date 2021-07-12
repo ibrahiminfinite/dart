@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void ScrewJoint(py::module& m) {
+void ScrewJoint(py::module& m)
+{
   ::py::class_<dart::dynamics::ScrewJoint::UniqueProperties>(
       m, "ScrewJointUniqueProperties")
       .def(::py::init<>())

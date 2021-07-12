@@ -34,11 +34,13 @@
 
 //==============================================================================
 WamWorld::WamWorld(WorldPtr world, SkeletonPtr robot)
-  : dart::gui::osg::WorldNode(world), mWam(robot) {
+  : dart::gui::osg::WorldNode(world), mWam(robot)
+{
   // Do nothing
 }
 
 //==============================================================================
-void WamWorld::customPreRefresh() {
+void WamWorld::customPreRefresh()
+{
   mWam->getIK(true)->solveAndApply(true);
 }

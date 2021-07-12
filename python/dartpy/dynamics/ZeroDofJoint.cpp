@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void ZeroDofJoint(py::module& m) {
+void ZeroDofJoint(py::module& m)
+{
   ::py::class_<dart::dynamics::ZeroDofJoint::Properties>(
       m, "ZeroDofJointProperties")
       .def(::py::init<>())

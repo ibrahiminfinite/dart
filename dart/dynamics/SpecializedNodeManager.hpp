@@ -46,7 +46,8 @@ class Skeleton;
 //==============================================================================
 /// Declaration of the variadic template
 template <class... OtherSpecNodes>
-class BodyNodeSpecializedFor {};
+class BodyNodeSpecializedFor {
+};
 
 //==============================================================================
 /// BodyNodeSpecializedFor allows classes that inherit BodyNode to
@@ -110,12 +111,14 @@ template <class SpecNode1, class... OtherSpecNodes>
 class BodyNodeSpecializedFor<SpecNode1, OtherSpecNodes...>
   : public NodeManagerJoinerForBodyNode<
         common::Virtual<BodyNodeSpecializedFor<SpecNode1> >,
-        common::Virtual<BodyNodeSpecializedFor<OtherSpecNodes...> > > {};
+        common::Virtual<BodyNodeSpecializedFor<OtherSpecNodes...> > > {
+};
 
 //==============================================================================
 /// Declaration of the variadic template
 template <class... OtherSpecNodes>
-class SkeletonSpecializedFor {};
+class SkeletonSpecializedFor {
+};
 
 //==============================================================================
 /// SkeletonSpecializedForNode allows classes that inherit Skeleton to
@@ -209,7 +212,8 @@ template <class SpecNode1, class... OtherSpecNodes>
 class SkeletonSpecializedFor<SpecNode1, OtherSpecNodes...>
   : public NodeManagerJoinerForSkeleton<
         common::Virtual<SkeletonSpecializedFor<SpecNode1> >,
-        common::Virtual<SkeletonSpecializedFor<OtherSpecNodes...> > > {};
+        common::Virtual<SkeletonSpecializedFor<OtherSpecNodes...> > > {
+};
 
 } // namespace dynamics
 } // namespace dart

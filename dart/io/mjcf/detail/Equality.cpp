@@ -40,17 +40,20 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-std::size_t Equality::getNumWelds() const {
+std::size_t Equality::getNumWelds() const
+{
   return mWelds.size();
 }
 
 //==============================================================================
-const Weld& Equality::getWeld(std::size_t index) const {
+const Weld& Equality::getWeld(std::size_t index) const
+{
   return mWelds[index];
 }
 
 //==============================================================================
-Errors Equality::read(tinyxml2::XMLElement* element, const Defaults& defaults) {
+Errors Equality::read(tinyxml2::XMLElement* element, const Defaults& defaults)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "equality") {

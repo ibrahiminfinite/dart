@@ -43,29 +43,34 @@ namespace dynamics {
 
 //==============================================================================
 ConeShape::ConeShape(double radius, double height)
-  : Shape(CONE), mRadius(radius), mHeight(height) {
+  : Shape(CONE), mRadius(radius), mHeight(height)
+{
   assert(0.0 < radius);
   assert(0.0 < height);
 }
 
 //==============================================================================
-const std::string& ConeShape::getType() const {
+const std::string& ConeShape::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& ConeShape::getStaticType() {
+const std::string& ConeShape::getStaticType()
+{
   static const std::string type("ConeShape");
   return type;
 }
 
 //==============================================================================
-double ConeShape::getRadius() const {
+double ConeShape::getRadius() const
+{
   return mRadius;
 }
 
 //==============================================================================
-void ConeShape::setRadius(double radius) {
+void ConeShape::setRadius(double radius)
+{
   assert(0.0 < radius);
   mRadius = radius;
   mIsBoundingBoxDirty = true;
@@ -75,12 +80,14 @@ void ConeShape::setRadius(double radius) {
 }
 
 //==============================================================================
-double ConeShape::getHeight() const {
+double ConeShape::getHeight() const
+{
   return mHeight;
 }
 
 //==============================================================================
-void ConeShape::setHeight(double height) {
+void ConeShape::setHeight(double height)
+{
   assert(0.0 < height);
   mHeight = height;
   mIsBoundingBoxDirty = true;
@@ -90,13 +97,15 @@ void ConeShape::setHeight(double height) {
 }
 
 //==============================================================================
-double ConeShape::computeVolume(double radius, double height) {
-  return (1.0 / 3.0) * math::constantsd::pi() * std::pow(radius, 2) * height;
+double ConeShape::computeVolume(double radius, double height)
+{
+  return (1.0 / 3.0) * math::pi() * std::pow(radius, 2) * height;
 }
 
 //==============================================================================
 Eigen::Matrix3d ConeShape::computeInertia(
-    double radius, double height, double mass) {
+    double radius, double height, double mass)
+{
   // Reference: https://en.wikipedia.org/wiki/List_of_moments_of_inertia
 
   const auto radius2 = radius * radius;
@@ -109,7 +118,8 @@ Eigen::Matrix3d ConeShape::computeInertia(
 }
 
 //==============================================================================
-void ConeShape::updateBoundingBox() const {
+void ConeShape::updateBoundingBox() const
+{
   const Eigen::Vector3d corner(mRadius, mRadius, mRadius + 0.5 * mHeight);
 
   mBoundingBox.setMin(-corner);
@@ -119,13 +129,15 @@ void ConeShape::updateBoundingBox() const {
 }
 
 //==============================================================================
-void ConeShape::updateVolume() const {
+void ConeShape::updateVolume() const
+{
   mVolume = computeVolume(mRadius, mHeight);
   mIsVolumeDirty = false;
 }
 
 //==============================================================================
-Eigen::Matrix3d ConeShape::computeInertia(double mass) const {
+Eigen::Matrix3d ConeShape::computeInertia(double mass) const
+{
   return computeInertia(mRadius, mHeight, mass);
 }
 

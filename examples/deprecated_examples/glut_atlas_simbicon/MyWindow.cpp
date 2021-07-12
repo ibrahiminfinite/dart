@@ -36,18 +36,21 @@
 
 //==============================================================================
 MyWindow::MyWindow(Controller* _controller)
-  : SimWindow(), mController(_controller) {
+  : SimWindow(), mController(_controller)
+{
   mForce = Eigen::Vector3d::Zero();
   mImpulseDuration = 0.0;
 }
 
 //==============================================================================
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
   delete mController;
 }
 
 //==============================================================================
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   // External force
   mWorld->getSkeleton("drc_skeleton")
       ->getBodyNode("pelvis")
@@ -68,7 +71,8 @@ void MyWindow::timeStepping() {
 }
 
 //==============================================================================
-void MyWindow::drawSkels() {
+void MyWindow::drawSkels()
+{
   //  glEnable(GL_LIGHTING);
   //  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -88,7 +92,8 @@ void MyWindow::drawSkels() {
 }
 
 //==============================================================================
-void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
+void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   switch (_key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;

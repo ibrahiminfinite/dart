@@ -47,7 +47,8 @@ SupportPolygonVisual::SupportPolygonVisual(
     const dart::dynamics::SkeletonPtr& skeleton, double elevation)
   : mSkeleton(skeleton),
     mTreeIndex(dart::dynamics::INVALID_INDEX),
-    mElevation(elevation) {
+    mElevation(elevation)
+{
   initialize();
 }
 
@@ -56,43 +57,51 @@ SupportPolygonVisual::SupportPolygonVisual(
     const dart::dynamics::SkeletonPtr& skeleton,
     std::size_t treeIndex,
     double elevation)
-  : mSkeleton(skeleton), mTreeIndex(treeIndex), mElevation(elevation) {
+  : mSkeleton(skeleton), mTreeIndex(treeIndex), mElevation(elevation)
+{
   initialize();
 }
 
 //==============================================================================
 void SupportPolygonVisual::setSkeleton(
-    const dart::dynamics::SkeletonPtr& skeleton) {
+    const dart::dynamics::SkeletonPtr& skeleton)
+{
   mSkeleton = skeleton;
 }
 
 //==============================================================================
-dart::dynamics::SkeletonPtr SupportPolygonVisual::getSkeleton() const {
+dart::dynamics::SkeletonPtr SupportPolygonVisual::getSkeleton() const
+{
   return mSkeleton.lock();
 }
 
 //==============================================================================
-void SupportPolygonVisual::visualizeWholeSkeleton() {
+void SupportPolygonVisual::visualizeWholeSkeleton()
+{
   mTreeIndex = dart::dynamics::INVALID_INDEX;
 }
 
 //==============================================================================
-void SupportPolygonVisual::visualizeTree(std::size_t treeIndex) {
+void SupportPolygonVisual::visualizeTree(std::size_t treeIndex)
+{
   mTreeIndex = treeIndex;
 }
 
 //==============================================================================
-void SupportPolygonVisual::setDisplayElevation(double elevation) {
+void SupportPolygonVisual::setDisplayElevation(double elevation)
+{
   mElevation = elevation;
 }
 
 //==============================================================================
-double SupportPolygonVisual::getDisplayElevation() const {
+double SupportPolygonVisual::getDisplayElevation() const
+{
   return mElevation;
 }
 
 //==============================================================================
-void SupportPolygonVisual::displayPolygon(bool display) {
+void SupportPolygonVisual::displayPolygon(bool display)
+{
   if (mDisplayPolygon == display)
     return;
 
@@ -105,19 +114,22 @@ void SupportPolygonVisual::displayPolygon(bool display) {
 }
 
 //==============================================================================
-void SupportPolygonVisual::setPolygonColor(const Eigen::Vector4d& color) {
+void SupportPolygonVisual::setPolygonColor(const Eigen::Vector4d& color)
+{
   (*mPolygonColor)[0] = ::osg::Vec4(color[0], color[1], color[2], color[3]);
   mPolygonGeom->setColorArray(mPolygonColor, ::osg::Array::BIND_OVERALL);
 }
 
 //==============================================================================
-Eigen::Vector4d SupportPolygonVisual::getPolygonColor() const {
+Eigen::Vector4d SupportPolygonVisual::getPolygonColor() const
+{
   const ::osg::Vec4& c = (*mPolygonColor)[0];
   return Eigen::Vector4d(c[0], c[1], c[2], c[3]);
 }
 
 //==============================================================================
-void SupportPolygonVisual::displayCentroid(bool display) {
+void SupportPolygonVisual::displayCentroid(bool display)
+{
   if (mDisplayCentroid == display)
     return;
 
@@ -130,12 +142,14 @@ void SupportPolygonVisual::displayCentroid(bool display) {
 }
 
 //==============================================================================
-bool SupportPolygonVisual::isCentroidDisplayed() const {
+bool SupportPolygonVisual::isCentroidDisplayed() const
+{
   return mDisplayCentroid;
 }
 
 //==============================================================================
-void SupportPolygonVisual::setCentroidRadius(double radius) {
+void SupportPolygonVisual::setCentroidRadius(double radius)
+{
   if (mCentroidRadius == radius)
     return;
 
@@ -147,12 +161,14 @@ void SupportPolygonVisual::setCentroidRadius(double radius) {
 }
 
 //==============================================================================
-double SupportPolygonVisual::getCentroidRadius() const {
+double SupportPolygonVisual::getCentroidRadius() const
+{
   return mCentroidRadius;
 }
 
 //==============================================================================
-void SupportPolygonVisual::displayCenterOfMass(bool display) {
+void SupportPolygonVisual::displayCenterOfMass(bool display)
+{
   if (mDisplayCOM == display)
     return;
 
@@ -165,12 +181,14 @@ void SupportPolygonVisual::displayCenterOfMass(bool display) {
 }
 
 //==============================================================================
-bool SupportPolygonVisual::isCenterOfMassDisplayed() const {
+bool SupportPolygonVisual::isCenterOfMassDisplayed() const
+{
   return mDisplayCOM;
 }
 
 //==============================================================================
-void SupportPolygonVisual::setCenterOfMassRadius(double radius) {
+void SupportPolygonVisual::setCenterOfMassRadius(double radius)
+{
   if (mComRadius == radius)
     return;
 
@@ -182,32 +200,38 @@ void SupportPolygonVisual::setCenterOfMassRadius(double radius) {
 }
 
 //==============================================================================
-double SupportPolygonVisual::getCenterOfMassRadius() const {
+double SupportPolygonVisual::getCenterOfMassRadius() const
+{
   return mComRadius;
 }
 
 //==============================================================================
-void SupportPolygonVisual::setValidCOMColor(const Eigen::Vector4d& color) {
+void SupportPolygonVisual::setValidCOMColor(const Eigen::Vector4d& color)
+{
   mValidColor = color;
 }
 
 //==============================================================================
-const Eigen::Vector4d& SupportPolygonVisual::getValidCOMColor() const {
+const Eigen::Vector4d& SupportPolygonVisual::getValidCOMColor() const
+{
   return mValidColor;
 }
 
 //==============================================================================
-void SupportPolygonVisual::setInvalidCOMColor(const Eigen::Vector4d& color) {
+void SupportPolygonVisual::setInvalidCOMColor(const Eigen::Vector4d& color)
+{
   mInvalidColor = color;
 }
 
 //==============================================================================
-const Eigen::Vector4d& SupportPolygonVisual::getInvalidCOMColor() const {
+const Eigen::Vector4d& SupportPolygonVisual::getInvalidCOMColor() const
+{
   return mInvalidColor;
 }
 
 //==============================================================================
-void SupportPolygonVisual::refresh() {
+void SupportPolygonVisual::refresh()
+{
   const dart::dynamics::SkeletonPtr& skel = mSkeleton.lock();
   if (nullptr == skel)
     return;
@@ -308,7 +332,8 @@ void SupportPolygonVisual::refresh() {
 }
 
 //==============================================================================
-void SupportPolygonVisual::initialize() {
+void SupportPolygonVisual::initialize()
+{
   mDisplayPolygon = true;
   mPolygonGeode = new ::osg::Geode;
   mPolygonGeode->getOrCreateStateSet()->setMode(

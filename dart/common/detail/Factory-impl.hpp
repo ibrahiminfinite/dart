@@ -47,7 +47,8 @@ namespace detail {
 /// other than std::unique_ptr and std::shared_ptr.
 template <typename T, typename HeldT, typename... Args>
 struct DefaultCreator {
-  static HeldT run(Args&&... args) {
+  static HeldT run(Args&&... args)
+  {
     return HeldT(new T(std::forward<Args>(args)...));
   }
 };
@@ -55,7 +56,8 @@ struct DefaultCreator {
 //==============================================================================
 template <typename T, typename... Args>
 struct DefaultCreator<T, std::unique_ptr<T>, Args...> {
-  static std::unique_ptr<T> run(Args&&... args) {
+  static std::unique_ptr<T> run(Args&&... args)
+  {
     return std::make_unique<T>(std::forward<Args>(args)...);
   }
 };
@@ -63,7 +65,8 @@ struct DefaultCreator<T, std::unique_ptr<T>, Args...> {
 //==============================================================================
 template <typename T, typename... Args>
 struct DefaultCreator<T, std::shared_ptr<T>, Args...> {
-  static std::shared_ptr<T> run(Args&&... args) {
+  static std::shared_ptr<T> run(Args&&... args)
+  {
     return std::make_shared<T>(std::forward<Args>(args)...);
   }
 };
@@ -76,7 +79,8 @@ struct DefaultCreator<T, std::shared_ptr<T>, Args...> {
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
 struct Factory<KeyT, BaseT, HeldT, Args...>::EnumClassHash {
   template <typename T>
-  std::size_t operator()(T t) const {
+  std::size_t operator()(T t) const
+  {
     return static_cast<std::size_t>(t);
   }
 };
@@ -84,32 +88,37 @@ struct Factory<KeyT, BaseT, HeldT, Args...>::EnumClassHash {
 //==============================================================================
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
 void Factory<KeyT, BaseT, HeldT, Args...>::registerCreator(
-    const KeyT& key, Creator creator) {
+    const KeyT& key, Creator creator)
+{
   mCreatorMap[key] = std::move(creator);
 }
 
 //==============================================================================
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
 template <typename Derived>
-void Factory<KeyT, BaseT, HeldT, Args...>::registerCreator(const KeyT& key) {
+void Factory<KeyT, BaseT, HeldT, Args...>::registerCreator(const KeyT& key)
+{
   return registerCreator(key, &Factory::defaultCreator<Derived>);
 }
 
 //==============================================================================
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
-void Factory<KeyT, BaseT, HeldT, Args...>::unregisterCreator(const KeyT& key) {
+void Factory<KeyT, BaseT, HeldT, Args...>::unregisterCreator(const KeyT& key)
+{
   mCreatorMap.erase(key);
 }
 
 //==============================================================================
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
-void Factory<KeyT, BaseT, HeldT, Args...>::unregisterAllCreators() {
+void Factory<KeyT, BaseT, HeldT, Args...>::unregisterAllCreators()
+{
   mCreatorMap.clear();
 }
 
 //==============================================================================
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
-bool Factory<KeyT, BaseT, HeldT, Args...>::canCreate(const KeyT& key) {
+bool Factory<KeyT, BaseT, HeldT, Args...>::canCreate(const KeyT& key)
+{
   const auto it = mCreatorMap.find(key);
 
   return (it != mCreatorMap.end());
@@ -118,7 +127,8 @@ bool Factory<KeyT, BaseT, HeldT, Args...>::canCreate(const KeyT& key) {
 //==============================================================================
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
 HeldT Factory<KeyT, BaseT, HeldT, Args...>::create(
-    const KeyT& key, Args&&... args) {
+    const KeyT& key, Args&&... args)
+{
   const auto it = mCreatorMap.find(key);
 
   const auto found = (it != mCreatorMap.end());
@@ -136,7 +146,8 @@ HeldT Factory<KeyT, BaseT, HeldT, Args...>::create(
 
 //==============================================================================
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
-std::unordered_set<KeyT> Factory<KeyT, BaseT, HeldT, Args...>::getKeys() const {
+std::unordered_set<KeyT> Factory<KeyT, BaseT, HeldT, Args...>::getKeys() const
+{
   std::unordered_set<KeyT> keys;
   for (const auto& entry : mCreatorMap)
     keys.insert(entry.first);
@@ -147,7 +158,8 @@ std::unordered_set<KeyT> Factory<KeyT, BaseT, HeldT, Args...>::getKeys() const {
 //==============================================================================
 template <typename KeyT, typename BaseT, typename HeldT, typename... Args>
 template <typename Derived>
-HeldT Factory<KeyT, BaseT, HeldT, Args...>::defaultCreator(Args&&... args) {
+HeldT Factory<KeyT, BaseT, HeldT, Args...>::defaultCreator(Args&&... args)
+{
   return detail::DefaultCreator<Derived, HeldT, Args...>::run(
       std::forward<Args>(args)...);
 }
@@ -160,7 +172,8 @@ template <
     typename HeldT,
     typename... Args>
 FactoryRegistrar<KeyT, BaseT, DerivedT, HeldT, Args...>::FactoryRegistrar(
-    const KeyT& key, Creator creator) {
+    const KeyT& key, Creator creator)
+{
   SingletonFactory::getSingleton().registerCreator(key, creator);
 }
 
@@ -172,7 +185,8 @@ template <
     typename HeldT,
     typename... Args>
 FactoryRegistrar<KeyT, BaseT, DerivedT, HeldT, Args...>::FactoryRegistrar(
-    const KeyT& key) {
+    const KeyT& key)
+{
   SingletonFactory::getSingleton().template registerCreator<DerivedT>(key);
 }
 

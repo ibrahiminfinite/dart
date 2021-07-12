@@ -37,7 +37,8 @@ namespace dynamics {
 
 //==============================================================================
 RaycastOption::RaycastOption(bool enableAllHits, bool sortByClosest)
-  : mEnableAllHits(enableAllHits), mSortByClosest(sortByClosest) {
+  : mEnableAllHits(enableAllHits), mSortByClosest(sortByClosest)
+{
   // Do nothing
 }
 

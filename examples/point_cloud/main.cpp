@@ -53,7 +53,8 @@ public:
       simulation::WorldPtr world, dynamics::SkeletonPtr robot)
     : gui::osg::RealTimeWorldNode(std::move(world)),
       mSampleingMode(SAMPLE_ON_ROBOT),
-      mRobot(std::move(robot)) {
+      mRobot(std::move(robot))
+  {
     auto pointCloudFrame = mWorld->getSimpleFrame("point cloud");
     auto voxelGridFrame = mWorld->getSimpleFrame("voxel");
 
@@ -70,16 +71,19 @@ public:
     assert(mVoxelGridShape);
   }
 
-  void setPointSamplingMode(PointSamplingMode mode) {
+  void setPointSamplingMode(PointSamplingMode mode)
+  {
     mSampleingMode = mode;
   }
 
-  PointSamplingMode getPointSamplingMode() const {
+  PointSamplingMode getPointSamplingMode() const
+  {
     return mSampleingMode;
   }
 
   // Triggered at the beginning of each simulation step
-  void customPreStep() override {
+  void customPreStep() override
+  {
     if (!mRobot)
       return;
 
@@ -132,32 +136,39 @@ public:
     mVoxelGridShape->updateOccupancy(pointCloud, sensorPos);
   }
 
-  dynamics::VisualAspect* getPointCloudVisualAspect() {
+  dynamics::VisualAspect* getPointCloudVisualAspect()
+  {
     return mPointCloudVisualAspect;
   }
 
-  dynamics::VisualAspect* getVoxelGridVisualAspect() {
+  dynamics::VisualAspect* getVoxelGridVisualAspect()
+  {
     return mVoxelGridVisualAspect;
   }
 
-  void setUpdate(bool update) {
+  void setUpdate(bool update)
+  {
     mUpdate = update;
   }
 
-  bool getUpdate() const {
+  bool getUpdate() const
+  {
     return mUpdate;
   }
 
-  std::shared_ptr<dynamics::PointCloudShape> getPointCloudShape() {
+  std::shared_ptr<dynamics::PointCloudShape> getPointCloudShape()
+  {
     return mPointCloudShape;
   }
 
-  std::shared_ptr<const dynamics::PointCloudShape> getPointCloudShape() const {
+  std::shared_ptr<const dynamics::PointCloudShape> getPointCloudShape() const
+  {
     return mPointCloudShape;
   }
 
 protected:
-  octomap::Pointcloud generatePointCloudOnRobot(std::size_t numPoints) {
+  octomap::Pointcloud generatePointCloudOnRobot(std::size_t numPoints)
+  {
     octomap::Pointcloud pointCloud;
     pointCloud.reserve(numPoints);
 
@@ -214,7 +225,8 @@ protected:
   octomap::Pointcloud generatePointCloudInBox(
       std::size_t numPoints,
       const Eigen::Vector3d& min = Eigen::Vector3d::Constant(-0.5),
-      const Eigen::Vector3d& max = Eigen::Vector3d::Constant(0.5)) {
+      const Eigen::Vector3d& max = Eigen::Vector3d::Constant(0.5))
+  {
     octomap::Pointcloud pointCloud;
     pointCloud.reserve(numPoints);
 
@@ -230,7 +242,8 @@ protected:
   }
 
   std::vector<Eigen::Vector4d, Eigen::aligned_allocator<Eigen::Vector4d>>
-  generatePointCloudColors(const octomap::Pointcloud& pointCloud) {
+  generatePointCloudColors(const octomap::Pointcloud& pointCloud)
+  {
     const auto& points = mPointCloudShape->getPoints();
     double minZ = std::numeric_limits<double>::max();
     double maxZ = std::numeric_limits<double>::min();
@@ -277,11 +290,13 @@ public:
       dart::gui::osg::ImGuiViewer* viewer,
       PointCloudWorld* node,
       gui::osg::GridVisual* grid)
-    : mViewer(viewer), mNode(node), mGrid(grid) {
+    : mViewer(viewer), mNode(node), mGrid(grid)
+  {
     // Do nothing
   }
 
-  void render() override {
+  void render() override
+  {
     ImGui::SetNextWindowPos(ImVec2(10, 20));
     ImGui::SetNextWindowSize(ImVec2(360, 600));
     ImGui::SetNextWindowBgAlpha(0.5f);
@@ -583,7 +598,8 @@ protected:
   osg::ref_ptr<gui::osg::GridVisual> mGrid;
 };
 
-dynamics::SkeletonPtr createRobot(const std::string& name) {
+dynamics::SkeletonPtr createRobot(const std::string& name)
+{
   auto urdfParser = dart::io::DartLoader();
 
   // Load the robot
@@ -599,7 +615,8 @@ dynamics::SkeletonPtr createRobot(const std::string& name) {
   return robot;
 }
 
-dynamics::SkeletonPtr createGround() {
+dynamics::SkeletonPtr createGround()
+{
   auto urdfParser = dart::io::DartLoader();
 
   auto ground = urdfParser.parseSkeleton("dart://sample/urdf/KR5/ground.urdf");
@@ -608,14 +625,14 @@ dynamics::SkeletonPtr createGround() {
   Eigen::Isometry3d ground_tf
       = ground->getJoint(0)->getTransformFromParentBodyNode();
   ground_tf.pretranslate(Eigen::Vector3d(0, 0, 0.5));
-  ground_tf.rotate(
-      Eigen::AngleAxisd(constantsd::pi() / 2, Eigen::Vector3d(1, 0, 0)));
+  ground_tf.rotate(Eigen::AngleAxisd(pi() / 2, Eigen::Vector3d(1, 0, 0)));
   ground->getJoint(0)->setTransformFromParentBodyNode(ground_tf);
 
   return ground;
 }
 
-dynamics::SimpleFramePtr createVoxelFrame(double resolution = 0.01) {
+dynamics::SimpleFramePtr createVoxelFrame(double resolution = 0.01)
+{
   auto voxelShape
       = ::std::make_shared<dart::dynamics::VoxelGridShape>(resolution);
   auto voxelFrame = ::dart::dynamics::SimpleFrame::createShared(
@@ -628,7 +645,8 @@ dynamics::SimpleFramePtr createVoxelFrame(double resolution = 0.01) {
   return voxelFrame;
 }
 
-dynamics::SimpleFramePtr createPointCloudFrame() {
+dynamics::SimpleFramePtr createPointCloudFrame()
+{
   auto pointCloudShape
       = ::std::make_shared<::dart::dynamics::PointCloudShape>();
   pointCloudShape->setPointShapeType(::dart::dynamics::PointCloudShape::BOX);
@@ -642,7 +660,8 @@ dynamics::SimpleFramePtr createPointCloudFrame() {
   return pointCloudFrame;
 }
 
-dynamics::SimpleFramePtr createSensorFrame() {
+dynamics::SimpleFramePtr createSensorFrame()
+{
   auto sphereShape = ::std::make_shared<dart::dynamics::SphereShape>(0.05);
   auto sensorFrame = ::dart::dynamics::SimpleFrame::createShared(
       dart::dynamics::Frame::World());
@@ -654,7 +673,8 @@ dynamics::SimpleFramePtr createSensorFrame() {
   return sensorFrame;
 }
 
-int main() {
+int main()
+{
   auto world = dart::simulation::World::create();
   world->setGravity(Eigen::Vector3d::Zero());
 

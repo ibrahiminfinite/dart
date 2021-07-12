@@ -62,7 +62,8 @@ static detail::OdeGeom* createOdeGeom(
     OdeCollisionObject* collObj, const dynamics::ShapeFrame* shapeFrame);
 
 //==============================================================================
-OdeCollisionObject::~OdeCollisionObject() {
+OdeCollisionObject::~OdeCollisionObject()
+{
   if (mBodyId)
     dBodyDestroy(mBodyId);
 }
@@ -73,7 +74,8 @@ OdeCollisionObject::OdeCollisionObject(
     const dynamics::ShapeFrame* shapeFrame)
   : CollisionObject(collisionDetector, shapeFrame),
     mOdeGeom(nullptr),
-    mBodyId(nullptr) {
+    mBodyId(nullptr)
+{
   // Create detail::OdeGeom according to the shape type.
   // The geometry may have a transform assigned to it which is to
   // be treated as relative transform to the main body.
@@ -105,7 +107,8 @@ OdeCollisionObject::OdeCollisionObject(
 }
 
 //==============================================================================
-OdeCollisionObject& OdeCollisionObject::operator=(OdeCollisionObject&& other) {
+OdeCollisionObject& OdeCollisionObject::operator=(OdeCollisionObject&& other)
+{
   // This should only be used for refreshing the collision objects, so the
   // detector and the shape frame should never need to change
   assert(mCollisionDetector == other.mCollisionDetector);
@@ -125,7 +128,8 @@ OdeCollisionObject& OdeCollisionObject::operator=(OdeCollisionObject&& other) {
 }
 
 //==============================================================================
-void OdeCollisionObject::updateEngineData() {
+void OdeCollisionObject::updateEngineData()
+{
   mOdeGeom->updateEngineData();
 
   // If body id is nullptr, this object is immobile. Immobile geom doesn't need
@@ -150,18 +154,21 @@ void OdeCollisionObject::updateEngineData() {
 }
 
 //==============================================================================
-dBodyID OdeCollisionObject::getOdeBodyId() const {
+dBodyID OdeCollisionObject::getOdeBodyId() const
+{
   return mBodyId;
 }
 
 //==============================================================================
-dGeomID OdeCollisionObject::getOdeGeomId() const {
+dGeomID OdeCollisionObject::getOdeGeomId() const
+{
   return mOdeGeom->getOdeGeomId();
 }
 
 //==============================================================================
 detail::OdeGeom* createOdeGeom(
-    OdeCollisionObject* collObj, const dynamics::ShapeFrame* shapeFrame) {
+    OdeCollisionObject* collObj, const dynamics::ShapeFrame* shapeFrame)
+{
   using dynamics::BoxShape;
   using dynamics::CapsuleShape;
   using dynamics::CylinderShape;

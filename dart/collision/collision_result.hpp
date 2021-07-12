@@ -39,6 +39,7 @@
 namespace dart {
 namespace collision {
 
+/// Structure to store the result of narrow phase collision checkings
 template <typename S_>
 class CollisionResult {
 public:
@@ -48,7 +49,7 @@ public:
   void add_contact(const Contact<S>& contact);
 
   /// Returns number of contacts
-  std::size_t get_num_contacts() const;
+  int get_num_contacts() const;
 
   /// Returns the index-th contact
   Contact<S>& get_mutable_contact(int index);

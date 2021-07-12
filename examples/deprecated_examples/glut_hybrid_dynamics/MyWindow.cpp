@@ -33,15 +33,18 @@
 #include "MyWindow.hpp"
 
 //==============================================================================
-MyWindow::MyWindow() : SimWindow(), mHarnessOn(false) {
+MyWindow::MyWindow() : SimWindow(), mHarnessOn(false)
+{
 }
 
 //==============================================================================
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
 }
 
 //==============================================================================
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   dart::dynamics::SkeletonPtr skel = mWorld->getSkeleton(1);
 
   std::size_t index0 = skel->getJoint("j_scapula_left")->getIndexInSkeleton(0);
@@ -64,7 +67,8 @@ void MyWindow::timeStepping() {
 }
 
 //==============================================================================
-void MyWindow::drawWorld() const {
+void MyWindow::drawWorld() const
+{
   glEnable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -72,7 +76,8 @@ void MyWindow::drawWorld() const {
 }
 
 //==============================================================================
-void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
+void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   switch (_key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;

@@ -45,7 +45,8 @@ public:
 
   bool ignoresCollision(
       const dart::dynamics::CollisionObject* object1,
-      const dart::dynamics::CollisionObject* object2) const override {
+      const dart::dynamics::CollisionObject* object2) const override
+  {
     PYBIND11_OVERLOAD_PURE(
         bool,
         CollisionFilterBase,
@@ -57,7 +58,8 @@ public:
   }
 };
 
-void CollisionFilter(py::module& m) {
+void CollisionFilter(py::module& m)
+{
   ::py::class_<
       dart::dynamics::CollisionFilter,
       PyCollisionFilter<>,

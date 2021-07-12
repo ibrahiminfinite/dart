@@ -40,7 +40,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void InteractiveFrame(py::module& m) {
+void InteractiveFrame(py::module& m)
+{
   auto it
       = ::py::class_<
             dart::gui::osg::InteractiveTool,

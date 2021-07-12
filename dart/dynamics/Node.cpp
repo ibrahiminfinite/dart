@@ -44,63 +44,75 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-NodeDestructor::NodeDestructor(Node* _node) : mNode(_node) {
+NodeDestructor::NodeDestructor(Node* _node) : mNode(_node)
+{
   // Do nothing
 }
 
 //==============================================================================
-NodeDestructor::~NodeDestructor() {
+NodeDestructor::~NodeDestructor()
+{
   delete mNode;
 }
 
 //==============================================================================
-Node* NodeDestructor::getNode() const {
+Node* NodeDestructor::getNode() const
+{
   return mNode;
 }
 
 //==============================================================================
-void Node::setNodeState(const State& /*otherState*/) {
+void Node::setNodeState(const State& /*otherState*/)
+{
   // Do nothing
 }
 
 //==============================================================================
-std::unique_ptr<Node::State> Node::getNodeState() const {
+std::unique_ptr<Node::State> Node::getNodeState() const
+{
   return nullptr;
 }
 
 //==============================================================================
-void Node::copyNodeStateTo(std::unique_ptr<State>& outputState) const {
+void Node::copyNodeStateTo(std::unique_ptr<State>& outputState) const
+{
   outputState = getNodeState();
 }
 
 //==============================================================================
-void Node::setNodeProperties(const Properties& /*properties*/) {
+void Node::setNodeProperties(const Properties& /*properties*/)
+{
   // Do nothing
 }
 
 //==============================================================================
-std::unique_ptr<Node::Properties> Node::getNodeProperties() const {
+std::unique_ptr<Node::Properties> Node::getNodeProperties() const
+{
   return nullptr;
 }
 
 //==============================================================================
 void Node::copyNodePropertiesTo(
-    std::unique_ptr<Properties>& outputProperties) const {
+    std::unique_ptr<Properties>& outputProperties) const
+{
   outputProperties = getNodeProperties();
 }
 
 //==============================================================================
-BodyNodePtr Node::getBodyNodePtr() {
+BodyNodePtr Node::getBodyNodePtr()
+{
   return mBodyNode;
 }
 
 //==============================================================================
-ConstBodyNodePtr Node::getBodyNodePtr() const {
+ConstBodyNodePtr Node::getBodyNodePtr() const
+{
   return mBodyNode;
 }
 
 //==============================================================================
-bool Node::isRemoved() const {
+bool Node::isRemoved() const
+{
   if (nullptr == mBodyNode) {
     REPORT_INVALID_NODE(isRemoved);
     return true;
@@ -110,17 +122,20 @@ bool Node::isRemoved() const {
 }
 
 //==============================================================================
-std::shared_ptr<Skeleton> Node::getSkeleton() {
+std::shared_ptr<Skeleton> Node::getSkeleton()
+{
   return mBodyNode->getSkeleton();
 }
 
 //==============================================================================
-std::shared_ptr<const Skeleton> Node::getSkeleton() const {
+std::shared_ptr<const Skeleton> Node::getSkeleton() const
+{
   return mBodyNode->getSkeleton();
 }
 
 //==============================================================================
-std::shared_ptr<NodeDestructor> Node::getOrCreateDestructor() {
+std::shared_ptr<NodeDestructor> Node::getOrCreateDestructor()
+{
   std::shared_ptr<NodeDestructor> destructor = mDestructor.lock();
   if (nullptr == destructor) {
     destructor = std::shared_ptr<NodeDestructor>(new NodeDestructor(this));
@@ -136,7 +151,8 @@ Node::Node(BodyNode* _bn)
     mAmAttached(false),
     mIndexInBodyNode(INVALID_INDEX),
     mIndexInSkeleton(INVALID_INDEX),
-    mIndexInTree(INVALID_INDEX) {
+    mIndexInTree(INVALID_INDEX)
+{
   if (nullptr == mBodyNode) {
     REPORT_INVALID_NODE(Node);
     return;
@@ -147,7 +163,8 @@ Node::Node(BodyNode* _bn)
 }
 
 //==============================================================================
-std::string Node::registerNameChange(const std::string& newName) {
+std::string Node::registerNameChange(const std::string& newName)
+{
   const SkeletonPtr& skel = mBodyNode->getSkeleton();
   if (nullptr == skel)
     return newName;
@@ -163,7 +180,8 @@ std::string Node::registerNameChange(const std::string& newName) {
 }
 
 //==============================================================================
-void Node::attach() {
+void Node::attach()
+{
   if (nullptr == mBodyNode) {
     REPORT_INVALID_NODE(attach);
     return;
@@ -214,7 +232,8 @@ void Node::attach() {
 }
 
 //==============================================================================
-void Node::stageForRemoval() {
+void Node::stageForRemoval()
+{
   if (nullptr == mBodyNode) {
     REPORT_INVALID_NODE(stageForRemoval);
     return;

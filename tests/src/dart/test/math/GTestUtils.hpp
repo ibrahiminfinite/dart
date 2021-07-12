@@ -224,7 +224,8 @@ struct EqualsImpl {
   static bool run(
       const Eigen::DenseBase<DerivedA>& expected,
       const Eigen::DenseBase<DerivedB>& actual,
-      typename DerivedA::Scalar tol) {
+      typename DerivedA::Scalar tol)
+  {
     // Get the matrix sizes and sanity check the call
     const std::size_t n1 = expected.cols(), m1 = expected.rows();
     const std::size_t n2 = actual.cols(), m2 = actual.rows();
@@ -262,7 +263,8 @@ struct EqualsImpl<
   static bool run(
       const Eigen::DenseBase<DerivedA>& expected,
       const Eigen::DenseBase<DerivedB>& actual,
-      typename DerivedA::Scalar tol) {
+      typename DerivedA::Scalar tol)
+  {
     // Get the matrix sizes and sanity check the call
     const std::size_t n1 = expected.cols(), m1 = expected.rows();
     const std::size_t n2 = actual.cols(), m2 = actual.rows();
@@ -299,15 +301,15 @@ template <typename T1, typename T2>
 bool equals(
     const T1& expected,
     const T2& actual,
-    typename T1::Scalar tol = static_cast<typename T1::Scalar>(1e-5)) {
+    typename T1::Scalar tol = static_cast<typename T1::Scalar>(1e-5))
+{
   return detail::EqualsImpl<T1, T2>::run(expected, actual, tol);
 }
 
 //==============================================================================
 inline bool rotationEquals(
-    const Eigen::Matrix3d& rot1,
-    const Eigen::Matrix3d& rot2,
-    double tol = 1e-5) {
+    const Eigen::Matrix3d& rot1, const Eigen::Matrix3d& rot2, double tol = 1e-5)
+{
   const Eigen::Matrix3d rotError = rot1.transpose() * rot2;
   const Eigen::Vector3d error = dart::math::logMap(rotError);
   return (error.norm() < tol);
@@ -317,7 +319,8 @@ inline bool rotationEquals(
 inline bool equals(
     const Eigen::Isometry3d& tf1,
     const Eigen::Isometry3d& tf2,
-    double tol = 1e-5) {
+    double tol = 1e-5)
+{
   auto se3 = dart::math::logMap(tf1.inverse() * tf2);
   auto norm = se3.norm();
 
@@ -328,7 +331,8 @@ template <class T, class S>
 struct Case {
   using type = T;
 
-  static std::string GetParam() {
+  static std::string GetParam()
+  {
     return S::str;
   }
 };

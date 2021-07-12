@@ -47,7 +47,8 @@ T* Singleton<T>::mInstance = nullptr;
 //==============================================================================
 template <typename T>
 template <typename... Args>
-T& Singleton<T>::getSingleton(Args... _args) {
+T& Singleton<T>::getSingleton(Args... _args)
+{
   // http://stackoverflow.com/questions/1008019/c-singleton-design-pattern
 
   // Guaranteed to be destroyed and instantiated on first use.
@@ -62,7 +63,8 @@ T& Singleton<T>::getSingleton(Args... _args) {
 //==============================================================================
 template <typename T>
 template <typename... Args>
-T* Singleton<T>::getSingletonPtr(Args... _args) {
+T* Singleton<T>::getSingletonPtr(Args... _args)
+{
   return &getSingleton(std::forward<Args>(_args)...);
 }
 

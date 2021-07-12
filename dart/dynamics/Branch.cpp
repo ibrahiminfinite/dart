@@ -38,17 +38,20 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-Branch::Criteria::Criteria(BodyNode* _start) : mStart(_start) {
+Branch::Criteria::Criteria(BodyNode* _start) : mStart(_start)
+{
   // Do nothing
 }
 
 //==============================================================================
-std::vector<BodyNode*> Branch::Criteria::satisfy() const {
+std::vector<BodyNode*> Branch::Criteria::satisfy() const
+{
   return convert().satisfy();
 }
 
 //==============================================================================
-Linkage::Criteria Branch::Criteria::convert() const {
+Linkage::Criteria Branch::Criteria::convert() const
+{
   Linkage::Criteria criteria;
   criteria.mStart.mNode = mStart;
   criteria.mStart.mPolicy = Linkage::Criteria::DOWNSTREAM;
@@ -57,12 +60,14 @@ Linkage::Criteria Branch::Criteria::convert() const {
 }
 
 //==============================================================================
-Branch::Criteria::operator Linkage::Criteria() const {
+Branch::Criteria::operator Linkage::Criteria() const
+{
   return convert();
 }
 
 //==============================================================================
-Branch::Criteria Branch::Criteria::convert(const Linkage::Criteria& criteria) {
+Branch::Criteria Branch::Criteria::convert(const Linkage::Criteria& criteria)
+{
   BodyNodePtr startBodyNode = criteria.mStart.mNode.lock();
   if (!startBodyNode) {
     dtwarn << "[Chain::Criteria::convert] Failed in conversion because the "
@@ -76,19 +81,22 @@ Branch::Criteria Branch::Criteria::convert(const Linkage::Criteria& criteria) {
 
 //==============================================================================
 BranchPtr Branch::create(
-    const Branch::Criteria& _criteria, const std::string& _name) {
+    const Branch::Criteria& _criteria, const std::string& _name)
+{
   BranchPtr branch(new Branch(_criteria, _name));
   branch->mPtr = branch;
   return branch;
 }
 
 //==============================================================================
-BranchPtr Branch::cloneBranch() const {
+BranchPtr Branch::cloneBranch() const
+{
   return cloneBranch(getName());
 }
 
 //==============================================================================
-BranchPtr Branch::cloneBranch(const std::string& cloneName) const {
+BranchPtr Branch::cloneBranch(const std::string& cloneName) const
+{
   // Clone the skeleton (assuming one skeleton is involved)
   BodyNodePtr bodyNode = mCriteria.mStart.mNode.lock();
   if (!bodyNode) {
@@ -112,12 +120,14 @@ BranchPtr Branch::cloneBranch(const std::string& cloneName) const {
 }
 
 //==============================================================================
-MetaSkeletonPtr Branch::cloneMetaSkeleton(const std::string& cloneName) const {
+MetaSkeletonPtr Branch::cloneMetaSkeleton(const std::string& cloneName) const
+{
   return cloneBranch(cloneName);
 }
 
 //==============================================================================
-bool Branch::isStillBranch() const {
+bool Branch::isStillBranch() const
+{
   if (!isAssembled())
     return false;
 
@@ -132,12 +142,14 @@ bool Branch::isStillBranch() const {
 
 //==============================================================================
 Branch::Branch(const Branch::Criteria& _criteria, const std::string& _name)
-  : Linkage(_criteria, _name) {
+  : Linkage(_criteria, _name)
+{
   update();
 }
 
 //==============================================================================
-void Branch::update() {
+void Branch::update()
+{
   Linkage::update();
 
   mNumChildNodes.clear();

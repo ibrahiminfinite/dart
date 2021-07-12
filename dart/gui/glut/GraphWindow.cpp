@@ -49,17 +49,20 @@ namespace dart {
 namespace gui {
 namespace glut {
 
-GraphWindow::GraphWindow() : Win2D() {
+GraphWindow::GraphWindow() : Win2D()
+{
   mBackground[0] = 1.0;
   mBackground[1] = 1.0;
   mBackground[2] = 1.0;
   mBackground[3] = 1.0;
 }
 
-GraphWindow::~GraphWindow() {
+GraphWindow::~GraphWindow()
+{
 }
 
-void GraphWindow::draw() {
+void GraphWindow::draw()
+{
   mRI->setPenColor(Eigen::Vector3d(0.2, 0.8, 0.2));
   glPointSize(2);
   glMatrixMode(GL_MODELVIEW);
@@ -117,12 +120,14 @@ void GraphWindow::draw() {
   }
 }
 
-void GraphWindow::keyboard(unsigned char _key, int _x, int _y) {
+void GraphWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   Win2D::keyboard(_key, _x, _y);
   glutPostRedisplay();
 }
 
-void GraphWindow::setData(Eigen::VectorXd _data) {
+void GraphWindow::setData(Eigen::VectorXd _data)
+{
   mData = _data;
 }
 

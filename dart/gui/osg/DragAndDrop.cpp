@@ -55,23 +55,27 @@ DragAndDrop::DragAndDrop(Viewer* viewer, dart::dynamics::Entity* entity)
     mAmObstructable(true),
     mAmMoving(false),
     mRotationOption(RotationOption::HOLD_MODKEY),
-    mRotationModKey(::osgGA::GUIEventAdapter::MODKEY_CTRL) {
+    mRotationModKey(::osgGA::GUIEventAdapter::MODKEY_CTRL)
+{
   addSubject(mEntity);
   addSubject(mViewer);
 }
 
 //==============================================================================
-DragAndDrop::~DragAndDrop() {
+DragAndDrop::~DragAndDrop()
+{
   // Do nothing
 }
 
 //==============================================================================
-dart::dynamics::Entity* DragAndDrop::getEntity() const {
+dart::dynamics::Entity* DragAndDrop::getEntity() const
+{
   return mEntity;
 }
 
 //==============================================================================
-void DragAndDrop::update() {
+void DragAndDrop::update()
+{
   if (nullptr == mEntity)
     return;
 
@@ -111,28 +115,33 @@ void DragAndDrop::update() {
 }
 
 //==============================================================================
-void DragAndDrop::setObstructable(bool _obstructable) {
+void DragAndDrop::setObstructable(bool _obstructable)
+{
   mAmObstructable = _obstructable;
 }
 
 //==============================================================================
-bool DragAndDrop::isObstructable() const {
+bool DragAndDrop::isObstructable() const
+{
   return mAmObstructable;
 }
 
 //==============================================================================
-void DragAndDrop::release() {
+void DragAndDrop::release()
+{
   // Do nothing
 }
 
 //==============================================================================
-Eigen::Vector3d DragAndDrop::getConstrainedDx() const {
+Eigen::Vector3d DragAndDrop::getConstrainedDx() const
+{
   return mViewer->getDefaultEventHandler()->getDeltaCursor(
       mPickedPosition, mConstraintType, mVector);
 }
 
 //==============================================================================
-Eigen::AngleAxisd DragAndDrop::getConstrainedRotation() const {
+Eigen::AngleAxisd DragAndDrop::getConstrainedRotation() const
+{
   Eigen::Vector3d v1 = mPickedPosition - mPivot;
   Eigen::Vector3d v2;
 
@@ -167,51 +176,60 @@ Eigen::AngleAxisd DragAndDrop::getConstrainedRotation() const {
 }
 
 //==============================================================================
-void DragAndDrop::unconstrain() {
+void DragAndDrop::unconstrain()
+{
   mConstraintType = UNCONSTRAINED;
 }
 
 //==============================================================================
-void DragAndDrop::constrainToLine(const Eigen::Vector3d& slope) {
+void DragAndDrop::constrainToLine(const Eigen::Vector3d& slope)
+{
   mConstraintType = LINE_CONSTRAINT;
   mVector = slope;
 }
 
 //==============================================================================
-void DragAndDrop::constrainToPlane(const Eigen::Vector3d& normal) {
+void DragAndDrop::constrainToPlane(const Eigen::Vector3d& normal)
+{
   mConstraintType = PLANE_CONSTRAINT;
   mVector = normal;
 }
 
 //==============================================================================
-bool DragAndDrop::isMoving() const {
+bool DragAndDrop::isMoving() const
+{
   return mAmMoving;
 }
 
 //==============================================================================
-void DragAndDrop::setRotationOption(RotationOption option) {
+void DragAndDrop::setRotationOption(RotationOption option)
+{
   mRotationOption = option;
 }
 
 //==============================================================================
-DragAndDrop::RotationOption DragAndDrop::getRotationOption() const {
+DragAndDrop::RotationOption DragAndDrop::getRotationOption() const
+{
   return mRotationOption;
 }
 
 //==============================================================================
 void DragAndDrop::setRotationModKey(
-    ::osgGA::GUIEventAdapter::ModKeyMask rotationModKey) {
+    ::osgGA::GUIEventAdapter::ModKeyMask rotationModKey)
+{
   mRotationModKey = rotationModKey;
 }
 
 //==============================================================================
-::osgGA::GUIEventAdapter::ModKeyMask DragAndDrop::getRotationModKey() const {
+::osgGA::GUIEventAdapter::ModKeyMask DragAndDrop::getRotationModKey() const
+{
   return mRotationModKey;
 }
 
 //==============================================================================
 void DragAndDrop::handleDestructionNotification(
-    const dart::common::Subject* subscription) {
+    const dart::common::Subject* subscription)
+{
   if (mEntity == subscription)
     mViewer->disableDragAndDrop(this);
 
@@ -222,17 +240,20 @@ void DragAndDrop::handleDestructionNotification(
 //==============================================================================
 SimpleFrameDnD::SimpleFrameDnD(
     Viewer* viewer, dart::dynamics::SimpleFrame* frame)
-  : DragAndDrop(viewer, frame), mFrame(frame) {
+  : DragAndDrop(viewer, frame), mFrame(frame)
+{
   // Do nothing
 }
 
 //==============================================================================
-dart::dynamics::SimpleFrame* SimpleFrameDnD::getSimpleFrame() const {
+dart::dynamics::SimpleFrame* SimpleFrameDnD::getSimpleFrame() const
+{
   return mFrame;
 }
 
 //==============================================================================
-void SimpleFrameDnD::move() {
+void SimpleFrameDnD::move()
+{
   Eigen::Isometry3d tf(Eigen::Isometry3d::Identity());
 
   bool modkey_down
@@ -263,7 +284,8 @@ void SimpleFrameDnD::move() {
 }
 
 //==============================================================================
-void SimpleFrameDnD::saveState() {
+void SimpleFrameDnD::saveState()
+{
   mPivot = mFrame->getWorldTransform().translation();
   mSavedRotation = mFrame->getWorldTransform().rotation();
 }
@@ -273,17 +295,20 @@ SimpleFrameShapeDnD::SimpleFrameShapeDnD(
     Viewer* viewer,
     dart::dynamics::SimpleFrame* frame,
     dart::dynamics::Shape* shape)
-  : SimpleFrameDnD(viewer, frame), mShape(shape) {
+  : SimpleFrameDnD(viewer, frame), mShape(shape)
+{
   // Do nothing
 }
 
 //==============================================================================
-dart::dynamics::Shape* SimpleFrameShapeDnD::getShape() const {
+dart::dynamics::Shape* SimpleFrameShapeDnD::getShape() const
+{
   return mShape;
 }
 
 //==============================================================================
-void SimpleFrameShapeDnD::update() {
+void SimpleFrameShapeDnD::update()
+{
   // This is almost identical to the original DragAndDrop::update() except that
   // it also checks that the picked shape matches
 
@@ -321,7 +346,8 @@ void SimpleFrameShapeDnD::update() {
 
 //==============================================================================
 void SimpleFrameShapeDnD::handleDestructionNotification(
-    const dart::common::Subject* subscription) {
+    const dart::common::Subject* subscription)
+{
   DragAndDrop::handleDestructionNotification(subscription);
 
   if (mShape == subscription)
@@ -332,11 +358,13 @@ void SimpleFrameShapeDnD::handleDestructionNotification(
 class InteractiveFrameMouseEvent : public MouseEventHandler {
 public:
   InteractiveFrameMouseEvent(InteractiveFrame* frame)
-    : mFrame(frame), mHighlighting(false) {
+    : mFrame(frame), mHighlighting(false)
+  {
     addSubject(mFrame);
   }
 
-  void update() override {
+  void update() override
+  {
     if (!mFrame)
       return;
 
@@ -405,7 +433,8 @@ public:
   }
 
 protected:
-  void handleDestructionNotification(const Subject* _subject) override {
+  void handleDestructionNotification(const Subject* _subject) override
+  {
     if (_subject == mFrame) {
       delete this;
       return;
@@ -426,12 +455,14 @@ class InteractiveToolDnD : public SimpleFrameDnD {
 public:
   InteractiveToolDnD(
       Viewer* viewer, InteractiveFrame* frame, InteractiveTool* tool)
-    : SimpleFrameDnD(viewer, frame) {
+    : SimpleFrameDnD(viewer, frame)
+  {
     addSubject(tool);
     mEntity = tool;
   }
 
-  void update() override {
+  void update() override
+  {
     if (nullptr == mEntity)
       return;
 
@@ -479,7 +510,8 @@ protected:
 //==============================================================================
 InteractiveFrameDnD::InteractiveFrameDnD(
     Viewer* viewer, InteractiveFrame* frame)
-  : DragAndDrop(viewer, frame), mInteractiveFrame(frame) {
+  : DragAndDrop(viewer, frame), mInteractiveFrame(frame)
+{
   mViewer->getDefaultEventHandler()->addMouseEventHandler(
       new InteractiveFrameMouseEvent(frame));
 
@@ -501,12 +533,14 @@ InteractiveFrameDnD::InteractiveFrameDnD(
 }
 
 //==============================================================================
-InteractiveFrame* InteractiveFrameDnD::getFrame() const {
+InteractiveFrame* InteractiveFrameDnD::getFrame() const
+{
   return mInteractiveFrame;
 }
 
 //==============================================================================
-void InteractiveFrameDnD::update() {
+void InteractiveFrameDnD::update()
+{
   if (!mAmMoving) {
     for (std::size_t i = 0; i < 3; ++i) {
       DragAndDrop* dnd = mDnDs[i];
@@ -557,12 +591,14 @@ void InteractiveFrameDnD::update() {
 }
 
 //==============================================================================
-void InteractiveFrameDnD::move() {
+void InteractiveFrameDnD::move()
+{
   // Do nothing. All the work is taken care of in update().
 }
 
 //==============================================================================
-void InteractiveFrameDnD::saveState() {
+void InteractiveFrameDnD::saveState()
+{
   // Do nothing. All the work is taken care of in update().
 }
 
@@ -577,17 +613,20 @@ BodyNodeDnD::BodyNodeDnD(
     mUseExternalIK(useExternalIK),
     mUseWholeBody(useWholeBody),
     mPreserveOrientationModKey(::osgGA::GUIEventAdapter::MODKEY_ALT),
-    mJointRestrictionModKey(::osgGA::GUIEventAdapter::MODKEY_SHIFT) {
+    mJointRestrictionModKey(::osgGA::GUIEventAdapter::MODKEY_SHIFT)
+{
   // Do nothing
 }
 
 //==============================================================================
-dart::dynamics::BodyNode* BodyNodeDnD::getBodyNode() const {
+dart::dynamics::BodyNode* BodyNodeDnD::getBodyNode() const
+{
   return mBodyNode.lock();
 }
 
 //==============================================================================
-void BodyNodeDnD::update() {
+void BodyNodeDnD::update()
+{
   if (nullptr == mEntity)
     return;
 
@@ -627,7 +666,8 @@ void BodyNodeDnD::update() {
 }
 
 //==============================================================================
-void BodyNodeDnD::move() {
+void BodyNodeDnD::move()
+{
   if (mIK == nullptr)
     return;
 
@@ -690,7 +730,8 @@ void BodyNodeDnD::move() {
 }
 
 //==============================================================================
-void BodyNodeDnD::saveState() {
+void BodyNodeDnD::saveState()
+{
   dart::dynamics::BodyNodePtr bn = mBodyNode.lock();
   mPivot = bn->getWorldTransform().translation();
   mSavedRotation = bn->getWorldTransform().rotation();
@@ -713,7 +754,8 @@ void BodyNodeDnD::saveState() {
 }
 
 //==============================================================================
-void BodyNodeDnD::release() {
+void BodyNodeDnD::release()
+{
   if (mUseExternalIK) {
     mIK = nullptr;
   } else {
@@ -723,46 +765,54 @@ void BodyNodeDnD::release() {
 }
 
 //==============================================================================
-void BodyNodeDnD::useExternalIK(bool external) {
+void BodyNodeDnD::useExternalIK(bool external)
+{
   mUseExternalIK = external;
 }
 
 //==============================================================================
-bool BodyNodeDnD::isUsingExternalIK() const {
+bool BodyNodeDnD::isUsingExternalIK() const
+{
   return mUseExternalIK;
 }
 
 //==============================================================================
-void BodyNodeDnD::useWholeBody(bool wholeBody) {
+void BodyNodeDnD::useWholeBody(bool wholeBody)
+{
   mUseWholeBody = wholeBody;
 }
 
 //==============================================================================
-bool BodyNodeDnD::isUsingWholeBody() const {
+bool BodyNodeDnD::isUsingWholeBody() const
+{
   return mUseWholeBody;
 }
 
 //==============================================================================
 void BodyNodeDnD::setPreserveOrientationModKey(
-    ::osgGA::GUIEventAdapter::ModKeyMask modkey) {
+    ::osgGA::GUIEventAdapter::ModKeyMask modkey)
+{
   mPreserveOrientationModKey = modkey;
 }
 
 //==============================================================================
 ::osgGA::GUIEventAdapter::ModKeyMask BodyNodeDnD::getPreserveOrientationModKey()
-    const {
+    const
+{
   return mPreserveOrientationModKey;
 }
 
 //==============================================================================
 void BodyNodeDnD::setJointRestrictionModKey(
-    ::osgGA::GUIEventAdapter::ModKeyMask modkey) {
+    ::osgGA::GUIEventAdapter::ModKeyMask modkey)
+{
   mJointRestrictionModKey = modkey;
 }
 
 //==============================================================================
 ::osgGA::GUIEventAdapter::ModKeyMask BodyNodeDnD::getJointRestrictionModKey()
-    const {
+    const
+{
   return mJointRestrictionModKey;
 }
 

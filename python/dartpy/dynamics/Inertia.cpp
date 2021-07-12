@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void Inertia(py::module& m) {
+void Inertia(py::module& m)
+{
   ::py::class_<
       dart::dynamics::Inertia,
       std::shared_ptr<dart::dynamics::Inertia>>(m, "Inertia")

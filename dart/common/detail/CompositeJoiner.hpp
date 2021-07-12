@@ -45,7 +45,8 @@ template <typename Base1Arg, typename... Base2Args>
 CompositeJoiner<Base1, Base2>::CompositeJoiner(
     Base1Arg&& arg1, Base2Args&&... args2)
   : Base1(std::forward<Base1Arg>(arg1)),
-    Base2(std::forward<Base2Args>(args2)...) {
+    Base2(std::forward<Base2Args>(args2)...)
+{
   // Do nothing
 }
 
@@ -53,7 +54,8 @@ CompositeJoiner<Base1, Base2>::CompositeJoiner(
 template <class Base1, class Base2>
 template <typename Base1Arg>
 CompositeJoiner<Base1, Base2>::CompositeJoiner(Base1Arg&& arg1, NoArgTag)
-  : Base1(std::forward<Base1Arg>(arg1)), Base2() {
+  : Base1(std::forward<Base1Arg>(arg1)), Base2()
+{
   // Do nothing
 }
 
@@ -61,7 +63,8 @@ CompositeJoiner<Base1, Base2>::CompositeJoiner(Base1Arg&& arg1, NoArgTag)
 template <class Base1, class Base2>
 template <typename... Base2Args>
 CompositeJoiner<Base1, Base2>::CompositeJoiner(NoArgTag, Base2Args&&... args2)
-  : Base1(), Base2(std::forward<Base2Args>(args2)...) {
+  : Base1(), Base2(std::forward<Base2Args>(args2)...)
+{
   // Do nothing
 }
 
@@ -90,7 +93,8 @@ DETAIL_DART_COMMON_TEMPLATEJOINERDISPATCH_IMPL(
 // implement it explicitly.
 template <class Base1, class Base2>
 template <class T, typename... Args>
-T* CompositeJoiner<Base1, Base2>::createAspect(Args&&... args) {
+T* CompositeJoiner<Base1, Base2>::createAspect(Args&&... args)
+{
   if (Base1::template isSpecializedFor<T>())
     return Base1::template createAspect<T, Args...>(
         std::forward<Args>(args)...);
@@ -101,7 +105,8 @@ T* CompositeJoiner<Base1, Base2>::createAspect(Args&&... args) {
 //==============================================================================
 template <class Base1, class Base2>
 template <class T>
-constexpr bool CompositeJoiner<Base1, Base2>::isSpecializedFor() {
+constexpr bool CompositeJoiner<Base1, Base2>::isSpecializedFor()
+{
   return (
       Base1::template isSpecializedFor<T>()
       || Base2::template isSpecializedFor<T>());
@@ -112,7 +117,8 @@ template <class Base1, class Base2, class... OtherBases>
 template <typename... Args>
 CompositeJoiner<Base1, Base2, OtherBases...>::CompositeJoiner(Args&&... args)
   : CompositeJoiner<Base1, CompositeJoiner<Base2, OtherBases...>>(
-      std::forward<Args>(args)...) {
+      std::forward<Args>(args)...)
+{
   // Do nothing
 }
 

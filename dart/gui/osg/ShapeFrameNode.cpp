@@ -88,14 +88,15 @@ ShapeFrameNode::ShapeFrameNode(
   : mShapeFrame(_frame),
     mWorldNode(_worldNode),
     mRenderShapeNode(nullptr),
-    mUtilized(false) {
+    mUtilized(false)
+{
   refresh();
   setName(_frame->getName() + " [frame]");
 }
 
 //==============================================================================
-dart::dynamics::ShapeFrame* ShapeFrameNode::getShapeFrame(
-    bool checkUtilization) {
+dart::dynamics::ShapeFrame* ShapeFrameNode::getShapeFrame(bool checkUtilization)
+{
   if (!mUtilized && checkUtilization) {
     dtwarn << "[ShapeFrameNode] Attempting to access ShapeFrame of unused "
            << "ShapeFrameNode. This can be dangerous because unused "
@@ -108,7 +109,8 @@ dart::dynamics::ShapeFrame* ShapeFrameNode::getShapeFrame(
 
 //==============================================================================
 const dart::dynamics::ShapeFrame* ShapeFrameNode::getShapeFrame(
-    bool checkUtilization) const {
+    bool checkUtilization) const
+{
   if (!mUtilized && checkUtilization) {
     dtwarn << "[ShapeFrameNode] Attempting to access ShapeFrame of unused "
            << "ShapeFrameNode. This can be dangerous because unused "
@@ -120,17 +122,20 @@ const dart::dynamics::ShapeFrame* ShapeFrameNode::getShapeFrame(
 }
 
 //==============================================================================
-WorldNode* ShapeFrameNode::getWorldNode() {
+WorldNode* ShapeFrameNode::getWorldNode()
+{
   return mWorldNode;
 }
 
 //==============================================================================
-const WorldNode* ShapeFrameNode::getWorldNode() const {
+const WorldNode* ShapeFrameNode::getWorldNode() const
+{
   return mWorldNode;
 }
 
 //==============================================================================
-void ShapeFrameNode::refresh(bool shortCircuitIfUtilized) {
+void ShapeFrameNode::refresh(bool shortCircuitIfUtilized)
+{
   if (shortCircuitIfUtilized && mUtilized)
     return;
 
@@ -151,23 +156,27 @@ void ShapeFrameNode::refresh(bool shortCircuitIfUtilized) {
 }
 
 //==============================================================================
-bool ShapeFrameNode::wasUtilized() const {
+bool ShapeFrameNode::wasUtilized() const
+{
   return mUtilized;
 }
 
 //==============================================================================
-void ShapeFrameNode::clearUtilization() {
+void ShapeFrameNode::clearUtilization()
+{
   mUtilized = false;
 }
 
 //==============================================================================
-ShapeFrameNode::~ShapeFrameNode() {
+ShapeFrameNode::~ShapeFrameNode()
+{
   // Do nothing
 }
 
 //==============================================================================
 void ShapeFrameNode::refreshShapeNode(
-    const std::shared_ptr<dart::dynamics::Shape>& shape) {
+    const std::shared_ptr<dart::dynamics::Shape>& shape)
+{
   if (mRenderShapeNode && mRenderShapeNode->getShape() == shape) {
     mRenderShapeNode->refresh();
     return;
@@ -178,7 +187,8 @@ void ShapeFrameNode::refreshShapeNode(
 
 //==============================================================================
 static void warnAboutUnsuccessfulCast(
-    const std::string& shapeType, const std::string& entityName) {
+    const std::string& shapeType, const std::string& entityName)
+{
   dtwarn << "[dart::gui::osg::EntityNode::createShapeNode] A Shape in '"
          << entityName << "' claimed to be a '" << shapeType
          << "' but it failed to be dynamically cast to that type. "
@@ -188,7 +198,8 @@ static void warnAboutUnsuccessfulCast(
 
 //==============================================================================
 void ShapeFrameNode::createShapeNode(
-    const std::shared_ptr<dart::dynamics::Shape>& shape) {
+    const std::shared_ptr<dart::dynamics::Shape>& shape)
+{
   using namespace dart::dynamics;
   if (mRenderShapeNode)
     removeChild(mRenderShapeNode->getNode());

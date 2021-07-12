@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void CollisionObject(py::module& m) {
+void CollisionObject(py::module& m)
+{
   ::py::class_<dart::dynamics::CollisionObject>(m, "CollisionObject")
       .def(
           "getCollisionDetector",

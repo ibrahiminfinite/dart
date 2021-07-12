@@ -39,7 +39,8 @@ using namespace dart;
 using namespace dart::common;
 
 //==============================================================================
-TEST(LoggingTest, Basics) {
+TEST(LoggingTest, Basics)
+{
   set_log_level(LogLevel::LL_FATAL);
   set_log_level(LogLevel::LL_ERROR);
   set_log_level(LogLevel::LL_WARN);

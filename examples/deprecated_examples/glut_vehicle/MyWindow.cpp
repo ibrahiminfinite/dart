@@ -32,17 +32,20 @@
 
 #include "MyWindow.hpp"
 
-MyWindow::MyWindow() : SimWindow() {
+MyWindow::MyWindow() : SimWindow()
+{
   mBackWheelVelocity = 0.0;
   mSteeringWheelAngle = 0.0;
   mK = 0.01;
   mD = 0.005;
 }
 
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
 }
 
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   dart::dynamics::SkeletonPtr vehicle = mWorld->getSkeleton("car_skeleton");
   assert(vehicle != 0);
 
@@ -64,14 +67,16 @@ void MyWindow::timeStepping() {
   mWorld->step();
 }
 
-void MyWindow::drawWorld() const {
+void MyWindow::drawWorld() const
+{
   glEnable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
   SimWindow::drawWorld();
 }
 
-void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
+void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   using namespace dart::math::suffixes;
 
   switch (_key) {

@@ -49,7 +49,8 @@ namespace osg {
 
 class WorldNodeCallback : public ::osg::NodeCallback {
 public:
-  virtual void operator()(::osg::Node* node, ::osg::NodeVisitor* nv) {
+  virtual void operator()(::osg::Node* node, ::osg::NodeVisitor* nv)
+  {
     ::osg::ref_ptr<WorldNode> currentNode = dynamic_cast<WorldNode*>(node);
 
     if (currentNode)
@@ -67,7 +68,8 @@ WorldNode::WorldNode(
     mSimulating(false),
     mNumStepsPerCycle(1),
     mViewer(nullptr),
-    mNormalGroup(new ::osg::Group) {
+    mNormalGroup(new ::osg::Group)
+{
   // Flags for shadowing; maybe this needs to be global?
   constexpr int ReceivesShadowTraversalMask = 0x2;
   constexpr int CastsShadowTraversalMask = 0x1;
@@ -93,17 +95,20 @@ WorldNode::WorldNode(
 }
 
 //==============================================================================
-void WorldNode::setWorld(std::shared_ptr<dart::simulation::World> newWorld) {
+void WorldNode::setWorld(std::shared_ptr<dart::simulation::World> newWorld)
+{
   mWorld = newWorld;
 }
 
 //==============================================================================
-std::shared_ptr<dart::simulation::World> WorldNode::getWorld() const {
+std::shared_ptr<dart::simulation::World> WorldNode::getWorld() const
+{
   return mWorld;
 }
 
 //==============================================================================
-void WorldNode::refresh() {
+void WorldNode::refresh()
+{
   customPreRefresh();
 
   clearChildUtilizationFlags();
@@ -125,63 +130,75 @@ void WorldNode::refresh() {
 }
 
 //==============================================================================
-void WorldNode::customPreRefresh() {
+void WorldNode::customPreRefresh()
+{
   // Do nothing
 }
 
 //==============================================================================
-void WorldNode::customPostRefresh() {
+void WorldNode::customPostRefresh()
+{
   // Do nothing
 }
 
 //==============================================================================
-void WorldNode::customPreStep() {
+void WorldNode::customPreStep()
+{
   // Do nothing
 }
 
 //==============================================================================
-void WorldNode::customPostStep() {
+void WorldNode::customPostStep()
+{
   // Do nothing
 }
 
 //==============================================================================
-bool WorldNode::isSimulating() const {
+bool WorldNode::isSimulating() const
+{
   return mSimulating;
 }
 
 //==============================================================================
-void WorldNode::simulate(bool on) {
+void WorldNode::simulate(bool on)
+{
   mSimulating = on;
 }
 
 //==============================================================================
-void WorldNode::setNumStepsPerCycle(std::size_t steps) {
+void WorldNode::setNumStepsPerCycle(std::size_t steps)
+{
   mNumStepsPerCycle = steps;
 }
 
 //==============================================================================
-std::size_t WorldNode::getNumStepsPerCycle() const {
+std::size_t WorldNode::getNumStepsPerCycle() const
+{
   return mNumStepsPerCycle;
 }
 
 //==============================================================================
-WorldNode::~WorldNode() {
+WorldNode::~WorldNode()
+{
   // Do nothing
 }
 
 //==============================================================================
-void WorldNode::setupViewer() {
+void WorldNode::setupViewer()
+{
   // Do nothing
 }
 
 //==============================================================================
-void WorldNode::clearChildUtilizationFlags() {
+void WorldNode::clearChildUtilizationFlags()
+{
   for (auto& node_pair : mFrameToNode)
     node_pair.second->clearUtilization();
 }
 
 //==============================================================================
-void WorldNode::clearUnusedNodes() {
+void WorldNode::clearUnusedNodes()
+{
   std::vector<dart::dynamics::Frame*> unused;
   unused.reserve(mFrameToNode.size());
 
@@ -203,7 +220,8 @@ void WorldNode::clearUnusedNodes() {
 }
 
 //==============================================================================
-void WorldNode::refreshSkeletons() {
+void WorldNode::refreshSkeletons()
+{
   if (!mWorld)
     return;
 
@@ -218,7 +236,8 @@ void WorldNode::refreshSkeletons() {
 }
 
 //==============================================================================
-void WorldNode::refreshSimpleFrames() {
+void WorldNode::refreshSimpleFrames()
+{
   if (!mWorld)
     return;
 
@@ -227,7 +246,8 @@ void WorldNode::refreshSimpleFrames() {
 }
 
 //==============================================================================
-void WorldNode::refreshBaseFrameNode(dart::dynamics::Frame* frame) {
+void WorldNode::refreshBaseFrameNode(dart::dynamics::Frame* frame)
+{
   std::deque<dart::dynamics::Frame*> frames;
   frames.push_back(frame);
   while (!frames.empty()) {
@@ -245,7 +265,8 @@ void WorldNode::refreshBaseFrameNode(dart::dynamics::Frame* frame) {
 }
 
 //==============================================================================
-void WorldNode::refreshShapeFrameNode(dart::dynamics::Frame* frame) {
+void WorldNode::refreshShapeFrameNode(dart::dynamics::Frame* frame)
+{
   std::pair<NodeMap::iterator, bool> insertion
       = mFrameToNode.insert(std::make_pair(frame, nullptr));
   NodeMap::iterator it = insertion.first;
@@ -294,13 +315,15 @@ void WorldNode::refreshShapeFrameNode(dart::dynamics::Frame* frame) {
 }
 
 //==============================================================================
-bool WorldNode::isShadowed() const {
+bool WorldNode::isShadowed() const
+{
   return mShadowed;
 }
 
 //==============================================================================
 void WorldNode::setShadowTechnique(
-    ::osg::ref_ptr<osgShadow::ShadowTechnique> shadowTechnique) {
+    ::osg::ref_ptr<osgShadow::ShadowTechnique> shadowTechnique)
+{
   if (!shadowTechnique) {
     mShadowed = false;
     mShadowedGroup->setShadowTechnique(nullptr);
@@ -311,8 +334,8 @@ void WorldNode::setShadowTechnique(
 }
 
 //==============================================================================
-::osg::ref_ptr<osgShadow::ShadowTechnique> WorldNode::getShadowTechnique()
-    const {
+::osg::ref_ptr<osgShadow::ShadowTechnique> WorldNode::getShadowTechnique() const
+{
   if (!mShadowed)
     return nullptr;
   return mShadowedGroup->getShadowTechnique();
@@ -320,7 +343,8 @@ void WorldNode::setShadowTechnique(
 
 //==============================================================================
 ::osg::ref_ptr<osgShadow::ShadowTechnique>
-WorldNode::createDefaultShadowTechnique(const Viewer* viewer) {
+WorldNode::createDefaultShadowTechnique(const Viewer* viewer)
+{
   assert(viewer);
 
   ::osg::ref_ptr<osgShadow::ShadowMap> sm = new osgShadow::ShadowMap;

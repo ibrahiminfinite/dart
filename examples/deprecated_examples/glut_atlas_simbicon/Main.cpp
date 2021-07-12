@@ -45,7 +45,8 @@ using namespace dart::dynamics;
 using namespace dart::simulation;
 using namespace dart::io;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
   // Create empty soft world
   WorldPtr myWorld = World::create();
 
@@ -60,7 +61,7 @@ int main(int argc, char* argv[]) {
 
   // Set initial configuration for Atlas robot
   VectorXd q = atlas->getPositions();
-  q[0] = -0.5 * constantsd::pi();
+  q[0] = -0.5 * pi();
   atlas->setPositions(q);
 
   // Set gravity of the world

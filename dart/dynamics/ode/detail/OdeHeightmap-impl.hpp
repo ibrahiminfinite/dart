@@ -52,7 +52,8 @@ void setOdeHeightfieldDetails(
     const std::size_t& width,
     const std::size_t& height,
     const Eigen::Matrix<S, 3, 1>& scale,
-    typename std::enable_if<std::is_same<float, S>::value>::type* = 0) {
+    typename std::enable_if<std::is_same<float, S>::value>::type* = 0)
+{
   assert(width >= 2);
   assert(height >= 2);
   if ((width < 2) || (height < 2)) {
@@ -83,7 +84,8 @@ void setOdeHeightfieldDetails(
     const std::size_t& width,
     const std::size_t& height,
     const Eigen::Matrix<S, 3, 1>& scale,
-    typename std::enable_if<std::is_same<double, S>::value>::type* = 0) {
+    typename std::enable_if<std::is_same<double, S>::value>::type* = 0)
+{
   assert(width >= 2);
   assert(height >= 2);
   if ((width < 2) || (height < 2)) {
@@ -111,7 +113,8 @@ template <typename S>
 OdeHeightmap<S>::OdeHeightmap(
     const OdeCollisionObject* parent,
     const dynamics::HeightmapShape<S>* heightMap)
-  : OdeGeom(parent) {
+  : OdeGeom(parent)
+{
   assert(heightMap);
 
   // get the heightmap parameters
@@ -157,7 +160,8 @@ OdeHeightmap<S>::OdeHeightmap(
 
 //==============================================================================
 template <typename S>
-OdeHeightmap<S>::~OdeHeightmap() {
+OdeHeightmap<S>::~OdeHeightmap()
+{
   dGeomHeightfieldDataDestroy(mOdeHeightfieldId);
   dGeomDestroy(mGeomId);
 }

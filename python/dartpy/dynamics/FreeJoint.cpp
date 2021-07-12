@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void FreeJoint(py::module& m) {
+void FreeJoint(py::module& m)
+{
   ::py::class_<
       dart::dynamics::FreeJoint::Properties,
       dart::dynamics::GenericJoint<math::SE3Space>::Properties>(

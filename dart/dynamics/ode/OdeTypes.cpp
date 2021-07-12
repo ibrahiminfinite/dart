@@ -36,7 +36,8 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-Eigen::Vector3d OdeTypes::convertVector3(const dVector3& vec) {
+Eigen::Vector3d OdeTypes::convertVector3(const dVector3& vec)
+{
   return Eigen::Vector3d(vec[0], vec[1], vec[2]);
 }
 

@@ -41,12 +41,14 @@ namespace dart {
 namespace common {
 
 //==============================================================================
-VersionCounter::VersionCounter() : mVersion(0), mDependent(nullptr) {
+VersionCounter::VersionCounter() : mVersion(0), mDependent(nullptr)
+{
   // Do nothing
 }
 
 //==============================================================================
-std::size_t VersionCounter::incrementVersion() {
+std::size_t VersionCounter::incrementVersion()
+{
   ++mVersion;
   if (mDependent)
     mDependent->incrementVersion();
@@ -55,12 +57,14 @@ std::size_t VersionCounter::incrementVersion() {
 }
 
 //==============================================================================
-std::size_t VersionCounter::getVersion() const {
+std::size_t VersionCounter::getVersion() const
+{
   return mVersion;
 }
 
 //==============================================================================
-void VersionCounter::setVersionDependentObject(VersionCounter* dependent) {
+void VersionCounter::setVersionDependentObject(VersionCounter* dependent)
+{
   VersionCounter* next = dependent;
   do {
     if (next == this) {

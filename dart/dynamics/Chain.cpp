@@ -42,17 +42,20 @@ Chain::Criteria::Criteria(
     BodyNode* start, BodyNode* target, bool includeUpstreamParentJoint)
   : mStart(start),
     mTarget(target),
-    mIncludeUpstreamParentJoint(includeUpstreamParentJoint) {
+    mIncludeUpstreamParentJoint(includeUpstreamParentJoint)
+{
   // Do nothing
 }
 
 //==============================================================================
-std::vector<BodyNode*> Chain::Criteria::satisfy() const {
+std::vector<BodyNode*> Chain::Criteria::satisfy() const
+{
   return convert().satisfy();
 }
 
 //==============================================================================
-Linkage::Criteria Chain::Criteria::convert() const {
+Linkage::Criteria Chain::Criteria::convert() const
+{
   Linkage::Criteria criteria;
   criteria.mStart.mNode = mStart;
   criteria.mStart.mPolicy = Linkage::Criteria::INCLUDE;
@@ -80,7 +83,8 @@ Linkage::Criteria Chain::Criteria::convert() const {
 }
 
 //==============================================================================
-Chain::Criteria Chain::Criteria::convert(const Linkage::Criteria& criteria) {
+Chain::Criteria Chain::Criteria::convert(const Linkage::Criteria& criteria)
+{
   BodyNodePtr startBodyNode = criteria.mStart.mNode.lock();
   if (!startBodyNode) {
     dtwarn << "[Chain::Criteria::convert] Failed in conversion because the "
@@ -117,13 +121,15 @@ Chain::Criteria Chain::Criteria::convert(const Linkage::Criteria& criteria) {
 }
 
 //==============================================================================
-Chain::Criteria::operator Linkage::Criteria() const {
+Chain::Criteria::operator Linkage::Criteria() const
+{
   return convert();
 }
 
 //==============================================================================
 ChainPtr Chain::create(
-    const Chain::Criteria& _criteria, const std::string& _name) {
+    const Chain::Criteria& _criteria, const std::string& _name)
+{
   ChainPtr chain(new Chain(_criteria, _name));
   chain->mPtr = chain;
   return chain;
@@ -131,7 +137,8 @@ ChainPtr Chain::create(
 
 //==============================================================================
 ChainPtr Chain::create(
-    BodyNode* _start, BodyNode* _target, const std::string& _name) {
+    BodyNode* _start, BodyNode* _target, const std::string& _name)
+{
   ChainPtr chain(new Chain(_start, _target, _name));
   chain->mPtr = chain;
   return chain;
@@ -142,19 +149,22 @@ ChainPtr Chain::create(
     BodyNode* _start,
     BodyNode* _target,
     IncludeUpstreamParentJointTag,
-    const std::string& _name) {
+    const std::string& _name)
+{
   ChainPtr chain(new Chain(_start, _target, IncludeUpstreamParentJoint, _name));
   chain->mPtr = chain;
   return chain;
 }
 
 //==============================================================================
-ChainPtr Chain::cloneChain() const {
+ChainPtr Chain::cloneChain() const
+{
   return cloneChain(getName());
 }
 
 //==============================================================================
-ChainPtr Chain::cloneChain(const std::string& cloneName) const {
+ChainPtr Chain::cloneChain(const std::string& cloneName) const
+{
   // Clone the skeleton (assuming one skeleton is involved)
   BodyNodePtr bodyNode = mCriteria.mStart.mNode.lock();
   if (!bodyNode) {
@@ -181,12 +191,14 @@ ChainPtr Chain::cloneChain(const std::string& cloneName) const {
 }
 
 //==============================================================================
-MetaSkeletonPtr Chain::cloneMetaSkeleton(const std::string& cloneName) const {
+MetaSkeletonPtr Chain::cloneMetaSkeleton(const std::string& cloneName) const
+{
   return cloneChain(cloneName);
 }
 
 //==============================================================================
-bool Chain::isStillChain() const {
+bool Chain::isStillChain() const
+{
   if (!isAssembled())
     return false;
 
@@ -212,13 +224,15 @@ bool Chain::isStillChain() const {
 
 //==============================================================================
 Chain::Chain(const Chain::Criteria& _criteria, const std::string& _name)
-  : Linkage(_criteria, _name) {
+  : Linkage(_criteria, _name)
+{
   // Do nothing
 }
 
 //==============================================================================
 Chain::Chain(BodyNode* _start, BodyNode* _target, const std::string& _name)
-  : Linkage(Chain::Criteria(_start, _target), _name) {
+  : Linkage(Chain::Criteria(_start, _target), _name)
+{
   // Do nothing
 }
 
@@ -228,7 +242,8 @@ Chain::Chain(
     BodyNode* _target,
     IncludeUpstreamParentJointTag,
     const std::string& _name)
-  : Linkage(Chain::Criteria(_start, _target, true), _name) {
+  : Linkage(Chain::Criteria(_start, _target, true), _name)
+{
   // Do nothing
 }
 

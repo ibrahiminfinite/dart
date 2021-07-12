@@ -50,7 +50,8 @@ class MouseEventHandler : public virtual dart::common::Subject,
 public:
   friend class DefaultEventHandler;
 
-  inline MouseEventHandler() : mEventHandler(nullptr) {
+  inline MouseEventHandler() : mEventHandler(nullptr)
+  {
   }
 
   /// Overload this function to set behavior that will get triggered during a
@@ -58,7 +59,8 @@ public:
   virtual void update() = 0;
 
 protected:
-  void handleDestructionNotification(const Subject* _subject) override {
+  void handleDestructionNotification(const Subject* _subject) override
+  {
     if (mEventHandler == _subject)
       delete this;
   }

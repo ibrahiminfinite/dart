@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void WeldJoint(py::module& m) {
+void WeldJoint(py::module& m)
+{
   ::py::class_<
       dart::dynamics::WeldJoint,
       dart::dynamics::ZeroDofJoint,

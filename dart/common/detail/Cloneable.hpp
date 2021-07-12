@@ -41,7 +41,8 @@ namespace common {
 
 //==============================================================================
 template <class Base, class Mixin>
-MakeCloneable<Base, Mixin>::MakeCloneable() {
+MakeCloneable<Base, Mixin>::MakeCloneable()
+{
   // Do nothing
 }
 
@@ -49,20 +50,23 @@ MakeCloneable<Base, Mixin>::MakeCloneable() {
 template <class Base, class Mixin>
 template <typename... Args>
 MakeCloneable<Base, Mixin>::MakeCloneable(Args&&... args)
-  : Mixin(std::forward<Args>(args)...) {
+  : Mixin(std::forward<Args>(args)...)
+{
   // Do nothing
 }
 
 //==============================================================================
 template <class Base, class Mixin>
-MakeCloneable<Base, Mixin>::MakeCloneable(const Mixin& mixin) : Mixin(mixin) {
+MakeCloneable<Base, Mixin>::MakeCloneable(const Mixin& mixin) : Mixin(mixin)
+{
   // Do nothing
 }
 
 //==============================================================================
 template <class Base, class Mixin>
 MakeCloneable<Base, Mixin>::MakeCloneable(Mixin&& mixin)
-  : Mixin(std::move(mixin)) {
+  : Mixin(std::move(mixin))
+{
   // Do nothing
 }
 
@@ -70,29 +74,32 @@ MakeCloneable<Base, Mixin>::MakeCloneable(Mixin&& mixin)
 template <class Base, class Mixin>
 MakeCloneable<Base, Mixin>::MakeCloneable(
     const MakeCloneable<Base, Mixin>& other)
-  : Mixin(other) {
+  : Mixin(other)
+{
   // Do nothing
 }
 
 //==============================================================================
 template <class Base, class Mixin>
 MakeCloneable<Base, Mixin>::MakeCloneable(MakeCloneable<Base, Mixin>&& other)
-  : Mixin(other) {
+  : Mixin(other)
+{
   // Do nothing
 }
 
 //==============================================================================
 template <class Base, class Mixin>
 MakeCloneable<Base, Mixin>& MakeCloneable<Base, Mixin>::operator=(
-    const Mixin& mixin) {
+    const Mixin& mixin)
+{
   static_cast<Mixin&>(*this) = mixin;
   return *this;
 }
 
 //==============================================================================
 template <class Base, class Mixin>
-MakeCloneable<Base, Mixin>& MakeCloneable<Base, Mixin>::operator=(
-    Mixin&& mixin) {
+MakeCloneable<Base, Mixin>& MakeCloneable<Base, Mixin>::operator=(Mixin&& mixin)
+{
   static_cast<Mixin&>(*this) = std::move(mixin);
   return *this;
 }
@@ -100,7 +107,8 @@ MakeCloneable<Base, Mixin>& MakeCloneable<Base, Mixin>::operator=(
 //==============================================================================
 template <class Base, class Mixin>
 MakeCloneable<Base, Mixin>& MakeCloneable<Base, Mixin>::operator=(
-    const MakeCloneable& other) {
+    const MakeCloneable& other)
+{
   static_cast<Mixin&>(*this) = static_cast<const Mixin&>(other);
   return *this;
 }
@@ -108,19 +116,22 @@ MakeCloneable<Base, Mixin>& MakeCloneable<Base, Mixin>::operator=(
 //==============================================================================
 template <class Base, class Mixin>
 MakeCloneable<Base, Mixin>& MakeCloneable<Base, Mixin>::operator=(
-    MakeCloneable&& other) {
+    MakeCloneable&& other)
+{
   static_cast<Mixin&>(*this) = std::move(static_cast<Mixin&&>(other));
 }
 
 //==============================================================================
 template <class Base, class Mixin>
-std::unique_ptr<Base> MakeCloneable<Base, Mixin>::clone() const {
+std::unique_ptr<Base> MakeCloneable<Base, Mixin>::clone() const
+{
   return std::make_unique<MakeCloneable<Base, Mixin>>(*this);
 }
 
 //==============================================================================
 template <class Base, class Mixin>
-void MakeCloneable<Base, Mixin>::copy(const Base& other) {
+void MakeCloneable<Base, Mixin>::copy(const Base& other)
+{
   *this = static_cast<const MakeCloneable<Base, Mixin>&>(other);
 }
 
@@ -132,7 +143,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 ProxyCloneable<Base, OwnerT, DataT, setData, getData>::ProxyCloneable()
-  : mOwner(nullptr), mData(std::make_unique<Data>()) {
+  : mOwner(nullptr), mData(std::make_unique<Data>())
+{
   // Do nothing
 }
 
@@ -145,7 +157,8 @@ template <
     DataT (*getData)(const OwnerT*)>
 ProxyCloneable<Base, OwnerT, DataT, setData, getData>::ProxyCloneable(
     OwnerT* owner)
-  : mOwner(owner) {
+  : mOwner(owner)
+{
   // Do nothing
 }
 
@@ -159,7 +172,8 @@ template <
 template <typename... Args>
 ProxyCloneable<Base, OwnerT, DataT, setData, getData>::ProxyCloneable(
     OwnerT* owner, Args&&... args)
-  : mOwner(owner) {
+  : mOwner(owner)
+{
   set(Data(std::forward<Args>(args)...));
 }
 
@@ -173,8 +187,8 @@ template <
 template <typename... Args>
 ProxyCloneable<Base, OwnerT, DataT, setData, getData>::ProxyCloneable(
     Args&&... args)
-  : mOwner(nullptr),
-    mData(std::make_unique<Data>(std::forward<Args>(args)...)) {
+  : mOwner(nullptr), mData(std::make_unique<Data>(std::forward<Args>(args)...))
+{
   // Do nothing
 }
 
@@ -187,7 +201,8 @@ template <
     DataT (*getData)(const OwnerT*)>
 ProxyCloneable<Base, OwnerT, DataT, setData, getData>::ProxyCloneable(
     const ProxyCloneable& other)
-  : mOwner(nullptr), mData(nullptr) {
+  : mOwner(nullptr), mData(nullptr)
+{
   set(other);
 }
 
@@ -200,7 +215,8 @@ template <
     DataT (*getData)(const OwnerT*)>
 ProxyCloneable<Base, OwnerT, DataT, setData, getData>::ProxyCloneable(
     ProxyCloneable&& other)
-  : mOwner(nullptr) {
+  : mOwner(nullptr)
+{
   set(other);
 }
 
@@ -212,7 +228,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 auto ProxyCloneable<Base, OwnerT, DataT, setData, getData>::operator=(
-    const Data& data) -> ProxyCloneable& {
+    const Data& data) -> ProxyCloneable&
+{
   set(data);
   return *this;
 }
@@ -225,7 +242,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 auto ProxyCloneable<Base, OwnerT, DataT, setData, getData>::operator=(
-    Data&& data) -> ProxyCloneable& {
+    Data&& data) -> ProxyCloneable&
+{
   set(data);
   return *this;
 }
@@ -238,7 +256,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 auto ProxyCloneable<Base, OwnerT, DataT, setData, getData>::operator=(
-    const ProxyCloneable& other) -> ProxyCloneable& {
+    const ProxyCloneable& other) -> ProxyCloneable&
+{
   mOwner = other.mOwner;
   set(other);
   return *this;
@@ -252,7 +271,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 auto ProxyCloneable<Base, OwnerT, DataT, setData, getData>::operator=(
-    ProxyCloneable&& other) -> ProxyCloneable& {
+    ProxyCloneable&& other) -> ProxyCloneable&
+{
   mOwner = other.mOwner;
   set(other);
   return *this;
@@ -266,7 +286,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 void ProxyCloneable<Base, OwnerT, DataT, setData, getData>::set(
-    const Data& data) {
+    const Data& data)
+{
   if (mOwner) {
     (*setData)(mOwner, data);
     return;
@@ -282,7 +303,8 @@ template <
     class DataT,
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
-void ProxyCloneable<Base, OwnerT, DataT, setData, getData>::set(Data&& data) {
+void ProxyCloneable<Base, OwnerT, DataT, setData, getData>::set(Data&& data)
+{
   if (mOwner) {
     (*setData)(mOwner, data);
     return;
@@ -299,7 +321,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 void ProxyCloneable<Base, OwnerT, DataT, setData, getData>::set(
-    const ProxyCloneable& other) {
+    const ProxyCloneable& other)
+{
   set(other.get());
 }
 
@@ -311,7 +334,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 void ProxyCloneable<Base, OwnerT, DataT, setData, getData>::set(
-    ProxyCloneable&& other) {
+    ProxyCloneable&& other)
+{
   set(other.get());
 }
 
@@ -322,8 +346,8 @@ template <
     class DataT,
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
-auto ProxyCloneable<Base, OwnerT, DataT, setData, getData>::get() const
-    -> Data {
+auto ProxyCloneable<Base, OwnerT, DataT, setData, getData>::get() const -> Data
+{
   if (mOwner)
     return (*getData)(mOwner);
 
@@ -337,7 +361,8 @@ template <
     class DataT,
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
-OwnerT* ProxyCloneable<Base, OwnerT, DataT, setData, getData>::getOwner() {
+OwnerT* ProxyCloneable<Base, OwnerT, DataT, setData, getData>::getOwner()
+{
   return mOwner;
 }
 
@@ -349,7 +374,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 const OwnerT* ProxyCloneable<Base, OwnerT, DataT, setData, getData>::getOwner()
-    const {
+    const
+{
   return mOwner;
 }
 
@@ -361,7 +387,8 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 std::unique_ptr<Base>
-ProxyCloneable<Base, OwnerT, DataT, setData, getData>::clone() const {
+ProxyCloneable<Base, OwnerT, DataT, setData, getData>::clone() const
+{
   return std::make_unique<ProxyCloneable>(get());
 }
 
@@ -373,38 +400,44 @@ template <
     void (*setData)(OwnerT*, const DataT&),
     DataT (*getData)(const OwnerT*)>
 void ProxyCloneable<Base, OwnerT, DataT, setData, getData>::copy(
-    const Base& other) {
+    const Base& other)
+{
   set(static_cast<const ProxyCloneable&>(other));
 }
 
 //==============================================================================
 template <typename MapType>
-CloneableMap<MapType>::CloneableMap(const CloneableMap& otherHolder) {
+CloneableMap<MapType>::CloneableMap(const CloneableMap& otherHolder)
+{
   copy(otherHolder);
 }
 
 //==============================================================================
 template <typename MapType>
-CloneableMap<MapType>::CloneableMap(CloneableMap&& otherHolder) {
+CloneableMap<MapType>::CloneableMap(CloneableMap&& otherHolder)
+{
   *this = std::move(otherHolder);
 }
 
 //==============================================================================
 template <typename MapType>
-CloneableMap<MapType>::CloneableMap(const MapType& otherMap) {
+CloneableMap<MapType>::CloneableMap(const MapType& otherMap)
+{
   copy(otherMap);
 }
 
 //==============================================================================
 template <typename MapType>
-CloneableMap<MapType>::CloneableMap(MapType&& otherMap) {
+CloneableMap<MapType>::CloneableMap(MapType&& otherMap)
+{
   *this = std::move(otherMap);
 }
 
 //==============================================================================
 template <typename MapType>
 CloneableMap<MapType>& CloneableMap<MapType>::operator=(
-    const CloneableMap& otherHolder) {
+    const CloneableMap& otherHolder)
+{
   copy(otherHolder);
   return *this;
 }
@@ -412,7 +445,8 @@ CloneableMap<MapType>& CloneableMap<MapType>::operator=(
 //==============================================================================
 template <typename MapType>
 CloneableMap<MapType>& CloneableMap<MapType>::operator=(
-    CloneableMap&& otherHolder) {
+    CloneableMap&& otherHolder)
+{
   mMap = std::move(otherHolder.mMap);
 
   return *this;
@@ -420,15 +454,16 @@ CloneableMap<MapType>& CloneableMap<MapType>::operator=(
 
 //==============================================================================
 template <typename MapType>
-CloneableMap<MapType>& CloneableMap<MapType>::operator=(
-    const MapType& otherMap) {
+CloneableMap<MapType>& CloneableMap<MapType>::operator=(const MapType& otherMap)
+{
   copy(otherMap);
   return *this;
 }
 
 //==============================================================================
 template <typename MapType>
-CloneableMap<MapType>& CloneableMap<MapType>::operator=(MapType&& otherHolder) {
+CloneableMap<MapType>& CloneableMap<MapType>::operator=(MapType&& otherHolder)
+{
   mMap = std::move(otherHolder);
 
   return *this;
@@ -436,13 +471,15 @@ CloneableMap<MapType>& CloneableMap<MapType>::operator=(MapType&& otherHolder) {
 
 //==============================================================================
 template <typename MapType>
-void CloneableMap<MapType>::copy(const CloneableMap& otherMap, bool merge) {
+void CloneableMap<MapType>::copy(const CloneableMap& otherMap, bool merge)
+{
   copy(otherMap.getMap(), merge);
 }
 
 //==============================================================================
 template <typename MapType>
-void CloneableMap<MapType>::copy(const MapType& otherMap, bool merge) {
+void CloneableMap<MapType>::copy(const MapType& otherMap, bool merge)
+{
   typename MapType::iterator receiver = mMap.begin();
   typename MapType::const_iterator sender = otherMap.begin();
 
@@ -495,58 +532,66 @@ void CloneableMap<MapType>::copy(const MapType& otherMap, bool merge) {
 
 //==============================================================================
 template <typename MapType>
-void CloneableMap<MapType>::merge(const CloneableMap& otherMap) {
+void CloneableMap<MapType>::merge(const CloneableMap& otherMap)
+{
   copy(otherMap, true);
 }
 
 //==============================================================================
 template <typename MapType>
-void CloneableMap<MapType>::merge(const MapType& otherMap) {
+void CloneableMap<MapType>::merge(const MapType& otherMap)
+{
   copy(otherMap, true);
 }
 
 //==============================================================================
 template <typename MapType>
-MapType& CloneableMap<MapType>::getMap() {
+MapType& CloneableMap<MapType>::getMap()
+{
   return mMap;
 }
 
 //==============================================================================
 template <typename MapType>
-const MapType& CloneableMap<MapType>::getMap() const {
+const MapType& CloneableMap<MapType>::getMap() const
+{
   return mMap;
 }
 
 //==============================================================================
 template <typename T>
 CloneableVector<T>::CloneableVector(const std::vector<T>& regularVector)
-  : mVector(regularVector) {
+  : mVector(regularVector)
+{
   // Do nothing
 }
 
 //==============================================================================
 template <typename T>
-CloneableVector<T>::CloneableVector(std::vector<T>&& regularVector) {
+CloneableVector<T>::CloneableVector(std::vector<T>&& regularVector)
+{
   mVector = std::move(regularVector);
 }
 
 //==============================================================================
 template <typename T>
-CloneableVector<T>::CloneableVector(const CloneableVector& other) {
+CloneableVector<T>::CloneableVector(const CloneableVector& other)
+{
   copy(other);
 }
 
 //==============================================================================
 template <typename T>
-CloneableVector<T>& CloneableVector<T>::operator=(
-    const CloneableVector& other) {
+CloneableVector<T>& CloneableVector<T>::operator=(const CloneableVector& other)
+{
   copy(other);
   return this;
 }
 
 //==============================================================================
 template <typename T>
-std::unique_ptr<CloneableVector<T>> CloneableVector<T>::clone() const {
+std::unique_ptr<CloneableVector<T>> CloneableVector<T>::clone() const
+{
   std::vector<T> clonedVector;
   clonedVector.reserve(mVector.size());
 
@@ -558,7 +603,8 @@ std::unique_ptr<CloneableVector<T>> CloneableVector<T>::clone() const {
 
 //==============================================================================
 template <typename T>
-void CloneableVector<T>::copy(const CloneableVector<T>& anotherVector) {
+void CloneableVector<T>::copy(const CloneableVector<T>& anotherVector)
+{
   const std::vector<T>& other = anotherVector.getVector();
   mVector.resize(other.size());
 
@@ -574,13 +620,15 @@ void CloneableVector<T>::copy(const CloneableVector<T>& anotherVector) {
 
 //==============================================================================
 template <typename T>
-std::vector<T>& CloneableVector<T>::getVector() {
+std::vector<T>& CloneableVector<T>::getVector()
+{
   return mVector;
 }
 
 //==============================================================================
 template <typename T>
-const std::vector<T>& CloneableVector<T>::getVector() const {
+const std::vector<T>& CloneableVector<T>::getVector() const
+{
   return mVector;
 }
 

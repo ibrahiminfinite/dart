@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void ConstraintBase(py::module& m) {
+void ConstraintBase(py::module& m)
+{
   ::py::class_<
       dart::dynamics::ConstraintBase,
       std::shared_ptr<dart::dynamics::ConstraintBase> >(m, "ConstraintBase")

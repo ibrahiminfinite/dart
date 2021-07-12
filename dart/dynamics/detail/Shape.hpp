@@ -39,7 +39,8 @@ namespace dart {
 namespace dynamics {
 
 template <typename ShapeT>
-bool Shape::is() const {
+bool Shape::is() const
+{
   return getType() == ShapeT::getStaticType();
 }
 

@@ -214,6 +214,10 @@ void setEulerZYX(FclMatrix3<S>& rot, S eulerX, S eulerY, S eulerZ);
 template <typename S>
 FclVector3<S> transform(const FclTransform3<S>& t, const FclVector3<S>& v);
 
+/// Returns an identity transform
+template <typename S>
+FclTransform3<S> get_identity_transform();
+
 } // namespace collision
 } // namespace dart
 

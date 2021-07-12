@@ -398,7 +398,8 @@ common::ResourceRetrieverPtr getRetriever(
 
 //==============================================================================
 simulation::WorldPtr SkelParser::readWorld(
-    const common::Uri& _uri, const common::ResourceRetrieverPtr& _retriever) {
+    const common::Uri& _uri, const common::ResourceRetrieverPtr& _retriever)
+{
   const common::ResourceRetrieverPtr retriever = getRetriever(_retriever);
 
   //--------------------------------------------------------------------------
@@ -426,7 +427,8 @@ simulation::WorldPtr SkelParser::readWorld(
 simulation::WorldPtr SkelParser::readWorldXML(
     const std::string& _xmlString,
     const common::Uri& _baseUri,
-    const common::ResourceRetrieverPtr& _retriever) {
+    const common::ResourceRetrieverPtr& _retriever)
+{
   const common::ResourceRetrieverPtr retriever = getRetriever(_retriever);
 
   tinyxml2::XMLDocument _dartXML;
@@ -446,8 +448,8 @@ simulation::WorldPtr SkelParser::readWorldXML(
 
 //==============================================================================
 dynamics::SkeletonPtr SkelParser::readSkeleton(
-    const common::Uri& uri,
-    const common::ResourceRetrieverPtr& nullOrRetriever) {
+    const common::Uri& uri, const common::ResourceRetrieverPtr& nullOrRetriever)
+{
   const common::ResourceRetrieverPtr retriever = getRetriever(nullOrRetriever);
 
   //--------------------------------------------------------------------------
@@ -496,7 +498,8 @@ dynamics::ShapeNode* readShapeNode(
     tinyxml2::XMLElement* shapeNodeEle,
     const std::string& shapeNodeName,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   assert(bodyNode);
 
   auto shape = readShape(shapeNodeEle, bodyNode->getName(), baseUri, retriever);
@@ -516,7 +519,8 @@ void readVisualizationShapeNode(
     dynamics::BodyNode* bodyNode,
     tinyxml2::XMLElement* vizShapeNodeEle,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   dynamics::ShapeNode* newShapeNode = readShapeNode(
       bodyNode,
       vizShapeNodeEle,
@@ -548,7 +552,8 @@ void readCollisionShapeNode(
     dynamics::BodyNode* bodyNode,
     tinyxml2::XMLElement* collShapeNodeEle,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   dynamics::ShapeNode* newShapeNode = readShapeNode(
       bodyNode,
       collShapeNodeEle,
@@ -571,7 +576,8 @@ void readAspects(
     const dynamics::SkeletonPtr& skeleton,
     tinyxml2::XMLElement* skeletonElement,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   ElementEnumerator xmlBodies(skeletonElement, "body");
   while (xmlBodies.next()) {
     auto bodyElement = xmlBodies.get();
@@ -617,7 +623,8 @@ void readAspects(
 
 //==============================================================================
 tinyxml2::XMLElement* checkFormatAndGetWorldElement(
-    tinyxml2::XMLDocument& _document) {
+    tinyxml2::XMLDocument& _document)
+{
   //--------------------------------------------------------------------------
   // Check xml tag
   tinyxml2::XMLElement* skelElement = nullptr;
@@ -642,7 +649,8 @@ tinyxml2::XMLElement* checkFormatAndGetWorldElement(
 
 //==============================================================================
 static std::shared_ptr<dynamics::CollisionDetector>
-createFclMeshCollisionDetector() {
+createFclMeshCollisionDetector()
+{
   auto cd = dynamics::CollisionDetector::getFactory()->create("fcl");
   auto fcl = std::static_pointer_cast<dynamics::FCLCollisionDetector>(cd);
   fcl->setPrimitiveShapeType(dynamics::FCLCollisionDetector::MESH);
@@ -655,7 +663,8 @@ createFclMeshCollisionDetector() {
 simulation::WorldPtr readWorld(
     tinyxml2::XMLElement* _worldElement,
     const common::Uri& _baseUri,
-    const common::ResourceRetrieverPtr& _retriever) {
+    const common::ResourceRetrieverPtr& _retriever)
+{
   assert(_worldElement != nullptr);
 
   // Create a world
@@ -737,7 +746,8 @@ NextResult getNextJointAndNodePair(
     dynamics::BodyNode*& parent,
     const dynamics::SkeletonPtr skeleton,
     JointMap& joints,
-    const BodyMap& bodyNodes) {
+    const BodyMap& bodyNodes)
+{
   NextResult result = VALID;
   const SkelJoint& joint = it->second;
   parent = skeleton->getBodyNode(joint.parentName);
@@ -784,7 +794,8 @@ std::pair<dynamics::Joint*, dynamics::BodyNode*> createJointAndNodePair(
     dynamics::SkeletonPtr skeleton,
     dynamics::BodyNode* parent,
     const SkelJoint& joint,
-    const typename BodyType::Properties& body) {
+    const typename BodyType::Properties& body)
+{
   if (std::string("weld") == joint.type)
     return skeleton->createJointAndBodyNodePair<dynamics::WeldJoint, BodyType>(
         parent,
@@ -862,7 +873,8 @@ bool createJointAndNodePair(
     dynamics::SkeletonPtr skeleton,
     dynamics::BodyNode* parent,
     const SkelJoint& joint,
-    const SkelBodyNode& body) {
+    const SkelBodyNode& body)
+{
   std::pair<dynamics::Joint*, dynamics::BodyNode*> pair;
   if (body.type.empty())
     pair = createJointAndNodePair<dynamics::BodyNode>(
@@ -903,7 +915,8 @@ bool createJointAndNodePair(
 dynamics::SkeletonPtr readSkeleton(
     tinyxml2::XMLElement* _skeletonElement,
     const common::Uri& _baseUri,
-    const common::ResourceRetrieverPtr& _retriever) {
+    const common::ResourceRetrieverPtr& _retriever)
+{
   assert(_skeletonElement != nullptr);
 
   dynamics::SkeletonPtr newSkeleton = dynamics::Skeleton::create();
@@ -1018,7 +1031,8 @@ SkelBodyNode readBodyNode(
     tinyxml2::XMLElement* _bodyNodeElement,
     const Eigen::Isometry3d& _skeletonFrame,
     const common::Uri& /*_baseUri*/,
-    const common::ResourceRetrieverPtr& /*_retriever*/) {
+    const common::ResourceRetrieverPtr& /*_retriever*/)
+{
   assert(_bodyNodeElement != nullptr);
 
   BodyPropPtr newBodyNode(new dynamics::BodyNode::Properties);
@@ -1102,7 +1116,8 @@ SkelBodyNode readSoftBodyNode(
     tinyxml2::XMLElement* _softBodyNodeElement,
     const Eigen::Isometry3d& _skeletonFrame,
     const common::Uri& _baseUri,
-    const common::ResourceRetrieverPtr& _retriever) {
+    const common::ResourceRetrieverPtr& _retriever)
+{
   //---------------------------------- Note ------------------------------------
   // SoftBodyNode is created if _softBodyNodeElement has <soft_shape>.
   // Otherwise, BodyNode is created.
@@ -1201,7 +1216,8 @@ dynamics::ShapePtr readShape(
     tinyxml2::XMLElement* vizEle,
     const std::string& bodyName,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   dynamics::ShapePtr newShape;
 
   // Geometry
@@ -1301,7 +1317,8 @@ dynamics::ShapePtr readShape(
 
 //==============================================================================
 dynamics::Marker::BasicProperties readMarker(
-    tinyxml2::XMLElement* _markerElement) {
+    tinyxml2::XMLElement* _markerElement)
+{
   // Name attribute
   std::string name = getAttributeString(_markerElement, "name");
 
@@ -1323,7 +1340,8 @@ void readJoint(
     const BodyMap& _bodyNodes,
     JointMap& _joints,
     IndexToJoint& _order,
-    JointToIndex& _lookup) {
+    JointToIndex& _lookup)
+{
   assert(_jointElement != nullptr);
 
   //--------------------------------------------------------------------------
@@ -1492,7 +1510,8 @@ void getDofAttributeIfItExists(
     const std::string& _element_type,
     const tinyxml2::XMLElement* _xmlElement,
     const std::string& _jointName,
-    std::size_t _index) {
+    std::size_t _index)
+{
   if (_xmlElement->QueryDoubleAttribute(_attribute.c_str(), _value)
       == tinyxml2::XML_WRONG_ATTRIBUTE_TYPE) {
     dterr << "[getDofAttributeIfItExists] Invalid type for [" << _attribute
@@ -1509,7 +1528,8 @@ void setDofLimitAttributes(
     std::size_t _index,
     double* lower,
     double* upper,
-    double* initial) {
+    double* initial)
+{
   const tinyxml2::XMLElement* xmlElement
       = getElement(_dofElement, _element_type);
 
@@ -1583,7 +1603,8 @@ struct DofProxy {
       friction(&properties.mFrictions.data()[index]),
 
       preserveName(&properties.mPreserveDofNames[index]),
-      name(&properties.mDofNames[index]) {
+      name(&properties.mDofNames[index])
+  {
     if ((int)index >= properties.mPositionLowerLimits.size()) {
       dterr << "[SkelParser] Joint named [" << jointName << "] has a dof "
             << "element (" << index << ") which is out of bounds (max "
@@ -1600,7 +1621,8 @@ void readAllDegreesOfFreedom(
     PropertyType& _properties,
     SkelJoint& _joint,
     const std::string& _jointName,
-    std::size_t _numDofs) {
+    std::size_t _numDofs)
+{
   if (_joint.position.size() < (int)_numDofs) {
     _joint.position.resize(_numDofs);
     _joint.position.setZero();
@@ -1634,7 +1656,8 @@ void readDegreeOfFreedom(
     PropertyType& properties,
     SkelJoint& joint,
     const std::string& jointName,
-    std::size_t numDofs) {
+    std::size_t numDofs)
+{
   int localIndex = -1;
   int xml_err = _dofElement->QueryIntAttribute("local_index", &localIndex);
 
@@ -1739,7 +1762,8 @@ void readJointDynamicsAndLimit(
     PropertyType& _properties,
     SkelJoint& _joint,
     const std::string& _name,
-    std::size_t _numAxis) {
+    std::size_t _numAxis)
+{
   // TODO(MXG): Consider printing warnings for these tags that recommends using
   // the dof tag instead, because all functionality of these tags have been
   // moved to the dof tag
@@ -1822,7 +1846,8 @@ void readJointDynamicsAndLimit(
 JointPropPtr readWeldJoint(
     tinyxml2::XMLElement* /*_jointElement*/,
     SkelJoint& /*_joint*/,
-    const std::string&) {
+    const std::string&)
+{
   return dynamics::WeldJoint::Properties::createShared();
 }
 
@@ -1830,7 +1855,8 @@ JointPropPtr readWeldJoint(
 JointPropPtr readRevoluteJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::RevoluteJoint::Properties properties;
@@ -1882,7 +1908,8 @@ JointPropPtr readRevoluteJoint(
 JointPropPtr readPrismaticJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::PrismaticJoint::Properties properties;
@@ -1934,7 +1961,8 @@ JointPropPtr readPrismaticJoint(
 JointPropPtr readScrewJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::ScrewJoint::Properties properties;
@@ -1992,7 +2020,8 @@ JointPropPtr readScrewJoint(
 JointPropPtr readUniversalJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::UniversalJoint::Properties properties;
@@ -2052,7 +2081,8 @@ JointPropPtr readUniversalJoint(
 JointPropPtr readBallJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::BallJoint::Properties properties;
@@ -2082,7 +2112,8 @@ JointPropPtr readBallJoint(
 JointPropPtr readEulerJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::EulerJoint::Properties properties;
@@ -2129,7 +2160,8 @@ JointPropPtr readEulerJoint(
 JointPropPtr readTranslationalJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::TranslationalJoint::Properties properties;
@@ -2163,7 +2195,8 @@ JointPropPtr readTranslationalJoint(
 JointPropPtr readTranslationalJoint2D(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::TranslationalJoint2D::Properties properties;
@@ -2234,7 +2267,8 @@ JointPropPtr readTranslationalJoint2D(
 JointPropPtr readPlanarJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::PlanarJoint::Properties properties;
@@ -2305,7 +2339,8 @@ JointPropPtr readPlanarJoint(
 JointPropPtr readFreeJoint(
     tinyxml2::XMLElement* _jointElement,
     SkelJoint& _joint,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::FreeJoint::Properties properties;
@@ -2333,7 +2368,8 @@ JointPropPtr readFreeJoint(
 
 //==============================================================================
 common::ResourceRetrieverPtr getRetriever(
-    const common::ResourceRetrieverPtr& _retriever) {
+    const common::ResourceRetrieverPtr& _retriever)
+{
   if (_retriever) {
     return _retriever;
   } else {

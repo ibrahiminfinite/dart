@@ -42,7 +42,8 @@ namespace dynamics {
 namespace {
 
 //==============================================================================
-Eigen::Vector3d toVector3d(const octomap::point3d& point) {
+Eigen::Vector3d toVector3d(const octomap::point3d& point)
+{
   return Eigen::Vector3f(point.x(), point.y(), point.z()).cast<double>();
 }
 
@@ -55,39 +56,46 @@ PointCloudShape::PointCloudShape(double visualSize)
   : Shape(),
     mPointShapeType(BOX),
     mColorMode(USE_SHAPE_COLOR),
-    mVisualSize(visualSize) {
+    mVisualSize(visualSize)
+{
   // Do nothing
 }
 
 //==============================================================================
-const std::string& PointCloudShape::getType() const {
+const std::string& PointCloudShape::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-Eigen::Matrix3d PointCloudShape::computeInertia(double /*mass*/) const {
+Eigen::Matrix3d PointCloudShape::computeInertia(double /*mass*/) const
+{
   return Eigen::Matrix3d::Identity();
 }
 
 //==============================================================================
-const std::string& PointCloudShape::getStaticType() {
+const std::string& PointCloudShape::getStaticType()
+{
   static const std::string type("PointCloudShape");
   return type;
 }
 
 //==============================================================================
-void PointCloudShape::reserve(std::size_t size) {
+void PointCloudShape::reserve(std::size_t size)
+{
   mPoints.reserve(size);
 }
 
 //==============================================================================
-void PointCloudShape::addPoint(const Eigen::Vector3d& point) {
+void PointCloudShape::addPoint(const Eigen::Vector3d& point)
+{
   mPoints.emplace_back(point);
   incrementVersion();
 }
 
 //==============================================================================
-void PointCloudShape::addPoint(const std::vector<Eigen::Vector3d>& points) {
+void PointCloudShape::addPoint(const std::vector<Eigen::Vector3d>& points)
+{
   mPoints.reserve(mPoints.size() + points.size());
   for (const auto& point : points)
     mPoints.emplace_back(point);
@@ -95,14 +103,16 @@ void PointCloudShape::addPoint(const std::vector<Eigen::Vector3d>& points) {
 }
 
 //==============================================================================
-void PointCloudShape::setPoint(const std::vector<Eigen::Vector3d>& points) {
+void PointCloudShape::setPoint(const std::vector<Eigen::Vector3d>& points)
+{
   mPoints = points;
   incrementVersion();
 }
 
 #if DART_HAVE_OCTOMAP
 //==============================================================================
-void PointCloudShape::setPoints(const ::octomap::Pointcloud& pointCloud) {
+void PointCloudShape::setPoints(const ::octomap::Pointcloud& pointCloud)
+{
   mPoints.resize(pointCloud.size());
   for (auto i = 0u; i < mPoints.size(); ++i)
     mPoints[i] = toVector3d(pointCloud[i]);
@@ -110,7 +120,8 @@ void PointCloudShape::setPoints(const ::octomap::Pointcloud& pointCloud) {
 }
 
 //==============================================================================
-void PointCloudShape::addPoints(const ::octomap::Pointcloud& pointCloud) {
+void PointCloudShape::addPoints(const ::octomap::Pointcloud& pointCloud)
+{
   mPoints.reserve(mPoints.size() + pointCloud.size());
   for (const auto& point : pointCloud)
     mPoints.emplace_back(toVector3d(point));
@@ -119,22 +130,26 @@ void PointCloudShape::addPoints(const ::octomap::Pointcloud& pointCloud) {
 #endif
 
 //==============================================================================
-const std::vector<Eigen::Vector3d>& PointCloudShape::getPoints() const {
+const std::vector<Eigen::Vector3d>& PointCloudShape::getPoints() const
+{
   return mPoints;
 }
 
 //==============================================================================
-std::size_t PointCloudShape::getNumPoints() const {
+std::size_t PointCloudShape::getNumPoints() const
+{
   return mPoints.size();
 }
 
 //==============================================================================
-void PointCloudShape::removeAllPoints() {
+void PointCloudShape::removeAllPoints()
+{
   mPoints.clear();
 }
 
 //==============================================================================
-void PointCloudShape::setPointShapeType(PointCloudShape::PointShapeType type) {
+void PointCloudShape::setPointShapeType(PointCloudShape::PointShapeType type)
+{
   if (mPointShapeType == type)
     return;
 
@@ -143,28 +158,33 @@ void PointCloudShape::setPointShapeType(PointCloudShape::PointShapeType type) {
 }
 
 //==============================================================================
-PointCloudShape::PointShapeType PointCloudShape::getPointShapeType() const {
+PointCloudShape::PointShapeType PointCloudShape::getPointShapeType() const
+{
   return mPointShapeType;
 }
 
 //==============================================================================
-void PointCloudShape::setColorMode(PointCloudShape::ColorMode mode) {
+void PointCloudShape::setColorMode(PointCloudShape::ColorMode mode)
+{
   mColorMode = mode;
 }
 
 //==============================================================================
-PointCloudShape::ColorMode PointCloudShape::getColorMode() const {
+PointCloudShape::ColorMode PointCloudShape::getColorMode() const
+{
   return mColorMode;
 }
 
 //==============================================================================
-void PointCloudShape::setOverallColor(const Eigen::Vector4d& color) {
+void PointCloudShape::setOverallColor(const Eigen::Vector4d& color)
+{
   mColors.resize(1);
   mColors[0] = color;
 }
 
 //==============================================================================
-Eigen::Vector4d PointCloudShape::getOverallColor() const {
+Eigen::Vector4d PointCloudShape::getOverallColor() const
+{
   if (mColors.empty()) {
     dtwarn << "[PointCloudShape] Attempt to get the overall color when the "
            << "color array is empty. Returning (RGBA: [0.5, 0.5, 0.5, 0.5]) "
@@ -185,40 +205,47 @@ Eigen::Vector4d PointCloudShape::getOverallColor() const {
 void PointCloudShape::setColors(
     const std::vector<
         Eigen::Vector4d,
-        Eigen::aligned_allocator<Eigen::Vector4d> >& colors) {
+        Eigen::aligned_allocator<Eigen::Vector4d> >& colors)
+{
   mColors = colors;
 }
 
 //==============================================================================
 const std::vector<Eigen::Vector4d, Eigen::aligned_allocator<Eigen::Vector4d> >&
-PointCloudShape::getColors() const {
+PointCloudShape::getColors() const
+{
   return mColors;
 }
 
 //==============================================================================
-void PointCloudShape::setVisualSize(double size) {
+void PointCloudShape::setVisualSize(double size)
+{
   mVisualSize = size;
   incrementVersion();
 }
 
 //==============================================================================
-double PointCloudShape::getVisualSize() const {
+double PointCloudShape::getVisualSize() const
+{
   return mVisualSize;
 }
 
 //==============================================================================
-void PointCloudShape::notifyColorUpdated(const Eigen::Vector4d& /*color*/) {
+void PointCloudShape::notifyColorUpdated(const Eigen::Vector4d& /*color*/)
+{
   incrementVersion();
 }
 
 //==============================================================================
-void PointCloudShape::updateVolume() const {
+void PointCloudShape::updateVolume() const
+{
   mVolume = 0.0;
   mIsVolumeDirty = false;
 }
 
 //==============================================================================
-void PointCloudShape::updateBoundingBox() const {
+void PointCloudShape::updateBoundingBox() const
+{
   if (mPoints.empty()) {
     mBoundingBox.setMin(Eigen::Vector3d::Zero());
     mBoundingBox.setMax(Eigen::Vector3d::Zero());

@@ -44,7 +44,8 @@ namespace render {
 
 WarningShapeNode::WarningShapeNode(
     std::shared_ptr<dart::dynamics::Shape> shape, ShapeFrameNode* parent)
-  : ShapeNode(shape, parent, this) {
+  : ShapeNode(shape, parent, this)
+{
   dtwarn << "Shape type (" << shape->getType() << ") found in Entity '"
          << parent->getName()
          << "' is not currently supported by dart::gui::osg, "
@@ -52,12 +53,14 @@ WarningShapeNode::WarningShapeNode(
 }
 
 //==============================================================================
-void WarningShapeNode::refresh() {
+void WarningShapeNode::refresh()
+{
   // Do nothing
 }
 
 //==============================================================================
-WarningShapeNode::~WarningShapeNode() {
+WarningShapeNode::~WarningShapeNode()
+{
   // Do nothing
 }
 

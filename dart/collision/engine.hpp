@@ -38,7 +38,7 @@
 
 #include "dart/collision/collision_option.hpp"
 #include "dart/collision/object.hpp"
-#include "dart/collision/types.hpp"
+#include "dart/collision/type.hpp"
 #include "dart/common/Factory.hpp"
 #include "dart/math/SmartPointer.hpp"
 
@@ -74,9 +74,13 @@ public:
   template <typename... Args>
   ObjectPtr<S> create_sphere_object(Args&&... args);
 
-  /// Performs collision detection for two objects
-  virtual bool collide(ObjectPtr<S> object1, ObjectPtr<S> object2) = 0;
-  // TODO(JS): Add options and results as parameters
+  /// Performs narrow phase collision detection
+  virtual bool collide(
+      ObjectPtr<S> object1,
+      ObjectPtr<S> object2,
+      const CollisionOption<S>& option = {},
+      CollisionResult<S>* result = nullptr)
+      = 0;
 
 protected:
   /// Registrar to register a concrete engine to the factory
@@ -117,9 +121,9 @@ extern template class Engine<double>;
 
 #define DART_REGISTER_ENGINE_OUT_HEADER(engine_type)                           \
   template <typename S>                                                        \
-  typename Engine<S>::template Registrar<engine_type>                          \
-      engine_type::m_registrar {                                               \
-    engine_type::GetStaticType(), []() -> std::shared_ptr<engine_type> {       \
+  typename Engine<S>::template Registrar<engine_type> engine_type::m_registrar \
+  {                                                                            \
+    engine_type::GetType(), []() -> std::shared_ptr<engine_type> {             \
       return engine_type::Create();                                            \
     }                                                                          \
   }

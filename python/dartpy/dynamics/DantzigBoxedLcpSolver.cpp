@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void DantzigBoxedLcpSolver(py::module& m) {
+void DantzigBoxedLcpSolver(py::module& m)
+{
   ::py::class_<
       dart::dynamics::DantzigBoxedLcpSolver,
       dart::dynamics::BoxedLcpSolver,

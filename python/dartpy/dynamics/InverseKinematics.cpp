@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void InverseKinematics(py::module& m) {
+void InverseKinematics(py::module& m)
+{
   ::py::class_<dart::dynamics::InverseKinematics::ErrorMethod::Properties>(
       m, "InverseKinematicsErrorMethodProperties")
       .def(

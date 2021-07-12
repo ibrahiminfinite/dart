@@ -32,20 +32,21 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/math/geometry/Icosphere.hpp"
+#include "dart/math/geometry/icosphere.hpp"
 
 using namespace dart;
 using namespace math;
 
 //==============================================================================
-TEST(IcosphereTests, NumOfVerticesAndTriangles) {
+TEST(IcosphereTests, NumOfVerticesAndTriangles)
+{
   const double radius = 5.0;
 
   for (auto i = 0; i < 8; ++i) {
     const auto subdivisions = i;
     const auto icosphere = Icosphered(radius, subdivisions);
-    const auto& vertices = icosphere.getVertices();
-    const auto& triangles = icosphere.getTriangles();
+    const auto& vertices = icosphere.get_vertices();
+    const auto& triangles = icosphere.get_triangles();
 
     EXPECT_EQ(vertices.size(), Icosphered::getNumVertices(subdivisions));
     EXPECT_EQ(triangles.size(), Icosphered::getNumTriangles(subdivisions));
@@ -57,14 +58,15 @@ TEST(IcosphereTests, NumOfVerticesAndTriangles) {
 }
 
 //==============================================================================
-TEST(IcosphereTests, Constructor) {
+TEST(IcosphereTests, Constructor)
+{
   auto s1 = Icosphered(1, 0);
-  EXPECT_FALSE(s1.isEmpty());
+  EXPECT_FALSE(s1.is_empty());
   EXPECT_DOUBLE_EQ(s1.getRadius(), 1);
   EXPECT_EQ(s1.getNumSubdivisions(), 0);
 
   auto s2 = Icosphered(2, 3);
-  EXPECT_FALSE(s2.isEmpty());
+  EXPECT_FALSE(s2.is_empty());
   EXPECT_DOUBLE_EQ(s2.getRadius(), 2);
   EXPECT_EQ(s2.getNumSubdivisions(), 3);
 }

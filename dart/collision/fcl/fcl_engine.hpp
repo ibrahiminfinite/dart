@@ -36,7 +36,7 @@
 
 #include "dart/collision/engine.hpp"
 #include "dart/collision/fcl/backward_compatibility.hpp"
-#include "dart/collision/fcl/fcl_types.hpp"
+#include "dart/collision/fcl/fcl_type.hpp"
 #include "dart/math/SmartPointer.hpp"
 
 namespace dart {
@@ -80,28 +80,30 @@ public:
   const std::string& get_type() const override;
 
   /// Get collision detector type for this class
-  static const std::string& GetStaticType();
+  static const std::string& GetType();
 
   // Documentation inherited
   GroupPtr<S> create_group() override;
 
   // Documentation inherited
-  bool collide(ObjectPtr<S> object1, ObjectPtr<S> object2) override;
+  bool collide(
+      ObjectPtr<S> object1,
+      ObjectPtr<S> object2,
+      const CollisionOption<S>& option = {},
+      CollisionResult<S>* result = nullptr) override;
 
 protected:
   /// Constructor
   FclEngine() = default;
 
-  /// Returns ::fcl::CollisionGeometry associated with give Shape. New
-  /// ::fcl::CollisionGeome will be created if it hasn't created yet.
+  /// Returns fcl::CollisionGeometry for a shape
   std::shared_ptr<FclCollisionGeometry<S>> create_fcl_collision_geometry(
-      math::ConstGeometryPtr shape);
+      const math::ConstGeometryPtr& shape);
 
 private:
-  std::shared_ptr<FclCollisionGeometry<S>> create_fcl_collision_geometry_impl(
-      const math::ConstGeometryPtr& shape, FclEngine::PrimitiveShape type);
+  friend class FclGroup<S>;
 
-  PrimitiveShape m_primitive_shape_type = PrimitiveShape::MESH;
+  PrimitiveShape m_primitive_shape_type = PrimitiveShape::PRIMITIVE;
 
   DART_REGISTER_ENGINE_IN_HEADER(FclEngine<S>);
 };

@@ -40,7 +40,8 @@ namespace dart {
 namespace common {
 
 //==============================================================================
-std::string ResourceRetriever::readAll(const Uri& uri) {
+std::string ResourceRetriever::readAll(const Uri& uri)
+{
   auto resource = retrieve(uri);
 
   if (!resource) {
@@ -53,7 +54,8 @@ std::string ResourceRetriever::readAll(const Uri& uri) {
 }
 
 //==============================================================================
-std::string ResourceRetriever::getFilePath(const Uri& /*uri*/) {
+std::string ResourceRetriever::getFilePath(const Uri& /*uri*/)
+{
   return "";
 }
 

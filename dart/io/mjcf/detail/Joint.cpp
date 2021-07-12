@@ -44,7 +44,8 @@ namespace detail {
 Errors Joint::read(
     tinyxml2::XMLElement* element,
     const Defaults& defaults,
-    const JointAttributes& defaultAttributes) {
+    const JointAttributes& defaultAttributes)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "joint") {
@@ -77,7 +78,8 @@ Errors Joint::read(
 }
 
 //==============================================================================
-Errors Joint::preprocess(const Compiler& /*compiler*/) {
+Errors Joint::preprocess(const Compiler& /*compiler*/)
+{
   Errors errors;
 
   if (mAttributes.mName) {
@@ -95,13 +97,15 @@ Errors Joint::preprocess(const Compiler& /*compiler*/) {
 }
 
 //==============================================================================
-Errors Joint::compile(const Compiler& /*compiler*/) {
+Errors Joint::compile(const Compiler& /*compiler*/)
+{
   Errors errors;
   return errors;
 }
 
 //==============================================================================
-Errors Joint::postprocess(const Body* parent, const Compiler& compiler) {
+Errors Joint::postprocess(const Body* parent, const Compiler& compiler)
+{
   Errors errors;
 
   if (compiler.getCoordinate() == Coordinate::LOCAL) {
@@ -119,42 +123,50 @@ Errors Joint::postprocess(const Body* parent, const Compiler& compiler) {
 }
 
 //==============================================================================
-const std::string& Joint::getName() const {
+const std::string& Joint::getName() const
+{
   return mName;
 }
 
 //==============================================================================
-JointType Joint::getType() const {
+JointType Joint::getType() const
+{
   return mType;
 }
 
 //==============================================================================
-const Eigen::Vector3d& Joint::getPos() const {
+const Eigen::Vector3d& Joint::getPos() const
+{
   return mPos;
 }
 
 //==============================================================================
-const Eigen::Vector3d& Joint::getAxis() const {
+const Eigen::Vector3d& Joint::getAxis() const
+{
   return mAxis;
 }
 
 //==============================================================================
-bool Joint::isLimited() const {
+bool Joint::isLimited() const
+{
   return mLimited;
 }
 
 //==============================================================================
-const Eigen::Vector2d& Joint::getRange() const {
+const Eigen::Vector2d& Joint::getRange() const
+{
   return mRange;
 }
 
 //==============================================================================
-double Joint::getDamping() const {
+double Joint::getDamping() const
+{
   return mDamping;
 }
 
 //==============================================================================
-double Joint::getSpringRef() const {
+double Joint::getSpringRef() const
+{
   return mSpringRef;
 }
 

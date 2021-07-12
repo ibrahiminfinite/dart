@@ -40,7 +40,8 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-WeldAttributes::WeldAttributes() {
+WeldAttributes::WeldAttributes()
+{
   mSolImp << 0.9, 0.95, 0.001, 0.5, 2;
   mSolRef << 0.02, 1;
   mRelPose << 0, 1, 0, 0, 0, 0, 0;
@@ -48,7 +49,8 @@ WeldAttributes::WeldAttributes() {
 
 //==============================================================================
 Errors appendWeldAttributes(
-    WeldAttributes& attributes, tinyxml2::XMLElement* element) {
+    WeldAttributes& attributes, tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "weld") {

@@ -43,7 +43,8 @@ namespace dynamics {
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::addShapeFramesOf(
-    const dynamics::ShapeFrame* shapeFrame, const Others*... others) {
+    const dynamics::ShapeFrame* shapeFrame, const Others*... others)
+{
   addShapeFrame(shapeFrame);
 
   addShapeFramesOf(others...);
@@ -53,7 +54,8 @@ void CollisionGroup::addShapeFramesOf(
 template <typename... Others>
 void CollisionGroup::addShapeFramesOf(
     const std::vector<const dynamics::ShapeFrame*>& shapeFrames,
-    const Others*... others) {
+    const Others*... others)
+{
   addShapeFrames(shapeFrames);
 
   addShapeFramesOf(others...);
@@ -62,7 +64,8 @@ void CollisionGroup::addShapeFramesOf(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::addShapeFramesOf(
-    const CollisionGroup* otherGroup, const Others*... others) {
+    const CollisionGroup* otherGroup, const Others*... others)
+{
   assert(otherGroup);
 
   if (otherGroup && this != otherGroup) {
@@ -76,7 +79,8 @@ void CollisionGroup::addShapeFramesOf(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::addShapeFramesOf(
-    const dynamics::BodyNode* bodyNode, const Others*... others) {
+    const dynamics::BodyNode* bodyNode, const Others*... others)
+{
   assert(bodyNode);
 
   auto collisionShapeNodes
@@ -91,7 +95,8 @@ void CollisionGroup::addShapeFramesOf(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::addShapeFramesOf(
-    const dynamics::MetaSkeleton* skel, const Others*... others) {
+    const dynamics::MetaSkeleton* skel, const Others*... others)
+{
   assert(skel);
 
   auto numBodyNodes = skel->getNumBodyNodes();
@@ -104,7 +109,8 @@ void CollisionGroup::addShapeFramesOf(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::subscribeTo(
-    const dynamics::ConstBodyNodePtr& bodyNode, const Others&... others) {
+    const dynamics::ConstBodyNodePtr& bodyNode, const Others&... others)
+{
   const auto inserted = mBodyNodeSources.insert(BodyNodeSources::value_type(
       bodyNode.get(), BodyNodeSource(bodyNode.get(), bodyNode->getVersion())));
 
@@ -126,7 +132,8 @@ void CollisionGroup::subscribeTo(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::subscribeTo(
-    const dynamics::ConstSkeletonPtr& skeleton, const Others&... others) {
+    const dynamics::ConstSkeletonPtr& skeleton, const Others&... others)
+{
   const auto inserted = mSkeletonSources.insert(SkeletonSources::value_type(
       skeleton.get(), SkeletonSource(skeleton, skeleton->getVersion())));
 
@@ -160,7 +167,8 @@ void CollisionGroup::subscribeTo(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::removeShapeFramesOf(
-    const dynamics::ShapeFrame* shapeFrame, const Others*... others) {
+    const dynamics::ShapeFrame* shapeFrame, const Others*... others)
+{
   removeShapeFrame(shapeFrame);
 
   removeShapeFramesOf(others...);
@@ -170,7 +178,8 @@ void CollisionGroup::removeShapeFramesOf(
 template <typename... Others>
 void CollisionGroup::removeShapeFramesOf(
     const std::vector<const dynamics::ShapeFrame*>& shapeFrames,
-    const Others*... others) {
+    const Others*... others)
+{
   removeShapeFrames(shapeFrames);
 
   removeShapeFramesOf(others...);
@@ -179,7 +188,8 @@ void CollisionGroup::removeShapeFramesOf(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::removeShapeFramesOf(
-    const CollisionGroup* otherGroup, const Others*... others) {
+    const CollisionGroup* otherGroup, const Others*... others)
+{
   assert(otherGroup);
 
   if (otherGroup) {
@@ -198,7 +208,8 @@ void CollisionGroup::removeShapeFramesOf(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::removeShapeFramesOf(
-    const dynamics::BodyNode* bodyNode, const Others*... others) {
+    const dynamics::BodyNode* bodyNode, const Others*... others)
+{
   assert(bodyNode);
 
   auto collisionShapeNodes
@@ -213,7 +224,8 @@ void CollisionGroup::removeShapeFramesOf(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::removeShapeFramesOf(
-    const dynamics::MetaSkeleton* skel, const Others*... others) {
+    const dynamics::MetaSkeleton* skel, const Others*... others)
+{
   assert(skel);
 
   auto numBodyNodes = skel->getNumBodyNodes();
@@ -226,7 +238,8 @@ void CollisionGroup::removeShapeFramesOf(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::unsubscribeFrom(
-    const dynamics::BodyNode* bodyNode, const Others*... others) {
+    const dynamics::BodyNode* bodyNode, const Others*... others)
+{
   auto it = mBodyNodeSources.find(bodyNode);
   if (it != mBodyNodeSources.end()) {
     for (const auto& entry : it->second.mObjects)
@@ -241,7 +254,8 @@ void CollisionGroup::unsubscribeFrom(
 //==============================================================================
 template <typename... Others>
 void CollisionGroup::unsubscribeFrom(
-    const dynamics::Skeleton* skeleton, const Others*... others) {
+    const dynamics::Skeleton* skeleton, const Others*... others)
+{
   auto it = mSkeletonSources.find(skeleton);
   if (it != mSkeletonSources.end()) {
     for (const auto& entry : it->second.mObjects) {

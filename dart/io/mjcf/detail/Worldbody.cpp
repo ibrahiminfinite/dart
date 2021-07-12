@@ -49,7 +49,8 @@ Errors Worldbody::read(
     const Defaults& defaults,
     const Default* currentDefault,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   assert(currentDefault != nullptr);
 
   Errors errors;
@@ -120,7 +121,8 @@ Errors Worldbody::read(
 }
 
 //==============================================================================
-Errors Worldbody::preprocess(const Compiler& compiler) {
+Errors Worldbody::preprocess(const Compiler& compiler)
+{
   Errors errors;
 
   for (Geom& geom : mGeoms) {
@@ -137,7 +139,8 @@ Errors Worldbody::preprocess(const Compiler& compiler) {
 }
 
 //==============================================================================
-Errors Worldbody::compile(const Compiler& compiler) {
+Errors Worldbody::compile(const Compiler& compiler)
+{
   Errors errors;
 
   for (Geom& geom : mGeoms) {
@@ -154,7 +157,8 @@ Errors Worldbody::compile(const Compiler& compiler) {
 }
 
 //==============================================================================
-Errors Worldbody::postprocess(const Compiler& compiler) {
+Errors Worldbody::postprocess(const Compiler& compiler)
+{
   Errors errors;
 
   for (Geom& geom : mGeoms) {
@@ -171,32 +175,38 @@ Errors Worldbody::postprocess(const Compiler& compiler) {
 }
 
 //==============================================================================
-std::size_t Worldbody::getNumGeoms() const {
+std::size_t Worldbody::getNumGeoms() const
+{
   return mGeoms.size();
 }
 
 //==============================================================================
-const Geom& Worldbody::getGeom(std::size_t index) const {
+const Geom& Worldbody::getGeom(std::size_t index) const
+{
   return mGeoms[index];
 }
 
 //==============================================================================
-std::size_t Worldbody::getNumSites() const {
+std::size_t Worldbody::getNumSites() const
+{
   return mSites.size();
 }
 
 //==============================================================================
-const Site& Worldbody::getSite(std::size_t index) const {
+const Site& Worldbody::getSite(std::size_t index) const
+{
   return mSites[index];
 }
 
 //==============================================================================
-std::size_t Worldbody::getNumRootBodies() const {
+std::size_t Worldbody::getNumRootBodies() const
+{
   return mRootBodies.size();
 }
 
 //==============================================================================
-const Body& Worldbody::getRootBody(std::size_t index) const {
+const Body& Worldbody::getRootBody(std::size_t index) const
+{
   return mRootBodies[index];
 }
 

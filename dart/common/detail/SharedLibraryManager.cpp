@@ -43,13 +43,15 @@ namespace detail {
 
 //==============================================================================
 std::shared_ptr<SharedLibrary> SharedLibraryManager::load(
-    const boost::filesystem::path& path) {
+    const boost::filesystem::path& path)
+{
   return load(path.string());
 }
 
 //==============================================================================
 std::shared_ptr<SharedLibrary> SharedLibraryManager::load(
-    const std::string& path) {
+    const std::string& path)
+{
   // Check if the given path exits
   const bool exists = std::ifstream(path).good();
   if (!exists) {

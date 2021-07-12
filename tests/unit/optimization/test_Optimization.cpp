@@ -68,21 +68,25 @@ using namespace dart::dynamics;
 class SampleObjFunc : public Function {
 public:
   /// \brief Constructor
-  SampleObjFunc() : Function() {
+  SampleObjFunc() : Function()
+  {
   }
 
   /// \brief Destructor
-  virtual ~SampleObjFunc() {
+  virtual ~SampleObjFunc()
+  {
   }
 
   /// \copydoc Function::eval
-  double eval(const Eigen::VectorXd& _x) override {
+  double eval(const Eigen::VectorXd& _x) override
+  {
     return std::sqrt(_x[1]);
   }
 
   /// \copydoc Function::evalGradient
   void evalGradient(
-      const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) override {
+      const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) override
+  {
     _grad[0] = 0.0;
     _grad[1] = 0.5 / std::sqrt(_x[1]);
   }
@@ -92,21 +96,25 @@ public:
 class SampleConstFunc : public Function {
 public:
   /// \brief Constructor
-  SampleConstFunc(double _a, double _b) : Function(), mA(_a), mB(_b) {
+  SampleConstFunc(double _a, double _b) : Function(), mA(_a), mB(_b)
+  {
   }
 
   /// \brief Destructor
-  virtual ~SampleConstFunc() {
+  virtual ~SampleConstFunc()
+  {
   }
 
   /// \copydoc Function::eval
-  double eval(const Eigen::VectorXd& _x) override {
+  double eval(const Eigen::VectorXd& _x) override
+  {
     return ((mA * _x[0] + mB) * (mA * _x[0] + mB) * (mA * _x[0] + mB) - _x[1]);
   }
 
   /// \copydoc Function::evalGradient
   void evalGradient(
-      const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) override {
+      const Eigen::VectorXd& _x, Eigen::Map<Eigen::VectorXd> _grad) override
+  {
     _grad[0] = 3 * mA * (mA * _x[0] + mB) * (mA * _x[0] + mB);
     _grad[1] = -1.0;
   }
@@ -120,7 +128,8 @@ private:
 };
 
 //==============================================================================
-TEST(Optimization, GradientDescent) {
+TEST(Optimization, GradientDescent)
+{
   std::shared_ptr<Problem> prob = std::make_shared<Problem>(2);
 
   prob->setLowerBounds(Eigen::Vector2d(-HUGE_VAL, 0));
@@ -143,7 +152,8 @@ TEST(Optimization, GradientDescent) {
 
 //==============================================================================
 #if DART_HAVE_NLOPT
-TEST(Optimization, BasicNlopt) {
+TEST(Optimization, BasicNlopt)
+{
   // Problem reference: http://ab-initio.mit.edu/wiki/index.php/NLopt_Tutorial
 
   std::shared_ptr<Problem> prob = std::make_shared<Problem>(2);
@@ -174,7 +184,8 @@ TEST(Optimization, BasicNlopt) {
 
 //==============================================================================
 #if DART_HAVE_IPOPT
-TEST(Optimization, BasicIpopt) {
+TEST(Optimization, BasicIpopt)
+{
   std::shared_ptr<Problem> prob = std::make_shared<Problem>(2);
 
   prob->setLowerBounds(Eigen::Vector2d(-HUGE_VAL, 0));
@@ -203,7 +214,8 @@ TEST(Optimization, BasicIpopt) {
 
 //==============================================================================
 #if DART_HAVE_SNOPT
-TEST(Optimization, BasicSnopt) {
+TEST(Optimization, BasicSnopt)
+{
   dterr << "SNOPT is not implemented yet.\n";
   return;
 }
@@ -211,7 +223,8 @@ TEST(Optimization, BasicSnopt) {
 
 //==============================================================================
 bool compareStringAndFile(
-    const std::string& content, const std::string& fileName) {
+    const std::string& content, const std::string& fileName)
+{
   std::ifstream ifs(fileName, std::ifstream::in);
   EXPECT_TRUE(ifs.is_open());
 
@@ -232,7 +245,8 @@ bool compareStringAndFile(
 }
 
 //==============================================================================
-TEST(Optimization, OutStream) {
+TEST(Optimization, OutStream)
+{
   std::shared_ptr<Problem> prob = std::make_shared<Problem>(2);
 
   prob->setLowerBounds(Eigen::Vector2d(-HUGE_VAL, 0));

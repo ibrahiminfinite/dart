@@ -42,28 +42,33 @@ namespace MjcfParser {
 namespace detail {
 
 //==============================================================================
-void Compiler::setBaseUri(const common::Uri& baseUri) {
+void Compiler::setBaseUri(const common::Uri& baseUri)
+{
   mBaseUri = baseUri;
 }
 
 //==============================================================================
-const common::Uri& Compiler::getBaseUri() const {
+const common::Uri& Compiler::getBaseUri() const
+{
   return mBaseUri;
 }
 
 //==============================================================================
 void Compiler::setResourceRetriever(
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   mRetriever = retriever;
 }
 
 //==============================================================================
-common::ResourceRetrieverPtr Compiler::getResourceRetriever() const {
+common::ResourceRetrieverPtr Compiler::getResourceRetriever() const
+{
   return mRetriever;
 }
 
 //==============================================================================
-Errors Compiler::read(tinyxml2::XMLElement* element) {
+Errors Compiler::read(tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "compiler") {
@@ -211,87 +216,104 @@ Errors Compiler::read(tinyxml2::XMLElement* element) {
 }
 
 //==============================================================================
-double Compiler::getBoundInertia() const {
+double Compiler::getBoundInertia() const
+{
   return mBoundInertia;
 }
 
 //==============================================================================
-double Compiler::getSetTotalMass() const {
+double Compiler::getSetTotalMass() const
+{
   return mSetTotalMass;
 }
 
 //==============================================================================
-bool Compiler::getBalanceInertia() const {
+bool Compiler::getBalanceInertia() const
+{
   return mBalanceInertia;
 }
 
 //==============================================================================
-bool Compiler::getStripPath() const {
+bool Compiler::getStripPath() const
+{
   return mStripPath;
 }
 
 //==============================================================================
-double Compiler::getBoundMass() const {
+double Compiler::getBoundMass() const
+{
   return mBoundMass;
 }
 
 //==============================================================================
-Coordinate Compiler::getCoordinate() const {
+Coordinate Compiler::getCoordinate() const
+{
   return mCoordinate;
 }
 
 //==============================================================================
-Angle Compiler::getAngle() const {
+Angle Compiler::getAngle() const
+{
   return mAngle;
 }
 
 //==============================================================================
-bool Compiler::getFitAabb() const {
+bool Compiler::getFitAabb() const
+{
   return mFitAabb;
 }
 
 //==============================================================================
-const std::string& Compiler::getEulerSeq() const {
+const std::string& Compiler::getEulerSeq() const
+{
   return mEulerSeq;
 }
 
 //==============================================================================
-const std::string& Compiler::getMeshDir() const {
+const std::string& Compiler::getMeshDir() const
+{
   return mMeshDir;
 }
 
 //==============================================================================
-const std::string& Compiler::getTextureDir() const {
+const std::string& Compiler::getTextureDir() const
+{
   return mTextureDir;
 }
 
 //==============================================================================
-bool Compiler::getDiscardVisual() const {
+bool Compiler::getDiscardVisual() const
+{
   return mDiscardVisual;
 }
 
 //==============================================================================
-bool Compiler::getConvexHull() const {
+bool Compiler::getConvexHull() const
+{
   return mConvexHull;
 }
 
 //==============================================================================
-bool Compiler::getUserThread() const {
+bool Compiler::getUserThread() const
+{
   return mUserThread;
 }
 
 //==============================================================================
-bool Compiler::getFuseStatic() const {
+bool Compiler::getFuseStatic() const
+{
   return mFuseStatic;
 }
 
 //==============================================================================
-InertiaFromGeom Compiler::getInertiaFromGeom() const {
+InertiaFromGeom Compiler::getInertiaFromGeom() const
+{
   return mInertiaFromGeom;
 }
 
 //==============================================================================
-const Eigen::Vector2i& Compiler::getInertiaGroupRange() const {
+const Eigen::Vector2i& Compiler::getInertiaGroupRange() const
+{
   return mInertiaGroupRange;
 }
 

@@ -125,12 +125,14 @@ constexpr int COPLANAR_CONTACT = -1;
 constexpr int INTERIAL_CONTACT = 1;
 
 /* implement as is fastest on your machine */
-inline float FABS(float x) {
+inline float FABS(float x)
+{
   return ((float)fabs(x));
 }
 
 inline void edge_tri_intersect(
-    float V0[3], float V1[3], float DV0, float DV1, float V[3]) {
+    float V0[3], float V1[3], float DV0, float DV1, float V[3])
+{
   float VV0[3], VV1[3];
   DART_MULT(VV0, V1, DV0);
   DART_MULT(VV1, V0, DV1);
@@ -148,7 +150,8 @@ inline int tri_tri_intersect(
     float U1[3],
     float U2[3],
     float res1[3],
-    float res2[3]) {
+    float res2[3])
+{
   float E1[3], E2[3];
   float N1[3], N2[3], d1, d2;
   float du0, du1, du2, dv0, dv1, dv2;

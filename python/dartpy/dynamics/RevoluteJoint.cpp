@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void RevoluteJoint(py::module& m) {
+void RevoluteJoint(py::module& m)
+{
   ::py::class_<dart::dynamics::RevoluteJoint::UniqueProperties>(
       m, "RevoluteJointUniqueProperties")
       .def(::py::init<>())

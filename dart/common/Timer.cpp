@@ -49,7 +49,8 @@ Timer::Timer(const std::string& _name)
     mLastElapsedTime(0.0),
     mTotalElapsedTime(0.0),
     mName(_name),
-    mIsStarted(false) {
+    mIsStarted(false)
+{
 #ifdef _WIN32
   mTimer.start.QuadPart = 0;
   mTimer.stop.QuadPart = 0;
@@ -61,12 +62,14 @@ Timer::Timer(const std::string& _name)
 }
 
 //==============================================================================
-Timer::~Timer() {
+Timer::~Timer()
+{
 }
 
 //==============================================================================
 #ifdef _WIN32
-double Timer::_convLIToSecs(const LARGE_INTEGER& _L) {
+double Timer::_convLIToSecs(const LARGE_INTEGER& _L)
+{
   return (
       static_cast<double>(_L.QuadPart)
       / static_cast<double>(mFrequency.QuadPart));
@@ -74,7 +77,8 @@ double Timer::_convLIToSecs(const LARGE_INTEGER& _L) {
 #endif
 
 //==============================================================================
-void Timer::start() {
+void Timer::start()
+{
   mIsStarted = true;
   mCount++;
 #ifdef _WIN32
@@ -86,7 +90,8 @@ void Timer::start() {
 }
 
 //==============================================================================
-void Timer::stop() {
+void Timer::stop()
+{
   mIsStarted = false;
 #ifdef _WIN32
   QueryPerformanceCounter(&mTimer.stop);
@@ -102,7 +107,8 @@ void Timer::stop() {
 }
 
 //==============================================================================
-double Timer::getElapsedTime() {
+double Timer::getElapsedTime()
+{
 #ifdef _WIN32
   LARGE_INTEGER timenow;
   QueryPerformanceCounter(&timenow);
@@ -118,22 +124,26 @@ double Timer::getElapsedTime() {
 }
 
 //==============================================================================
-double Timer::getLastElapsedTime() const {
+double Timer::getLastElapsedTime() const
+{
   return mLastElapsedTime;
 }
 
 //==============================================================================
-double Timer::getTotalElapsedTime() const {
+double Timer::getTotalElapsedTime() const
+{
   return mTotalElapsedTime;
 }
 
 //==============================================================================
-bool Timer::isStarted() const {
+bool Timer::isStarted() const
+{
   return mIsStarted;
 }
 
 //==============================================================================
-void Timer::print() {
+void Timer::print()
+{
   if (mCount > 0) {
     std::cout << "Timer [" << mName << "] : " << std::endl
               << "Last elapsed : " << mLastElapsedTime << "; "
@@ -149,7 +159,8 @@ void Timer::print() {
 }
 
 //==============================================================================
-double Timer::getWallTime() {
+double Timer::getWallTime()
+{
 #ifdef _WIN32
   LARGE_INTEGER ticksPerSecond;
   LARGE_INTEGER ticks;

@@ -74,12 +74,14 @@ public:
   // Forwarding constructor
   template <typename... Args>
   ProxyStateAndPropertiesAspect(Args&&... args)
-    : Base(std::forward<Args>(args)...) {
+    : Base(std::forward<Args>(args)...)
+  {
     // Do nothing
   }
 
   // Documentation inherited
-  std::unique_ptr<Aspect> cloneAspect() const override {
+  std::unique_ptr<Aspect> cloneAspect() const override
+  {
     return std::make_unique<ProxyStateAndPropertiesAspect>();
   }
 };

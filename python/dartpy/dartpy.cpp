@@ -49,7 +49,8 @@ void dart_simulation(py::module& m);
 void dart_io(py::module& m);
 void dart_gui(py::module& m);
 
-PYBIND11_MODULE(dartpy, m) {
+PYBIND11_MODULE(dartpy, m)
+{
   m.doc() = "dartpy: Python API of Dynamic Animation and Robotics Toolkit";
 
   eigen_geometry(m);

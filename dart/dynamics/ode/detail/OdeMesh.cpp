@@ -43,7 +43,8 @@ OdeMesh::OdeMesh(
     const OdeCollisionObject* parent,
     const aiScene* scene,
     const Eigen::Vector3d& scale)
-  : OdeGeom(parent), mOdeTriMeshDataId(nullptr) {
+  : OdeGeom(parent), mOdeTriMeshDataId(nullptr)
+{
   // Fill vertices, normals, and indices in the ODE friendly data structures.
   fillArrays(scene, scale);
 
@@ -66,7 +67,8 @@ OdeMesh::OdeMesh(
 }
 
 //==============================================================================
-OdeMesh::~OdeMesh() {
+OdeMesh::~OdeMesh()
+{
   dGeomDestroy(mGeomId);
 
   if (mOdeTriMeshDataId)
@@ -74,12 +76,14 @@ OdeMesh::~OdeMesh() {
 }
 
 //==============================================================================
-void OdeMesh::updateEngineData() {
+void OdeMesh::updateEngineData()
+{
   // Do nothing
 }
 
 //==============================================================================
-void OdeMesh::fillArrays(const aiScene* scene, const Eigen::Vector3d& scale) {
+void OdeMesh::fillArrays(const aiScene* scene, const Eigen::Vector3d& scale)
+{
   mVertices.clear();
   mNormals.clear();
   mIndices.clear();

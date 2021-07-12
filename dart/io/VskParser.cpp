@@ -187,13 +187,15 @@ VskParser::Options::Options(
     jointPositionUpperLimit(newJointPositionUpperLimit),
     jointDampingCoefficient(newJointDampingCoefficient),
     jointFriction(newJointFriction),
-    removeEndBodyNodes(newRemoveEndBodyNodes) {
+    removeEndBodyNodes(newRemoveEndBodyNodes)
+{
   // Do nothing
 }
 
 //==============================================================================
 dynamics::SkeletonPtr VskParser::readSkeleton(
-    const common::Uri& fileUri, Options options) {
+    const common::Uri& fileUri, Options options)
+{
   options.retrieverOrNullptr = getRetriever(options.retrieverOrNullptr);
 
   // Load VSK file and create document
@@ -269,8 +271,8 @@ dynamics::SkeletonPtr VskParser::readSkeleton(
 namespace {
 
 //==============================================================================
-bool readParameters(
-    tinyxml2::XMLElement* parametersEle, ParameterMap& paramMap) {
+bool readParameters(tinyxml2::XMLElement* parametersEle, ParameterMap& paramMap)
+{
   if (nullptr == parametersEle)
     return false;
 
@@ -289,7 +291,8 @@ bool readParameters(
 bool readSkeletonElement(
     const tinyxml2::XMLElement* skeletonEle,
     dynamics::SkeletonPtr& skel,
-    VskData& vskData) {
+    VskData& vskData)
+{
   skel = dynamics::Skeleton::create();
 
   if (hasAttribute(skeletonEle, "DENSITY")) {
@@ -309,7 +312,8 @@ bool readSkeletonElement(
 
 //==============================================================================
 double getParameter(
-    const ParameterMap& ParameterMap, const std::string& paramNameOrValue) {
+    const ParameterMap& ParameterMap, const std::string& paramNameOrValue)
+{
   assert(!paramNameOrValue.empty());
 
   int sign = 1;
@@ -333,7 +337,8 @@ double getParameter(
 //==============================================================================
 template <std::size_t NumParams>
 Eigen::Matrix<double, NumParams, 1> getParameters(
-    const ParameterMap& ParameterMap, const std::string& paramNamesOrValues) {
+    const ParameterMap& ParameterMap, const std::string& paramNamesOrValues)
+{
   std::vector<std::string> tokens;
   tokenize(paramNamesOrValues, tokens);
 
@@ -352,7 +357,8 @@ template <std::size_t NumParams>
 Eigen::Matrix<double, NumParams, 1> readAttributeVector(
     const tinyxml2::XMLElement* element,
     const std::string& name,
-    const ParameterMap& parameterMap) {
+    const ParameterMap& parameterMap)
+{
   const std::string positionStr = getAttributeString(element, name);
 
   return getParameters<NumParams>(parameterMap, positionStr);
@@ -363,7 +369,8 @@ bool readSegment(
     const tinyxml2::XMLElement* segment,
     dynamics::BodyNode* parentBodyNode,
     const dynamics::SkeletonPtr& skel,
-    VskData& vskData) {
+    VskData& vskData)
+{
   // Attribute: NAME
   const std::string name = getAttributeString(segment, "NAME");
 
@@ -466,7 +473,8 @@ bool readSegment(
 bool readShape(
     const tinyxml2::XMLElement* shapeEle,
     dynamics::BodyNode* bodyNode,
-    VskData& vskData) {
+    VskData& vskData)
+{
   std::string type;
   if (hasAttribute(shapeEle, "TYPE"))
     type = getAttributeString(shapeEle, "TYPE");
@@ -522,7 +530,8 @@ bool readJoint(
     const tinyxml2::XMLElement* jointEle,
     JointPropPtr& jointProperties,
     const Eigen::Isometry3d& tfFromParent,
-    const VskData& vskData) {
+    const VskData& vskData)
+{
   if (jointType == "JointFree") {
     return readJointFree(jointEle, jointProperties, tfFromParent, vskData);
   } else if (jointType == "JointBall") {
@@ -545,7 +554,8 @@ bool readJointFree(
     const tinyxml2::XMLElement* /*jointEle*/,
     JointPropPtr& jointProperties,
     const Eigen::Isometry3d& tfFromParent,
-    const VskData& /*vskData*/) {
+    const VskData& /*vskData*/)
+{
   dynamics::FreeJoint::Properties properties;
 
   properties.mT_ParentBodyToJoint = tfFromParent;
@@ -561,7 +571,8 @@ bool readJointBall(
     const tinyxml2::XMLElement* /*jointEle*/,
     JointPropPtr& jointProperties,
     const Eigen::Isometry3d& tfFromParent,
-    const VskData& vskData) {
+    const VskData& vskData)
+{
   dynamics::BallJoint::Properties properties;
 
   properties.mT_ParentBodyToJoint = tfFromParent;
@@ -586,7 +597,8 @@ bool readJointHardySpicer(
     const tinyxml2::XMLElement* jointEle,
     JointPropPtr& jointProperties,
     const Eigen::Isometry3d& tfFromParent,
-    const VskData& vskData) {
+    const VskData& vskData)
+{
   dynamics::UniversalJoint::Properties properties;
 
   // Attribute: AXIS-PAIR
@@ -624,7 +636,8 @@ bool readJointHinge(
     const tinyxml2::XMLElement* jointEle,
     JointPropPtr& jointProperties,
     const Eigen::Isometry3d& tfFromParent,
-    const VskData& vskData) {
+    const VskData& vskData)
+{
   dynamics::RevoluteJoint::Properties properties;
 
   // Attribute: AXIS
@@ -652,7 +665,8 @@ bool readJointDummy(
     const tinyxml2::XMLElement* /*jointEle*/,
     JointPropPtr& jointProperties,
     const Eigen::Isometry3d& tfFromParent,
-    const VskData& /*vskData*/) {
+    const VskData& /*vskData*/)
+{
   dynamics::WeldJoint::Properties properties;
 
   properties.mT_ParentBodyToJoint = tfFromParent;
@@ -667,7 +681,8 @@ bool readJointDummy(
 Eigen::Vector3d readColorAttribute(
     const tinyxml2::XMLElement* element,
     const ParameterMap& parameterMap,
-    const Eigen::Vector3d& defaultColor) {
+    const Eigen::Vector3d& defaultColor)
+{
   if (hasAttribute(element, "RGB"))
     return readAttributeVector<3>(element, "RGB", parameterMap) / 255.0;
   else
@@ -681,7 +696,8 @@ std::pair<dynamics::Joint*, dynamics::BodyNode*> createJointAndBodyNodePair(
     const dynamics::SkeletonPtr& skeleton,
     dynamics::BodyNode* parentBodyNode,
     const dynamics::Joint::Properties* jointProperties,
-    const dynamics::BodyNode::Properties& bodyNodeProperties) {
+    const dynamics::BodyNode::Properties& bodyNodeProperties)
+{
   if (jointType == "JointFree") {
     return skeleton
         ->createJointAndBodyNodePair<dynamics::FreeJoint, dynamics::BodyNode>(
@@ -732,7 +748,8 @@ std::pair<dynamics::Joint*, dynamics::BodyNode*> createJointAndBodyNodePair(
 bool readMarkerSet(
     const tinyxml2::XMLElement* markerSetEle,
     const dynamics::SkeletonPtr& skel,
-    VskData& vskData) {
+    VskData& vskData)
+{
   // std::string name = getAttributeString(markerSetEle, "NAME");
 
   // Read all <Marker> elements in <Markers> element
@@ -760,7 +777,8 @@ bool readMarkerSet(
 bool readMarker(
     const tinyxml2::XMLElement* markerEle,
     const dynamics::SkeletonPtr& skel,
-    VskData& vskData) {
+    VskData& vskData)
+{
   // Attribute: NAME
   const std::string name = getAttributeString(markerEle, "NAME");
 
@@ -806,7 +824,8 @@ bool readMarker(
 bool readStick(
     const tinyxml2::XMLElement* /*stickEle*/,
     const dynamics::SkeletonPtr& /*skel*/,
-    VskData& /*vskData*/) {
+    VskData& /*vskData*/)
+{
   // std::string marker1 = getAttributeString(stickEle, "MARKER1");
   // std::string marker2 = getAttributeString(stickEle, "MARKER2");
 
@@ -818,7 +837,8 @@ bool readStick(
 }
 
 //==============================================================================
-void generateShapes(const dynamics::SkeletonPtr& skel, VskData& vskData) {
+void generateShapes(const dynamics::SkeletonPtr& skel, VskData& vskData)
+{
   // Generate shapes for bodies that have their parents
   for (std::size_t i = 0; i < skel->getNumBodyNodes(); ++i) {
     dynamics::BodyNode* bodyNode = skel->getBodyNode(i);
@@ -929,7 +949,8 @@ void generateShapes(const dynamics::SkeletonPtr& skel, VskData& vskData) {
 void tokenize(
     const std::string& str,
     std::vector<std::string>& tokens,
-    const std::string& delimiters) {
+    const std::string& delimiters)
+{
   // Skip delimiters at beginning.
   std::string::size_type lastPos = str.find_first_not_of(delimiters, 0);
 
@@ -950,7 +971,8 @@ void tokenize(
 
 //==============================================================================
 common::ResourceRetrieverPtr getRetriever(
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   if (retriever) {
     return retriever;
   } else {

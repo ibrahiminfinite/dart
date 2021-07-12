@@ -91,13 +91,15 @@ protected:
 SoftMeshShapeNode::SoftMeshShapeNode(
     std::shared_ptr<dart::dynamics::SoftMeshShape> shape,
     ShapeFrameNode* parent)
-  : ShapeNode(shape, parent, this), mSoftMeshShape(shape), mGeode(nullptr) {
+  : ShapeNode(shape, parent, this), mSoftMeshShape(shape), mGeode(nullptr)
+{
   extractData(true);
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
 }
 
 //==============================================================================
-void SoftMeshShapeNode::refresh() {
+void SoftMeshShapeNode::refresh()
+{
   mUtilized = true;
 
   setNodeMask(mVisualAspect->isHidden() ? 0x0 : ~0x0);
@@ -109,7 +111,8 @@ void SoftMeshShapeNode::refresh() {
 }
 
 //==============================================================================
-void SoftMeshShapeNode::extractData(bool /*firstTime*/) {
+void SoftMeshShapeNode::extractData(bool /*firstTime*/)
+{
   if (nullptr == mGeode) {
     mGeode = new SoftMeshShapeGeode(
         mSoftMeshShape.get(), mParentShapeFrameNode, this);
@@ -121,7 +124,8 @@ void SoftMeshShapeNode::extractData(bool /*firstTime*/) {
 }
 
 //==============================================================================
-SoftMeshShapeNode::~SoftMeshShapeNode() {
+SoftMeshShapeNode::~SoftMeshShapeNode()
+{
   // Do nothing
 }
 
@@ -133,7 +137,8 @@ SoftMeshShapeGeode::SoftMeshShapeGeode(
   : ShapeNode(parentNode->getShape(), parentShapeFrame, this),
     mSoftMeshShape(shape),
     mVisualAspect(parentNode->getVisualAspect()),
-    mDrawable(nullptr) {
+    mDrawable(nullptr)
+{
   getOrCreateStateSet()->setMode(GL_BLEND, ::osg::StateAttribute::ON);
   getOrCreateStateSet()->setRenderingHint(::osg::StateSet::TRANSPARENT_BIN);
   getOrCreateStateSet()->setAttributeAndModes(
@@ -142,14 +147,16 @@ SoftMeshShapeGeode::SoftMeshShapeGeode(
 }
 
 //==============================================================================
-void SoftMeshShapeGeode::refresh() {
+void SoftMeshShapeGeode::refresh()
+{
   mUtilized = true;
 
   extractData();
 }
 
 //==============================================================================
-void SoftMeshShapeGeode::extractData() {
+void SoftMeshShapeGeode::extractData()
+{
   if (nullptr == mDrawable) {
     mDrawable = new SoftMeshShapeDrawable(mSoftMeshShape, mVisualAspect);
     addDrawable(mDrawable);
@@ -160,7 +167,8 @@ void SoftMeshShapeGeode::extractData() {
 }
 
 //==============================================================================
-SoftMeshShapeGeode::~SoftMeshShapeGeode() {
+SoftMeshShapeGeode::~SoftMeshShapeGeode()
+{
   // Do nothing
 }
 
@@ -172,14 +180,16 @@ SoftMeshShapeDrawable::SoftMeshShapeDrawable(
     mNormals(new ::osg::Vec3Array),
     mColors(new ::osg::Vec4Array),
     mSoftMeshShape(shape),
-    mVisualAspect(visualAspect) {
+    mVisualAspect(visualAspect)
+{
   refresh(true);
 }
 
 static Eigen::Vector3d normalFromVertex(
     const dart::dynamics::SoftBodyNode* bn,
     const Eigen::Vector3i& face,
-    std::size_t v) {
+    std::size_t v)
+{
   const Eigen::Vector3d& v0 = bn->getPointMass(face[v])->getLocalPosition();
   const Eigen::Vector3d& v1
       = bn->getPointMass(face[(v + 1) % 3])->getLocalPosition();
@@ -198,7 +208,8 @@ static Eigen::Vector3d normalFromVertex(
 
 static void computeNormals(
     std::vector<Eigen::Vector3d>& normals,
-    const dart::dynamics::SoftBodyNode* bn) {
+    const dart::dynamics::SoftBodyNode* bn)
+{
   for (std::size_t i = 0; i < normals.size(); ++i)
     normals[i] = Eigen::Vector3d::Zero();
 
@@ -213,7 +224,8 @@ static void computeNormals(
 }
 
 //==============================================================================
-void SoftMeshShapeDrawable::refresh(bool firstTime) {
+void SoftMeshShapeDrawable::refresh(bool firstTime)
+{
   if (mSoftMeshShape->getDataVariance() == dart::dynamics::Shape::STATIC)
     setDataVariance(::osg::Object::STATIC);
   else
@@ -271,7 +283,8 @@ void SoftMeshShapeDrawable::refresh(bool firstTime) {
 }
 
 //==============================================================================
-SoftMeshShapeDrawable::~SoftMeshShapeDrawable() {
+SoftMeshShapeDrawable::~SoftMeshShapeDrawable()
+{
   // Do nothing
 }
 

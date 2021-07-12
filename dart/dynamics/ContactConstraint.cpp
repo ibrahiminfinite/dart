@@ -89,7 +89,8 @@ ContactConstraint::ContactConstraint(
     mIsFrictionOn(true),
     mAppliedImpulseIndex(dynamics::INVALID_INDEX),
     mIsBounceOn(false),
-    mActive(false) {
+    mActive(false)
+{
   assert(
       contact.normal.squaredNorm() >= DART_CONTACT_CONSTRAINT_EPSILON_SQUARED);
 
@@ -285,18 +286,21 @@ ContactConstraint::ContactConstraint(
 }
 
 //==============================================================================
-const std::string& ContactConstraint::getType() const {
+const std::string& ContactConstraint::getType() const
+{
   return getStaticType();
 }
 
 //==============================================================================
-const std::string& ContactConstraint::getStaticType() {
+const std::string& ContactConstraint::getStaticType()
+{
   static const std::string name = "ContactConstraint";
   return name;
 }
 
 //==============================================================================
-void ContactConstraint::setErrorAllowance(double allowance) {
+void ContactConstraint::setErrorAllowance(double allowance)
+{
   // Clamp error reduction parameter if it is out of the range
   if (allowance < 0.0) {
     dtwarn << "Error reduction parameter[" << allowance
@@ -309,12 +313,14 @@ void ContactConstraint::setErrorAllowance(double allowance) {
 }
 
 //==============================================================================
-double ContactConstraint::getErrorAllowance() {
+double ContactConstraint::getErrorAllowance()
+{
   return mErrorAllowance;
 }
 
 //==============================================================================
-void ContactConstraint::setErrorReductionParameter(double erp) {
+void ContactConstraint::setErrorReductionParameter(double erp)
+{
   // Clamp error reduction parameter if it is out of the range [0, 1]
   if (erp < 0.0) {
     dtwarn << "Error reduction parameter[" << erp << "] is lower than 0.0. "
@@ -331,12 +337,14 @@ void ContactConstraint::setErrorReductionParameter(double erp) {
 }
 
 //==============================================================================
-double ContactConstraint::getErrorReductionParameter() {
+double ContactConstraint::getErrorReductionParameter()
+{
   return mErrorReductionParameter;
 }
 
 //==============================================================================
-void ContactConstraint::setMaxErrorReductionVelocity(double erv) {
+void ContactConstraint::setMaxErrorReductionVelocity(double erv)
+{
   // Clamp maximum error reduction velocity if it is out of the range
   if (erv < 0.0) {
     dtwarn << "Maximum error reduction velocity[" << erv
@@ -349,12 +357,14 @@ void ContactConstraint::setMaxErrorReductionVelocity(double erv) {
 }
 
 //==============================================================================
-double ContactConstraint::getMaxErrorReductionVelocity() {
+double ContactConstraint::getMaxErrorReductionVelocity()
+{
   return mMaxErrorReductionVelocity;
 }
 
 //==============================================================================
-void ContactConstraint::setConstraintForceMixing(double cfm) {
+void ContactConstraint::setConstraintForceMixing(double cfm)
+{
   // Clamp constraint force mixing parameter if it is out of the range
   if (cfm < 1e-9) {
     dtwarn << "Constraint force mixing parameter[" << cfm
@@ -367,22 +377,26 @@ void ContactConstraint::setConstraintForceMixing(double cfm) {
 }
 
 //==============================================================================
-double ContactConstraint::getConstraintForceMixing() {
+double ContactConstraint::getConstraintForceMixing()
+{
   return mConstraintForceMixing;
 }
 
 //==============================================================================
-void ContactConstraint::setFrictionDirection(const Eigen::Vector3d& dir) {
+void ContactConstraint::setFrictionDirection(const Eigen::Vector3d& dir)
+{
   mFirstFrictionalDirection = dir.normalized();
 }
 
 //==============================================================================
-const Eigen::Vector3d& ContactConstraint::getFrictionDirection1() const {
+const Eigen::Vector3d& ContactConstraint::getFrictionDirection1() const
+{
   return mFirstFrictionalDirection;
 }
 
 //==============================================================================
-void ContactConstraint::update() {
+void ContactConstraint::update()
+{
   if (mBodyNodeA->isReactive() || mBodyNodeB->isReactive())
     mActive = true;
   else
@@ -390,7 +404,8 @@ void ContactConstraint::update() {
 }
 
 //==============================================================================
-void ContactConstraint::getInformation(ConstraintInfo* info) {
+void ContactConstraint::getInformation(ConstraintInfo* info)
+{
   // Fill w, where the LCP form is Ax = b + w (x >= 0, w >= 0, x^T w = 0)
   getRelVelocity(info->b);
 
@@ -504,7 +519,8 @@ void ContactConstraint::getInformation(ConstraintInfo* info) {
 }
 
 //==============================================================================
-void ContactConstraint::applyUnitImpulse(std::size_t index) {
+void ContactConstraint::applyUnitImpulse(std::size_t index)
+{
   assert(index < mDim && "Invalid Index.");
   // assert(isActive());
   assert(mBodyNodeA->isReactive() || mBodyNodeB->isReactive());
@@ -562,7 +578,8 @@ void ContactConstraint::applyUnitImpulse(std::size_t index) {
 }
 
 //==============================================================================
-void ContactConstraint::getVelocityChange(double* vel, bool withCfm) {
+void ContactConstraint::getVelocityChange(double* vel, bool withCfm)
+{
   assert(vel != nullptr && "Null pointer is not allowed.");
 
   Eigen::Map<Eigen::VectorXd> velMap(vel, static_cast<int>(mDim));
@@ -593,7 +610,8 @@ void ContactConstraint::getVelocityChange(double* vel, bool withCfm) {
 }
 
 //==============================================================================
-void ContactConstraint::excite() {
+void ContactConstraint::excite()
+{
   if (mBodyNodeA->isReactive())
     mBodyNodeA->getSkeleton()->setImpulseApplied(true);
 
@@ -602,7 +620,8 @@ void ContactConstraint::excite() {
 }
 
 //==============================================================================
-void ContactConstraint::unexcite() {
+void ContactConstraint::unexcite()
+{
   if (mBodyNodeA->isReactive())
     mBodyNodeA->getSkeleton()->setImpulseApplied(false);
 
@@ -611,7 +630,8 @@ void ContactConstraint::unexcite() {
 }
 
 //==============================================================================
-void ContactConstraint::applyImpulse(double* lambda) {
+void ContactConstraint::applyImpulse(double* lambda)
+{
   //----------------------------------------------------------------------------
   // Friction case
   //----------------------------------------------------------------------------
@@ -665,7 +685,8 @@ void ContactConstraint::applyImpulse(double* lambda) {
 }
 
 //==============================================================================
-void ContactConstraint::getRelVelocity(double* relVel) {
+void ContactConstraint::getRelVelocity(double* relVel)
+{
   assert(relVel != nullptr && "Null pointer is not allowed.");
 
   Eigen::Map<Eigen::VectorXd> relVelMap(relVel, static_cast<int>(mDim));
@@ -675,13 +696,15 @@ void ContactConstraint::getRelVelocity(double* relVel) {
 }
 
 //==============================================================================
-bool ContactConstraint::isActive() const {
+bool ContactConstraint::isActive() const
+{
   return mActive;
 }
 
 //==============================================================================
 double ContactConstraint::computeFrictionCoefficient(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -699,7 +722,8 @@ double ContactConstraint::computeFrictionCoefficient(
 
 //==============================================================================
 double ContactConstraint::computePrimaryFrictionCoefficient(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -718,7 +742,8 @@ double ContactConstraint::computePrimaryFrictionCoefficient(
 
 //==============================================================================
 double ContactConstraint::computeSecondaryFrictionCoefficient(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -737,7 +762,8 @@ double ContactConstraint::computeSecondaryFrictionCoefficient(
 
 //==============================================================================
 double ContactConstraint::computePrimarySlipCompliance(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -759,7 +785,8 @@ double ContactConstraint::computePrimarySlipCompliance(
 
 //==============================================================================
 double ContactConstraint::computeSecondarySlipCompliance(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -782,7 +809,8 @@ double ContactConstraint::computeSecondarySlipCompliance(
 
 //==============================================================================
 Eigen::Vector3d ContactConstraint::computeWorldFirstFrictionDir(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -809,7 +837,8 @@ Eigen::Vector3d ContactConstraint::computeWorldFirstFrictionDir(
 
 //==============================================================================
 double ContactConstraint::computeRestitutionCoefficient(
-    const dynamics::ShapeNode* shapeNode) {
+    const dynamics::ShapeNode* shapeNode)
+{
   assert(shapeNode);
 
   auto dynamicAspect = shapeNode->getDynamicsAspect();
@@ -826,7 +855,8 @@ double ContactConstraint::computeRestitutionCoefficient(
 }
 
 //==============================================================================
-dynamics::SkeletonPtr ContactConstraint::getRootSkeleton() const {
+dynamics::SkeletonPtr ContactConstraint::getRootSkeleton() const
+{
   assert(isActive());
 
   if (mBodyNodeA->isReactive())
@@ -836,7 +866,8 @@ dynamics::SkeletonPtr ContactConstraint::getRootSkeleton() const {
 }
 
 //==============================================================================
-void ContactConstraint::updateFirstFrictionalDirection() {
+void ContactConstraint::updateFirstFrictionalDirection()
+{
   //  std::cout << "ContactConstraintTEST::_updateFirstFrictionalDirection(): "
   //            << "Not finished implementation."
   //            << std::endl;
@@ -849,7 +880,8 @@ void ContactConstraint::updateFirstFrictionalDirection() {
 
 //==============================================================================
 ContactConstraint::TangentBasisMatrix
-ContactConstraint::getTangentBasisMatrixODE(const Eigen::Vector3d& n) {
+ContactConstraint::getTangentBasisMatrixODE(const Eigen::Vector3d& n)
+{
   using namespace math::suffixes;
 
   // TODO(JS): Use mNumFrictionConeBases
@@ -903,7 +935,8 @@ ContactConstraint::getTangentBasisMatrixODE(const Eigen::Vector3d& n) {
 }
 
 //==============================================================================
-void ContactConstraint::uniteSkeletons() {
+void ContactConstraint::uniteSkeletons()
+{
   if (!mBodyNodeA->isReactive() || !mBodyNodeB->isReactive())
     return;
 
@@ -930,27 +963,32 @@ void ContactConstraint::uniteSkeletons() {
 }
 
 //==============================================================================
-double ContactConstraint::getPrimarySlipCompliance() const {
+double ContactConstraint::getPrimarySlipCompliance() const
+{
   return mPrimarySlipCompliance;
 }
 
 //==============================================================================
-void ContactConstraint::setPrimarySlipCompliance(double slip) {
+void ContactConstraint::setPrimarySlipCompliance(double slip)
+{
   mPrimarySlipCompliance = slip;
 }
 
 //==============================================================================
-double ContactConstraint::getSecondarySlipCompliance() const {
+double ContactConstraint::getSecondarySlipCompliance() const
+{
   return mSecondarySlipCompliance;
 }
 
 //==============================================================================
-void ContactConstraint::setSecondarySlipCompliance(double slip) {
+void ContactConstraint::setSecondarySlipCompliance(double slip)
+{
   mSecondarySlipCompliance = slip;
 }
 
 //==============================================================================
-const dynamics::Contact& ContactConstraint::getContact() const {
+const dynamics::Contact& ContactConstraint::getContact() const
+{
   return mContact;
 }
 

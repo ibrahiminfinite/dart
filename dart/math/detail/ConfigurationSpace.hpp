@@ -47,7 +47,8 @@ struct Range;
 //==============================================================================
 template <typename MatrixType, int Size, typename Enable = Range<true>>
 struct inverseImpl {
-  static void run(const MatrixType& matrix, MatrixType& result) {
+  static void run(const MatrixType& matrix, MatrixType& result)
+  {
     result = matrix.ldlt().solve(MatrixType::Identity());
   }
 };
@@ -55,7 +56,8 @@ struct inverseImpl {
 //==============================================================================
 template <typename MatrixType, int Size>
 struct inverseImpl<MatrixType, Size, Range<(0 <= Size && Size <= 4)>> {
-  static void run(const MatrixType& matrix, MatrixType& result) {
+  static void run(const MatrixType& matrix, MatrixType& result)
+  {
     result = matrix.inverse();
   }
 };
@@ -64,7 +66,8 @@ struct inverseImpl<MatrixType, Size, Range<(0 <= Size && Size <= 4)>> {
 template <typename SpaceT>
 struct toEuclideanPointImpl {
   static typename SpaceT::EuclideanPoint run(
-      const typename SpaceT::Point& point) {
+      const typename SpaceT::Point& point)
+  {
     return point;
   }
 };
@@ -73,7 +76,8 @@ struct toEuclideanPointImpl {
 template <>
 struct toEuclideanPointImpl<SO3Space> {
   static typename SO3Space::EuclideanPoint run(
-      const typename SO3Space::Point& point) {
+      const typename SO3Space::Point& point)
+  {
     return math::logMap(point);
   }
 };
@@ -82,7 +86,8 @@ struct toEuclideanPointImpl<SO3Space> {
 template <>
 struct toEuclideanPointImpl<SE3Space> {
   static typename SE3Space::EuclideanPoint run(
-      const typename SE3Space::Point& point) {
+      const typename SE3Space::Point& point)
+  {
     Eigen::Vector6d x;
 
     x.head<3>() = math::logMap(point.linear());
@@ -96,7 +101,8 @@ struct toEuclideanPointImpl<SE3Space> {
 template <typename SpaceT>
 struct toManifoldPointImpl {
   static typename SpaceT::Point run(
-      const typename SpaceT::EuclideanPoint& point) {
+      const typename SpaceT::EuclideanPoint& point)
+  {
     return point;
   }
 };
@@ -105,7 +111,8 @@ struct toManifoldPointImpl {
 template <>
 struct toManifoldPointImpl<SO3Space> {
   static typename SO3Space::Point run(
-      const typename SO3Space::EuclideanPoint& point) {
+      const typename SO3Space::EuclideanPoint& point)
+  {
     return math::expMapRot(point);
   }
 };
@@ -114,7 +121,8 @@ struct toManifoldPointImpl<SO3Space> {
 template <>
 struct toManifoldPointImpl<SE3Space> {
   static typename SE3Space::Point run(
-      const typename SE3Space::EuclideanPoint& point) {
+      const typename SE3Space::EuclideanPoint& point)
+  {
     Eigen::Isometry3d tf(Eigen::Isometry3d::Identity());
 
     tf.linear() = math::expMapRot(point.head<3>());
@@ -130,7 +138,8 @@ struct integratePositionImpl {
   static typename SpaceT::Point run(
       const typename SpaceT::Point& pos,
       const typename SpaceT::Vector& vel,
-      double dt) {
+      double dt)
+  {
     return pos + dt * vel;
   }
 };
@@ -141,7 +150,8 @@ struct integratePositionImpl<SO3Space> {
   static typename SO3Space::Point run(
       const typename SO3Space::Point& pos,
       const typename SO3Space::Vector& vel,
-      double dt) {
+      double dt)
+  {
     return pos * toManifoldPoint<SO3Space>(vel * dt);
   }
 };
@@ -152,7 +162,8 @@ struct integratePositionImpl<SE3Space> {
   static typename SE3Space::Point run(
       const typename SE3Space::Point& pos,
       const typename SE3Space::Vector& vel,
-      double dt) {
+      double dt)
+  {
     return pos * toManifoldPoint<SE3Space>(vel * dt);
   }
 };
@@ -161,7 +172,8 @@ struct integratePositionImpl<SE3Space> {
 
 //==============================================================================
 template <typename SpaceT>
-typename SpaceT::Matrix inverse(const typename SpaceT::Matrix& mat) {
+typename SpaceT::Matrix inverse(const typename SpaceT::Matrix& mat)
+{
   typename SpaceT::Matrix res;
 
   detail::inverseImpl<typename SpaceT::Matrix, SpaceT::NumDofsEigen>::run(
@@ -173,14 +185,16 @@ typename SpaceT::Matrix inverse(const typename SpaceT::Matrix& mat) {
 //==============================================================================
 template <typename SpaceT>
 typename SpaceT::EuclideanPoint toEuclideanPoint(
-    const typename SpaceT::Point& point) {
+    const typename SpaceT::Point& point)
+{
   return detail::toEuclideanPointImpl<SpaceT>::run(point);
 }
 
 //==============================================================================
 template <typename SpaceT>
 typename SpaceT::Point toManifoldPoint(
-    const typename SpaceT::EuclideanPoint& point) {
+    const typename SpaceT::EuclideanPoint& point)
+{
   return detail::toManifoldPointImpl<SpaceT>::run(point);
 }
 
@@ -189,7 +203,8 @@ template <typename SpaceT>
 typename SpaceT::Point integratePosition(
     const typename SpaceT::Point& pos,
     const typename SpaceT::Vector& vel,
-    double dt) {
+    double dt)
+{
   return detail::integratePositionImpl<SpaceT>::run(pos, vel, dt);
 }
 
@@ -198,7 +213,8 @@ template <typename SpaceT>
 typename SpaceT::Vector integrateVelocity(
     const typename SpaceT::Vector& vel,
     const typename SpaceT::Vector& acc,
-    double dt) {
+    double dt)
+{
   return vel + acc * dt;
 }
 

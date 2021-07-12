@@ -40,7 +40,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void RaycastResult(py::module& m) {
+void RaycastResult(py::module& m)
+{
   ::py::class_<dart::dynamics::RayHit>(m, "RayHit")
       .def(::py::init<>())
       .def_readwrite(

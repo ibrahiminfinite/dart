@@ -57,9 +57,11 @@ enum DecoDrawType {
 
 class RenderInterface {
 public:
-  RenderInterface() {
+  RenderInterface()
+  {
   }
-  virtual ~RenderInterface() {
+  virtual ~RenderInterface()
+  {
   }
 
   virtual void initialize();

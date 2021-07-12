@@ -51,7 +51,8 @@ namespace osg {
 DefaultEventHandler::DefaultEventHandler(Viewer* _viewer)
   : mViewer(_viewer),
     mLastCursorPosition(Eigen::Vector2d::Zero()),
-    mLastModKeyMask(0) {
+    mLastModKeyMask(0)
+{
   mViewer->addInstructionText("Spacebar:     Turn simulation on/off\n");
   mViewer->addInstructionText("Ctrl+H:       Turn headlights on/off\n");
 
@@ -64,27 +65,32 @@ DefaultEventHandler::DefaultEventHandler(Viewer* _viewer)
 }
 
 //==============================================================================
-DefaultEventHandler::~DefaultEventHandler() {
+DefaultEventHandler::~DefaultEventHandler()
+{
   // Do nothing
 }
 
 //==============================================================================
-MouseButtonEvent DefaultEventHandler::getButtonEvent(MouseButton button) const {
+MouseButtonEvent DefaultEventHandler::getButtonEvent(MouseButton button) const
+{
   return mLastButtonEvent[button];
 }
 
 //==============================================================================
-int DefaultEventHandler::getModKeyMask() const {
+int DefaultEventHandler::getModKeyMask() const
+{
   return mLastModKeyMask;
 }
 
 //==============================================================================
-double DefaultEventHandler::getWindowCursorX() const {
+double DefaultEventHandler::getWindowCursorX() const
+{
   return mLastCursorPosition[0];
 }
 
 //==============================================================================
-double DefaultEventHandler::getWindowCursorY() const {
+double DefaultEventHandler::getWindowCursorY() const
+{
   return mLastCursorPosition[1];
 }
 
@@ -92,7 +98,8 @@ double DefaultEventHandler::getWindowCursorY() const {
 Eigen::Vector3d DefaultEventHandler::getDeltaCursor(
     const Eigen::Vector3d& _fromPosition,
     ConstraintType _constraint,
-    const Eigen::Vector3d& _constraintVector) const {
+    const Eigen::Vector3d& _constraintVector) const
+{
   ::osg::Vec3d eye, center, up;
   mViewer->getCamera()->getViewMatrixAsLookAt(eye, center, up);
 
@@ -134,7 +141,8 @@ Eigen::Vector3d DefaultEventHandler::getDeltaCursor(
 
 //==============================================================================
 void DefaultEventHandler::getNearAndFarPointUnderCursor(
-    Eigen::Vector3d& near, Eigen::Vector3d& far, double distance) const {
+    Eigen::Vector3d& near, Eigen::Vector3d& far, double distance) const
+{
   ::osg::Camera* C = mViewer->getCamera();
   ::osg::Matrix VPW = C->getViewMatrix() * C->getProjectionMatrix()
                       * C->getViewport()->computeWindowMatrix();
@@ -151,7 +159,8 @@ void DefaultEventHandler::getNearAndFarPointUnderCursor(
 
 //==============================================================================
 const std::vector<PickInfo>& DefaultEventHandler::getButtonPicks(
-    MouseButton button, MouseButtonEvent event) const {
+    MouseButton button, MouseButtonEvent event) const
+{
   if (BUTTON_NOTHING == event)
     return mMovePicks;
 
@@ -159,13 +168,15 @@ const std::vector<PickInfo>& DefaultEventHandler::getButtonPicks(
 }
 
 //==============================================================================
-const std::vector<PickInfo>& DefaultEventHandler::getMovePicks() const {
+const std::vector<PickInfo>& DefaultEventHandler::getMovePicks() const
+{
   return mMovePicks;
 }
 
 //==============================================================================
 void DefaultEventHandler::suppressButtonPicks(
-    MouseButton button, MouseButtonEvent event) {
+    MouseButton button, MouseButtonEvent event)
+{
   if (BUTTON_NOTHING == event)
     mSuppressMovePicks = true;
   else
@@ -173,13 +184,15 @@ void DefaultEventHandler::suppressButtonPicks(
 }
 
 //==============================================================================
-void DefaultEventHandler::suppressMovePicks() {
+void DefaultEventHandler::suppressMovePicks()
+{
   mSuppressMovePicks = true;
 }
 
 //==============================================================================
 void DefaultEventHandler::activateButtonPicks(
-    MouseButton button, MouseButtonEvent event) {
+    MouseButton button, MouseButtonEvent event)
+{
   if (BUTTON_NOTHING == event)
     mSuppressMovePicks = false;
   else
@@ -187,13 +200,15 @@ void DefaultEventHandler::activateButtonPicks(
 }
 
 //==============================================================================
-void DefaultEventHandler::activateMovePicks() {
+void DefaultEventHandler::activateMovePicks()
+{
   mSuppressMovePicks = false;
 }
 
 //==============================================================================
 void DefaultEventHandler::pick(
-    std::vector<PickInfo>& infoVector, const ::osgGA::GUIEventAdapter& ea) {
+    std::vector<PickInfo>& infoVector, const ::osgGA::GUIEventAdapter& ea)
+{
   ::osgUtil::LineSegmentIntersector::Intersections hlist;
 
   infoVector.clear();
@@ -219,7 +234,8 @@ void DefaultEventHandler::pick(
 }
 
 //==============================================================================
-void DefaultEventHandler::addMouseEventHandler(MouseEventHandler* handler) {
+void DefaultEventHandler::addMouseEventHandler(MouseEventHandler* handler)
+{
   mMouseEventHandlers.insert(handler);
   handler->mEventHandler = this;
   handler->addSubject(this);
@@ -227,19 +243,22 @@ void DefaultEventHandler::addMouseEventHandler(MouseEventHandler* handler) {
 
 //==============================================================================
 const std::set<MouseEventHandler*>& DefaultEventHandler::getMouseEventHandlers()
-    const {
+    const
+{
   return mMouseEventHandlers;
 }
 
 //==============================================================================
-static bool wasActive(MouseButtonEvent event) {
+static bool wasActive(MouseButtonEvent event)
+{
   return ((event == BUTTON_PUSH) || (event == BUTTON_DRAG));
 }
 
 //==============================================================================
 static void assignEventToButtons(
     MouseButtonEvent (&mLastButtonEvent)[NUM_MOUSE_BUTTONS],
-    const ::osgGA::GUIEventAdapter& ea) {
+    const ::osgGA::GUIEventAdapter& ea)
+{
   MouseButtonEvent event = BUTTON_NOTHING;
   if (ea.getEventType() == ::osgGA::GUIEventAdapter::PUSH)
     event = BUTTON_PUSH;
@@ -275,7 +294,8 @@ static void assignEventToButtons(
 
 //==============================================================================
 bool DefaultEventHandler::handle(
-    const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) {
+    const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&)
+{
   mLastModKeyMask = ea.getModKeyMask();
 
   switch (ea.getEventType()) {
@@ -340,14 +360,16 @@ bool DefaultEventHandler::handle(
 }
 
 //==============================================================================
-void DefaultEventHandler::triggerMouseEventHandlers() {
+void DefaultEventHandler::triggerMouseEventHandlers()
+{
   for (MouseEventHandler* h : mMouseEventHandlers) {
     h->update();
   }
 }
 
 //==============================================================================
-void DefaultEventHandler::eventPick(const ::osgGA::GUIEventAdapter& ea) {
+void DefaultEventHandler::eventPick(const ::osgGA::GUIEventAdapter& ea)
+{
   MouseButtonEvent mbe;
   switch (ea.getEventType()) {
     case ::osgGA::GUIEventAdapter::PUSH:
@@ -383,14 +405,16 @@ void DefaultEventHandler::eventPick(const ::osgGA::GUIEventAdapter& ea) {
 }
 
 //==============================================================================
-void DefaultEventHandler::clearButtonEvents() {
+void DefaultEventHandler::clearButtonEvents()
+{
   for (std::size_t i = 0; i < NUM_MOUSE_BUTTONS; ++i)
     mLastButtonEvent[i] = BUTTON_NOTHING;
 }
 
 //==============================================================================
 void DefaultEventHandler::handleDestructionNotification(
-    const dart::common::Subject* _subject) {
+    const dart::common::Subject* _subject)
+{
   MouseEventHandler* meh = const_cast<MouseEventHandler*>(
       dynamic_cast<const MouseEventHandler*>(_subject));
   std::set<MouseEventHandler*>::iterator it = mMouseEventHandlers.find(meh);

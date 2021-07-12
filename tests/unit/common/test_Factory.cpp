@@ -62,15 +62,18 @@ public:
   using RegistrarString = common::
       FactoryRegistrar<std::string, Fruit, Derived, std::shared_ptr<Fruit>>;
 
-  static FactoryEnum* getFactoryEnum() {
+  static FactoryEnum* getFactoryEnum()
+  {
     return SingletonFactoryEnum::getSingletonPtr();
   }
 
-  static FactoryEnumClass* getFactoryEnumClass() {
+  static FactoryEnumClass* getFactoryEnumClass()
+  {
     return SingletonFactoryEnumClass::getSingletonPtr();
   }
 
-  static FactoryString* getFactoryString() {
+  static FactoryString* getFactoryString()
+  {
     return SingletonFactoryString::getSingletonPtr();
   }
 
@@ -79,7 +82,8 @@ public:
 
 class Apple : public Fruit {
 public:
-  std::string getName() const override {
+  std::string getName() const override
+  {
     return "apple";
   }
 
@@ -95,7 +99,8 @@ Apple::RegistrarString<Apple> Apple::mRegistrarString{"apple"};
 
 class Banana : public Fruit {
 public:
-  std::string getName() const override {
+  std::string getName() const override
+  {
     return "banana";
   }
 
@@ -111,7 +116,8 @@ Banana::RegistrarString<Banana> Banana::mRegistrarString{"banana"};
 
 class Orange : public Fruit {
 public:
-  std::string getName() const override {
+  std::string getName() const override
+  {
     return "orange";
   }
 
@@ -135,16 +141,19 @@ public:
   using Registrar = common::
       FactoryRegistrar<std::string, City, Derived, std::shared_ptr<City>, int>;
 
-  static Factory* getFactory() {
+  static Factory* getFactory()
+  {
     return SingletonFactory::getSingletonPtr();
   }
 
-  City(int year) : mYear(year) {
+  City(int year) : mYear(year)
+  {
   }
 
   virtual std::string getName() const = 0;
 
-  int getYear() const {
+  int getYear() const
+  {
     return mYear;
   }
 
@@ -154,10 +163,12 @@ protected:
 
 class Atlanta : public City {
 public:
-  Atlanta(int year) : City(year) {
+  Atlanta(int year) : City(year)
+  {
   }
 
-  std::string getName() const override {
+  std::string getName() const override
+  {
     return "Atlanta";
   }
 
@@ -168,10 +179,12 @@ City::Registrar<Atlanta> Atlanta::mRegistrar("Atlanta");
 
 class Pittsburgh : public City {
 public:
-  Pittsburgh(int year) : City(year) {
+  Pittsburgh(int year) : City(year)
+  {
   }
 
-  std::string getName() const override {
+  std::string getName() const override
+  {
     return "Pittsburgh";
   }
 
@@ -182,10 +195,12 @@ City::Registrar<Pittsburgh> Pittsburgh::mRegistrar("Pittsburgh");
 
 class Seattle : public City {
 public:
-  Seattle(int year) : City(year) {
+  Seattle(int year) : City(year)
+  {
   }
 
-  std::string getName() const override {
+  std::string getName() const override
+  {
     return "Seattle";
   }
 
@@ -195,7 +210,8 @@ public:
 City::Registrar<Seattle> Seattle::mRegistrar{"Seattle"};
 
 //==============================================================================
-TEST(Factory, Create) {
+TEST(Factory, Create)
+{
   //----------------------------------------------------------------------------
   // enum class key type
   //----------------------------------------------------------------------------
@@ -271,12 +287,14 @@ TEST(Factory, Create) {
 }
 
 //==============================================================================
-static std::shared_ptr<Orange> createOrange() {
+static std::shared_ptr<Orange> createOrange()
+{
   return std::shared_ptr<Orange>(new Orange());
 }
 
 //==============================================================================
-TEST(Factory, VariousCreatorFunctions) {
+TEST(Factory, VariousCreatorFunctions)
+{
   using FruitFactory = common::Singleton<common::Factory<std::string, Fruit>>;
 
   FruitFactory::getSingleton().unregisterAllCreators();
@@ -300,7 +318,8 @@ TEST(Factory, VariousCreatorFunctions) {
 }
 
 //==============================================================================
-TEST(Factory, CreateWithArguments) {
+TEST(Factory, CreateWithArguments)
+{
   EXPECT_TRUE(City::getFactory()->canCreate("Atlanta"));
   EXPECT_TRUE(City::getFactory()->canCreate("Pittsburgh"));
   EXPECT_TRUE(City::getFactory()->canCreate("Seattle"));

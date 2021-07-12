@@ -38,7 +38,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void FCLCollisionDetector(py::module& m) {
+void FCLCollisionDetector(py::module& m)
+{
   auto fclCollisionDetector
       = ::py::class_<
             dart::dynamics::FCLCollisionDetector,

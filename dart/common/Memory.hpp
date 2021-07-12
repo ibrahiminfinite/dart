@@ -73,7 +73,8 @@ using aligned_map = std::map<
 // Define static creator function that returns a smart pointer to an object
 #define _DART_DEFINE_OBJECT_CREATOR(class_name, func_name, ptr_type, creator)  \
   template <typename... Args>                                                  \
-  static ptr_type<class_name> func_name(Args&&... args) {                      \
+  static ptr_type<class_name> func_name(Args&&... args)                        \
+  {                                                                            \
     return creator<class_name>(std::forward<Args>(args)...);                   \
   }
 
@@ -83,17 +84,20 @@ using aligned_map = std::map<
     class_name, func_name, ptr_type, creator)                                  \
 private:                                                                       \
   struct private_structure {                                                   \
-    explicit private_structure() {                                             \
+    explicit private_structure()                                               \
+    {                                                                          \
     }                                                                          \
   };                                                                           \
                                                                                \
 public:                                                                        \
   template <typename... Args>                                                  \
   class_name(const private_structure&, Args&&... args)                         \
-    : class_name(std::forward<Args>(args)...) {                                \
+    : class_name(std::forward<Args>(args)...)                                  \
+  {                                                                            \
   }                                                                            \
   template <typename... Args>                                                  \
-  static ptr_type<class_name> func_name(Args&&... args) {                      \
+  static ptr_type<class_name> func_name(Args&&... args)                        \
+  {                                                                            \
     return creator<class_name>(                                                \
         private_structure{}, std::forward<Args>(args)...);                     \
   }
@@ -102,7 +106,8 @@ public:                                                                        \
 // This static functions will be defined: create()
 #define DART_DEFINE_RAW_OBJECT_CREATOR(class_name)                             \
   template <typename... Args>                                                  \
-  static class_name* DART_RAW_PTR_CREATOR_NAME(Args&&... args) {               \
+  static class_name* DART_RAW_PTR_CREATOR_NAME(Args&&... args)                 \
+  {                                                                            \
     return new class_name(std::forward<Args>(args)...);                        \
   }
 

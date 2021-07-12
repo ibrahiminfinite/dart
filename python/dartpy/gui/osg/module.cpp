@@ -56,7 +56,8 @@ void DragAndDrop(py::module& sm);
 
 void ShadowTechnique(py::module& sm);
 
-void dart_gui_osg(py::module& m) {
+void dart_gui_osg(py::module& m)
+{
   auto sm = m.def_submodule("osg");
 
   WorldNode(sm);

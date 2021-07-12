@@ -38,7 +38,8 @@
 
 #include "dart/common/Console.hpp"
 
-static bool startsWith(const std::string& _target, const std::string& _prefix) {
+static bool startsWith(const std::string& _target, const std::string& _prefix)
+{
   return _target.substr(0, _prefix.size()) == _prefix;
 }
 
@@ -50,76 +51,90 @@ namespace common {
  */
 
 //==============================================================================
-UriComponent::UriComponent() {
+UriComponent::UriComponent()
+{
   reset();
 }
 
 //==============================================================================
-UriComponent::UriComponent(reference_const_type _value) {
+UriComponent::UriComponent(reference_const_type _value)
+{
   assign(_value);
 }
 
 //==============================================================================
-UriComponent::operator bool() const {
+UriComponent::operator bool() const
+{
   return mExists;
 }
 
 //==============================================================================
-bool UriComponent::operator!() const {
+bool UriComponent::operator!() const
+{
   return !mExists;
 }
 
 //==============================================================================
-auto UriComponent::operator=(reference_const_type _value) -> UriComponent& {
+auto UriComponent::operator=(reference_const_type _value) -> UriComponent&
+{
   assign(_value);
   return *this;
 }
 
 //==============================================================================
-auto UriComponent::operator*() -> reference_type {
+auto UriComponent::operator*() -> reference_type
+{
   return get();
 }
 
 //==============================================================================
-auto UriComponent::operator*() const -> reference_const_type {
+auto UriComponent::operator*() const -> reference_const_type
+{
   return get();
 }
 
 //==============================================================================
-auto UriComponent::operator-> () -> pointer_type {
+auto UriComponent::operator-> () -> pointer_type
+{
   return &get();
 }
 
 //==============================================================================
-auto UriComponent::operator-> () const -> pointer_const_type {
+auto UriComponent::operator-> () const -> pointer_const_type
+{
   return &get();
 }
 
 //==============================================================================
-void UriComponent::assign(reference_const_type _value) {
+void UriComponent::assign(reference_const_type _value)
+{
   mExists = true;
   mValue = _value;
 }
 
 //==============================================================================
-void UriComponent::reset() {
+void UriComponent::reset()
+{
   mExists = false;
 }
 
 //==============================================================================
-auto UriComponent::get() -> reference_type {
+auto UriComponent::get() -> reference_type
+{
   assert(mExists);
   return mValue;
 }
 
 //==============================================================================
-auto UriComponent::get() const -> reference_const_type {
+auto UriComponent::get() const -> reference_const_type
+{
   assert(mExists);
   return mValue;
 }
 
 //==============================================================================
-auto UriComponent::get_value_or(reference_type _default) -> reference_type {
+auto UriComponent::get_value_or(reference_type _default) -> reference_type
+{
   if (mExists)
     return mValue;
   else
@@ -128,7 +143,8 @@ auto UriComponent::get_value_or(reference_type _default) -> reference_type {
 
 //==============================================================================
 auto UriComponent::get_value_or(reference_const_type _default) const
-    -> reference_const_type {
+    -> reference_const_type
+{
   if (mExists)
     return mValue;
   else
@@ -140,7 +156,8 @@ auto UriComponent::get_value_or(reference_const_type _default) const
  */
 
 //==============================================================================
-Uri::Uri(const std::string& _input) {
+Uri::Uri(const std::string& _input)
+{
   if (!fromStringOrPath(_input))
     dtwarn << "[Uri::Uri] Failed parsing URI '" << _input << "'.\n";
 
@@ -149,7 +166,8 @@ Uri::Uri(const std::string& _input) {
 }
 
 //==============================================================================
-Uri::Uri(const char* _input) {
+Uri::Uri(const char* _input)
+{
   if (!fromStringOrPath(std::string(_input)))
     dtwarn << "[Uri::Uri] Failed parsing URI '" << _input << "'.\n";
 
@@ -158,7 +176,8 @@ Uri::Uri(const char* _input) {
 }
 
 //==============================================================================
-void Uri::clear() {
+void Uri::clear()
+{
   mScheme.reset();
   mAuthority.reset();
   mPath.reset();
@@ -167,7 +186,8 @@ void Uri::clear() {
 }
 
 //==============================================================================
-bool Uri::fromString(const std::string& _input) {
+bool Uri::fromString(const std::string& _input)
+{
   // This is regex is from Appendix B of RFC 3986.
   static std::regex uriRegex(
       R"END(^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?)END",
@@ -213,7 +233,8 @@ bool Uri::fromString(const std::string& _input) {
 }
 
 //==============================================================================
-bool Uri::fromPath(const std::string& _path) {
+bool Uri::fromPath(const std::string& _path)
+{
   // TODO(JS): We might want to check validity of _path.
 
   static const std::string fileScheme("file://");
@@ -230,7 +251,8 @@ bool Uri::fromPath(const std::string& _path) {
 }
 
 //==============================================================================
-bool Uri::fromStringOrPath(const std::string& _input) {
+bool Uri::fromStringOrPath(const std::string& _input)
+{
   // TODO(JS): Need to check if _input is an "absolute" path?
 
 #ifdef _WIN32
@@ -261,7 +283,8 @@ bool Uri::fromStringOrPath(const std::string& _input) {
 
 //==============================================================================
 bool Uri::fromRelativeUri(
-    const std::string& _base, const std::string& _relative, bool _strict) {
+    const std::string& _base, const std::string& _relative, bool _strict)
+{
   Uri baseUri;
   if (!baseUri.fromString(_base)) {
     dtwarn << "[Uri::fromRelativeUri] Failed parsing base URI '" << _base
@@ -275,13 +298,15 @@ bool Uri::fromRelativeUri(
 
 //==============================================================================
 bool Uri::fromRelativeUri(
-    const char* _base, const char* _relative, bool _strict) {
+    const char* _base, const char* _relative, bool _strict)
+{
   return fromRelativeUri(std::string(_base), std::string(_relative), _strict);
 }
 
 //==============================================================================
 bool Uri::fromRelativeUri(
-    const Uri& _base, const std::string& _relative, bool _strict) {
+    const Uri& _base, const std::string& _relative, bool _strict)
+{
   Uri relativeUri;
   if (!relativeUri.fromString(_relative)) {
     dtwarn << "[Uri::fromRelativeUri] Failed parsing relative URI '"
@@ -294,14 +319,15 @@ bool Uri::fromRelativeUri(
 }
 
 //==============================================================================
-bool Uri::fromRelativeUri(
-    const Uri& _base, const char* _relative, bool _strict) {
+bool Uri::fromRelativeUri(const Uri& _base, const char* _relative, bool _strict)
+{
   return fromRelativeUri(_base, std::string(_relative), _strict);
 }
 
 //==============================================================================
 bool Uri::fromRelativeUri(
-    const Uri& _base, const Uri& _relative, bool /*_strict*/) {
+    const Uri& _base, const Uri& _relative, bool /*_strict*/)
+{
   assert(_base.mPath && "The path component is always defined.");
   assert(_relative.mPath && "The path component is always defined.");
 
@@ -347,7 +373,8 @@ bool Uri::fromRelativeUri(
 }
 
 //==============================================================================
-std::string Uri::toString() const {
+std::string Uri::toString() const
+{
   // This function implements the pseudo-code from Section 5.3 of RFC 3986.
   std::stringstream output;
 
@@ -369,7 +396,8 @@ std::string Uri::toString() const {
 }
 
 //==============================================================================
-Uri Uri::createFromString(const std::string& _input) {
+Uri Uri::createFromString(const std::string& _input)
+{
   Uri uri;
   if (!uri.fromString(_input)) {
     dtwarn << "[Uri::createFromString] Failed parsing URI '" << _input
@@ -383,7 +411,8 @@ Uri Uri::createFromString(const std::string& _input) {
 }
 
 //==============================================================================
-Uri Uri::createFromPath(const std::string& _path) {
+Uri Uri::createFromPath(const std::string& _path)
+{
   Uri fileUri;
   if (!fileUri.fromPath(_path)) {
     dtwarn << "[Uri::createFromPath] Failed parsing local path '" << _path
@@ -397,7 +426,8 @@ Uri Uri::createFromPath(const std::string& _path) {
 }
 
 //==============================================================================
-Uri Uri::createFromStringOrPath(const std::string& _input) {
+Uri Uri::createFromStringOrPath(const std::string& _input)
+{
   Uri uri;
   if (!uri.fromStringOrPath(_input)) {
     dtwarn << "[Uri::createFromString] Failed parsing URI '" << _input
@@ -412,7 +442,8 @@ Uri Uri::createFromStringOrPath(const std::string& _input) {
 
 //==============================================================================
 Uri Uri::createFromRelativeUri(
-    const std::string& _base, const std::string& _relative, bool _strict) {
+    const std::string& _base, const std::string& _relative, bool _strict)
+{
   Uri mergedUri;
   if (!mergedUri.fromRelativeUri(_base, _relative, _strict)) {
     dtwarn << "[Uri::createFromRelativeUri] Failed merging URI '" << _relative
@@ -427,7 +458,8 @@ Uri Uri::createFromRelativeUri(
 
 //==============================================================================
 Uri Uri::createFromRelativeUri(
-    const Uri& _base, const std::string& _relative, bool _strict) {
+    const Uri& _base, const std::string& _relative, bool _strict)
+{
   Uri mergedUri;
   if (!mergedUri.fromRelativeUri(_base, _relative, _strict)) {
     dtwarn << "[Uri::createFromRelativeUri] Failed merging URI '" << _relative
@@ -442,7 +474,8 @@ Uri Uri::createFromRelativeUri(
 
 //==============================================================================
 Uri Uri::createFromRelativeUri(
-    const Uri& _baseUri, const Uri& _relativeUri, bool _strict) {
+    const Uri& _baseUri, const Uri& _relativeUri, bool _strict)
+{
   Uri mergedUri;
   if (!mergedUri.fromRelativeUri(_baseUri, _relativeUri, _strict)) {
     dtwarn << "[Uri::createFromRelativeUri] Failed merging URI '"
@@ -457,7 +490,8 @@ Uri Uri::createFromRelativeUri(
 }
 
 //==============================================================================
-std::string Uri::getUri(const std::string& _input) {
+std::string Uri::getUri(const std::string& _input)
+{
   Uri uri;
   if (uri.fromStringOrPath(_input))
     return uri.toString();
@@ -467,7 +501,8 @@ std::string Uri::getUri(const std::string& _input) {
 
 //==============================================================================
 std::string Uri::getRelativeUri(
-    const std::string& _base, const std::string& _relative, bool _strict) {
+    const std::string& _base, const std::string& _relative, bool _strict)
+{
   Uri mergedUri;
   if (!mergedUri.fromRelativeUri(_base, _relative, _strict))
     return "";
@@ -477,7 +512,8 @@ std::string Uri::getRelativeUri(
 
 //==============================================================================
 std::string Uri::getRelativeUri(
-    const Uri& _base, const std::string& _relative, bool _strict) {
+    const Uri& _base, const std::string& _relative, bool _strict)
+{
   Uri mergedUri;
   if (!mergedUri.fromRelativeUri(_base, _relative, _strict))
     return "";
@@ -487,7 +523,8 @@ std::string Uri::getRelativeUri(
 
 //==============================================================================
 std::string Uri::getRelativeUri(
-    const Uri& _baseUri, const Uri& _relativeUri, bool _strict) {
+    const Uri& _baseUri, const Uri& _relativeUri, bool _strict)
+{
   Uri mergedUri;
   if (!mergedUri.fromRelativeUri(_baseUri, _relativeUri, _strict))
     return "";
@@ -496,12 +533,14 @@ std::string Uri::getRelativeUri(
 }
 
 //==============================================================================
-std::string Uri::getPath() const {
+std::string Uri::getPath() const
+{
   return mPath.get_value_or("");
 }
 
 //==============================================================================
-std::string Uri::getFilesystemPath() const {
+std::string Uri::getFilesystemPath() const
+{
 #ifdef _WIN32
   if (mScheme.get_value_or("") == "file") {
     const std::string& filesystemPath = getPath();
@@ -515,7 +554,8 @@ std::string Uri::getFilesystemPath() const {
 }
 
 //==============================================================================
-std::string Uri::mergePaths(const Uri& _base, const Uri& _relative) {
+std::string Uri::mergePaths(const Uri& _base, const Uri& _relative)
+{
   assert(_base.mPath && "The path component is always defined.");
   assert(_relative.mPath && "The path component is always defined.");
 
@@ -532,7 +572,8 @@ std::string Uri::mergePaths(const Uri& _base, const Uri& _relative) {
 }
 
 //==============================================================================
-std::string Uri::removeDotSegments(const std::string& _path) {
+std::string Uri::removeDotSegments(const std::string& _path)
+{
   // 1.  The input buffer is initialized with the now-appended path
   //     components and the output buffer is initialized to the empty
   //     string.

@@ -56,7 +56,8 @@ class MyWindow : public dart::gui::glut::SimWindow {
 public:
   /// Constructor
   MyWindow(WorldPtr world)
-    : mBallConstraint(nullptr), mPositiveSign(true), mBodyForce(false) {
+    : mBallConstraint(nullptr), mPositiveSign(true), mBodyForce(false)
+  {
     setWorld(world);
 
     // Find the Skeleton named "pendulum" within the World
@@ -76,7 +77,8 @@ public:
         dart::Color::Orange(1.0)));
   }
 
-  void changeDirection() {
+  void changeDirection()
+  {
     mPositiveSign = !mPositiveSign;
     if (mPositiveSign) {
       mArrow->setPositions(
@@ -89,12 +91,14 @@ public:
     }
   }
 
-  void applyForce(std::size_t index) {
+  void applyForce(std::size_t index)
+  {
     if (index < mForceCountDown.size())
       mForceCountDown[index] = default_countdown;
   }
 
-  void changeRestPosition(double delta) {
+  void changeRestPosition(double delta)
+  {
     for (std::size_t i = 0; i < mPendulum->getNumDofs(); ++i) {
       DegreeOfFreedom* dof = mPendulum->getDof(i);
       double q0 = dof->getRestPosition() + delta;
@@ -113,7 +117,8 @@ public:
     mPendulum->getDof(2)->setRestPosition(0.0);
   }
 
-  void changeStiffness(double delta) {
+  void changeStiffness(double delta)
+  {
     for (std::size_t i = 0; i < mPendulum->getNumDofs(); ++i) {
       DegreeOfFreedom* dof = mPendulum->getDof(i);
       double stiffness = dof->getSpringStiffness() + delta;
@@ -123,7 +128,8 @@ public:
     }
   }
 
-  void changeDamping(double delta) {
+  void changeDamping(double delta)
+  {
     for (std::size_t i = 0; i < mPendulum->getNumDofs(); ++i) {
       DegreeOfFreedom* dof = mPendulum->getDof(i);
       double damping = dof->getDampingCoefficient() + delta;
@@ -134,7 +140,8 @@ public:
   }
 
   /// Add a constraint to attach the final link to the world
-  void addConstraint() {
+  void addConstraint()
+  {
     // Get the last body in the pendulum
     BodyNode* tip = mPendulum->getBodyNode(mPendulum->getNumBodyNodes() - 1);
 
@@ -147,13 +154,15 @@ public:
   }
 
   /// Remove any existing constraint, allowing the pendulum to flail freely
-  void removeConstraint() {
+  void removeConstraint()
+  {
     mWorld->getConstraintSolver()->removeConstraint(mBallConstraint);
     mBallConstraint = nullptr;
   }
 
   /// Handle keyboard input
-  void keyboard(unsigned char key, int x, int y) override {
+  void keyboard(unsigned char key, int x, int y) override
+  {
     switch (key) {
       case '-':
         changeDirection();
@@ -228,7 +237,8 @@ public:
     }
   }
 
-  void timeStepping() override {
+  void timeStepping() override
+  {
     // Reset all the shapes to be Blue
     for (std::size_t i = 0; i < mPendulum->getNumBodyNodes(); ++i) {
       BodyNode* bn = mPendulum->getBodyNode(i);
@@ -308,7 +318,8 @@ protected:
   bool mBodyForce;
 };
 
-void setGeometry(const BodyNodePtr& bn) {
+void setGeometry(const BodyNodePtr& bn)
+{
   // Create a BoxShape to be used for both visualization and collision checking
   std::shared_ptr<BoxShape> box(new BoxShape(
       Eigen::Vector3d(default_width, default_depth, default_height)));
@@ -329,7 +340,8 @@ void setGeometry(const BodyNodePtr& bn) {
   bn->setLocalCOM(center);
 }
 
-BodyNode* makeRootBody(const SkeletonPtr& pendulum, const std::string& name) {
+BodyNode* makeRootBody(const SkeletonPtr& pendulum, const std::string& name)
+{
   BallJoint::Properties properties;
   properties.mName = name + "_joint";
   properties.mRestPositions = Eigen::Vector3d::Constant(default_rest_position);
@@ -356,7 +368,8 @@ BodyNode* makeRootBody(const SkeletonPtr& pendulum, const std::string& name) {
 }
 
 BodyNode* addBody(
-    const SkeletonPtr& pendulum, BodyNode* parent, const std::string& name) {
+    const SkeletonPtr& pendulum, BodyNode* parent, const std::string& name)
+{
   // Set up the properties for the Joint
   RevoluteJoint::Properties properties;
   properties.mName = name + "_joint";
@@ -393,7 +406,8 @@ BodyNode* addBody(
   return bn;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
   // Create an empty Skeleton with the name "pendulum"
   SkeletonPtr pendulum = Skeleton::create("pendulum");
 

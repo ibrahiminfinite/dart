@@ -35,7 +35,7 @@
 #include <algorithm>
 
 #include "dart/gui/glut/LoadGlut.hpp"
-#include "dart/math/Constants.hpp"
+#include "dart/math/constant.hpp"
 
 namespace dart {
 namespace gui {
@@ -51,12 +51,14 @@ Win3D::Win3D()
     mPersp(45.0),
     mRotate(false),
     mTranslate(false),
-    mZooming(false) {
+    mZooming(false)
+{
   // Do nothing
 }
 
 //==============================================================================
-void Win3D::initWindow(int _w, int _h, const char* _name) {
+void Win3D::initWindow(int _w, int _h, const char* _name)
+{
   Window::initWindow(_w, _h, _name);
 
   int smaller = _w < _h ? _w : _h;
@@ -64,7 +66,8 @@ void Win3D::initWindow(int _w, int _h, const char* _name) {
 }
 
 //==============================================================================
-void Win3D::resize(int _w, int _h) {
+void Win3D::resize(int _w, int _h)
+{
   mWinWidth = _w;
   mWinHeight = _h;
 
@@ -87,7 +90,8 @@ void Win3D::resize(int _w, int _h) {
 }
 
 //==============================================================================
-void Win3D::keyboard(unsigned char _key, int /*_x*/, int /*_y*/) {
+void Win3D::keyboard(unsigned char _key, int /*_x*/, int /*_y*/)
+{
   switch (_key) {
     case ',': // slow down
       mDisplayTimeout += 2;
@@ -118,7 +122,8 @@ void Win3D::keyboard(unsigned char _key, int /*_x*/, int /*_y*/) {
 }
 
 //==============================================================================
-void Win3D::click(int _button, int _state, int _x, int _y) {
+void Win3D::click(int _button, int _state, int _x, int _y)
+{
   mMouseDown = !mMouseDown;
   int mask = glutGetModifiers();
   if (mMouseDown) {
@@ -151,7 +156,8 @@ void Win3D::click(int _button, int _state, int _x, int _y) {
 }
 
 //==============================================================================
-void Win3D::drag(int _x, int _y) {
+void Win3D::drag(int _x, int _y)
+{
   double deltaX = _x - mMouseX;
   double deltaY = _y - mMouseY;
 
@@ -174,7 +180,8 @@ void Win3D::drag(int _x, int _y) {
 }
 
 //==============================================================================
-void Win3D::render() {
+void Win3D::render()
+{
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   gluPerspective(
@@ -234,7 +241,8 @@ void Win3D::render() {
 }
 
 //==============================================================================
-void Win3D::initGL() {
+void Win3D::initGL()
+{
   glClearColor(mBackground[0], mBackground[1], mBackground[2], mBackground[3]);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_BLEND);
@@ -245,7 +253,8 @@ void Win3D::initGL() {
 }
 
 //==============================================================================
-void Win3D::initLights() {
+void Win3D::initLights()
+{
   static float ambient[] = {0.2, 0.2, 0.2, 1.0};
   static float diffuse[] = {0.6, 0.6, 0.6, 1.0};
   static float front_mat_shininess[] = {60.0};
@@ -293,7 +302,8 @@ void accFrustum(
     GLdouble pixdy,
     GLdouble eyedx,
     GLdouble eyedy,
-    GLdouble focus) {
+    GLdouble focus)
+{
   GLdouble xwsize, ywsize;
   GLdouble dx, dy;
   GLint viewport[4];
@@ -326,8 +336,9 @@ void accPerspective(
     GLdouble pixdy,
     GLdouble eyedx,
     GLdouble eyedy,
-    GLdouble focus) {
-  const double pi = math::constantsd::pi();
+    GLdouble focus)
+{
+  const double pi = math::pi();
 
   GLdouble fov2 = ((fovy * pi) / 180.0) / 2.0;
   GLdouble top = nearPlane / (cosf(fov2) / sinf(fov2));

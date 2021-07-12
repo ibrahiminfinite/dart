@@ -102,7 +102,8 @@ public:
   /// axis ordering.
   template <typename RotationType>
   static Eigen::Vector3d convertToPositions(
-      const RotationType& _rotation, AxisOrder _ordering) {
+      const RotationType& _rotation, AxisOrder _ordering)
+  {
     switch (_ordering) {
       case AxisOrder::XYZ:
         return math::matrixToEulerXYZ(_rotation);
@@ -119,7 +120,8 @@ public:
   /// AxisOrder) which will use the AxisOrder belonging to the joint instance
   /// that it gets called on.
   template <typename RotationType>
-  Eigen::Vector3d convertToPositions(const RotationType& _rotation) const {
+  Eigen::Vector3d convertToPositions(const RotationType& _rotation) const
+  {
     return convertToPositions(_rotation, getAxisOrder());
   }
 

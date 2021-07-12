@@ -40,12 +40,14 @@ class TinkertoyInputHandler : public osgGA::GUIEventHandler {
 public:
   TinkertoyInputHandler(
       dart::gui::osg::Viewer* viewer, TinkertoyWorldNode* node)
-    : mViewer(viewer), mNode(node) {
+    : mViewer(viewer), mNode(node)
+  {
     // Do nothing
   }
 
   bool handle(
-      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override {
+      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override
+  {
     if (ea.getEventType() == osgGA::GUIEventAdapter::KEYDOWN) {
       if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Tab) {
         mViewer->home();
@@ -94,11 +96,13 @@ public:
 class TinkertoyMouseHandler : public dart::gui::osg::MouseEventHandler {
 public:
   TinkertoyMouseHandler(TinkertoyInputHandler* inputHandler)
-    : mInputHandler(inputHandler) {
+    : mInputHandler(inputHandler)
+  {
     // Do nothing
   }
 
-  void update() override {
+  void update() override
+  {
     dart::gui::osg::Viewer* viewer = mInputHandler->mViewer;
     TinkertoyWorldNode* node = mInputHandler->mNode;
 
@@ -122,7 +126,8 @@ public:
 };
 
 //==============================================================================
-int main() {
+int main()
+{
   // Create a world
   dart::simulation::WorldPtr world(new dart::simulation::World);
 

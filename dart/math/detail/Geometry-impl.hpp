@@ -47,7 +47,8 @@ std::tuple<
     std::vector<Eigen::Matrix<Index, 3, 1>>>
 discardUnusedVertices(
     const std::vector<Eigen::Matrix<S, 3, 1>>& vertices,
-    const std::vector<Eigen::Matrix<Index, 3, 1>>& triangles) {
+    const std::vector<Eigen::Matrix<Index, 3, 1>>& triangles)
+{
   auto newVertices = std::vector<Eigen::Matrix<S, 3, 1>>();
   auto newTriangles = std::vector<Eigen::Matrix<Index, 3, 1>>();
   newTriangles.resize(triangles.size());
@@ -79,8 +80,9 @@ template <typename S, typename Index>
 std::tuple<
     std::vector<Eigen::Matrix<S, 3, 1>>,
     std::vector<Eigen::Matrix<Index, 3, 1>>>
-computeConvexHull3D(
-    const std::vector<Eigen::Matrix<S, 3, 1>>& inputVertices, bool optimize) {
+compute_convex_hull_3d(
+    const std::vector<Eigen::Matrix<S, 3, 1>>& inputVertices, bool optimize)
+{
   ch_vertex* vertices = new ch_vertex[inputVertices.size()];
 
   for (auto i = 0u; i < inputVertices.size(); ++i) {

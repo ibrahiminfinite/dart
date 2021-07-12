@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void TranslationalJoint2D(py::module& m) {
+void TranslationalJoint2D(py::module& m)
+{
   ::py::class_<dart::dynamics::TranslationalJoint2D::UniqueProperties>(
       m, "TranslationalJoint2DUniqueProperties")
       .def(::py::init<>());

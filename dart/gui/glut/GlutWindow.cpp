@@ -58,7 +58,8 @@ namespace glut {
 std::vector<Window*> Window::mWindows;
 std::vector<int> Window::mWinIDs;
 
-Window::Window() {
+Window::Window()
+{
   mWinWidth = 0;
   mWinHeight = 0;
   mMouseX = 0;
@@ -74,11 +75,13 @@ Window::Window() {
   mRI = nullptr;
 }
 
-Window::~Window() {
+Window::~Window()
+{
   delete mRI;
 }
 
-void Window::initWindow(int _w, int _h, const char* _name) {
+void Window::initWindow(int _w, int _h, const char* _name)
+{
   mWindows.push_back(this);
 
   mWinWidth = _w;
@@ -114,53 +117,65 @@ void Window::initWindow(int _w, int _h, const char* _name) {
   // Note: We book the timer id 0 for the main rendering purpose.
 }
 
-void Window::reshape(int _w, int _h) {
+void Window::reshape(int _w, int _h)
+{
   current()->mScreenshotTemp = std::vector<unsigned char>(_w * _h * 4);
   current()->mScreenshotTemp2 = std::vector<unsigned char>(_w * _h * 4);
   current()->resize(_w, _h);
 }
 
-void Window::keyEvent(unsigned char _key, int _x, int _y) {
+void Window::keyEvent(unsigned char _key, int _x, int _y)
+{
   current()->keyboard(_key, _x, _y);
 }
 
-void Window::specKeyEvent(int _key, int _x, int _y) {
+void Window::specKeyEvent(int _key, int _x, int _y)
+{
   current()->specKey(_key, _x, _y);
 }
 
-void Window::mouseClick(int _button, int _state, int _x, int _y) {
+void Window::mouseClick(int _button, int _state, int _x, int _y)
+{
   current()->click(_button, _state, _x, _y);
 }
 
-void Window::mouseDrag(int _x, int _y) {
+void Window::mouseDrag(int _x, int _y)
+{
   current()->drag(_x, _y);
 }
 
-void Window::mouseMove(int _x, int _y) {
+void Window::mouseMove(int _x, int _y)
+{
   current()->move(_x, _y);
 }
 
-void Window::refresh() {
+void Window::refresh()
+{
   current()->render();
 }
 
-void Window::refreshTimer(int _val) {
+void Window::refreshTimer(int _val)
+{
   current()->displayTimer(_val);
 }
 
-void Window::displayTimer(int _val) {
+void Window::displayTimer(int _val)
+{
   glutPostRedisplay();
   glutTimerFunc(mDisplayTimeout, refreshTimer, _val);
 }
 
-void Window::simTimer(int /*_val*/) {
+void Window::simTimer(int /*_val*/)
+{
 }
 
-void Window::runTimer(int _val) {
+void Window::runTimer(int _val)
+{
   current()->simTimer(_val);
 }
 
-bool Window::screenshot() {
+bool Window::screenshot()
+{
   static int count = 0;
   const char directory[8] = "frames";
   const char fileBase[8] = "Capture";
@@ -232,7 +247,8 @@ bool Window::screenshot() {
   }
 }
 
-inline Window* Window::current() {
+inline Window* Window::current()
+{
   int id = glutGetWindow();
   for (unsigned int i = 0; i < mWinIDs.size(); i++) {
     if (mWinIDs.at(i) == id) {
@@ -243,20 +259,25 @@ inline Window* Window::current() {
   exit(0);
 }
 
-void Window::keyboard(unsigned char /*_key*/, int /*_x*/, int /*_y*/) {
+void Window::keyboard(unsigned char /*_key*/, int /*_x*/, int /*_y*/)
+{
   // TODO(JS): Is 2d point information necessary for keyboard event?
 }
 
-void Window::specKey(int /*_key*/, int /*_x*/, int /*_y*/) {
+void Window::specKey(int /*_key*/, int /*_x*/, int /*_y*/)
+{
 }
 
-void Window::click(int /*_button*/, int /*_state*/, int /*_x*/, int /*_y*/) {
+void Window::click(int /*_button*/, int /*_state*/, int /*_x*/, int /*_y*/)
+{
 }
 
-void Window::drag(int /*_x*/, int /*_y*/) {
+void Window::drag(int /*_x*/, int /*_y*/)
+{
 }
 
-void Window::move(int /*_x*/, int /*_y*/) {
+void Window::move(int /*_x*/, int /*_y*/)
+{
 }
 
 } // namespace glut

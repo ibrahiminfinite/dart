@@ -83,7 +83,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void BodyNode(py::module& m) {
+void BodyNode(py::module& m)
+{
   ::py::class_<dart::dynamics::detail::BodyNodeAspectProperties>(
       m, "BodyNodeAspectProperties")
       .def(::py::init<>())

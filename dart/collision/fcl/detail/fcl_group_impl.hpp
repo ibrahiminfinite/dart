@@ -36,49 +36,34 @@
 #include "dart/collision/fcl/fcl_group.hpp"
 #include "dart/collision/fcl/fcl_object.hpp"
 #include "dart/collision/object.hpp"
-#include "dart/common/Console.hpp"
-#include "dart/math/geometry/Sphere.hpp"
+#include "dart/common/logging.hpp"
+#include "dart/math/geometry/sphere.hpp"
 
 namespace dart {
 namespace collision {
 
 //==============================================================================
 template <typename S>
-std::shared_ptr<FclCollisionGeometry<S>> createFclCollisionGeometry(
-    const math::ConstGeometryPtr& shape,
-    typename FclEngine<S>::PrimitiveShape /*type*/) {
-  FclCollisionGeometry<S>* geom = nullptr;
-
-  if (auto sphere = shape->as<math::Sphered>()) {
-    geom = new FclSphere<S>(sphere->getRadius());
-  } else {
-    dterr << "Unsupported geometry type: " << shape->getType() << "\n";
-  }
-
-  return std::shared_ptr<FclCollisionGeometry<S>>(geom);
-}
-
-//==============================================================================
-template <typename S>
 FclGroup<S>::FclGroup(Engine<S>* engine)
   : Group<S>(engine),
-    m_broad_phase_alg(new FclDynamicAABBTreeCollisionManager<S>()) {
+    m_broad_phase_alg(new FclDynamicAABBTreeCollisionManager<S>())
+{
   // Do nothing
 }
 
 //==============================================================================
 template <typename S>
-ObjectPtr<S> FclGroup<S>::create_object(math::GeometryPtr shape) {
+ObjectPtr<S> FclGroup<S>::create_object(math::GeometryPtr shape)
+{
   if (!shape) {
-    dtwarn
-        << "Not allowed to create a collision object for a shape of nullptr.\n";
+    DART_WARN("Not allowed to create a collision object for a null shape");
     return nullptr;
   }
 
   auto fcl_collision_geometry
-      = createFclCollisionGeometry<S>(shape, FclEngine<S>::MESH);
+      = get_mutable_fcl_engine()->create_fcl_collision_geometry(shape);
   if (!fcl_collision_geometry) {
-    dtwarn << "Failed to create FCL collision geometry.\n";
+    DART_WARN("Failed to create FCL collision geometry.");
     return nullptr;
   }
 
@@ -88,27 +73,31 @@ ObjectPtr<S> FclGroup<S>::create_object(math::GeometryPtr shape) {
 
 //==============================================================================
 template <typename S>
-FclEngine<S>* FclGroup<S>::get_mutable_fcl_engine() {
+FclEngine<S>* FclGroup<S>::get_mutable_fcl_engine()
+{
   return static_cast<FclEngine<S>*>(this->m_engine);
 }
 
 //==============================================================================
 template <typename S>
-const FclEngine<S>* FclGroup<S>::get_fcl_engine() const {
+const FclEngine<S>* FclGroup<S>::get_fcl_engine() const
+{
   return static_cast<const FclEngine<S>*>(this->m_engine);
 }
 
 //==============================================================================
 template <typename S>
 typename FclGroup<S>::FCLCollisionManager*
-FclGroup<S>::get_fcl_collision_manager() {
+FclGroup<S>::get_fcl_collision_manager()
+{
   return m_broad_phase_alg.get();
 }
 
 //==============================================================================
 template <typename S>
 const typename FclGroup<S>::FCLCollisionManager*
-FclGroup<S>::get_fcl_collision_manager() const {
+FclGroup<S>::get_fcl_collision_manager() const
+{
   return m_broad_phase_alg.get();
 }
 

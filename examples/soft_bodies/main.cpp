@@ -38,12 +38,14 @@ using namespace dart::dynamics;
 class RecordingWorld : public dart::gui::osg::RealTimeWorldNode {
 public:
   RecordingWorld(const dart::simulation::WorldPtr& world)
-    : dart::gui::osg::RealTimeWorldNode(world) {
+    : dart::gui::osg::RealTimeWorldNode(world)
+  {
     grabTimeSlice();
     mCurrentIndex = 0;
   }
 
-  void grabTimeSlice() {
+  void grabTimeSlice()
+  {
     TimeSlice slice;
     slice.reserve(mWorld->getNumSkeletons());
 
@@ -64,7 +66,8 @@ public:
     mHistory.push_back(slice);
   }
 
-  void customPostStep() override {
+  void customPostStep() override
+  {
     if (mCurrentIndex < mHistory.size() - 1)
       mHistory.resize(mCurrentIndex + 1);
 
@@ -72,7 +75,8 @@ public:
     ++mCurrentIndex;
   }
 
-  void moveTo(std::size_t index) {
+  void moveTo(std::size_t index)
+  {
     mViewer->simulate(false);
 
     if (mHistory.empty())
@@ -99,20 +103,24 @@ public:
     mCurrentIndex = index;
   }
 
-  void moveForward(int delta) {
+  void moveForward(int delta)
+  {
     moveTo(mCurrentIndex + delta);
   }
 
-  void moveBackward(int delta) {
+  void moveBackward(int delta)
+  {
     if (mCurrentIndex > 0)
       moveTo(mCurrentIndex - delta);
   }
 
-  void restart() {
+  void restart()
+  {
     moveTo(0);
   }
 
-  void moveToEnd() {
+  void moveToEnd()
+  {
     moveTo(mHistory.size() - 1);
   }
 
@@ -131,12 +139,14 @@ public:
 
 class RecordingEventHandler : public osgGA::GUIEventHandler {
 public:
-  RecordingEventHandler(RecordingWorld* rec) : mRecWorld(rec) {
+  RecordingEventHandler(RecordingWorld* rec) : mRecWorld(rec)
+  {
     // Do nothing
   }
 
   virtual bool handle(
-      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override {
+      const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter&) override
+  {
     if (!mRecWorld)
       return false;
 
@@ -178,7 +188,8 @@ public:
   RecordingWorld* mRecWorld;
 };
 
-int main() {
+int main()
+{
   using namespace dart::dynamics;
 
   dart::simulation::WorldPtr world

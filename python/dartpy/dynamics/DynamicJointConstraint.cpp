@@ -39,7 +39,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void DynamicJointConstraint(py::module& m) {
+void DynamicJointConstraint(py::module& m)
+{
   ::py::class_<
       dart::dynamics::DynamicJointConstraint,
       dart::dynamics::ConstraintBase,

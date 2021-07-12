@@ -43,12 +43,14 @@ namespace dynamics {
 //==============================================================================
 /// Declaration of the variadic template
 template <class... OtherBases>
-class NodeManagerJoinerForBodyNode {};
+class NodeManagerJoinerForBodyNode {
+};
 
 //==============================================================================
 /// Special case of only having 1 class: we do nothing but inherit it.
 template <class Base1>
-class NodeManagerJoinerForBodyNode<Base1> : public Base1 {};
+class NodeManagerJoinerForBodyNode<Base1> : public Base1 {
+};
 
 //==============================================================================
 /// NodeManagerJoiner allows classes that inherit from various
@@ -107,12 +109,14 @@ public:
 //==============================================================================
 /// Declaration of variadic template
 template <class... OtherBases>
-class NodeManagerJoinerForSkeleton {};
+class NodeManagerJoinerForSkeleton {
+};
 
 //==============================================================================
 /// Special case of only having 1 class: we do nothing but inherit it
 template <class Base1>
-class NodeManagerJoinerForSkeleton<Base1> : public Base1 {};
+class NodeManagerJoinerForSkeleton<Base1> : public Base1 {
+};
 
 //==============================================================================
 template <class Base1, class Base2>

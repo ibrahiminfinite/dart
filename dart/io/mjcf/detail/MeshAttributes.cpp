@@ -41,7 +41,8 @@ namespace detail {
 
 //==============================================================================
 Errors appendMeshAttributes(
-    MeshAttributes& attributes, tinyxml2::XMLElement* element) {
+    MeshAttributes& attributes, tinyxml2::XMLElement* element)
+{
   Errors errors;
 
   if (std::string(element->Name()) != "mesh") {

@@ -98,7 +98,8 @@ public:
   /// get stored in BodyNode::ExtendedProperties. Typically Properties are
   /// values that only change rarely if ever, whereas State contains values that
   /// might change as often as every time step.
-  class State : public common::Cloneable<State> {};
+  class State : public common::Cloneable<State> {
+  };
 
   /// Use the MakeState class to easily create a State extension from an
   /// existing class or struct
@@ -117,7 +118,8 @@ public:
   /// get stored in BodyNode::ExtendedProperties. Typically Properties are
   /// values that only change rarely if ever, whereas State contains values that
   /// might change as often as every time step.
-  class Properties : public common::Cloneable<Properties> {};
+  class Properties : public common::Cloneable<Properties> {
+  };
 
   /// Use the MakeProperties class to easily create a Properties extension
   /// from an existing class or struct.

@@ -46,38 +46,47 @@ static int callCount1 = 0;
 static int callCount2 = 0;
 
 //==============================================================================
-void foo0() {
+void foo0()
+{
   callCount0++;
 }
-void foo1(int /*_val*/) {
+void foo1(int /*_val*/)
+{
   callCount1++;
 }
-void foo2(int /*_val1*/, float /*_val2*/) {
+void foo2(int /*_val1*/, float /*_val2*/)
+{
   callCount2++;
 }
-double foo3() {
+double foo3()
+{
   return 10.0;
 }
 
 //==============================================================================
 class Viewer {
 public:
-  static void onSignal1Static(int /*_val*/) {
+  static void onSignal1Static(int /*_val*/)
+  {
     callCount1++;
   }
-  static void onSignal2Static(int /*_val1*/, float /*_val2*/) {
+  static void onSignal2Static(int /*_val1*/, float /*_val2*/)
+  {
     callCount2++;
   }
-  void onSignal1(int /*_val*/) {
+  void onSignal1(int /*_val*/)
+  {
     callCount1++;
   }
-  void onSignal2(int /*_val1*/, float /*_val2*/) {
+  void onSignal2(int /*_val1*/, float /*_val2*/)
+  {
     callCount2++;
   }
 };
 
 //==============================================================================
-TEST(Signal, Basic) {
+TEST(Signal, Basic)
+{
   Signal<void()> signal0;
   Signal<void(int)> signal1;
   Signal<void(int, float)> signal2;
@@ -117,7 +126,8 @@ TEST(Signal, Basic) {
 }
 
 //==============================================================================
-TEST(Signal, NonStaticMemberFunction) {
+TEST(Signal, NonStaticMemberFunction)
+{
   Signal<void(int)> signal1;
   Signal<void(int, float)> signal2;
   Viewer viewer;
@@ -146,7 +156,8 @@ TEST(Signal, NonStaticMemberFunction) {
 }
 
 //==============================================================================
-TEST(Signal, ScopedConnection) {
+TEST(Signal, ScopedConnection)
+{
   Signal<void(int)> signal;
   Connection c = signal.connect(foo1);
   EXPECT_EQ(static_cast<int>(signal.getNumConnections()), 1);
@@ -160,7 +171,8 @@ TEST(Signal, ScopedConnection) {
 }
 
 //==============================================================================
-TEST(Signal, ConnectionLifeTime) {
+TEST(Signal, ConnectionLifeTime)
+{
   Signal<void(int)>* signal = new Signal<void(int)>();
 
   Connection connection1 = signal->connect(foo1);
@@ -186,16 +198,20 @@ TEST(Signal, ConnectionLifeTime) {
 }
 
 //==============================================================================
-float product(float x, float y) {
+float product(float x, float y)
+{
   return x * y;
 }
-float quotient(float x, float y) {
+float quotient(float x, float y)
+{
   return x / y;
 }
-float sum(float x, float y) {
+float sum(float x, float y)
+{
   return x + y;
 }
-float difference(float x, float y) {
+float difference(float x, float y)
+{
   return x - y;
 }
 
@@ -205,7 +221,8 @@ struct signal_maximum {
   typedef T result_type;
 
   template <typename InputIterator>
-  static T process(InputIterator first, InputIterator last) {
+  static T process(InputIterator first, InputIterator last)
+  {
     // If there are no slots to call, just return the
     // default-constructed value
     if (first == last)
@@ -229,7 +246,8 @@ struct signal_sum {
   typedef T result_type;
 
   template <typename InputIterator>
-  static T process(InputIterator first, InputIterator last) {
+  static T process(InputIterator first, InputIterator last)
+  {
     // If there are no slots to call, just return the
     // default-constructed value
     if (first == last)
@@ -248,7 +266,8 @@ struct signal_sum {
 };
 
 //==============================================================================
-TEST(Signal, ReturnValues) {
+TEST(Signal, ReturnValues)
+{
   const float tol = 1.5e-6;
 
   const float a = 5.0f;

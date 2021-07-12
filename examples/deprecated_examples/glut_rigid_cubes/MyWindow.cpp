@@ -32,27 +32,32 @@
 
 #include "MyWindow.hpp"
 
-MyWindow::MyWindow() : SimWindow() {
+MyWindow::MyWindow() : SimWindow()
+{
   mForce = Eigen::Vector3d::Zero();
 }
 
-MyWindow::~MyWindow() {
+MyWindow::~MyWindow()
+{
 }
 
-void MyWindow::timeStepping() {
+void MyWindow::timeStepping()
+{
   mWorld->getSkeleton(1)->getBodyNode(0)->addExtForce(mForce);
   mWorld->step();
   mForce /= 2.0;
 }
 
-void MyWindow::drawWorld() const {
+void MyWindow::drawWorld() const
+{
   glEnable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
   SimWindow::drawWorld();
 }
 
-void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
+void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+{
   switch (_key) {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;

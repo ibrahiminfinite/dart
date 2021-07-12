@@ -231,14 +231,15 @@ common::ResourceRetrieverPtr getRetriever(
 
 //==============================================================================
 simulation::WorldPtr readSdfFile(
-    const common::Uri& uri,
-    const common::ResourceRetrieverPtr& nullOrRetriever) {
+    const common::Uri& uri, const common::ResourceRetrieverPtr& nullOrRetriever)
+{
   return readWorld(uri, nullOrRetriever);
 }
 
 //==============================================================================
 bool checkVersion(
-    const tinyxml2::XMLElement& sdfElement, const common::Uri& uri) {
+    const tinyxml2::XMLElement& sdfElement, const common::Uri& uri)
+{
   const std::string version = getAttributeString(&sdfElement, "version");
   // TODO: We need version aware SDF parser (see #264)
   // We support 1.4 ~ 1.6.
@@ -254,8 +255,8 @@ bool checkVersion(
 
 //==============================================================================
 simulation::WorldPtr readWorld(
-    const common::Uri& uri,
-    const common::ResourceRetrieverPtr& nullOrRetriever) {
+    const common::Uri& uri, const common::ResourceRetrieverPtr& nullOrRetriever)
+{
   const auto retriever = getRetriever(nullOrRetriever);
 
   //--------------------------------------------------------------------------
@@ -293,8 +294,8 @@ simulation::WorldPtr readWorld(
 
 //==============================================================================
 dynamics::SkeletonPtr readSkeleton(
-    const common::Uri& uri,
-    const common::ResourceRetrieverPtr& nullOrRetriever) {
+    const common::Uri& uri, const common::ResourceRetrieverPtr& nullOrRetriever)
+{
   const auto retriever = getRetriever(nullOrRetriever);
 
   //--------------------------------------------------------------------------
@@ -338,7 +339,8 @@ namespace {
 simulation::WorldPtr readWorld(
     tinyxml2::XMLElement* worldElement,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   assert(worldElement != nullptr);
 
   // Create a world
@@ -372,7 +374,8 @@ simulation::WorldPtr readWorld(
 
 //==============================================================================
 void readPhysics(
-    tinyxml2::XMLElement* physicsElement, simulation::WorldPtr world) {
+    tinyxml2::XMLElement* physicsElement, simulation::WorldPtr world)
+{
   // Type attribute
   // std::string physicsEngineName = getAttribute(_physicsElement, "type");
 
@@ -400,7 +403,8 @@ void readPhysics(
 dynamics::SkeletonPtr readSkeleton(
     tinyxml2::XMLElement* skeletonElement,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   assert(skeletonElement != nullptr);
 
   Eigen::Isometry3d skeletonFrame = Eigen::Isometry3d::Identity();
@@ -469,7 +473,8 @@ bool createPair(
     dynamics::SkeletonPtr skeleton,
     dynamics::BodyNode* parent,
     const SDFJoint& newJoint,
-    const SDFBodyNode& newBody) {
+    const SDFBodyNode& newBody)
+{
   std::pair<dynamics::Joint*, dynamics::BodyNode*> pair;
 
   if (newBody.type.empty()) {
@@ -497,7 +502,8 @@ NextResult getNextJointAndNodePair(
     dynamics::BodyNode*& parentBody,
     const dynamics::SkeletonPtr skeleton,
     BodyMap& sdfBodyNodes,
-    const JointMap& sdfJoints) {
+    const JointMap& sdfJoints)
+{
   parentJoint = sdfJoints.find(body->first);
   if (parentJoint == sdfJoints.end()) {
     return CREATE_FREEJOINT_ROOT;
@@ -531,7 +537,8 @@ NextResult getNextJointAndNodePair(
 }
 
 dynamics::SkeletonPtr makeSkeleton(
-    tinyxml2::XMLElement* _skeletonElement, Eigen::Isometry3d& skeletonFrame) {
+    tinyxml2::XMLElement* _skeletonElement, Eigen::Isometry3d& skeletonFrame)
+{
   assert(_skeletonElement != nullptr);
 
   dynamics::SkeletonPtr newSkeleton = dynamics::Skeleton::create();
@@ -565,7 +572,8 @@ std::pair<dynamics::Joint*, dynamics::BodyNode*> createJointAndNodePair(
     dynamics::SkeletonPtr skeleton,
     dynamics::BodyNode* parent,
     const SDFJoint& joint,
-    const SDFBodyNode& node) {
+    const SDFBodyNode& node)
+{
   const std::string& type = joint.type;
 
   if (std::string("prismatic") == type)
@@ -618,7 +626,8 @@ BodyMap readAllBodyNodes(
     tinyxml2::XMLElement* skeletonElement,
     const common::Uri& baseUri,
     const common::ResourceRetrieverPtr& retriever,
-    const Eigen::Isometry3d& skeletonFrame) {
+    const Eigen::Isometry3d& skeletonFrame)
+{
   ElementEnumerator bodies(skeletonElement, "link");
   BodyMap sdfBodyNodes;
   while (bodies.next()) {
@@ -644,7 +653,8 @@ SDFBodyNode readBodyNode(
     tinyxml2::XMLElement* bodyNodeElement,
     const Eigen::Isometry3d& skeletonFrame,
     const common::Uri& /*baseUri*/,
-    const common::ResourceRetrieverPtr& /*retriever*/) {
+    const common::ResourceRetrieverPtr& /*retriever*/)
+{
   assert(bodyNodeElement != nullptr);
 
   dynamics::BodyNode::Properties properties;
@@ -732,7 +742,8 @@ SDFBodyNode readBodyNode(
 
 //==============================================================================
 dynamics::SoftBodyNode::UniqueProperties readSoftBodyProperties(
-    tinyxml2::XMLElement* softBodyNodeElement) {
+    tinyxml2::XMLElement* softBodyNodeElement)
+{
   //---------------------------------- Note ------------------------------------
   // SoftBodyNode is created if _softBodyNodeElement has <soft_shape>.
   // Otherwise, BodyNode is created.
@@ -814,7 +825,8 @@ dynamics::SoftBodyNode::UniqueProperties readSoftBodyProperties(
 dynamics::ShapePtr readShape(
     tinyxml2::XMLElement* _shapelement,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& _retriever) {
+    const common::ResourceRetrieverPtr& _retriever)
+{
   dynamics::ShapePtr newShape;
 
   // type
@@ -892,7 +904,8 @@ dynamics::ShapeNode* readShapeNode(
     tinyxml2::XMLElement* shapeNodeEle,
     const std::string& shapeNodeName,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   assert(bodyNode);
 
   auto shape = readShape(shapeNodeEle, baseUri, retriever);
@@ -910,7 +923,8 @@ dynamics::ShapeNode* readShapeNode(
 
 //==============================================================================
 void readMaterial(
-    tinyxml2::XMLElement* materialEle, dynamics::ShapeNode* shapeNode) {
+    tinyxml2::XMLElement* materialEle, dynamics::ShapeNode* shapeNode)
+{
   auto visualAspect = shapeNode->getVisualAspect();
   if (hasElement(materialEle, "diffuse")) {
     Eigen::VectorXd color = getValueVectorXd(materialEle, "diffuse");
@@ -932,7 +946,8 @@ void readVisualizationShapeNode(
     dynamics::BodyNode* bodyNode,
     tinyxml2::XMLElement* vizShapeNodeEle,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   dynamics::ShapeNode* newShapeNode = readShapeNode(
       bodyNode,
       vizShapeNodeEle,
@@ -954,7 +969,8 @@ void readCollisionShapeNode(
     dynamics::BodyNode* bodyNode,
     tinyxml2::XMLElement* collShapeNodeEle,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   dynamics::ShapeNode* newShapeNode = readShapeNode(
       bodyNode,
       collShapeNodeEle,
@@ -971,7 +987,8 @@ void readAspects(
     const dynamics::SkeletonPtr& skeleton,
     tinyxml2::XMLElement* skeletonElement,
     const common::Uri& baseUri,
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   ElementEnumerator xmlBodies(skeletonElement, "link");
   while (xmlBodies.next()) {
     auto bodyElement = xmlBodies.get();
@@ -995,7 +1012,8 @@ void readAspects(
 JointMap readAllJoints(
     tinyxml2::XMLElement* _skeletonElement,
     const Eigen::Isometry3d& skeletonFrame,
-    const BodyMap& sdfBodyNodes) {
+    const BodyMap& sdfBodyNodes)
+{
   JointMap sdfJoints;
   ElementEnumerator joints(_skeletonElement, "joint");
   while (joints.next()) {
@@ -1028,7 +1046,8 @@ JointMap readAllJoints(
 SDFJoint readJoint(
     tinyxml2::XMLElement* _jointElement,
     const BodyMap& _sdfBodyNodes,
-    const Eigen::Isometry3d& _skeletonFrame) {
+    const Eigen::Isometry3d& _skeletonFrame)
+{
   assert(_jointElement != nullptr);
 
   //--------------------------------------------------------------------------
@@ -1142,7 +1161,8 @@ static void reportMissingElement(
     const std::string& functionName,
     const std::string& elementName,
     const std::string& objectType,
-    const std::string& objectName) {
+    const std::string& objectName)
+{
   dterr << "[SdfParser::" << functionName << "] Missing element " << elementName
         << " for " << objectType << " named " << objectName << "\n";
   assert(0);
@@ -1158,7 +1178,8 @@ static void readAxisElement(
     double& rest,
     double& damping,
     double& friction,
-    double& spring_stiffness) {
+    double& spring_stiffness)
+{
   // use_parent_model_frame
   bool useParentModelFrame = false;
   if (hasElement(axisElement, "use_parent_model_frame"))
@@ -1231,14 +1252,16 @@ static void readAxisElement(
 dart::dynamics::WeldJoint::Properties readWeldJoint(
     tinyxml2::XMLElement* /*_jointElement*/,
     const Eigen::Isometry3d&,
-    const std::string&) {
+    const std::string&)
+{
   return dynamics::WeldJoint::Properties();
 }
 
 dynamics::RevoluteJoint::Properties readRevoluteJoint(
     tinyxml2::XMLElement* _revoluteJointElement,
     const Eigen::Isometry3d& _parentModelFrame,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_revoluteJointElement != nullptr);
 
   dynamics::RevoluteJoint::Properties newRevoluteJoint;
@@ -1270,7 +1293,8 @@ dynamics::RevoluteJoint::Properties readRevoluteJoint(
 dynamics::PrismaticJoint::Properties readPrismaticJoint(
     tinyxml2::XMLElement* _jointElement,
     const Eigen::Isometry3d& _parentModelFrame,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::PrismaticJoint::Properties newPrismaticJoint;
@@ -1301,7 +1325,8 @@ dynamics::PrismaticJoint::Properties readPrismaticJoint(
 dynamics::ScrewJoint::Properties readScrewJoint(
     tinyxml2::XMLElement* _jointElement,
     const Eigen::Isometry3d& _parentModelFrame,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::ScrewJoint::Properties newScrewJoint;
@@ -1338,7 +1363,8 @@ dynamics::ScrewJoint::Properties readScrewJoint(
 dynamics::UniversalJoint::Properties readUniversalJoint(
     tinyxml2::XMLElement* _jointElement,
     const Eigen::Isometry3d& _parentModelFrame,
-    const std::string& _name) {
+    const std::string& _name)
+{
   assert(_jointElement != nullptr);
 
   dynamics::UniversalJoint::Properties newUniversalJoint;
@@ -1389,13 +1415,15 @@ dynamics::UniversalJoint::Properties readUniversalJoint(
 dynamics::BallJoint::Properties readBallJoint(
     tinyxml2::XMLElement* /*_jointElement*/,
     const Eigen::Isometry3d&,
-    const std::string&) {
+    const std::string&)
+{
   return dynamics::BallJoint::Properties();
 }
 
 //==============================================================================
 common::ResourceRetrieverPtr getRetriever(
-    const common::ResourceRetrieverPtr& retriever) {
+    const common::ResourceRetrieverPtr& retriever)
+{
   if (retriever) {
     return retriever;
   } else {

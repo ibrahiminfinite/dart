@@ -46,7 +46,8 @@ namespace simulation {
 
 //==============================================================================
 template <typename... Args>
-WorldPtr World::create(Args&&... args) {
+WorldPtr World::create(Args&&... args)
+{
   return std::make_shared<World>(std::forward<Args>(args)...);
 }
 

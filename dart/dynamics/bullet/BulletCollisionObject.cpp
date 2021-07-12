@@ -39,13 +39,14 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-btCollisionObject* BulletCollisionObject::getBulletCollisionObject() {
+btCollisionObject* BulletCollisionObject::getBulletCollisionObject()
+{
   return mBulletCollisionObject.get();
 }
 
 //==============================================================================
-const btCollisionObject* BulletCollisionObject::getBulletCollisionObject()
-    const {
+const btCollisionObject* BulletCollisionObject::getBulletCollisionObject() const
+{
   return mBulletCollisionObject.get();
 }
 
@@ -56,7 +57,8 @@ BulletCollisionObject::BulletCollisionObject(
     const std::shared_ptr<BulletCollisionShape>& bulletCollisionShape)
   : CollisionObject(collisionDetector, shapeFrame),
     mBulletCollisionShape(bulletCollisionShape),
-    mBulletCollisionObject(new btCollisionObject()) {
+    mBulletCollisionObject(new btCollisionObject())
+{
   assert(bulletCollisionShape);
 
   mBulletCollisionObject->setCollisionShape(
@@ -66,7 +68,8 @@ BulletCollisionObject::BulletCollisionObject(
 }
 
 //==============================================================================
-void BulletCollisionObject::updateEngineData() {
+void BulletCollisionObject::updateEngineData()
+{
   btTransform worldTransform
       = convertTransform(mShapeFrame->getWorldTransform());
 

@@ -47,7 +47,8 @@ namespace std {
 
 template <>
 struct hash<boost::filesystem::path> {
-  size_t operator()(const boost::filesystem::path& p) const {
+  size_t operator()(const boost::filesystem::path& p) const
+  {
     return boost::filesystem::hash_value(p);
   }
 };

@@ -50,7 +50,8 @@ using namespace simulation;
 using namespace io;
 
 //==============================================================================
-TEST(FileInfoWorld, Basic) {
+TEST(FileInfoWorld, Basic)
+{
   const std::size_t numFrames = 100;
   const std::string fileName = "testWorld.txt";
   double tol = 1e-6;

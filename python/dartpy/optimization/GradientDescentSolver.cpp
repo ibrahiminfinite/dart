@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void GradientDescentSolver(py::module& m) {
+void GradientDescentSolver(py::module& m)
+{
   ::py::class_<dart::optimization::GradientDescentSolver::UniqueProperties>(
       m, "GradientDescentSolverUniqueProperties")
       .def(::py::init<>())

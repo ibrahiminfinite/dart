@@ -40,7 +40,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-void World(py::module& m) {
+void World(py::module& m)
+{
   ::py::class_<
       dart::simulation::World,
       std::shared_ptr<dart::simulation::World>>(m, "World")

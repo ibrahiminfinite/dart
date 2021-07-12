@@ -39,7 +39,7 @@ using namespace dart;
 
 //==============================================================================
 template <typename T>
-struct FclConversion : public testing::Test {
+struct FclConversionTest : public testing::Test {
   using Type = T;
 };
 
@@ -47,10 +47,11 @@ struct FclConversion : public testing::Test {
 using Types = testing::Types<double, float>;
 
 //==============================================================================
-TYPED_TEST_CASE(FclConversion, Types);
+TYPED_TEST_CASE(FclConversionTest, Types);
 
 //==============================================================================
-TYPED_TEST(FclConversion, Vector) {
+TYPED_TEST(FclConversionTest, Vector)
+{
   using S = typename TestFixture::Type;
 
   const math::Vector3<S> vec3 = math::Vector3<S>::Random();
@@ -59,12 +60,13 @@ TYPED_TEST(FclConversion, Vector) {
     fclVec3[i] = vec3[i];
   }
 
-  EXPECT_VECTOR3S_EQ(fclVec3, collision::toFclVector3<S>(vec3));
-  EXPECT_VECTOR3S_EQ(vec3, collision::toVector3<S>(fclVec3));
+  EXPECT_VECTOR3S_EQ(fclVec3, collision::to_fcl_vector3<S>(vec3));
+  EXPECT_VECTOR3S_EQ(vec3, collision::to_vector3<S>(fclVec3));
 }
 
 //==============================================================================
-TYPED_TEST(FclConversion, Matrix) {
+TYPED_TEST(FclConversionTest, Matrix)
+{
   using S = typename TestFixture::Type;
 
   const math::Matrix3<S> mat3 = math::Matrix3<S>::Random();
@@ -75,12 +77,13 @@ TYPED_TEST(FclConversion, Matrix) {
     }
   }
 
-  EXPECT_MATRIX3S_EQ(fclMat3, collision::toFclMatrix3<S>(mat3));
-  EXPECT_MATRIX3S_EQ(mat3, collision::toMatrix3<S>(fclMat3));
+  EXPECT_MATRIX3S_EQ(fclMat3, collision::to_fcl_matrix3<S>(mat3));
+  EXPECT_MATRIX3S_EQ(mat3, collision::to_matrix3<S>(fclMat3));
 }
 
 //==============================================================================
-TYPED_TEST(FclConversion, Transform) {
+TYPED_TEST(FclConversionTest, Transform)
+{
   using S = typename TestFixture::Type;
 
   math::Isometry3<S> tf3 = math::Isometry3<S>::Identity();
@@ -88,5 +91,5 @@ TYPED_TEST(FclConversion, Transform) {
   tf3.translation() = math::Vector3<S>::Random();
 
   EXPECT_TRANSFORM3S_EQ(
-      tf3, collision::toTransform3<S>(collision::toFclTransform3<S>(tf3)));
+      tf3, collision::to_pose3<S>(collision::to_fcl_pose3<S>(tf3)));
 }
