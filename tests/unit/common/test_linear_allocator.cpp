@@ -34,30 +34,73 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
+#include "dart/common/linear_allocator.hpp"
 #include "dart/common/logging.hpp"
 
 using namespace dart::common;
 
 //==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+TEST(LinearAllocatorTest, ConstructorsAndInitialStates)
 {
 #ifndef NDEBUG
   set_log_level(LogLevel::LL_DEBUG);
 #endif
 
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
+  auto alloc1 = LinearAllocator(0);
+  EXPECT_EQ(alloc1.get_max_capacity(), 0);
+  EXPECT_EQ(alloc1.get_size(), 0);
+  EXPECT_EQ(alloc1.get_begin_address(), nullptr);
 
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
+  auto alloc2 = LinearAllocator(64);
+  EXPECT_EQ(alloc2.get_max_capacity(), 64);
+  EXPECT_EQ(alloc2.get_size(), 0);
+  EXPECT_NE(alloc2.get_begin_address(), nullptr);
+}
+
+//==============================================================================
+TEST(AllocatorTest, TotalSize)
+{
+#ifndef NDEBUG
+  set_log_level(LogLevel::LL_DEBUG);
 #endif
+
+  auto allocator1 = LinearAllocator(0);
+  EXPECT_TRUE(allocator1.allocate(0) == nullptr);
+  EXPECT_TRUE(allocator1.allocate(1) == nullptr);
+  EXPECT_EQ(allocator1.get_size(), 0);
+
+  auto allocator2 = LinearAllocator(4);
+
+  EXPECT_TRUE(allocator2.allocate(0) == nullptr);
+  EXPECT_EQ(allocator2.get_size(), 0);
+
+  EXPECT_TRUE(allocator2.allocate(1) != nullptr);
+  EXPECT_EQ(allocator2.get_size(), 1);
+
+  EXPECT_TRUE(allocator2.allocate(2) != nullptr);
+  EXPECT_EQ(allocator2.get_size(), 3);
+
+  EXPECT_TRUE(allocator2.allocate(3) == nullptr);
+  EXPECT_EQ(allocator2.get_size(), 3);
+
+  EXPECT_TRUE(allocator2.allocate(1) != nullptr);
+  EXPECT_EQ(allocator2.get_size(), 4);
+
+  EXPECT_TRUE(allocator2.allocate(1) == nullptr);
+  EXPECT_EQ(allocator2.get_size(), 4);
+
+  struct DoubleInt {
+    int a;
+    int b;
+  };
+
+  static_assert(sizeof(DoubleInt) > 1);
+  auto allocator3 = LinearAllocator(sizeof(DoubleInt) + 1);
+
+  EXPECT_TRUE(allocator3.construct<DoubleInt>() != nullptr);
+  EXPECT_EQ(allocator3.get_size(), sizeof(DoubleInt));
+  EXPECT_TRUE(allocator3.construct<DoubleInt>() == nullptr);
+  EXPECT_EQ(allocator3.get_size(), sizeof(DoubleInt));
+
+  allocator3.destroy<DoubleInt>(nullptr);
 }

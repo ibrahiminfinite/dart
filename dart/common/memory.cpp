@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -30,64 +30,35 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "dart/common/memory.hpp"
 
-#include "dart/collision/object.hpp"
-#include "dart/collision/ode/detail/ode_geom.hpp"
-#include "dart/collision/ode/ode_include.hpp"
-#include "dart/collision/ode/ode_type.hpp"
-#include "dart/math/type.hpp"
+#include <cstdlib>
 
-namespace dart {
-namespace collision {
+#include "dart/common/Platform.hpp"
+#include "dart/common/compiler.hpp"
 
-template <typename S_>
-class OdeObject : public Object<S_> {
-public:
-  // Type aliases
-  using S = S_;
+namespace dart::common {
 
-  // Documentation inherited
-  math::Isometry3<S> get_pose() const override;
+//==============================================================================
+void* aligned_alloc(std::size_t alignment, std::size_t size)
+{
+#if DART_COMPILER_MSVC
+  return _aligned_malloc(size, alignment);
+#elif DART_OS_MACOS
+  return ::aligned_alloc(alignment, size);
+#else
+  return std::aligned_alloc(alignment, size);
+#endif
+}
 
-  // Documentation inherited
-  void set_pose(const math::Isometry3<S>& tf) override;
+//==============================================================================
+void aligned_free(void* ptr)
+{
+#if DART_COMPILER_MSVC
+  return _aligned_free(ptr);
+#else
+  return std::free(ptr);
+#endif
+}
 
-  // Documentation inherited
-  math::Vector3<S> get_position() const override;
-
-  // Documentation inherited
-  void set_position(const math::Vector3<S>& pos) override;
-
-protected:
-  /// Constructor
-  OdeObject(OdeGroup<S>* collision_group, math::GeometryPtr shape);
-
-  // Documentation inherited
-  void update_engine_data() override;
-
-  /// Returns the ODE body id associated to this object
-  dBodyID get_ode_body_id() const;
-
-  /// Returns the ODE body id associated to this object
-  dGeomID get_ode_geom_id() const;
-
-private:
-  friend class OdeEngine<S>;
-  friend class OdeGroup<S>;
-
-  /// ODE geom
-  std::shared_ptr<detail::OdeGeom<S>> m_ode_geom;
-
-  /// ODE body id associated with this object
-  ///
-  /// If the ODE geom type is immobile, this is nullptr.
-  dBodyID m_ode_body_id;
-};
-
-DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeObject)
-
-} // namespace collision
-} // namespace dart
-
-#include "dart/collision/ode/detail/ode_object_impl.hpp"
+} // namespace dart::common

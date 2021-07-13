@@ -36,7 +36,7 @@ namespace dart {
 namespace collision {
 namespace detail {
 
-template class OdeGeom<double>;
+DART_TEMPLATE_CLASS_SOURCE(OdeGeom)
 
 } // namespace detail
 } // namespace collision

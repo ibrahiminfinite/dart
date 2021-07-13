@@ -38,6 +38,7 @@
 #include "dart/common/aligned_allocator.hpp"
 #include "dart/common/logging.hpp"
 #include "dart/common/macro.hpp"
+#include "dart/common/memory.hpp"
 
 namespace dart::common {
 
@@ -92,7 +93,7 @@ typename AlignedAllocator<T, Alignment>::
   }
 
   const size_type alignment = static_cast<size_type>(Alignment);
-  void* ptr = std::aligned_alloc(alignment, n * sizeof(T));
+  void* ptr = common::aligned_alloc(alignment, n * sizeof(T));
   if (ptr == nullptr) {
     throw std::bad_alloc();
   }
@@ -174,7 +175,7 @@ AlignedAllocator<const T, Alignment>::allocate(
   }
 
   const size_type alignment = static_cast<size_type>(Alignment);
-  void* ptr = std::aligned_alloc(alignment, n * sizeof(T));
+  void* ptr = common::aligned_alloc(alignment, n * sizeof(T));
   if (ptr == nullptr) {
     throw std::bad_alloc();
   }

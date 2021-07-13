@@ -76,7 +76,7 @@ private:
   dTriMeshDataID m_ode_tri_mesh_data_id;
 };
 
-extern template class OdeMesh<double>;
+DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeMesh)
 
 //==============================================================================
 template <typename S>

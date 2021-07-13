@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -32,62 +32,49 @@
 
 #pragma once
 
-#include "dart/collision/object.hpp"
-#include "dart/collision/ode/detail/ode_geom.hpp"
-#include "dart/collision/ode/ode_include.hpp"
-#include "dart/collision/ode/ode_type.hpp"
-#include "dart/math/type.hpp"
+#include <cstddef>
+#include <memory>
 
-namespace dart {
-namespace collision {
+#include "dart/common/export.hpp"
 
-template <typename S_>
-class OdeObject : public Object<S_> {
+namespace dart::common {
+
+/// Base class for memory allocators.
+///
+/// \note The derived classes should be thread safe when DART_ENABLE_THREAD_SAFE
+/// is defined to 1
+class DART_COMMON_API Allocator {
 public:
-  // Type aliases
-  using S = S_;
-
-  // Documentation inherited
-  math::Isometry3<S> get_pose() const override;
-
-  // Documentation inherited
-  void set_pose(const math::Isometry3<S>& tf) override;
-
-  // Documentation inherited
-  math::Vector3<S> get_position() const override;
-
-  // Documentation inherited
-  void set_position(const math::Vector3<S>& pos) override;
-
-protected:
   /// Constructor
-  OdeObject(OdeGroup<S>* collision_group, math::GeometryPtr shape);
+  Allocator() = default;
 
-  // Documentation inherited
-  void update_engine_data() override;
+  /// Destructor
+  virtual ~Allocator() = default;
 
-  /// Returns the ODE body id associated to this object
-  dBodyID get_ode_body_id() const;
+  /// Allocates memory of a given size in bytes and return a pointer to the
+  /// allocated memory.
+  [[nodiscard]] virtual void* allocate(
+      std::size_t size, std::size_t alignment = 0)
+      = 0;
+  // TODO(JS): Make this constexpr once migrated to C++20
 
-  /// Returns the ODE body id associated to this object
-  dGeomID get_ode_geom_id() const;
+  /// Releases previously allocated memory.
+  virtual void deallocate(void* ptr, std::size_t size) = 0;
+  // TODO(JS): Make this constexpr once migrated to C++20
 
-private:
-  friend class OdeEngine<S>;
-  friend class OdeGroup<S>;
+  /// Creates an object.
+  template <typename T, typename... Args>
+  [[nodiscard]] T* construct(Args&&... args) noexcept;
 
-  /// ODE geom
-  std::shared_ptr<detail::OdeGeom<S>> m_ode_geom;
+  /// Creates an object to an aligned memory.
+  template <typename T, typename... Args>
+  [[nodiscard]] T* aligned_construct(size_t alignment, Args&&... args) noexcept;
 
-  /// ODE body id associated with this object
-  ///
-  /// If the ODE geom type is immobile, this is nullptr.
-  dBodyID m_ode_body_id;
+  /// Destroys an object created by this allocator.
+  template <typename T>
+  void destroy(T* object) noexcept;
 };
 
-DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeObject)
+} // namespace dart::common
 
-} // namespace collision
-} // namespace dart
-
-#include "dart/collision/ode/detail/ode_object_impl.hpp"
+#include "dart/common/detail/allocator_impl.hpp"

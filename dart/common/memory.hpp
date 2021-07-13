@@ -32,10 +32,12 @@
 
 #pragma once
 
+#include <cstddef>
 #include <map>
 #include <memory>
 #include <vector>
 
+#include "dart/common/export.hpp"
 #include "dart/config.hpp"
 
 namespace dart {
@@ -43,6 +45,25 @@ namespace common {
 
 template <typename _Tp, typename... _Args>
 std::shared_ptr<_Tp> make_aligned_shared(_Args&&... __args);
+
+constexpr std::size_t get_padding(
+    const std::size_t base_address, const std::size_t alignment);
+
+/// A portable function to allocate memory on a specified alignment boundary.
+///
+/// \param[in] alignment: The alignment value, which must be an integer power
+/// of 2.
+/// \param[in] size: Size of the requested memory allocation.
+/// \returns A pointer to the memory block that was allocated or nullptr if the
+/// operation failed. The pointer is a multiple of alignment.
+DART_COMMON_API void* aligned_alloc(std::size_t alignment, std::size_t size);
+
+/// A portable function to releases a block of memory that was allocated with
+/// aligned_alloc()
+///
+/// \param[in] ptr: A pointer to the memory block that was returned to the
+/// aligned_alloc()
+DART_COMMON_API void aligned_free(void* ptr);
 
 // TODO(JS): Move to math component
 template <typename _Tp>

@@ -47,7 +47,7 @@ struct FclConversionTest : public testing::Test {
 using Types = testing::Types<double, float>;
 
 //==============================================================================
-TYPED_TEST_CASE(FclConversionTest, Types);
+TYPED_TEST_SUITE(FclConversionTest, Types);
 
 //==============================================================================
 TYPED_TEST(FclConversionTest, Vector)

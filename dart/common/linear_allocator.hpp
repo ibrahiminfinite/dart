@@ -32,40 +32,66 @@
 
 #pragma once
 
-#include "dart/collision/ode/detail/ode_geom.hpp"
-#include "dart/collision/ode/ode_include.hpp"
+#if DART_ENABLE_THREAD_SAFE
+  #include <mutex>
+#endif
 
-namespace dart {
-namespace collision {
-namespace detail {
+#include "dart/common/allocator.hpp"
+#include "dart/common/memory.hpp"
 
-template <typename S>
-class OdeCapsule : public OdeGeom<S> {
+namespace dart::common {
+
+class DART_COMMON_API LinearAllocator final : public Allocator {
 public:
   /// Constructor
-  OdeCapsule(const OdeObject<S>* parent, S radius, S height);
+  LinearAllocator(
+      std::size_t max_capacity = 64,
+      std::shared_ptr<Allocator> base_allocator = nullptr);
 
   /// Destructor
-  ~OdeCapsule() override;
+  ~LinearAllocator() override;
+
+  // Documentation inherited
+  [[nodiscard]] void* allocate(
+      std::size_t size, std::size_t alignment = 0) override;
+
+  /// This function does nothing. The allocated memory is released when this
+  /// allocator is detructed.
+  void deallocate(void* ptr, std::size_t size) override;
+
+  /// Returns the maximum capacity of this allocator.
+  std::size_t get_max_capacity() const;
+
+  /// Returns the size of allocated memory.
+  ///
+  /// The return is the same as get_size_in_bytes() if T is void.
+  std::size_t get_size() const;
+
+  /// Returns the first address of this allocator uses.
+  const void* get_begin_address() const;
+
+private:
+#if DART_ENABLE_THREAD_SAFE
+  /// Mutex for thread safety
+  mutable std::mutex m_mutex;
+#endif
+
+  /// The maximum size of memory that this allocator can allocate
+  const std::size_t m_max_capacity;
+
+  /// The Memory address of this allocator uses
+  void* m_start_ptr = nullptr;
+
+  /// The size of allocated memory or the offset from m_start_ptr.
+  std::size_t m_offset = 0;
+
+  /// The base allocator to allocate memory chunck
+  std::shared_ptr<Allocator> m_base_allocator;
+
+#ifndef NDEBUG
+  // Statics for debugging
+  std::size_t m_peak = 0;
+#endif
 };
 
-DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeCapsule)
-
-//==============================================================================
-template <typename S>
-OdeCapsule<S>::OdeCapsule(const OdeObject<S>* parent, S radius, S height)
-  : OdeGeom<S>(parent)
-{
-  this->m_geom_id = dCreateCapsule(nullptr, radius, height);
-}
-
-//==============================================================================
-template <typename S>
-OdeCapsule<S>::~OdeCapsule()
-{
-  dGeomDestroy(this->m_geom_id);
-}
-
-} // namespace detail
-} // namespace collision
-} // namespace dart
+} // namespace dart::common

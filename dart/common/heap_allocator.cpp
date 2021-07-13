@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -30,64 +30,49 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "dart/common/heap_allocator.hpp"
 
-#include "dart/collision/object.hpp"
-#include "dart/collision/ode/detail/ode_geom.hpp"
-#include "dart/collision/ode/ode_include.hpp"
-#include "dart/collision/ode/ode_type.hpp"
-#include "dart/math/type.hpp"
+#include <cstdlib>
 
-namespace dart {
-namespace collision {
+#include "dart/common/logging.hpp"
+#include "dart/common/memory.hpp"
 
-template <typename S_>
-class OdeObject : public Object<S_> {
-public:
-  // Type aliases
-  using S = S_;
+namespace dart::common {
 
-  // Documentation inherited
-  math::Isometry3<S> get_pose() const override;
+//==============================================================================
+HeapAllocator::HeapAllocator()
+{
+  // Do nothing
+}
 
-  // Documentation inherited
-  void set_pose(const math::Isometry3<S>& tf) override;
+//==============================================================================
+void* HeapAllocator::allocate(std::size_t size, std::size_t alignment)
+{
+  if (size == 0) {
+    return nullptr;
+  }
 
-  // Documentation inherited
-  math::Vector3<S> get_position() const override;
+  if (alignment == 0) {
+    return std::malloc(size);
+  }
 
-  // Documentation inherited
-  void set_position(const math::Vector3<S>& pos) override;
+  if (size % alignment != 0) {
+    DART_ERROR(
+        "Invalid size to allocate [{}]. The size should be a integer "
+        "multiple of the alignment [{}]",
+        size,
+        alignment);
+    return nullptr;
+  }
 
-protected:
-  /// Constructor
-  OdeObject(OdeGroup<S>* collision_group, math::GeometryPtr shape);
+  return common::aligned_alloc(alignment, size);
+}
 
-  // Documentation inherited
-  void update_engine_data() override;
+//==============================================================================
+void HeapAllocator::deallocate(void* pointer, std::size_t size)
+{
+  DART_UNUSED(size);
+  std::free(pointer);
+}
 
-  /// Returns the ODE body id associated to this object
-  dBodyID get_ode_body_id() const;
-
-  /// Returns the ODE body id associated to this object
-  dGeomID get_ode_geom_id() const;
-
-private:
-  friend class OdeEngine<S>;
-  friend class OdeGroup<S>;
-
-  /// ODE geom
-  std::shared_ptr<detail::OdeGeom<S>> m_ode_geom;
-
-  /// ODE body id associated with this object
-  ///
-  /// If the ODE geom type is immobile, this is nullptr.
-  dBodyID m_ode_body_id;
-};
-
-DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeObject)
-
-} // namespace collision
-} // namespace dart
-
-#include "dart/collision/ode/detail/ode_object_impl.hpp"
+} // namespace dart::common

@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -32,62 +32,47 @@
 
 #pragma once
 
-#include "dart/collision/object.hpp"
-#include "dart/collision/ode/detail/ode_geom.hpp"
-#include "dart/collision/ode/ode_include.hpp"
-#include "dart/collision/ode/ode_type.hpp"
-#include "dart/math/type.hpp"
+#include "dart/common/allocator.hpp"
 
-namespace dart {
-namespace collision {
+namespace dart::common {
 
-template <typename S_>
-class OdeObject : public Object<S_> {
-public:
-  // Type aliases
-  using S = S_;
+//==============================================================================
+template <typename T, typename... Args>
+T* Allocator::construct(Args&&... args) noexcept
+{
+  return aligned_construct<T>(0, std::forward<Args>(args)...);
+}
 
-  // Documentation inherited
-  math::Isometry3<S> get_pose() const override;
+//==============================================================================
+template <typename T, typename... Args>
+T* Allocator::aligned_construct(size_t alignment, Args&&... args) noexcept
+{
+  // Allocate new memory for a new object (without calling the constructor)
+  void* object = allocate(sizeof(T), alignment);
+  if (!object) {
+    return nullptr;
+  }
 
-  // Documentation inherited
-  void set_pose(const math::Isometry3<S>& tf) override;
+  // Call constructor. Return nullptr if failed.
+  try {
+    new (object) T(std::forward<Args>(args)...);
+  } catch (...) {
+    deallocate(object, sizeof(T));
+    return nullptr;
+  }
 
-  // Documentation inherited
-  math::Vector3<S> get_position() const override;
+  return reinterpret_cast<T*>(object);
+}
 
-  // Documentation inherited
-  void set_position(const math::Vector3<S>& pos) override;
+//==============================================================================
+template <typename T>
+void Allocator::destroy(T* object) noexcept
+{
+  if (!object) {
+    return;
+  }
+  object->~T();
+  deallocate(object, sizeof(T));
+}
 
-protected:
-  /// Constructor
-  OdeObject(OdeGroup<S>* collision_group, math::GeometryPtr shape);
-
-  // Documentation inherited
-  void update_engine_data() override;
-
-  /// Returns the ODE body id associated to this object
-  dBodyID get_ode_body_id() const;
-
-  /// Returns the ODE body id associated to this object
-  dGeomID get_ode_geom_id() const;
-
-private:
-  friend class OdeEngine<S>;
-  friend class OdeGroup<S>;
-
-  /// ODE geom
-  std::shared_ptr<detail::OdeGeom<S>> m_ode_geom;
-
-  /// ODE body id associated with this object
-  ///
-  /// If the ODE geom type is immobile, this is nullptr.
-  dBodyID m_ode_body_id;
-};
-
-DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeObject)
-
-} // namespace collision
-} // namespace dart
-
-#include "dart/collision/ode/detail/ode_object_impl.hpp"
+} // namespace dart::common

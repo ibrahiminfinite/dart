@@ -37,8 +37,8 @@
 #include <Eigen/Core>
 #include <Eigen/StdVector>
 
+#include "dart/common/macro.hpp"
 #include "dart/common/memory.hpp"
-#include "dart/config.hpp"
 
 namespace dart {
 namespace common {
@@ -51,6 +51,19 @@ std::shared_ptr<_Tp> make_aligned_shared(_Args&&... __args)
 
   return std::allocate_shared<_Tp>(
       Eigen::aligned_allocator<_Tp_nc>(), std::forward<_Args>(__args)...);
+}
+
+//==============================================================================
+constexpr std::size_t get_padding(
+    const std::size_t base_address, const std::size_t alignment)
+{
+  if (alignment == 0) {
+    return 0;
+  }
+  const std::size_t multiplier = (base_address / alignment) + 1;
+  const std::size_t aligned_address = multiplier * alignment;
+  DART_ASSERT(aligned_address >= base_address);
+  return aligned_address - base_address;
 }
 
 } // namespace common

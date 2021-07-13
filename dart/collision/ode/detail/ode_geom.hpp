@@ -32,8 +32,10 @@
 
 #pragma once
 
+#include "dart/collision/export.hpp"
 #include "dart/collision/ode/ode_include.hpp"
 #include "dart/collision/ode/ode_type.hpp"
+#include "dart/common/macro.hpp"
 
 namespace dart {
 namespace collision {
@@ -73,7 +75,7 @@ protected:
   dGeomID m_geom_id;
 };
 
-extern template class OdeGeom<double>;
+DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeGeom)
 
 //==============================================================================
 template <typename S>

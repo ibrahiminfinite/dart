@@ -51,7 +51,7 @@ public:
   ~OdeBox() override;
 };
 
-extern template class OdeBox<double>;
+DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeBox)
 
 //==============================================================================
 template <typename S>

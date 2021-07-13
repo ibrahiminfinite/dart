@@ -36,7 +36,7 @@ namespace dart {
 namespace collision {
 namespace detail {
 
-template class OdeSphere<double>;
+DART_TEMPLATE_CLASS_SOURCE(OdeSphere)
 
 } // namespace detail
 } // namespace collision

@@ -49,7 +49,7 @@ public:
   ~OdeCylinder() override;
 };
 
-extern template class OdeCylinder<double>;
+DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeCylinder)
 
 //==============================================================================
 template <typename S>

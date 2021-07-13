@@ -36,7 +36,7 @@ namespace dart {
 namespace collision {
 namespace detail {
 
-template class OdeHeightmap<double>;
+DART_TEMPLATE_CLASS_SOURCE(OdeHeightmap)
 
 } // namespace detail
 } // namespace collision

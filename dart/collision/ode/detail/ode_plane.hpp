@@ -56,7 +56,7 @@ public:
   bool is_placeable() const override;
 };
 
-extern template class OdePlane<double>;
+DART_TEMPLATE_CLASS_HEADER(COLLISION, OdePlane)
 
 } // namespace detail
 } // namespace collision

@@ -46,7 +46,7 @@ struct NarrowPhaseTest : public testing::Test {
 using Types = testing::Types</*double, */ float>;
 
 //==============================================================================
-TYPED_TEST_CASE(NarrowPhaseTest, Types);
+TYPED_TEST_SUITE(NarrowPhaseTest, Types);
 
 //==============================================================================
 template <typename EngineT>

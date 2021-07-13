@@ -54,10 +54,7 @@ private:
   dHeightfieldDataID m_ode_heightfield_id;
 };
 
-using OdeHeightmapf = OdeHeightmap<float>;
-using OdeHeightmapd = OdeHeightmap<double>;
-
-extern template class OdeHeightmap<double>;
+DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeHeightmap)
 
 } // namespace detail
 } // namespace collision

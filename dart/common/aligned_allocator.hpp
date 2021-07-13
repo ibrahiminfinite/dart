@@ -34,6 +34,7 @@
 
 #include <cstddef>
 #include <cstdlib>
+#include <memory>
 #include <type_traits>
 
 namespace dart::common {
@@ -43,12 +44,11 @@ namespace dart::common {
 /// This class is intended to be compatible with std::allocator, so that it can
 /// be used with any STL containers for aligned memory allocation.
 template <typename T = void, std::size_t Alignment = 32>
-class AlignedAllocator;
+struct AlignedAllocator;
 
 // Specialized for void
 template <std::size_t Alignment>
-class AlignedAllocator<void, Alignment> {
-public:
+struct AlignedAllocator<void, Alignment> {
   using pointer = void*;
   using const_pointer = const void*;
   using value_type = void;
@@ -64,8 +64,7 @@ public:
 /// This class is intended to be compatible with std::allocator, so that it can
 /// be used with any STL containers for aligned memory allocation.
 template <typename T, std::size_t Alignment>
-class AlignedAllocator {
-public:
+struct AlignedAllocator {
   using value_type = T;
   using pointer = T*;
   using const_pointer = const T*;
@@ -77,7 +76,7 @@ public:
 
   template <class U>
   struct rebind {
-    typedef AlignedAllocator<U, Alignment> other;
+    using other = AlignedAllocator<U, Alignment>;
   };
 
   /// Constructor
@@ -132,8 +131,7 @@ public:
 
 // Specialized for const type
 template <typename T, std::size_t Alignment>
-class AlignedAllocator<const T, Alignment> {
-public:
+struct AlignedAllocator<const T, Alignment> {
   using value_type = T;
   using pointer = const T*;
   using const_pointer = const T*;

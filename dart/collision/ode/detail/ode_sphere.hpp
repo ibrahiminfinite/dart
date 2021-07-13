@@ -50,7 +50,7 @@ public:
   ~OdeSphere() override;
 };
 
-extern template class OdeSphere<double>;
+DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeSphere)
 
 //==============================================================================
 template <typename S>
