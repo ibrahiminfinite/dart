@@ -42,6 +42,16 @@ if [ -z "$NUM_CORES" ]; then
   NUM_CORES=MAX
 fi
 
+if [ -z "$BUILD_EXAMPLES" ]; then
+  echo "Info: Environment variable BUILD_EXAMPLES is unset. Using ON by default."
+  BUILD_EXAMPLES=ON
+fi
+
+if [ -z "$BUILD_TUTORIALS" ]; then
+  echo "Info: Environment variable BUILD_TUTORIALS is unset. Using ON by default."
+  BUILD_TUTORIALS=ON
+fi
+
 if [ -f /etc/os-release ]; then
   # freedesktop.org and systemd
   . /etc/os-release
@@ -139,8 +149,17 @@ if [ "$CHECK_FORMAT" = "ON" ]; then
 fi
 
 # DART: build, test, and install
-make -j$num_threads all tutorials examples tests
+make -j$num_threads all tests
 ctest --output-on-failure -j$num_threads
+
+if [ "$BUILD_EXAMPLES" = "ON" ]; then
+  make -j$num_threads all examples
+fi
+
+if [ "$BUILD_TUTORIALS" = "ON" ]; then
+  make -j$num_threads all tutorials
+fi
+
 make -j$num_threads install
 
 # dartpy: build, test, and install
