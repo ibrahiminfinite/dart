@@ -32,32 +32,32 @@ jobs:
             codecov: ON
             check_format: ON
             num_cores: MAX
-            build_examples: [ON]
-            build_tutorials: [ON]
+            build_examples: ON
+            build_tutorials: ON
           - os: ubuntu-focal
             platform: linux/amd64
             build_type: Release
             codecov: OFF
             check_format: ON
             num_cores: MAX
-            build_examples: [ON]
-            build_tutorials: [ON]
+            build_examples: ON
+            build_tutorials: ON
           - os: ubuntu-focal
             platform: linux/arm64
             build_type: Release
             codecov: OFF
             check_format: OFF
             num_cores: MAX
-            build_examples: [OFF]
-            build_tutorials: [OFF]
+            build_examples: OFF
+            build_tutorials: OFF
           - os: ubuntu-focal
             platform: linux/ppc64le
             build_type: Release
             codecov: OFF
             check_format: OFF
             num_cores: MAX
-            build_examples: [OFF]
-            build_tutorials: [OFF]
+            build_examples: OFF
+            build_tutorials: OFF
     env:
       # Hosted on: https://hub.docker.com/repository/docker/dartsim/dart-dev
       DART_DEV_IMAGE: dartsim/dart-dev
