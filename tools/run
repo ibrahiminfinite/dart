@@ -19,6 +19,7 @@ build_tutorial=true
 build_dartpy=true
 codecov_option=""
 num_cores=1
+os_list="ubuntu-bionic ubuntu-focal ubuntu-impish"
 
 help() {
   cat <<EOF
@@ -211,7 +212,16 @@ build() {
 }
 
 build_all() {
-  _build $full_image_name_dev
+  echo "======================================================================="
+  echo " [Build on $os_list]"
+  echo " Caution: This could take time to finish"
+  echo "======================================================================="
+
+  for val in $os_list; do
+    echo $val
+    full_image_name_dev=dartsim/dart-dev:$val-$dart_version
+    _build $full_image_name_dev
+  done
 }
 
 # Run the selected routine
