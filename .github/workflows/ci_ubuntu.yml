@@ -35,7 +35,7 @@ jobs:
             num_cores: MAX
             build_examples: ON
             build_tutorials: ON
-            build_dartpy: ON
+            build_dartpy: OFF
           - os: ubuntu-focal
             platform: linux/amd64
             build_type: Release
