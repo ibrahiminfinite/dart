@@ -75,10 +75,7 @@ void Linkage(py::module& m)
             return self->cloneLinkage(cloneName);
           },
           ::py::arg("cloneName"))
-      .def(
-          "clone",
-          &dart::dynamics::Linkage::clone,
-          ::py::arg("cloneName"))
+      .def("clone", &dart::dynamics::Linkage::clone, ::py::arg("cloneName"))
       .def(
           "isAssembled",
           +[](const dart::dynamics::Linkage* self) -> bool {

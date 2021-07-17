@@ -35,7 +35,6 @@
 #include <unordered_set>
 
 #include "dart/collision/type.hpp"
-#include "dart/common/Deprecated.hpp"
 
 namespace dart {
 namespace collision {

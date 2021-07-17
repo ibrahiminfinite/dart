@@ -37,7 +37,6 @@
 
 #include <Eigen/Dense>
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/dynamics/GenericJoint.hpp"
 
 namespace dart {

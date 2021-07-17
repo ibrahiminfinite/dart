@@ -37,7 +37,6 @@
 #include <string>
 #include <vector>
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/common/EmbeddedAspect.hpp"
 #include "dart/common/Subject.hpp"
 #include "dart/common/VersionCounter.hpp"
@@ -607,10 +606,6 @@ public:
   virtual double computePotentialEnergy() const = 0;
 
   //----------------------------------------------------------------------------
-
-  /// Deprecated. Use getRelativeJacobianTimeDeriv() instead.
-  DART_DEPRECATED(6.0)
-  const math::Jacobian getLocalJacobianTimeDeriv() const;
 
   /// Get transform of the child BodyNode relative to the parent BodyNode
   /// expressed in the child BodyNode frame

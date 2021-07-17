@@ -41,7 +41,6 @@
 #include <tinyxml2.h>
 
 #include "dart/common/Console.hpp"
-#include "dart/common/Deprecated.hpp"
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/math/MathTypes.hpp"
 

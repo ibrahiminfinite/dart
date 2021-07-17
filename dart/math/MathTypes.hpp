@@ -38,7 +38,6 @@
 
 #include <Eigen/Dense>
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/common/Memory.hpp"
 
 //------------------------------------------------------------------------------

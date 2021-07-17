@@ -37,7 +37,6 @@
 #include <memory>
 #include <set>
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/common/detail/ConnectionBody.hpp"
 
 namespace dart {

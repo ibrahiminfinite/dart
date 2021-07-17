@@ -38,7 +38,6 @@
 #include <vector>
 
 #include "dart/common/Console.hpp"
-#include "dart/common/Deprecated.hpp"
 #include "dart/common/StlHelpers.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/DegreeOfFreedom.hpp"

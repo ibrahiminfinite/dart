@@ -39,7 +39,6 @@
 #include <Eigen/Dense>
 #include <Eigen/StdVector>
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/common/EmbeddedAspect.hpp"
 #include "dart/common/Signal.hpp"
 #include "dart/config.hpp"

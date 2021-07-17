@@ -37,7 +37,6 @@
 #include <string>
 #include <unordered_map>
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/common/Singleton.hpp"
 
 namespace dart {

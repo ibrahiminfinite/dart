@@ -35,7 +35,6 @@
 
 #include <nlopt.hpp>
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/optimization/Solver.hpp"
 
 namespace dart {

@@ -128,10 +128,7 @@ void Chain(py::module& m)
             return self->cloneChain(cloneName);
           },
           ::py::arg("cloneName"))
-      .def(
-          "clone",
-          &dart::dynamics::Chain::clone,
-          ::py::arg("cloneName"))
+      .def("clone", &dart::dynamics::Chain::clone, ::py::arg("cloneName"))
       .def(
           "isStillChain", +[](const dart::dynamics::Chain* self) -> bool {
             return self->isStillChain();

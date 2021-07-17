@@ -30,8 +30,7 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_DEPRECATED_HPP_
-#define DART_COMMON_DEPRECATED_HPP_
+#pragma once
 
 #include "dart/config.hpp"
 
@@ -41,14 +40,13 @@
 // version up.
 //==============================================================================
 
+// Use [[deprecated]] instead of DART_DEPRECATED(...), which is removed in DART7
+
 #if defined(__GNUC__) || defined(__clang__)
-  #define DART_DEPRECATED(version) __attribute__((deprecated))
   #define DART_FORCEINLINE __attribute__((always_inline))
 #elif defined(_MSC_VER)
-  #define DART_DEPRECATED(version) __declspec(deprecated)
   #define DART_FORCEINLINE _forceinline
 #else
-  #define DART_DEPRECATED(version) ()
   #define DART_FORCEINLINE
 #endif
 
@@ -89,5 +87,3 @@
   #define DART_SUPPRESS_DEPRECATED_END __pragma(warning(pop))
 
 #endif
-
-#endif // DART_COMMON_DEPRECATED_HPP_

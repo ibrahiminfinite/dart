@@ -37,7 +37,6 @@
 #include <memory>
 #include <vector>
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/config.hpp"
 
 namespace dart {
