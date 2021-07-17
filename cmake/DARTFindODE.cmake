@@ -6,7 +6,7 @@
 #
 # This file is provided under the "BSD-style" License
 
-find_package(ODE CONFIG NAMES ODE ode)
+find_package(ODE QUIET CONFIG NAMES ODE ode)
 
 if(NOT ODE_FOUND)
 

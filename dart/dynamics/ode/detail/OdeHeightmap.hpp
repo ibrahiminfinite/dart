@@ -42,13 +42,14 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-template <typename S>
+template <typename Scalar>
 class OdeHeightmap : public OdeGeom
 {
 public:
   /// Constructor
   OdeHeightmap(
-      const OdeCollisionObject* parent, const dynamics::HeightmapShape<S>* hs);
+      const OdeCollisionObject* parent,
+      const dynamics::HeightmapShape<Scalar>* hs);
 
   /// Destructor
   ~OdeHeightmap() override;

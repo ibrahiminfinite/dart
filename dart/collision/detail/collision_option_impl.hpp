@@ -38,8 +38,9 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-CollisionOption<S>::CollisionOption(bool enable_contact, int max_num_contacts)
+template <typename Scalar>
+CollisionOption<Scalar>::CollisionOption(
+    bool enable_contact, int max_num_contacts)
   : enable_contact(enable_contact), max_num_contacts(max_num_contacts)
 {
   // Do nothing

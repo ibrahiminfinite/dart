@@ -38,19 +38,19 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
-class Cuboid : public Convex3<S_>
+template <typename Scalar_>
+class Cuboid : public Convex3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
-  using Vector3 = typename Convex3<S>::Vector3;
+  using Scalar = Scalar_;
+  using Vector3 = typename Convex3<Scalar>::Vector3;
 
   /// Returns type string
   static const std::string& GetType();
 
   /// Computes volume given size
-  static S ComputeVolume(const Vector3& size);
+  static Scalar ComputeVolume(const Vector3& size);
 
   /// Constructor
   ///

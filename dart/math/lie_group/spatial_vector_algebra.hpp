@@ -38,10 +38,10 @@
 
 namespace dart::math {
 
-template <typename S>
-using SpatialMotion = SE3Tangent<S>;
+template <typename Scalar>
+using SpatialMotion = SE3Tangent<Scalar>;
 
-template <typename S>
-using SpatialForce = SE3Tangent<S>;
+template <typename Scalar>
+using SpatialForce = SE3Cotangent<Scalar>;
 
 } // namespace dart::math

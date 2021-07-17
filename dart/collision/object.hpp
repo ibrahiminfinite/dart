@@ -43,12 +43,12 @@ namespace dart {
 namespace collision {
 
 /// Collision object
-template <typename S_>
+template <typename Scalar_>
 class Object
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Constructor
   Object();
@@ -57,10 +57,10 @@ public:
   virtual ~Object();
 
   /// Returns collision detection engine associated with this object
-  Engine<S>* get_mutable_engine();
+  Engine<Scalar>* get_mutable_engine();
 
   /// Returns collision detection engine associated with this object
-  const Engine<S>* get_engine() const;
+  const Engine<Scalar>* get_engine() const;
 
   /// Returns the user data associated with this object.
   const void* get_user_data() const;
@@ -69,20 +69,20 @@ public:
   math::ConstGeometryPtr get_geometry() const;
 
   /// Returns the pose of this object in world coordinates
-  virtual math::Isometry3<S> get_pose() const = 0;
+  virtual math::Isometry3<Scalar> get_pose() const = 0;
 
   /// Sets the pose of this object
-  virtual void set_pose(const math::Isometry3<S>& tf) = 0;
+  virtual void set_pose(const math::Isometry3<Scalar>& tf) = 0;
 
   /// Returns the position of this object in world coordinates
-  virtual math::Vector3<S> get_position() const = 0;
+  virtual math::Vector3<Scalar> get_position() const = 0;
 
   /// Sets the position os this object in world coordinates
-  virtual void set_position(const math::Vector3<S>& pos) = 0;
+  virtual void set_position(const math::Vector3<Scalar>& pos) = 0;
 
 protected:
   /// Contructor
-  Object(Scene<S>* group, math::GeometryPtr shape);
+  Object(Scene<Scalar>* group, math::GeometryPtr shape);
 
   /// Update the collision object of the collision detection engine. This
   /// function will be called ahead of every collision checking by
@@ -91,7 +91,7 @@ protected:
 
 protected:
   /// Collision group
-  Scene<S>* m_scene;
+  Scene<Scalar>* m_scene;
 
   /// Geometry
   const math::GeometryPtr m_geometry;
@@ -99,7 +99,7 @@ protected:
   void* m_user_data = nullptr;
 
 private:
-  friend class Scene<S>;
+  friend class Scene<Scalar>;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, Object)

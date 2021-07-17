@@ -91,131 +91,133 @@ namespace collision {
 
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
 // Geometric fundamentals
-template <typename S>
-using FclVector3 = ::fcl::Vector3<S>;
-template <typename S>
-using FclMatrix3 = ::fcl::Matrix3<S>;
-template <typename S>
-using FclTransform3 = ::fcl::Transform3<S>;
+template <typename Scalar>
+using FclVector3 = ::fcl::Vector3<Scalar>;
+template <typename Scalar>
+using FclMatrix3 = ::fcl::Matrix3<Scalar>;
+template <typename Scalar>
+using FclTransform3 = ::fcl::Transform3<Scalar>;
 // Geometric primitives
-template <typename S>
-using FclBox = ::fcl::Box<S>;
-template <typename S>
-using FclCylinder = ::fcl::Cylinder<S>;
-template <typename S>
-using FclCone = ::fcl::Cone<S>;
-template <typename S>
-using FclEllipsoid = ::fcl::Ellipsoid<S>;
-template <typename S>
-using FclHalfspace = ::fcl::Halfspace<S>;
-template <typename S>
-using FclSphere = ::fcl::Sphere<S>;
+template <typename Scalar>
+using FclBox = ::fcl::Box<Scalar>;
+template <typename Scalar>
+using FclCylinder = ::fcl::Cylinder<Scalar>;
+template <typename Scalar>
+using FclCone = ::fcl::Cone<Scalar>;
+template <typename Scalar>
+using FclEllipsoid = ::fcl::Ellipsoid<Scalar>;
+template <typename Scalar>
+using FclHalfspace = ::fcl::Halfspace<Scalar>;
+template <typename Scalar>
+using FclSphere = ::fcl::Sphere<Scalar>;
   #if DART_HAVE_OCTOMAP && FCL_HAVE_OCTOMAP
-template <typename S>
-using FclOcTree = ::fcl::OcTree<S>;
+template <typename Scalar>
+using FclOcTree = ::fcl::OcTree<Scalar>;
   #endif // DART_HAVE_OCTOMAP && FCL_HAVE_OCTOMAP
 // Collision objects
-template <typename S>
-using FclCollisionObject = ::fcl::CollisionObject<S>;
-template <typename S>
-using FclCollisionGeometry = ::fcl::CollisionGeometry<S>;
-template <typename S>
+template <typename Scalar>
+using FclCollisionObject = ::fcl::CollisionObject<Scalar>;
+template <typename Scalar>
+using FclCollisionGeometry = ::fcl::CollisionGeometry<Scalar>;
+template <typename Scalar>
 using FclDynamicAABBTreeCollisionManager
-    = ::fcl::DynamicAABBTreeCollisionManager<S>;
-template <typename S>
-using FclOBBRSS = ::fcl::OBBRSS<S>;
-template <typename S>
-using FclCollisionRequest = ::fcl::CollisionRequest<S>;
-template <typename S>
-using FclCollisionResult = ::fcl::CollisionResult<S>;
-template <typename S>
-using FclDistanceRequest = ::fcl::DistanceRequest<S>;
-template <typename S>
-using FclDistanceResult = ::fcl::DistanceResult<S>;
-template <typename S>
-using FclContact = ::fcl::Contact<S>;
+    = ::fcl::DynamicAABBTreeCollisionManager<Scalar>;
+template <typename Scalar>
+using FclOBBRSS = ::fcl::OBBRSS<Scalar>;
+template <typename Scalar>
+using FclCollisionRequest = ::fcl::CollisionRequest<Scalar>;
+template <typename Scalar>
+using FclCollisionResult = ::fcl::CollisionResult<Scalar>;
+template <typename Scalar>
+using FclDistanceRequest = ::fcl::DistanceRequest<Scalar>;
+template <typename Scalar>
+using FclDistanceResult = ::fcl::DistanceResult<Scalar>;
+template <typename Scalar>
+using FclContact = ::fcl::Contact<Scalar>;
 #else
 // Geometric fundamentals
-template <typename S>
+template <typename Scalar>
 using FclVector3 = ::fcl::Vec3f;
-template <typename S>
+template <typename Scalar>
 using FclMatrix3 = ::fcl::Matrix3f;
-template <typename S>
+template <typename Scalar>
 using FclTransform3 = ::fcl::Transform3f;
 // Geometric primitives
-template <typename S>
+template <typename Scalar>
 using FclBox = ::fcl::Box;
-template <typename S>
+template <typename Scalar>
 using FclCylinder = ::fcl::Cylinder;
-template <typename S>
+template <typename Scalar>
 using FclCone = ::fcl::Cone;
-template <typename S>
+template <typename Scalar>
 using FclEllipsoid = ::fcl::Ellipsoid;
-template <typename S>
+template <typename Scalar>
 using FclHalfspace = ::fcl::Halfspace;
-template <typename S>
+template <typename Scalar>
 using FclSphere = ::fcl::Sphere;
   #if DART_HAVE_OCTOMAP && FCL_HAVE_OCTOMAP
-template <typename S>
+template <typename Scalar>
 using FclOcTree = ::fcl::OcTree;
   #endif // DART_HAVE_OCTOMAP && FCL_HAVE_OCTOMAP
 // Collision objects
-template <typename S>
+template <typename Scalar>
 using FclCollisionObject = ::fcl::CollisionObject;
-template <typename S>
+template <typename Scalar>
 using FclCollisionGeometry = ::fcl::CollisionGeometry;
-template <typename S>
+template <typename Scalar>
 using FclDynamicAABBTreeCollisionManager
     = ::fcl::DynamicAABBTreeCollisionManager;
-template <typename S>
+template <typename Scalar>
 using FclOBBRSS = ::fcl::OBBRSS;
-template <typename S>
+template <typename Scalar>
 using FclCollisionRequest = ::fcl::CollisionRequest;
-template <typename S>
+template <typename Scalar>
 using FclCollisionResult = ::fcl::CollisionResult;
-template <typename S>
+template <typename Scalar>
 using FclDistanceRequest = ::fcl::DistanceRequest;
-template <typename S>
+template <typename Scalar>
 using FclDistanceResult = ::fcl::DistanceResult;
-template <typename S>
+template <typename Scalar>
 using FclContact = ::fcl::Contact;
 #endif
 
 /// Returns norm of a 3-dim vector
-template <typename S>
-S length(const FclVector3<S>& t);
+template <typename Scalar>
+Scalar length(const FclVector3<Scalar>& t);
 
 /// Returns squared norm of a 3-dim vector
-template <typename S>
-S length2(const FclVector3<S>& t);
+template <typename Scalar>
+Scalar length2(const FclVector3<Scalar>& t);
 
 /// Returns translation component of a transform
-template <typename S>
-FclVector3<S> getTranslation(const FclTransform3<S>& T);
+template <typename Scalar>
+FclVector3<Scalar> getTranslation(const FclTransform3<Scalar>& T);
 
 /// Sets translation component of a transform
-template <typename S>
-void setTranslation(FclTransform3<S>& T, const FclVector3<S>& t);
+template <typename Scalar>
+void setTranslation(FclTransform3<Scalar>& T, const FclVector3<Scalar>& t);
 
 /// Returns rotation component of a transform
-template <typename S>
-FclMatrix3<S> getRotation(const FclTransform3<S>& T);
+template <typename Scalar>
+FclMatrix3<Scalar> getRotation(const FclTransform3<Scalar>& T);
 
 /// Sets rotation component of a transform
-template <typename S>
-void setRotation(FclTransform3<S>& T, const FclMatrix3<S>& R);
+template <typename Scalar>
+void setRotation(FclTransform3<Scalar>& T, const FclMatrix3<Scalar>& R);
 
 /// Sets a rotation matrix given Euler-XYZ angles
-template <typename S>
-void setEulerZYX(FclMatrix3<S>& rot, S eulerX, S eulerY, S eulerZ);
+template <typename Scalar>
+void setEulerZYX(
+    FclMatrix3<Scalar>& rot, Scalar eulerX, Scalar eulerY, Scalar eulerZ);
 
 /// Transforms a 3-dim vector by a transform and returns the result
-template <typename S>
-FclVector3<S> transform(const FclTransform3<S>& t, const FclVector3<S>& v);
+template <typename Scalar>
+FclVector3<Scalar> transform(
+    const FclTransform3<Scalar>& t, const FclVector3<Scalar>& v);
 
 /// Returns an identity transform
-template <typename S>
-FclTransform3<S> get_identity_transform();
+template <typename Scalar>
+FclTransform3<Scalar> get_identity_transform();
 
 } // namespace collision
 } // namespace dart

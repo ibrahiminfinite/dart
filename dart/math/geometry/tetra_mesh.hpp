@@ -40,16 +40,16 @@ namespace dart {
 namespace math {
 
 /// This class represents triangle meshes.
-template <typename S_>
-class TetraMesh : public Mesh<S_>
+template <typename Scalar_>
+class TetraMesh : public Mesh<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
-  using Base = Mesh<S>;
+  using Scalar = Scalar_;
+  using Base = Mesh<Scalar>;
   using Index = typename Base::Index;
   using Vector3 = typename Base::Vector3;
-  using Vector4 = Eigen::Matrix<S, 4, 1>;
+  using Vector4 = Eigen::Matrix<Scalar, 4, 1>;
   using Triangle = Eigen::Matrix<Index, 3, 1>;
   using Tetra = Eigen::Matrix<Index, 3, 1>;
   using Vertices = typename Base::Vertices;
@@ -98,7 +98,8 @@ public:
   ///
   /// \param[in] optimize: (Optional) Whether to discard vertices that are not
   /// used in the convex hull.
-  std::shared_ptr<TetraMesh<S>> generateConvexHull(bool optimize = true) const;
+  std::shared_ptr<TetraMesh<Scalar>> generateConvexHull(
+      bool optimize = true) const;
 
 protected:
   /// Computes triangle normals.

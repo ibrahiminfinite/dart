@@ -39,63 +39,64 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> FclObject<S>::get_pose() const
+template <typename Scalar>
+math::Isometry3<Scalar> FclObject<Scalar>::get_pose() const
 {
-  return to_pose3<S>(m_fcl_collision_object->getTransform());
+  return to_pose3<Scalar>(m_fcl_collision_object->getTransform());
 }
 
 //==============================================================================
-template <typename S>
-void FclObject<S>::set_pose(const math::Isometry3<S>& tf)
+template <typename Scalar>
+void FclObject<Scalar>::set_pose(const math::Isometry3<Scalar>& tf)
 {
-  m_fcl_collision_object->setTransform(to_fcl_pose3<S>(tf));
+  m_fcl_collision_object->setTransform(to_fcl_pose3<Scalar>(tf));
 }
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> FclObject<S>::get_position() const
+template <typename Scalar>
+math::Vector3<Scalar> FclObject<Scalar>::get_position() const
 {
-  return to_vector3<S>(m_fcl_collision_object->getTranslation());
+  return to_vector3<Scalar>(m_fcl_collision_object->getTranslation());
 }
 
 //==============================================================================
-template <typename S>
-void FclObject<S>::set_position(const math::Vector3<S>& pos)
+template <typename Scalar>
+void FclObject<Scalar>::set_position(const math::Vector3<Scalar>& pos)
 {
-  m_fcl_collision_object->setTranslation(to_fcl_vector3<S>(pos));
+  m_fcl_collision_object->setTranslation(to_fcl_vector3<Scalar>(pos));
 }
 
 //==============================================================================
-template <typename S>
-FclCollisionObject<S>* FclObject<S>::get_fcl_collision_object()
-{
-  return m_fcl_collision_object.get();
-}
-
-//==============================================================================
-template <typename S>
-const FclCollisionObject<S>* FclObject<S>::get_fcl_collision_object() const
+template <typename Scalar>
+FclCollisionObject<Scalar>* FclObject<Scalar>::get_fcl_collision_object()
 {
   return m_fcl_collision_object.get();
 }
 
 //==============================================================================
-template <typename S>
-FclObject<S>::FclObject(
-    Scene<S>* collision_scene,
+template <typename Scalar>
+const FclCollisionObject<Scalar>* FclObject<Scalar>::get_fcl_collision_object()
+    const
+{
+  return m_fcl_collision_object.get();
+}
+
+//==============================================================================
+template <typename Scalar>
+FclObject<Scalar>::FclObject(
+    Scene<Scalar>* collision_scene,
     math::GeometryPtr shape,
-    const std::shared_ptr<FclCollisionGeometry<S>>& fcl_coll_geom)
-  : Object<S>(collision_scene, shape),
-    m_fcl_collision_object(new FclCollisionObject<S>(fcl_coll_geom))
+    const std::shared_ptr<FclCollisionGeometry<Scalar>>& fcl_coll_geom)
+  : Object<Scalar>(collision_scene, shape),
+    m_fcl_collision_object(new FclCollisionObject<Scalar>(fcl_coll_geom))
 {
   assert(fcl_coll_geom);
   m_fcl_collision_object->setUserData(this);
 }
 
 //==============================================================================
-template <typename S>
-void FclObject<S>::update_engine_data()
+template <typename Scalar>
+void FclObject<Scalar>::update_engine_data()
 {
   m_fcl_collision_object->setTransform(to_fcl_pose3(get_pose()));
   m_fcl_collision_object->computeAABB();

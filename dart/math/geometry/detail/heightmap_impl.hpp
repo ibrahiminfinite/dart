@@ -39,32 +39,32 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-const std::string& Heightmap<S>::GetType()
+template <typename Scalar>
+const std::string& Heightmap<Scalar>::GetType()
 {
   static const std::string type("Heightmap");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-Heightmap<S>::Heightmap() : m_scale(1, 1, 1)
+template <typename Scalar>
+Heightmap<Scalar>::Heightmap() : m_scale(1, 1, 1)
 {
   static_assert(
-      std::is_same<S, float>::value || std::is_same<S, double>::value,
+      std::is_same<Scalar, float>::value || std::is_same<Scalar, double>::value,
       "Height field needs to be double or float");
 }
 
 //==============================================================================
-template <typename S>
-const std::string& Heightmap<S>::get_type() const
+template <typename Scalar>
+const std::string& Heightmap<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-void Heightmap<S>::set_scale(const Vector3& scale)
+template <typename Scalar>
+void Heightmap<Scalar>::set_scale(const Vector3& scale)
 {
   DART_ASSERT(scale[0] > 0.0);
   DART_ASSERT(scale[1] > 0.0);
@@ -73,18 +73,18 @@ void Heightmap<S>::set_scale(const Vector3& scale)
 }
 
 //==============================================================================
-template <typename S>
-auto Heightmap<S>::get_scale() const -> const Vector3&
+template <typename Scalar>
+auto Heightmap<Scalar>::get_scale() const -> const Vector3&
 {
   return m_scale;
 }
 
 //==============================================================================
-template <typename S>
-void Heightmap<S>::set_height_field(
+template <typename Scalar>
+void Heightmap<Scalar>::set_height_field(
     const std::size_t& width,
     const std::size_t& depth,
-    const std::vector<S>& heights)
+    const std::vector<Scalar>& heights)
 {
   DART_ASSERT(heights.size() == width * depth);
 
@@ -110,8 +110,8 @@ void Heightmap<S>::set_height_field(
 }
 
 //==============================================================================
-template <typename S>
-void Heightmap<S>::set_height_field(const HeightField& heights)
+template <typename Scalar>
+void Heightmap<Scalar>::set_height_field(const HeightField& heights)
 {
   m_heights = heights;
 
@@ -120,50 +120,50 @@ void Heightmap<S>::set_height_field(const HeightField& heights)
 }
 
 //==============================================================================
-template <typename S>
-auto Heightmap<S>::get_height_field() const -> const HeightField&
+template <typename Scalar>
+auto Heightmap<Scalar>::get_height_field() const -> const HeightField&
 {
   return m_heights;
 }
 
 //==============================================================================
-template <typename S>
-auto Heightmap<S>::get_height_field_modifiable() const -> HeightField&
+template <typename Scalar>
+auto Heightmap<Scalar>::get_height_field_modifiable() const -> HeightField&
 {
   return m_heights;
 }
 
 //==============================================================================
-template <typename S>
-void Heightmap<S>::flip_y() const
+template <typename Scalar>
+void Heightmap<Scalar>::flip_y() const
 {
   m_heights = m_heights.colwise().reverse().eval();
 }
 
 //==============================================================================
-template <typename S>
-S Heightmap<S>::get_max_height() const
+template <typename Scalar>
+Scalar Heightmap<Scalar>::get_max_height() const
 {
   return m_max_height;
 }
 
 //==============================================================================
-template <typename S>
-S Heightmap<S>::get_min_height() const
+template <typename Scalar>
+Scalar Heightmap<Scalar>::get_min_height() const
 {
   return m_min_height;
 }
 
 //==============================================================================
-template <typename S>
-std::size_t Heightmap<S>::get_width() const
+template <typename Scalar>
+std::size_t Heightmap<Scalar>::get_width() const
 {
   return m_heights.cols();
 }
 
 //==============================================================================
-template <typename S>
-std::size_t Heightmap<S>::get_depth() const
+template <typename Scalar>
+std::size_t Heightmap<Scalar>::get_depth() const
 {
   return m_heights.rows();
 }

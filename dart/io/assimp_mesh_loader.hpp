@@ -42,8 +42,8 @@
 namespace dart {
 namespace io {
 
-template <typename S>
-class AssimpMeshLoader : public MeshLoader<S>
+template <typename Scalar>
+class AssimpMeshLoader : public MeshLoader<Scalar>
 {
 public:
   /// Constructor
@@ -53,7 +53,7 @@ public:
   ~AssimpMeshLoader() override = default;
 
   // Documentation inherited
-  std::shared_ptr<math::TriMesh<S>> load(
+  std::shared_ptr<math::TriMesh<Scalar>> load(
       const common::Uri& uri,
       common::ResourceRetrieverPtr resource_retriever = nullptr) override;
 
@@ -62,14 +62,14 @@ public:
 
 private:
   /// Loads math::TriMesh given Assimp scene
-  std::shared_ptr<math::TriMesh<S>> load(const aiScene* ai_scene);
+  std::shared_ptr<math::TriMesh<Scalar>> load(const aiScene* ai_scene);
 
   /// Loads math::TriMesh recursively traveling Assimp nodes
   void load_recurse(
-      const std::shared_ptr<math::TriMesh<S>>& mesh,
+      const std::shared_ptr<math::TriMesh<Scalar>>& mesh,
       const aiScene* ai_scene,
       const aiNode* ai_node,
-      const math::Isometry3<S>& parent_node_pose);
+      const math::Isometry3<Scalar>& parent_node_pose);
 };
 
 using AssimpMeshLoaderf = AssimpMeshLoader<float>;

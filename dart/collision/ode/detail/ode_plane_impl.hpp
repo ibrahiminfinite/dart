@@ -43,45 +43,47 @@ namespace collision {
 namespace detail {
 
 //==============================================================================
-template <typename S>
-OdePlane<S>::OdePlane(
-    const OdeObject<S>* parent, const math::Vector3<S>& normal, S offset)
-  : OdeGeom<S>(parent)
+template <typename Scalar>
+OdePlane<Scalar>::OdePlane(
+    const OdeObject<Scalar>* parent,
+    const math::Vector3<Scalar>& normal,
+    Scalar offset)
+  : OdeGeom<Scalar>(parent)
 {
   this->m_geom_id
       = dCreatePlane(nullptr, normal.x(), normal.y(), normal.z(), offset);
 }
 
 //==============================================================================
-template <typename S>
-OdePlane<S>::~OdePlane()
+template <typename Scalar>
+OdePlane<Scalar>::~OdePlane()
 {
   dGeomDestroy(this->m_geom_id);
 }
 
 //==============================================================================
-template <typename S>
-void OdePlane<S>::update_engine_data()
+template <typename Scalar>
+void OdePlane<Scalar>::update_engine_data()
 {
-  const math::Isometry3<S>& tf = this->m_parent_object->get_pose();
-  const math::Vector3<S> pos = tf.translation();
-  const math::Matrix3<S> rot = tf.linear();
+  const math::Isometry3<Scalar>& tf = this->m_parent_object->get_pose();
+  const math::Vector3<Scalar> pos = tf.translation();
+  const math::Matrix3<Scalar> rot = tf.linear();
 
-  auto plane
-      = this->m_parent_object->get_geometry()->template as<math::Plane3<S>>();
-  const math::Vector3<S>& normal = plane->get_normal();
-  const S offset = plane->get_offset();
+  auto plane = this->m_parent_object->get_geometry()
+                   ->template as<math::Plane3<Scalar>>();
+  const math::Vector3<Scalar>& normal = plane->get_normal();
+  const Scalar offset = plane->get_offset();
 
-  const math::Vector3<S>& normal2 = rot * normal;
-  const S offset2 = offset + pos.dot(normal2);
+  const math::Vector3<Scalar>& normal2 = rot * normal;
+  const Scalar offset2 = offset + pos.dot(normal2);
 
   dGeomPlaneSetParams(
       this->m_geom_id, normal2.x(), normal2.y(), normal2.z(), offset2);
 }
 
 //==============================================================================
-template <typename S>
-bool OdePlane<S>::is_placeable() const
+template <typename Scalar>
+bool OdePlane<Scalar>::is_placeable() const
 {
   return false;
 }

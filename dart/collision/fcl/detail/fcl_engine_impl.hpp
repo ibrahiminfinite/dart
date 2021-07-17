@@ -45,21 +45,21 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-Contact<S> convert_contact(
-    const FclContact<S>& fcl_contact,
-    FclObject<S>* object1,
-    FclObject<S>* object2,
-    const CollisionOption<S>& option)
+template <typename Scalar>
+Contact<Scalar> convert_contact(
+    const FclContact<Scalar>& fcl_contact,
+    FclObject<Scalar>* object1,
+    FclObject<Scalar>* object2,
+    const CollisionOption<Scalar>& option)
 {
-  Contact<S> contact;
+  Contact<Scalar> contact;
 
   contact.collision_object1 = object1;
   contact.collision_object2 = object2;
 
   if (option.enable_contact) {
-    contact.point = to_vector3<S>(fcl_contact.pos);
-    contact.normal = -to_vector3<S>(fcl_contact.normal);
+    contact.point = to_vector3<Scalar>(fcl_contact.pos);
+    contact.normal = -to_vector3<Scalar>(fcl_contact.normal);
     contact.depth = fcl_contact.penetration_depth;
   }
 
@@ -67,14 +67,14 @@ Contact<S> convert_contact(
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 void report_contacts(
     int num_contacts,
-    const FclCollisionResult<S>& fcl_result,
-    FclObject<S>* b1,
-    FclObject<S>* b2,
-    const CollisionOption<S>& option,
-    CollisionResult<S>& result)
+    const FclCollisionResult<Scalar>& fcl_result,
+    FclObject<Scalar>* b1,
+    FclObject<Scalar>* b2,
+    const CollisionOption<Scalar>& option,
+    CollisionResult<Scalar>& result)
 {
   for (auto i = 0; i < num_contacts; ++i) {
     result.add_contact(
@@ -87,56 +87,56 @@ void report_contacts(
 }
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<FclEngine<S>> FclEngine<S>::Create()
+template <typename Scalar>
+std::shared_ptr<FclEngine<Scalar>> FclEngine<Scalar>::Create()
 {
   return std::shared_ptr<FclEngine>(new FclEngine());
 }
 
 //==============================================================================
-template <typename S>
-FclEngine<S>::~FclEngine()
+template <typename Scalar>
+FclEngine<Scalar>::~FclEngine()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& FclEngine<S>::get_type() const
+template <typename Scalar>
+const std::string& FclEngine<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-const std::string& FclEngine<S>::GetType()
+template <typename Scalar>
+const std::string& FclEngine<Scalar>::GetType()
 {
   static const std::string type = "fcl";
   return type;
 }
 
 //==============================================================================
-template <typename S>
-ScenePtr<S> FclEngine<S>::create_scene()
+template <typename Scalar>
+ScenePtr<Scalar> FclEngine<Scalar>::create_scene()
 {
-  return std::make_shared<FclScene<S>>(this);
+  return std::make_shared<FclScene<Scalar>>(this);
 }
 
 //==============================================================================
-template <typename S>
-bool FclEngine<S>::collide(
-    ObjectPtr<S> object1,
-    ObjectPtr<S> object2,
-    const CollisionOption<S>& option,
-    CollisionResult<S>* result)
+template <typename Scalar>
+bool FclEngine<Scalar>::collide(
+    ObjectPtr<Scalar> object1,
+    ObjectPtr<Scalar> object2,
+    const CollisionOption<Scalar>& option,
+    CollisionResult<Scalar>* result)
 {
-  auto derived1 = std::dynamic_pointer_cast<FclObject<S>>(object1);
+  auto derived1 = std::dynamic_pointer_cast<FclObject<Scalar>>(object1);
   if (!derived1) {
     DART_ERROR("Invalid object");
     return false;
   }
 
-  auto derived2 = std::dynamic_pointer_cast<FclObject<S>>(object2);
+  auto derived2 = std::dynamic_pointer_cast<FclObject<Scalar>>(object2);
   if (!derived2) {
     DART_ERROR("Invalid object");
     return false;
@@ -154,11 +154,11 @@ bool FclEngine<S>::collide(
     return false;
   }
 
-  FclCollisionRequest<S> fcl_request;
+  FclCollisionRequest<Scalar> fcl_request;
   fcl_request.enable_contact = option.enable_contact;
   fcl_request.num_max_contacts = option.max_num_contacts;
 
-  FclCollisionResult<S> fcl_result;
+  FclCollisionResult<Scalar> fcl_result;
 
   const auto num_contacts = ::fcl::collide(
       fcl_collision_object1, fcl_collision_object2, fcl_request, fcl_result);
@@ -177,23 +177,24 @@ bool FclEngine<S>::collide(
 }
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<FclCollisionGeometry<S>>
-FclEngine<S>::create_fcl_collision_geometry(const math::ConstGeometryPtr& shape)
+template <typename Scalar>
+std::shared_ptr<FclCollisionGeometry<Scalar>>
+FclEngine<Scalar>::create_fcl_collision_geometry(
+    const math::ConstGeometryPtr& shape)
 {
-  FclCollisionGeometry<S>* geom = nullptr;
+  FclCollisionGeometry<Scalar>* geom = nullptr;
   const auto& shapeType = shape->get_type();
 
-  if (auto sphere = shape->as<math::Sphere<S>>()) {
+  if (auto sphere = shape->as<math::Sphere<Scalar>>()) {
     const auto radius = sphere->get_radius();
 
-    if (FclEngine<S>::PRIMITIVE == m_primitive_shape_type) {
-      geom = new FclSphere<S>(radius);
+    if (FclEngine<Scalar>::PRIMITIVE == m_primitive_shape_type) {
+      geom = new FclSphere<Scalar>(radius);
     } else {
-      auto fcl_mesh = new ::fcl::BVHModel<FclOBBRSS<S>>();
-      auto fcl_sphere = FclSphere<S>(radius);
+      auto fcl_mesh = new ::fcl::BVHModel<FclOBBRSS<Scalar>>();
+      auto fcl_sphere = FclSphere<Scalar>(radius);
       ::fcl::generateBVHModel(
-          *fcl_mesh, fcl_sphere, get_identity_transform<S>(), 16, 16);
+          *fcl_mesh, fcl_sphere, get_identity_transform<Scalar>(), 16, 16);
       // TODO(JS): Consider using icosphere
       geom = fcl_mesh;
     }
@@ -202,12 +203,12 @@ FclEngine<S>::create_fcl_collision_geometry(const math::ConstGeometryPtr& shape)
         "Attempting to create an unsupported shape type [{}]. Creating a "
         "sphere with 0.1 radius instead.",
         shapeType);
-    geom = new FclSphere<S>(0.1);
+    geom = new FclSphere<Scalar>(0.1);
   }
 
   assert(geom);
 
-  return std::shared_ptr<FclCollisionGeometry<S>>(geom);
+  return std::shared_ptr<FclCollisionGeometry<Scalar>>(geom);
 }
 
 } // namespace collision

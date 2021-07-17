@@ -37,12 +37,12 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
-class Ellipsoid : public Convex3<S_>
+template <typename Scalar_>
+class Ellipsoid : public Convex3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Returns type string
   static const std::string& GetType();
@@ -51,14 +51,14 @@ public:
   ///
   /// \param[in] radius: Radius of the circular base.
   /// \param[in] height: Lateral height of the cone.
-  Ellipsoid(S radius, S length);
+  Ellipsoid(Scalar radius, Scalar length);
 
   // Documentation inherited
   const std::string& get_type() const override;
 
 private:
-  S m_radius;
-  S m_length;
+  Scalar m_radius;
+  Scalar m_length;
 };
 
 using Ellipsoidf = Ellipsoid<float>;

@@ -39,12 +39,12 @@
 namespace dart {
 namespace collision {
 
-template <typename S>
+template <typename Scalar>
 bool collide(
-    ObjectPtr<S> object1,
-    ObjectPtr<S> object2,
-    const CollisionOption<S>& option = {},
-    CollisionResult<S>* result = nullptr);
+    ObjectPtr<Scalar> object1,
+    ObjectPtr<Scalar> object2,
+    const CollisionOption<Scalar>& option = {},
+    CollisionResult<Scalar>* result = nullptr);
 
 #if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
 extern template DART_COLLISION_API bool collide(

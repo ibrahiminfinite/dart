@@ -61,16 +61,16 @@ typename LieGroupBase<Derived>::LieGroupCoeffs& LieGroupBase<Derived>::coeffs()
 
 //==============================================================================
 template <typename Derived>
-Derived& LieGroupBase<Derived>::derived()
+const Derived& LieGroupBase<Derived>::derived() const noexcept
 {
-  return static_cast<Derived>(*this);
+  return *static_cast<const Derived*>(this);
 }
 
 //==============================================================================
 template <typename Derived>
-const Derived& LieGroupBase<Derived>::derived() const
+Derived& LieGroupBase<Derived>::derived() noexcept
 {
-  return static_cast<Derived>(*this);
+  return *static_cast<Derived*>(this);
 }
 
 //==============================================================================
@@ -111,16 +111,14 @@ typename LieGroupTangent<Derived>::Tangent LieGroupTangent<Derived>::Zero()
 
 //==============================================================================
 template <typename Derived>
-typename LieGroupTangent<Derived>::TangentData&
-LieGroupTangent<Derived>::vector()
+auto& LieGroupTangent<Derived>::vector()
 {
   return derived().vector();
 }
 
 //==============================================================================
 template <typename Derived>
-const typename LieGroupTangent<Derived>::TangentData&
-LieGroupTangent<Derived>::vector() const
+const auto& LieGroupTangent<Derived>::vector() const
 {
   return derived().vector();
 }
@@ -129,14 +127,14 @@ LieGroupTangent<Derived>::vector() const
 template <typename Derived>
 Derived& LieGroupTangent<Derived>::derived() noexcept
 {
-  return static_cast<Derived>(*this);
+  return *static_cast<Derived*>(this);
 }
 
 //==============================================================================
 template <typename Derived>
 const Derived& LieGroupTangent<Derived>::derived() const noexcept
 {
-  return static_cast<const Derived>(*this);
+  return *static_cast<const Derived*>(this);
 }
 
 //==============================================================================
@@ -167,14 +165,14 @@ LieGroupCotangent<Derived>::vector() const
 template <typename Derived>
 Derived& LieGroupCotangent<Derived>::derived() noexcept
 {
-  return static_cast<Derived>(*this);
+  return *static_cast<Derived*>(this);
 }
 
 //==============================================================================
 template <typename Derived>
 const Derived& LieGroupCotangent<Derived>::derived() const noexcept
 {
-  return static_cast<const Derived>(*this);
+  return *static_cast<const Derived*>(this);
 }
 
 } // namespace math

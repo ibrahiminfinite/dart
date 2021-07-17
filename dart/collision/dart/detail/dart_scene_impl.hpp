@@ -44,44 +44,44 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-DartScene<S>::DartScene(Engine<S>* engine) : Scene<S>(engine)
+template <typename Scalar>
+DartScene<Scalar>::DartScene(Engine<Scalar>* engine) : Scene<Scalar>(engine)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-DartScene<S>::~DartScene()
+template <typename Scalar>
+DartScene<Scalar>::~DartScene()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-ObjectPtr<S> DartScene<S>::create_object(math::GeometryPtr shape)
+template <typename Scalar>
+ObjectPtr<Scalar> DartScene<Scalar>::create_object(math::GeometryPtr shape)
 {
   if (!shape) {
     DART_WARN("Not allowed to create a collision object for a null shape");
     return nullptr;
   }
 
-  return std::shared_ptr<DartObject<S>>(
-      new DartObject<S>(this, std::move(shape)));
+  return std::shared_ptr<DartObject<Scalar>>(
+      new DartObject<Scalar>(this, std::move(shape)));
 }
 
 //==============================================================================
-template <typename S>
-DartEngine<S>* DartScene<S>::get_mutable_dart_engine()
+template <typename Scalar>
+DartEngine<Scalar>* DartScene<Scalar>::get_mutable_dart_engine()
 {
-  return static_cast<DartEngine<S>*>(this->m_engine);
+  return static_cast<DartEngine<Scalar>*>(this->m_engine);
 }
 
 //==============================================================================
-template <typename S>
-const DartEngine<S>* DartScene<S>::get_dart_engine() const
+template <typename Scalar>
+const DartEngine<Scalar>* DartScene<Scalar>::get_dart_engine() const
 {
-  return static_cast<const DartEngine<S>*>(this->m_engine);
+  return static_cast<const DartEngine<Scalar>*>(this->m_engine);
 }
 
 } // namespace collision

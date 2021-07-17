@@ -41,44 +41,44 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-const std::string& Cuboid<S>::GetType()
+template <typename Scalar>
+const std::string& Cuboid<Scalar>::GetType()
 {
   static const std::string type("Cuboid");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-S Cuboid<S>::ComputeVolume(const Vector3& size)
+template <typename Scalar>
+Scalar Cuboid<Scalar>::ComputeVolume(const Vector3& size)
 {
   return size[0] * size[1] * size[2];
 }
 
 //==============================================================================
-template <typename S>
-Cuboid<S>::Cuboid(const Vector3& size) : m_size(size)
+template <typename Scalar>
+Cuboid<Scalar>::Cuboid(const Vector3& size) : m_size(size)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& Cuboid<S>::get_type() const
+template <typename Scalar>
+const std::string& Cuboid<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-const typename Cuboid<S>::Vector3& Cuboid<S>::get_size() const
+template <typename Scalar>
+const typename Cuboid<Scalar>::Vector3& Cuboid<Scalar>::get_size() const
 {
   return m_size;
 }
 
 //==============================================================================
-template <typename S>
-void Cuboid<S>::set_size(const Vector3& size)
+template <typename Scalar>
+void Cuboid<Scalar>::set_size(const Vector3& size)
 {
   m_size = size;
 }

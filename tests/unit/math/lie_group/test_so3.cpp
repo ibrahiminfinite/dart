@@ -54,44 +54,62 @@ TYPED_TEST_SUITE(SO3Test, Types);
 //==============================================================================
 TYPED_TEST(SO3Test, StaticProperties)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
-  EXPECT_EQ(SO3<S>::GroupDim, 3);
+  EXPECT_EQ(SO3<Scalar>::GroupDim, 3);
 }
 
 //==============================================================================
-TYPED_TEST(SO3Test, SO3)
+TYPED_TEST(SO3Test, Constructors)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
   // Default constructor
-  SO3<S> a;
+  SO3<Scalar> a;
 
   // Copy constructor
-  SO3<S> b = a;
+  SO3<Scalar> b = a;
 
   // Move constructor
-  SO3<S> c = std::move(a);
+  SO3<Scalar> c = std::move(a);
 
   // From quaternions
-  auto d = SO3<S>(Eigen::Quaternion<S>());
-  auto q_b = Eigen::Quaternion<S>();
-  auto e = SO3<S>(std::move(q_b));
+  auto d = SO3<Scalar>(Eigen::Quaternion<Scalar>());
+  auto q_b = Eigen::Quaternion<Scalar>();
+  auto e = SO3<Scalar>(std::move(q_b));
 
   // Using static functions
-  SO3<S> f = SO3<S>::Identity();
-  SO3<S> g = SO3<S>::Random();
+  SO3<Scalar> f = SO3<Scalar>::Identity();
+  SO3<Scalar> g = SO3<Scalar>::Random();
 
   DART_UNUSED(b, c, f, g);
 }
 
 //==============================================================================
+TYPED_TEST(SO3Test, Inverse)
+{
+  using Scalar = typename TestFixture::Type;
+
+  SO3<Scalar> a;
+  SO3<Scalar> b;
+  SO3<Scalar> c;
+
+  b = a.inverse();
+  c = a.inverse() * b;
+  c = a * b.inverse();
+  // c = a.inverse().eval() * b;
+  // c = a * b.inverse().eval();
+  // c.noalias() = a * b.inverse();
+  // c.noalias() = a.inverse() * b;
+}
+
+//==============================================================================
 TYPED_TEST(SO3Test, Map)
 {
-  using S = typename TestFixture::Type;
-  std::array<S, 4> data{1, 2, 3, 4};
+  using Scalar = typename TestFixture::Type;
+  std::array<Scalar, 4> data{1, 2, 3, 4};
 
-  SO3Map<S> a(data.data());
+  SO3Map<Scalar> a(data.data());
   auto q = a.quaternion();
   EXPECT_S_EQ(q.x(), data[0]);
   EXPECT_S_EQ(q.y(), data[1]);
@@ -107,7 +125,7 @@ TYPED_TEST(SO3Test, Map)
   EXPECT_S_EQ(data[2], -3);
   EXPECT_S_EQ(data[3], -4);
 
-  ConstSO3Map<S> b(data.data());
+  ConstSO3Map<Scalar> b(data.data());
   q = a.quaternion();
   EXPECT_S_EQ(q.x(), data[0]);
   EXPECT_S_EQ(q.y(), data[1]);
@@ -118,24 +136,24 @@ TYPED_TEST(SO3Test, Map)
 //==============================================================================
 TYPED_TEST(SO3Test, Jacobians)
 {
-  using S = typename TestFixture::Type;
-  const S eps = test::eps_for_diff<S>();
+  using Scalar = typename TestFixture::Type;
+  const Scalar eps = test::eps_for_diff<Scalar>();
 
   for (auto i = 0; i < 100; ++i) {
-    const SO3Tangent<S> q = SO3<S>::Random().log();
-    Eigen::Matrix<S, 3, 3> jac_numeric;
+    const SO3Tangent<Scalar> q = SO3<Scalar>::Random().log();
+    Eigen::Matrix<Scalar, 3, 3> jac_numeric;
     for (int j = 0; j < 3; ++j) {
-      SO3Tangent<S> q_a = q;
-      q_a[j] -= S(0.5) * eps;
+      SO3Tangent<Scalar> q_a = q;
+      q_a[j] -= Scalar(0.5) * eps;
 
-      SO3Tangent<S> q_b = q;
-      q_b[j] += S(0.5) * eps;
+      SO3Tangent<Scalar> q_b = q;
+      q_b[j] += Scalar(0.5) * eps;
 
-      const SO3<S> R_a = exp(q_a);
-      const SO3<S> R_b = exp(q_b);
-      const SO3<S> dR_left = R_b * R_a.inverse();
-      const SO3Tangent<S> dr = log(dR_left);
-      const SO3Algebra<S> dr_dt = dr.hat() / eps;
+      const SO3<Scalar> R_a = exp(q_a);
+      const SO3<Scalar> R_b = exp(q_b);
+      const SO3<Scalar> dR_left = R_b * R_a.inverse();
+      const SO3Tangent<Scalar> dr = log(dR_left);
+      const SO3Algebra<Scalar> dr_dt = dr.hat() / eps;
       jac_numeric.col(j) = dr_dt.vee().vector();
     }
     EXPECT_TRUE(test::equals(jac_numeric, q.left_jacobian()));

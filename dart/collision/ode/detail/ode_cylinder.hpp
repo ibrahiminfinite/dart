@@ -39,12 +39,12 @@ namespace dart {
 namespace collision {
 namespace detail {
 
-template <typename S>
-class OdeCylinder : public OdeGeom<S>
+template <typename Scalar>
+class OdeCylinder : public OdeGeom<Scalar>
 {
 public:
   /// Constructor
-  OdeCylinder(const OdeObject<S>* parent, S radius, S height);
+  OdeCylinder(const OdeObject<Scalar>* parent, Scalar radius, Scalar height);
 
   /// Destructor
   ~OdeCylinder() override;
@@ -53,16 +53,17 @@ public:
 DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeCylinder)
 
 //==============================================================================
-template <typename S>
-OdeCylinder<S>::OdeCylinder(const OdeObject<S>* parent, S radius, S height)
-  : OdeGeom<S>(parent)
+template <typename Scalar>
+OdeCylinder<Scalar>::OdeCylinder(
+    const OdeObject<Scalar>* parent, Scalar radius, Scalar height)
+  : OdeGeom<Scalar>(parent)
 {
   this->m_geom_id = dCreateCylinder(0, radius, height);
 }
 
 //==============================================================================
-template <typename S>
-OdeCylinder<S>::~OdeCylinder()
+template <typename Scalar>
+OdeCylinder<Scalar>::~OdeCylinder()
 {
   dGeomDestroy(this->m_geom_id);
 }

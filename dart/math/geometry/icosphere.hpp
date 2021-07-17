@@ -43,13 +43,13 @@ namespace math {
 
 /// The class Icosphere represents an icosphere where the subdivision and radius
 /// are configurable.
-template <typename S_>
-class Icosphere : public TriMesh<S_>
+template <typename Scalar_>
+class Icosphere : public TriMesh<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
-  using Base = TriMesh<S>;
+  using Scalar = Scalar_;
+  using Base = TriMesh<Scalar>;
   using Index = typename Base::Index;
   using Vector3 = typename Base::Vector3;
   using Triangle = typename Base::Triangle;
@@ -67,17 +67,17 @@ public:
   static std::size_t getNumTriangles(std::size_t subdivisions);
 
   /// Returns vertices and faces of icosahedron given radius.
-  static std::pair<Vertices, Triangles> computeIcosahedron(S radius);
+  static std::pair<Vertices, Triangles> computeIcosahedron(Scalar radius);
 
   /// Construct an icosphere given radius and subdivisions.
   ///
   /// \param[in] radius: The radius of the icosphere.
   /// \param[in] subdivisions: The number of subdividing an icosahedron. Passing
   /// 1 generates icosahedron without subdividing.
-  Icosphere(S radius, std::size_t subdivisions);
+  Icosphere(Scalar radius, std::size_t subdivisions);
 
   /// Returns the radius of the icosphere.
-  S getRadius() const;
+  Scalar getRadius() const;
 
   /// Returns the number of subdivisions of the icosphere.
   std::size_t getNumSubdivisions() const;
@@ -87,7 +87,7 @@ private:
   void build();
 
   /// Radius of icosphere.
-  S mRadius;
+  Scalar mRadius;
 
   /// Number of subdividing an icosahedron.
   std::size_t mSubdivisions;

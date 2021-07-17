@@ -53,20 +53,24 @@ TYPED_TEST_SUITE(SpatialInertiaTest, Types);
 //==============================================================================
 TYPED_TEST(SpatialInertiaTest, StaticProperties)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
-  EXPECT_EQ(SE3<S>::SpaceDim, 3);
-  EXPECT_EQ(SE3<S>::GroupDim, 6);
-  EXPECT_EQ(SE3<S>::MatrixDim, 4);
+  EXPECT_EQ(SE3<Scalar>::SpaceDim, 3);
+  EXPECT_EQ(SE3<Scalar>::GroupDim, 6);
+  EXPECT_EQ(SE3<Scalar>::MatrixDim, 4);
 }
 
 //==============================================================================
 TYPED_TEST(SpatialInertiaTest, Constructors)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
-  auto I_a = SpatialInertia<S>();
+  auto I_a = SpatialInertia<Scalar>();
   DART_UNUSED(I_a);
 
-  SpatialInertia<S>(SE3<S>::Random(), Eigen::Matrix<S, 3, 3>::Random(), 1);
+  SpatialInertia<Scalar> G = SpatialInertia<Scalar>(
+      SE3<Scalar>::Random(), Eigen::Matrix<Scalar, 3, 3>::Random(), 1);
+  SpatialMotion<Scalar> V = SpatialMotion<Scalar>::Random();
+  SpatialForce<Scalar> P = G * V;
+  (void)P;
 }

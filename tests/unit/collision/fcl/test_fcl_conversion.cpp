@@ -53,44 +53,44 @@ TYPED_TEST_SUITE(FclConversionTest, Types);
 //==============================================================================
 TYPED_TEST(FclConversionTest, Vector)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
-  const math::Vector3<S> vec3 = math::Vector3<S>::Random();
-  collision::FclVector3<S> fclVec3;
+  const math::Vector3<Scalar> vec3 = math::Vector3<Scalar>::Random();
+  collision::FclVector3<Scalar> fclVec3;
   for (auto i = 0; i < 3; ++i) {
     fclVec3[i] = vec3[i];
   }
 
-  EXPECT_VECTOR3S_EQ(fclVec3, collision::to_fcl_vector3<S>(vec3));
-  EXPECT_VECTOR3S_EQ(vec3, collision::to_vector3<S>(fclVec3));
+  EXPECT_VECTOR3S_EQ(fclVec3, collision::to_fcl_vector3<Scalar>(vec3));
+  EXPECT_VECTOR3S_EQ(vec3, collision::to_vector3<Scalar>(fclVec3));
 }
 
 //==============================================================================
 TYPED_TEST(FclConversionTest, Matrix)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
-  const math::Matrix3<S> mat3 = math::Matrix3<S>::Random();
-  collision::FclMatrix3<S> fclMat3;
+  const math::Matrix3<Scalar> mat3 = math::Matrix3<Scalar>::Random();
+  collision::FclMatrix3<Scalar> fclMat3;
   for (auto i = 0; i < 3; ++i) {
     for (auto j = 0; j < 3; ++j) {
       fclMat3(i, j) = mat3(i, j);
     }
   }
 
-  EXPECT_MATRIX3S_EQ(fclMat3, collision::to_fcl_matrix3<S>(mat3));
-  EXPECT_MATRIX3S_EQ(mat3, collision::to_matrix3<S>(fclMat3));
+  EXPECT_MATRIX3S_EQ(fclMat3, collision::to_fcl_matrix3<Scalar>(mat3));
+  EXPECT_MATRIX3S_EQ(mat3, collision::to_matrix3<Scalar>(fclMat3));
 }
 
 //==============================================================================
 TYPED_TEST(FclConversionTest, Transform)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
-  math::Isometry3<S> tf3 = math::Isometry3<S>::Identity();
-  tf3.linear() = math::Random::uniformRotationMatrix3<S>();
-  tf3.translation() = math::Vector3<S>::Random();
+  math::Isometry3<Scalar> tf3 = math::Isometry3<Scalar>::Identity();
+  tf3.linear() = math::Random::uniformRotationMatrix3<Scalar>();
+  tf3.translation() = math::Vector3<Scalar>::Random();
 
   EXPECT_TRANSFORM3S_EQ(
-      tf3, collision::to_pose3<S>(collision::to_fcl_pose3<S>(tf3)));
+      tf3, collision::to_pose3<Scalar>(collision::to_fcl_pose3<Scalar>(tf3)));
 }

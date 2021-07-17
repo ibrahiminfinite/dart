@@ -41,15 +41,15 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S, typename Index>
+template <typename Scalar, typename Index>
 std::tuple<
-    std::vector<Eigen::Matrix<S, 3, 1>>,
+    std::vector<Eigen::Matrix<Scalar, 3, 1>>,
     std::vector<Eigen::Matrix<Index, 3, 1>>>
 discardUnusedVertices(
-    const std::vector<Eigen::Matrix<S, 3, 1>>& vertices,
+    const std::vector<Eigen::Matrix<Scalar, 3, 1>>& vertices,
     const std::vector<Eigen::Matrix<Index, 3, 1>>& triangles)
 {
-  auto newVertices = std::vector<Eigen::Matrix<S, 3, 1>>();
+  auto newVertices = std::vector<Eigen::Matrix<Scalar, 3, 1>>();
   auto newTriangles = std::vector<Eigen::Matrix<Index, 3, 1>>();
   newTriangles.resize(triangles.size());
   auto indexMap = std::unordered_map<Index, Index>();
@@ -76,17 +76,18 @@ discardUnusedVertices(
 }
 
 //==============================================================================
-template <typename S, typename Index>
+template <typename Scalar, typename Index>
 std::tuple<
-    std::vector<Eigen::Matrix<S, 3, 1>>,
+    std::vector<Eigen::Matrix<Scalar, 3, 1>>,
     std::vector<Eigen::Matrix<Index, 3, 1>>>
 compute_convex_hull_3d(
-    const std::vector<Eigen::Matrix<S, 3, 1>>& inputVertices, bool optimize)
+    const std::vector<Eigen::Matrix<Scalar, 3, 1>>& inputVertices,
+    bool optimize)
 {
   ch_vertex* vertices = new ch_vertex[inputVertices.size()];
 
   for (auto i = 0u; i < inputVertices.size(); ++i) {
-    const Eigen::Matrix<S, 3, 1>& inputV = inputVertices[i];
+    const Eigen::Matrix<Scalar, 3, 1>& inputV = inputVertices[i];
     ch_vertex& v = vertices[i];
     v.x = inputV[0];
     v.y = inputV[1];
@@ -113,7 +114,7 @@ compute_convex_hull_3d(
   delete[] vertices;
 
   if (optimize)
-    return discardUnusedVertices<S, Index>(inputVertices, eigenFaces);
+    return discardUnusedVertices<Scalar, Index>(inputVertices, eigenFaces);
   else
     return std::make_pair(inputVertices, eigenFaces);
 }

@@ -38,23 +38,23 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-const std::string& Pyramid<S>::GetType()
+template <typename Scalar>
+const std::string& Pyramid<Scalar>::GetType()
 {
   static const std::string type("Pyramid");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-Pyramid<S>::Pyramid()
+template <typename Scalar>
+Pyramid<Scalar>::Pyramid()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& Pyramid<S>::get_type() const
+template <typename Scalar>
+const std::string& Pyramid<Scalar>::get_type() const
 {
   return GetType();
 }

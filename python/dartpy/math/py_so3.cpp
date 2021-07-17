@@ -31,6 +31,8 @@
  */
 
 #include <dart/dart.hpp>
+#include <pybind11/eigen.h>
+#include <pybind11/operators.h>
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
@@ -40,13 +42,25 @@ namespace dart::python {
 void py_so3(py::module& m)
 {
   ::py::class_<math::SO3d>(m, "SO3")
+      .def_static("Identity", &math::SO3d::Identity)
+      .def_static("Random", &math::SO3d::Random)
+      .def_readonly_static("GroupDim", &math::SO3d::GroupDim)
       .def(::py::init<>())
+      .def(py::self * py::self)
+      .def(
+          "__mul__",
+          [](const math::SO3d& a, const Eigen::Vector3d& b) {
+            return a * b;
+          },
+          py::is_operator())
       .def("set_identity", &math::SO3d::set_identity)
       .def("set_random", &math::SO3d::set_random)
-      .def_readonly_static("GroupDim", &math::SO3d::GroupDim)
-      .def_static("Random", &math::SO3d::Random);
+      .def("is_identity", &math::SO3d::is_identity);
 
-  ::py::class_<math::SO3Tangentd>(m, "SO3Tangent").def(::py::init<>());
+  ::py::class_<math::SO3Tangentd>(m, "SO3Tangent")
+      .def(::py::init<>())
+      .def("is_zero", &math::SO3Tangentd::is_zero);
+
   ::py::class_<math::SO3Cotangentd>(m, "SO3Cotangent").def(::py::init<>());
 }
 

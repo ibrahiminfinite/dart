@@ -38,11 +38,11 @@
 namespace dart {
 namespace math {
 
-template <typename S>
+template <typename Scalar>
 class Convex2
 {
 public:
-  using Vector2 = Eigen::Matrix<S, 2, 1>;
+  using Vector2 = Eigen::Matrix<Scalar, 2, 1>;
   virtual Vector2 getSupport(const Vector2& direction) const = 0;
 };
 

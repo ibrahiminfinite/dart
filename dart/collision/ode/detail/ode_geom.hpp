@@ -41,20 +41,20 @@ namespace dart {
 namespace collision {
 namespace detail {
 
-template <typename S>
+template <typename Scalar>
 class OdeGeom
 {
 public:
   struct GeomUserData;
 
   /// Constructor.
-  OdeGeom(const OdeObject<S>* collObj);
+  OdeGeom(const OdeObject<Scalar>* collObj);
 
   /// Destructor.
   virtual ~OdeGeom();
 
   /// Returns the parent collision object.
-  const OdeObject<S>* get_parent_collision_object() const;
+  const OdeObject<Scalar>* get_parent_collision_object() const;
 
   // Documentation inherited.
   virtual void update_engine_data();
@@ -67,7 +67,7 @@ public:
 
 protected:
   /// Parent collision object
-  const OdeObject<S>* m_parent_object;
+  const OdeObject<Scalar>* m_parent_object;
 
   /// ODE geom ID associated with this object.
   ///
@@ -79,8 +79,8 @@ protected:
 DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeGeom)
 
 //==============================================================================
-template <typename S>
-OdeGeom<S>::OdeGeom(const OdeObject<S>* collObj)
+template <typename Scalar>
+OdeGeom<Scalar>::OdeGeom(const OdeObject<Scalar>* collObj)
   : m_parent_object(collObj),
     m_geom_id(nullptr) // will be set by concrete geom classes
 {
@@ -88,36 +88,36 @@ OdeGeom<S>::OdeGeom(const OdeObject<S>* collObj)
 }
 
 //==============================================================================
-template <typename S>
-OdeGeom<S>::~OdeGeom()
+template <typename Scalar>
+OdeGeom<Scalar>::~OdeGeom()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const OdeObject<S>* OdeGeom<S>::get_parent_collision_object() const
+template <typename Scalar>
+const OdeObject<Scalar>* OdeGeom<Scalar>::get_parent_collision_object() const
 {
   return m_parent_object;
 }
 
 //==============================================================================
-template <typename S>
-void OdeGeom<S>::update_engine_data()
+template <typename Scalar>
+void OdeGeom<Scalar>::update_engine_data()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-dGeomID OdeGeom<S>::get_ode_geom_id() const
+template <typename Scalar>
+dGeomID OdeGeom<Scalar>::get_ode_geom_id() const
 {
   return m_geom_id;
 }
 
 //==============================================================================
-template <typename S>
-bool OdeGeom<S>::is_placeable() const
+template <typename Scalar>
+bool OdeGeom<Scalar>::is_placeable() const
 {
   return true;
 }

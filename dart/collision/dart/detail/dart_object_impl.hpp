@@ -39,44 +39,45 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
+template <typename Scalar>
+math::Isometry3<Scalar> DartObject<Scalar>::get_pose() const
 {
   return m_pose.transformation();
 }
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
+template <typename Scalar>
+void DartObject<Scalar>::set_pose(const math::Isometry3<Scalar>& tf)
 {
   m_pose = tf;
 }
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
+template <typename Scalar>
+math::Vector3<Scalar> DartObject<Scalar>::get_position() const
 {
   return m_pose.translation();
 }
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
+template <typename Scalar>
+void DartObject<Scalar>::set_position(const math::Vector3<Scalar>& pos)
 {
-  m_pose.mutable_position() = pos;
+  m_pose.position() = pos;
 }
 
 //==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
+template <typename Scalar>
+DartObject<Scalar>::DartObject(
+    DartScene<Scalar>* group, math::GeometryPtr shape)
+  : Object<Scalar>(group, shape)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
+template <typename Scalar>
+void DartObject<Scalar>::update_engine_data()
 {
   // Do nothing
 }

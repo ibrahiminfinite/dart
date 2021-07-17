@@ -40,14 +40,14 @@
 namespace dart {
 namespace math {
 
-template <typename S = double>
-static constexpr S eps()
+template <typename Scalar = double>
+static constexpr Scalar eps()
 {
-  if constexpr (std::is_same_v<S, float>) {
+  if constexpr (std::is_same_v<Scalar, float>) {
     return 1e-6;
-  } else if constexpr (std::is_same_v<S, double>) {
+  } else if constexpr (std::is_same_v<Scalar, double>) {
     return 1e-12;
-  } else if constexpr (std::is_same_v<S, long double>) {
+  } else if constexpr (std::is_same_v<Scalar, long double>) {
     return 1e-18;
   } else {
     common::static_assert_no_match();
@@ -55,42 +55,42 @@ static constexpr S eps()
   }
 }
 
-template <typename S = double>
-static constexpr S pi()
+template <typename Scalar = double>
+static constexpr Scalar pi()
 {
-  return static_cast<S>(
+  return static_cast<Scalar>(
       3.141592653589793238462643383279502884197169399375105820974944592L);
 }
 
-template <typename S = double>
-static constexpr S two_pi()
+template <typename Scalar = double>
+static constexpr Scalar two_pi()
 {
-  return 2.0 * pi<S>();
+  return 2.0 * pi<Scalar>();
 }
 
-template <typename S = double>
-static constexpr S half_pi()
+template <typename Scalar = double>
+static constexpr Scalar half_pi()
 {
-  return 0.5 * pi<S>();
+  return 0.5 * pi<Scalar>();
 }
 
-template <typename S = double>
-static constexpr S pi_sqr()
+template <typename Scalar = double>
+static constexpr Scalar pi_sqr()
 {
-  return pi<S>() * pi<S>();
+  return pi<Scalar>() * pi<Scalar>();
 }
 
-template <typename S = double>
-static constexpr S phi()
+template <typename Scalar = double>
+static constexpr Scalar phi()
 {
-  return static_cast<S>(
+  return static_cast<Scalar>(
       1.618033988749894848204586834365638117720309179805762862135448623L);
 }
 
-template <typename S = double>
-static constexpr S inf()
+template <typename Scalar = double>
+static constexpr Scalar inf()
 {
-  return std::numeric_limits<S>::infinity();
+  return std::numeric_limits<Scalar>::infinity();
 }
 
 } // namespace math

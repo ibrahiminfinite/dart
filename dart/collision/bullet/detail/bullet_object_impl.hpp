@@ -47,32 +47,32 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> BulletObject<S>::get_pose() const
+template <typename Scalar>
+math::Isometry3<Scalar> BulletObject<Scalar>::get_pose() const
 {
-  return to_pose<S>(m_bullet_collision_object->getWorldTransform());
+  return to_pose<Scalar>(m_bullet_collision_object->getWorldTransform());
 }
 
 //==============================================================================
-template <typename S>
-void BulletObject<S>::set_pose(const math::Isometry3<S>& tf)
+template <typename Scalar>
+void BulletObject<Scalar>::set_pose(const math::Isometry3<Scalar>& tf)
 {
   DART_ASSERT(m_bullet_collision_object);
-  m_bullet_collision_object->setWorldTransform(to_bullet_pose<S>(tf));
+  m_bullet_collision_object->setWorldTransform(to_bullet_pose<Scalar>(tf));
 }
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> BulletObject<S>::get_position() const
+template <typename Scalar>
+math::Vector3<Scalar> BulletObject<Scalar>::get_position() const
 {
   const btTransform& bullet_pose
       = m_bullet_collision_object->getWorldTransform();
-  return to_vector3<S>(bullet_pose.getOrigin());
+  return to_vector3<Scalar>(bullet_pose.getOrigin());
 }
 
 //==============================================================================
-template <typename S>
-void BulletObject<S>::set_position(const math::Vector3<S>& pos)
+template <typename Scalar>
+void BulletObject<Scalar>::set_position(const math::Vector3<Scalar>& pos)
 {
   btTransform bullet_pose = m_bullet_collision_object->getWorldTransform();
   bullet_pose.setOrigin(to_bullet_vector3(pos));
@@ -80,9 +80,10 @@ void BulletObject<S>::set_position(const math::Vector3<S>& pos)
 }
 
 //==============================================================================
-template <typename S>
-BulletObject<S>::BulletObject(BulletScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
+template <typename Scalar>
+BulletObject<Scalar>::BulletObject(
+    BulletScene<Scalar>* group, math::GeometryPtr shape)
+  : Object<Scalar>(group, shape)
 {
   auto engine = group->get_mutable_bullet_engine();
   auto bullet_collision_shape = engine->create_bullet_collision_shape(shape);
@@ -93,15 +94,16 @@ BulletObject<S>::BulletObject(BulletScene<S>* group, math::GeometryPtr shape)
 }
 
 //==============================================================================
-template <typename S>
-const btCollisionObject* BulletObject<S>::get_bullet_collision_object() const
+template <typename Scalar>
+const btCollisionObject* BulletObject<Scalar>::get_bullet_collision_object()
+    const
 {
   return m_bullet_collision_object.get();
 }
 
 //==============================================================================
-template <typename S>
-void BulletObject<S>::update_engine_data()
+template <typename Scalar>
+void BulletObject<Scalar>::update_engine_data()
 {
   // Do nothing
 }

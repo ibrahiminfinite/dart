@@ -37,8 +37,9 @@
 
 namespace dart::math {
 
-template <typename S, template <typename> class... SubGroups>
-class ProductLieGroup : public LieGroupBase<ProductLieGroup<S, SubGroups...>>
+template <typename Scalar, template <typename> class... SubGroups>
+class ProductLieGroup
+  : public LieGroupBase<ProductLieGroup<Scalar, SubGroups...>>
 {
 public:
   template <int Index>
@@ -53,8 +54,8 @@ public:
   //  MapSubGroup<Index> element();
 };
 
-template <typename S>
-class ProductLieGroup<S>
+template <typename Scalar>
+class ProductLieGroup<Scalar>
 {
 public:
   ProductLieGroup() = default;

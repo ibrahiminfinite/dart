@@ -145,6 +145,7 @@ endif()
 #=======================
 
 dart_find_package(spdlog)
+dart_find_package(yaml-cpp)
 
 # find_package(Threads)
 dart_find_package(NLOPT)

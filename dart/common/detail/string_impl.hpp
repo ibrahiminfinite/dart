@@ -40,27 +40,28 @@
 namespace dart::common {
 
 //==============================================================================
-template <typename S>
-S to_scalar(const std::string& str)
+template <typename Scalar>
+Scalar to_scalar(const std::string& str)
 {
-  if constexpr (std::is_same_v<S, bool>) {
+  if constexpr (std::is_same_v<Scalar, bool>) {
     return to_bool(str);
-  } else if constexpr (std::is_same_v<S, char>) {
+  } else if constexpr (std::is_same_v<Scalar, char>) {
     return to_char(str);
-  } else if constexpr (std::is_same_v<S, int>) {
+  } else if constexpr (std::is_same_v<Scalar, int>) {
     return to_int(str);
-  } else if constexpr (std::is_same_v<S, unsigned int>) {
+  } else if constexpr (std::is_same_v<Scalar, unsigned int>) {
     return to_uint(str);
-  } else if constexpr (std::is_same_v<S, long>) {
+  } else if constexpr (std::is_same_v<Scalar, long>) {
     return to_long(str);
-  } else if constexpr (std::is_same_v<S, long long>) {
+  } else if constexpr (std::is_same_v<Scalar, long long>) {
     return to_long_long(str);
-  } else if constexpr (std::is_same_v<S, float>) {
+  } else if constexpr (std::is_same_v<Scalar, float>) {
     return to_float(str);
-  } else if constexpr (std::is_same_v<S, double>) {
+  } else if constexpr (std::is_same_v<Scalar, double>) {
     return to_double(str);
   } else {
-    DART_ERROR("Unsupported scalar type [{}] to convert to.", typeid(S).name());
+    DART_ERROR(
+        "Unsupported scalar type [{}] to convert to.", typeid(Scalar).name());
     return 0;
   }
 }

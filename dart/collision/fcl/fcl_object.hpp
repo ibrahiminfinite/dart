@@ -40,47 +40,47 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class FclObject : public Object<S_>
+template <typename Scalar_>
+class FclObject : public Object<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   // Documentation inherited
-  math::Isometry3<S> get_pose() const override;
+  math::Isometry3<Scalar> get_pose() const override;
 
   // Documentation inherited
-  void set_pose(const math::Isometry3<S>& tf) override;
+  void set_pose(const math::Isometry3<Scalar>& tf) override;
 
   // Documentation inherited
-  math::Vector3<S> get_position() const override;
+  math::Vector3<Scalar> get_position() const override;
 
   // Documentation inherited
-  void set_position(const math::Vector3<S>& pos) override;
+  void set_position(const math::Vector3<Scalar>& pos) override;
 
   /// Return FCL collision object
-  FclCollisionObject<S>* get_fcl_collision_object();
+  FclCollisionObject<Scalar>* get_fcl_collision_object();
 
   /// Return FCL collision object
-  const FclCollisionObject<S>* get_fcl_collision_object() const;
+  const FclCollisionObject<Scalar>* get_fcl_collision_object() const;
 
 protected:
   /// Constructor
   FclObject(
-      Scene<S>* collision_scene,
+      Scene<Scalar>* collision_scene,
       math::GeometryPtr shape,
-      const std::shared_ptr<FclCollisionGeometry<S>>& fcl_coll_geom);
+      const std::shared_ptr<FclCollisionGeometry<Scalar>>& fcl_coll_geom);
 
   // Documentation inherited
   void update_engine_data() override;
 
   /// FCL collision object
-  std::unique_ptr<FclCollisionObject<S>> m_fcl_collision_object;
+  std::unique_ptr<FclCollisionObject<Scalar>> m_fcl_collision_object;
 
 private:
-  friend class FclEngine<S>;
-  friend class FclScene<S>;
+  friend class FclEngine<Scalar>;
+  friend class FclScene<Scalar>;
 };
 
 #if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE

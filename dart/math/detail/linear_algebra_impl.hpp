@@ -45,10 +45,10 @@ template <typename Derived>
 math::Matrix<typename Derived::Scalar, 3, 3> skew(
     const math::MatrixBase<Derived>& vec)
 {
-  using S = typename Derived::Scalar;
+  using Scalar = typename Derived::Scalar;
 
   // clang-format off
-  return (math::Matrix<S, 3, 3>() <<
+  return (math::Matrix<Scalar, 3, 3>() <<
           0, -vec[2], +vec[1],
     +vec[2],       0, -vec[0],
     -vec[1], +vec[0],       0
@@ -61,17 +61,17 @@ template <typename Derived>
 math::Matrix<typename Derived::Scalar, 3, 1> unskew(
     const math::MatrixBase<Derived>& mat)
 {
-  using S = typename Derived::Scalar;
+  using Scalar = typename Derived::Scalar;
 
 #ifndef NDEBUG
-  if (std::abs(mat(0, 0)) > eps<S>() || std::abs(mat(1, 1)) > eps<S>()
-      || std::abs(mat(2, 2)) > eps<S>()) {
+  if (std::abs(mat(0, 0)) > eps<Scalar>() || std::abs(mat(1, 1)) > eps<Scalar>()
+      || std::abs(mat(2, 2)) > eps<Scalar>()) {
     DART_DEBUG("Not skew a symmetric matrix");
   }
 
   // TODO(JS): Check skew-symmetry
 #endif
-  return math::Vector3<S>(mat(2, 1), mat(0, 2), mat(1, 0));
+  return math::Vector3<Scalar>(mat(2, 1), mat(0, 2), mat(1, 0));
 }
 
 } // namespace dart::math

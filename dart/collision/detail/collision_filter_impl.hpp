@@ -38,16 +38,16 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-CollisionFilter<S>::~CollisionFilter()
+template <typename Scalar>
+CollisionFilter<Scalar>::~CollisionFilter()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-void CompositeCollisionFilter<S>::add_collision_filter(
-    ConstCollisionFilterPtr<S> filter)
+template <typename Scalar>
+void CompositeCollisionFilter<Scalar>::add_collision_filter(
+    ConstCollisionFilterPtr<Scalar> filter)
 {
   // nullptr is not an allowed filter
   if (!filter)
@@ -57,24 +57,24 @@ void CompositeCollisionFilter<S>::add_collision_filter(
 }
 
 //==============================================================================
-template <typename S>
-void CompositeCollisionFilter<S>::remove_collision_filter(
-    const ConstCollisionFilterPtr<S>& filter)
+template <typename Scalar>
+void CompositeCollisionFilter<Scalar>::remove_collision_filter(
+    const ConstCollisionFilterPtr<Scalar>& filter)
 {
   m_filters.erase(filter);
 }
 
 //==============================================================================
-template <typename S>
-void CompositeCollisionFilter<S>::remove_all_collision_filters()
+template <typename Scalar>
+void CompositeCollisionFilter<Scalar>::remove_all_collision_filters()
 {
   m_filters.clear();
 }
 
 //==============================================================================
-template <typename S>
-bool CompositeCollisionFilter<S>::ignores(
-    const Object<S>* object1, const Object<S>* object2) const
+template <typename Scalar>
+bool CompositeCollisionFilter<Scalar>::ignores(
+    const Object<Scalar>* object1, const Object<Scalar>* object2) const
 {
   for (const auto& filter : m_filters) {
     if (filter->ignores(object1, object2))

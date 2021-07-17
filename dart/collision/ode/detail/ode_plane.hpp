@@ -39,13 +39,15 @@ namespace dart {
 namespace collision {
 namespace detail {
 
-template <typename S>
-class OdePlane : public OdeGeom<S>
+template <typename Scalar>
+class OdePlane : public OdeGeom<Scalar>
 {
 public:
   /// Constructor
   OdePlane(
-      const OdeObject<S>* parent, const math::Vector3<S>& normal, S offset);
+      const OdeObject<Scalar>* parent,
+      const math::Vector3<Scalar>& normal,
+      Scalar offset);
 
   /// Destructor
   ~OdePlane() override;

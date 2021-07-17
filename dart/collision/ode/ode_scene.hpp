@@ -40,30 +40,30 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class OdeScene : public Scene<S_>
+template <typename Scalar_>
+class OdeScene : public Scene<Scalar_>
 {
 public:
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Constructor
-  explicit OdeScene(Engine<S>* engine);
+  explicit OdeScene(Engine<Scalar>* engine);
 
   /// Destructor
   ~OdeScene() override;
 
-  ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+  ObjectPtr<Scalar> create_object(math::GeometryPtr shape) override;
 
 protected:
-  OdeEngine<S>* get_mutable_ode_engine();
+  OdeEngine<Scalar>* get_mutable_ode_engine();
 
-  const OdeEngine<S>* get_ode_engine() const;
+  const OdeEngine<Scalar>* get_ode_engine() const;
 
   dSpaceID get_ode_space_id() const;
 
 private:
-  friend class OdeEngine<S>;
-  friend class OdeObject<S>;
+  friend class OdeEngine<Scalar>;
+  friend class OdeObject<Scalar>;
 
   /// Top-level space for all sub-spaces/collisions
   dSpaceID m_ode_space_id;

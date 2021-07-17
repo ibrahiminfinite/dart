@@ -42,12 +42,12 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class FclEngine : public Engine<S_>
+template <typename Scalar_>
+class FclEngine : public Engine<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   static std::shared_ptr<FclEngine> Create();
 
@@ -92,32 +92,32 @@ public:
   static const std::string& GetType();
 
   // Documentation inherited
-  ScenePtr<S> create_scene() override;
+  ScenePtr<Scalar> create_scene() override;
 
   // Documentation inherited
   bool collide(
-      ObjectPtr<S> object1,
-      ObjectPtr<S> object2,
-      const CollisionOption<S>& option = {},
-      CollisionResult<S>* result = nullptr) override;
+      ObjectPtr<Scalar> object1,
+      ObjectPtr<Scalar> object2,
+      const CollisionOption<Scalar>& option = {},
+      CollisionResult<Scalar>* result = nullptr) override;
 
 protected:
   /// Constructor
   FclEngine() = default;
 
   /// Returns fcl::CollisionGeometry for a shape
-  std::shared_ptr<FclCollisionGeometry<S>> create_fcl_collision_geometry(
+  std::shared_ptr<FclCollisionGeometry<Scalar>> create_fcl_collision_geometry(
       const math::ConstGeometryPtr& shape);
 
 private:
-  friend class FclScene<S>;
+  friend class FclScene<Scalar>;
 
   PrimitiveShape m_primitive_shape_type = PrimitiveShape::PRIMITIVE;
 
-  DART_REGISTER_ENGINE_IN_HEADER(FclEngine<S>);
+  DART_REGISTER_ENGINE_IN_HEADER(FclEngine<Scalar>);
 };
 
-DART_REGISTER_ENGINE_OUT_HEADER(FclEngine<S>);
+DART_REGISTER_ENGINE_OUT_HEADER(FclEngine<Scalar>);
 
 using FclEnginef = FclEngine<float>;
 using FclEngined = FclEngine<double>;

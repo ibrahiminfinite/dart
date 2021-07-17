@@ -38,32 +38,33 @@
 namespace dart::math {
 
 //==============================================================================
-template <typename S>
-SpatialInertia<S>::SpatialInertia() : m_matrix(Eigen::Matrix<S, 6, 6>::Zero())
+template <typename Scalar, int Options>
+SpatialInertia<Scalar, Options>::SpatialInertia()
+  : m_matrix(Eigen::Matrix<Scalar, 6, 6>::Zero())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar, int Options>
 template <typename Derived>
-SpatialInertia<S>::SpatialInertia(
-    const Eigen::MatrixBase<Derived>& moment, S mass)
+SpatialInertia<Scalar, Options>::SpatialInertia(
+    const Eigen::MatrixBase<Derived>& moment, Scalar mass)
 {
   m_matrix.template topLeftCorner<3, 3>() = moment;
   m_matrix.template topRightCorner<3, 3>().setZero();
   m_matrix.template bottomLeftCorner<3, 3>().setZero();
   m_matrix.template bottomRightCorner<3, 3>().noalias()
-      = Eigen::Matrix<S, 3, 3>::Identity() * mass;
+      = Eigen::Matrix<Scalar, 3, 3>::Identity() * mass;
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar, int Options>
 template <typename DerivedA, typename DerivedB>
-SpatialInertia<S>::SpatialInertia(
+SpatialInertia<Scalar, Options>::SpatialInertia(
     const Eigen::MatrixBase<DerivedA>& offset,
     const Eigen::MatrixBase<DerivedB>& moment,
-    S mass)
+    Scalar mass)
 {
   const auto p_mat = skew(offset);
 
@@ -72,14 +73,14 @@ SpatialInertia<S>::SpatialInertia(
   m_matrix.template bottomLeftCorner<3, 3>()
       = m_matrix.template topRightCorner<3, 3>().transpose();
   m_matrix.template bottomRightCorner<3, 3>().noalias()
-      = Eigen::Matrix<S, 3, 3>::Identity() * mass;
+      = Eigen::Matrix<Scalar, 3, 3>::Identity() * mass;
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar, int Options>
 template <typename Derived>
-SpatialInertia<S>::SpatialInertia(
-    const SE3<S>& T, const Eigen::MatrixBase<Derived>& moment, S mass)
+SpatialInertia<Scalar, Options>::SpatialInertia(
+    const SE3<Scalar>& T, const Eigen::MatrixBase<Derived>& moment, Scalar mass)
 {
   const auto R = T.rotation();
   const auto Rt = R.transpose().eval();
@@ -91,44 +92,7 @@ SpatialInertia<S>::SpatialInertia(
   m_matrix.template bottomLeftCorner<3, 3>()
       = m_matrix.template topRightCorner<3, 3>().transpose();
   m_matrix.template bottomRightCorner<3, 3>().noalias()
-      = Eigen::Matrix<S, 3, 3>::Identity() * mass;
-}
-
-//==============================================================================
-template <typename S>
-S SpatialInertia<S>::operator()(int row, int col) const
-{
-  return m_matrix(row, col);
-}
-
-//==============================================================================
-template <typename S>
-S& SpatialInertia<S>::operator()(int row, int col)
-{
-  return m_matrix(row, col);
-}
-
-//==============================================================================
-template <typename S>
-SE3Cotangent<S> SpatialInertia<S>::operator*(const SE3Tangent<S>& s) const
-{
-  return SE3Tangent<S>(m_matrix * s.vector());
-}
-
-//==============================================================================
-template <typename S>
-void SpatialInertia<S>::transform(const SE3<S>& T)
-{
-  const auto AdT = T.ad_matrix();
-  m_matrix = AdT.transpose() * m_matrix * AdT;
-}
-
-//==============================================================================
-template <typename S>
-SpatialInertia<S> SpatialInertia<S>::transformed(const SE3<S>& T) const
-{
-  const auto AdT = T.ad_matrix();
-  return SpatialInertia<S>(AdT.transpose() * m_matrix * AdT);
+      = Eigen::Matrix<Scalar, 3, 3>::Identity() * mass;
 }
 
 } // namespace dart::math

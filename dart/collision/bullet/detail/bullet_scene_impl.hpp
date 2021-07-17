@@ -44,44 +44,44 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-BulletScene<S>::BulletScene(Engine<S>* engine) : Scene<S>(engine)
+template <typename Scalar>
+BulletScene<Scalar>::BulletScene(Engine<Scalar>* engine) : Scene<Scalar>(engine)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-BulletScene<S>::~BulletScene()
+template <typename Scalar>
+BulletScene<Scalar>::~BulletScene()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-ObjectPtr<S> BulletScene<S>::create_object(math::GeometryPtr shape)
+template <typename Scalar>
+ObjectPtr<Scalar> BulletScene<Scalar>::create_object(math::GeometryPtr shape)
 {
   if (!shape) {
     DART_WARN("Not allowed to create a collision object for a null shape");
     return nullptr;
   }
 
-  return std::shared_ptr<BulletObject<S>>(
-      new BulletObject<S>(this, std::move(shape)));
+  return std::shared_ptr<BulletObject<Scalar>>(
+      new BulletObject<Scalar>(this, std::move(shape)));
 }
 
 //==============================================================================
-template <typename S>
-BulletEngine<S>* BulletScene<S>::get_mutable_bullet_engine()
+template <typename Scalar>
+BulletEngine<Scalar>* BulletScene<Scalar>::get_mutable_bullet_engine()
 {
-  return static_cast<BulletEngine<S>*>(this->m_engine);
+  return static_cast<BulletEngine<Scalar>*>(this->m_engine);
 }
 
 //==============================================================================
-template <typename S>
-const BulletEngine<S>* BulletScene<S>::get_bullet_engine() const
+template <typename Scalar>
+const BulletEngine<Scalar>* BulletScene<Scalar>::get_bullet_engine() const
 {
-  return static_cast<const BulletEngine<S>*>(this->m_engine);
+  return static_cast<const BulletEngine<Scalar>*>(this->m_engine);
 }
 
 } // namespace collision

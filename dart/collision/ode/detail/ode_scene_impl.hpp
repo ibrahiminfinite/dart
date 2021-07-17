@@ -44,8 +44,8 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-OdeScene<S>::OdeScene(Engine<S>* engine) : Scene<S>(engine)
+template <typename Scalar>
+OdeScene<Scalar>::OdeScene(Engine<Scalar>* engine) : Scene<Scalar>(engine)
 {
   // This uses an internal data structure that records how each geom overlaps
   // cells in one of several three dimensional grids. Each grid has cubical
@@ -62,42 +62,42 @@ OdeScene<S>::OdeScene(Engine<S>* engine) : Scene<S>(engine)
 }
 
 //==============================================================================
-template <typename S>
-OdeScene<S>::~OdeScene()
+template <typename Scalar>
+OdeScene<Scalar>::~OdeScene()
 {
   dSpaceDestroy(m_ode_space_id);
 }
 
 //==============================================================================
-template <typename S>
-ObjectPtr<S> OdeScene<S>::create_object(math::GeometryPtr shape)
+template <typename Scalar>
+ObjectPtr<Scalar> OdeScene<Scalar>::create_object(math::GeometryPtr shape)
 {
   if (!shape) {
     DART_WARN("Not allowed to create a collision object for a null shape");
     return nullptr;
   }
 
-  return std::shared_ptr<OdeObject<S>>(
-      new OdeObject<S>(this, std::move(shape)));
+  return std::shared_ptr<OdeObject<Scalar>>(
+      new OdeObject<Scalar>(this, std::move(shape)));
 }
 
 //==============================================================================
-template <typename S>
-OdeEngine<S>* OdeScene<S>::get_mutable_ode_engine()
+template <typename Scalar>
+OdeEngine<Scalar>* OdeScene<Scalar>::get_mutable_ode_engine()
 {
-  return static_cast<OdeEngine<S>*>(this->m_engine);
+  return static_cast<OdeEngine<Scalar>*>(this->m_engine);
 }
 
 //==============================================================================
-template <typename S>
-const OdeEngine<S>* OdeScene<S>::get_ode_engine() const
+template <typename Scalar>
+const OdeEngine<Scalar>* OdeScene<Scalar>::get_ode_engine() const
 {
-  return static_cast<const OdeEngine<S>*>(this->m_engine);
+  return static_cast<const OdeEngine<Scalar>*>(this->m_engine);
 }
 
 //==============================================================================
-template <typename S_>
-dSpaceID OdeScene<S_>::get_ode_space_id() const
+template <typename Scalar_>
+dSpaceID OdeScene<Scalar_>::get_ode_space_id() const
 {
   return m_ode_space_id;
 }

@@ -35,14 +35,17 @@ set(dartpy_test_utils
 
 file(GLOB_RECURSE dartpy_test_files "*test_*.py")
 
-# Add custom target to run the tests
-add_custom_target(pytest
+# Add custom target "py_test" to run the tests
+add_custom_target(py_test
   COMMAND ${CMAKE_COMMAND} -E echo "Running pytest by: PYTHONPATH=${DART_DARTPY_BUILD_DIR} ${PYTHON_EXECUTABLE} -m pytest [sources]"
   COMMAND PYTHONPATH=${DART_DARTPY_BUILD_DIR} ${PYTHON_EXECUTABLE} -m pytest ${dartpy_test_files} -v
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   SOURCES ${dartpy_test_files} ${dartpy_test_utils}
   DEPENDS dartpy
 )
+
+# (Deprecated in DART 7) Add "pytest" target for backward compatibility
+add_custom_target(pytest DEPENDS py_test)
 
 #===============================================================================
 # Usage:

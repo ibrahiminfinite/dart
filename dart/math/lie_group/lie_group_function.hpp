@@ -38,24 +38,29 @@
 
 namespace dart::math {
 
-template <typename S>
-SO3<S> exp(const SO3Tangent<S>& w);
+template <typename Scalar>
+SO3<Scalar> exp(const SO3Tangent<Scalar>& w);
 
-template <typename S>
-SE3<S> exp(const SE3Tangent<S>& twist);
+template <typename Scalar>
+SE3<Scalar> exp(const SE3Tangent<Scalar>& twist);
 
-template <typename S>
-SO3Tangent<S> log(const SO3<S>& r);
+template <typename Scalar>
+SO3Tangent<Scalar> log(const SO3<Scalar>& r);
 
-template <typename S>
-SE3Tangent<S> log(const SE3<S>& r);
+template <typename Scalar>
+SE3Tangent<Scalar> log(const SE3<Scalar>& r);
 
-template <typename S>
-typename SE3<S>::Tangent Ad(const SE3<S>& T, const typename SE3<S>::Tangent& V);
+template <typename DerivedA, typename DerivedB>
+SE3Tangent<typename DerivedB::Scalar> Ad(
+    const SE3Base<DerivedA>& T, const SE3TangentBase<DerivedB>& V);
 
-template <typename S>
-typename SE3<S>::Tangent ad(
-    const typename SE3<S>::Tangent& s1, const typename SE3<S>::Tangent& s2);
+template <typename DerivedA, typename DerivedB>
+SE3Tangent<typename DerivedB::Scalar> Ad_R(
+    const SE3Base<DerivedA>& T, const SE3TangentBase<DerivedB>& V);
+
+template <typename DerivedA, typename DerivedB>
+DerivedA ad(
+    const SE3TangentBase<DerivedA>& s1, const SE3TangentBase<DerivedB>& s2);
 
 } // namespace dart::math
 

@@ -36,25 +36,11 @@
 #include "dart/math/lie_group/lie_group.hpp"
 #include "dart/math/type.hpp"
 
-namespace dart::math {
-
-// Forward declaration
-template <typename S, int Dim, int Options = 0>
-class R;
-template <typename S, int Dim, int Options = 0>
-class RAlgebra;
-template <typename S, int Dim, int Options = 0>
-class RTangent;
-template <typename S, int Dim, int Options = 0>
-class RCotangent;
-
-} // namespace dart::math
-
 namespace Eigen::internal {
 
 //==============================================================================
-template <typename S_, int Dim, int Options_>
-struct traits<dart::math::R<S_, Dim, Options_>>
+template <typename Scalar_, int Dim, int Options_>
+struct traits<dart::math::R<Scalar_, Dim, Options_>>
 {
   static constexpr int Options = Options_;
 
@@ -69,30 +55,30 @@ struct traits<dart::math::R<S_, Dim, Options_>>
 
   static constexpr int RepDim = Dim;
 
-  using S = S_;
+  using Scalar = Scalar_;
 
-  using LieGroup = dart::math::R<S, GroupDim, Options>;
-  using LieGroupData = Eigen::Matrix<S, MatrixDim, Options>;
-  using LieGroupCoeffs = Eigen::Matrix<S, MatrixDim, Options>;
+  using LieGroup = dart::math::R<Scalar, GroupDim, Options>;
+  using LieGroupData = Eigen::Matrix<Scalar, MatrixDim, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, MatrixDim, Options>;
 
-  using Rotation = Eigen::Matrix<S, 3, 3>;
+  using Rotation = Eigen::Matrix<Scalar, 3, 3>;
   using Transformation
-      = Eigen::Transform<S, SpaceDim, Eigen::Isometry, Options>;
+      = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry, Options>;
 
-  using Tangent = dart::math::RTangent<S, GroupDim, Options>;
-  using TangentData = Eigen::Matrix<S, GroupDim, Options>;
+  using Tangent = dart::math::RTangent<Scalar, GroupDim, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using Cotangent = dart::math::RCotangent<S, GroupDim, Options>;
-  using CotangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Cotangent = dart::math::RCotangent<Scalar, GroupDim, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using LieAlgebra = dart::math::RAlgebra<S, GroupDim, Options>;
+  using LieAlgebra = dart::math::RAlgebra<Scalar, GroupDim, Options>;
 
-  using Jacobian = Eigen::Matrix<S, GroupDim, GroupDim, Options>;
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
 };
 
 //==============================================================================
-template <typename S_, int Options_>
-struct traits<dart::math::R<S_, Eigen::Dynamic, Options_>>
+template <typename Scalar_, int Options_>
+struct traits<dart::math::R<Scalar_, Eigen::Dynamic, Options_>>
 {
   static constexpr int Options = Options_;
 
@@ -107,25 +93,286 @@ struct traits<dart::math::R<S_, Eigen::Dynamic, Options_>>
 
   static constexpr int RepDim = Eigen::Dynamic;
 
-  using S = S_;
+  using Scalar = Scalar_;
 
-  using LieGroup = dart::math::R<S, GroupDim, Options>;
-  using LieGroupData = Eigen::Matrix<S, MatrixDim, Options>;
-  using LieGroupCoeffs = Eigen::Matrix<S, MatrixDim, Options>;
+  using LieGroup = dart::math::R<Scalar, GroupDim, Options>;
+  using LieGroupData = Eigen::Matrix<Scalar, MatrixDim, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, MatrixDim, Options>;
 
-  using Rotation = Eigen::Matrix<S, 3, 3>;
+  using Rotation = Eigen::Matrix<Scalar, 3, 3>;
   using Transformation
-      = Eigen::Transform<S, SpaceDim, Eigen::Isometry, Options>;
+      = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry, Options>;
 
-  using Tangent = dart::math::RTangent<S, GroupDim, Options>;
-  using TangentData = Eigen::Matrix<S, GroupDim, Options>;
+  using Tangent = dart::math::RTangent<Scalar, GroupDim, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using Cotangent = dart::math::RCotangent<S, GroupDim, Options>;
-  using CotangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Cotangent = dart::math::RCotangent<Scalar, GroupDim, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using LieAlgebra = dart::math::RAlgebra<S, GroupDim, Options>;
+  using LieAlgebra = dart::math::RAlgebra<Scalar, GroupDim, Options>;
 
-  using Jacobian = Eigen::Matrix<S, GroupDim, GroupDim, Options>;
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+};
+
+//==============================================================================
+template <typename Scalar_, int Dim, int Options_>
+struct traits<dart::math::RTangent<Scalar_, Dim, Options_>>
+{
+  static constexpr int Options = Options_;
+
+  /// Dimension of the Euclidean space that the Lie group is embedded.
+  static constexpr int SpaceDim = Dim;
+
+  /// Dimension of the Lie group.
+  static constexpr int GroupDim = Dim;
+
+  /// Dimension of the matrix representation of the Lie group.
+  static constexpr int MatrixDim = GroupDim + 1;
+
+  static constexpr int RepDim = Dim;
+
+  using Scalar = Scalar_;
+
+  using LieGroup = dart::math::R<Scalar, GroupDim, Options>;
+  using LieGroupData = Eigen::Matrix<Scalar, MatrixDim, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, MatrixDim, Options>;
+
+  using Rotation = Eigen::Matrix<Scalar, 3, 3>;
+  using Transformation
+      = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry, Options>;
+
+  using Tangent = dart::math::RTangent<Scalar, GroupDim, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using Cotangent = dart::math::RCotangent<Scalar, GroupDim, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using LieAlgebra = dart::math::RAlgebra<Scalar, GroupDim, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Data = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+};
+
+//==============================================================================
+template <typename Scalar_, int Options_>
+struct traits<dart::math::RTangent<Scalar_, Eigen::Dynamic, Options_>>
+{
+  static constexpr int Options = Options_;
+
+  /// Dimension of the Euclidean space that the Lie group is embedded.
+  static constexpr int SpaceDim = 3;
+
+  /// Dimension of the Lie group.
+  static constexpr int GroupDim = Eigen::Dynamic;
+
+  /// Dimension of the matrix representation of the Lie group.
+  static constexpr int MatrixDim = Eigen::Dynamic;
+
+  static constexpr int RepDim = Eigen::Dynamic;
+
+  using Scalar = Scalar_;
+
+  using LieGroup = dart::math::R<Scalar, GroupDim, Options>;
+  using LieGroupData = Eigen::Matrix<Scalar, MatrixDim, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, MatrixDim, Options>;
+
+  using Rotation = Eigen::Matrix<Scalar, 3, 3>;
+  using Transformation
+      = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry, Options>;
+
+  using Tangent = dart::math::RTangent<Scalar, GroupDim, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using Cotangent = dart::math::RCotangent<Scalar, GroupDim, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using LieAlgebra = dart::math::RAlgebra<Scalar, GroupDim, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Data = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+};
+
+//==============================================================================
+template <typename Scalar_, int Dim, int Options_>
+struct traits<dart::math::RCotangent<Scalar_, Dim, Options_>>
+{
+  static constexpr int Options = Options_;
+
+  /// Dimension of the Euclidean space that the Lie group is embedded.
+  static constexpr int SpaceDim = Dim;
+
+  /// Dimension of the Lie group.
+  static constexpr int GroupDim = Dim;
+
+  /// Dimension of the matrix representation of the Lie group.
+  static constexpr int MatrixDim = GroupDim + 1;
+
+  static constexpr int RepDim = Dim;
+
+  using Scalar = Scalar_;
+
+  using LieGroup = dart::math::R<Scalar, GroupDim, Options>;
+  using LieGroupData = Eigen::Matrix<Scalar, MatrixDim, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, MatrixDim, Options>;
+
+  using Rotation = Eigen::Matrix<Scalar, 3, 3>;
+  using Transformation
+      = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry, Options>;
+
+  using Tangent = dart::math::RTangent<Scalar, GroupDim, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using Cotangent = dart::math::RCotangent<Scalar, GroupDim, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using LieAlgebra = dart::math::RAlgebra<Scalar, GroupDim, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Data = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+};
+
+//==============================================================================
+template <typename Scalar_, int Options_>
+struct traits<dart::math::RCotangent<Scalar_, Eigen::Dynamic, Options_>>
+{
+  static constexpr int Options = Options_;
+
+  /// Dimension of the Euclidean space that the Lie group is embedded.
+  static constexpr int SpaceDim = 3;
+
+  /// Dimension of the Lie group.
+  static constexpr int GroupDim = Eigen::Dynamic;
+
+  /// Dimension of the matrix representation of the Lie group.
+  static constexpr int MatrixDim = Eigen::Dynamic;
+
+  static constexpr int RepDim = Eigen::Dynamic;
+
+  using Scalar = Scalar_;
+
+  using LieGroup = dart::math::R<Scalar, GroupDim, Options>;
+  using LieGroupData = Eigen::Matrix<Scalar, MatrixDim, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, MatrixDim, Options>;
+
+  using Rotation = Eigen::Matrix<Scalar, 3, 3>;
+  using Transformation
+      = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry, Options>;
+
+  using Tangent = dart::math::RTangent<Scalar, GroupDim, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using Cotangent = dart::math::RCotangent<Scalar, GroupDim, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using LieAlgebra = dart::math::RAlgebra<Scalar, GroupDim, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Data = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+};
+
+//==============================================================================
+template <typename Scalar_, int Dim, int Options_>
+struct traits<Map<dart::math::RTangent<Scalar_, Dim>, Options_>>
+{
+  static constexpr int Options = Options_;
+
+  /// Dimension of the Euclidean space that the Lie group is embedded.
+  static constexpr int SpaceDim = Dim;
+
+  /// Dimension of the Lie group.
+  static constexpr int GroupDim = Dim;
+
+  /// Dimension of the matrix representation of the Lie group.
+  static constexpr int MatrixDim = GroupDim + 1;
+
+  static constexpr int RepDim = Dim;
+
+  using Scalar = Scalar_;
+
+  using LieGroup = dart::math::R<Scalar, GroupDim, Options>;
+  using LieGroupData = Eigen::Matrix<Scalar, MatrixDim, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, MatrixDim, Options>;
+
+  using Rotation = Eigen::Matrix<Scalar, 3, 3>;
+  using Transformation
+      = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry, Options>;
+
+  using Tangent = dart::math::RTangent<Scalar, GroupDim, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using Cotangent = dart::math::RCotangent<Scalar, GroupDim, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using LieAlgebra = dart::math::RAlgebra<Scalar, GroupDim, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Data = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  typedef Eigen::Dense StorageKind;
+  typedef Eigen::MatrixXpr XprKind;
+  typedef typename Data::StorageIndex StorageIndex;
+  enum
+  {
+    Flags = Eigen::ColMajor,
+    RowsAtCompileTime = Data::RowsAtCompileTime,
+    ColsAtCompileTime = Data::RowsAtCompileTime,
+    MaxRowsAtCompileTime = Data::MaxRowsAtCompileTime,
+    MaxColsAtCompileTime = Data::MaxRowsAtCompileTime,
+
+    InnerStrideAtCompileTime = Data::InnerStrideAtCompileTime,
+    SizeAtCompileTime = Data::SizeAtCompileTime,
+  };
+};
+
+//==============================================================================
+template <typename Scalar_, int Options_>
+struct traits<Map<dart::math::RTangent<Scalar_, Eigen::Dynamic>, Options_>>
+{
+  static constexpr int Options = Options_;
+
+  /// Dimension of the Euclidean space that the Lie group is embedded.
+  static constexpr int SpaceDim = Eigen::Dynamic;
+
+  /// Dimension of the Lie group.
+  static constexpr int GroupDim = Eigen::Dynamic;
+
+  /// Dimension of the matrix representation of the Lie group.
+  static constexpr int MatrixDim = GroupDim + 1;
+
+  static constexpr int RepDim = Eigen::Dynamic;
+
+  using Scalar = Scalar_;
+
+  using LieGroup = dart::math::R<Scalar, GroupDim, Options>;
+  using LieGroupData = Eigen::Matrix<Scalar, MatrixDim, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, MatrixDim, Options>;
+
+  using Rotation = Eigen::Matrix<Scalar, 3, 3>;
+  using Transformation
+      = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry, Options>;
+
+  using Tangent = dart::math::RTangent<Scalar, GroupDim, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using Cotangent = dart::math::RCotangent<Scalar, GroupDim, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using LieAlgebra = dart::math::RAlgebra<Scalar, GroupDim, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+
+  using Data = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 };
 
 } // namespace Eigen::internal
@@ -146,16 +393,40 @@ public:
 
   static constexpr int GroupDim = Base::GroupDim;
   static constexpr int MatrixDim = Base::MatrixDim;
+
+  template <typename OtherDerived>
+  bool operator==(const RBase<OtherDerived>& other) const
+  {
+    return vector() == other.vector();
+  }
+
+  bool is_zero() const
+  {
+    return derived().vector().isZero();
+  }
+
+  auto vector() const
+  {
+    return derived().vector();
+  }
+
+  auto& vector()
+  {
+    return derived().vector();
+  }
+
+protected:
+  using Base::derived;
 };
 
 //==============================================================================
 /// Translation group where the dimension is determined in compile-time.
-template <typename S, int N, int Options>
-class R : public RBase<R<S, N, Options>>
+template <typename Scalar, int N, int Options>
+class R : public RBase<R<Scalar, N, Options>>
 {
 public:
-  using Base = LieGroupBase<R<S, N>>;
-  using LieGroupData = math::Vector<S, N>;
+  using Base = LieGroupBase<R<Scalar, N>>;
+  using LieGroupData = math::Vector<Scalar, N>;
   using Tangent = typename Base::Tangent;
   using Cotangent = typename Base::Cotangent;
   using Jacobian = typename Base::Jacobian;
@@ -175,16 +446,24 @@ public:
   R();
 
   /// Copy constructor
-  R(const R& other);
+  R(const R& other) = default;
 
   /// Move constructor
-  R(R&& other);
+  R(R&& other) = default;
 
-  /// Constructs from vector
+  /// Copy constructor from OtherDerived
+  template <typename OtherDerived>
+  R(const RBase<OtherDerived>& other);
+
+  /// Move constructor from OtherDerived
+  template <typename OtherDerived>
+  R(RBase<OtherDerived>&& other);
+
+  /// Constructs from Derived
   template <typename Derived>
   R(const Eigen::MatrixBase<Derived>& vec);
 
-  /// Constructs from vector
+  /// Constructs from Derived
   template <typename Derived>
   R(Eigen::MatrixBase<Derived>&& vec);
 
@@ -203,15 +482,28 @@ public:
   template <typename Derived>
   R& operator=(Eigen::MatrixBase<Derived>&& matrix);
 
+  template <typename OtherDerived>
+  bool operator!=(const RBase<OtherDerived>& other) const
+  {
+    return m_data != other.vector();
+  }
+
   R operator-() const;
 
   R operator+(const R& other) const;
+
+  R operator-(const R& other) const;
 
   void set_identity();
 
   void set_random();
 
   constexpr int dimension() const;
+
+  bool is_identity() const
+  {
+    return this->is_zero();
+  }
 
   LieGroupData& vector();
 
@@ -220,18 +512,18 @@ public:
 protected:
   using Base::derived;
 
-  LieGroupData m_vector;
+  LieGroupData m_data;
 };
 
 //==============================================================================
 /// Translation group where the dimension is determined in runtime.
-template <typename S, int Options>
-class R<S, Eigen::Dynamic, Options>
-  : public LieGroupBase<R<S, Eigen::Dynamic, Options>>
+template <typename Scalar, int Options>
+class R<Scalar, Eigen::Dynamic, Options>
+  : public RBase<R<Scalar, Eigen::Dynamic, Options>>
 {
 public:
-  using Base = LieGroupBase<R<S, Eigen::Dynamic>>;
-  using LieGroupData = math::Vector<S, Eigen::Dynamic>;
+  using Base = RBase<R<Scalar, Eigen::Dynamic>>;
+  using LieGroupData = math::Vector<Scalar, Eigen::Dynamic>;
   using Tangent = typename Base::Tangent;
   using Cotangent = typename Base::Cotangent;
   using Jacobian = typename Base::Jacobian;
@@ -285,50 +577,179 @@ public:
 protected:
   using Base::derived;
 
-  math::VectorX<S> m_vector;
+  math::VectorX<Scalar> m_data;
 };
 
-#define DART_MATH_REAL_VECTOR_SPACE(dim)                                       \
-  /** Translation group of dim##-dimension. */                                 \
-  template <typename S, int Options = 0>                                       \
-  using R##dim = R<S, dim, Options>;                                           \
-  /** Translation group of dim##-dimension for float scalar type. */           \
-  using R##dim##f = R##dim<float>;                                             \
-  /** Translation group of dim##-dimension for double scalar type. */          \
-  using R##dim##d = R##dim<double>;                                            \
-  /** Translation group of dim##-dimension for long double scalar type. */     \
-  using R##dim##ld = R##dim<long double>
-
-/// Translation group of dynamic-size.
-template <typename S>
-using RX = R<S, Eigen::Dynamic>;
-/// Translation group of dynamic-size for float scalar type.
-using RXf = RX<float>;
-/// Translation group of dynamic-size for double scalar type.
-using RXd = RX<double>;
-/// Translation group of dynamic-size for long double scalar type.
-using RXld = RX<long double>;
-
-DART_MATH_REAL_VECTOR_SPACE(1);
-DART_MATH_REAL_VECTOR_SPACE(2);
-DART_MATH_REAL_VECTOR_SPACE(3);
-DART_MATH_REAL_VECTOR_SPACE(4);
-DART_MATH_REAL_VECTOR_SPACE(5);
-DART_MATH_REAL_VECTOR_SPACE(6);
-
 //==============================================================================
-template <typename S, int Dim, int Options>
-class RTangent : public LieGroupTangent<RTangent<S, Dim, Options>>
+template <typename Derived>
+class RTangentBase : public LieGroupTangent<Derived>
 {
 public:
-  using Base = LieGroupTangent<RTangent<S, Dim, Options>>;
-  using Data = typename Base::Data;
+  using Base = LieGroupTangent<Derived>;
+  using TangentData = typename Base::TangentData;
+  using LieGroup = typename Base::LieGroup;
+  using LieAlgebra = typename Base::LieAlgebra;
+  using Jacobian = typename Base::Jacobian;
+
+  /// Assign operator
+  template <typename OtherDerived>
+  Derived& operator=(const RTangentBase<OtherDerived>& other)
+  {
+    derived().vector() = other.vector();
+    return derived();
+  }
+
+  /// Move operator
+  template <typename OtherDerived>
+  Derived& operator=(RTangentBase<OtherDerived>&& other)
+  {
+    derived().vector() = std::move(other.vector());
+    return derived();
+  }
+
+  /// Assign operator
+  ///
+  /// Allows to assign the tangent space of SO(3)
+  template <typename OtherDerived>
+  Derived& operator=(const SO3TangentBase<OtherDerived>& other)
+  {
+    derived().vector() = other.vector();
+    return derived();
+  }
+
+  /// Move operator
+  ///
+  /// Allows to move the tangent space of SO(3)
+  template <typename OtherDerived>
+  Derived& operator=(SO3TangentBase<OtherDerived>&& other)
+  {
+    derived().vector() = std::move(other.vector());
+    return derived();
+  }
+
+  template <typename OtherDerived>
+  Derived& operator+=(const RTangentBase<OtherDerived>& other)
+  {
+    derived().vector() += other.vector();
+    return derived();
+  }
+
+  template <typename OtherDerived>
+  Derived& operator+=(const SO3TangentBase<OtherDerived>& other)
+  {
+    derived().vector() += other.vector();
+    return derived();
+  }
+
+  template <typename OtherDerived>
+  Derived& operator-=(const RTangentBase<OtherDerived>& other)
+  {
+    derived().vector() -= other.vector();
+    return derived();
+  }
+
+  template <typename OtherDerived>
+  Derived& operator-=(const SO3TangentBase<OtherDerived>& other)
+  {
+    derived().vector() -= other.vector();
+    return derived();
+  }
+
+  /// Returns whether the vector is zero
+  bool is_zero() const
+  {
+    return derived().vector().isZero();
+  }
+
+  auto noalias()
+  {
+    return derived().vector().noalias();
+  }
+
+  friend std::ostream& operator<<(
+      std::ostream& os, const RTangentBase<Derived>& x)
+  {
+    os << x.derived().vector().transpose();
+    return os;
+  }
+
+protected:
+  using Base::derived;
+};
+
+//==============================================================================
+template <typename Scalar, int Dim, int Options>
+class RTangent : public RTangentBase<RTangent<Scalar, Dim, Options>>
+{
+public:
+  using Base = RTangentBase<RTangent<Scalar, Dim, Options>>;
+  using TangentData = typename Base::TangentData;
   using LieGroup = typename Base::LieGroup;
   using LieAlgebra = typename Base::LieAlgebra;
   using Jacobian = typename Base::Jacobian;
 
   /// Default constructor
   RTangent();
+
+  /// Copy constructor
+  RTangent(const RTangent& other);
+
+  /// Move constructor
+  RTangent(RTangent&& other);
+
+  template <typename OtherDerived>
+  RTangent(const RTangentBase<OtherDerived>& other);
+
+  template <typename OtherDerived>
+  RTangent(RTangentBase<OtherDerived>&& other);
+
+  /// Copy constructor for coeffs
+  template <typename Derived>
+  RTangent(const Eigen::MatrixBase<Derived>& coeffs);
+
+  /// Move constructor for coeffs
+  template <typename Derived>
+  RTangent(Eigen::MatrixBase<Derived>&& coeffs);
+
+  template <typename Derived>
+  RTangent(const LieGroupTangent<Derived>& other);
+
+  using Base::operator=;
+
+  Scalar operator*(const RCotangent<Scalar, Dim>& cotan) const;
+
+  LieAlgebra hat() const;
+
+  const auto& vector() const
+  {
+    return m_data;
+  }
+
+  auto& vector()
+  {
+    return m_data;
+  }
+
+protected:
+  using Base::derived;
+
+  TangentData m_data;
+};
+
+//==============================================================================
+template <typename Scalar, int Options>
+class RTangent<Scalar, Eigen::Dynamic, Options>
+  : public RTangentBase<RTangent<Scalar, Eigen::Dynamic, Options>>
+{
+public:
+  using Base = RTangentBase<RTangent<Scalar, Eigen::Dynamic, Options>>;
+  using TangentData = typename Base::TangentData;
+  using LieGroup = typename Base::LieGroup;
+  using LieAlgebra = typename Base::LieAlgebra;
+  using Jacobian = typename Base::Jacobian;
+
+  /// Default constructor
+  explicit RTangent(int size = 0);
 
   /// Copy constructor
   RTangent(const RTangent& other);
@@ -347,31 +768,108 @@ public:
   template <typename OtherDerived>
   RTangent(const LieGroupTangent<OtherDerived>& other);
 
-  S operator*(const RCotangent<S, Dim>& cotan) const;
+  template <typename Derived>
+  RTangent& operator=(const RTangentBase<Derived>& other)
+  {
+    m_data = other.vector();
+    return *this;
+  }
+
+  template <typename Derived>
+  RTangent& operator=(RTangentBase<Derived>&& other)
+  {
+    m_data = std::move(other.vector());
+    return *this;
+  }
+
+  Scalar operator*(const RCotangent<Scalar, Eigen::Dynamic>& cotan) const;
 
   LieAlgebra hat() const;
+
+  const auto& vector() const
+  {
+    return m_data;
+  }
+
+  auto& vector()
+  {
+    return m_data;
+  }
 
 protected:
   using Base::derived;
 
-  Data m_data;
+  TangentData m_data;
 };
 
 //==============================================================================
-template <typename S, int N, int Options>
-class RCotangent : public LieGroupCotangent<RCotangent<S, N, Options>>
+template <typename Scalar, int N, int Options>
+class RCotangent : public LieGroupCotangent<RCotangent<Scalar, N, Options>>
 {
 public:
-  using Base = LieGroupCotangent<RTangent<S, N, Options>>;
-  using Data = typename Base::Data;
+  using Base = LieGroupCotangent<RCotangent<Scalar, N, Options>>;
+  using CotangentData = typename Base::CotangentData;
   using LieGroup = typename Base::LieGroup;
   using LieAlgebra = typename Base::LieAlgebra;
   using Jacobian = typename Base::Jacobian;
 
+  bool is_zero() const
+  {
+    return m_data.isZero();
+  }
+
+  const auto& vector() const
+  {
+    return m_data;
+  }
+
+  auto& vector()
+  {
+    return m_data;
+  }
+
 protected:
   using Base::derived;
 
-  Data m_data;
+  CotangentData m_data;
+};
+
+//==============================================================================
+template <typename Scalar, int Options>
+class RCotangent<Scalar, Eigen::Dynamic, Options>
+  : public LieGroupCotangent<RCotangent<Scalar, Eigen::Dynamic, Options>>
+{
+public:
+  using Base = LieGroupCotangent<RCotangent<Scalar, Eigen::Dynamic, Options>>;
+  using CotangentData = typename Base::CotangentData;
+  using LieGroup = typename Base::LieGroup;
+  using LieAlgebra = typename Base::LieAlgebra;
+  using Jacobian = typename Base::Jacobian;
+
+  explicit RCotangent(int size = 0) : m_data(CotangentData::Zero(size))
+  {
+    // Do nothing
+  }
+
+  bool is_zero() const
+  {
+    return m_data.isZero();
+  }
+
+  const auto& vector() const
+  {
+    return m_data;
+  }
+
+  auto& vector()
+  {
+    return m_data;
+  }
+
+protected:
+  using Base::derived;
+
+  CotangentData m_data;
 };
 
 } // namespace dart::math
@@ -379,42 +877,114 @@ protected:
 namespace Eigen {
 
 //==============================================================================
-template <typename S_, int N, int Options>
-class Map<dart::math::R<S_, N, Options>, Options>
-  : public dart::math::RBase<Map<dart::math::R<S_, N, Options>, Options>>
+template <typename Scalar_, int N, int Options>
+class Map<dart::math::R<Scalar_, N, Options>, Options>
+  : public dart::math::RBase<Map<dart::math::R<Scalar_, N, Options>, Options>>
 {
 public:
-  using S = S_;
-  using Base = dart::math::RBase<Map<dart::math::R<S_, N, Options>, Options>>;
+  using Scalar = Scalar_;
+  using Base
+      = dart::math::RBase<Map<dart::math::R<Scalar_, N, Options>, Options>>;
 
   using Base::operator=;
   using Base::operator*=;
   using Base::operator*;
 
-  Map(S* data);
+  Map(Scalar* data);
+
+  const auto& vector() const
+  {
+    return m_data;
+  }
+
+  auto& vector()
+  {
+    return m_data;
+  }
 
 private:
-  Map<Eigen::Matrix<S, N, 1, Options>> m_data;
+  Map<Eigen::Matrix<Scalar, N, 1, Options>> m_data;
 };
 
 //==============================================================================
-template <typename S_, int N, int Options>
-class Map<const dart::math::R<S_, N, Options>, Options>
-  : public dart::math::RBase<Map<const dart::math::R<S_, N, Options>, Options>>
+template <typename Scalar_, int N, int Options>
+class Map<const dart::math::R<Scalar_, N, Options>, Options>
+  : public dart::math::RBase<
+        Map<const dart::math::R<Scalar_, N, Options>, Options>>
 {
 public:
-  using S = S_;
-  using Base
-      = dart::math::RBase<Map<const dart::math::R<S_, N, Options>, Options>>;
+  using Scalar = Scalar_;
+  using Base = dart::math::RBase<
+      Map<const dart::math::R<Scalar_, N, Options>, Options>>;
 
   using Base::operator=;
   using Base::operator*=;
   using Base::operator*;
 
-  Map(S* data);
+  Map(const Scalar* data);
+
+  const auto& vector() const
+  {
+    return m_data;
+  }
 
 private:
-  Map<Eigen::Matrix<S, N, 1, Options>> m_data;
+  Map<const Eigen::Matrix<Scalar, N, 1, Options>> m_data;
+};
+
+//==============================================================================
+template <typename Scalar_, int N, int Options>
+class Map<dart::math::RTangent<Scalar_, N, Options>, Options>
+  : public dart::math::RTangentBase<
+        Map<dart::math::RTangent<Scalar_, N, Options>, Options>>
+{
+public:
+  using Scalar = Scalar_;
+  using Base = dart::math::RTangentBase<
+      Map<dart::math::RTangent<Scalar_, N, Options>, Options>>;
+
+  Map(Scalar* data);
+
+  using Base::operator=;
+  using Base::is_zero;
+
+  const Map<Eigen::Matrix<Scalar, N, 1, Options>>& vector() const
+  {
+    return m_data;
+  }
+
+  Map<Eigen::Matrix<Scalar, N, 1, Options>>& vector()
+  {
+    return m_data;
+  }
+
+private:
+  Map<Eigen::Matrix<Scalar, N, 1, Options>> m_data;
+};
+
+//==============================================================================
+template <typename Scalar_, int N, int Options>
+class Map<const dart::math::RTangent<Scalar_, N, Options>, Options>
+  : public dart::math::RTangentBase<
+        Map<const dart::math::RTangent<Scalar_, N, Options>, Options>>
+{
+public:
+  using Scalar = Scalar_;
+  using Base = dart::math::RTangentBase<
+      Map<const dart::math::RTangent<Scalar_, N, Options>, Options>>;
+
+  Map(const Scalar* data);
+
+  using Base::operator=;
+  using Base::is_zero;
+
+  const Map<const Eigen::Matrix<Scalar, N, 1, Options>>& vector() const
+  {
+    return m_data;
+  }
+
+private:
+  Map<const Eigen::Matrix<Scalar, N, 1, Options>> m_data;
 };
 
 } // namespace Eigen

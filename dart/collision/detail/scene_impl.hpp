@@ -41,34 +41,34 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-Scene<S>::Scene(Engine<S>* engine)
+template <typename Scalar>
+Scene<Scalar>::Scene(Engine<Scalar>* engine)
   : m_engine(engine), m_update_automatically(true)
 {
   assert(m_engine);
 }
 
 //==============================================================================
-template <typename S>
-Engine<S>* Scene<S>::get_mutable_engine()
+template <typename Scalar>
+Engine<Scalar>* Scene<Scalar>::get_mutable_engine()
 {
   return m_engine;
 }
 
 //==============================================================================
-template <typename S>
-const Engine<S>* Scene<S>::get_engine() const
+template <typename Scalar>
+const Engine<Scalar>* Scene<Scalar>::get_engine() const
 {
   return m_engine;
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 template <typename... Args>
-ObjectPtr<S> Scene<S>::create_sphere_object(Args&&... args)
+ObjectPtr<Scalar> Scene<Scalar>::create_sphere_object(Args&&... args)
 {
   auto geometry
-      = std::make_shared<math::Sphere<S>>(std::forward<Args>(args)...);
+      = std::make_shared<math::Sphere<Scalar>>(std::forward<Args>(args)...);
   return create_object(std::move(geometry));
 }
 

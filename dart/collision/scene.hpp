@@ -40,38 +40,38 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
+template <typename Scalar_>
 class Scene
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Destructor
   virtual ~Scene() = default;
 
   /// Return collision detection engine associated with this Scene
-  Engine<S>* get_mutable_engine();
+  Engine<Scalar>* get_mutable_engine();
 
   /// Return (const) collision detection engine associated with this
   /// Scene
-  const Engine<S>* get_engine() const;
+  const Engine<Scalar>* get_engine() const;
 
   /// Creates a collision object.
-  virtual ObjectPtr<S> create_object(math::GeometryPtr shape) = 0;
+  virtual ObjectPtr<Scalar> create_object(math::GeometryPtr shape) = 0;
 
   /// Creates a collision object with sphere
   template <typename... Args>
-  ObjectPtr<S> create_sphere_object(Args&&... args);
+  ObjectPtr<Scalar> create_sphere_object(Args&&... args);
 
 protected:
   /// Constructor
   ///
   /// \param[in] collisionDetector: Collision detector that created this group.
-  Scene(Engine<S>* engine);
+  Scene(Engine<Scalar>* engine);
 
   /// The parent collision engine that created this scene
-  Engine<S>* m_engine;
+  Engine<Scalar>* m_engine;
 
 private:
   /// Set this to true to have this Scene check for updates

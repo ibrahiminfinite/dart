@@ -38,7 +38,6 @@
 #include "dart/dart.hpp"
 #include "dart/test/math/GTestUtils.hpp"
 
-using namespace Eigen;
 using namespace dart::math;
 using namespace dart::collision;
 using namespace dart::dynamics;

@@ -30,6 +30,14 @@ if(spdlog_FOUND)
   endif()
 endif()
 
+if(spdlog_FOUND)
+  if(TARGET yaml-cpp)
+    list(APPEND link_libraries_public yaml-cpp)
+  else()
+    message(FATAL_ERROR "Failed to find spdlog targets")
+  endif()
+endif()
+
 # Build DART with all available SIMD instructions
 if(DART_ENABLE_SIMD)
   if(MSVC)
@@ -101,7 +109,7 @@ dart_add_component(
   COMPONENT_DEPENDENCY_PACKAGES
     Eigen3
   COMPONENT_DEPENDENCY_PACKAGES_OPTIONAL
-    fmt spdlog
+    fmt spdlog yaml-cpp
   TARGET_LINK_LIBRARIES_PUBLIC
     ${link_libraries_public}
   TARGET_LINK_LIBRARIES_PUBLIC_SKIP_CHECKING

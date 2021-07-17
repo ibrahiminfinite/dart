@@ -42,15 +42,15 @@ namespace dart {
 namespace collision {
 namespace detail {
 
-template <typename S>
-class OdeMesh : public OdeGeom<S>
+template <typename Scalar>
+class OdeMesh : public OdeGeom<Scalar>
 {
 public:
   /// Constructor
   OdeMesh(
-      const OdeObject<S>* parent,
-      const math::TriMesh<S>* scene,
-      const math::Vector3<S>& scale = math::Vector3<S>::Ones());
+      const OdeObject<Scalar>* parent,
+      const math::TriMesh<Scalar>* scene,
+      const math::Vector3<Scalar>& scale = math::Vector3<Scalar>::Ones());
 
   /// Destructor
   ~OdeMesh() override;
@@ -60,15 +60,15 @@ public:
 
 private:
   void fill_arrays(
-      const math::TriMesh<S>* scene,
-      const math::Vector3<S>& scale = math::Vector3<S>::Ones());
+      const math::TriMesh<Scalar>* scene,
+      const math::Vector3<Scalar>& scale = math::Vector3<Scalar>::Ones());
 
 private:
   /// Array of vertex values.
-  std::vector<S> m_vertices;
+  std::vector<Scalar> m_vertices;
 
   /// Array of normals values.
-  std::vector<S> m_normals;
+  std::vector<Scalar> m_normals;
 
   /// Array of index values.
   std::vector<int> m_indices;
@@ -80,12 +80,12 @@ private:
 DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeMesh)
 
 //==============================================================================
-template <typename S>
-OdeMesh<S>::OdeMesh(
-    const OdeObject<S>* parent,
-    const math::TriMesh<S>* scene,
-    const math::Vector3<S>& scale)
-  : OdeGeom<S>(parent), m_ode_tri_mesh_data_id(nullptr)
+template <typename Scalar>
+OdeMesh<Scalar>::OdeMesh(
+    const OdeObject<Scalar>* parent,
+    const math::TriMesh<Scalar>* scene,
+    const math::Vector3<Scalar>& scale)
+  : OdeGeom<Scalar>(parent), m_ode_tri_mesh_data_id(nullptr)
 {
   // Fill vertices, normals, and indices in the ODE friendly data structures.
   fill_arrays(scene, scale);
@@ -96,21 +96,21 @@ OdeMesh<S>::OdeMesh(
   }
 
   // Build the ODE triangle mesh
-  if constexpr (std::is_same_v<S, double>) {
+  if constexpr (std::is_same_v<Scalar, double>) {
     dGeomTriMeshDataBuildDouble1(
         m_ode_tri_mesh_data_id,
         m_vertices.data(),
-        3 * sizeof(S),
+        3 * sizeof(Scalar),
         static_cast<int>(m_vertices.size() / 3),
         m_indices.data(),
         static_cast<int>(m_indices.size()),
         3 * sizeof(int),
         m_normals.data());
-  } else if constexpr (std::is_same_v<S, float>) {
+  } else if constexpr (std::is_same_v<Scalar, float>) {
     dGeomTriMeshDataBuildSingle1(
         m_ode_tri_mesh_data_id,
         m_vertices.data(),
-        3 * sizeof(S),
+        3 * sizeof(Scalar),
         static_cast<int>(m_vertices.size() / 3),
         m_indices.data(),
         static_cast<int>(m_indices.size()),
@@ -118,11 +118,12 @@ OdeMesh<S>::OdeMesh(
         m_normals.data());
   } else {
     DART_ERROR(
-        "Unsupported scalar type [{}]. Assuming double.", typeid(S).name());
+        "Unsupported scalar type [{}]. Assuming double.",
+        typeid(Scalar).name());
     dGeomTriMeshDataBuildDouble1(
         m_ode_tri_mesh_data_id,
         m_vertices.data(),
-        3 * sizeof(S),
+        3 * sizeof(Scalar),
         static_cast<int>(m_vertices.size() / 3),
         m_indices.data(),
         static_cast<int>(m_indices.size()),
@@ -135,8 +136,8 @@ OdeMesh<S>::OdeMesh(
 }
 
 //==============================================================================
-template <typename S>
-OdeMesh<S>::~OdeMesh()
+template <typename Scalar>
+OdeMesh<Scalar>::~OdeMesh()
 {
   dGeomDestroy(this->m_geom_id);
 
@@ -146,16 +147,16 @@ OdeMesh<S>::~OdeMesh()
 }
 
 //==============================================================================
-template <typename S>
-void OdeMesh<S>::update_engine_data()
+template <typename Scalar>
+void OdeMesh<Scalar>::update_engine_data()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-void OdeMesh<S>::fill_arrays(
-    const math::TriMesh<S>* scene, const math::Vector3<S>& scale)
+template <typename Scalar>
+void OdeMesh<Scalar>::fill_arrays(
+    const math::TriMesh<Scalar>* scene, const math::Vector3<Scalar>& scale)
 {
   m_vertices.resize(scene->get_vertices().size() * 3);
   m_normals.resize(scene->get_vertex_normals().size() * 3);

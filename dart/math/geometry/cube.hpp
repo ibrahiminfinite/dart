@@ -38,37 +38,37 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
-class Cube : public Convex3<S_>
+template <typename Scalar_>
+class Cube : public Convex3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
-  using Vector3 = typename Convex3<S>::Vector3;
+  using Scalar = Scalar_;
+  using Vector3 = typename Convex3<Scalar>::Vector3;
 
   /// Returns type string
   static const std::string& GetType();
 
   /// Computes volume given length
-  static S ComputeVolume(S length);
+  static Scalar ComputeVolume(Scalar length);
 
   /// Constructor
   ///
   /// \param[in] length: The length of each side of the cube.
-  explicit Cube(S length = 0.5);
+  explicit Cube(Scalar length = 0.5);
 
   // Documentation inherited
   const std::string& get_type() const override;
 
   /// Returns the length
-  S get_length() const;
+  Scalar get_length() const;
 
   /// Sets the length
-  void set_length(S length);
+  void set_length(Scalar length);
 
 private:
   /// The lengths of each side of the cube
-  S m_length;
+  Scalar m_length;
 };
 
 using Cubef = Cube<float>;

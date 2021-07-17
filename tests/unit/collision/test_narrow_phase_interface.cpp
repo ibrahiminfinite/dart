@@ -53,13 +53,13 @@ TYPED_TEST_SUITE(NarrowPhaseTest, Types);
 template <typename EngineT>
 void test_collide(const EngineT& engine)
 {
-  using S = typename EngineT::element_type::S;
+  using Scalar = typename EngineT::element_type::Scalar;
 
   if (!engine) {
     return;
   }
 #if DART_HAVE_BULLET
-  if (engine->get_type() == collision::BulletEngine<S>::GetType()) {
+  if (engine->get_type() == collision::BulletEngine<Scalar>::GetType()) {
     return;
   }
 #endif
@@ -69,34 +69,34 @@ void test_collide(const EngineT& engine)
   ASSERT_TRUE(sphere1);
   ASSERT_TRUE(sphere2);
 
-  sphere1->set_position(math::Vector3<S>(-1, 0, 0));
-  sphere2->set_position(math::Vector3<S>(1, 0, 0));
+  sphere1->set_position(math::Vector3<Scalar>(-1, 0, 0));
+  sphere2->set_position(math::Vector3<Scalar>(1, 0, 0));
   EXPECT_FALSE(collision::collide(sphere1, sphere2));
 
-  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
-  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
+  sphere1->set_position(math::Vector3<Scalar>(-0.25, 0, 0));
+  sphere2->set_position(math::Vector3<Scalar>(0.25, 0, 0));
   EXPECT_TRUE(collision::collide(sphere1, sphere2));
 
-  collision::CollisionOption<S> option;
+  collision::CollisionOption<Scalar> option;
   option.enable_contact = true;
   option.max_num_contacts = 10;
-  collision::CollisionResult<S> result;
-  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
-  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
+  collision::CollisionResult<Scalar> result;
+  sphere1->set_position(math::Vector3<Scalar>(-0.25, 0, 0));
+  sphere2->set_position(math::Vector3<Scalar>(0.25, 0, 0));
   EXPECT_TRUE(collision::collide(sphere1, sphere2, option, &result));
 }
 
 //==============================================================================
 TYPED_TEST(NarrowPhaseTest, Collide)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
-  test_collide(collision::DartEngine<S>::Create());
-  test_collide(collision::FclEngine<S>::Create());
+  test_collide(collision::DartEngine<Scalar>::Create());
+  test_collide(collision::FclEngine<Scalar>::Create());
 #if DART_HAVE_ODE
-  test_collide(collision::OdeEngine<S>::Create());
+  test_collide(collision::OdeEngine<Scalar>::Create());
 #endif
 #if DART_HAVE_Bullet
-  test_collide(collision::BulletEngine<S>::Create());
+  test_collide(collision::BulletEngine<Scalar>::Create());
 #endif
 }

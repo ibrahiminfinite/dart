@@ -40,7 +40,7 @@
 namespace dart::math {
 
 // Forward declaration
-template <typename S, template <typename> class... SubGroups>
+template <typename Scalar, template <typename> class... SubGroups>
 class ProductLieGroup;
 
 } // namespace dart::math
@@ -48,14 +48,14 @@ class ProductLieGroup;
 namespace Eigen::internal {
 
 //==============================================================================
-template <typename S_, template <typename> class... SubGroups_>
-struct traits<dart::math::ProductLieGroup<S_, SubGroups_...>>
+template <typename Scalar_, template <typename> class... SubGroups_>
+struct traits<dart::math::ProductLieGroup<Scalar_, SubGroups_...>>
 {
   static constexpr std::size_t NumSubGroups = sizeof...(SubGroups_);
 
-  using S = S_;
+  using Scalar = Scalar_;
 
-  using SubGroups = std::tuple<SubGroups_<S>...>;
+  using SubGroups = std::tuple<SubGroups_<Scalar>...>;
 
   template <int N>
   using SubGroup = typename std::tuple_element<N, SubGroups>::type;

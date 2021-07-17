@@ -38,24 +38,24 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> to_vector3(const btVector3& vec)
+template <typename Scalar>
+math::Vector3<Scalar> to_vector3(const btVector3& vec)
 {
-  return math::Vector3<S>(vec.x(), vec.y(), vec.z());
+  return math::Vector3<Scalar>(vec.x(), vec.y(), vec.z());
 }
 
 //==============================================================================
-template <typename S>
-btVector3 to_bullet_vector3(const math::Vector3<S>& vec)
+template <typename Scalar>
+btVector3 to_bullet_vector3(const math::Vector3<Scalar>& vec)
 {
   return btVector3(vec.x(), vec.y(), vec.z());
 }
 
 //==============================================================================
-template <typename S>
-math::Matrix3<S> to_matrix3(const btMatrix3x3& rot)
+template <typename Scalar>
+math::Matrix3<Scalar> to_matrix3(const btMatrix3x3& rot)
 {
-  math::Matrix3<S> out;
+  math::Matrix3<Scalar> out;
   // clang-format off
   out << rot[0][0], rot[0][1], rot[0][2],
          rot[1][0], rot[1][1], rot[1][2],
@@ -65,8 +65,8 @@ math::Matrix3<S> to_matrix3(const btMatrix3x3& rot)
 }
 
 //==============================================================================
-template <typename S>
-btMatrix3x3 to_bullet_matrix3(const math::Matrix3<S>& rot)
+template <typename Scalar>
+btMatrix3x3 to_bullet_matrix3(const math::Matrix3<Scalar>& rot)
 {
   // clang-format off
   return btMatrix3x3(rot(0, 0), rot(0, 1), rot(0, 2),
@@ -76,22 +76,22 @@ btMatrix3x3 to_bullet_matrix3(const math::Matrix3<S>& rot)
 }
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> to_pose(const btTransform& pose)
+template <typename Scalar>
+math::Isometry3<Scalar> to_pose(const btTransform& pose)
 {
-  math::Isometry3<S> out = math::Isometry3<S>::Identity();
-  out.linear() = to_matrix3<S>(pose.getBasis());
-  out.translation() = to_vector3<S>(pose.getOrigin());
+  math::Isometry3<Scalar> out = math::Isometry3<Scalar>::Identity();
+  out.linear() = to_matrix3<Scalar>(pose.getBasis());
+  out.translation() = to_vector3<Scalar>(pose.getOrigin());
   return out;
 }
 
 //==============================================================================
-template <typename S>
-btTransform to_bullet_pose(const math::Isometry3<S>& pose)
+template <typename Scalar>
+btTransform to_bullet_pose(const math::Isometry3<Scalar>& pose)
 {
   btTransform out;
-  out.setOrigin(to_bullet_vector3<S>(pose.translation()));
-  out.setBasis(to_bullet_matrix3<S>(pose.linear()));
+  out.setOrigin(to_bullet_vector3<Scalar>(pose.translation()));
+  out.setBasis(to_bullet_matrix3<Scalar>(pose.linear()));
   return out;
 }
 

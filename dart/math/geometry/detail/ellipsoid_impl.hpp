@@ -38,23 +38,24 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-const std::string& Ellipsoid<S>::GetType()
+template <typename Scalar>
+const std::string& Ellipsoid<Scalar>::GetType()
 {
   static const std::string type("Ellipsoid");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-Ellipsoid<S>::Ellipsoid(S radius, S length) : m_radius(radius), m_length(length)
+template <typename Scalar>
+Ellipsoid<Scalar>::Ellipsoid(Scalar radius, Scalar length)
+  : m_radius(radius), m_length(length)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& Ellipsoid<S>::get_type() const
+template <typename Scalar>
+const std::string& Ellipsoid<Scalar>::get_type() const
 {
   return GetType();
 }

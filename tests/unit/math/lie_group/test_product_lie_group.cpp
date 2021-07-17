@@ -53,7 +53,7 @@ TYPED_TEST_SUITE(ProductLieGroupTest, Types);
 //==============================================================================
 TYPED_TEST(ProductLieGroupTest, Constructors)
 {
-  using S = typename TestFixture::Type;
-  S a;
+  using Scalar = typename TestFixture::Type;
+  Scalar a;
   DART_UNUSED(a);
 }

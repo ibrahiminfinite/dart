@@ -39,30 +39,30 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-TetraMesh<S>::TetraMesh()
+template <typename Scalar>
+TetraMesh<Scalar>::TetraMesh()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& TetraMesh<S>::getStaticType()
+template <typename Scalar>
+const std::string& TetraMesh<Scalar>::getStaticType()
 {
   static const std::string type("TetraMesh");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-const std::string& TetraMesh<S>::get_type() const
+template <typename Scalar>
+const std::string& TetraMesh<Scalar>::get_type() const
 {
   return getStaticType();
 }
 
 //==============================================================================
-template <typename S>
-void TetraMesh<S>::setTriangles(
+template <typename Scalar>
+void TetraMesh<Scalar>::setTriangles(
     const Vertices& vertices, const Triangles& triangles)
 {
   clear();
@@ -72,8 +72,8 @@ void TetraMesh<S>::setTriangles(
 }
 
 //==============================================================================
-template <typename S>
-void TetraMesh<S>::computeVertexNormals()
+template <typename Scalar>
+void TetraMesh<Scalar>::computeVertexNormals()
 {
   computeTriangleNormals();
 
@@ -91,36 +91,38 @@ void TetraMesh<S>::computeVertexNormals()
 }
 
 //==============================================================================
-template <typename S>
-bool TetraMesh<S>::hasTriangles() const
+template <typename Scalar>
+bool TetraMesh<Scalar>::hasTriangles() const
 {
   return !mTriangles.empty();
 }
 
 //==============================================================================
-template <typename S>
-bool TetraMesh<S>::hasTriangleNormals() const
+template <typename Scalar>
+bool TetraMesh<Scalar>::hasTriangleNormals() const
 {
   return hasTriangles() && mTriangles.size() == mTetraNormals.size();
 }
 
 //==============================================================================
-template <typename S>
-const typename TetraMesh<S>::Triangles& TetraMesh<S>::get_triangles() const
+template <typename Scalar>
+const typename TetraMesh<Scalar>::Triangles& TetraMesh<Scalar>::get_triangles()
+    const
 {
   return mTriangles;
 }
 
 //==============================================================================
-template <typename S>
-const typename TetraMesh<S>::Normals& TetraMesh<S>::getTriangleNormals() const
+template <typename Scalar>
+const typename TetraMesh<Scalar>::Normals&
+TetraMesh<Scalar>::getTriangleNormals() const
 {
   return mTetraNormals;
 }
 
 //==============================================================================
-template <typename S>
-void TetraMesh<S>::clear()
+template <typename Scalar>
+void TetraMesh<Scalar>::clear()
 {
   mTriangles.clear();
   mTetraNormals.clear();
@@ -128,15 +130,15 @@ void TetraMesh<S>::clear()
 }
 
 //==============================================================================
-template <typename S>
-TetraMesh<S> TetraMesh<S>::operator+(const TetraMesh& other) const
+template <typename Scalar>
+TetraMesh<Scalar> TetraMesh<Scalar>::operator+(const TetraMesh& other) const
 {
   return (TetraMesh(*this) += other);
 }
 
 //==============================================================================
-template <typename S>
-TetraMesh<S>& TetraMesh<S>::operator+=(const TetraMesh& other)
+template <typename Scalar>
+TetraMesh<Scalar>& TetraMesh<Scalar>::operator+=(const TetraMesh& other)
 {
   if (other.is_empty())
     return *this;
@@ -167,24 +169,24 @@ TetraMesh<S>& TetraMesh<S>::operator+=(const TetraMesh& other)
 }
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<TetraMesh<S>> TetraMesh<S>::generateConvexHull(
+template <typename Scalar>
+std::shared_ptr<TetraMesh<Scalar>> TetraMesh<Scalar>::generateConvexHull(
     bool optimize) const
 {
   auto triangles = Triangles();
   auto vertices = Vertices();
   std::tie(vertices, triangles)
-      = compute_convex_hull_3d<S, Index>(this->m_vertices, optimize);
+      = compute_convex_hull_3d<Scalar, Index>(this->m_vertices, optimize);
 
-  auto mesh = std::make_shared<TetraMesh<S>>();
+  auto mesh = std::make_shared<TetraMesh<Scalar>>();
   mesh->setTriangles(vertices, triangles);
 
   return mesh;
 }
 
 //==============================================================================
-template <typename S>
-void TetraMesh<S>::computeTriangleNormals()
+template <typename Scalar>
+void TetraMesh<Scalar>::computeTriangleNormals()
 {
   mTetraNormals.resize(mTriangles.size());
 
@@ -201,8 +203,8 @@ void TetraMesh<S>::computeTriangleNormals()
 }
 
 //==============================================================================
-template <typename S>
-void TetraMesh<S>::normalizeTriangleNormals()
+template <typename Scalar>
+void TetraMesh<Scalar>::normalizeTriangleNormals()
 {
   for (auto& normal : mTetraNormals) {
     normal.normalize();

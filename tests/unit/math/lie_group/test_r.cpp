@@ -51,10 +51,10 @@ using Types = testing::Types<float, double, long double>;
 TYPED_TEST_SUITE(TTest, Types);
 
 //==============================================================================
-template <typename S, int Dim>
+template <typename Scalar, int Dim>
 void test_constructors_fixed_size()
 {
-  using RN = R<S, Dim>;
+  using RN = R<Scalar, Dim>;
 
   // Default constructor
   RN a;
@@ -67,8 +67,8 @@ void test_constructors_fixed_size()
   RN c = std::move(a);
 
   // From Eigen vectors
-  RN d(Eigen::Matrix<S, Dim, 1>::Random());
-  Eigen::Matrix<S, Dim, 1> vec = Eigen::Matrix<S, Dim, 1>::Random();
+  RN d(Eigen::Matrix<Scalar, Dim, 1>::Random());
+  Eigen::Matrix<Scalar, Dim, 1> vec = Eigen::Matrix<Scalar, Dim, 1>::Random();
   RN e = std::move(vec);
   EXPECT_TRUE(e.vector().isApprox(vec));
 
@@ -81,27 +81,27 @@ void test_constructors_fixed_size()
 //==============================================================================
 TYPED_TEST(TTest, Constructors)
 {
-  using S = typename TestFixture::Type;
+  using Scalar = typename TestFixture::Type;
 
   // Fixed size
   {
     // Default constructor
-    RX<S> a;
+    RX<Scalar> a;
     EXPECT_EQ(a.dimension(), 0);
 
     // Copy constructor
-    RX<S> b = a;
+    RX<Scalar> b = a;
 
     // Move constructor
-    RX<S> c = std::move(a);
+    RX<Scalar> c = std::move(a);
   }
 
   // Dynamic size
-  test_constructors_fixed_size<S, 0>();
-  test_constructors_fixed_size<S, 1>();
-  test_constructors_fixed_size<S, 2>();
-  test_constructors_fixed_size<S, 3>();
-  test_constructors_fixed_size<S, 4>();
-  test_constructors_fixed_size<S, 5>();
-  test_constructors_fixed_size<S, 6>();
+  test_constructors_fixed_size<Scalar, 0>();
+  test_constructors_fixed_size<Scalar, 1>();
+  test_constructors_fixed_size<Scalar, 2>();
+  test_constructors_fixed_size<Scalar, 3>();
+  test_constructors_fixed_size<Scalar, 4>();
+  test_constructors_fixed_size<Scalar, 5>();
+  test_constructors_fixed_size<Scalar, 6>();
 }

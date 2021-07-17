@@ -41,8 +41,8 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-std::size_t Icosphere<S>::getNumVertices(std::size_t subdivisions)
+template <typename Scalar>
+std::size_t Icosphere<Scalar>::getNumVertices(std::size_t subdivisions)
 {
   std::size_t numVertices = 12;
   for (auto i = 0u; i < subdivisions; ++i)
@@ -51,29 +51,31 @@ std::size_t Icosphere<S>::getNumVertices(std::size_t subdivisions)
 }
 
 //==============================================================================
-template <typename S>
-std::size_t Icosphere<S>::getNumEdges(std::size_t subdivisions)
+template <typename Scalar>
+std::size_t Icosphere<Scalar>::getNumEdges(std::size_t subdivisions)
 {
   return getNumTriangles(subdivisions) / 2 * 3;
 }
 
 //==============================================================================
-template <typename S>
-std::size_t Icosphere<S>::getNumTriangles(std::size_t subdivisions)
+template <typename Scalar>
+std::size_t Icosphere<Scalar>::getNumTriangles(std::size_t subdivisions)
 {
   return 20 * std::pow(4, subdivisions);
 }
 
 //==============================================================================
-template <typename S>
-std::pair<typename Icosphere<S>::Vertices, typename Icosphere<S>::Triangles>
-Icosphere<S>::computeIcosahedron(S radius)
+template <typename Scalar>
+std::pair<
+    typename Icosphere<Scalar>::Vertices,
+    typename Icosphere<Scalar>::Triangles>
+Icosphere<Scalar>::computeIcosahedron(Scalar radius)
 {
-  const S unitX = 1 / std::sqrt(1 + phi<S>() * phi<S>());
-  const S unitZ = unitX * phi<S>();
+  const Scalar unitX = 1 / std::sqrt(1 + phi<Scalar>() * phi<Scalar>());
+  const Scalar unitZ = unitX * phi<Scalar>();
 
-  const S x = radius * unitX;
-  const S z = radius * unitZ;
+  const Scalar x = radius * unitX;
+  const Scalar z = radius * unitZ;
 
   std::vector<Vector3> vertices = {{{-x, 0, z},
                                     {x, 0, z},
@@ -98,12 +100,12 @@ Icosphere<S>::computeIcosahedron(S radius)
 }
 
 //==============================================================================
-template <typename S>
-Icosphere<S>::Icosphere(S radius, std::size_t subdivisions)
+template <typename Scalar>
+Icosphere<Scalar>::Icosphere(Scalar radius, std::size_t subdivisions)
   : mRadius(radius), mSubdivisions(subdivisions)
 {
   static_assert(
-      std::is_floating_point<S>::value,
+      std::is_floating_point<Scalar>::value,
       "Scalar must be a floating point type.");
   assert(radius > 0);
 
@@ -111,22 +113,22 @@ Icosphere<S>::Icosphere(S radius, std::size_t subdivisions)
 }
 
 //==============================================================================
-template <typename S>
-S Icosphere<S>::getRadius() const
+template <typename Scalar>
+Scalar Icosphere<Scalar>::getRadius() const
 {
   return mRadius;
 }
 
 //==============================================================================
-template <typename S>
-std::size_t Icosphere<S>::getNumSubdivisions() const
+template <typename Scalar>
+std::size_t Icosphere<Scalar>::getNumSubdivisions() const
 {
   return mSubdivisions;
 }
 
 //==============================================================================
-template <typename S>
-void Icosphere<S>::build()
+template <typename Scalar>
+void Icosphere<Scalar>::build()
 {
   // Reference: https://schneide.blog/2016/07/15/generating-an-icosphere-in-c/
 

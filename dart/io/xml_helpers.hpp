@@ -46,16 +46,16 @@
 namespace dart {
 namespace io {
 
-template <typename S, int N>
-std::string to_string(const math::Vector<S, N>& v);
+template <typename Scalar, int N>
+std::string to_string(const math::Vector<Scalar, N>& v);
 
-template <typename S>
+template <typename Scalar>
 std::string to_string(
-    const math::Isometry3<S>& v,
+    const math::Isometry3<Scalar>& v,
     const std::string& rotation_type = "intrinsic");
 
-template <typename S, int N>
-math::Vector<S, N> to_vector(const std::string& str);
+template <typename Scalar, int N>
+math::Vector<Scalar, N> to_vector(const std::string& str);
 
 DART_IO_API math::Vector2d to_vector2d(const std::string& str);
 DART_IO_API math::Vector3d to_vector3d(const std::string& str);
@@ -65,8 +65,8 @@ DART_IO_API math::Vector6d to_vector6d(const std::string& str);
 DART_IO_API math::Vector2i to_vector2i(const std::string& str);
 DART_IO_API math::Vector3i to_vector3i(const std::string& str);
 
-template <typename S>
-math::VectorX<S> to_vector_x(const std::string& str);
+template <typename Scalar>
+math::VectorX<Scalar> to_vector_x(const std::string& str);
 
 /// Converts string to isometry3
 ///
@@ -76,8 +76,8 @@ math::VectorX<S> to_vector_x(const std::string& str);
 /// \param[in] rotation_type: (optional) How to convert 3-D vector to a rotation
 /// matrix. Supported types are {intrinsic, extrinsic} where the default is
 /// intrinsic.
-template <typename S>
-math::Isometry3<S> to_isometry3(
+template <typename Scalar>
+math::Isometry3<Scalar> to_isometry3(
     const std::string& str, const std::string& rotation_type = "intrinsic");
 // TODO(JS): Change to return the success
 

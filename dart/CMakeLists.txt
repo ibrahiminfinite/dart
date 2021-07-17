@@ -79,6 +79,7 @@ dart_add_project(
     common
     math
     optimization
+    multibody
     collision
     dynamics
     simulation

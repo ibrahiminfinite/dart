@@ -41,14 +41,14 @@ namespace dart {
 namespace math {
 
 /// Base class for meshes.
-template <typename S_>
-class Mesh : public Geometry3<S_>
+template <typename Scalar_>
+class Mesh : public Geometry3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
   using Index = std::size_t;
-  using Vector3 = Eigen::Matrix<S, 3, 1>;
+  using Vector3 = Eigen::Matrix<Scalar, 3, 1>;
   using Vertices = std::vector<Vector3>;
   using Normals = std::vector<Vector3>;
   using Indices = std::vector<Index>;

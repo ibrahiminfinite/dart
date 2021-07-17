@@ -40,18 +40,18 @@ using namespace dart::common;
 using namespace dart::dynamics;
 using namespace dart::math;
 
-template <typename S>
+template <typename Scalar>
 dynamics::ShapePtr createHeightmapShape(
     std::size_t xResolution = 20u,
     std::size_t yResolution = 20u,
-    S xSize = S(2),
-    S ySize = S(2),
-    S zMin = S(0.0),
-    S zMax = S(0.1))
+    Scalar xSize = Scalar(2),
+    Scalar ySize = Scalar(2),
+    Scalar zMin = Scalar(0.0),
+    Scalar zMax = Scalar(0.1))
 {
-  using Vector3 = Eigen::Matrix<S, 3, 1>;
+  using Vector3 = Eigen::Matrix<Scalar, 3, 1>;
 
-  typename HeightmapShape<S>::HeightField data(yResolution, xResolution);
+  typename HeightmapShape<Scalar>::HeightField data(yResolution, xResolution);
   for (auto i = 0u; i < yResolution; ++i) {
     for (auto j = 0u; j < xResolution; ++j) {
       data(i, j) = math::Random::uniform(zMin, zMax);
@@ -59,21 +59,21 @@ dynamics::ShapePtr createHeightmapShape(
   }
   auto scale = Vector3(xSize / xResolution, ySize / yResolution, 1);
 
-  auto terrainShape = std::make_shared<HeightmapShape<S>>();
+  auto terrainShape = std::make_shared<HeightmapShape<Scalar>>();
   terrainShape->setScale(scale);
   terrainShape->setHeightField(data);
 
   return terrainShape;
 }
 
-template <typename S>
+template <typename Scalar>
 dynamics::SimpleFramePtr createHeightmapFrame(
     std::size_t xResolution = 20u,
     std::size_t yResolution = 20u,
-    S xSize = S(2),
-    S ySize = S(2),
-    S zMin = S(0.0),
-    S zMax = S(0.1))
+    Scalar xSize = Scalar(2),
+    Scalar ySize = Scalar(2),
+    Scalar zMin = Scalar(0.0),
+    Scalar zMax = Scalar(0.1))
 {
   auto terrainFrame = SimpleFrame::createShared(Frame::World());
   auto tf = terrainFrame->getRelativeTransform();
@@ -109,7 +109,7 @@ public:
 protected:
 };
 
-template <typename S>
+template <typename Scalar>
 class HeightmapWidget : public dart::gui::osg::ImGuiWidget
 {
 public:
@@ -120,10 +120,10 @@ public:
       gui::osg::GridVisual* grid,
       std::size_t xResolution = 20u,
       std::size_t yResolution = 20u,
-      S xSize = S(2),
-      S ySize = S(2),
-      S zMin = S(0.0),
-      S zMax = S(0.1))
+      Scalar xSize = Scalar(2),
+      Scalar ySize = Scalar(2),
+      Scalar zMin = Scalar(0.0),
+      Scalar zMax = Scalar(0.1))
     : mViewer(viewer), mNode(node), mTerrain(std::move(terrain)), mGrid(grid)
   {
     mXResolution = xResolution;

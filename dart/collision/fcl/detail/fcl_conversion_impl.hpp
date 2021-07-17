@@ -38,31 +38,31 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-FclVector3<S> to_fcl_vector3(const math::Vector3<S>& vec)
+template <typename Scalar>
+FclVector3<Scalar> to_fcl_vector3(const math::Vector3<Scalar>& vec)
 {
-  return FclVector3<S>(vec[0], vec[1], vec[2]);
+  return FclVector3<Scalar>(vec[0], vec[1], vec[2]);
 }
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> to_vector3(const FclVector3<S>& vec)
+template <typename Scalar>
+math::Vector3<Scalar> to_vector3(const FclVector3<Scalar>& vec)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return vec;
 #else
-  return math::Vector3<S>(vec[0], vec[1], vec[2]);
+  return math::Vector3<Scalar>(vec[0], vec[1], vec[2]);
 #endif
 }
 
 //==============================================================================
-template <typename S>
-FclMatrix3<S> to_fcl_matrix3(const math::Matrix3<S>& R)
+template <typename Scalar>
+FclMatrix3<Scalar> to_fcl_matrix3(const math::Matrix3<Scalar>& R)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return R;
 #else
-  return FclMatrix3<S>(
+  return FclMatrix3<Scalar>(
       R(0, 0),
       R(0, 1),
       R(0, 2),
@@ -76,13 +76,13 @@ FclMatrix3<S> to_fcl_matrix3(const math::Matrix3<S>& R)
 }
 
 //==============================================================================
-template <typename S>
-math::Matrix3<S> to_matrix3(const FclMatrix3<S>& R)
+template <typename Scalar>
+math::Matrix3<Scalar> to_matrix3(const FclMatrix3<Scalar>& R)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return R;
 #else
-  math::Matrix3<S> out;
+  math::Matrix3<Scalar> out;
   out << R(0, 0), R(0, 1), R(0, 2), R(1, 0), R(1, 1), R(1, 2), R(2, 0), R(2, 1),
       R(2, 2);
   return out;
@@ -90,32 +90,32 @@ math::Matrix3<S> to_matrix3(const FclMatrix3<S>& R)
 }
 
 //==============================================================================
-template <typename S>
-FclTransform3<S> to_fcl_pose3(const math::Isometry3<S>& T)
+template <typename Scalar>
+FclTransform3<Scalar> to_fcl_pose3(const math::Isometry3<Scalar>& T)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return T;
 #else
-  FclTransform3<S> trans;
+  FclTransform3<Scalar> trans;
 
-  trans.setTranslation(to_fcl_vector3<S>(T.translation()));
-  trans.setRotation(to_fcl_matrix3<S>(T.linear()));
+  trans.setTranslation(to_fcl_vector3<Scalar>(T.translation()));
+  trans.setRotation(to_fcl_matrix3<Scalar>(T.linear()));
 
   return trans;
 #endif
 }
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> to_pose3(const FclTransform3<S>& T)
+template <typename Scalar>
+math::Isometry3<Scalar> to_pose3(const FclTransform3<Scalar>& T)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return T;
 #else
-  math::Isometry3<S> trans = math::Isometry3<S>::Identity();
+  math::Isometry3<Scalar> trans = math::Isometry3<Scalar>::Identity();
 
-  trans.translation() = to_vector3<S>(T.getTranslation());
-  trans.linear() = to_matrix3<S>(T.getRotation());
+  trans.translation() = to_vector3<Scalar>(T.getTranslation());
+  trans.linear() = to_matrix3<Scalar>(T.getRotation());
 
   return trans;
 #endif

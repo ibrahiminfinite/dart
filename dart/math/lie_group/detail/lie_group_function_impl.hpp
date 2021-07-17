@@ -33,54 +33,72 @@
 #pragma once
 
 #include "dart/math/export.hpp"
+#include "dart/math/lie_group/lie_group_function.hpp"
 #include "dart/math/lie_group/se3.hpp"
 #include "dart/math/lie_group/so3.hpp"
 
 namespace dart::math {
 
 //==============================================================================
-template <typename S>
-SO3<S> exp(const SO3Tangent<S>& w)
+template <typename Scalar>
+SO3<Scalar> exp(const SO3Tangent<Scalar>& w)
 {
   return w.exp();
 }
 
 //==============================================================================
-template <typename S>
-SE3<S> exp(const SE3Tangent<S>& twist)
+template <typename Scalar>
+SE3<Scalar> exp(const SE3Tangent<Scalar>& twist)
 {
   return twist.exp();
 }
 
 //==============================================================================
-template <typename S>
-SO3Tangent<S> log(const SO3<S>& r)
+template <typename Scalar>
+SO3Tangent<Scalar> log(const SO3<Scalar>& r)
 {
   return r.log();
 }
 
 //==============================================================================
-template <typename S>
-SE3Tangent<S> log(const SE3<S>& tf)
+template <typename Scalar>
+SE3Tangent<Scalar> log(const SE3<Scalar>& tf)
 {
   return tf.log();
 }
 
 //==============================================================================
-template <typename S>
-typename SE3<S>::Tangent Ad(const SE3<S>& T, const typename SE3<S>::Tangent& V)
+template <typename DerivedA, typename DerivedB>
+SE3Tangent<typename DerivedB::Scalar> Ad(
+    const SE3Base<DerivedA>& T, const SE3TangentBase<DerivedB>& V)
 {
-  return SE3<S>::Ad(T, V);
+  using Scalar = typename DerivedB::Scalar;
+  return SE3<Scalar>::Ad(T, V);
 }
 
 //==============================================================================
-template <typename S>
-typename SE3<S>::Tangent ad(
-    const typename SE3<S>::Tangent& s1, const typename SE3<S>::Tangent& s2)
+template <typename DerivedA, typename DerivedB>
+SE3Tangent<typename DerivedB::Scalar> Ad_R(
+    const SE3Base<DerivedA>& T, const SE3TangentBase<DerivedB>& V)
+{
+  using Scalar = typename DerivedB::Scalar;
+  return SE3<Scalar>::Ad_R(T, V);
+}
+
+//==============================================================================
+template <typename Scalar>
+typename SE3<Scalar>::Tangent Ad_Tinv(
+    const SE3<Scalar>& T, const typename SE3<Scalar>::Tangent& V)
+{
+  return SE3<Scalar>::Ad(T, V);
+}
+
+//==============================================================================
+template <typename DerivedA, typename DerivedB>
+DerivedA ad(
+    const SE3TangentBase<DerivedA>& s1, const SE3TangentBase<DerivedB>& s2)
 {
   return s1.ad(s2);
 }
 
 } // namespace dart::math
-
-#include "dart/math/lie_group/detail/lie_group_function_impl.hpp"

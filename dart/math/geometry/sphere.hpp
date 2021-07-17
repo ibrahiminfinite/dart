@@ -38,45 +38,47 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
-class Sphere : public Convex3<S_>
+template <typename Scalar_>
+class Sphere : public Convex3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
-  using Vector3 = typename Convex3<S>::Vector3;
+  using Scalar = Scalar_;
+  using Vector3 = typename Convex3<Scalar>::Vector3;
 
   /// Returns type string
   static const std::string& GetType();
 
   /// Computes volume given radius
-  static S ComputeVolume(S radius);
+  static Scalar ComputeVolume(Scalar radius);
 
   /// Computes inertia given radius and mass
-  static Eigen::Matrix<S, 3, 3> ComputeInertiaFromMass(S radius, S mass);
+  static Eigen::Matrix<Scalar, 3, 3> ComputeInertiaFromMass(
+      Scalar radius, Scalar mass);
 
   /// Computes inertia given radius and density
-  static Eigen::Matrix<S, 3, 3> ComputeInertiaFromDensity(S radius, S density);
+  static Eigen::Matrix<Scalar, 3, 3> ComputeInertiaFromDensity(
+      Scalar radius, Scalar density);
 
   /// Constructor
   ///
   /// \param[in] radius: The radius of this sphere to set.
-  explicit Sphere(S radius = 0.5);
+  explicit Sphere(Scalar radius = 0.5);
 
   // Documentation inherited
   const std::string& get_type() const override;
 
   /// Returns the radius
-  S get_radius() const;
+  Scalar get_radius() const;
 
   /// Sets the radius5
-  void set_radius(S radius);
+  void set_radius(Scalar radius);
 
   // Documentation inherited
   Vector3 get_local_support_point(const Vector3& direction) const override;
 
 private:
-  S m_radius;
+  Scalar m_radius;
 };
 
 using Spheref = Sphere<float>;

@@ -38,51 +38,51 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-const std::string& Plane3<S>::GetType()
+template <typename Scalar>
+const std::string& Plane3<Scalar>::GetType()
 {
   static const std::string type("Plane3");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-Plane3<S>::Plane3()
+template <typename Scalar>
+Plane3<Scalar>::Plane3()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& Plane3<S>::get_type() const
+template <typename Scalar>
+const std::string& Plane3<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-void Plane3<S>::set_normal(const math::Vector3<S>& normal)
+template <typename Scalar>
+void Plane3<Scalar>::set_normal(const math::Vector3<Scalar>& normal)
 {
   m_normal = normal.normalized();
 }
 
 //==============================================================================
-template <typename S>
-const math::Vector3<S>& Plane3<S>::get_normal() const
+template <typename Scalar>
+const math::Vector3<Scalar>& Plane3<Scalar>::get_normal() const
 {
   return m_normal;
 }
 
 //==============================================================================
-template <typename S>
-void Plane3<S>::set_offset(S offset)
+template <typename Scalar>
+void Plane3<Scalar>::set_offset(Scalar offset)
 {
   m_offset = offset;
 }
 
 //==============================================================================
-template <typename S>
-S Plane3<S>::get_offset() const
+template <typename Scalar>
+Scalar Plane3<Scalar>::get_offset() const
 {
   return m_offset;
 }

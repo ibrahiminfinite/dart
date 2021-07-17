@@ -44,21 +44,21 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-Contact<S> convert_contact(
+template <typename Scalar>
+Contact<Scalar> convert_contact(
     const dContactGeom& odeContact,
-    OdeObject<S>* object1,
-    OdeObject<S>* object2,
-    const CollisionOption<S>& option)
+    OdeObject<Scalar>* object1,
+    OdeObject<Scalar>* object2,
+    const CollisionOption<Scalar>& option)
 {
-  Contact<S> contact;
+  Contact<Scalar> contact;
 
   contact.collision_object1 = object1;
   contact.collision_object2 = object2;
 
   if (option.enable_contact) {
-    contact.point = to_vector3<S>(odeContact.pos);
-    contact.normal = to_vector3<S>(odeContact.normal);
+    contact.point = to_vector3<Scalar>(odeContact.pos);
+    contact.normal = to_vector3<Scalar>(odeContact.normal);
     contact.depth = odeContact.depth;
   }
 
@@ -66,14 +66,14 @@ Contact<S> convert_contact(
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 void report_contacts(
     int num_contacts,
     const dContactGeom* contact_geoms,
-    OdeObject<S>* b1,
-    OdeObject<S>* b2,
-    const CollisionOption<S>& option,
-    CollisionResult<S>& result)
+    OdeObject<Scalar>* b1,
+    OdeObject<Scalar>* b2,
+    const CollisionOption<Scalar>& option,
+    CollisionResult<Scalar>& result)
 {
   for (auto i = 0; i < num_contacts; ++i) {
     result.add_contact(convert_contact(contact_geoms[i], b1, b2, option));
@@ -85,15 +85,15 @@ void report_contacts(
 }
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<OdeEngine<S>> OdeEngine<S>::Create()
+template <typename Scalar>
+std::shared_ptr<OdeEngine<Scalar>> OdeEngine<Scalar>::Create()
 {
   return std::shared_ptr<OdeEngine>(new OdeEngine());
 }
 
 //==============================================================================
-template <typename S>
-OdeEngine<S>::OdeEngine()
+template <typename Scalar>
+OdeEngine<Scalar>::OdeEngine()
 {
   // Initialize ODE. dInitODE is deprecated.
   const auto initialized = dInitODE2(0);
@@ -107,49 +107,49 @@ OdeEngine<S>::OdeEngine()
 }
 
 //==============================================================================
-template <typename S>
-OdeEngine<S>::~OdeEngine()
+template <typename Scalar>
+OdeEngine<Scalar>::~OdeEngine()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& OdeEngine<S>::get_type() const
+template <typename Scalar>
+const std::string& OdeEngine<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-const std::string& OdeEngine<S>::GetType()
+template <typename Scalar>
+const std::string& OdeEngine<Scalar>::GetType()
 {
   static const std::string type = "ode";
   return type;
 }
 
 //==============================================================================
-template <typename S>
-ScenePtr<S> OdeEngine<S>::create_scene()
+template <typename Scalar>
+ScenePtr<Scalar> OdeEngine<Scalar>::create_scene()
 {
-  return std::make_shared<OdeScene<S>>(this);
+  return std::make_shared<OdeScene<Scalar>>(this);
 }
 
 //==============================================================================
-template <typename S>
-bool OdeEngine<S>::collide(
-    ObjectPtr<S> object1,
-    ObjectPtr<S> object2,
-    const CollisionOption<S>& option,
-    CollisionResult<S>* result)
+template <typename Scalar>
+bool OdeEngine<Scalar>::collide(
+    ObjectPtr<Scalar> object1,
+    ObjectPtr<Scalar> object2,
+    const CollisionOption<Scalar>& option,
+    CollisionResult<Scalar>* result)
 {
-  auto derived1 = std::dynamic_pointer_cast<OdeObject<S>>(object1);
+  auto derived1 = std::dynamic_pointer_cast<OdeObject<Scalar>>(object1);
   if (!derived1) {
     DART_ERROR("Invalid object");
     return false;
   }
 
-  auto derived2 = std::dynamic_pointer_cast<OdeObject<S>>(object2);
+  auto derived2 = std::dynamic_pointer_cast<OdeObject<Scalar>>(object2);
   if (!derived2) {
     DART_ERROR("Invalid object");
     return false;
@@ -190,8 +190,8 @@ bool OdeEngine<S>::collide(
 }
 
 //==============================================================================
-template <typename S>
-dWorldID OdeEngine<S>::get_ode_world_id() const
+template <typename Scalar>
+dWorldID OdeEngine<Scalar>::get_ode_world_id() const
 {
   return m_ode_world_id;
 }

@@ -38,23 +38,24 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-const std::string& Cone<S>::GetType()
+template <typename Scalar>
+const std::string& Cone<Scalar>::GetType()
 {
   static const std::string type("Cone");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-Cone<S>::Cone(S radius, S length) : m_radius(radius), m_length(length)
+template <typename Scalar>
+Cone<Scalar>::Cone(Scalar radius, Scalar length)
+  : m_radius(radius), m_length(length)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& Cone<S>::get_type() const
+template <typename Scalar>
+const std::string& Cone<Scalar>::get_type() const
 {
   return GetType();
 }

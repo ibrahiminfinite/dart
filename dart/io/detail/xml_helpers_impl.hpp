@@ -44,8 +44,8 @@ namespace dart {
 namespace io {
 
 //==============================================================================
-template <typename S, int N>
-std::string to_string(const math::Vector<S, N>& v)
+template <typename Scalar, int N>
+std::string to_string(const math::Vector<Scalar, N>& v)
 {
   std::stringstream ss;
   ss << v.transpose();
@@ -53,11 +53,11 @@ std::string to_string(const math::Vector<S, N>& v)
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 std::string to_string(
-    const math::Isometry3<S>& v, const std::string& rotation_type)
+    const math::Isometry3<Scalar>& v, const std::string& rotation_type)
 {
-  math::Vector3<S> angles;
+  math::Vector3<Scalar> angles;
   if (rotation_type == "intrinsic") {
     angles = math::matrixToEulerXYZ(v.rotation());
   } else if (rotation_type == "extrinsic") {
@@ -77,16 +77,16 @@ std::string to_string(
 }
 
 //==============================================================================
-template <typename S, int N>
-math::Vector<S, N> to_vector(const std::string& str)
+template <typename Scalar, int N>
+math::Vector<Scalar, N> to_vector(const std::string& str)
 {
-  math::Vector<S, N> out;
+  math::Vector<Scalar, N> out;
 
   auto pieces = common::split(common::trim(str));
 
   if (pieces.size() != N) {
     DART_ERROR("Invalid string [{}] to convert to vector2", str);
-    return math::Vector<S, N>::Zero();
+    return math::Vector<Scalar, N>::Zero();
   }
 
   for (auto i = 0u; i < N; ++i) {
@@ -96,48 +96,48 @@ math::Vector<S, N> to_vector(const std::string& str)
           i,
           str,
           N);
-      return math::Vector<S, N>::Zero();
+      return math::Vector<Scalar, N>::Zero();
     }
 
-    out[i] = common::to_scalar<S>(pieces[i]);
+    out[i] = common::to_scalar<Scalar>(pieces[i]);
   }
 
   return out;
 }
 
 //==============================================================================
-template <typename S>
-math::VectorX<S> to_vector_x(const std::string& str)
+template <typename Scalar>
+math::VectorX<Scalar> to_vector_x(const std::string& str)
 {
   auto pieces = common::split(common::trim(str));
 
-  math::VectorX<S> out(pieces.size());
+  math::VectorX<Scalar> out(pieces.size());
 
   for (auto i = 0u; i < pieces.size(); ++i) {
     if (pieces[i].empty()) {
       DART_ERROR(
           "Invalid {}-th token of string [{}] to convert to vectorX", i, str);
-      return math::VectorX<S>();
+      return math::VectorX<Scalar>();
     }
 
-    out[i] = common::to_scalar<S>(pieces[i]);
+    out[i] = common::to_scalar<Scalar>(pieces[i]);
   }
 
   return out;
 }
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> to_isometry3(
+template <typename Scalar>
+math::Isometry3<Scalar> to_isometry3(
     const std::string& str, const std::string& rotation_type)
 {
-  math::Isometry3<S> out = math::Isometry3<S>::Identity();
+  math::Isometry3<Scalar> out = math::Isometry3<Scalar>::Identity();
 
   // Parse as 6-D vector
-  const math::VectorX<S> vec = to_vector_x<S>(str);
+  const math::VectorX<Scalar> vec = to_vector_x<Scalar>(str);
   if (vec.size() != 6) {
     DART_ERROR("Failed to convert [{}] to isometry3", str);
-    return math::Isometry3<S>::Identity();
+    return math::Isometry3<Scalar>::Identity();
   }
 
   // Parse rotation part

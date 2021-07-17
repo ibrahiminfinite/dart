@@ -54,17 +54,17 @@ namespace io {
 namespace {
 
 //==============================================================================
-template <typename S>
-math::Vector<S, 3> convert(const aiVector3D& ai_vector)
+template <typename Scalar>
+math::Vector<Scalar, 3> convert(const aiVector3D& ai_vector)
 {
-  return math::Vector<S, 3>(ai_vector.x, ai_vector.y, ai_vector.z);
+  return math::Vector<Scalar, 3>(ai_vector.x, ai_vector.y, ai_vector.z);
 }
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> convert(const aiMatrix4x4& ai_matrix)
+template <typename Scalar>
+math::Isometry3<Scalar> convert(const aiMatrix4x4& ai_matrix)
 {
-  math::Isometry3<S> out = math::Isometry3<S>::Identity();
+  math::Isometry3<Scalar> out = math::Isometry3<Scalar>::Identity();
 
   out(0, 0) = ai_matrix.a1;
   out(0, 1) = ai_matrix.a2;
@@ -352,8 +352,8 @@ aiFileIO createFileIO(Assimp::IOSystem* system)
 } // namespace
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<math::TriMesh<S>> AssimpMeshLoader<S>::load(
+template <typename Scalar>
+std::shared_ptr<math::TriMesh<Scalar>> AssimpMeshLoader<Scalar>::load(
     const common::Uri& url,
     std::shared_ptr<common::ResourceRetriever> resource_retriever)
 {
@@ -420,8 +420,9 @@ std::shared_ptr<math::TriMesh<S>> AssimpMeshLoader<S>::load(
 }
 
 //==============================================================================
-template <typename S>
-bool AssimpMeshLoader<S>::can_load_extension(const std::string& extension) const
+template <typename Scalar>
+bool AssimpMeshLoader<Scalar>::can_load_extension(
+    const std::string& extension) const
 {
   if (extension == "stl" || extension == "dae" || extension == "obj") {
     return true;
@@ -430,32 +431,33 @@ bool AssimpMeshLoader<S>::can_load_extension(const std::string& extension) const
 }
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<math::TriMesh<S>> AssimpMeshLoader<S>::load(
+template <typename Scalar>
+std::shared_ptr<math::TriMesh<Scalar>> AssimpMeshLoader<Scalar>::load(
     const aiScene* ai_scene)
 {
-  auto mesh = std::make_shared<math::TriMesh<S>>();
+  auto mesh = std::make_shared<math::TriMesh<Scalar>>();
 
   const aiNode* ai_root_node = ai_scene->mRootNode;
 
   // There will always be at least the root node if the import was successful
   DART_ASSERT(ai_root_node);
 
-  load_recurse(mesh, ai_scene, ai_root_node, math::Isometry3<S>::Identity());
+  load_recurse(
+      mesh, ai_scene, ai_root_node, math::Isometry3<Scalar>::Identity());
 
   return mesh;
 }
 
 //==============================================================================
-template <typename S>
-void AssimpMeshLoader<S>::load_recurse(
-    const std::shared_ptr<math::TriMesh<S>>& mesh,
+template <typename Scalar>
+void AssimpMeshLoader<Scalar>::load_recurse(
+    const std::shared_ptr<math::TriMesh<Scalar>>& mesh,
     const aiScene* ai_scene,
     const aiNode* ai_node,
-    const math::Isometry3<S>& parent_node_pose)
+    const math::Isometry3<Scalar>& parent_node_pose)
 {
-  const math::Isometry3<S> tf
-      = parent_node_pose * convert<S>(ai_node->mTransformation);
+  const math::Isometry3<Scalar> tf
+      = parent_node_pose * convert<Scalar>(ai_node->mTransformation);
 
   for (auto i = 0u; i < ai_node->mNumMeshes; ++i) {
     const aiMesh* ai_mesh = ai_scene->mMeshes[ai_node->mMeshes[i]];
@@ -464,7 +466,7 @@ void AssimpMeshLoader<S>::load_recurse(
     // Vertices
     mesh->reserve_vertices(ai_mesh->mNumVertices);
     for (auto j = 0u; j < ai_mesh->mNumVertices; ++j) {
-      mesh->add_vertex(tf * convert<S>(ai_mesh->mVertices[j]));
+      mesh->add_vertex(tf * convert<Scalar>(ai_mesh->mVertices[j]));
     }
 
     // Normals
@@ -472,7 +474,7 @@ void AssimpMeshLoader<S>::load_recurse(
       mesh->reserve_vertex_normals(ai_mesh->mNumVertices);
       for (auto j = 0u; j < ai_mesh->mNumVertices; ++j) {
         mesh->add_vertex_normal(
-            tf.rotation() * convert<S>(ai_mesh->mNormals[j]));
+            tf.rotation() * convert<Scalar>(ai_mesh->mNormals[j]));
       }
     }
 
@@ -483,7 +485,7 @@ void AssimpMeshLoader<S>::load_recurse(
       // TODO(JS): Support more elements other than triangles
       // (i.e., mNumIndices != 3)
       DART_ASSERT(face.mNumIndices == 3);
-      mesh->add_triangle(typename math::TriMesh<S>::Triangle(
+      mesh->add_triangle(typename math::TriMesh<Scalar>::Triangle(
           face.mIndices[0] + base_index,
           face.mIndices[1] + base_index,
           face.mIndices[2] + base_index));

@@ -38,10 +38,10 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> to_vector3(const dVector3& vec)
+template <typename Scalar>
+math::Vector3<Scalar> to_vector3(const dVector3& vec)
 {
-  return math::Vector3<S>(vec[0], vec[1], vec[2]);
+  return math::Vector3<Scalar>(vec[0], vec[1], vec[2]);
 }
 
 } // namespace collision

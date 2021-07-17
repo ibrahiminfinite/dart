@@ -41,27 +41,28 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-const std::string& Sphere<S>::GetType()
+template <typename Scalar>
+const std::string& Sphere<Scalar>::GetType()
 {
   static const std::string type("Sphere");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-S Sphere<S>::ComputeVolume(S radius)
+template <typename Scalar>
+Scalar Sphere<Scalar>::ComputeVolume(Scalar radius)
 {
-  return pi<S>() * S(4) / S(3) * radius * radius * radius;
+  return pi<Scalar>() * Scalar(4) / Scalar(3) * radius * radius * radius;
 }
 
 //==============================================================================
-template <typename S>
-Eigen::Matrix<S, 3, 3> Sphere<S>::ComputeInertiaFromMass(S radius, S mass)
+template <typename Scalar>
+Eigen::Matrix<Scalar, 3, 3> Sphere<Scalar>::ComputeInertiaFromMass(
+    Scalar radius, Scalar mass)
 {
-  Eigen::Matrix<S, 3, 3> inertia = Eigen::Matrix<S, 3, 3>::Zero();
+  Eigen::Matrix<Scalar, 3, 3> inertia = Eigen::Matrix<Scalar, 3, 3>::Zero();
 
-  inertia(0, 0) = S(2) / S(5) * mass * radius * radius;
+  inertia(0, 0) = Scalar(2) / Scalar(5) * mass * radius * radius;
   inertia(1, 1) = inertia(0, 0);
   inertia(2, 2) = inertia(0, 0);
 
@@ -69,45 +70,46 @@ Eigen::Matrix<S, 3, 3> Sphere<S>::ComputeInertiaFromMass(S radius, S mass)
 }
 
 //==============================================================================
-template <typename S>
-Eigen::Matrix<S, 3, 3> Sphere<S>::ComputeInertiaFromDensity(S radius, S density)
+template <typename Scalar>
+Eigen::Matrix<Scalar, 3, 3> Sphere<Scalar>::ComputeInertiaFromDensity(
+    Scalar radius, Scalar density)
 {
-  const S mass = ComputeVolume(radius) * density;
+  const Scalar mass = ComputeVolume(radius) * density;
   return ComputeInertiaFromMass(radius, mass);
 }
 
 //==============================================================================
-template <typename S>
-Sphere<S>::Sphere(S radius) : m_radius(radius)
+template <typename Scalar>
+Sphere<Scalar>::Sphere(Scalar radius) : m_radius(radius)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& Sphere<S>::get_type() const
+template <typename Scalar>
+const std::string& Sphere<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-S Sphere<S>::get_radius() const
+template <typename Scalar>
+Scalar Sphere<Scalar>::get_radius() const
 {
   return m_radius;
 }
 
 //==============================================================================
-template <typename S>
-void Sphere<S>::set_radius(S radius)
+template <typename Scalar>
+void Sphere<Scalar>::set_radius(Scalar radius)
 {
   m_radius = radius;
 }
 
 //==============================================================================
-template <typename S>
-typename Sphere<S>::Vector3 Sphere<S>::get_local_support_point(
-    const typename Sphere<S>::Vector3& direction) const
+template <typename Scalar>
+typename Sphere<Scalar>::Vector3 Sphere<Scalar>::get_local_support_point(
+    const typename Sphere<Scalar>::Vector3& direction) const
 {
   return m_radius * direction.normalized();
 }

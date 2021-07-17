@@ -41,6 +41,32 @@
 namespace dart::math {
 
 template <typename Derived>
+struct Eval
+{
+};
+
+template <typename ExpressionType, template <typename> class StorageBase>
+class LieGroupNoAlias
+{
+public:
+  LieGroupNoAlias(ExpressionType& expression) : m_expression(expression)
+  {
+    // Do nothing
+  }
+
+  template <typename OtherDerived>
+  ExpressionType& operator=(const StorageBase<OtherDerived>& other)
+  {
+    (void)other;
+    DART_NOT_IMPLEMENTED;
+    return m_expression;
+  }
+
+private:
+  ExpressionType& m_expression;
+};
+
+template <typename Derived>
 class LieGroupBase
 {
 public:
@@ -52,8 +78,8 @@ public:
   static constexpr int RepDim = Eigen::internal::traits<Derived>::RepDim;
 
   // Type defs
-  using S = typename Eigen::internal::traits<Derived>::S;
-  using Matrix = Eigen::Matrix<S, MatrixDim, MatrixDim>;
+  using Scalar = typename Eigen::internal::traits<Derived>::Scalar;
+  using Matrix = Eigen::Matrix<Scalar, MatrixDim, MatrixDim>;
   using LieGroup = typename Eigen::internal::traits<Derived>::LieGroup;
   // using LieGroupData = typename
   // Eigen::internal::traits<Derived>::LieGroupData;
@@ -67,9 +93,9 @@ public:
       typename Eigen::internal::traits<Derived>::CotangentData;
   using Jacobian = typename Eigen::internal::traits<Derived>::Jacobian;
 
-  using Rotation = math::Matrix<S, SpaceDim, SpaceDim>;
-  using Translation = math::Vector<S, SpaceDim>;
-  using Transformation = Eigen::Transform<S, SpaceDim, Eigen::Isometry>;
+  using Rotation = math::Matrix<Scalar, SpaceDim, SpaceDim>;
+  using Translation = math::Vector<Scalar, SpaceDim>;
+  using Transformation = Eigen::Transform<Scalar, SpaceDim, Eigen::Isometry>;
 
   void set_identity();
 
@@ -77,10 +103,9 @@ public:
 
   LieGroupCoeffs& coeffs();
 
-protected:
-  Derived& derived();
+  const Derived& derived() const noexcept;
 
-  const Derived& derived() const;
+  Derived& derived() noexcept;
 };
 
 template <typename Derived>
@@ -93,8 +118,8 @@ public:
   static constexpr int MatrixDim = Eigen::internal::traits<Derived>::MatrixDim;
 
   // Type defs
-  using S = typename Eigen::internal::traits<Derived>::S;
-  using Matrix = Eigen::Matrix<S, MatrixDim, MatrixDim>;
+  using Scalar = typename Eigen::internal::traits<Derived>::Scalar;
+  using Matrix = Eigen::Matrix<Scalar, MatrixDim, MatrixDim>;
 
   using LieGroup = typename Eigen::internal::traits<Derived>::LieGroup;
 
@@ -130,8 +155,8 @@ public:
   static constexpr int MatrixDim = Eigen::internal::traits<Derived>::MatrixDim;
 
   // Type defs
-  using S = typename Eigen::internal::traits<Derived>::S;
-  using Matrix = Eigen::Matrix<S, MatrixDim, MatrixDim>;
+  using Scalar = typename Eigen::internal::traits<Derived>::Scalar;
+  using Matrix = Eigen::Matrix<Scalar, MatrixDim, MatrixDim>;
 
   using LieGroup = typename Eigen::internal::traits<Derived>::LieGroup;
 
@@ -143,14 +168,16 @@ public:
       typename Eigen::internal::traits<Derived>::CotangentData;
 
   using LieAlgebra = typename Eigen::internal::traits<Derived>::LieAlgebra;
+  using LieAlgebraData =
+      typename Eigen::internal::traits<Derived>::LieAlgebraData;
 
   using Jacobian = typename Eigen::internal::traits<Derived>::Jacobian;
 
   static Tangent Zero();
 
-  TangentData& vector();
+  auto& vector();
 
-  const TangentData& vector() const;
+  const auto& vector() const;
 
 protected:
   Derived& derived() noexcept;
@@ -168,8 +195,8 @@ public:
   static constexpr int MatrixDim = Eigen::internal::traits<Derived>::MatrixDim;
 
   // Type defs
-  using S = typename Eigen::internal::traits<Derived>::S;
-  using Matrix = Eigen::Matrix<S, MatrixDim, MatrixDim>;
+  using Scalar = typename Eigen::internal::traits<Derived>::Scalar;
+  using Matrix = Eigen::Matrix<Scalar, MatrixDim, MatrixDim>;
 
   using LieGroup = typename Eigen::internal::traits<Derived>::LieGroup;
 
@@ -181,6 +208,8 @@ public:
       typename Eigen::internal::traits<Derived>::CotangentData;
 
   using LieAlgebra = typename Eigen::internal::traits<Derived>::LieAlgebra;
+  using LieAlgebraData =
+      typename Eigen::internal::traits<Derived>::LieAlgebraData;
 
   using Jacobian = typename Eigen::internal::traits<Derived>::Jacobian;
 

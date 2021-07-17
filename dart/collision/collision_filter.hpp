@@ -41,12 +41,12 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
+template <typename Scalar_>
 class CollisionFilter
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Destructor.
   virtual ~CollisionFilter();
@@ -54,34 +54,34 @@ public:
   /// Returns true if the given two Objects should be checked by the
   /// collision detector, false otherwise.
   virtual bool ignores(
-      const Object<S>* object1, const Object<S>* object2) const = 0;
+      const Object<Scalar>* object1, const Object<Scalar>* object2) const = 0;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, CollisionFilter)
 
-template <typename S>
-class CompositeCollisionFilter : public CollisionFilter<S>
+template <typename Scalar>
+class CompositeCollisionFilter : public CollisionFilter<Scalar>
 {
 public:
   /// Destructor
   ~CompositeCollisionFilter() override = default;
 
   /// Adds a collision filter to this CompositeCollisionFilter.
-  void add_collision_filter(ConstCollisionFilterPtr<S> filter);
+  void add_collision_filter(ConstCollisionFilterPtr<Scalar> filter);
 
   /// Removes a collision filter from this CompositeCollisionFilter.
-  void remove_collision_filter(const ConstCollisionFilterPtr<S>& filter);
+  void remove_collision_filter(const ConstCollisionFilterPtr<Scalar>& filter);
 
   /// Removes all the collision filters from this CompositeCollisionFilter.
   void remove_all_collision_filters();
 
   // Documentation inherited
-  bool ignores(
-      const Object<S>* object1, const Object<S>* object2) const override;
+  bool ignores(const Object<Scalar>* object1, const Object<Scalar>* object2)
+      const override;
 
 protected:
   /// Collision filters
-  std::unordered_set<ConstCollisionFilterPtr<S>> m_filters;
+  std::unordered_set<ConstCollisionFilterPtr<Scalar>> m_filters;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, CompositeCollisionFilter)

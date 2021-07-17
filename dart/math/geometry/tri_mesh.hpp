@@ -39,13 +39,13 @@ namespace dart {
 namespace math {
 
 /// This class represents triangle meshes.
-template <typename S_>
-class TriMesh : public Mesh<S_>
+template <typename Scalar_>
+class TriMesh : public Mesh<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
-  using Base = Mesh<S>;
+  using Scalar = Scalar_;
+  using Base = Mesh<Scalar>;
   using Index = typename Base::Index;
   using Vector3 = typename Base::Vector3;
   using Triangle = Eigen::Matrix<Index, 3, 1>;
@@ -98,14 +98,15 @@ public:
 
   /// Computes the volume of this mesh, assuming that the mesh is watertight and
   /// orientable.
-  S get_volume() const override;
+  Scalar get_volume() const override;
   // TODO(JS): Make this to lazy-evaluate
 
   /// Generates a convex hull that encloses the trimesh.
   ///
   /// \param[in] optimize: (Optional) Whether to discard vertices that are not
   /// used in the convex hull.
-  std::shared_ptr<TriMesh<S>> generate_convex_hull(bool optimize = true) const;
+  std::shared_ptr<TriMesh<Scalar>> generate_convex_hull(
+      bool optimize = true) const;
 
 protected:
   /// Computes triangle normals.

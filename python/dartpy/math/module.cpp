@@ -39,8 +39,10 @@ namespace python {
 
 void Random(py::module& sm);
 void Geometry(py::module& sm);
-void py_t(py::module& sm);
+void py_r(py::module& sm);
 void py_so3(py::module& sm);
+void py_se3(py::module& sm);
+void py_spatial_jacobian(py::module& sm);
 
 void dart_math(py::module& m)
 {
@@ -48,8 +50,10 @@ void dart_math(py::module& m)
 
   Random(sm);
   Geometry(sm);
-  py_t(sm);
+  py_r(sm);
   py_so3(sm);
+  py_se3(sm);
+  py_spatial_jacobian(sm);
 }
 
 } // namespace python

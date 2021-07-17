@@ -40,26 +40,26 @@ namespace dart {
 namespace collision {
 
 /// @brief Convert Bullet vector3 type to Eigen vector3 type
-template <typename S>
-math::Vector3<S> to_vector3(const btVector3& vec);
+template <typename Scalar>
+math::Vector3<Scalar> to_vector3(const btVector3& vec);
 
 /// @brief Convert Eigen vector3 type to Bullet vector3 type
-template <typename S>
-btVector3 to_bullet_vector3(const math::Vector3<S>& vec);
+template <typename Scalar>
+btVector3 to_bullet_vector3(const math::Vector3<Scalar>& vec);
 
-template <typename S>
-math::Matrix3<S> to_matrix3(const btMatrix3x3& rot);
+template <typename Scalar>
+math::Matrix3<Scalar> to_matrix3(const btMatrix3x3& rot);
 
 /// @brief Convert Bullet matrix3x3 type to Eigen matrix3x3 type
-template <typename S>
-btMatrix3x3 to_bullet_matrix3(const math::Matrix3<S>& rot);
+template <typename Scalar>
+btMatrix3x3 to_bullet_matrix3(const math::Matrix3<Scalar>& rot);
 
-template <typename S>
-math::Isometry3<S> to_pose(const btTransform& pose);
+template <typename Scalar>
+math::Isometry3<Scalar> to_pose(const btTransform& pose);
 
 /// @brief Convert Bullet transformation type to Eigen transformation type
-template <typename S>
-btTransform to_bullet_pose(const math::Isometry3<S>& pose);
+template <typename Scalar>
+btTransform to_bullet_pose(const math::Isometry3<Scalar>& pose);
 
 } // namespace collision
 } // namespace dart

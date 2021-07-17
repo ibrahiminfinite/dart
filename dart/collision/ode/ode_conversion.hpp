@@ -38,8 +38,8 @@
 namespace dart {
 namespace collision {
 
-template <typename S>
-math::Vector3<S> to_vector3(const dVector3& vec);
+template <typename Scalar>
+math::Vector3<Scalar> to_vector3(const dVector3& vec);
 
 } // namespace collision
 } // namespace dart

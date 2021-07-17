@@ -43,19 +43,19 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 int collide_sphere_sphere(
-    DartObject<S>* o1,
-    DartObject<S>* o2,
-    S r0,
-    const math::Isometry3<S>& c0,
-    S r1,
-    const math::Isometry3<S>& c1,
-    CollisionResult<S>* result)
+    DartObject<Scalar>* o1,
+    DartObject<Scalar>* o2,
+    Scalar r0,
+    const math::Isometry3<Scalar>& c0,
+    Scalar r1,
+    const math::Isometry3<Scalar>& c1,
+    CollisionResult<Scalar>* result)
 {
-  S rsum = r0 + r1;
-  math::Vector3<S> normal = c0.translation() - c1.translation();
-  S normal_sqr = normal.squaredNorm();
+  Scalar rsum = r0 + r1;
+  math::Vector3<Scalar> normal = c0.translation() - c1.translation();
+  Scalar normal_sqr = normal.squaredNorm();
 
   if (normal_sqr > rsum * rsum) {
     return 0;
@@ -64,7 +64,7 @@ int collide_sphere_sphere(
   r0 /= rsum;
   r1 /= rsum;
 
-  math::Vector3<S> point = r1 * c0.translation() + r0 * c1.translation();
+  math::Vector3<Scalar> point = r1 * c0.translation() + r0 * c1.translation();
   double penetration;
 
   if (normal_sqr < 1e-6) {
@@ -72,7 +72,7 @@ int collide_sphere_sphere(
     penetration = rsum;
 
     if (result) {
-      Contact<S> contact;
+      Contact<Scalar> contact;
       contact.collision_object1 = o1;
       contact.collision_object2 = o2;
       contact.point = point;
@@ -88,7 +88,7 @@ int collide_sphere_sphere(
   penetration = rsum - normal_sqr;
 
   if (result) {
-    Contact<S> contact;
+    Contact<Scalar> contact;
     contact.collision_object1 = o1;
     contact.collision_object2 = o2;
     contact.point = point;
@@ -101,9 +101,11 @@ int collide_sphere_sphere(
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 int collide_pair(
-    DartObject<S>* o1, DartObject<S>* o2, CollisionResult<S>* result)
+    DartObject<Scalar>* o1,
+    DartObject<Scalar>* o2,
+    CollisionResult<Scalar>* result)
 {
   // TODO(JS): We could make the contact point computation as optional for
   // the case that we want only binary check.
@@ -111,11 +113,11 @@ int collide_pair(
   const auto& shape1 = o1->get_geometry();
   const auto& shape2 = o2->get_geometry();
 
-  const math::Isometry3<S>& T1 = o1->get_pose();
-  const math::Isometry3<S>& T2 = o2->get_pose();
+  const math::Isometry3<Scalar>& T1 = o1->get_pose();
+  const math::Isometry3<Scalar>& T2 = o2->get_pose();
 
-  if (const auto& sphere1 = shape1->template as<math::Sphere<S>>()) {
-    if (const auto& sphere2 = shape2->template as<math::Sphere<S>>()) {
+  if (const auto& sphere1 = shape1->template as<math::Sphere<Scalar>>()) {
+    if (const auto& sphere2 = shape2->template as<math::Sphere<Scalar>>()) {
       return collide_sphere_sphere(
           o1, o2, sphere1->get_radius(), T1, sphere2->get_radius(), T2, result);
     }
@@ -130,56 +132,56 @@ int collide_pair(
 }
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<DartEngine<S>> DartEngine<S>::Create()
+template <typename Scalar>
+std::shared_ptr<DartEngine<Scalar>> DartEngine<Scalar>::Create()
 {
   return std::shared_ptr<DartEngine>(new DartEngine());
 }
 
 //==============================================================================
-template <typename S>
-DartEngine<S>::~DartEngine()
+template <typename Scalar>
+DartEngine<Scalar>::~DartEngine()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& DartEngine<S>::get_type() const
+template <typename Scalar>
+const std::string& DartEngine<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-const std::string& DartEngine<S>::GetType()
+template <typename Scalar>
+const std::string& DartEngine<Scalar>::GetType()
 {
   static const std::string type = "dart";
   return type;
 }
 
 //==============================================================================
-template <typename S>
-ScenePtr<S> DartEngine<S>::create_scene()
+template <typename Scalar>
+ScenePtr<Scalar> DartEngine<Scalar>::create_scene()
 {
-  return std::make_shared<DartScene<S>>(this);
+  return std::make_shared<DartScene<Scalar>>(this);
 }
 
 //==============================================================================
-template <typename S>
-bool DartEngine<S>::collide(
-    ObjectPtr<S> object1,
-    ObjectPtr<S> object2,
-    const CollisionOption<S>& option,
-    CollisionResult<S>* result)
+template <typename Scalar>
+bool DartEngine<Scalar>::collide(
+    ObjectPtr<Scalar> object1,
+    ObjectPtr<Scalar> object2,
+    const CollisionOption<Scalar>& option,
+    CollisionResult<Scalar>* result)
 {
-  auto derived1 = std::dynamic_pointer_cast<DartObject<S>>(object1);
+  auto derived1 = std::dynamic_pointer_cast<DartObject<Scalar>>(object1);
   if (!derived1) {
     DART_ERROR("Invalid object");
     return false;
   }
 
-  auto derived2 = std::dynamic_pointer_cast<DartObject<S>>(object2);
+  auto derived2 = std::dynamic_pointer_cast<DartObject<Scalar>>(object2);
   if (!derived2) {
     DART_ERROR("Invalid object");
     return false;

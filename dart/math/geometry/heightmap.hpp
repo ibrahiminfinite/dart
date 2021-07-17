@@ -41,15 +41,15 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
-class Heightmap : public Convex3<S_>
+template <typename Scalar_>
+class Heightmap : public Convex3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
-  using Vector3 = typename Convex3<S>::Vector3;
+  using Scalar = Scalar_;
+  using Vector3 = typename Convex3<Scalar>::Vector3;
   using HeightField
-      = Eigen::Matrix<S, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+      = Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
   /// Returns type string
   static const std::string& GetType();
@@ -90,7 +90,7 @@ public:
   void set_height_field(
       const std::size_t& width,
       const std::size_t& depth,
-      const std::vector<S>& heights);
+      const std::vector<Scalar>& heights);
 
   /// Sets the height field.
   ///
@@ -130,10 +130,10 @@ public:
   std::size_t get_depth() const;
 
   /// Returns the minimum height set by setHeightField()
-  S get_min_height() const;
+  Scalar get_min_height() const;
 
   /// Returns the maximum height set by setHeightField()
-  S get_max_height() const;
+  Scalar get_max_height() const;
 
 private:
   /// Scale of the heightmap
@@ -144,11 +144,11 @@ private:
 
   /// Minimum heights.
   /// Is computed each time the height field is set with setHeightField().
-  S m_min_height;
+  Scalar m_min_height;
 
   /// Maximum heights.
   /// Is computed each time the height field is set with setHeightField().
-  S m_max_height;
+  Scalar m_max_height;
 };
 
 using Heightmapf = Heightmap<float>;

@@ -988,14 +988,14 @@ TEST_F(Collision, testPlane)
 /// to adjust collision checks.
 ///
 /// \sa dGeomHeightfieldDataBuild*().
-template <typename S>
+template <typename Scalar>
 void testHeightmapBox(
     CollisionDetector* cd,
     const bool collidesUnderTerrain = true,
     const bool extendsUntilGroundPlane = false,
-    const S odeThck = 0)
+    const Scalar odeThck = 0)
 {
-  using Vector3 = Eigen::Matrix<S, 3, 1>;
+  using Vector3 = Eigen::Matrix<Scalar, 3, 1>;
 
   ///////////////////////////////////////
   // Set test parameters.
@@ -1004,22 +1004,22 @@ void testHeightmapBox(
   ///////////////////////////////////////
 
   // size of box
-  const S boxSize = S(0.1);
+  const Scalar boxSize = S(0.1);
   // terrain scale in x and y direction
-  const S terrainScale = S(2.0);
+  const Scalar terrainScale = S(2.0);
   // z values scale
-  const S zScale = S(2.0);
+  const Scalar zScale = S(2.0);
 
   // minimum hand maximum height of terrain to use
-  const S minH = 1.0; // note: ODE doesn't behave well with negative heights
-  const S maxH = 3.0;
+  const Scalar minH = 1.0; // note: ODE doesn't behave well with negative heights
+  const Scalar maxH = 3.0;
   // adjusted minimum height: If minH > 0, and extendsUntilGroundPlane true,
   // then the minimum height is actually 0.
-  const S adjMinH = (extendsUntilGroundPlane && (minH > S(0))) ? 0.0 : minH;
-  const S halfHeight = minH + (maxH - minH) / S(2);
+  const Scalar adjMinH = (extendsUntilGroundPlane && (minH > S(0))) ? 0.0 : minH;
+  const Scalar halfHeight = minH + (maxH - minH) / S(2);
   // ODE thickness is only used if there is not already a layer of this
   // thickness due to a minH > 0 (for ODE, extendsUntilGroundPlane is true)
-  const S useOdeThck
+  const Scalar useOdeThck
       = (odeThck > S(1.0e-06)) ? std::max(odeThck - minH, S(0)) : 0.0;
 
   ///////////////////////////////////////
@@ -1029,15 +1029,15 @@ void testHeightmapBox(
   // frames and shapes
   auto terrainFrame = SimpleFrame::createShared(Frame::World());
   auto boxFrame = SimpleFrame::createShared(Frame::World());
-  auto terrainShape = std::make_shared<HeightmapShape<S>>();
+  auto terrainShape = std::make_shared<HeightmapShape<Scalar>>();
   auto boxShape = std::make_shared<BoxShape>(
       Eigen::Vector3d::Constant(static_cast<double>(boxSize)));
 
   // make a terrain with a linearly increasing slope
-  std::vector<S> heights = {minH, halfHeight, halfHeight, maxH};
+  std::vector<Scalar> heights = {minH, halfHeight, halfHeight, maxH};
   terrainShape->setHeightField(2u, 2u, heights);
   // set a scale to test this at the same time
-  const S terrSize = terrainScale;
+  const Scalar terrSize = terrainScale;
   terrainShape->setScale(Vector3(terrainScale, terrainScale, zScale));
   EXPECT_EQ(terrainShape->getHeightField().size(), heights.size());
 
@@ -1104,7 +1104,7 @@ void testHeightmapBox(
   // it basically has to ensure the box is inside or outside the terrain
   // bounds, so the slope plays a role for this factor.
   // But since the box is small, an estimate is used for now.
-  const S boxShift = boxSize * S(1.5);
+  const Scalar boxShift = boxSize * S(1.5);
 
   // expect collision at highest point (at max height)
   Vector3 cornerShift = highCorner - slope * boxShift;
@@ -1182,10 +1182,10 @@ TEST_F(Collision, testHeightmapBox)
 // Tests HeightmapShape::flipY();
 TEST_F(Collision, testHeightmapFlipY)
 {
-  using S = double;
+  using Scalar = double;
 
-  std::vector<S> heights1 = {-1, -2, 2, 1};
-  auto shape = std::make_shared<HeightmapShape<S>>();
+  std::vector<Scalar> heights1 = {-1, -2, 2, 1};
+  auto shape = std::make_shared<HeightmapShape<Scalar>>();
   shape->setHeightField(2, 2, heights1);
   shape->flipY();
   EXPECT_EQ(shape->getHeightField().data()[0], heights1[2]);
@@ -1194,7 +1194,7 @@ TEST_F(Collision, testHeightmapFlipY)
   EXPECT_EQ(shape->getHeightField().data()[3], heights1[1]);
 
   // test with odd number of rows
-  std::vector<S> heights2 = {-1, -2, 3, 3, 2, 1};
+  std::vector<Scalar> heights2 = {-1, -2, 3, 3, 2, 1};
   shape->setHeightField(2, 3, heights2);
   shape->flipY();
   EXPECT_EQ(shape->getHeightField().data()[0], heights2[4]);
@@ -1205,7 +1205,7 @@ TEST_F(Collision, testHeightmapFlipY)
   EXPECT_EQ(shape->getHeightField().data()[5], heights2[1]);
 
   // test higher number of rows
-  std::vector<S> heights3 = {1, -1, 2, -2, 3, -3, 4, -4};
+  std::vector<Scalar> heights3 = {1, -1, 2, -2, 3, -3, 4, -4};
   shape->setHeightField(2, 4, heights3);
   shape->flipY();
   EXPECT_EQ(shape->getHeightField().data()[0], heights3[6]);
@@ -1218,7 +1218,7 @@ TEST_F(Collision, testHeightmapFlipY)
   EXPECT_EQ(shape->getHeightField().data()[7], heights3[1]);
 
   // test wider rows
-  std::vector<S> heights4 = {1, -1, 1.5, 2, -2, 2.5, 3, -3, 3.5, 4, -4, 4.5};
+  std::vector<Scalar> heights4 = {1, -1, 1.5, 2, -2, 2.5, 3, -3, 3.5, 4, -4, 4.5};
   shape->setHeightField(3, 4, heights4);
   shape->flipY();
   EXPECT_EQ(shape->getHeightField().data()[0], heights4[9]);
@@ -1235,28 +1235,28 @@ TEST_F(Collision, testHeightmapFlipY)
   EXPECT_EQ(shape->getHeightField().data()[11], heights4[2]);
 
   // test mini (actually meaningless) height field
-  std::vector<S> heights5 = {1, 2};
+  std::vector<Scalar> heights5 = {1, 2};
   shape->setHeightField(1, 2, heights5);
   shape->flipY();
   EXPECT_EQ(shape->getHeightField().data()[0], heights5[1]);
   EXPECT_EQ(shape->getHeightField().data()[1], heights5[0]);
 
   // test height field with only one row (which is actually meaningless)
-  std::vector<S> heights6 = {1, 2};
+  std::vector<Scalar> heights6 = {1, 2};
   shape->setHeightField(2, 1, heights6);
   shape->flipY();
   EXPECT_EQ(shape->getHeightField().data()[0], heights6[0]);
   EXPECT_EQ(shape->getHeightField().data()[1], heights6[1]);
 
   // test height field with only one column (which is actually meaningless)
-  std::vector<S> heights7 = {1, 2};
+  std::vector<Scalar> heights7 = {1, 2};
   shape->setHeightField(1, 2, heights7);
   shape->flipY();
   EXPECT_EQ(shape->getHeightField().data()[0], heights7[1]);
   EXPECT_EQ(shape->getHeightField().data()[1], heights7[0]);
 
   // test height field with only one col and row (which is actually meaningless)
-  std::vector<S> heights8 = {1};
+  std::vector<Scalar> heights8 = {1};
   shape->setHeightField(1, 1, heights8);
   shape->flipY();
   EXPECT_EQ(shape->getHeightField().data()[0], heights8[0]);

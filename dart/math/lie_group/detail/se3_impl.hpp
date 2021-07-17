@@ -33,67 +33,120 @@
 #pragma once
 
 #include "dart/math/lie_group/lie_group.hpp"
+#include "dart/math/lie_group/r.hpp"
 #include "dart/math/lie_group/se3.hpp"
 
 namespace dart::math {
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options> SE3<S, Options>::Identity()
+template <typename Derived>
+auto SE3Base<Derived>::orientation() const
 {
-  return SE3(SO3<S, Options>::Identity(), R3<S, Options>::Identity());
+  return derived().orientation();
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options> SE3<S, Options>::Random()
+template <typename Derived>
+auto SE3Base<Derived>::orientation()
 {
-  return SE3(SO3<S, Options>::Random(), R3<S, Options>::Random());
+  return derived().orientation();
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>::SE3()
+template <typename Derived>
+auto SE3Base<Derived>::position() const
+{
+  return derived().position();
+}
+
+//==============================================================================
+template <typename Derived>
+auto SE3Base<Derived>::position()
+{
+  return derived().position();
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3<Scalar, Options> SE3<Scalar, Options>::Identity()
+{
+  return SE3(SO3<Scalar, Options>::Identity(), R3<Scalar, Options>::Identity());
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3<Scalar, Options> SE3<Scalar, Options>::Random()
+{
+  return SE3(SO3<Scalar, Options>::Random(), R3<Scalar, Options>::Random());
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3<Scalar, Options>::SE3()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>::SE3(const SE3<S, Options>& other)
-  : m_orientation(other.m_orientation), m_position(other.m_position)
+template <typename Scalar, int Options>
+template <typename OtherDerived>
+SE3<Scalar, Options>::SE3(const SE3Base<OtherDerived>& other)
+  : m_orientation(other.orientation()), m_position(other.position())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>::SE3(SE3<S, Options>&& other)
-  : m_orientation(std::move(other.m_orientation)),
-    m_position(std::move(other.m_position))
+template <typename Scalar, int Options>
+template <typename OtherDerived>
+SE3<Scalar, Options>::SE3(SE3Base<OtherDerived>&& other)
+  : m_orientation(std::move(other.orientation())),
+    m_position(std::move(other.position()))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>::SE3(const SO3<S, Options>& orientation, const R3<S>& position)
+template <typename Scalar, int Options>
+SE3<Scalar, Options>::SE3(
+    const SO3<Scalar>& orientation, const R3<Scalar>& position)
   : m_orientation(orientation), m_position(position)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>::SE3(SO3<S, Options>&& orientation, R3<S>&& position)
+template <typename Scalar, int Options>
+SE3<Scalar, Options>::SE3(SO3<Scalar>&& orientation, R3<Scalar>&& position)
   : m_orientation(std::move(orientation)), m_position(std::move(position))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>& SE3<S, Options>::operator=(const SE3<S, Options>& other)
+template <typename Scalar, int Options>
+template <typename SO3Derived, typename RDerived>
+SE3<Scalar, Options>::SE3(
+    const SO3Base<SO3Derived>& orientation, const RBase<RDerived>& position)
+  : m_orientation(orientation), m_position(position)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+template <typename SO3Derived, typename RDerived>
+SE3<Scalar, Options>::SE3(
+    SO3Base<SO3Derived>&& orientation, RBase<RDerived>&& position)
+  : m_orientation(std::move(orientation)), m_position(std::move(position))
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3<Scalar, Options>& SE3<Scalar, Options>::operator=(
+    const SE3<Scalar, Options>& other)
 {
   m_orientation = other.m_orientation;
   m_position = other.m_position;
@@ -101,8 +154,9 @@ SE3<S, Options>& SE3<S, Options>::operator=(const SE3<S, Options>& other)
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>& SE3<S, Options>::operator=(SE3<S, Options>&& other)
+template <typename Scalar, int Options>
+SE3<Scalar, Options>& SE3<Scalar, Options>::operator=(
+    SE3<Scalar, Options>&& other)
 {
   m_orientation = std::move(other.m_orientation);
   m_position = std::move(other.m_position);
@@ -110,9 +164,19 @@ SE3<S, Options>& SE3<S, Options>::operator=(SE3<S, Options>&& other)
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>& SE3<S, Options>::operator=(
-    const Eigen::Transform<S, 3, Eigen::Isometry, Options>& tf)
+template <typename Scalar, int Options>
+template <typename OtherDerived>
+SE3<Scalar, Options>& SE3<Scalar, Options>::operator=(
+    const SE3Base<OtherDerived>& other)
+{
+  *this = other.eval();
+  return *this;
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3<Scalar, Options>& SE3<Scalar, Options>::operator=(
+    const Eigen::Transform<Scalar, 3, Eigen::Isometry, Options>& tf)
 {
   m_orientation = tf.rotation();
   m_position = tf.translation();
@@ -120,71 +184,84 @@ SE3<S, Options>& SE3<S, Options>::operator=(
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options> SE3<S, Options>::operator*(const SE3<S, Options>& other) const
+template <typename Scalar, int Options>
+template <typename OtherDerived>
+SE3<Scalar, Options> SE3<Scalar, Options>::operator*(
+    const SE3Base<OtherDerived>& other) const
 {
-  return SE3<S, Options>(
-      m_orientation * other.m_orientation,
-      m_position + m_orientation * other.m_position);
+  // TODO(JS): Fix this not to use .eval()
+  const auto other_evaluated = other.eval();
+  return SE3<Scalar, Options>(
+      m_orientation * other_evaluated.orientation(),
+      m_position + m_orientation * other_evaluated.position());
 }
 
 //==============================================================================
-template <typename S, int Options>
-R3<S> SE3<S, Options>::operator*(const R3<S>& position) const
+template <typename Scalar, int Options>
+R3<Scalar> SE3<Scalar, Options>::operator*(const R3<Scalar>& position) const
 {
   return m_orientation * position + m_position;
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options> SE3<S, Options>::operator*(
-    const SE3Algebra<S, Options>& dx) const
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options> SE3<Scalar, Options>::operator*(
+    const SE3Algebra<Scalar, Options>& dx) const
 {
-  return SE3Algebra<S, Options>(matrix() * dx.matrix());
+  return SE3Algebra<Scalar, Options>(matrix() * dx.matrix());
 }
 
 //==============================================================================
-template <typename S, int Options>
-void SE3<S, Options>::set_identity()
+template <typename Scalar, int Options>
+void SE3<Scalar, Options>::set_identity()
 {
   m_orientation.set_identity();
   m_position.set_identity();
 }
 
 //==============================================================================
-template <typename S, int Options>
-void SE3<S, Options>::set_random()
+template <typename Scalar, int Options>
+void SE3<Scalar, Options>::set_random()
 {
   m_orientation.set_random();
   m_position.set_random();
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options> SE3<S, Options>::inverse() const
+template <typename Scalar, int Options>
+SE3Inverse<Scalar, Options> SE3<Scalar, Options>::inverse() const
 {
-  const auto r_inv = m_orientation.inverse();
-  return SE3<S, Options>(r_inv, -(r_inv * m_position));
+  return SE3Inverse<Scalar, Options>(*this);
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options>& SE3<S, Options>::inverse_in_place()
+template <typename Scalar, int Options>
+SE3<Scalar, Options>& SE3<Scalar, Options>::inverse_in_place()
 {
   *this = inverse();
   return *this;
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3<S, Options>::Tangent SE3<S, Options>::log(
-    Jacobian* jacobian, S tolerance) const
+template <typename Scalar, int Options>
+SE3<Scalar, Options>& SE3<Scalar, Options>::rotate(
+    const SO3<Scalar, Options>& orientation)
+{
+  m_orientation = orientation * m_orientation;
+  m_position = orientation * m_position;
+  return *this;
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+typename SE3<Scalar, Options>::Tangent SE3<Scalar, Options>::log(
+    Jacobian* jacobian, Scalar tolerance) const
 {
   Tangent out;
-  out.mutable_angular() = m_orientation.log(nullptr, tolerance).vector();
-  out.mutable_linear().noalias()
-      = SO3Tangent<S>(out.angular()).left_jacobian_inverse(tolerance)
-        * m_position.vector();
+  out.set_angular(m_orientation.log(nullptr, tolerance));
+  out.set_linear(
+      SO3Tangent<Scalar>(out.angular()).left_jacobian_inverse(tolerance)
+      * m_position.vector());
   // TODO(JS): Use map
 
   if (jacobian) {
@@ -195,16 +272,16 @@ typename SE3<S, Options>::Tangent SE3<S, Options>::log(
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3<S, Options>::Tangent SE3<S, Options>::ad(
-    const SE3<S, Options>::Tangent& V) const
+template <typename Scalar, int Options>
+typename SE3<Scalar, Options>::Tangent SE3<Scalar, Options>::ad(
+    const SE3<Scalar, Options>::Tangent& V) const
 {
   return Ad(*this, V);
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3<S, Options>::Jacobian SE3<S, Options>::ad_matrix() const
+template <typename Scalar, int Options>
+typename SE3<Scalar, Options>::Jacobian SE3<Scalar, Options>::ad_matrix() const
 {
   Jacobian out;
   const auto rot_mat = m_orientation.quaternion().toRotationMatrix();
@@ -217,36 +294,37 @@ typename SE3<S, Options>::Jacobian SE3<S, Options>::ad_matrix() const
 }
 
 //==============================================================================
-template <typename S, int Options>
-SO3<S>& SE3<S, Options>::mutable_orientation()
+template <typename Scalar, int Options>
+SO3<Scalar>& SE3<Scalar, Options>::orientation()
 {
   return m_orientation;
 }
 
 //==============================================================================
-template <typename S, int Options>
-const SO3<S>& SE3<S, Options>::orientation() const
+template <typename Scalar, int Options>
+const SO3<Scalar>& SE3<Scalar, Options>::orientation() const
 {
   return m_orientation;
 }
 
 //==============================================================================
-template <typename S, int Options>
-R3<S>& SE3<S, Options>::mutable_position()
+template <typename Scalar, int Options>
+R3<Scalar>& SE3<Scalar, Options>::position()
 {
   return m_position;
 }
 
 //==============================================================================
-template <typename S, int Options>
-const R3<S>& SE3<S, Options>::position() const
+template <typename Scalar, int Options>
+const R3<Scalar>& SE3<Scalar, Options>::position() const
 {
   return m_position;
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3<S, Options>::Transformation SE3<S, Options>::transformation() const
+template <typename Scalar, int Options>
+typename SE3<Scalar, Options>::Transformation
+SE3<Scalar, Options>::transformation() const
 {
   Transformation out = Transformation::Identity();
   out.linear() = std::move(rotation());
@@ -255,38 +333,39 @@ typename SE3<S, Options>::Transformation SE3<S, Options>::transformation() const
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3<S, Options>::Matrix SE3<S, Options>::matrix() const
+template <typename Scalar, int Options>
+typename SE3<Scalar, Options>::Matrix SE3<Scalar, Options>::matrix() const
 {
   return transformation().matrix();
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3<S, Options>::Rotation SE3<S, Options>::rotation() const
+template <typename Scalar, int Options>
+typename SE3<Scalar, Options>::Rotation SE3<Scalar, Options>::rotation() const
 {
   return m_orientation.rotation();
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3<S, Options>::Translation& SE3<S, Options>::mutable_translation()
+template <typename Scalar, int Options>
+typename SE3<Scalar, Options>::Translation& SE3<Scalar, Options>::translation()
 {
   return m_position.vector();
 }
 
 //==============================================================================
-template <typename S, int Options>
-const typename SE3<S, Options>::Translation& SE3<S, Options>::translation()
-    const
+template <typename Scalar, int Options>
+const typename SE3<Scalar, Options>::Translation&
+SE3<Scalar, Options>::translation() const
 {
   return m_position.vector();
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3<S, Options>::Tangent SE3<S, Options>::Ad(
-    const SE3<S, Options>& T, const typename SE3<S, Options>::Tangent& V)
+template <typename Scalar, int Options>
+template <typename DerivedA, typename DerivedB>
+typename SE3<Scalar, Options>::Tangent SE3<Scalar, Options>::Ad(
+    const SE3Base<DerivedA>& T, const SE3TangentBase<DerivedB>& V)
 {
   const auto& orientation = T.orientation();
   const auto& position = T.position();
@@ -301,12 +380,73 @@ typename SE3<S, Options>::Tangent SE3<S, Options>::Ad(
   data.template tail<3>().noalias() = rotation * V.vector().template tail<3>()
                                       + vector.cross(data.template head<3>());
 
-  return SE3<S, Options>::Tangent(std::move(data));
+  return SE3<Scalar, Options>::Tangent(std::move(data));
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options> SE3Algebra<S, Options>::Zero()
+template <typename Scalar, int Options>
+template <typename DerivedA, typename DerivedB>
+typename SE3<Scalar, Options>::Tangent SE3<Scalar, Options>::Ad_R(
+    const SE3Base<DerivedA>& T, const SE3TangentBase<DerivedB>& V)
+{
+  const auto& orientation = T.orientation();
+
+  // Using rotation matrix is more efficient when multiplying 3d vector more
+  // than once
+  const auto rotation = orientation.rotation();
+
+  TangentData data;
+  data.template head<3>().noalias() = rotation * V.vector().template head<3>();
+  data.template tail<3>().noalias() = rotation * V.vector().template tail<3>();
+
+  return SE3<Scalar, Options>::Tangent(std::move(data));
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3Inverse<Scalar, Options>::SE3Inverse(const SE3<Scalar, Options>& original)
+  : m_original(original)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3<Scalar, Options> SE3Inverse<Scalar, Options>::operator*(
+    const SE3<Scalar, Options>& other) const
+{
+  const SO3<Scalar, Options> Rt = m_original.orientation().inverse();
+  return SE3<Scalar, Options>(
+      Rt * other.orientation(),
+      Rt * (other.position() - m_original.position()));
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SO3<Scalar> SE3Inverse<Scalar, Options>::orientation() const
+{
+  return m_original.orientation().inverse();
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+R3<Scalar> SE3Inverse<Scalar, Options>::position() const
+{
+  return m_original.orientation().inverse() * -m_original.position();
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+typename SE3Inverse<Scalar, Options>::EvalReturnType
+SE3Inverse<Scalar, Options>::eval() const
+{
+  const SO3<Scalar, Options> Rt = m_original.orientation().inverse();
+  return SE3<Scalar, Options>(Rt, -(Rt * m_original.position()));
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options> SE3Algebra<Scalar, Options>::Zero()
 {
   SE3Algebra out;
   out.set_zero();
@@ -314,31 +454,32 @@ SE3Algebra<S, Options> SE3Algebra<S, Options>::Zero()
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options>::SE3Algebra() : m_data(LieAlgebraData::Zero())
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options>::SE3Algebra() : m_data(LieAlgebraData::Zero())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options>::SE3Algebra(const SE3Algebra& other)
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options>::SE3Algebra(const SE3Algebra& other)
   : m_data(other.m_data)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options>::SE3Algebra(SE3Algebra&& other)
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options>::SE3Algebra(SE3Algebra&& other)
   : m_data(std::move(other.m_data))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options>::SE3Algebra(const SE3Tangent<S, Options>& tangent)
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options>::SE3Algebra(
+    const SE3Tangent<Scalar, Options>& tangent)
 {
   const auto& vector = tangent.vector();
   m_data.setZero();
@@ -347,8 +488,8 @@ SE3Algebra<S, Options>::SE3Algebra(const SE3Tangent<S, Options>& tangent)
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options>::SE3Algebra(SE3Tangent<S, Options>&& tangent)
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options>::SE3Algebra(SE3Tangent<Scalar, Options>&& tangent)
 {
   const auto& vector = tangent.vector();
   m_data.setZero();
@@ -357,24 +498,25 @@ SE3Algebra<S, Options>::SE3Algebra(SE3Tangent<S, Options>&& tangent)
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options>::SE3Algebra(const LieAlgebraData& data) : m_data(data)
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options>::SE3Algebra(const LieAlgebraData& data)
+  : m_data(data)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options>::SE3Algebra(LieAlgebraData&& data)
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options>::SE3Algebra(LieAlgebraData&& data)
   : m_data(std::move(data))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
+template <typename Scalar, int Options>
 template <typename DerivedA, typename DerivedB>
-SE3Algebra<S, Options>::SE3Algebra(
+SE3Algebra<Scalar, Options>::SE3Algebra(
     const Eigen::MatrixBase<DerivedA>& angular,
     const Eigen::MatrixBase<DerivedB>& linear)
 {
@@ -384,89 +526,115 @@ SE3Algebra<S, Options>::SE3Algebra(
 }
 
 //==============================================================================
-template <typename S, int Options>
-void SE3Algebra<S, Options>::set_zero()
+template <typename Scalar, int Options>
+void SE3Algebra<Scalar, Options>::set_zero()
 {
   m_data.setZero();
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options> SE3Algebra<S, Options>::operator/(S scalar) const
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options> SE3Algebra<Scalar, Options>::operator/(
+    Scalar scalar) const
 {
-  return SE3Algebra<S, Options>(m_data / scalar);
+  return SE3Algebra<Scalar, Options>(m_data / scalar);
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Tangent<S, Options> SE3Algebra<S, Options>::vee() const
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options> SE3Algebra<Scalar, Options>::vee() const
 {
-  return SE3Tangent<S, Options>(
-      Eigen::Matrix<S, 3, 1>(m_data(2, 1), m_data(0, 2), m_data(1, 0)),
+  return SE3Tangent<Scalar, Options>(
+      Eigen::Matrix<Scalar, 3, 1>(m_data(2, 1), m_data(0, 2), m_data(1, 0)),
       m_data.template topRightCorner<3, 1>());
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Algebra<S, Options>::LieAlgebraData&
-SE3Algebra<S, Options>::mutable_matrix()
+template <typename Scalar, int Options>
+typename SE3Algebra<Scalar, Options>::LieAlgebraData&
+SE3Algebra<Scalar, Options>::mutable_matrix()
 {
   return m_data;
 }
 
 //==============================================================================
-template <typename S, int Options>
-const typename SE3Algebra<S, Options>::LieAlgebraData&
-SE3Algebra<S, Options>::matrix() const
+template <typename Scalar, int Options>
+const typename SE3Algebra<Scalar, Options>::LieAlgebraData&
+SE3Algebra<Scalar, Options>::matrix() const
 {
   return m_data;
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Tangent<S, Options>::SE3Tangent() : m_data(TangentData::Zero())
+template <typename Derived>
+template <typename OtherDerived>
+Derived SE3TangentBase<Derived>::ad(
+    const SE3TangentBase<OtherDerived>& other) const
+{
+  return derived().ad(other);
+}
+
+//==============================================================================
+template <typename Derived>
+const typename SE3TangentBase<Derived>::TangentData&
+SE3TangentBase<Derived>::vector() const
+{
+  return derived().vector();
+}
+
+//==============================================================================
+template <typename Derived>
+typename SE3TangentBase<Derived>::TangentData& SE3TangentBase<Derived>::vector()
+{
+  return derived().vector();
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options>::SE3Tangent() : m_data(TangentData::Zero())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Tangent<S, Options>::SE3Tangent(const SE3Tangent& other)
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options>::SE3Tangent(const SE3Tangent& other)
   : m_data(other.m_data)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Tangent<S, Options>::SE3Tangent(SE3Tangent&& other)
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options>::SE3Tangent(SE3Tangent&& other)
   : m_data(std::move(other.m_data))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
+template <typename Scalar, int Options>
 template <typename Derived>
-SE3Tangent<S, Options>::SE3Tangent(const Eigen::MatrixBase<Derived>& coeffs)
+SE3Tangent<Scalar, Options>::SE3Tangent(
+    const Eigen::MatrixBase<Derived>& coeffs)
   : m_data(coeffs)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
+template <typename Scalar, int Options>
 template <typename Derived>
-SE3Tangent<S, Options>::SE3Tangent(Eigen::MatrixBase<Derived>&& coeffs)
+SE3Tangent<Scalar, Options>::SE3Tangent(Eigen::MatrixBase<Derived>&& coeffs)
   : m_data(std::move(coeffs))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
+template <typename Scalar, int Options>
 template <typename DerivedA, typename DerivedB>
-SE3Tangent<S, Options>::SE3Tangent(
+SE3Tangent<Scalar, Options>::SE3Tangent(
     const Eigen::MatrixBase<DerivedA>& angular,
     const Eigen::MatrixBase<DerivedB>& linear)
 {
@@ -475,71 +643,94 @@ SE3Tangent<S, Options>::SE3Tangent(
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Tangent<S, Options>& SE3Tangent<S, Options>::operator=(
-    const SE3Tangent<S, Options>& other)
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options>& SE3Tangent<Scalar, Options>::operator=(
+    const SE3Tangent<Scalar, Options>& other)
 {
   m_data = other.m_data;
   return *this;
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Tangent<S, Options>& SE3Tangent<S, Options>::operator=(
-    SE3Tangent<S, Options>&& other)
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options>& SE3Tangent<Scalar, Options>::operator=(
+    SE3Tangent<Scalar, Options>&& other)
 {
   m_data = std::move(other.m_data);
   return *this;
 }
 
 //==============================================================================
-template <typename S, int Options>
-S SE3Tangent<S, Options>::operator[](int index) const
+template <typename Scalar, int Options>
+Scalar SE3Tangent<Scalar, Options>::operator[](int index) const
 {
   return m_data[index];
 }
 
 //==============================================================================
-template <typename S, int Options>
-S& SE3Tangent<S, Options>::operator[](int index)
+template <typename Scalar, int Options>
+Scalar& SE3Tangent<Scalar, Options>::operator[](int index)
 {
   return m_data[index];
 }
 
 //==============================================================================
-template <typename S, int Options>
-S SE3Tangent<S, Options>::operator*(
-    const SE3Cotangent<S, Options>& wrench) const
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options> SE3Tangent<Scalar, Options>::operator-() const
+{
+  return SE3Tangent<Scalar, Options>(-m_data);
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options> SE3Tangent<Scalar, Options>::operator+(
+    const SE3Tangent& other) const
+{
+  return SE3Tangent(m_data + other.m_data);
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options> SE3Tangent<Scalar, Options>::operator-(
+    const SE3Tangent& other) const
+{
+  return SE3Tangent(m_data - other.m_data);
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+Scalar SE3Tangent<Scalar, Options>::operator*(
+    const SE3Cotangent<Scalar, Options>& wrench) const
 {
   return m_data.dot(wrench.m_data);
 }
 
 //==============================================================================
-template <typename S, int Options>
-void SE3Tangent<S, Options>::set_zero()
+template <typename Scalar, int Options>
+void SE3Tangent<Scalar, Options>::set_zero()
 {
   m_data.setZero();
 }
 
 //==============================================================================
-template <typename S, int Options>
-void SE3Tangent<S, Options>::set_random()
+template <typename Scalar, int Options>
+void SE3Tangent<Scalar, Options>::set_random()
 {
-  const SE3<S, Options> tf = SE3<S, Options>::Random();
+  const SE3<Scalar, Options> tf = SE3<Scalar, Options>::Random();
   *this = tf.log();
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Algebra<S, Options> SE3Tangent<S, Options>::hat() const
+template <typename Scalar, int Options>
+SE3Algebra<Scalar, Options> SE3Tangent<Scalar, Options>::hat() const
 {
-  return SE3Algebra<S, Options>(*this);
+  return SE3Algebra<Scalar, Options>(*this);
 }
 
 //==============================================================================
-template <typename S, int Options>
+template <typename Scalar, int Options>
 template <typename Derived>
-void SE3Tangent<S, Options>::vee(const math::MatrixBase<Derived>& mat)
+void SE3Tangent<Scalar, Options>::vee(const math::MatrixBase<Derived>& mat)
 {
   if constexpr (Derived::RowsAtCompileTime == Eigen::Dynamic) {
     DART_ASSERT(mat.rows() == 3);
@@ -559,16 +750,16 @@ void SE3Tangent<S, Options>::vee(const math::MatrixBase<Derived>& mat)
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3<S, Options> SE3Tangent<S, Options>::exp(
-    Jacobian* jacobian, S tolerance) const
+template <typename Scalar, int Options>
+SE3<Scalar, Options> SE3Tangent<Scalar, Options>::exp(
+    Jacobian* jacobian, Scalar tolerance) const
 {
   // TODO(JS): Make this a map
-  const auto so3_tangent = SO3Tangent<S>(m_data.template head<3>());
+  const auto so3_tangent = SO3Tangent<Scalar>(m_data.template head<3>());
   const auto so3_exp = so3_tangent.exp(nullptr, tolerance);
   const auto so3_left_jacobian = so3_tangent.left_jacobian(tolerance);
 
-  const SE3<S, Options> out(
+  const SE3<Scalar, Options> out(
       so3_exp, so3_left_jacobian * m_data.template tail<3>());
 
   if (jacobian) {
@@ -579,8 +770,10 @@ SE3<S, Options> SE3Tangent<S, Options>::exp(
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Tangent<S, Options> SE3Tangent<S, Options>::ad(const SE3Tangent& other) const
+template <typename Scalar, int Options>
+template <typename Derived>
+SE3Tangent<Scalar, Options> SE3Tangent<Scalar, Options>::ad(
+    const SE3TangentBase<Derived>& other) const
 {
   //--------------------------------------------------------------------------
   // ad(s1, s2) = | [w1]    0 | | w2 |
@@ -592,7 +785,7 @@ SE3Tangent<S, Options> SE3Tangent<S, Options>::ad(const SE3Tangent& other) const
 
   TangentData data;
   const TangentData& vec1 = m_data;
-  const TangentData& vec2 = other.m_data;
+  const TangentData& vec2 = other.vector();
   data.template head<3>()
       = vec1.template head<3>().cross(vec2.template head<3>());
   data.template tail<3>()
@@ -602,9 +795,9 @@ SE3Tangent<S, Options> SE3Tangent<S, Options>::ad(const SE3Tangent& other) const
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Tangent<S, Options>::Matrix SE3Tangent<S, Options>::ad_matrix()
-    const
+template <typename Scalar, int Options>
+typename SE3Tangent<Scalar, Options>::Matrix
+SE3Tangent<Scalar, Options>::ad_matrix() const
 {
   // TODO(JS): Create matrix type instead of using Jacobian
 
@@ -619,9 +812,9 @@ typename SE3Tangent<S, Options>::Matrix SE3Tangent<S, Options>::ad_matrix()
 }
 
 //==============================================================================
-template <typename Derived, typename S>
-Eigen::Matrix<S, 3, 3> compute_q(
-    const Eigen::MatrixBase<Derived>& data, S tolerance)
+template <typename Derived, typename Scalar>
+Eigen::Matrix<Scalar, 3, 3> compute_q(
+    const Eigen::MatrixBase<Derived>& data, Scalar tolerance)
 {
   const auto& a = data.template head<3>().eval();
   const auto& b = data.template tail<3>().eval();
@@ -629,17 +822,17 @@ Eigen::Matrix<S, 3, 3> compute_q(
   const auto A = skew(a);
   const auto B = skew(b);
 
-  const S t = a.norm();
+  const Scalar t = a.norm();
 
-  Eigen::Matrix<S, 3, 3> out;
+  Eigen::Matrix<Scalar, 3, 3> out;
 
   if (t < tolerance) {
     out.noalias() = 0.5 * B;
   } else {
-    const S t2 = t * t;
-    const S t3 = t2 * t;
-    const S t4 = t3 * t;
-    const S t5 = t4 * t;
+    const Scalar t2 = t * t;
+    const Scalar t3 = t2 * t;
+    const Scalar t4 = t3 * t;
+    const Scalar t5 = t4 * t;
     const auto AB = (A * B).eval();
     const auto BA = (B * A).eval();
     const auto ABA = (AB * A).eval();
@@ -647,8 +840,8 @@ Eigen::Matrix<S, 3, 3> compute_q(
     const auto BAA = (BA * A).eval();
     const auto ABAA = (ABA * A).eval();
     const auto AABA = (A * ABA).eval();
-    const S st = std::sin(t);
-    const S ct = std::cos(t);
+    const Scalar st = std::sin(t);
+    const Scalar ct = std::cos(t);
     // clang-format off
     out.noalias() =
       0.5 * B
@@ -662,15 +855,15 @@ Eigen::Matrix<S, 3, 3> compute_q(
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Tangent<S, Options>::Jacobian SE3Tangent<S, Options>::left_jacobian(
-    S tolerance) const
+template <typename Scalar, int Options>
+typename SE3Tangent<Scalar, Options>::Jacobian
+SE3Tangent<Scalar, Options>::left_jacobian(Scalar tolerance) const
 {
   const auto& a = m_data.template head<3>();
 
   Jacobian jac;
   jac.template topLeftCorner<3, 3>()
-      = SO3Tangent<S>(a).left_jacobian(tolerance);
+      = SO3Tangent<Scalar>(a).left_jacobian(tolerance);
   jac.template topRightCorner<3, 3>().setZero();
   jac.template bottomLeftCorner<3, 3>() = compute_q(m_data, tolerance);
   jac.template bottomRightCorner<3, 3>() = jac.template topLeftCorner<3, 3>();
@@ -678,37 +871,37 @@ typename SE3Tangent<S, Options>::Jacobian SE3Tangent<S, Options>::left_jacobian(
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Tangent<S, Options>::Jacobian
-SE3Tangent<S, Options>::space_jacobian(S tolerance) const
+template <typename Scalar, int Options>
+typename SE3Tangent<Scalar, Options>::Jacobian
+SE3Tangent<Scalar, Options>::space_jacobian(Scalar tolerance) const
 {
   return left_jacobian(tolerance);
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Tangent<S, Options>::Jacobian
-SE3Tangent<S, Options>::right_jacobian(S tolerance) const
+template <typename Scalar, int Options>
+typename SE3Tangent<Scalar, Options>::Jacobian
+SE3Tangent<Scalar, Options>::right_jacobian(Scalar tolerance) const
 {
-  return SE3Tangent<S, Options>(-m_data).left_jacobian(tolerance);
+  return SE3Tangent<Scalar, Options>(-m_data).left_jacobian(tolerance);
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Tangent<S, Options>::Jacobian SE3Tangent<S, Options>::body_jacobian(
-    S tolerance) const
+template <typename Scalar, int Options>
+typename SE3Tangent<Scalar, Options>::Jacobian
+SE3Tangent<Scalar, Options>::body_jacobian(Scalar tolerance) const
 {
   return right_jacobian(tolerance);
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Tangent<S, Options>::Jacobian
-SE3Tangent<S, Options>::left_jacobian_inverse(S tolerance) const
+template <typename Scalar, int Options>
+typename SE3Tangent<Scalar, Options>::Jacobian
+SE3Tangent<Scalar, Options>::left_jacobian_inverse(Scalar tolerance) const
 {
   const auto& a = m_data.template head<3>();
-  const Eigen::Matrix<S, 3, 3> jac_inv
-      = SO3Tangent<S>(a).left_jacobian_inverse(tolerance);
+  const Eigen::Matrix<Scalar, 3, 3> jac_inv
+      = SO3Tangent<Scalar>(a).left_jacobian_inverse(tolerance);
   const auto& Q = compute_q(m_data, tolerance);
 
   Jacobian jac;
@@ -720,156 +913,141 @@ SE3Tangent<S, Options>::left_jacobian_inverse(S tolerance) const
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Tangent<S, Options>::Jacobian
-SE3Tangent<S, Options>::right_jacobian_inverse(S tolerance) const
+template <typename Scalar, int Options>
+typename SE3Tangent<Scalar, Options>::Jacobian
+SE3Tangent<Scalar, Options>::right_jacobian_inverse(Scalar tolerance) const
 {
-  return SE3Tangent<S, Options>(-m_data).left_jacobian_inverse(tolerance);
+  return SE3Tangent<Scalar, Options>(-m_data).left_jacobian_inverse(tolerance);
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Tangent<S, Options>::angular() const
+template <typename Scalar, int Options>
+SO3Tangent<Scalar, Options> SE3Tangent<Scalar, Options>::angular() const
 {
-  return m_data.template head<3>();
+  return SO3Tangent<Scalar, Options>(m_data.template head<3>());
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Tangent<S, Options>::mutable_angular()
+template <typename Scalar, int Options>
+Eigen::Map<SO3Tangent<Scalar, Options>> SE3Tangent<Scalar, Options>::angular()
 {
-  return m_data.template head<3>();
+  return Eigen::Map<SO3Tangent<Scalar, Options>>(m_data.data());
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Tangent<S, Options>::linear() const
+template <typename Scalar, int Options>
+RTangent<Scalar, 3, Options> SE3Tangent<Scalar, Options>::linear() const
 {
-  return m_data.template tail<3>();
+  return RTangent<Scalar, 3, Options>(m_data.template tail<3>());
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Tangent<S, Options>::mutable_linear()
+template <typename Scalar, int Options>
+Eigen::Map<R3Tangent<Scalar, Options>> SE3Tangent<Scalar, Options>::linear()
 {
-  return m_data.template tail<3>();
+  return Eigen::Map<R3Tangent<Scalar, Options>>(m_data.data() + 3);
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Tangent<S, Options>::TangentData& SE3Tangent<S, Options>::vector()
+template <typename Scalar, int Options>
+typename SE3Tangent<Scalar, Options>::TangentData&
+SE3Tangent<Scalar, Options>::vector()
 {
   return m_data;
 }
 
 //==============================================================================
-template <typename S, int Options>
-const typename SE3Tangent<S, Options>::TangentData&
-SE3Tangent<S, Options>::vector() const
+template <typename Scalar, int Options>
+const typename SE3Tangent<Scalar, Options>::TangentData&
+SE3Tangent<Scalar, Options>::vector() const
 {
   return m_data;
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Tangent<S, Options> SE3Tangent<S, Options>::Random()
+template <typename Scalar, int Options>
+SE3Tangent<Scalar, Options> SE3Tangent<Scalar, Options>::Random()
 {
-  SE3Tangent<S, Options> out;
+  SE3Tangent<Scalar, Options> out;
   out.set_random();
   return out;
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Cotangent<S, Options>::SE3Cotangent() : m_data(CotangentData::Zero())
+template <typename Scalar, int Options>
+SE3Cotangent<Scalar, Options>::SE3Cotangent() : m_data(CotangentData::Zero())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-SE3Cotangent<S, Options>::SE3Cotangent(const SE3Cotangent& other)
-  : m_data(other.m_data)
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S, int Options>
-SE3Cotangent<S, Options>::SE3Cotangent(SE3Cotangent&& other)
-  : m_data(std::move(other.m_data))
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S, int Options>
-auto SE3Cotangent<S, Options>::torque() const
+template <typename Scalar, int Options>
+auto SE3Cotangent<Scalar, Options>::torque() const
 {
   return m_data.template head<3>();
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Cotangent<S, Options>::mutable_torque()
+template <typename Scalar, int Options>
+auto SE3Cotangent<Scalar, Options>::mutable_torque()
 {
   return m_data.template head<3>();
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Cotangent<S, Options>::force() const
+template <typename Scalar, int Options>
+auto SE3Cotangent<Scalar, Options>::force() const
 {
   return m_data.template tail<3>();
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Cotangent<S, Options>::mutable_force()
+template <typename Scalar, int Options>
+auto SE3Cotangent<Scalar, Options>::mutable_force()
 {
   return m_data.template tail<3>();
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Cotangent<S, Options>::angular() const
+template <typename Scalar, int Options>
+auto SE3Cotangent<Scalar, Options>::angular() const
 {
   return m_data.template head<3>();
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Cotangent<S, Options>::mutable_angular()
+template <typename Scalar, int Options>
+auto SE3Cotangent<Scalar, Options>::mutable_angular()
 {
   return m_data.template head<3>();
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Cotangent<S, Options>::linear() const
+template <typename Scalar, int Options>
+auto SE3Cotangent<Scalar, Options>::linear() const
 {
   return m_data.template tail<3>();
 }
 
 //==============================================================================
-template <typename S, int Options>
-auto SE3Cotangent<S, Options>::mutable_linear()
+template <typename Scalar, int Options>
+auto SE3Cotangent<Scalar, Options>::mutable_linear()
 {
   return m_data.template tail<3>();
 }
 
 //==============================================================================
-template <typename S, int Options>
-typename SE3Cotangent<S, Options>::CotangentData&
-SE3Cotangent<S, Options>::vector()
+template <typename Scalar, int Options>
+typename SE3Cotangent<Scalar, Options>::CotangentData&
+SE3Cotangent<Scalar, Options>::vector()
 {
   return m_data;
 }
 
 //==============================================================================
-template <typename S, int Options>
-const typename SE3Cotangent<S, Options>::CotangentData&
-SE3Cotangent<S, Options>::vector() const
+template <typename Scalar, int Options>
+const typename SE3Cotangent<Scalar, Options>::CotangentData&
+SE3Cotangent<Scalar, Options>::vector() const
 {
   return m_data;
 }
@@ -879,17 +1057,17 @@ SE3Cotangent<S, Options>::vector() const
 namespace Eigen {
 
 //==============================================================================
-template <typename S, int Options>
-Map<dart::math::SE3<S, Options>, Options>::Map(S* data)
-  : m_orientation(data), m_position(data + dart::math::SO3<S>::RepDim)
+template <typename Scalar, int Options>
+Map<dart::math::SE3<Scalar, Options>, Options>::Map(Scalar* data)
+  : m_orientation(data), m_position(data + dart::math::SO3<Scalar>::RepDim)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-Map<const dart::math::SE3<S, Options>, Options>::Map(const S* data)
-  : m_orientation(data), m_position(data + dart::math::SO3<S>::RepDim)
+template <typename Scalar, int Options>
+Map<const dart::math::SE3<Scalar, Options>, Options>::Map(const Scalar* data)
+  : m_orientation(data), m_position(data + dart::math::SO3<Scalar>::RepDim)
 {
   // Do nothing
 }

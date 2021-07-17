@@ -41,28 +41,28 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class OdeObject : public Object<S_>
+template <typename Scalar_>
+class OdeObject : public Object<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   // Documentation inherited
-  math::Isometry3<S> get_pose() const override;
+  math::Isometry3<Scalar> get_pose() const override;
 
   // Documentation inherited
-  void set_pose(const math::Isometry3<S>& tf) override;
+  void set_pose(const math::Isometry3<Scalar>& tf) override;
 
   // Documentation inherited
-  math::Vector3<S> get_position() const override;
+  math::Vector3<Scalar> get_position() const override;
 
   // Documentation inherited
-  void set_position(const math::Vector3<S>& pos) override;
+  void set_position(const math::Vector3<Scalar>& pos) override;
 
 protected:
   /// Constructor
-  OdeObject(OdeScene<S>* group, math::GeometryPtr shape);
+  OdeObject(OdeScene<Scalar>* group, math::GeometryPtr shape);
 
   // Documentation inherited
   void update_engine_data() override;
@@ -74,11 +74,11 @@ protected:
   dGeomID get_ode_geom_id() const;
 
 private:
-  friend class OdeEngine<S>;
-  friend class OdeScene<S>;
+  friend class OdeEngine<Scalar>;
+  friend class OdeScene<Scalar>;
 
   /// ODE geom
-  std::shared_ptr<detail::OdeGeom<S>> m_ode_geom;
+  std::shared_ptr<detail::OdeGeom<Scalar>> m_ode_geom;
 
   /// ODE body id associated with this object
   ///

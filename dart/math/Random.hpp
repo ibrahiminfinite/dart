@@ -121,8 +121,8 @@ public:
   /// \param[in] max Upper bound of the distribution.
   ///
   /// \sa normal()
-  template <typename S>
-  static S uniform(S min, S max);
+  template <typename Scalar>
+  static Scalar uniform(Scalar min, Scalar max);
 
   /// Returns a random vector or matrix from an uniform distribution.
   ///
@@ -190,12 +190,12 @@ public:
       typename DynamicSizeMatrixT::Scalar max);
 
   /// Returns a random unit quaternion sampled uniformly sampled on SO(3)
-  template <typename S = double>
-  static ::Eigen::Quaternion<S> uniformUnitQuaternion();
+  template <typename Scalar = double>
+  static ::Eigen::Quaternion<Scalar> uniformUnitQuaternion();
 
   /// Returns a random rotation matrix that is uniformly sampled on SO(3)
-  template <typename S = double>
-  static ::Eigen::Matrix<S, 3, 3> uniformRotationMatrix3();
+  template <typename Scalar = double>
+  static ::Eigen::Matrix<Scalar, 3, 3> uniformRotationMatrix3();
 
   /// Returns a random number from a normal distribution.
   ///
@@ -218,8 +218,8 @@ public:
   /// \param[in] sigma Standard deviation of the distribution.
   ///
   /// \sa uniform()
-  template <typename S>
-  static S normal(S mean, S sigma);
+  template <typename Scalar>
+  static Scalar normal(Scalar mean, Scalar sigma);
 
 private:
   /// \return A mutable reference to the seed.

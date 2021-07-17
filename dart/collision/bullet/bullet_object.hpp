@@ -41,28 +41,28 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class BulletObject : public Object<S_>
+template <typename Scalar_>
+class BulletObject : public Object<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   // Documentation inherited
-  math::Isometry3<S> get_pose() const override;
+  math::Isometry3<Scalar> get_pose() const override;
 
   // Documentation inherited
-  void set_pose(const math::Isometry3<S>& tf) override;
+  void set_pose(const math::Isometry3<Scalar>& tf) override;
 
   // Documentation inherited
-  math::Vector3<S> get_position() const override;
+  math::Vector3<Scalar> get_position() const override;
 
   // Documentation inherited
-  void set_position(const math::Vector3<S>& pos) override;
+  void set_position(const math::Vector3<Scalar>& pos) override;
 
 protected:
   /// Constructor
-  BulletObject(BulletScene<S>* collision_scene, math::GeometryPtr shape);
+  BulletObject(BulletScene<Scalar>* collision_scene, math::GeometryPtr shape);
 
   // Documentation inherited
   void update_engine_data() override;
@@ -70,8 +70,8 @@ protected:
   const btCollisionObject* get_bullet_collision_object() const;
 
 private:
-  friend class BulletEngine<S>;
-  friend class BulletScene<S>;
+  friend class BulletEngine<Scalar>;
+  friend class BulletScene<Scalar>;
 
   std::unique_ptr<btCollisionObject> m_bullet_collision_object;
 };

@@ -30,16 +30,14 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <dart/dart.hpp>
-#include <pybind11/pybind11.h>
+#include "dart/multibody/frame.hpp"
 
-namespace py = pybind11;
+namespace dart::multibody {
 
-namespace dart::python {
+DART_TEMPLATE_CLASS_SOURCE(Frame)
+DART_TEMPLATE_CLASS_SOURCE(InertialFrame)
+DART_TEMPLATE_CLASS_SOURCE(FreeFrame)
+DART_TEMPLATE_CLASS_SOURCE(RelativeFrame)
+DART_TEMPLATE_CLASS_SOURCE(FreeRelativeFrame)
 
-void py_t(py::module& m)
-{
-  ::py::class_<math::RXd>(m, "R").def(::py::init<>());
-}
-
-} // namespace dart::python
+} // namespace dart::multibody

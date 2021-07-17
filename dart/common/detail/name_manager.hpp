@@ -36,6 +36,7 @@
 #include <sstream>
 
 #include "dart/common/console.hpp"
+#include "dart/common/logging.hpp"
 #include "dart/common/name_manager.hpp"
 
 namespace dart {
@@ -82,25 +83,27 @@ bool NameManager<T>::setPattern(const std::string& _newPattern)
 
 //==============================================================================
 template <class T>
-std::string NameManager<T>::issueNewName(const std::string& _name) const
+std::string NameManager<T>::issueNewName(const std::string& name) const
 {
-  if (!hasName(_name))
-    return _name;
+  if (!hasName(name))
+    return name;
 
   int count = 1;
   std::string newName;
   do {
     std::stringstream ss;
     if (mNameBeforeNumber)
-      ss << mPrefix << _name << mInfix << count++ << mAffix;
+      ss << mPrefix << name << mInfix << count++ << mAffix;
     else
-      ss << mPrefix << count++ << mInfix << _name << mAffix;
+      ss << mPrefix << count++ << mInfix << name << mAffix;
     newName = ss.str();
   } while (hasName(newName));
 
-  dtmsg << "[NameManager::issueNewName] (" << mManagerName << ") The name ["
-        << _name << "] is a duplicate, so it has been renamed to [" << newName
-        << "]\n";
+  DART_DEBUG(
+      "({}) The name [{}] is a duplicate, so it has been renamed to [{}].",
+      mManagerName,
+      name,
+      newName);
 
   return newName;
 }

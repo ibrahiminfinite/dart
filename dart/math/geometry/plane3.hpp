@@ -38,13 +38,13 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
-class Plane3 : public Convex3<S_>
+template <typename Scalar_>
+class Plane3 : public Convex3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
-  using Vector3 = typename Convex3<S>::Vector3;
+  using Scalar = Scalar_;
+  using Vector3 = typename Convex3<Scalar>::Vector3;
 
   /// Returns type string
   static const std::string& GetType();
@@ -56,23 +56,23 @@ public:
   const std::string& get_type() const override;
 
   /// Sets plane normal
-  void set_normal(const math::Vector3<S>& normal);
+  void set_normal(const math::Vector3<Scalar>& normal);
 
   /// Returns plane normal
-  const math::Vector3<S>& get_normal() const;
+  const math::Vector3<Scalar>& get_normal() const;
 
   /// Sets plane offset
-  void set_offset(S offset);
+  void set_offset(Scalar offset);
 
   /// Returns plane offset
-  S get_offset() const;
+  Scalar get_offset() const;
 
 private:
   /// Plane normal
-  math::Vector3<S> m_normal;
+  math::Vector3<Scalar> m_normal;
 
   /// Plane offset
-  S m_offset;
+  Scalar m_offset;
 };
 
 using Plane3f = Plane3<float>;

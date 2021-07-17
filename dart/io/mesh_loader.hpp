@@ -40,7 +40,7 @@
 namespace dart {
 namespace io {
 
-template <typename S>
+template <typename Scalar>
 class MeshLoader
 {
 public:
@@ -51,7 +51,7 @@ public:
   virtual ~MeshLoader() = default;
 
   /// Loads math::TriMesh given URI and resource retriever
-  virtual std::shared_ptr<math::TriMesh<S>> load(
+  virtual std::shared_ptr<math::TriMesh<Scalar>> load(
       const common::Uri& uri,
       common::ResourceRetrieverPtr resource_retriever = nullptr)
       = 0;

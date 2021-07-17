@@ -39,29 +39,29 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class DartScene : public Scene<S_>
+template <typename Scalar_>
+class DartScene : public Scene<Scalar_>
 {
 public:
-  using S = S_;
+  using Scalar = Scalar_;
 
-  friend class DartEngine<S>;
+  friend class DartEngine<Scalar>;
 
   /// Constructor
-  DartScene(Engine<S>* engine);
+  DartScene(Engine<Scalar>* engine);
 
   /// Destructor
   ~DartScene() override;
 
-  ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+  ObjectPtr<Scalar> create_object(math::GeometryPtr shape) override;
 
 protected:
-  DartEngine<S>* get_mutable_dart_engine();
+  DartEngine<Scalar>* get_mutable_dart_engine();
 
-  const DartEngine<S>* get_dart_engine() const;
+  const DartEngine<Scalar>* get_dart_engine() const;
 
 private:
-  friend class DartObject<S>;
+  friend class DartObject<Scalar>;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, DartScene)

@@ -38,12 +38,12 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 bool collide(
-    ObjectPtr<S> object1,
-    ObjectPtr<S> object2,
-    const CollisionOption<S>& option,
-    CollisionResult<S>* result)
+    ObjectPtr<Scalar> object1,
+    ObjectPtr<Scalar> object2,
+    const CollisionOption<Scalar>& option,
+    CollisionResult<Scalar>* result)
 {
   if (!object1) {
     return false;
@@ -56,7 +56,7 @@ bool collide(
   assert(object1->get_engine());
   assert(object2->get_engine());
 
-  Engine<S>* engine = object1->get_mutable_engine();
+  Engine<Scalar>* engine = object1->get_mutable_engine();
   assert(engine);
 
   if (engine != object2->get_engine()) {

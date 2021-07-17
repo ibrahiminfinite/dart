@@ -39,7 +39,7 @@
 namespace dart {
 namespace collision {
 
-template <typename S>
+template <typename Scalar>
 struct CollisionOption
 {
   /// Flag whether the collision detector computes contact information (contact

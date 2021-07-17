@@ -38,22 +38,22 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-void CollisionResult<S>::add_contact(const Contact<S>& contact)
+template <typename Scalar>
+void CollisionResult<Scalar>::add_contact(const Contact<Scalar>& contact)
 {
   m_contacts.push_back(contact);
 }
 
 //==============================================================================
-template <typename S>
-int CollisionResult<S>::get_num_contacts() const
+template <typename Scalar>
+int CollisionResult<Scalar>::get_num_contacts() const
 {
   return m_contacts.size();
 }
 
 //==============================================================================
-template <typename S>
-Contact<S>& CollisionResult<S>::get_mutable_contact(int index)
+template <typename Scalar>
+Contact<Scalar>& CollisionResult<Scalar>::get_mutable_contact(int index)
 {
   assert(0 <= index && static_cast<std::size_t>(index) < m_contacts.size());
 
@@ -61,8 +61,8 @@ Contact<S>& CollisionResult<S>::get_mutable_contact(int index)
 }
 
 //==============================================================================
-template <typename S>
-const Contact<S>& CollisionResult<S>::get_contact(int index) const
+template <typename Scalar>
+const Contact<Scalar>& CollisionResult<Scalar>::get_contact(int index) const
 {
   assert(0 <= index && static_cast<std::size_t>(index) < m_contacts.size());
 
@@ -70,29 +70,30 @@ const Contact<S>& CollisionResult<S>::get_contact(int index) const
 }
 
 //==============================================================================
-template <typename S>
-const std::vector<Contact<S>>& CollisionResult<S>::get_contacts() const
+template <typename Scalar>
+const std::vector<Contact<Scalar>>& CollisionResult<Scalar>::get_contacts()
+    const
 {
   return m_contacts;
 }
 
 //==============================================================================
-template <typename S>
-bool CollisionResult<S>::is_collision() const
+template <typename Scalar>
+bool CollisionResult<Scalar>::is_collision() const
 {
   return !m_contacts.empty();
 }
 
 //==============================================================================
-template <typename S>
-CollisionResult<S>::operator bool() const
+template <typename Scalar>
+CollisionResult<Scalar>::operator bool() const
 {
   return is_collision();
 }
 
 //==============================================================================
-template <typename S>
-void CollisionResult<S>::clear()
+template <typename Scalar>
+void CollisionResult<Scalar>::clear()
 {
   m_contacts.clear();
 }

@@ -39,37 +39,37 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-TriMesh<S>::TriMesh()
+template <typename Scalar>
+TriMesh<Scalar>::TriMesh()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& TriMesh<S>::GetType()
+template <typename Scalar>
+const std::string& TriMesh<Scalar>::GetType()
 {
   static const std::string type("TriMesh");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-const std::string& TriMesh<S>::get_type() const
+template <typename Scalar>
+const std::string& TriMesh<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-void TriMesh<S>::reserve_triangles(int size)
+template <typename Scalar>
+void TriMesh<Scalar>::reserve_triangles(int size)
 {
   m_triangles.reserve(size);
 }
 
 //==============================================================================
-template <typename S>
-void TriMesh<S>::set_triangles(
+template <typename Scalar>
+void TriMesh<Scalar>::set_triangles(
     const Vertices& vertices, const Triangles& triangles)
 {
   clear();
@@ -79,22 +79,22 @@ void TriMesh<S>::set_triangles(
 }
 
 //==============================================================================
-template <typename S>
-void TriMesh<S>::add_triangle(const Triangle& triangle)
+template <typename Scalar>
+void TriMesh<Scalar>::add_triangle(const Triangle& triangle)
 {
   m_triangles.push_back(triangle);
 }
 
 //==============================================================================
-template <typename S>
-int TriMesh<S>::get_num_triangles() const
+template <typename Scalar>
+int TriMesh<Scalar>::get_num_triangles() const
 {
   return m_triangles.size();
 }
 
 //==============================================================================
-template <typename S>
-void TriMesh<S>::compute_vertex_normals()
+template <typename Scalar>
+void TriMesh<Scalar>::compute_vertex_normals()
 {
   compute_triangle_normals();
 
@@ -112,36 +112,38 @@ void TriMesh<S>::compute_vertex_normals()
 }
 
 //==============================================================================
-template <typename S>
-bool TriMesh<S>::has_triangles() const
+template <typename Scalar>
+bool TriMesh<Scalar>::has_triangles() const
 {
   return !m_triangles.empty();
 }
 
 //==============================================================================
-template <typename S>
-bool TriMesh<S>::has_triangle_normals() const
+template <typename Scalar>
+bool TriMesh<Scalar>::has_triangle_normals() const
 {
   return has_triangles() && m_triangles.size() == m_triangle_normals.size();
 }
 
 //==============================================================================
-template <typename S>
-const typename TriMesh<S>::Triangles& TriMesh<S>::get_triangles() const
+template <typename Scalar>
+const typename TriMesh<Scalar>::Triangles& TriMesh<Scalar>::get_triangles()
+    const
 {
   return m_triangles;
 }
 
 //==============================================================================
-template <typename S>
-const typename TriMesh<S>::Normals& TriMesh<S>::get_triangle_normals() const
+template <typename Scalar>
+const typename TriMesh<Scalar>::Normals& TriMesh<Scalar>::get_triangle_normals()
+    const
 {
   return m_triangle_normals;
 }
 
 //==============================================================================
-template <typename S>
-void TriMesh<S>::clear()
+template <typename Scalar>
+void TriMesh<Scalar>::clear()
 {
   m_triangles.clear();
   m_triangle_normals.clear();
@@ -149,15 +151,15 @@ void TriMesh<S>::clear()
 }
 
 //==============================================================================
-template <typename S>
-TriMesh<S> TriMesh<S>::operator+(const TriMesh& other) const
+template <typename Scalar>
+TriMesh<Scalar> TriMesh<Scalar>::operator+(const TriMesh& other) const
 {
   return (TriMesh(*this) += other);
 }
 
 //==============================================================================
-template <typename S>
-TriMesh<S>& TriMesh<S>::operator+=(const TriMesh& other)
+template <typename Scalar>
+TriMesh<Scalar>& TriMesh<Scalar>::operator+=(const TriMesh& other)
 {
   if (other.is_empty())
     return *this;
@@ -189,8 +191,8 @@ TriMesh<S>& TriMesh<S>::operator+=(const TriMesh& other)
 }
 
 //==============================================================================
-template <typename S>
-S TriMesh<S>::get_volume() const
+template <typename Scalar>
+Scalar TriMesh<Scalar>::get_volume() const
 {
   // Reference: Zhang and Chen, "Efficient feature extraction for 2D/3D objects
   // in mesh representation," 2001
@@ -202,7 +204,7 @@ S TriMesh<S>::get_volume() const
     return v0.dot(v1.cross(v2)) / 6.0;
   };
 
-  S volume = 0;
+  Scalar volume = 0;
 
   for (const auto& triangle : m_triangles) {
     volume += compute_volume(triangle);
@@ -212,24 +214,24 @@ S TriMesh<S>::get_volume() const
 }
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<TriMesh<S>> TriMesh<S>::generate_convex_hull(
+template <typename Scalar>
+std::shared_ptr<TriMesh<Scalar>> TriMesh<Scalar>::generate_convex_hull(
     bool optimize) const
 {
   auto triangles = Triangles();
   auto vertices = Vertices();
   std::tie(vertices, triangles)
-      = compute_convex_hull_3d<S, Index>(this->m_vertices, optimize);
+      = compute_convex_hull_3d<Scalar, Index>(this->m_vertices, optimize);
 
-  auto mesh = std::make_shared<TriMesh<S>>();
+  auto mesh = std::make_shared<TriMesh<Scalar>>();
   mesh->set_triangles(vertices, triangles);
 
   return mesh;
 }
 
 //==============================================================================
-template <typename S>
-void TriMesh<S>::compute_triangle_normals()
+template <typename Scalar>
+void TriMesh<Scalar>::compute_triangle_normals()
 {
   m_triangle_normals.resize(m_triangles.size());
 
@@ -246,8 +248,8 @@ void TriMesh<S>::compute_triangle_normals()
 }
 
 //==============================================================================
-template <typename S>
-void TriMesh<S>::normalize_triangle_normals()
+template <typename Scalar>
+void TriMesh<Scalar>::normalize_triangle_normals()
 {
   for (auto& normal : m_triangle_normals) {
     normal.normalize();

@@ -43,17 +43,17 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-FclScene<S>::FclScene(Engine<S>* engine)
-  : Scene<S>(engine),
-    m_broad_phase_alg(new FclDynamicAABBTreeCollisionManager<S>())
+template <typename Scalar>
+FclScene<Scalar>::FclScene(Engine<Scalar>* engine)
+  : Scene<Scalar>(engine),
+    m_broad_phase_alg(new FclDynamicAABBTreeCollisionManager<Scalar>())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-ObjectPtr<S> FclScene<S>::create_object(math::GeometryPtr shape)
+template <typename Scalar>
+ObjectPtr<Scalar> FclScene<Scalar>::create_object(math::GeometryPtr shape)
 {
   if (!shape) {
     DART_WARN("Not allowed to create a collision object for a null shape");
@@ -67,36 +67,36 @@ ObjectPtr<S> FclScene<S>::create_object(math::GeometryPtr shape)
     return nullptr;
   }
 
-  return std::shared_ptr<FclObject<S>>(
-      new FclObject<S>(this, std::move(shape), fcl_collision_geometry));
+  return std::shared_ptr<FclObject<Scalar>>(
+      new FclObject<Scalar>(this, std::move(shape), fcl_collision_geometry));
 }
 
 //==============================================================================
-template <typename S>
-FclEngine<S>* FclScene<S>::get_mutable_fcl_engine()
+template <typename Scalar>
+FclEngine<Scalar>* FclScene<Scalar>::get_mutable_fcl_engine()
 {
-  return static_cast<FclEngine<S>*>(this->m_engine);
+  return static_cast<FclEngine<Scalar>*>(this->m_engine);
 }
 
 //==============================================================================
-template <typename S>
-const FclEngine<S>* FclScene<S>::get_fcl_engine() const
+template <typename Scalar>
+const FclEngine<Scalar>* FclScene<Scalar>::get_fcl_engine() const
 {
-  return static_cast<const FclEngine<S>*>(this->m_engine);
+  return static_cast<const FclEngine<Scalar>*>(this->m_engine);
 }
 
 //==============================================================================
-template <typename S>
-typename FclScene<S>::FCLCollisionManager*
-FclScene<S>::get_fcl_collision_manager()
+template <typename Scalar>
+typename FclScene<Scalar>::FCLCollisionManager*
+FclScene<Scalar>::get_fcl_collision_manager()
 {
   return m_broad_phase_alg.get();
 }
 
 //==============================================================================
-template <typename S>
-const typename FclScene<S>::FCLCollisionManager*
-FclScene<S>::get_fcl_collision_manager() const
+template <typename Scalar>
+const typename FclScene<Scalar>::FCLCollisionManager*
+FclScene<Scalar>::get_fcl_collision_manager() const
 {
   return m_broad_phase_alg.get();
 }

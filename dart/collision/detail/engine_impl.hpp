@@ -39,12 +39,12 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-std::unordered_map<std::string, EnginePtr<S>> Engine<S>::m_engines;
+template <typename Scalar>
+std::unordered_map<std::string, EnginePtr<Scalar>> Engine<Scalar>::m_engines;
 
 //==============================================================================
-template <typename S>
-EnginePtr<S> Engine<S>::Create(const std::string& engine_name)
+template <typename Scalar>
+EnginePtr<Scalar> Engine<Scalar>::Create(const std::string& engine_name)
 {
   const auto& result = m_engines.find(engine_name);
   if (result != m_engines.end()) {
@@ -65,32 +65,32 @@ EnginePtr<S> Engine<S>::Create(const std::string& engine_name)
 }
 
 //==============================================================================
-template <typename S>
-Engine<S>::~Engine()
+template <typename Scalar>
+Engine<Scalar>::~Engine()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 template <typename GeometryType, typename... Args>
-ObjectPtr<S> Engine<S>::create_object(Args&&... args)
+ObjectPtr<Scalar> Engine<Scalar>::create_object(Args&&... args)
 {
   return get_default_scene()->template create_object<GeometryType>(
       std::forward<Args>(args)...);
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 template <typename... Args>
-ObjectPtr<S> Engine<S>::create_sphere_object(Args&&... args)
+ObjectPtr<Scalar> Engine<Scalar>::create_sphere_object(Args&&... args)
 {
   return get_default_scene()->create_sphere_object(std::forward<Args>(args)...);
 }
 
 //==============================================================================
-template <typename S>
-Scene<S>* Engine<S>::get_default_scene()
+template <typename Scalar>
+Scene<Scalar>* Engine<Scalar>::get_default_scene()
 {
   if (!m_default_scene) {
     m_default_scene = create_scene();

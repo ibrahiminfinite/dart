@@ -86,7 +86,7 @@ struct is_compatible_to_uniform_int_distribution<
 // clang-format on
 
 //==============================================================================
-template <typename S, typename Enable = void>
+template <typename Scalar, typename Enable = void>
 struct UniformScalarImpl
 {
   // Define nothing
@@ -94,33 +94,33 @@ struct UniformScalarImpl
 
 //==============================================================================
 // Floating-point case
-template <typename S>
+template <typename Scalar>
 struct UniformScalarImpl<
-    S,
-    typename std::enable_if<std::is_floating_point<S>::value>::type>
+    Scalar,
+    typename std::enable_if<std::is_floating_point<Scalar>::value>::type>
 {
-  static S run(S min, S max)
+  static Scalar run(Scalar min, Scalar max)
   {
     // Distribution objects are lightweight so we simply construct a new
     // distribution for each random number generation.
-    Random::UniformRealDist<S> d(min, max);
+    Random::UniformRealDist<Scalar> d(min, max);
     return d(Random::getGenerator());
   }
 };
 
 //==============================================================================
 // Floating-point case
-template <typename S>
+template <typename Scalar>
 struct UniformScalarImpl<
-    S,
+    Scalar,
     typename std::enable_if<
-        is_compatible_to_uniform_int_distribution<S>::value>::type>
+        is_compatible_to_uniform_int_distribution<Scalar>::value>::type>
 {
-  static S run(S min, S max)
+  static Scalar run(Scalar min, Scalar max)
   {
     // Distribution objects are lightweight so we simply construct a new
     // distribution for each random number generation.
-    Random::UniformIntDist<S> d(min, max);
+    Random::UniformIntDist<Scalar> d(min, max);
     return d(Random::getGenerator());
   }
 };
@@ -245,7 +245,7 @@ struct UniformImpl<
 };
 
 //==============================================================================
-template <typename S, typename Enable = void>
+template <typename Scalar, typename Enable = void>
 struct NormalScalarImpl
 {
   // Define nothing
@@ -253,33 +253,33 @@ struct NormalScalarImpl
 
 //==============================================================================
 // Floating-point case
-template <typename S>
+template <typename Scalar>
 struct NormalScalarImpl<
-    S,
-    typename std::enable_if<std::is_floating_point<S>::value>::type>
+    Scalar,
+    typename std::enable_if<std::is_floating_point<Scalar>::value>::type>
 {
-  static S run(S mean, S sigma)
+  static Scalar run(Scalar mean, Scalar sigma)
   {
-    Random::NormalRealDist<S> d(mean, sigma);
+    Random::NormalRealDist<Scalar> d(mean, sigma);
     return d(Random::getGenerator());
   }
 };
 
 //==============================================================================
 // Floating-point case
-template <typename S>
+template <typename Scalar>
 struct NormalScalarImpl<
-    S,
+    Scalar,
     typename std::enable_if<
-        is_compatible_to_uniform_int_distribution<S>::value>::type>
+        is_compatible_to_uniform_int_distribution<Scalar>::value>::type>
 {
-  static S run(S mean, S sigma)
+  static Scalar run(Scalar mean, Scalar sigma)
   {
     using DefaultFloatType = float;
     const DefaultFloatType realNormal = Random::normal(
         static_cast<DefaultFloatType>(mean),
         static_cast<DefaultFloatType>(sigma));
-    return static_cast<S>(std::round(realNormal));
+    return static_cast<Scalar>(std::round(realNormal));
   }
 };
 
@@ -305,10 +305,10 @@ struct NormalImpl<
 } // namespace detail
 
 //==============================================================================
-template <typename S>
-S Random::uniform(S min, S max)
+template <typename Scalar>
+Scalar Random::uniform(Scalar min, Scalar max)
 {
-  return detail::UniformImpl<S>::run(min, max);
+  return detail::UniformImpl<Scalar>::run(min, max);
 }
 
 //==============================================================================
@@ -346,40 +346,41 @@ DynamicSizeMatrixT Random::uniform(
 }
 
 //==============================================================================
-template <typename S>
-::Eigen::Quaternion<S> Random::uniformUnitQuaternion()
+template <typename Scalar>
+::Eigen::Quaternion<Scalar> Random::uniformUnitQuaternion()
 {
   // "Uniform Random Rotations" of Shoemake:
   // http://planning.cs.uiuc.edu/node198.html
 
   static_assert(
-      std::is_floating_point_v<S>, "Non-floating point type is not supported");
+      std::is_floating_point_v<Scalar>,
+      "Non-floating point type is not supported");
 
-  const S u1 = uniform<S>(0, 1);
-  const S u2 = uniform<S>(0, 1);
-  const S u3 = uniform<S>(0, 1);
+  const Scalar u1 = uniform<Scalar>(0, 1);
+  const Scalar u2 = uniform<Scalar>(0, 1);
+  const Scalar u3 = uniform<Scalar>(0, 1);
 
-  const S a = std::sqrt(1. - u1);
-  const S b = S(2) * pi<S>() * u2;
-  const S c = std::sqrt(u1);
-  const S d = S(2) * pi<S>() * u3;
+  const Scalar a = std::sqrt(1. - u1);
+  const Scalar b = Scalar(2) * pi<Scalar>() * u2;
+  const Scalar c = std::sqrt(u1);
+  const Scalar d = Scalar(2) * pi<Scalar>() * u3;
 
-  return ::Eigen::Quaternion<S>(
+  return ::Eigen::Quaternion<Scalar>(
       a * std::sin(b), a * std::cos(b), c * std::sin(d), c * std::cos(d));
 }
 
 //==============================================================================
-template <typename S>
-::Eigen::Matrix<S, 3, 3> Random::uniformRotationMatrix3()
+template <typename Scalar>
+::Eigen::Matrix<Scalar, 3, 3> Random::uniformRotationMatrix3()
 {
-  return uniformUnitQuaternion<S>().toRotationMatrix();
+  return uniformUnitQuaternion<Scalar>().toRotationMatrix();
 }
 
 //==============================================================================
-template <typename S>
-S Random::normal(S min, S max)
+template <typename Scalar>
+Scalar Random::normal(Scalar min, Scalar max)
 {
-  return detail::NormalImpl<S>::run(min, max);
+  return detail::NormalImpl<Scalar>::run(min, max);
 }
 
 } // namespace math

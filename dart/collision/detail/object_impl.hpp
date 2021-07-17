@@ -42,50 +42,50 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-Object<S>::Object()
+template <typename Scalar>
+Object<Scalar>::Object()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-Object<S>::~Object()
+template <typename Scalar>
+Object<Scalar>::~Object()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-Engine<S>* Object<S>::get_mutable_engine()
+template <typename Scalar>
+Engine<Scalar>* Object<Scalar>::get_mutable_engine()
 {
   return m_scene->get_mutable_engine();
 }
 
 //==============================================================================
-template <typename S>
-const Engine<S>* Object<S>::get_engine() const
+template <typename Scalar>
+const Engine<Scalar>* Object<Scalar>::get_engine() const
 {
   return m_scene->get_engine();
 }
 
 //==============================================================================
-template <typename S>
-const void* Object<S>::get_user_data() const
+template <typename Scalar>
+const void* Object<Scalar>::get_user_data() const
 {
   return m_user_data;
 }
 
 //==============================================================================
-template <typename S>
-math::ConstGeometryPtr Object<S>::get_geometry() const
+template <typename Scalar>
+math::ConstGeometryPtr Object<Scalar>::get_geometry() const
 {
   return m_geometry;
 }
 
 //==============================================================================
-template <typename S>
-Object<S>::Object(Scene<S>* collisionGroup, math::GeometryPtr shape)
+template <typename Scalar>
+Object<Scalar>::Object(Scene<Scalar>* collisionGroup, math::GeometryPtr shape)
   : m_scene(collisionGroup), m_geometry(std::move(shape))
 {
   assert(m_scene);

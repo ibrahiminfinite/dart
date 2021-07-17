@@ -80,8 +80,8 @@ DART_COMMON_API long long to_long_long(const std::string& str);
 DART_COMMON_API float to_float(const std::string& str);
 DART_COMMON_API double to_double(const std::string& str);
 
-template <typename S>
-S to_scalar(const std::string& str);
+template <typename Scalar>
+Scalar to_scalar(const std::string& str);
 
 } // namespace dart::common
 

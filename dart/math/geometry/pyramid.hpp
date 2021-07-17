@@ -37,12 +37,12 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
-class Pyramid : public Convex3<S_>
+template <typename Scalar_>
+class Pyramid : public Convex3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Returns type string
   static const std::string& GetType();

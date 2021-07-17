@@ -41,31 +41,31 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class BulletScene : public Scene<S_>
+template <typename Scalar_>
+class BulletScene : public Scene<Scalar_>
 {
 public:
-  using S = S_;
+  using Scalar = Scalar_;
 
-  friend class BulletEngine<S>;
+  friend class BulletEngine<Scalar>;
 
   /// Constructor
-  BulletScene(Engine<S>* engine);
+  BulletScene(Engine<Scalar>* engine);
 
   /// Destructor
   ~BulletScene() override;
 
-  ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+  ObjectPtr<Scalar> create_object(math::GeometryPtr shape) override;
 
 protected:
-  BulletEngine<S>* get_mutable_bullet_engine();
+  BulletEngine<Scalar>* get_mutable_bullet_engine();
 
-  const BulletEngine<S>* get_bullet_engine() const;
+  const BulletEngine<Scalar>* get_bullet_engine() const;
 
   //  dSpaceID get_ode_space_id() const;
 
 private:
-  friend class BulletObject<S>;
+  friend class BulletObject<Scalar>;
 
   /// Top-level space for all sub-spaces/collisions
   //  dSpaceID m_ode_space_id;

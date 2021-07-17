@@ -37,15 +37,15 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
+template <typename Scalar_>
 class Geometry3 : public Geometry
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Computes the volume of this 3D geometry.
-  virtual S get_volume() const
+  virtual Scalar get_volume() const
   {
     return 0;
   }

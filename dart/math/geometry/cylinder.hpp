@@ -37,12 +37,12 @@
 namespace dart {
 namespace math {
 
-template <typename S_>
-class Cylinder : public Convex3<S_>
+template <typename Scalar_>
+class Cylinder : public Convex3<Scalar_>
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Returns type string
   static const std::string& GetType();
@@ -51,23 +51,24 @@ public:
   ///
   /// \param[in] radius: Radius of the cylinder
   /// \param[in] height: height of the cylinder
-  Cylinder(S radius, S height);
+  Cylinder(Scalar radius, Scalar height);
 
   // Documentation inherited
   const std::string& get_type() const override;
 
-  S get_radius() const
+  Scalar get_radius() const
   {
     return m_radius;
   }
-  S get_height() const
+
+  Scalar get_height() const
   {
     return m_height;
   }
 
 private:
-  S m_radius;
-  S m_height;
+  Scalar m_radius;
+  Scalar m_height;
 };
 
 using Cylinderf = Cylinder<float>;

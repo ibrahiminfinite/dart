@@ -45,14 +45,14 @@ namespace detail {
 
 //==============================================================================
 // creates the ODE height field. Only enabled if the height data type is float.
-template <class S>
+template <typename Scalar>
 void set_ode_heightfield_details(
     const dHeightfieldDataID odeHeightfieldId,
-    const S* heights,
+    const Scalar* heights,
     const std::size_t& width,
     const std::size_t& height,
-    const Eigen::Matrix<S, 3, 1>& scale,
-    typename std::enable_if<std::is_same<float, S>::value>::type* = 0)
+    const Eigen::Matrix<Scalar, 3, 1>& scale,
+    typename std::enable_if<std::is_same<float, Scalar>::value>::type* = 0)
 {
   DART_ASSERT(width >= 2);
   DART_ASSERT(height >= 2);
@@ -80,14 +80,14 @@ void set_ode_heightfield_details(
 
 //==============================================================================
 // creates the ODE height field. Only enabled if the height data type is double.
-template <class S>
+template <typename Scalar>
 void set_ode_heightfield_details(
     const dHeightfieldDataID odeHeightfieldId,
-    const S* heights,
+    const Scalar* heights,
     const std::size_t& width,
     const std::size_t& height,
-    const Eigen::Matrix<S, 3, 1>& scale,
-    typename std::enable_if<std::is_same<double, S>::value>::type* = 0)
+    const Eigen::Matrix<Scalar, 3, 1>& scale,
+    typename std::enable_if<std::is_same<double, Scalar>::value>::type* = 0)
 {
   assert(width >= 2);
   assert(height >= 2);
@@ -115,10 +115,10 @@ void set_ode_heightfield_details(
 }
 
 //==============================================================================
-template <typename S>
-OdeHeightmap<S>::OdeHeightmap(
-    const OdeObject<S>* parent, const math::Heightmap<S>* heightmap)
-  : OdeGeom<S>(parent)
+template <typename Scalar>
+OdeHeightmap<Scalar>::OdeHeightmap(
+    const OdeObject<Scalar>* parent, const math::Heightmap<Scalar>* heightmap)
+  : OdeGeom<Scalar>(parent)
 {
   DART_ASSERT(heightmap);
 
@@ -171,8 +171,8 @@ OdeHeightmap<S>::OdeHeightmap(
 }
 
 //==============================================================================
-template <typename S>
-OdeHeightmap<S>::~OdeHeightmap()
+template <typename Scalar>
+OdeHeightmap<Scalar>::~OdeHeightmap()
 {
   dGeomHeightfieldDataDestroy(m_ode_heightfield_id);
   dGeomDestroy(this->m_geom_id);

@@ -53,47 +53,48 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-detail::OdeGeom<S>* create_ode_geom(
-    OdeObject<S>* object, const math::Geometry* shape)
+template <typename Scalar>
+detail::OdeGeom<Scalar>* create_ode_geom(
+    OdeObject<Scalar>* object, const math::Geometry* shape)
 {
-  detail::OdeGeom<S>* geom = nullptr;
+  detail::OdeGeom<Scalar>* geom = nullptr;
 
-  if (const auto sphere = shape->as<math::Sphere<S>>()) {
+  if (const auto sphere = shape->as<math::Sphere<Scalar>>()) {
     const auto& radius = sphere->get_radius();
-    geom = new detail::OdeSphere<S>(object, radius);
+    geom = new detail::OdeSphere<Scalar>(object, radius);
 
-  } else if (const auto box = shape->as<math::Cuboid<S>>()) {
+  } else if (const auto box = shape->as<math::Cuboid<Scalar>>()) {
     const auto& size = box->get_size();
-    geom = new detail::OdeBox<S>(object, size);
+    geom = new detail::OdeBox<Scalar>(object, size);
 
-  } else if (const auto capsule = shape->as<math::Capsule<S>>()) {
+  } else if (const auto capsule = shape->as<math::Capsule<Scalar>>()) {
     const auto& radius = capsule->get_radius();
     const auto& height = capsule->get_height();
-    geom = new detail::OdeCapsule<S>(object, radius, height);
+    geom = new detail::OdeCapsule<Scalar>(object, radius, height);
 
-  } else if (const auto cylinder = shape->as<math::Cylinder<S>>()) {
+  } else if (const auto cylinder = shape->as<math::Cylinder<Scalar>>()) {
     const auto& radius = cylinder->get_radius();
     const auto& height = cylinder->get_height();
-    geom = new detail::OdeCylinder<S>(object, radius, height);
+    geom = new detail::OdeCylinder<Scalar>(object, radius, height);
 
-  } else if (const auto plane = shape->as<math::Plane3<S>>()) {
+  } else if (const auto plane = shape->as<math::Plane3<Scalar>>()) {
     const auto& normal = plane->get_normal();
     const auto& offset = plane->get_offset();
-    geom = new detail::OdePlane<S>(object, normal, offset);
+    geom = new detail::OdePlane<Scalar>(object, normal, offset);
 
-  } else if (const auto mesh = shape->as<math::TriMesh<S>>()) {
-    geom = new detail::OdeMesh<S>(object, mesh, math::Vector3<S>::Ones());
+  } else if (const auto mesh = shape->as<math::TriMesh<Scalar>>()) {
+    geom = new detail::OdeMesh<Scalar>(
+        object, mesh, math::Vector3<Scalar>::Ones());
 
-  } else if (const auto heightmap = shape->as<math::Heightmap<S>>()) {
-    geom = new detail::OdeHeightmap<S>(object, heightmap);
+  } else if (const auto heightmap = shape->as<math::Heightmap<Scalar>>()) {
+    geom = new detail::OdeHeightmap<Scalar>(object, heightmap);
 
   } else {
     DART_ERROR(
         "Attempting to create an unsupported shape type [{}]. Creating a "
         "sphere with 0.001 radius instead.",
         shape->get_type());
-    geom = new detail::OdeSphere<S>(object, S(0.01));
+    geom = new detail::OdeSphere<Scalar>(object, Scalar(0.01));
   }
   // TODO(JS): not implemented for EllipsoidShape, ConeShape, MultiSphereShape,
   // and SoftMeshShape.
@@ -106,15 +107,15 @@ detail::OdeGeom<S>* create_ode_geom(
 }
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> OdeObject<S>::get_pose() const
+template <typename Scalar>
+math::Isometry3<Scalar> OdeObject<Scalar>::get_pose() const
 {
-  math::Isometry3<S> out = math::Isometry3<S>::Identity();
+  math::Isometry3<Scalar> out = math::Isometry3<Scalar>::Identity();
 
   const auto* ode_quat = dBodyGetQuaternion(m_ode_body_id);
-  out.linear()
-      = math::Quaternion<S>(ode_quat[0], ode_quat[1], ode_quat[2], ode_quat[3])
-            .toRotationMatrix();
+  out.linear() = math::Quaternion<Scalar>(
+                     ode_quat[0], ode_quat[1], ode_quat[2], ode_quat[3])
+                     .toRotationMatrix();
 
   const auto* ode_pos = dBodyGetPosition(m_ode_body_id);
   out.translation() << ode_pos[0], ode_pos[1], ode_pos[2];
@@ -123,8 +124,8 @@ math::Isometry3<S> OdeObject<S>::get_pose() const
 }
 
 //==============================================================================
-template <typename S>
-void OdeObject<S>::set_pose(const math::Isometry3<S>& tf)
+template <typename Scalar>
+void OdeObject<Scalar>::set_pose(const math::Isometry3<Scalar>& tf)
 {
   // If body id is nullptr, this object is immobile. Immobile geom doesn't need
   // to update its pose.
@@ -132,7 +133,7 @@ void OdeObject<S>::set_pose(const math::Isometry3<S>& tf)
     return;
   }
 
-  const math::Quaternion<S> quat(tf.linear());
+  const math::Quaternion<Scalar> quat(tf.linear());
   dQuaternion ode_quat;
   ode_quat[0] = quat.w();
   ode_quat[1] = quat.x();
@@ -144,16 +145,16 @@ void OdeObject<S>::set_pose(const math::Isometry3<S>& tf)
 }
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> OdeObject<S>::get_position() const
+template <typename Scalar>
+math::Vector3<Scalar> OdeObject<Scalar>::get_position() const
 {
   const auto* ode_pos = dBodyGetPosition(m_ode_body_id);
-  return math::Vector3<S>(ode_pos[0], ode_pos[1], ode_pos[2]);
+  return math::Vector3<Scalar>(ode_pos[0], ode_pos[1], ode_pos[2]);
 }
 
 //==============================================================================
-template <typename S>
-void OdeObject<S>::set_position(const math::Vector3<S>& pos)
+template <typename Scalar>
+void OdeObject<Scalar>::set_position(const math::Vector3<Scalar>& pos)
 {
   // If body id is nullptr, this object is immobile. Immobile geom doesn't need
   // to update its pose.
@@ -165,9 +166,9 @@ void OdeObject<S>::set_position(const math::Vector3<S>& pos)
 }
 
 //==============================================================================
-template <typename S>
-OdeObject<S>::OdeObject(OdeScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape), m_ode_geom{nullptr}, m_ode_body_id(nullptr)
+template <typename Scalar>
+OdeObject<Scalar>::OdeObject(OdeScene<Scalar>* group, math::GeometryPtr shape)
+  : Object<Scalar>(group, shape), m_ode_geom{nullptr}, m_ode_body_id(nullptr)
 {
   // Create detail::OdeGeom according to the shape type.
   // The geometry may have a transform assigned to it which is to
@@ -200,22 +201,22 @@ OdeObject<S>::OdeObject(OdeScene<S>* group, math::GeometryPtr shape)
 }
 
 //==============================================================================
-template <typename S>
-dBodyID OdeObject<S>::get_ode_body_id() const
+template <typename Scalar>
+dBodyID OdeObject<Scalar>::get_ode_body_id() const
 {
   return m_ode_body_id;
 }
 
 //==============================================================================
-template <typename S>
-dGeomID OdeObject<S>::get_ode_geom_id() const
+template <typename Scalar>
+dGeomID OdeObject<Scalar>::get_ode_geom_id() const
 {
   return m_ode_geom->get_ode_geom_id();
 }
 
 //==============================================================================
-template <typename S>
-void OdeObject<S>::update_engine_data()
+template <typename Scalar>
+void OdeObject<Scalar>::update_engine_data()
 {
   m_ode_geom->update_engine_data();
 }

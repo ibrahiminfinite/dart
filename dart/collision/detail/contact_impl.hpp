@@ -38,25 +38,25 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-constexpr S Contact<S>::get_normal_epsilon()
+template <typename Scalar>
+constexpr Scalar Contact<Scalar>::get_normal_epsilon()
 {
   return 1e-6;
 }
 
 //==============================================================================
-template <typename S>
-constexpr S Contact<S>::get_normal_epsilon_squared()
+template <typename Scalar>
+constexpr Scalar Contact<Scalar>::get_normal_epsilon_squared()
 {
   return 1e-12;
 }
 
 //==============================================================================
-template <typename S>
-Contact<S>::Contact()
-  : point(math::Vector3<S>::Zero()),
-    normal(math::Vector3<S>::Zero()),
-    force(math::Vector3<S>::Zero()),
+template <typename Scalar>
+Contact<Scalar>::Contact()
+  : point(math::Vector3<Scalar>::Zero()),
+    normal(math::Vector3<Scalar>::Zero()),
+    force(math::Vector3<Scalar>::Zero()),
     collision_object1(nullptr),
     collision_object2(nullptr),
     depth(0)
@@ -66,8 +66,8 @@ Contact<S>::Contact()
 }
 
 //==============================================================================
-template <typename S>
-bool Contact<S>::is_zero_normal(const math::Vector3<S>& normal)
+template <typename Scalar>
+bool Contact<Scalar>::is_zero_normal(const math::Vector3<Scalar>& normal)
 {
   if (normal.squaredNorm() < get_normal_epsilon_squared())
     return true;
@@ -76,8 +76,8 @@ bool Contact<S>::is_zero_normal(const math::Vector3<S>& normal)
 }
 
 //==============================================================================
-template <typename S>
-bool Contact<S>::is_non_zero_normal(const math::Vector3<S>& normal)
+template <typename Scalar>
+bool Contact<Scalar>::is_non_zero_normal(const math::Vector3<Scalar>& normal)
 {
   return !is_zero_normal(normal);
 }

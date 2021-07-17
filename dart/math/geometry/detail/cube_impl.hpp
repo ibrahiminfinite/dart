@@ -41,44 +41,44 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-const std::string& Cube<S>::GetType()
+template <typename Scalar>
+const std::string& Cube<Scalar>::GetType()
 {
   static const std::string type("Cube");
   return type;
 }
 
 //==============================================================================
-template <typename S>
-S Cube<S>::ComputeVolume(S length)
+template <typename Scalar>
+Scalar Cube<Scalar>::ComputeVolume(Scalar length)
 {
   return length * length * length;
 }
 
 //==============================================================================
-template <typename S>
-Cube<S>::Cube(S length) : m_length(length)
+template <typename Scalar>
+Cube<Scalar>::Cube(Scalar length) : m_length(length)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& Cube<S>::get_type() const
+template <typename Scalar>
+const std::string& Cube<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-S Cube<S>::get_length() const
+template <typename Scalar>
+Scalar Cube<Scalar>::get_length() const
 {
   return m_length;
 }
 
 //==============================================================================
-template <typename S>
-void Cube<S>::set_length(S length)
+template <typename Scalar>
+void Cube<Scalar>::set_length(Scalar length)
 {
   m_length = length;
 }

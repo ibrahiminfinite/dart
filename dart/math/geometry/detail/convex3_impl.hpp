@@ -39,8 +39,8 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-typename Convex3<S>::Vector3 Convex3<S>::get_local_support_point(
+template <typename Scalar>
+typename Convex3<Scalar>::Vector3 Convex3<Scalar>::get_local_support_point(
     const Vector3& /*direction*/) const
 {
   DART_ERROR("Not implemented for [{}]", this->get_type());

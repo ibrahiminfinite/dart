@@ -43,15 +43,15 @@ namespace dynamics {
 ///
 /// \tparam S_ Data type used for height map. At this point, only double and
 /// float are supported. Short and char can be added at a later point.
-template <typename S_>
+template <typename Scalar_>
 class HeightmapShape : public Shape
 {
 public:
-  using S = S_;
+  using Scalar = Scalar_;
 
-  using Vector3 = Eigen::Matrix<S, 3, 1>;
+  using Vector3 = Eigen::Matrix<Scalar, 3, 1>;
   using HeightField
-      = Eigen::Matrix<S, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+      = Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
   /// Constructor.
   HeightmapShape();
@@ -102,7 +102,7 @@ public:
   void setHeightField(
       const std::size_t& width,
       const std::size_t& depth,
-      const std::vector<S>& heights);
+      const std::vector<Scalar>& heights);
 
   /// Sets the height field.
   ///
@@ -142,10 +142,10 @@ public:
   std::size_t getDepth() const;
 
   /// Returns the minimum height set by setHeightField()
-  S getMinHeight() const;
+  Scalar getMinHeight() const;
 
   /// Returns the maximum height set by setHeightField()
-  S getMaxHeight() const;
+  Scalar getMaxHeight() const;
 
   /// Set the color of this arrow
   void notifyColorUpdated(const Eigen::Vector4d& color) override;
@@ -175,11 +175,11 @@ private:
 
   /// Minimum heights.
   /// Is computed each time the height field is set with setHeightField().
-  S mMinHeight;
+  Scalar mMinHeight;
 
   /// Maximum heights.
   /// Is computed each time the height field is set with setHeightField().
-  S mMaxHeight;
+  Scalar mMaxHeight;
 };
 
 using HeightmapShapef = HeightmapShape<float>;

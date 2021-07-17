@@ -46,18 +46,18 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
+template <typename Scalar_>
 class Engine
 {
 public:
   // Type aliases
-  using S = S_;
+  using Scalar = Scalar_;
 
   /// Creates a new collision detector.
   ///
   /// \param[in] engine_name: Name of the underlying collision detection engine
   /// to create.
-  static EnginePtr<S> Create(const std::string& engine_name);
+  static EnginePtr<Scalar> Create(const std::string& engine_name);
 
   /// Destructor
   virtual ~Engine();
@@ -66,35 +66,35 @@ public:
   virtual const std::string& get_type() const = 0;
 
   /// Creates a collision scene.
-  virtual ScenePtr<S> create_scene() = 0;
+  virtual ScenePtr<Scalar> create_scene() = 0;
 
   /// Create an collision object for a geometry type
   template <typename GeometryType, typename... Args>
-  ObjectPtr<S> create_object(Args&&... args);
+  ObjectPtr<Scalar> create_object(Args&&... args);
 
   /// Create an collision object for a sphere shape
   template <typename... Args>
-  ObjectPtr<S> create_sphere_object(Args&&... args);
+  ObjectPtr<Scalar> create_sphere_object(Args&&... args);
 
   /// Performs narrow phase collision detection
   virtual bool collide(
-      ObjectPtr<S> object1,
-      ObjectPtr<S> object2,
-      const CollisionOption<S>& option = {},
-      CollisionResult<S>* result = nullptr)
+      ObjectPtr<Scalar> object1,
+      ObjectPtr<Scalar> object2,
+      const CollisionOption<Scalar>& option = {},
+      CollisionResult<Scalar>* result = nullptr)
       = 0;
 
 protected:
   /// Registrar to register a concrete engine to the factory
   ///
   /// Add the following line to the concrete engine:
-  /// static typename Engine<S>::template Regist
+  /// static typename Engine<Scalar>::template Regist
   template <typename Derived>
   using Registrar = common::FactoryRegistrar<
       std::string,
-      Engine<S>,
+      Engine<Scalar>,
       Derived,
-      std::shared_ptr<Engine<S>>>;
+      std::shared_ptr<Engine<Scalar>>>;
 
   /// Constructor
   Engine() = default;
@@ -103,11 +103,11 @@ private:
   using Factory = common::Factory<std::string, Engine, std::shared_ptr<Engine>>;
   using SingletonFactory = common::Singleton<Factory>;
 
-  static std::unordered_map<std::string, EnginePtr<S>> m_engines;
+  static std::unordered_map<std::string, EnginePtr<Scalar>> m_engines;
 
-  Scene<S>* get_default_scene();
+  Scene<Scalar>* get_default_scene();
 
-  ScenePtr<S> m_default_scene;
+  ScenePtr<Scalar> m_default_scene;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, Engine)
@@ -116,11 +116,12 @@ DART_TEMPLATE_CLASS_HEADER(COLLISION, Engine)
 } // namespace dart
 
 #define DART_REGISTER_ENGINE_IN_HEADER(engine_type)                            \
-  static typename Engine<S>::template Registrar<engine_type> m_registrar
+  static typename Engine<Scalar>::template Registrar<engine_type> m_registrar
 
 #define DART_REGISTER_ENGINE_OUT_HEADER(engine_type)                           \
-  template <typename S>                                                        \
-  typename Engine<S>::template Registrar<engine_type> engine_type::m_registrar \
+  template <typename Scalar>                                                   \
+  typename Engine<Scalar>::template Registrar<engine_type>                     \
+      engine_type::m_registrar                                                 \
   {                                                                            \
     engine_type::GetType(), []() -> std::shared_ptr<engine_type> {             \
       return engine_type::Create();                                            \

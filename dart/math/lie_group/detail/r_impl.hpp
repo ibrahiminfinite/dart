@@ -37,306 +37,408 @@
 namespace dart::math {
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options> R<S, N, Options>::Zero()
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options> R<Scalar, N, Options>::Zero()
 {
-  return R<S, N, Options>(Eigen::Matrix<S, N, 1, Options>::Zero());
+  return R<Scalar, N, Options>(Eigen::Matrix<Scalar, N, 1, Options>::Zero());
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options> R<S, N, Options>::Identity()
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options> R<Scalar, N, Options>::Identity()
 {
   return Zero();
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options> R<S, N, Options>::Random()
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options> R<Scalar, N, Options>::Random()
 {
-  return R<S, N, Options>(Eigen::Matrix<S, N, 1, Options>::Random());
+  return R<Scalar, N, Options>(Eigen::Matrix<Scalar, N, 1, Options>::Random());
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options>::R() : m_vector(LieGroupData::Zero())
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options>::R(const R& other) : m_vector(other.m_vector)
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options>::R() : m_data(LieGroupData::Zero())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options>::R(R&& other) : m_vector(std::move(other.m_vector))
+template <typename Scalar, int N, int Options>
+template <typename OtherDerived>
+R<Scalar, N, Options>::R(const RBase<OtherDerived>& other)
+  : m_data(other.vector())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
+template <typename Scalar, int N, int Options>
+template <typename OtherDerived>
+R<Scalar, N, Options>::R(RBase<OtherDerived>&& other)
+  : m_data(std::move(other.vector()))
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int N, int Options>
 template <typename Derived>
-R<S, N, Options>::R(const math::MatrixBase<Derived>& vec) : m_vector(vec)
+R<Scalar, N, Options>::R(const math::MatrixBase<Derived>& vec) : m_data(vec)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
+template <typename Scalar, int N, int Options>
 template <typename Derived>
-R<S, N, Options>::R(math::MatrixBase<Derived>&& vec) : m_vector(std::move(vec))
+R<Scalar, N, Options>::R(math::MatrixBase<Derived>&& vec)
+  : m_data(std::move(vec))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options>& R<S, N, Options>::operator=(const R<S, N, Options>& other)
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options>& R<Scalar, N, Options>::operator=(
+    const R<Scalar, N, Options>& other)
 {
-  m_vector = other.m_vector;
+  m_data = other.m_data;
   return *this;
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options>& R<S, N, Options>::operator=(R<S, N, Options>&& other)
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options>& R<Scalar, N, Options>::operator=(
+    R<Scalar, N, Options>&& other)
 {
-  m_vector = std::move(other.m_vector);
+  m_data = std::move(other.m_data);
   return *this;
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
+template <typename Scalar, int N, int Options>
 template <typename Derived>
-R<S, N, Options>& R<S, N, Options>::operator=(
+R<Scalar, N, Options>& R<Scalar, N, Options>::operator=(
     const Eigen::MatrixBase<Derived>& matrix)
 {
-  m_vector = matrix;
+  m_data = matrix;
   return *this;
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
+template <typename Scalar, int N, int Options>
 template <typename Derived>
-R<S, N, Options>& R<S, N, Options>::operator=(
+R<Scalar, N, Options>& R<Scalar, N, Options>::operator=(
     Eigen::MatrixBase<Derived>&& matrix)
 {
-  m_vector = std::move(matrix);
+  m_data = std::move(matrix);
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options> R<S, N, Options>::operator-() const
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options> R<Scalar, N, Options>::operator-() const
 {
-  return R<S, N, Options>(-m_vector);
+  return R<Scalar, N, Options>(-m_data);
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-R<S, N, Options> R<S, N, Options>::operator+(
-    const R<S, N, Options>& other) const
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options> R<Scalar, N, Options>::operator+(
+    const R<Scalar, N, Options>& other) const
 {
-  return R<S, N, Options>(m_vector + other.m_vector);
+  return R<Scalar, N, Options>(m_data + other.m_data);
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-void R<S, N, Options>::set_identity()
+template <typename Scalar, int N, int Options>
+R<Scalar, N, Options> R<Scalar, N, Options>::operator-(
+    const R<Scalar, N, Options>& other) const
 {
-  m_vector.setZero();
+  return R<Scalar, N, Options>(m_data - other.m_data);
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-void R<S, N, Options>::set_random()
+template <typename Scalar, int N, int Options>
+void R<Scalar, N, Options>::set_identity()
 {
-  m_vector.setRandom();
+  m_data.setZero();
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-constexpr int R<S, N, Options>::dimension() const
+template <typename Scalar, int N, int Options>
+void R<Scalar, N, Options>::set_random()
+{
+  m_data.setRandom();
+}
+
+//==============================================================================
+template <typename Scalar, int N, int Options>
+constexpr int R<Scalar, N, Options>::dimension() const
 {
   return GroupDim;
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-typename R<S, N, Options>::LieGroupData& R<S, N, Options>::vector()
+template <typename Scalar, int N, int Options>
+typename R<Scalar, N, Options>::LieGroupData& R<Scalar, N, Options>::vector()
 {
-  return m_vector;
+  return m_data;
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-const typename R<S, N, Options>::LieGroupData& R<S, N, Options>::vector() const
+template <typename Scalar, int N, int Options>
+const typename R<Scalar, N, Options>::LieGroupData&
+R<Scalar, N, Options>::vector() const
 {
-  return m_vector;
+  return m_data;
 }
 
 //==============================================================================
-template <typename S, int Options>
-R<S, Eigen::Dynamic, Options>::R() : m_vector(LieGroupData())
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S, int Options>
-R<S, Eigen::Dynamic, Options>::R(int dim) : m_vector(LieGroupData::Zero(dim))
+template <typename Scalar, int Options>
+R<Scalar, Eigen::Dynamic, Options>::R() : m_data(LieGroupData())
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-R<S, Eigen::Dynamic, Options>::R(const R& other) : m_vector(other.m_vector)
+template <typename Scalar, int Options>
+R<Scalar, Eigen::Dynamic, Options>::R(int dim) : m_data(LieGroupData::Zero(dim))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-R<S, Eigen::Dynamic, Options>::R(R&& other)
-  : m_vector(std::move(other.m_vector))
+template <typename Scalar, int Options>
+R<Scalar, Eigen::Dynamic, Options>::R(const R& other) : m_data(other.m_data)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Options>
-template <typename Derived>
-R<S, Eigen::Dynamic, Options>::R(const math::MatrixBase<Derived>& vector)
-  : m_vector(vector)
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S, int Options>
-template <typename Derived>
-R<S, Eigen::Dynamic, Options>::R(math::MatrixBase<Derived>&& vector)
-  : m_vector(std::move(vector))
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S, int Options>
-template <typename Derived>
-R<S, Eigen::Dynamic, Options>& R<S, Eigen::Dynamic, Options>::operator=(
-    const Eigen::MatrixBase<Derived>& matrix)
-{
-  m_vector = matrix;
-}
-
-//==============================================================================
-template <typename S, int Options>
-template <typename Derived>
-R<S, Eigen::Dynamic, Options>& R<S, Eigen::Dynamic, Options>::operator=(
-    Eigen::MatrixBase<Derived>&& matrix)
-{
-  m_vector = std::move(matrix);
-}
-
-//==============================================================================
-template <typename S, int Options>
-const R<S, Eigen::Dynamic, Options>& R<S, Eigen::Dynamic, Options>::operator+()
-    const
-{
-  return *this;
-}
-
-//==============================================================================
-template <typename S, int Options>
-R<S, Eigen::Dynamic, Options> R<S, Eigen::Dynamic, Options>::operator-() const
-{
-  return R<S, Eigen::Dynamic, Options>(m_vector);
-}
-
-//==============================================================================
-template <typename S, int Options>
-int R<S, Eigen::Dynamic, Options>::dimension() const
-{
-  return m_vector.size();
-}
-
-//==============================================================================
-template <typename S, int Options>
-const typename R<S, Eigen::Dynamic, Options>::LieGroupData&
-R<S, Eigen::Dynamic, Options>::vector() const
-{
-  return m_vector;
-}
-
-//==============================================================================
-template <typename S, int Options>
-typename R<S, Eigen::Dynamic, Options>::LieGroupData&
-R<S, Eigen::Dynamic, Options>::mutable_vector()
-{
-  return m_vector;
-}
-
-//==============================================================================
-template <typename S, int Dim, int Options>
-RTangent<S, Dim, Options>::RTangent() : m_data(Data::Zero())
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S, int Dim, int Options>
-RTangent<S, Dim, Options>::RTangent(const RTangent& other)
-  : m_data(other.m_data)
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S, int Dim, int Options>
-RTangent<S, Dim, Options>::RTangent(RTangent&& other)
+template <typename Scalar, int Options>
+R<Scalar, Eigen::Dynamic, Options>::R(R&& other)
   : m_data(std::move(other.m_data))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Dim, int Options>
+template <typename Scalar, int Options>
 template <typename Derived>
-RTangent<S, Dim, Options>::RTangent(const Eigen::MatrixBase<Derived>& coeffs)
+R<Scalar, Eigen::Dynamic, Options>::R(const math::MatrixBase<Derived>& vector)
+  : m_data(vector)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+template <typename Derived>
+R<Scalar, Eigen::Dynamic, Options>::R(math::MatrixBase<Derived>&& vector)
+  : m_data(std::move(vector))
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+template <typename Derived>
+R<Scalar, Eigen::Dynamic, Options>&
+R<Scalar, Eigen::Dynamic, Options>::operator=(
+    const Eigen::MatrixBase<Derived>& matrix)
+{
+  m_data = matrix;
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+template <typename Derived>
+R<Scalar, Eigen::Dynamic, Options>&
+R<Scalar, Eigen::Dynamic, Options>::operator=(
+    Eigen::MatrixBase<Derived>&& matrix)
+{
+  m_data = std::move(matrix);
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+const R<Scalar, Eigen::Dynamic, Options>&
+R<Scalar, Eigen::Dynamic, Options>::operator+() const
+{
+  return *this;
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+R<Scalar, Eigen::Dynamic, Options>
+R<Scalar, Eigen::Dynamic, Options>::operator-() const
+{
+  return R<Scalar, Eigen::Dynamic, Options>(m_data);
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+int R<Scalar, Eigen::Dynamic, Options>::dimension() const
+{
+  return m_data.size();
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+const typename R<Scalar, Eigen::Dynamic, Options>::LieGroupData&
+R<Scalar, Eigen::Dynamic, Options>::vector() const
+{
+  return m_data;
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+typename R<Scalar, Eigen::Dynamic, Options>::LieGroupData&
+R<Scalar, Eigen::Dynamic, Options>::mutable_vector()
+{
+  return m_data;
+}
+
+//==============================================================================
+template <typename Scalar, int Dim, int Options>
+RTangent<Scalar, Dim, Options>::RTangent() : m_data(TangentData::Zero())
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Dim, int Options>
+RTangent<Scalar, Dim, Options>::RTangent(const RTangent& other)
+  : m_data(other.m_data)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Dim, int Options>
+RTangent<Scalar, Dim, Options>::RTangent(RTangent&& other)
+  : m_data(std::move(other.m_data))
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Dim, int Options>
+template <typename OtherDerived>
+RTangent<Scalar, Dim, Options>::RTangent(
+    const RTangentBase<OtherDerived>& other)
+  : m_data(other.vector())
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Dim, int Options>
+template <typename OtherDerived>
+RTangent<Scalar, Dim, Options>::RTangent(RTangentBase<OtherDerived>&& other)
+  : m_data(std::move(other.vector()))
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Dim, int Options>
+template <typename Derived>
+RTangent<Scalar, Dim, Options>::RTangent(
+    const Eigen::MatrixBase<Derived>& coeffs)
   : m_data(coeffs)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Dim, int Options>
+template <typename Scalar, int Dim, int Options>
 template <typename Derived>
-RTangent<S, Dim, Options>::RTangent(Eigen::MatrixBase<Derived>&& coeffs)
+RTangent<Scalar, Dim, Options>::RTangent(Eigen::MatrixBase<Derived>&& coeffs)
   : m_data(std::move(coeffs))
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int Dim, int Options>
-S RTangent<S, Dim, Options>::operator*(const RCotangent<S, Dim>& cotan) const
+template <typename Scalar, int Dim, int Options>
+Scalar RTangent<Scalar, Dim, Options>::operator*(
+    const RCotangent<Scalar, Dim>& cotan) const
 {
   return m_data.dot(cotan.m_data);
 }
 
 //==============================================================================
-template <typename S, int Dim, int Options>
-typename RTangent<S, Dim, Options>::LieAlgebra RTangent<S, Dim, Options>::hat()
-    const
+template <typename Scalar, int Dim, int Options>
+typename RTangent<Scalar, Dim, Options>::LieAlgebra
+RTangent<Scalar, Dim, Options>::hat() const
 {
   LieAlgebra out = LieAlgebra::Zero();
   out.template topRightCorner<Dim + 1, 1>() = m_data;
+  return out;
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+RTangent<Scalar, Eigen::Dynamic, Options>::RTangent(int size)
+  : m_data(TangentData::Zero(size))
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+RTangent<Scalar, Eigen::Dynamic, Options>::RTangent(const RTangent& other)
+  : m_data(other.m_data)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+RTangent<Scalar, Eigen::Dynamic, Options>::RTangent(RTangent&& other)
+  : m_data(std::move(other.m_data))
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+template <typename Derived>
+RTangent<Scalar, Eigen::Dynamic, Options>::RTangent(
+    const Eigen::MatrixBase<Derived>& coeffs)
+  : m_data(coeffs)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+template <typename Derived>
+RTangent<Scalar, Eigen::Dynamic, Options>::RTangent(
+    Eigen::MatrixBase<Derived>&& coeffs)
+  : m_data(std::move(coeffs))
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+Scalar RTangent<Scalar, Eigen::Dynamic, Options>::operator*(
+    const RCotangent<Scalar, Eigen::Dynamic>& cotan) const
+{
+  return m_data.dot(cotan.m_data);
+}
+
+//==============================================================================
+template <typename Scalar, int Options>
+typename RTangent<Scalar, Eigen::Dynamic, Options>::LieAlgebra
+RTangent<Scalar, Eigen::Dynamic, Options>::hat() const
+{
+  LieAlgebra out = LieAlgebra::Zero(m_data.size() + 1, m_data.size() + 1);
+  out.topRightCorner(m_data.size() + 1, 1) = m_data;
   return out;
 }
 
@@ -345,15 +447,34 @@ typename RTangent<S, Dim, Options>::LieAlgebra RTangent<S, Dim, Options>::hat()
 namespace Eigen {
 
 //==============================================================================
-template <typename S, int N, int Options>
-Map<dart::math::R<S, N, Options>, Options>::Map(S* data) : m_data(data)
+template <typename Scalar, int N, int Options>
+Map<dart::math::R<Scalar, N, Options>, Options>::Map(Scalar* data)
+  : m_data(data)
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S, int N, int Options>
-Map<const dart::math::R<S, N, Options>, Options>::Map(S* data) : m_data(data)
+template <typename Scalar, int N, int Options>
+Map<const dart::math::R<Scalar, N, Options>, Options>::Map(const Scalar* data)
+  : m_data(data)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int N, int Options>
+Map<dart::math::RTangent<Scalar, N, Options>, Options>::Map(Scalar* data)
+  : m_data(data)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar, int N, int Options>
+Map<const dart::math::RTangent<Scalar, N, Options>, Options>::Map(
+    const Scalar* data)
+  : m_data(data)
 {
   // Do nothing
 }

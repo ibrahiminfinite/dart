@@ -38,11 +38,11 @@
 namespace dart {
 namespace math {
 
-template <typename S>
-class Convex3 : public Geometry3<S>
+template <typename Scalar>
+class Convex3 : public Geometry3<Scalar>
 {
 public:
-  using Vector3 = Eigen::Matrix<S, 3, 1>;
+  using Vector3 = Eigen::Matrix<Scalar, 3, 1>;
 
   /// Returns the support point given direction
   virtual Vector3 get_local_support_point(const Vector3& direction) const;

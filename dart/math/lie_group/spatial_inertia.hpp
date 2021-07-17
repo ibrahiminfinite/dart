@@ -35,42 +35,117 @@
 #include "dart/math/lie_group/se3.hpp"
 #include "dart/math/type.hpp"
 
+namespace Eigen::internal {
+
+//==============================================================================
+template <typename Scalar_, int Options_>
+struct traits<dart::math::SpatialInertia<Scalar_, Options_>>
+{
+  static constexpr int Options = Options_;
+
+  using Scalar = Scalar_;
+};
+
+} // namespace Eigen::internal
+
 namespace dart::math {
 
-template <typename S_>
-class SpatialInertia
+//==============================================================================
+template <typename Derived>
+class SpatialInertiaBase
 {
 public:
-  using S = S_;
+  using Scalar = typename Eigen::internal::traits<Derived>::Scalar;
+
+  template <typename OtherDerived>
+  SE3Cotangent<Scalar> operator*(
+      const SE3TangentBase<OtherDerived>& other) const
+  {
+    return SE3Cotangent<Scalar>(derived().matrix() * other.vector());
+  }
+
+  template <typename SE3Derived>
+  void transform(const SE3Base<SE3Derived>& T)
+  {
+    const auto AdT = T.ad_matrix();
+    derived().matrix() = AdT.transpose() * derived().matrix() * AdT;
+  }
+
+  template <typename SE3Derived>
+  SpatialInertia<Scalar> transformed(const SE3<Scalar>& T) const
+  {
+    const auto AdT = T.ad_matrix();
+    return SpatialInertia<Scalar>(AdT.transpose() * derived().matrix() * AdT);
+  }
+
+  Scalar operator()(int row, int col) const
+  {
+    return derived().matrix()(row, col);
+  }
+
+  Scalar& operator()(int row, int col)
+  {
+    return derived().matrix()(row, col);
+  }
+
+protected:
+  Derived& derived() noexcept
+  {
+    return *static_cast<Derived*>(this);
+  }
+
+  const Derived& derived() const noexcept
+  {
+    return *static_cast<const Derived*>(this);
+  }
+
+private:
+};
+
+//==============================================================================
+template <typename Scalar_, int Options_>
+class SpatialInertia
+  : public SpatialInertiaBase<SpatialInertia<Scalar_, Options_>>
+{
+public:
+  using Scalar = Scalar_;
+  static constexpr int Options = Options_;
+
+  using Base = SpatialInertiaBase<SpatialInertia<Scalar, Options>>;
+  using MatrixType = Eigen::Matrix<Scalar, 6, 6, Options>;
 
   /// Default constructor
   SpatialInertia();
 
   template <typename Derived>
-  SpatialInertia(const Eigen::MatrixBase<Derived>& moment, S mass);
+  SpatialInertia(const Eigen::MatrixBase<Derived>& moment, Scalar mass);
 
   template <typename DerivedA, typename DerivedB>
   SpatialInertia(
       const Eigen::MatrixBase<DerivedA>& offset,
       const Eigen::MatrixBase<DerivedB>& moment,
-      S mass);
+      Scalar mass);
 
   template <typename Derived>
   SpatialInertia(
-      const SE3<S>& T, const Eigen::MatrixBase<Derived>& moment, S mass);
+      const SE3<Scalar>& T,
+      const Eigen::MatrixBase<Derived>& moment,
+      Scalar mass);
 
-  S operator()(int row, int col) const;
+  using Base::operator*;
 
-  S& operator()(int row, int col);
+  const MatrixType& matrix() const
+  {
+    return m_matrix;
+  }
 
-  SE3Cotangent<S> operator*(const SE3Tangent<S>& s) const;
-
-  void transform(const SE3<S>& T);
-
-  SpatialInertia<S> transformed(const SE3<S>& T) const;
+  MatrixType& matrix()
+  {
+    return m_matrix;
+  }
 
 private:
-  Eigen::Matrix<S, 6, 6> m_matrix;
+  MatrixType m_matrix;
 };
 
 } // namespace dart::math

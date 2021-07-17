@@ -40,37 +40,37 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class DartObject : public Object<S_>
+template <typename Scalar_>
+class DartObject : public Object<Scalar_>
 {
 public:
-  using S = S_;
+  using Scalar = Scalar_;
 
   // Documentation inherited
-  math::Isometry3<S> get_pose() const override;
+  math::Isometry3<Scalar> get_pose() const override;
 
   // Documentation inherited
-  void set_pose(const math::Isometry3<S>& tf) override;
+  void set_pose(const math::Isometry3<Scalar>& tf) override;
 
   // Documentation inherited
-  math::Vector3<S> get_position() const override;
+  math::Vector3<Scalar> get_position() const override;
 
   // Documentation inherited
-  void set_position(const math::Vector3<S>& pos) override;
+  void set_position(const math::Vector3<Scalar>& pos) override;
 
 protected:
   /// Constructor
-  DartObject(DartScene<S>* group, math::GeometryPtr shape);
+  DartObject(DartScene<Scalar>* group, math::GeometryPtr shape);
 
   // Documentation inherited
   void update_engine_data() override;
 
 private:
-  friend class DartEngine<S>;
-  friend class DartScene<S>;
+  friend class DartEngine<Scalar>;
+  friend class DartScene<Scalar>;
 
   /// Pose of the collision object
-  math::SE3<S> m_pose;
+  math::SE3<Scalar> m_pose;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, DartObject)

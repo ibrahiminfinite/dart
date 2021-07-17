@@ -51,17 +51,17 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-btCollisionShape* create_bullet_mesh(const math::TriMesh<S>& mesh_data)
+template <typename Scalar>
+btCollisionShape* create_bullet_mesh(const math::TriMesh<Scalar>& mesh_data)
 {
   auto tri_mesh = new btTriangleMesh();
 
   const auto& vertices = mesh_data.get_vertices();
   for (const auto& triangle : mesh_data.get_triangles()) {
     tri_mesh->addTriangle(
-        to_bullet_vector3<S>(vertices[triangle[0]]),
-        to_bullet_vector3<S>(vertices[triangle[1]]),
-        to_bullet_vector3<S>(vertices[triangle[2]]));
+        to_bullet_vector3<Scalar>(vertices[triangle[0]]),
+        to_bullet_vector3<Scalar>(vertices[triangle[1]]),
+        to_bullet_vector3<Scalar>(vertices[triangle[2]]));
   }
 
   auto* gimpact_mesh_shape = new btGImpactMeshShape(tri_mesh);
@@ -72,18 +72,18 @@ btCollisionShape* create_bullet_mesh(const math::TriMesh<S>& mesh_data)
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 btCollisionShape* create_bullet_heightmap(
-    const math::Heightmap<S>& heightmap_src)
+    const math::Heightmap<Scalar>& heightmap_src)
 {
   // get the heightmap parameters
   const auto& scale = heightmap_src.get_scale();
-  const S min_height = heightmap_src.get_min_height();
-  const S max_height = heightmap_src.get_max_height();
+  const Scalar min_height = heightmap_src.get_min_height();
+  const Scalar max_height = heightmap_src.get_max_height();
 
   // determine which data type (float or double) is to be used for the field
   PHY_ScalarType scalar_yype = PHY_FLOAT;
-  if constexpr (std::is_same_v<S, double>) {
+  if constexpr (std::is_same_v<Scalar, double>) {
     dterr << "Bullet does not support DOUBLE as heightmap field yet.\n";
     return nullptr;
     // take this back in as soon as it is supported
@@ -91,7 +91,7 @@ btCollisionShape* create_bullet_heightmap(
   }
 
   // the y-values in the height field need to be flipped
-  math::Heightmap<S> heightmap_data = heightmap_src;
+  math::Heightmap<Scalar> heightmap_data = heightmap_src;
   heightmap_data.flip_y();
 
   const auto& heights = heightmap_data.get_height_field();
@@ -140,63 +140,63 @@ btCollisionShape* create_bullet_heightmap(
 }
 
 //==============================================================================
-template <typename S>
-std::shared_ptr<BulletEngine<S>> BulletEngine<S>::Create()
+template <typename Scalar>
+std::shared_ptr<BulletEngine<Scalar>> BulletEngine<Scalar>::Create()
 {
   return std::shared_ptr<BulletEngine>(new BulletEngine());
 }
 
 //==============================================================================
-template <typename S>
-BulletEngine<S>::BulletEngine()
+template <typename Scalar>
+BulletEngine<Scalar>::BulletEngine()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-BulletEngine<S>::~BulletEngine()
+template <typename Scalar>
+BulletEngine<Scalar>::~BulletEngine()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-const std::string& BulletEngine<S>::get_type() const
+template <typename Scalar>
+const std::string& BulletEngine<Scalar>::get_type() const
 {
   return GetType();
 }
 
 //==============================================================================
-template <typename S>
-const std::string& BulletEngine<S>::GetType()
+template <typename Scalar>
+const std::string& BulletEngine<Scalar>::GetType()
 {
   static const std::string type = "bullet";
   return type;
 }
 
 //==============================================================================
-template <typename S>
-ScenePtr<S> BulletEngine<S>::create_scene()
+template <typename Scalar>
+ScenePtr<Scalar> BulletEngine<Scalar>::create_scene()
 {
-  return std::make_shared<BulletScene<S>>(this);
+  return std::make_shared<BulletScene<Scalar>>(this);
 }
 
 //==============================================================================
-template <typename S>
-bool BulletEngine<S>::collide(
-    ObjectPtr<S> object1,
-    ObjectPtr<S> object2,
-    const CollisionOption<S>& option,
-    CollisionResult<S>* result)
+template <typename Scalar>
+bool BulletEngine<Scalar>::collide(
+    ObjectPtr<Scalar> object1,
+    ObjectPtr<Scalar> object2,
+    const CollisionOption<Scalar>& option,
+    CollisionResult<Scalar>* result)
 {
-  auto derived1 = std::dynamic_pointer_cast<BulletObject<S>>(object1);
+  auto derived1 = std::dynamic_pointer_cast<BulletObject<Scalar>>(object1);
   if (!derived1) {
     DART_ERROR("Invalid object");
     return false;
   }
 
-  auto derived2 = std::dynamic_pointer_cast<BulletObject<S>>(object2);
+  auto derived2 = std::dynamic_pointer_cast<BulletObject<Scalar>>(object2);
   if (!derived2) {
     DART_ERROR("Invalid object");
     return false;
@@ -223,40 +223,41 @@ bool BulletEngine<S>::collide(
 }
 
 //==============================================================================
-template <typename S>
+template <typename Scalar>
 std::shared_ptr<btCollisionShape>
-BulletEngine<S>::create_bullet_collision_shape(
+BulletEngine<Scalar>::create_bullet_collision_shape(
     const math::ConstGeometryPtr& shape)
 {
   btCollisionShape* bt_shape = nullptr;
 
-  if (const auto sphere = shape->as<math::Sphere<S>>()) {
+  if (const auto sphere = shape->as<math::Sphere<Scalar>>()) {
     const auto& radius = sphere->get_radius();
     bt_shape = new btSphereShape(radius);
 
-  } else if (const auto box = shape->as<math::Cuboid<S>>()) {
+  } else if (const auto box = shape->as<math::Cuboid<Scalar>>()) {
     const auto& size = box->get_size();
-    bt_shape = new btBoxShape(to_bullet_vector3<S>(0.5 * size));
+    bt_shape = new btBoxShape(to_bullet_vector3<Scalar>(0.5 * size));
 
-  } else if (const auto capsule = shape->as<math::Capsule<S>>()) {
+  } else if (const auto capsule = shape->as<math::Capsule<Scalar>>()) {
     const auto& radius = capsule->get_radius();
     const auto& height = capsule->get_height();
     bt_shape = new btCapsuleShapeZ(radius, height);
 
-  } else if (const auto cylinder = shape->as<math::Cylinder<S>>()) {
+  } else if (const auto cylinder = shape->as<math::Cylinder<Scalar>>()) {
     const auto& radius = cylinder->get_radius();
     const auto& height = cylinder->get_height();
     bt_shape = new btCylinderShapeZ(btVector3(radius, radius, 0.5 * height));
 
-  } else if (const auto plane = shape->as<math::Plane3<S>>()) {
+  } else if (const auto plane = shape->as<math::Plane3<Scalar>>()) {
     const auto& normal = plane->get_normal();
     const auto& offset = plane->get_offset();
-    bt_shape = new btStaticPlaneShape(to_bullet_vector3<S>(normal), offset);
+    bt_shape
+        = new btStaticPlaneShape(to_bullet_vector3<Scalar>(normal), offset);
 
-  } else if (const auto mesh = shape->as<math::TriMesh<S>>()) {
+  } else if (const auto mesh = shape->as<math::TriMesh<Scalar>>()) {
     bt_shape = create_bullet_mesh(*mesh);
 
-  } else if (const auto heightmap = shape->as<math::Heightmap<S>>()) {
+  } else if (const auto heightmap = shape->as<math::Heightmap<Scalar>>()) {
     bt_shape = create_bullet_heightmap(*heightmap);
 
   } else {

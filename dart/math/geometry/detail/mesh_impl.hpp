@@ -38,100 +38,100 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-template <typename S>
-Mesh<S>::~Mesh()
+template <typename Scalar>
+Mesh<Scalar>::~Mesh()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-void Mesh<S>::reserve_vertices(int size)
+template <typename Scalar>
+void Mesh<Scalar>::reserve_vertices(int size)
 {
   m_vertices.reserve(size);
 }
 
 //==============================================================================
-template <typename S>
-void Mesh<S>::add_vertex(const Vector3& vertex)
+template <typename Scalar>
+void Mesh<Scalar>::add_vertex(const Vector3& vertex)
 {
   m_vertices.push_back(vertex);
 }
 
 //==============================================================================
-template <typename S>
-int Mesh<S>::get_num_vertices() const
+template <typename Scalar>
+int Mesh<Scalar>::get_num_vertices() const
 {
   return m_vertices.size();
 }
 
 //==============================================================================
-template <typename S>
-bool Mesh<S>::has_vertices() const
+template <typename Scalar>
+bool Mesh<Scalar>::has_vertices() const
 {
   return !m_vertices.empty();
 }
 
 //==============================================================================
-template <typename S>
-void Mesh<S>::reserve_vertex_normals(int size)
+template <typename Scalar>
+void Mesh<Scalar>::reserve_vertex_normals(int size)
 {
   m_vertex_normals.reserve(size);
 }
 
 //==============================================================================
-template <typename S>
-void Mesh<S>::add_vertex_normal(const Vector3& vertex)
+template <typename Scalar>
+void Mesh<Scalar>::add_vertex_normal(const Vector3& vertex)
 {
   m_vertex_normals.push_back(vertex);
 }
 
 //==============================================================================
-template <typename S>
-int Mesh<S>::get_num_vertex_normals() const
+template <typename Scalar>
+int Mesh<Scalar>::get_num_vertex_normals() const
 {
   return m_vertex_normals.size();
 }
 
 //==============================================================================
-template <typename S>
-bool Mesh<S>::has_vertex_normals() const
+template <typename Scalar>
+bool Mesh<Scalar>::has_vertex_normals() const
 {
   return has_vertices() && m_vertices.size() == m_vertex_normals.size();
 }
 
 //==============================================================================
-template <typename S>
-const typename Mesh<S>::Vertices& Mesh<S>::get_vertices() const
+template <typename Scalar>
+const typename Mesh<Scalar>::Vertices& Mesh<Scalar>::get_vertices() const
 {
   return this->m_vertices;
 }
 
 //==============================================================================
-template <typename S>
-const typename Mesh<S>::Normals& Mesh<S>::get_vertex_normals() const
+template <typename Scalar>
+const typename Mesh<Scalar>::Normals& Mesh<Scalar>::get_vertex_normals() const
 {
   return this->m_vertex_normals;
 }
 
 //==============================================================================
-template <typename S>
-void Mesh<S>::clear()
+template <typename Scalar>
+void Mesh<Scalar>::clear()
 {
   m_vertices.clear();
   m_vertex_normals.clear();
 }
 
 //==============================================================================
-template <typename S>
-bool Mesh<S>::is_empty() const
+template <typename Scalar>
+bool Mesh<Scalar>::is_empty() const
 {
   return !(this->has_vertices());
 }
 
 //==============================================================================
-template <typename S>
-void Mesh<S>::translate(const Vector3& translation)
+template <typename Scalar>
+void Mesh<Scalar>::translate(const Vector3& translation)
 {
   for (auto& vertex : m_vertices) {
     vertex += translation;
@@ -139,15 +139,15 @@ void Mesh<S>::translate(const Vector3& translation)
 }
 
 //==============================================================================
-template <typename S>
-Mesh<S> Mesh<S>::operator+(const Mesh& other) const
+template <typename Scalar>
+Mesh<Scalar> Mesh<Scalar>::operator+(const Mesh& other) const
 {
   return (Mesh(*this) += other);
 }
 
 //==============================================================================
-template <typename S>
-Mesh<S>& Mesh<S>::operator+=(const Mesh& other)
+template <typename Scalar>
+Mesh<Scalar>& Mesh<Scalar>::operator+=(const Mesh& other)
 {
   if (other.is_empty())
     return *this;
@@ -171,15 +171,15 @@ Mesh<S>& Mesh<S>::operator+=(const Mesh& other)
 }
 
 //==============================================================================
-template <typename S>
-Mesh<S>::Mesh()
+template <typename Scalar>
+Mesh<Scalar>::Mesh()
 {
   // Do nothing
 }
 
 //==============================================================================
-template <typename S>
-void Mesh<S>::normalize_vertex_vormals()
+template <typename Scalar>
+void Mesh<Scalar>::normalize_vertex_vormals()
 {
   for (auto& normal : m_vertex_normals) {
     normal.normalize();

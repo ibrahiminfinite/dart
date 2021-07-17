@@ -37,18 +37,18 @@
 namespace dart::math {
 
 //==============================================================================
-template <typename S, template <typename> class... SubGroups>
-ProductLieGroup<S, SubGroups...> ProductLieGroup<S, SubGroups...>::inverse()
-    const
+template <typename Scalar, template <typename> class... SubGroups>
+ProductLieGroup<Scalar, SubGroups...>
+ProductLieGroup<Scalar, SubGroups...>::inverse() const
 {
   // TODO
 }
 
 //==============================================================================
-// template <typename S, template <typename> class... SubGroups>
+// template <typename Scalar, template <typename> class... SubGroups>
 // template <int Index>
-// typename ProductLieGroup<S, SubGroups...>::MapSubGroup<Index>
-// ProductLieGroup<S, SubGroups...>::element()
+// typename ProductLieGroup<Scalar, SubGroups...>::MapSubGroup<Index>
+// ProductLieGroup<Scalar, SubGroups...>::element()
 //{
 ////  return MapSubGroup<Index>(element)
 //}

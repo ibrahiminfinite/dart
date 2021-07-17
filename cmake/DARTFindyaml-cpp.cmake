@@ -6,4 +6,4 @@
 #
 # This file is provided under the "BSD-style" License
 
-find_package(lz4 QUIET)
+find_package(yaml-cpp 0.5.2 QUIET CONFIG)

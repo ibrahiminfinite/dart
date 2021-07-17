@@ -38,8 +38,8 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
-template <typename S>
-S length(const FclVector3<S>& t)
+template <typename Scalar>
+Scalar length(const FclVector3<Scalar>& t)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return t.norm();
@@ -49,8 +49,8 @@ S length(const FclVector3<S>& t)
 }
 
 //==============================================================================
-template <typename S>
-S length2(const FclVector3<S>& t)
+template <typename Scalar>
+Scalar length2(const FclVector3<Scalar>& t)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return t.squaredNorm();
@@ -60,8 +60,8 @@ S length2(const FclVector3<S>& t)
 }
 
 //==============================================================================
-template <typename S>
-FclVector3<S> getTranslation(const FclTransform3<S>& T)
+template <typename Scalar>
+FclVector3<Scalar> getTranslation(const FclTransform3<Scalar>& T)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return T.translation();
@@ -71,8 +71,8 @@ FclVector3<S> getTranslation(const FclTransform3<S>& T)
 }
 
 //==============================================================================
-template <typename S>
-void setTranslation(FclTransform3<S>& T, const FclVector3<S>& t)
+template <typename Scalar>
+void setTranslation(FclTransform3<Scalar>& T, const FclVector3<Scalar>& t)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   T.translation() = t;
@@ -82,8 +82,8 @@ void setTranslation(FclTransform3<S>& T, const FclVector3<S>& t)
 }
 
 //==============================================================================
-template <typename S>
-FclMatrix3<S> getRotation(const FclTransform3<S>& T)
+template <typename Scalar>
+FclMatrix3<Scalar> getRotation(const FclTransform3<Scalar>& T)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return T.linear();
@@ -93,8 +93,8 @@ FclMatrix3<S> getRotation(const FclTransform3<S>& T)
 }
 
 //==============================================================================
-template <typename S>
-void setRotation(FclTransform3<S>& T, const FclMatrix3<S>& R)
+template <typename Scalar>
+void setRotation(FclTransform3<Scalar>& T, const FclMatrix3<Scalar>& R)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   T.linear() = R;
@@ -104,20 +104,21 @@ void setRotation(FclTransform3<S>& T, const FclMatrix3<S>& R)
 }
 
 //==============================================================================
-template <typename S>
-void setEulerZYX(FclMatrix3<S>& rot, S eulerX, S eulerY, S eulerZ)
+template <typename Scalar>
+void setEulerZYX(
+    FclMatrix3<Scalar>& rot, Scalar eulerX, Scalar eulerY, Scalar eulerZ)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
-  S ci(cos(eulerX));
-  S cj(cos(eulerY));
-  S ch(cos(eulerZ));
-  S si(sin(eulerX));
-  S sj(sin(eulerY));
-  S sh(sin(eulerZ));
-  S cc = ci * ch;
-  S cs = ci * sh;
-  S sc = si * ch;
-  S ss = si * sh;
+  Scalar ci(cos(eulerX));
+  Scalar cj(cos(eulerY));
+  Scalar ch(cos(eulerZ));
+  Scalar si(sin(eulerX));
+  Scalar sj(sin(eulerY));
+  Scalar sh(sin(eulerZ));
+  Scalar cc = ci * ch;
+  Scalar cs = ci * sh;
+  Scalar sc = si * ch;
+  Scalar ss = si * sh;
 
   // clang-format off
   rot << cj * ch, sj * sc - cs, sj * cc + ss,
@@ -130,8 +131,9 @@ void setEulerZYX(FclMatrix3<S>& rot, S eulerX, S eulerY, S eulerZ)
 }
 
 //==============================================================================
-template <typename S>
-FclVector3<S> transform(const FclTransform3<S>& t, const FclVector3<S>& v)
+template <typename Scalar>
+FclVector3<Scalar> transform(
+    const FclTransform3<Scalar>& t, const FclVector3<Scalar>& v)
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
   return t * v;
@@ -141,13 +143,13 @@ FclVector3<S> transform(const FclTransform3<S>& t, const FclVector3<S>& v)
 }
 
 //==============================================================================
-template <typename S>
-FclTransform3<S> get_identity_transform()
+template <typename Scalar>
+FclTransform3<Scalar> get_identity_transform()
 {
 #if FCL_VERSION_AT_LEAST(0, 6, 0)
-  return FclTransform3<S>::Identity();
+  return FclTransform3<Scalar>::Identity();
 #else
-  return FclTransform3<S>();
+  return FclTransform3<Scalar>();
 #endif
 }
 

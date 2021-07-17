@@ -39,28 +39,28 @@ namespace dart {
 namespace collision {
 
 /// Converts Eigen vector3 to FCL vector3
-template <typename S>
-FclVector3<S> to_fcl_vector3(const math::Vector3<S>& vec);
+template <typename Scalar>
+FclVector3<Scalar> to_fcl_vector3(const math::Vector3<Scalar>& vec);
 
 /// Converts FCL vector3 to Eigen vector3
-template <typename S>
-math::Vector3<S> to_vector3(const FclVector3<S>& vec);
+template <typename Scalar>
+math::Vector3<Scalar> to_vector3(const FclVector3<Scalar>& vec);
 
 /// Converts Eigen matrix3x3 to FCL matrix3x3
-template <typename S>
-FclMatrix3<S> to_fcl_matrix3(const math::Matrix3<S>& R);
+template <typename Scalar>
+FclMatrix3<Scalar> to_fcl_matrix3(const math::Matrix3<Scalar>& R);
 
 /// Converts FCL matrix3x3 to Eigen matrix3x3
-template <typename S>
-math::Matrix3<S> to_matrix3(const FclMatrix3<S>& R);
+template <typename Scalar>
+math::Matrix3<Scalar> to_matrix3(const FclMatrix3<Scalar>& R);
 
 /// Converts Eigen transform to FCL transform
-template <typename S>
-FclTransform3<S> to_fcl_pose3(const math::Isometry3<S>& T);
+template <typename Scalar>
+FclTransform3<Scalar> to_fcl_pose3(const math::Isometry3<Scalar>& T);
 
 /// Converts FCL transform to Eigen transform
-template <typename S>
-math::Isometry3<S> to_pose3(const FclTransform3<S>& T);
+template <typename Scalar>
+math::Isometry3<Scalar> to_pose3(const FclTransform3<Scalar>& T);
 
 } // namespace collision
 } // namespace dart

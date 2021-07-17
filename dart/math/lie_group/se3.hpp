@@ -38,25 +38,11 @@
 #include "dart/math/lie_group/so3.hpp"
 #include "dart/math/type.hpp"
 
-namespace dart::math {
-
-// Forward declaration
-template <typename S, int Options = 0>
-class SE3;
-template <typename S, int Options = 0>
-class SE3Algebra;
-template <typename S, int Options = 0>
-class SE3Tangent;
-template <typename S, int Options = 0>
-class SE3Cotangent;
-
-} // namespace dart::math
-
 namespace Eigen::internal {
 
 //==============================================================================
-template <typename S_, int Options_>
-struct traits<dart::math::SE3<S_, Options_>>
+template <typename Scalar_, int Options_>
+struct traits<dart::math::SE3<Scalar_, Options_>>
 {
   static constexpr int Options = Options_;
 
@@ -70,29 +56,65 @@ struct traits<dart::math::SE3<S_, Options_>>
   static constexpr int MatrixDim = 4;
 
   /// Dimension of internal parameters to represent the group element.
-  static constexpr int RepDim = traits<dart::math::SO3<S_>>::RepDim
-                                + traits<dart::math::R3<S_>>::RepDim;
+  static constexpr int RepDim = traits<dart::math::SO3<Scalar_>>::RepDim
+                                + traits<dart::math::R3<Scalar_>>::RepDim;
 
-  using S = S_;
+  using Scalar = Scalar_;
 
-  using LieGroup = dart::math::SE3<S, Options>;
-  using LieGroupCoeffs = Eigen::Matrix<S, RepDim, 1, Options>;
+  using LieGroup = dart::math::SE3<Scalar, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, RepDim, 1, Options>;
 
-  using Tangent = dart::math::SE3Tangent<S, Options>;
-  using TangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Tangent = dart::math::SE3Tangent<Scalar, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using Cotangent = dart::math::SE3Cotangent<S, Options>;
-  using CotangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Cotangent = dart::math::SE3Cotangent<Scalar, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using LieAlgebra = dart::math::SE3Algebra<S, Options>;
-  using LieAlgebraData = Eigen::Matrix<S, MatrixDim, MatrixDim, Options>;
+  using LieAlgebra = dart::math::SE3Algebra<Scalar, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, MatrixDim, MatrixDim, Options>;
 
-  using Jacobian = Eigen::Matrix<S, GroupDim, GroupDim, Options>;
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
 };
 
 //==============================================================================
-template <typename S_, int Options_>
-struct traits<dart::math::SE3Algebra<S_, Options_>>
+template <typename Scalar_, int Options_>
+struct traits<dart::math::SE3Inverse<Scalar_, Options_>>
+{
+  static constexpr int Options = Options_;
+
+  /// Dimension of the Euclidean space that the Lie group is embedded.
+  static constexpr int SpaceDim = 3;
+
+  /// Dimension of the Lie group.
+  static constexpr int GroupDim = 6;
+
+  /// Dimension of the matrix representation of the Lie group.
+  static constexpr int MatrixDim = 4;
+
+  /// Dimension of internal parameters to represent the group element.
+  static constexpr int RepDim = traits<dart::math::SO3<Scalar_>>::RepDim
+                                + traits<dart::math::R3<Scalar_>>::RepDim;
+
+  using Scalar = Scalar_;
+
+  using LieGroup = dart::math::SE3<Scalar, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, RepDim, 1, Options>;
+
+  using Tangent = dart::math::SE3Tangent<Scalar, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using Cotangent = dart::math::SE3Cotangent<Scalar, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
+
+  using LieAlgebra = dart::math::SE3Algebra<Scalar, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, MatrixDim, MatrixDim, Options>;
+
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
+};
+
+//==============================================================================
+template <typename Scalar_, int Options_>
+struct traits<dart::math::SE3Algebra<Scalar_, Options_>>
 {
   static constexpr int Options = Options_;
 
@@ -107,26 +129,26 @@ struct traits<dart::math::SE3Algebra<S_, Options_>>
 
   static constexpr int RepDim = MatrixDim * MatrixDim;
 
-  using S = S_;
+  using Scalar = Scalar_;
 
-  using LieGroup = dart::math::SE3<S, Options>;
-  using LieGroupCoeffs = Eigen::Matrix<S, RepDim, 1, Options>;
+  using LieGroup = dart::math::SE3<Scalar, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, RepDim, 1, Options>;
 
-  using Tangent = dart::math::SE3Tangent<S, Options>;
-  using TangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Tangent = dart::math::SE3Tangent<Scalar, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using Cotangent = dart::math::SE3Cotangent<S, Options>;
-  using CotangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Cotangent = dart::math::SE3Cotangent<Scalar, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using LieAlgebra = dart::math::SE3Algebra<S, Options>;
-  using LieAlgebraData = Eigen::Matrix<S, MatrixDim, MatrixDim, Options>;
+  using LieAlgebra = dart::math::SE3Algebra<Scalar, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, MatrixDim, MatrixDim, Options>;
 
-  using Jacobian = Eigen::Matrix<S, GroupDim, GroupDim, Options>;
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
 };
 
 //==============================================================================
-template <typename S_, int Options_>
-struct traits<dart::math::SE3Tangent<S_, Options_>>
+template <typename Scalar_, int Options_>
+struct traits<dart::math::SE3Tangent<Scalar_, Options_>>
 {
   static constexpr int Options = Options_;
 
@@ -141,26 +163,26 @@ struct traits<dart::math::SE3Tangent<S_, Options_>>
 
   static constexpr int RepDim = 6;
 
-  using S = S_;
+  using Scalar = Scalar_;
 
-  using LieGroup = dart::math::SE3<S, Options>;
-  using LieGroupCoeffs = Eigen::Matrix<S, RepDim, 1, Options>;
+  using LieGroup = dart::math::SE3<Scalar, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, RepDim, 1, Options>;
 
-  using Tangent = dart::math::SE3Tangent<S, Options>;
-  using TangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Tangent = dart::math::SE3Tangent<Scalar, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using Cotangent = dart::math::SE3Cotangent<S, Options>;
-  using CotangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Cotangent = dart::math::SE3Cotangent<Scalar, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using LieAlgebra = dart::math::SE3Algebra<S, Options>;
-  using LieAlgebraData = Eigen::Matrix<S, MatrixDim, MatrixDim, Options>;
+  using LieAlgebra = dart::math::SE3Algebra<Scalar, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, MatrixDim, MatrixDim, Options>;
 
-  using Jacobian = Eigen::Matrix<S, GroupDim, GroupDim, Options>;
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
 };
 
 //==============================================================================
-template <typename S_, int Options_>
-struct traits<dart::math::SE3Cotangent<S_, Options_>>
+template <typename Scalar_, int Options_>
+struct traits<dart::math::SE3Cotangent<Scalar_, Options_>>
 {
   static constexpr int Options = Options_;
 
@@ -175,32 +197,46 @@ struct traits<dart::math::SE3Cotangent<S_, Options_>>
 
   static constexpr int RepDim = 6;
 
-  using S = S_;
+  using Scalar = Scalar_;
 
-  using LieGroup = dart::math::SE3<S, Options>;
-  using LieGroupCoeffs = Eigen::Matrix<S, RepDim, 1, Options>;
+  using LieGroup = dart::math::SE3<Scalar, Options>;
+  using LieGroupCoeffs = Eigen::Matrix<Scalar, RepDim, 1, Options>;
 
-  using Tangent = dart::math::SE3Tangent<S, Options>;
-  using TangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Tangent = dart::math::SE3Tangent<Scalar, Options>;
+  using TangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using Cotangent = dart::math::SE3Cotangent<S, Options>;
-  using CotangentData = Eigen::Matrix<S, GroupDim, 1, Options>;
+  using Cotangent = dart::math::SE3Cotangent<Scalar, Options>;
+  using CotangentData = Eigen::Matrix<Scalar, GroupDim, 1, Options>;
 
-  using LieAlgebra = dart::math::SE3Algebra<S, Options>;
-  using LieAlgebraData = Eigen::Matrix<S, MatrixDim, MatrixDim, Options>;
+  using LieAlgebra = dart::math::SE3Algebra<Scalar, Options>;
+  using LieAlgebraData = Eigen::Matrix<Scalar, MatrixDim, MatrixDim, Options>;
 
-  using Jacobian = Eigen::Matrix<S, GroupDim, GroupDim, Options>;
+  using Jacobian = Eigen::Matrix<Scalar, GroupDim, GroupDim, Options>;
 };
 
 } // namespace Eigen::internal
 
 namespace dart::math {
 
+template <typename Scalar, int Options>
+struct Eval<SE3<Scalar, Options>>
+{
+  using Type = SE3<Scalar, Options>;
+};
+
+template <typename Scalar, int Options>
+struct Eval<SE3Inverse<Scalar, Options>>
+{
+  using Type = SE3<Scalar, Options>;
+};
+
 //==============================================================================
 template <typename Derived>
 class SE3Base : public LieGroupBase<Derived>
 {
 public:
+  using Scalar = typename Eigen::internal::traits<Derived>::Scalar;
+
   using Base = LieGroupBase<Derived>;
   using Matrix = typename Base::Matrix;
   using LieGroupCoeffs = typename Base::LieGroupCoeffs;
@@ -213,17 +249,46 @@ public:
   using Translation = typename Base::Translation;
   using Transformation = typename Base::Transformation;
 
+  using EvalReturnType = typename Eval<Derived>::Type;
+
   static constexpr int SpaceDim = Base::SpaceDim;
   static constexpr int GroupDim = Base::GroupDim;
   static constexpr int MatrixDim = Base::MatrixDim;
+
+  template <typename OtherDerived>
+  bool operator==(const SE3Base<OtherDerived>& other) const
+  {
+    return (position() == other.position())
+           && (orientation() == other.orientation());
+  }
+
+  EvalReturnType eval() const
+  {
+    return derived().eval();
+  }
+
+  LieGroupNoAlias<Derived, SE3Base> noalias()
+  {
+    return LieGroupNoAlias<Derived, SE3Base>(derived());
+  }
+
+  auto orientation() const;
+
+  auto orientation();
+
+  auto position() const;
+
+  auto position();
+
+  using Base::derived;
 };
 
 //==============================================================================
-template <typename S, int Options>
-class SE3 : public SE3Base<SE3<S>>
+template <typename Scalar, int Options>
+class SE3 : public SE3Base<SE3<Scalar, Options>>
 {
 public:
-  using Base = LieGroupBase<SE3<S>>;
+  using Base = SE3Base<SE3<Scalar, Options>>;
   using Matrix = typename Base::Matrix;
   using LieAlgebra = typename Base::LieAlgebra;
   using Tangent = typename Base::Tangent;
@@ -236,26 +301,50 @@ public:
   using Translation = typename Base::Translation;
   using Transformation = typename Base::Transformation;
 
+  using EvalReturnType = typename Base::EvalReturnType;
+
   static SE3 Identity();
 
   static SE3 Random();
 
-  static Tangent Ad(const SE3& T, const typename SE3::Tangent& V);
+  template <typename DerivedA, typename DerivedB>
+  static Tangent Ad(
+      const SE3Base<DerivedA>& T, const SE3TangentBase<DerivedB>& V);
+
+  template <typename DerivedA, typename DerivedB>
+  static Tangent Ad_R(
+      const SE3Base<DerivedA>& T, const SE3TangentBase<DerivedB>& V);
 
   /// Default constructor
   SE3();
 
   /// Copy constructor
-  SE3(const SE3& other);
+  SE3(const SE3& other) = default;
 
   /// Move constructor
-  SE3(SE3&& other);
+  SE3(SE3&& other) = default;
+
+  /// Copy constructor
+  template <typename OtherDerived>
+  SE3(const SE3Base<OtherDerived>& other);
+
+  /// Move constructor
+  template <typename OtherDerived>
+  SE3(SE3Base<OtherDerived>&& other);
 
   /// Constructs from orientation and position
-  explicit SE3(const SO3<S, Options>& orientation, const R3<S>& position);
+  SE3(const SO3<Scalar>& orientation, const R3<Scalar>& position);
 
   /// Constructs from orientation and position
-  explicit SE3(SO3<S, Options>&& orientation, R3<S>&& position);
+  SE3(SO3<Scalar>&& orientation, R3<Scalar>&& position);
+
+  /// Constructs from orientation and position from SO3Derived and RDerived.
+  template <typename SO3Derived, typename RDerived>
+  SE3(const SO3Base<SO3Derived>& orientation, const RBase<RDerived>& position);
+
+  /// Constructs from orientation and position from SO3Derived and RDerived
+  template <typename SO3Derived, typename RDerived>
+  SE3(SO3Base<SO3Derived>&& orientation, RBase<RDerived>&& position);
 
   /// Assignment operator
   SE3& operator=(const SE3& other);
@@ -263,38 +352,65 @@ public:
   /// Move operator
   SE3& operator=(SE3&& other);
 
+  template <typename OtherDerived>
+  SE3& operator=(const SE3Base<OtherDerived>& other);
+
   /// Assign operator for Eigen::Isometry3
-  SE3& operator=(const Eigen::Transform<S, 3, Eigen::Isometry, Options>& tf);
+  SE3& operator=(
+      const Eigen::Transform<Scalar, 3, Eigen::Isometry, Options>& tf);
 
   /// Group operation
-  SE3 operator*(const SE3& other) const;
+  template <typename OtherDerived>
+  SE3 operator*(const SE3Base<OtherDerived>& other) const;
 
   /// Transforms a 3D point
-  R3<S> operator*(const R3<S>& position) const;
+  R3<Scalar> operator*(const R3<Scalar>& position) const;
 
-  SE3Algebra<S, Options> operator*(const SE3Algebra<S, Options>& dx) const;
+  SE3Algebra<Scalar, Options> operator*(
+      const SE3Algebra<Scalar, Options>& dx) const;
 
   void set_identity();
 
   void set_random();
 
-  SE3 inverse() const;
+  SE3Inverse<Scalar, Options> inverse() const;
 
   SE3& inverse_in_place();
 
-  Tangent log(Jacobian* jacobian = nullptr, S tolerance = eps<S>()) const;
+  SE3& rotate(const SO3<Scalar, Options>& orientation);
+
+  bool is_identity() const
+  {
+    if (!m_position.is_zero()) {
+      return false;
+    }
+
+    if (!m_orientation.is_identity()) {
+      return false;
+    }
+
+    return true;
+  }
+
+  Tangent log(
+      Jacobian* jacobian = nullptr, Scalar tolerance = eps<Scalar>()) const;
 
   Tangent ad(const Tangent& V) const;
 
   Jacobian ad_matrix() const;
 
-  SO3<S>& mutable_orientation();
+  const EvalReturnType& eval() const
+  {
+    return *this;
+  }
 
-  const SO3<S>& orientation() const;
+  SO3<Scalar>& orientation();
 
-  R3<S>& mutable_position();
+  const SO3<Scalar>& orientation() const;
 
-  const R3<S>& position() const;
+  R3<Scalar>& position();
+
+  const R3<Scalar>& position() const;
 
   Transformation transformation() const;
 
@@ -302,29 +418,79 @@ public:
 
   Rotation rotation() const;
 
-  Translation& mutable_translation();
+  Translation& translation();
 
   const Translation& translation() const;
 
-protected:
   using Base::derived;
 
+protected:
   /// Orientation component
-  SO3<S, Options> m_orientation;
+  SO3<Scalar, Options> m_orientation;
 
   /// Position component
-  R3<S> m_position;
+  R3<Scalar> m_position;
 };
 
 DART_TEMPLATE_CLASS_SCALAR(SE3)
 
 //==============================================================================
-template <typename S, int Options>
-class SE3Algebra : public LieAlgebra<SE3Algebra<S>>
+template <typename Scalar, int Options>
+class SE3Inverse : public SE3Base<SE3Inverse<Scalar, Options>>
+{
+public:
+  using Base = SE3Base<SE3Inverse<Scalar, Options>>;
+  using Matrix = typename Base::Matrix;
+  using LieAlgebra = typename Base::LieAlgebra;
+  using Tangent = typename Base::Tangent;
+  using TangentData = typename Base::TangentData;
+  using Cotangent = typename Base::Cotangent;
+  using Jacobian = typename Base::Jacobian;
+
+  // Eigen data
+  using Rotation = typename Base::Rotation;
+  using Translation = typename Base::Translation;
+  using Transformation = typename Base::Transformation;
+
+  using EvalReturnType = typename Base::EvalReturnType;
+
+  SE3Inverse(const SE3<Scalar, Options>& original);
+
+  /// Group operation
+  SE3<Scalar, Options> operator*(const SE3<Scalar, Options>& other) const;
+
+  SO3<Scalar> orientation() const;
+
+  R3<Scalar> position() const;
+
+  EvalReturnType eval() const;
+
+private:
+  const SE3<Scalar, Options>& m_original;
+};
+
+//==============================================================================
+template <typename Derived>
+class SE3AlgebraBase : public LieAlgebra<Derived>
+{
+public:
+  using Base = LieAlgebra<Derived>;
+  using TangentData = typename Base::TangentData;
+  using LieGroup = typename Base::LieGroup;
+  using LieAlgebraData = typename Base::LieAlgebraData;
+  using Jacobian = typename Base::Jacobian;
+
+protected:
+  using Base::derived;
+};
+
+//==============================================================================
+template <typename Scalar, int Options>
+class SE3Algebra : public SE3AlgebraBase<SE3Algebra<Scalar>>
 {
 public:
   using This = SE3Algebra;
-  using Base = LieAlgebra<SE3Algebra<S>>;
+  using Base = SE3AlgebraBase<SE3Algebra<Scalar>>;
   using TangentData = typename Base::TangentData;
   using LieGroup = typename Base::LieGroup;
   using LieAlgebraData = typename Base::LieAlgebraData;
@@ -345,10 +511,10 @@ public:
   SE3Algebra(SE3Algebra&& other);
 
   /// Constructs from the vector form of se(3)
-  explicit SE3Algebra(const SE3Tangent<S, Options>& tangent);
+  explicit SE3Algebra(const SE3Tangent<Scalar, Options>& tangent);
 
   /// Constructs from the vector form of se(3)
-  explicit SE3Algebra(SE3Tangent<S, Options>&& tangent);
+  explicit SE3Algebra(SE3Tangent<Scalar, Options>&& tangent);
 
   explicit SE3Algebra(const LieAlgebraData& data);
 
@@ -361,9 +527,9 @@ public:
 
   void set_zero();
 
-  SE3Algebra operator/(S scalar) const;
+  SE3Algebra operator/(Scalar scalar) const;
 
-  SE3Tangent<S, Options> vee() const;
+  SE3Tangent<Scalar, Options> vee() const;
 
   LieAlgebraData& mutable_matrix();
 
@@ -378,11 +544,96 @@ protected:
 DART_TEMPLATE_CLASS_SCALAR(SE3Algebra)
 
 //==============================================================================
-template <typename S, int Options>
-class SE3Tangent : public LieGroupTangent<SE3Tangent<S>>
+template <typename Derived>
+class SE3TangentBase : public LieGroupTangent<Derived>
 {
 public:
-  using Base = LieGroupTangent<SE3Tangent<S>>;
+  using Base = LieGroupTangent<Derived>;
+  using Scalar = typename Base::Scalar;
+  using Matrix = typename Base::Matrix;
+  using TangentData = typename Base::TangentData;
+  using LieGroup = typename Base::LieGroup;
+  using LieAlgebra = typename Base::LieAlgebra;
+  using LieAlgebraData = typename Base::LieAlgebraData;
+  using Jacobian = typename Base::Jacobian;
+
+  /// Assignment operator
+  template <typename OtherDerived>
+  Derived& operator=(const SE3TangentBase<OtherDerived>& other)
+  {
+    derived().vector() = other.vector();
+    return derived();
+  }
+
+  /// Move operator
+  template <typename OtherDerived>
+  Derived& operator=(SE3TangentBase<OtherDerived>&& other)
+  {
+    derived().vector() = std::move(other.vector());
+    return derived();
+  }
+
+  /// Compound assignment operator
+  template <typename OtherDerived>
+  Derived& operator+=(const SE3TangentBase<OtherDerived>& other)
+  {
+    derived().vector() += other.vector();
+    return derived();
+  }
+
+  /// Compound assignment operator
+  template <typename OtherDerived>
+  Derived& operator-=(const SE3TangentBase<OtherDerived>& other)
+  {
+    derived().vector() -= other.vector();
+    return derived();
+  }
+
+  [[nodiscard]] bool is_zero() const
+  {
+    return derived().vector().isZero();
+  }
+
+  template <typename OtherDerived>
+  [[nodiscard]] Derived ad(const SE3TangentBase<OtherDerived>& other) const;
+
+  [[nodiscard]] const TangentData& vector() const;
+
+  [[nodiscard]] TangentData& vector();
+
+  template <typename SO3TangentDerived>
+  void set_angular(const SO3TangentBase<SO3TangentDerived>& other)
+  {
+    derived().set_angular(other);
+  }
+
+  [[nodiscard]] auto angular() const
+  {
+    return derived().angular();
+  }
+
+  template <typename RTangentDerived>
+  void set_linear(const RTangentBase<RTangentDerived>& other)
+  {
+    derived().set_linear(other);
+  }
+
+  [[nodiscard]] auto linear() const
+  {
+    return derived().linear();
+  }
+
+protected:
+  using Base::derived;
+};
+
+//==============================================================================
+template <typename Scalar_, int Options>
+class SE3Tangent : public SE3TangentBase<SE3Tangent<Scalar_>>
+{
+public:
+  using Scalar = Scalar_;
+  using Base = SE3TangentBase<SE3Tangent<Scalar>>;
   using Matrix = typename Base::Matrix;
   using TangentData = typename Base::TangentData;
   using LieGroup = typename Base::LieGroup;
@@ -414,53 +665,98 @@ public:
   template <typename OtherDerived>
   explicit SE3Tangent(const LieGroupTangent<OtherDerived>& other);
 
+  using Base::operator=;
+
   SE3Tangent& operator=(const SE3Tangent& other);
 
   SE3Tangent& operator=(SE3Tangent&& other);
 
-  S operator[](int index) const;
+  Scalar operator[](int index) const;
 
-  S& operator[](int index);
+  Scalar& operator[](int index);
 
-  S operator*(const SE3Cotangent<S, Options>& wrench) const;
+  SE3Tangent operator-() const;
+
+  SE3Tangent operator+(const SE3Tangent& other) const;
+
+  SE3Tangent operator-(const SE3Tangent& other) const;
+
+  Scalar operator*(const SE3Cotangent<Scalar, Options>& wrench) const;
 
   void set_zero();
 
   void set_random();
 
+  template <typename SO3TangentDerived>
+  void set_angular(const SO3TangentBase<SO3TangentDerived>& other)
+  {
+    m_data.template head<3>() = other.vector();
+  }
+
+  template <typename SO3TangentDerived>
+  void set_angular(SO3TangentBase<SO3TangentDerived>&& other)
+  {
+    m_data.template head<3>() = std::move(other.vector());
+  }
+
+  template <typename RTangentDerived>
+  void set_linear(const RTangentBase<RTangentDerived>& other)
+  {
+    m_data.template tail<3>() = other.vector();
+  }
+
+  template <typename RTangentDerived>
+  void set_linear(RTangentBase<RTangentDerived>&& other)
+  {
+    m_data.template tail<3>() = std::move(other.vector());
+  }
+
+  template <typename MatrixDerived>
+  void set_linear(const Eigen::MatrixBase<MatrixDerived>& other)
+  {
+    m_data.template tail<3>() = other;
+  }
+
+  template <typename MatrixDerived>
+  void set_linear(Eigen::MatrixBase<MatrixDerived>&& other)
+  {
+    m_data.template tail<3>() = std::move(other);
+  }
+
   /// Hat operation
-  SE3Algebra<S, Options> hat() const;
+  SE3Algebra<Scalar, Options> hat() const;
 
   /// Vee operation, reverse of hat().
   template <typename Derived>
   void vee(const Eigen::MatrixBase<Derived>& mat);
 
-  SE3<S, Options> exp(
-      Jacobian* jacobian = nullptr, S tolerance = eps<S>()) const;
+  SE3<Scalar, Options> exp(
+      Jacobian* jacobian = nullptr, Scalar tolerance = eps<Scalar>()) const;
 
-  SE3Tangent ad(const SE3Tangent& other) const;
+  template <typename Derived>
+  SE3Tangent ad(const SE3TangentBase<Derived>& other) const;
 
   Matrix ad_matrix() const;
 
-  Jacobian left_jacobian(S tolerance = eps<S>()) const;
+  Jacobian left_jacobian(Scalar tolerance = eps<Scalar>()) const;
 
-  Jacobian space_jacobian(S tolerance = eps<S>()) const;
+  Jacobian space_jacobian(Scalar tolerance = eps<Scalar>()) const;
 
-  Jacobian right_jacobian(S tolerance = eps<S>()) const;
+  Jacobian right_jacobian(Scalar tolerance = eps<Scalar>()) const;
 
-  Jacobian body_jacobian(S tolerance = eps<S>()) const;
+  Jacobian body_jacobian(Scalar tolerance = eps<Scalar>()) const;
 
-  Jacobian left_jacobian_inverse(S tolerance = eps<S>()) const;
+  Jacobian left_jacobian_inverse(Scalar tolerance = eps<Scalar>()) const;
 
-  Jacobian right_jacobian_inverse(S tolerance = eps<S>()) const;
+  Jacobian right_jacobian_inverse(Scalar tolerance = eps<Scalar>()) const;
 
-  auto angular() const;
+  SO3Tangent<Scalar, Options> angular() const;
 
-  auto mutable_angular();
+  Eigen::Map<SO3Tangent<Scalar, Options>> angular();
 
-  auto linear() const;
+  RTangent<Scalar, 3, Options> linear() const;
 
-  auto mutable_linear();
+  Eigen::Map<R3Tangent<Scalar, Options>> linear();
 
   TangentData& vector();
 
@@ -477,11 +773,31 @@ protected:
 DART_TEMPLATE_CLASS_SCALAR(SE3Tangent)
 
 //==============================================================================
-template <typename S, int Options_>
-class SE3Cotangent : public LieGroupCotangent<SE3Cotangent<S>>
+template <typename Derived>
+class SE3CotangentBase : public LieGroupCotangent<Derived>
 {
 public:
-  using Base = LieGroupCotangent<SE3Cotangent<S>>;
+  using Base = LieGroupCotangent<Derived>;
+  using TangentData = typename Base::TangentData;
+  using LieGroup = typename Base::LieGroup;
+  using LieAlgebraData = typename Base::LieAlgebraData;
+  using Jacobian = typename Base::Jacobian;
+
+  bool is_zero() const
+  {
+    return derived().vector().isZero();
+  }
+
+protected:
+  using Base::derived;
+};
+
+//==============================================================================
+template <typename Scalar, int Options_>
+class SE3Cotangent : public SE3CotangentBase<SE3Cotangent<Scalar>>
+{
+public:
+  using Base = SE3CotangentBase<SE3Cotangent<Scalar>>;
   using CotangentData = typename Base::CotangentData;
   using LieGroup = typename Base::LieGroup;
   using LieAlgebra = typename Base::LieAlgebra;
@@ -491,10 +807,34 @@ public:
   SE3Cotangent();
 
   /// Copy constructor
-  SE3Cotangent(const SE3Cotangent& other);
+  template <typename Derived>
+  SE3Cotangent(const SE3CotangentBase<Derived>& other) : m_data(other.vector())
+  {
+    // Do nothing
+  }
 
   /// Move constructor
-  SE3Cotangent(SE3Cotangent&& other);
+  template <typename Derived>
+  SE3Cotangent(SE3Cotangent<Derived>&& other)
+    : m_data(std::move(other.vector()))
+  {
+    // Do nothing
+  }
+
+  /// Constructs from Eigen::MatrixBase
+  template <typename MatrixDerived>
+  SE3Cotangent(const Eigen::MatrixBase<MatrixDerived>& other) : m_data(other)
+  {
+    // Do nothing
+  }
+
+  /// Constructs from Eigen::MatrixBase
+  template <typename MatrixDerived>
+  SE3Cotangent(Eigen::MatrixBase<MatrixDerived>&& other)
+    : m_data(std::move(other))
+  {
+    // Do nothing
+  }
 
   auto torque() const;
 
@@ -529,40 +869,42 @@ DART_TEMPLATE_CLASS_SCALAR(SE3Cotangent)
 namespace Eigen {
 
 //==============================================================================
-template <typename S_, int Options>
-class Map<dart::math::SE3<S_, Options>, Options>
-  : public dart::math::SE3Base<Map<dart::math::SE3<S_, Options>, Options>>
+template <typename Scalar_, int Options>
+class Map<dart::math::SE3<Scalar_, Options>, Options>
+  : public dart::math::SE3Base<Map<dart::math::SE3<Scalar_, Options>, Options>>
 {
 public:
-  using S = S_;
-  using Base = dart::math::SE3Base<Map<dart::math::SE3<S_, Options>, Options>>;
+  using Scalar = Scalar_;
+  using Base
+      = dart::math::SE3Base<Map<dart::math::SE3<Scalar_, Options>, Options>>;
 
   using Base::operator=;
 
-  Map(S* data);
+  Map(Scalar* data);
 
 private:
-  Map<dart::math::SO3<S, Options>> m_orientation;
-  Map<dart::math::R3<S, Options>> m_position;
+  Map<dart::math::SO3<Scalar, Options>> m_orientation;
+  Map<dart::math::R3<Scalar, Options>> m_position;
 };
 
 //==============================================================================
-template <typename S_, int Options>
-class Map<const dart::math::SE3<S_, Options>, Options>
-  : public dart::math::SE3Base<Map<const dart::math::SE3<S_, Options>, Options>>
+template <typename Scalar_, int Options>
+class Map<const dart::math::SE3<Scalar_, Options>, Options>
+  : public dart::math::SE3Base<
+        Map<const dart::math::SE3<Scalar_, Options>, Options>>
 {
 public:
-  using S = S_;
-  using Base
-      = dart::math::SE3Base<Map<const dart::math::SE3<S_, Options>, Options>>;
+  using Scalar = Scalar_;
+  using Base = dart::math::SE3Base<
+      Map<const dart::math::SE3<Scalar_, Options>, Options>>;
 
   using Base::operator=;
 
-  Map(const S* data);
+  Map(const Scalar* data);
 
 private:
-  Map<const dart::math::SO3<S, Options>> m_orientation;
-  Map<const dart::math::R3<S, Options>> m_position;
+  Map<const dart::math::SO3<Scalar, Options>> m_orientation;
+  Map<const dart::math::R3<Scalar, Options>> m_position;
 };
 
 } // namespace Eigen

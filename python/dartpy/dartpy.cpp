@@ -44,6 +44,7 @@ void dart_common(py::module& m);
 void dart_math(py::module& m);
 void dart_optimization(py::module& m);
 void dart_collision(py::module& m);
+void dart_multibody(py::module& m);
 void dart_dynamics(py::module& m);
 void dart_simulation(py::module& m);
 void dart_io(py::module& m);
@@ -59,6 +60,7 @@ PYBIND11_MODULE(dartpy, m)
   dart_math(m);
   dart_optimization(m);
   dart_collision(m);
+  dart_multibody(m);
   dart_dynamics(m);
   dart_simulation(m);
   dart_io(m);

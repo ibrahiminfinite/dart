@@ -40,28 +40,28 @@
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class FclScene : public Scene<S_>
+template <typename Scalar_>
+class FclScene : public Scene<Scalar_>
 {
 public:
-  using S = S_;
-  using FCLCollisionManager = FclDynamicAABBTreeCollisionManager<S>;
+  using Scalar = Scalar_;
+  using FCLCollisionManager = FclDynamicAABBTreeCollisionManager<Scalar>;
 
-  friend class FclEngine<S>;
+  friend class FclEngine<Scalar>;
 
   /// Constructor
-  FclScene(Engine<S>* engine);
+  FclScene(Engine<Scalar>* engine);
 
   /// Destructor
   ~FclScene() override = default;
 
   // Documentation inherited
-  ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+  ObjectPtr<Scalar> create_object(math::GeometryPtr shape) override;
 
 protected:
-  FclEngine<S>* get_mutable_fcl_engine();
+  FclEngine<Scalar>* get_mutable_fcl_engine();
 
-  const FclEngine<S>* get_fcl_engine() const;
+  const FclEngine<Scalar>* get_fcl_engine() const;
 
   /// Return FCL collision manager that is also a broad-phase algorithm
   FCLCollisionManager* get_fcl_collision_manager();
