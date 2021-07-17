@@ -33,32 +33,18 @@
 #ifndef DART_COLLISION_COLLISIONFILTER_HPP_
 #define DART_COLLISION_COLLISIONFILTER_HPP_
 
-#include "dart/common/Deprecated.hpp"
 #include "dart/dynamics/detail/UnorderedPairs.hpp"
 
 namespace dart {
-
 namespace dynamics {
+
 class BodyNode;
-} // namespace dynamics
-
-namespace dynamics {
-
 class CollisionObject;
 
 class CollisionFilter {
 public:
   /// Destructor.
   virtual ~CollisionFilter();
-
-  /// Returns true if the given two CollisionObjects should be checked by the
-  /// collision detector, false otherwise.
-  /// \deprecated Deprecated in 6.3.0. Please use ignoreCollision instead. Note
-  /// that ignoreCollision returns logically opposite to what needCollision
-  /// returns.
-  DART_DEPRECATED(6.3)
-  bool needCollision(
-      const CollisionObject* object1, const CollisionObject* object2) const;
 
   /// Returns true if the given two CollisionObjects should be checked by the
   /// collision detector, false otherwise.

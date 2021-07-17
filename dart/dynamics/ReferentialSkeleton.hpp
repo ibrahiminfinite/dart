@@ -51,7 +51,7 @@ public:
   ReferentialSkeleton& operator=(const ReferentialSkeleton& _other) = delete;
 
   /// Default destructor
-  virtual ~ReferentialSkeleton() = default;
+  ~ReferentialSkeleton() override = default;
 
   // Documentation inherited
   std::unique_ptr<common::LockableReference> getLockableReference()

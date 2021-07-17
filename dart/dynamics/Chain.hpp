@@ -108,8 +108,7 @@ public:
   using MetaSkeleton::cloneMetaSkeleton;
 
   // Documentation inherited
-  MetaSkeletonPtr cloneMetaSkeleton(
-      const std::string& cloneName) const override;
+  MetaSkeletonPtr clone(const std::string& cloneName) const override;
 
   /// Returns false if this Chain has been broken, or some new Branching has
   /// been added.

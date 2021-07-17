@@ -65,7 +65,7 @@ public:
       const std::string& _name, const MetaSkeletonPtr& _metaSkeleton);
 
   /// Destructor
-  virtual ~Group() = default;
+  ~Group() override = default;
 
   /// Creates and returns a clone of this Group.
   GroupPtr cloneGroup() const;
@@ -77,8 +77,7 @@ public:
   using MetaSkeleton::cloneMetaSkeleton;
 
   // Documentation inherited
-  MetaSkeletonPtr cloneMetaSkeleton(
-      const std::string& cloneName) const override;
+  MetaSkeletonPtr clone(const std::string& cloneName) const override;
 
   /// Swap the index of BodyNode _index1 with _index2
   void swapBodyNodeIndices(std::size_t _index1, std::size_t _index2);

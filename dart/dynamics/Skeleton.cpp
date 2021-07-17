@@ -433,13 +433,13 @@ Skeleton::~Skeleton()
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::clone() const
+MetaSkeletonPtr Skeleton::clone() const
 {
-  return cloneSkeleton(getName());
+  return clone(getName());
 }
 
 //==============================================================================
-SkeletonPtr Skeleton::clone(const std::string& cloneName) const
+MetaSkeletonPtr Skeleton::clone(const std::string& cloneName) const
 {
   return cloneSkeleton(cloneName);
 }
@@ -523,12 +523,6 @@ SkeletonPtr Skeleton::cloneSkeleton(const std::string& cloneName) const
   }
 
   return skelClone;
-}
-
-//==============================================================================
-MetaSkeletonPtr Skeleton::cloneMetaSkeleton(const std::string& cloneName) const
-{
-  return cloneSkeleton(cloneName);
 }
 
 //==============================================================================

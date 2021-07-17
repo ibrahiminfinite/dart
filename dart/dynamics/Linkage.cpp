@@ -531,7 +531,7 @@ LinkagePtr Linkage::cloneLinkage(const std::string& cloneName) const
 }
 
 //==============================================================================
-MetaSkeletonPtr Linkage::cloneMetaSkeleton(const std::string& cloneName) const
+MetaSkeletonPtr Linkage::clone(const std::string& cloneName) const
 {
   return cloneLinkage(cloneName);
 }
