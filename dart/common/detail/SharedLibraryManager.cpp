@@ -32,11 +32,11 @@
 
 #include "dart/common/detail/SharedLibraryManager.hpp"
 
-#include <filesystem>
 #include <fstream>
 
 #include "dart/common/Console.hpp"
 #include "dart/common/SharedLibrary.hpp"
+#include "dart/common/filesystem.hpp"
 
 namespace dart {
 namespace common {
