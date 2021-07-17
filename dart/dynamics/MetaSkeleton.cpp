@@ -1069,18 +1069,6 @@ double MetaSkeleton::computeLagrangian() const
 }
 
 //==============================================================================
-double MetaSkeleton::getKineticEnergy() const
-{
-  return computeKineticEnergy();
-}
-
-//==============================================================================
-double MetaSkeleton::getPotentialEnergy() const
-{
-  return computePotentialEnergy();
-}
-
-//==============================================================================
 MetaSkeleton::MetaSkeleton() : onNameChanged(mNameChangedSignal)
 {
   // Do nothing
