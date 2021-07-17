@@ -33,10 +33,11 @@
 #ifndef DART_IO_MJCF_DETAIL_JOINTATTRIBUTES_HPP_
 #define DART_IO_MJCF_DETAIL_JOINTATTRIBUTES_HPP_
 
+#include <optional>
+
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
-#include "dart/common/Optional.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Types.hpp"
 
@@ -46,7 +47,7 @@ namespace MjcfParser {
 namespace detail {
 
 struct JointAttributes final {
-  common::optional<std::string> mName;
+  std::optional<std::string> mName;
 
   JointType mType{JointType::HINGE};
 

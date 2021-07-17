@@ -33,10 +33,11 @@
 #ifndef DART_IO_MJCF_DETAIL_WELDATTRIBUTES_HPP_
 #define DART_IO_MJCF_DETAIL_WELDATTRIBUTES_HPP_
 
+#include <optional>
+
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
-#include "dart/common/Optional.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 
 namespace dart {
@@ -45,12 +46,12 @@ namespace MjcfParser {
 namespace detail {
 
 struct WeldAttributes final {
-  common::optional<std::string> mName;
+  std::optional<std::string> mName;
   bool mActive{true};
   Eigen::Vector2d mSolRef;
   Eigen::Matrix<double, 5, 1> mSolImp;
   std::string mBody1;
-  common::optional<std::string> mBody2;
+  std::optional<std::string> mBody2;
   Eigen::Matrix<double, 7, 1> mRelPose;
 
   WeldAttributes();

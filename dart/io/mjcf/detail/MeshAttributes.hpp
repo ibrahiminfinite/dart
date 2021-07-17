@@ -33,10 +33,11 @@
 #ifndef DART_IO_MJCF_DETAIL_MESHATTRIBUTES_HPP_
 #define DART_IO_MJCF_DETAIL_MESHATTRIBUTES_HPP_
 
+#include <optional>
+
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
-#include "dart/common/Optional.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 
 namespace dart {
@@ -48,9 +49,9 @@ namespace detail {
 /// http://www.mujoco.org/book/XMLreference.html#mesh
 struct MeshAttributes final {
   /// Name of the Asset
-  common::optional<std::string> mName;
+  std::optional<std::string> mName;
 
-  common::optional<std::string> mFile;
+  std::optional<std::string> mFile;
 
   Eigen::Vector3d mScale{Eigen::Vector3d::Ones()};
 };
