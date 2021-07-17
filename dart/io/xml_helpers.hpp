@@ -30,84 +30,55 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_IO_XMLHELPERS_HPP_
-#define DART_IO_XMLHELPERS_HPP_
+#pragma once
 
 #include <string>
 
 #include <Eigen/Dense>
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 #include <tinyxml2.h>
 
 #include "dart/common/Console.hpp"
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/math/MathTypes.hpp"
+#include "dart/math/type.hpp"
 
 namespace dart {
 namespace io {
 
-std::string toString(bool v);
-std::string toString(int v);
-std::string toString(unsigned int v);
-std::string toString(float v);
-std::string toString(double v);
-std::string toString(char v);
-std::string toString(const Eigen::Vector2d& v);
-std::string toString(const Eigen::Vector3d& v);
-std::string toString(const Eigen::Vector3i& v);
-std::string toString(const Eigen::Vector6d& v);
-std::string toString(const Eigen::VectorXd& v);
-std::string toString(const Eigen::Isometry3d& v);
+template <typename S, int N>
+std::string to_string(const math::Vector<S, N>& v);
 
-bool toBool(const std::string& str);
-int toInt(const std::string& str);
-unsigned int toUInt(const std::string& str);
-float toFloat(const std::string& str);
-double toDouble(const std::string& str);
-char toChar(const std::string& str);
-Eigen::Vector2d toVector2d(const std::string& str);
-Eigen::Vector2i toVector2i(const std::string& str);
-Eigen::Vector3d toVector3d(const std::string& str);
-Eigen::Vector3i toVector3i(const std::string& str);
-Eigen::Vector4d toVector4d(const std::string& str);
-Eigen::Vector6d toVector6d(const std::string& str);
-Eigen::VectorXd toVectorXd(const std::string& str);
-template <std::size_t N>
-Eigen::Matrix<double, N, 1> toVectorNd(const std::string& str)
-{
-  Eigen::Matrix<double, N, 1> ret = Eigen::Matrix<double, N, 1>::Zero();
+template <typename S>
+std::string to_string(
+    const math::Isometry3<S>& v,
+    const std::string& rotation_type = "intrinsic");
 
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  std::size_t sizeToRead = std::min(N, pieces.size());
-  if (pieces.size() < N) {
-    dterr << "Failed to read a vector because the dimension '" << pieces.size()
-          << "' is less than the expectation '" << N << "'.\n";
-  } else if (pieces.size() > N) {
-    dterr << "Failed to read a vector because the dimension '" << pieces.size()
-          << "' is greater than the expectation '" << N << "'.\n";
-  }
+template <typename S, int N>
+math::Vector<S, N> to_vector(const std::string& str);
 
-  for (std::size_t i = 0; i < sizeToRead; ++i) {
-    if (pieces[i] != "") {
-      try {
-        ret(i) = boost::lexical_cast<double>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        dterr << "value [" << pieces[i]
-              << "] is not a valid double for Eigen::Vector" << N << "d[" << i
-              << "]: " << e.what() << "\n";
-      }
-    }
-  }
+math::Vector2d to_vector2d(const std::string& str);
+math::Vector3d to_vector3d(const std::string& str);
+math::Vector4d to_vector4d(const std::string& str);
+math::Vector6d to_vector6d(const std::string& str);
 
-  return ret;
-}
-// TODO: The definition of _str is not clear for transform (see: #250)
-Eigen::Isometry3d toIsometry3d(const std::string& str);
-Eigen::Isometry3d toIsometry3dWithExtrinsicRotation(const std::string& str);
+math::Vector2i to_vector2i(const std::string& str);
+math::Vector3i to_vector3i(const std::string& str);
+
+template <typename S>
+math::VectorX<S> to_vector_x(const std::string& str);
+
+/// Converts string to isometry3
+///
+/// @param[in] str: String to convert. The expected format is an array of 6
+/// numbers distinguished by space. The first three numbers are for position,
+/// and the last three numbers are for orientation.
+/// @param[in] rotation_type: (optional) How to convert 3-D vector to a rotation
+/// matrix. Supported types are {intrinsic, extrinsic} where the default is
+/// intrinsic.
+template <typename S>
+math::Isometry3<S> to_isometry3(
+    const std::string& str, const std::string& rotation_type = "intrinsic");
+// TODO(JS): Change to return the success
 
 std::string getValueString(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
@@ -120,8 +91,6 @@ unsigned int getValueUInt(
 float getValueFloat(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
 double getValueDouble(
-    const tinyxml2::XMLElement* parentElement, const std::string& name);
-char getValueChar(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
 Eigen::Vector2d getValueVector2d(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
@@ -191,7 +160,7 @@ Eigen::Matrix<double, N, 1> getAttributeVectorNd(
     const tinyxml2::XMLElement* element, const std::string& attributeName)
 {
   const std::string val = getAttributeString(element, attributeName);
-  return toVectorNd<N>(val);
+  return to_vector<double, N>(val);
 }
 
 /// TemplatedElementEnumerator is a convenience class to help visiting all the
@@ -309,4 +278,4 @@ bool copyChildNodes(
 } // namespace io
 } // namespace dart
 
-#endif // #ifndef DART_IO_XMLHELPERS_HPP_
+#include "dart/io/detail/xml_helpers_impl.hpp"

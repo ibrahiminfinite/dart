@@ -45,7 +45,7 @@
 #include "dart/dynamics/dynamics.hpp"
 #include "dart/io/CompositeResourceRetriever.hpp"
 #include "dart/io/DartResourceRetriever.hpp"
-#include "dart/io/XmlHelpers.hpp"
+#include "dart/io/xml_helpers.hpp"
 
 #define SCALE_VSK 1.0e-3
 
@@ -331,7 +331,7 @@ double getParameter(
   if (found)
     return sign * result->second;
   else
-    return toDouble(paramNameOrValue);
+    return common::to_double(paramNameOrValue);
 }
 
 //==============================================================================

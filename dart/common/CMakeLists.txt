@@ -9,12 +9,20 @@
 # Set basic component settings
 set(project_name ${PROJECT_NAME})
 set(component_name common)
-set(link_libraries_public
-  Boost::boost
-  Boost::system
-  Boost::filesystem
-  Eigen3::Eigen
-)
+set(component_dependency_packages )
+set(link_libraries_public Eigen3::Eigen)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+  list(APPEND component_dependency_packages Boost)
+  list(APPEND link_libraries_public Boost::boost Boost::system Boost::filesystem)
+endif()
+
+if(TARGET fmt::fmt-header-only)
+  list(APPEND link_libraries_public fmt::fmt-header-only)
+elseif(TARGET fmt::fmt)
+  list(APPEND link_libraries_public fmt::fmt)
+else()
+  message(FATAL_ERROR "Failed to find fmt targets")
+endif()
 
 if(spdlog_FOUND)
   if(TARGET spdlog::spdlog_header_only)
@@ -73,7 +81,7 @@ dart_add_component(
   COMPONENT_DEPENDENCY_PACKAGES
     Boost Eigen3
   COMPONENT_OPTIONAL_DEPENDENCY_PACKAGES
-    spdlog
+    fmt spdlog
   TARGET_LINK_LIBRARIES_PUBLIC
     ${link_libraries_public}
   TARGET_LINK_LIBRARIES_PUBLIC_SKIP_CHECKING

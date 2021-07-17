@@ -31,7 +31,7 @@ dart_add_component(
   TARGET_COMPILE_FEATURES_PUBLIC
     cxx_std_17
   SUB_DIRECTORIES
-    sdf urdf mjcf
+    sdf urdf mjcf detail
   GENERATE_META_HEADER
   FORMAT_CODE
 )

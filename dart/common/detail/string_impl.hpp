@@ -30,52 +30,39 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/io/mjcf/detail/Equality.hpp"
+#pragma once
 
-#include "dart/io/xml_helpers.hpp"
+#include <fmt/format.h>
 
-namespace dart {
-namespace io {
-namespace MjcfParser {
-namespace detail {
+#include "dart/common/logging.hpp"
+#include "dart/common/string.hpp"
 
-//==============================================================================
-std::size_t Equality::getNumWelds() const
-{
-  return mWelds.size();
-}
+namespace dart::common {
 
 //==============================================================================
-const Weld& Equality::getWeld(std::size_t index) const
+template <typename S>
+S to_scalar(const std::string& str)
 {
-  return mWelds[index];
-}
-
-//==============================================================================
-Errors Equality::read(tinyxml2::XMLElement* element, const Defaults& defaults)
-{
-  Errors errors;
-
-  if (std::string(element->Name()) != "equality") {
-    errors.emplace_back(
-        ErrorCode::INCORRECT_ELEMENT_TYPE,
-        "Failed to find <Equality> from the provided element");
-    return errors;
+  if constexpr (std::is_same_v<S, bool>) {
+    return to_bool(str);
+  } else if constexpr (std::is_same_v<S, char>) {
+    return to_char(str);
+  } else if constexpr (std::is_same_v<S, int>) {
+    return to_int(str);
+  } else if constexpr (std::is_same_v<S, unsigned int>) {
+    return to_uint(str);
+  } else if constexpr (std::is_same_v<S, long>) {
+    return to_long(str);
+  } else if constexpr (std::is_same_v<S, long long>) {
+    return to_long_long(str);
+  } else if constexpr (std::is_same_v<S, float>) {
+    return to_float(str);
+  } else if constexpr (std::is_same_v<S, double>) {
+    return to_double(str);
+  } else {
+    DART_ERROR("Unsupported scalar type [{}] to convert to.", typeid(S).name());
+    return 0;
   }
-
-  // Read multiple <weld>
-  ElementEnumerator weldElements(element, "weld");
-  while (weldElements.next()) {
-    Weld weld = Weld();
-    const Errors bodyErrors = weld.read(weldElements.get(), defaults);
-    errors.insert(errors.end(), bodyErrors.begin(), bodyErrors.end());
-    mWelds.emplace_back(std::move(weld));
-  }
-
-  return errors;
 }
 
-} // namespace detail
-} // namespace MjcfParser
-} // namespace io
-} // namespace dart
+} // namespace dart::common

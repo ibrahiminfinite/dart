@@ -32,7 +32,7 @@
 
 #include "dart/io/mjcf/detail/WeldAttributes.hpp"
 
-#include "dart/io/XmlHelpers.hpp"
+#include "dart/io/xml_helpers.hpp"
 
 namespace dart {
 namespace io {

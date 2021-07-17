@@ -55,7 +55,7 @@ std::shared_ptr<SharedLibrary> SharedLibraryManager::load(
   }
 
   // Convert the given path to the canonical path
-  const auto canonicalPath = std::filesystem::canonical(path).string();
+  const auto canonicalPath = common::filesystem::canonical(path).string();
 
   const auto iter = mSharedLibraries.find(canonicalPath);
 

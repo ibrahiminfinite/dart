@@ -32,8 +32,8 @@
 
 #include "dart/io/mjcf/detail/GeomAttributes.hpp"
 
-#include "dart/io/XmlHelpers.hpp"
 #include "dart/io/mjcf/detail/Utils.hpp"
+#include "dart/io/xml_helpers.hpp"
 
 namespace dart {
 namespace io {

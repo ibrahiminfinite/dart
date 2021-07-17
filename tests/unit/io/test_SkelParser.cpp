@@ -40,6 +40,7 @@
 #include "dart/test/math/GTestUtils.hpp"
 
 using namespace dart;
+using namespace common;
 using namespace math;
 using namespace dynamics;
 using namespace simulation;
@@ -61,31 +62,32 @@ TEST(SkelParser, DataStructure)
   Eigen::VectorXd valVectorXd = Eigen::VectorXd::Random(10);
   Eigen::Isometry3d valIsometry3d = Eigen::Isometry3d::Identity();
 
-  std::string strBool = toString(valBool);
-  std::string strInt = toString(valInt);
-  std::string strUInt = toString(valUInt);
-  std::string strFloat = toString(valFloat);
-  std::string strDouble = toString(valDouble);
-  std::string strChar = toString(valChar);
-  std::string strVector2d = toString(valVector2d);
-  std::string strVector3d = toString(valVector3d);
-  std::string strVector3i = toString(valVector3i);
-  std::string strVector6d = toString(valVector6d);
-  std::string strVectorXd = toString(valVectorXd);
-  std::string strIsometry3d = toString(valIsometry3d);
+  std::string strBool = to_string(valBool);
+  std::string strInt = to_string(valInt);
+  std::string strUInt = to_string(valUInt);
+  std::string strFloat = to_string(valFloat);
+  std::string strDouble = to_string(valDouble);
+  std::string strChar = to_string(valChar);
+  std::string strVector2d = to_string(valVector2d);
+  std::string strVector3d = to_string(valVector3d);
+  std::string strVector3i = to_string(valVector3i);
+  std::string strVector6d = to_string(valVector6d);
+  std::string strVectorXd = to_string(valVectorXd);
+  std::string strIsometry3d = to_string(valIsometry3d);
 
-  EXPECT_EQ(valBool, toBool(strBool));
-  EXPECT_EQ(valInt, toInt(strInt));
-  EXPECT_EQ(valUInt, toUInt(strUInt));
-  EXPECT_EQ(valFloat, toFloat(strFloat));
-  EXPECT_EQ(valDouble, toDouble(strDouble));
-  EXPECT_EQ(valChar, toChar(strChar));
-  EXPECT_VECTOR_DOUBLE_EQ(valVector2d, toVector2d(strVector2d));
-  EXPECT_VECTOR_DOUBLE_EQ(valVector3d, toVector3d(strVector3d));
-  EXPECT_VECTOR_DOUBLE_EQ(valVector3i, toVector3i(strVector3i));
-  EXPECT_VECTOR_DOUBLE_EQ(valVector6d, toVector6d(strVector6d));
-  EXPECT_VECTOR_DOUBLE_EQ(valVectorXd, toVectorXd(strVectorXd));
-  EXPECT_TRANSFORM_DOUBLE_EQ(valIsometry3d, toIsometry3d(strIsometry3d));
+  EXPECT_EQ(valBool, to_bool(strBool));
+  EXPECT_EQ(valInt, to_int(strInt));
+  EXPECT_EQ(valUInt, to_uint(strUInt));
+  EXPECT_EQ(valFloat, to_float(strFloat));
+  EXPECT_EQ(valDouble, to_double(strDouble));
+  EXPECT_EQ(valChar, to_char(strChar));
+  EXPECT_VECTOR_DOUBLE_EQ(valVector2d, to_vector2d(strVector2d));
+  EXPECT_VECTOR_DOUBLE_EQ(valVector3d, to_vector3d(strVector3d));
+  EXPECT_VECTOR_DOUBLE_EQ(valVector3i, to_vector3i(strVector3i));
+  EXPECT_VECTOR_DOUBLE_EQ(valVector6d, to_vector6d(strVector6d));
+  EXPECT_VECTOR_DOUBLE_EQ(valVectorXd, to_vector_x<double>(strVectorXd));
+  EXPECT_TRANSFORM_DOUBLE_EQ(
+      valIsometry3d, to_isometry3<double>(strIsometry3d));
 }
 
 //==============================================================================

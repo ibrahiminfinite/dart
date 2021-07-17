@@ -75,7 +75,7 @@
 #include "dart/dynamics/fcl/FCLCollisionDetector.hpp"
 #include "dart/io/CompositeResourceRetriever.hpp"
 #include "dart/io/DartResourceRetriever.hpp"
-#include "dart/io/XmlHelpers.hpp"
+#include "dart/io/xml_helpers.hpp"
 
 namespace dart {
 namespace io {
@@ -680,7 +680,7 @@ simulation::WorldPtr readWorld(
     timeStepElement = physicsElement->FirstChildElement("time_step");
     if (timeStepElement != nullptr) {
       std::string strTimeStep = timeStepElement->GetText();
-      double timeStep = toDouble(strTimeStep);
+      double timeStep = common::to_double(strTimeStep);
       newWorld->setTimeStep(timeStep);
     }
 
@@ -689,7 +689,7 @@ simulation::WorldPtr readWorld(
     gravityElement = physicsElement->FirstChildElement("gravity");
     if (gravityElement != nullptr) {
       std::string strGravity = gravityElement->GetText();
-      Eigen::Vector3d gravity = toVector3d(strGravity);
+      Eigen::Vector3d gravity = to_vector<double, 3>(strGravity);
       newWorld->setGravity(gravity);
     }
 
@@ -940,7 +940,7 @@ dynamics::SkeletonPtr readSkeleton(
   tinyxml2::XMLElement* mobileElement = nullptr;
   mobileElement = _skeletonElement->FirstChildElement("mobile");
   if (mobileElement != nullptr) {
-    newSkeleton->setMobile(toBool(mobileElement->GetText()));
+    newSkeleton->setMobile(common::to_bool(mobileElement->GetText()));
   }
 
   //--------------------------------------------------------------------------

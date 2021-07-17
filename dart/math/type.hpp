@@ -86,6 +86,27 @@ using Vector5 = Vector<S, 5>;
 template <typename S>
 using Vector6 = Vector<S, 6>;
 
+using Vector2i = Vector2<int>;
+using Vector3i = Vector3<int>;
+using Vector4i = Vector4<int>;
+using Vector5i = Vector5<int>;
+using Vector6i = Vector6<int>;
+using VectorXi = VectorX<int>;
+
+using Vector2f = Vector2<float>;
+using Vector3f = Vector3<float>;
+using Vector4f = Vector4<float>;
+using Vector5f = Vector5<float>;
+using Vector6f = Vector6<float>;
+using VectorXf = VectorX<float>;
+
+using Vector2d = Vector2<double>;
+using Vector3d = Vector3<double>;
+using Vector4d = Vector4<double>;
+using Vector5d = Vector5<double>;
+using Vector6d = Vector6<double>;
+using VectorXd = VectorX<double>;
+
 template <typename S>
 using Quaternion = Eigen::Quaternion<S>;
 
@@ -94,3 +115,5 @@ using Isometry3 = Eigen::Transform<S, 3, Eigen::Isometry>;
 
 } // namespace math
 } // namespace dart
+
+#include "dart/math/detail/type_impl.hpp"

@@ -32,10 +32,10 @@
 
 #include "dart/io/mjcf/detail/Worldbody.hpp"
 
-#include "dart/io/XmlHelpers.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Size.hpp"
 #include "dart/io/mjcf/detail/Utils.hpp"
+#include "dart/io/xml_helpers.hpp"
 
 namespace dart {
 namespace io {

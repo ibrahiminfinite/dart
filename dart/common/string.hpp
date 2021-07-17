@@ -30,52 +30,55 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/io/mjcf/detail/Equality.hpp"
+#pragma once
 
-#include "dart/io/xml_helpers.hpp"
+#include <string>
 
-namespace dart {
-namespace io {
-namespace MjcfParser {
-namespace detail {
+#include "dart/config.hpp"
 
-//==============================================================================
-std::size_t Equality::getNumWelds() const
-{
-  return mWelds.size();
-}
+namespace dart::common {
 
-//==============================================================================
-const Weld& Equality::getWeld(std::size_t index) const
-{
-  return mWelds[index];
-}
+std::string to_upper(std::string str);
+void to_upper_in_place(std::string& str);
+std::string to_lower(std::string str);
+void to_lower_in_place(std::string& str);
 
-//==============================================================================
-Errors Equality::read(tinyxml2::XMLElement* element, const Defaults& defaults)
-{
-  Errors errors;
+std::string trim(
+    const std::string& s, const std::string& whitespaces = " \n\r\t");
 
-  if (std::string(element->Name()) != "equality") {
-    errors.emplace_back(
-        ErrorCode::INCORRECT_ELEMENT_TYPE,
-        "Failed to find <Equality> from the provided element");
-    return errors;
-  }
+std::string trim_left(
+    const std::string& s, const std::string& whitespaces = " \n\r\t");
 
-  // Read multiple <weld>
-  ElementEnumerator weldElements(element, "weld");
-  while (weldElements.next()) {
-    Weld weld = Weld();
-    const Errors bodyErrors = weld.read(weldElements.get(), defaults);
-    errors.insert(errors.end(), bodyErrors.begin(), bodyErrors.end());
-    mWelds.emplace_back(std::move(weld));
-  }
+std::string trim_right(
+    const std::string& s, const std::string& whitespaces = " \n\r\t");
 
-  return errors;
-}
+std::vector<std::string> split(
+    const std::string& s, const std::string& delims = " ");
 
-} // namespace detail
-} // namespace MjcfParser
-} // namespace io
-} // namespace dart
+std::string to_string(bool v);
+std::string to_string(char v);
+std::string to_string(int v);
+std::string to_string(long v);
+std::string to_string(long long v);
+std::string to_string(unsigned v);
+std::string to_string(unsigned long v);
+std::string to_string(unsigned long long v);
+std::string to_string(float v);
+std::string to_string(double v);
+std::string to_string(long double v);
+
+bool to_bool(const std::string& str);
+char to_char(const std::string& str);
+int to_int(const std::string& str);
+unsigned int to_uint(const std::string& str);
+long to_long(const std::string& str);
+long long to_long_long(const std::string& str);
+float to_float(const std::string& str);
+double to_double(const std::string& str);
+
+template <typename S>
+S to_scalar(const std::string& str);
+
+} // namespace dart::common
+
+#include "dart/common/detail/string_impl.hpp"

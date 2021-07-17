@@ -30,52 +30,19 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/io/mjcf/detail/Equality.hpp"
+#pragma once
 
-#include "dart/io/xml_helpers.hpp"
+#include <sstream>
+
+#include "dart/common/logging.hpp"
+#include "dart/common/string.hpp"
+#include "dart/math/Geometry.hpp"
+#include "dart/math/type.hpp"
 
 namespace dart {
-namespace io {
-namespace MjcfParser {
-namespace detail {
+namespace math {
 
 //==============================================================================
-std::size_t Equality::getNumWelds() const
-{
-  return mWelds.size();
-}
 
-//==============================================================================
-const Weld& Equality::getWeld(std::size_t index) const
-{
-  return mWelds[index];
-}
-
-//==============================================================================
-Errors Equality::read(tinyxml2::XMLElement* element, const Defaults& defaults)
-{
-  Errors errors;
-
-  if (std::string(element->Name()) != "equality") {
-    errors.emplace_back(
-        ErrorCode::INCORRECT_ELEMENT_TYPE,
-        "Failed to find <Equality> from the provided element");
-    return errors;
-  }
-
-  // Read multiple <weld>
-  ElementEnumerator weldElements(element, "weld");
-  while (weldElements.next()) {
-    Weld weld = Weld();
-    const Errors bodyErrors = weld.read(weldElements.get(), defaults);
-    errors.insert(errors.end(), bodyErrors.begin(), bodyErrors.end());
-    mWelds.emplace_back(std::move(weld));
-  }
-
-  return errors;
-}
-
-} // namespace detail
-} // namespace MjcfParser
-} // namespace io
+} // namespace math
 } // namespace dart

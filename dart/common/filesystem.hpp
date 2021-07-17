@@ -32,10 +32,22 @@
 
 #pragma once
 
+#include "dart/common/Platform.hpp"
 #include "dart/config.hpp"
 
+#if DART_OS_MACOS
+
+  #include <boost/filesystem.hpp>
+
+namespace dart {
+namespace common {
+namespace filesystem = ::boost::filesystem;
+using error_code = ::boost::system::error_code;
+} // namespace common
+} // namespace dart
+
 // We haven't checked which filesystem to include yet
-#ifndef DART_INCLUDE_STD_FILESYSTEM_EXPERIMENTAL
+#elif !defined(DART_INCLUDE_STD_FILESYSTEM_EXPERIMENTAL)
 
   // Check for feature test macro for <filesystem>
   #if defined(__cpp_lib_filesystem)
@@ -93,15 +105,25 @@
     // Include it
     #include <experimental/filesystem>
 
-// We need the alias from std::experimental::filesystem to std::filesystem
-namespace std {
-namespace filesystem = experimental::filesystem;
-}
+namespace dart {
+namespace common {
+namespace filesystem = ::std::experimental::filesystem;
+using error_code = ::std::error_code;
+} // namespace common
+} // namespace dart
 
   // We have a decent compiler and can use the normal version
   #else
     // Include it
     #include <filesystem>
+
+namespace dart {
+namespace common {
+namespace filesystem = ::std::filesystem;
+using error_code = ::std::error_code;
+} // namespace common
+} // namespace dart
+
   #endif
 
 #endif // #ifndef DART_INCLUDE_STD_FILESYSTEM_EXPERIMENTAL

@@ -30,384 +30,54 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/io/XmlHelpers.hpp"
+#include "dart/io/xml_helpers.hpp"
 
 #include <iostream>
 #include <vector>
 
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
-
 #include "dart/common/Console.hpp"
 #include "dart/common/LocalResourceRetriever.hpp"
+#include "dart/common/string.hpp"
 #include "dart/math/Geometry.hpp"
+#include "dart/math/type.hpp"
 
 namespace dart {
 namespace io {
 
 //==============================================================================
-std::string toString(bool v)
+math::Vector2d to_vector2d(const std::string& str)
 {
-  return boost::lexical_cast<std::string>(v);
+  return to_vector<double, 2>(str);
 }
 
 //==============================================================================
-std::string toString(int v)
+math::Vector3d to_vector3d(const std::string& str)
 {
-  return boost::lexical_cast<std::string>(v);
+  return to_vector<double, 3>(str);
 }
 
 //==============================================================================
-std::string toString(unsigned int v)
+math::Vector4d to_vector4d(const std::string& str)
 {
-  return boost::lexical_cast<std::string>(v);
+  return to_vector<double, 4>(str);
 }
 
 //==============================================================================
-std::string toString(float v)
+math::Vector6d to_vector6d(const std::string& str)
 {
-  return boost::lexical_cast<std::string>(v);
+  return to_vector<double, 6>(str);
 }
 
 //==============================================================================
-std::string toString(double v)
+math::Vector2i to_vector2i(const std::string& str)
 {
-  return boost::lexical_cast<std::string>(v);
+  return to_vector<int, 2>(str);
 }
 
 //==============================================================================
-std::string toString(char v)
+math::Vector3i to_vector3i(const std::string& str)
 {
-  return boost::lexical_cast<std::string>(v);
-}
-
-//==============================================================================
-std::string toString(const Eigen::Vector2d& v)
-{
-  return boost::lexical_cast<std::string>(v.transpose());
-}
-
-//==============================================================================
-std::string toString(const Eigen::Vector3d& v)
-{
-  return boost::lexical_cast<std::string>(v.transpose());
-}
-
-//==============================================================================
-std::string toString(const Eigen::Vector3i& v)
-{
-  return boost::lexical_cast<std::string>(v.transpose());
-}
-
-//==============================================================================
-std::string toString(const Eigen::Vector6d& v)
-{
-  return boost::lexical_cast<std::string>(v.transpose());
-}
-
-//==============================================================================
-std::string toString(const Eigen::VectorXd& v)
-{
-  return boost::lexical_cast<std::string>(v.transpose());
-}
-
-//==============================================================================
-std::string toString(const Eigen::Isometry3d& v)
-{
-  std::ostringstream ostr;
-  ostr.precision(6);
-
-  Eigen::Vector3d xyz = math::matrixToEulerXYZ(v.linear());
-
-  ostr << v.translation()(0) << " " << v.translation()(1) << " "
-       << v.translation()(2) << " ";
-  ostr << xyz[0] << " " << xyz[1] << " " << xyz[2];
-
-  return ostr.str();
-}
-
-//==============================================================================
-bool toBool(const std::string& str)
-{
-  if (boost::to_upper_copy(str) == "TRUE" || str == "1")
-    return true;
-  else if (boost::to_upper_copy(str) == "FALSE" || str == "0")
-    return false;
-  else {
-    dterr << "value [" << str << "] is not a valid boolean type. "
-          << "Retuning false." << std::endl;
-    return false;
-  }
-}
-
-//==============================================================================
-int toInt(const std::string& str)
-{
-  return boost::lexical_cast<int>(str);
-}
-
-//==============================================================================
-unsigned int toUInt(const std::string& str)
-{
-  return boost::lexical_cast<unsigned int>(str);
-}
-
-//==============================================================================
-float toFloat(const std::string& str)
-{
-  return boost::lexical_cast<float>(str);
-}
-
-//==============================================================================
-double toDouble(const std::string& str)
-{
-  return boost::lexical_cast<double>(str);
-}
-//==============================================================================
-char toChar(const std::string& str)
-{
-  return boost::lexical_cast<char>(str);
-}
-
-//==============================================================================
-Eigen::Vector2d toVector2d(const std::string& str)
-{
-  Eigen::Vector2d ret;
-
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() == 2);
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        ret(i) = boost::lexical_cast<double>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid double for Eigen::Vector2d[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  return ret;
-}
-
-//==============================================================================
-Eigen::Vector2i toVector2i(const std::string& str)
-{
-  Eigen::Vector2i ret;
-
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() == 2);
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        ret(i) = boost::lexical_cast<int>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid double for Eigen::Vector2i[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  return ret;
-}
-
-//==============================================================================
-Eigen::Vector3d toVector3d(const std::string& str)
-{
-  Eigen::Vector3d ret;
-
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() == 3);
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        ret(i) = boost::lexical_cast<double>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid double for Eigen::Vector3d[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  return ret;
-}
-
-//==============================================================================
-Eigen::Vector3i toVector3i(const std::string& str)
-{
-  Eigen::Vector3i ret;
-
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() == 3);
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        ret(i) = boost::lexical_cast<int>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid int for Eigen::Vector3i[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  return ret;
-}
-
-//==============================================================================
-Eigen::Vector4d toVector4d(const std::string& str)
-{
-  Eigen::Vector4d ret;
-
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() == 4);
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        ret(i) = boost::lexical_cast<double>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid double for Eigen::Vector4d[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  return ret;
-}
-
-//==============================================================================
-Eigen::Vector6d toVector6d(const std::string& str)
-{
-  Eigen::Vector6d ret;
-
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() == 6);
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        ret(i) = boost::lexical_cast<double>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid double for Eigen::Vector6d[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  return ret;
-}
-
-//==============================================================================
-Eigen::VectorXd toVectorXd(const std::string& str)
-{
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() > 0);
-
-  Eigen::VectorXd ret(pieces.size());
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        ret(i) = boost::lexical_cast<double>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid double for Eigen::VectorXd[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  return ret;
-}
-
-//==============================================================================
-Eigen::Isometry3d toIsometry3d(const std::string& str)
-{
-  Eigen::Isometry3d T = Eigen::Isometry3d::Identity();
-  Eigen::Vector6d elements = Eigen::Vector6d::Zero();
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() == 6);
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        elements(i) = boost::lexical_cast<double>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid double for SE3[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  T.linear() = math::eulerXYZToMatrix(elements.tail<3>());
-  T.translation() = elements.head<3>();
-  return T;
-}
-
-//==============================================================================
-Eigen::Isometry3d toIsometry3dWithExtrinsicRotation(const std::string& str)
-{
-  Eigen::Isometry3d T = Eigen::Isometry3d::Identity();
-  Eigen::Vector6d elements = Eigen::Vector6d::Zero();
-  std::vector<std::string> pieces;
-  std::string trimedStr = boost::trim_copy(str);
-  boost::split(
-      pieces, trimedStr, boost::is_any_of(" "), boost::token_compress_on);
-  assert(pieces.size() == 6);
-
-  for (std::size_t i = 0; i < pieces.size(); ++i) {
-    if (pieces[i] != "") {
-      try {
-        elements(i) = boost::lexical_cast<double>(pieces[i].c_str());
-      } catch (boost::bad_lexical_cast& e) {
-        std::cerr << "value [" << pieces[i]
-                  << "] is not a valid double for SE3[" << i
-                  << "]: " << e.what() << std::endl;
-      }
-    }
-  }
-
-  Eigen::Vector3d reverseEulerAngles(
-      elements.tail<3>()[2], elements.tail<3>()[1], elements.tail<3>()[0]);
-
-  T.linear() = math::eulerZYXToMatrix(reverseEulerAngles);
-  T.translation() = elements.head<3>();
-  return T;
+  return to_vector<int, 3>(str);
 }
 
 //==============================================================================
@@ -429,18 +99,9 @@ bool getValueBool(
   assert(parentElement != nullptr);
   assert(!name.empty());
 
-  std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
-
-  if (boost::to_upper_copy(str) == "TRUE" || str == "1")
-    return true;
-  else if (boost::to_upper_copy(str) == "FALSE" || str == "0")
-    return false;
-  else {
-    std::cerr << "value [" << str << "] is not a valid boolean type. "
-              << "Returning false." << std::endl;
-    assert(0);
-    return false;
-  }
+  const std::string str
+      = parentElement->FirstChildElement(name.c_str())->GetText();
+  return common::to_bool(str);
 }
 
 //==============================================================================
@@ -452,7 +113,7 @@ int getValueInt(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toInt(str);
+  return common::to_int(str);
 }
 
 //==============================================================================
@@ -464,7 +125,7 @@ unsigned int getValueUInt(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toUInt(str);
+  return common::to_uint(str);
 }
 
 //==============================================================================
@@ -476,7 +137,7 @@ float getValueFloat(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toFloat(str);
+  return common::to_float(str);
 }
 
 //==============================================================================
@@ -488,19 +149,7 @@ double getValueDouble(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toDouble(str);
-}
-
-//==============================================================================
-char getValueChar(
-    const tinyxml2::XMLElement* parentElement, const std::string& name)
-{
-  assert(parentElement != nullptr);
-  assert(!name.empty());
-
-  std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
-
-  return toChar(str);
+  return common::to_double(str);
 }
 
 //==============================================================================
@@ -512,7 +161,7 @@ Eigen::Vector2d getValueVector2d(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toVector2d(str);
+  return to_vector2d(str);
 }
 
 //==============================================================================
@@ -524,7 +173,7 @@ Eigen::Vector3d getValueVector3d(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toVector3d(str);
+  return to_vector3d(str);
 }
 
 //==============================================================================
@@ -536,7 +185,7 @@ Eigen::Vector3i getValueVector3i(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toVector3i(str);
+  return to_vector3i(str);
 }
 
 //==============================================================================
@@ -548,7 +197,7 @@ Eigen::Vector6d getValueVector6d(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toVector6d(str);
+  return to_vector6d(str);
 }
 
 //==============================================================================
@@ -560,7 +209,7 @@ Eigen::VectorXd getValueVectorXd(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toVectorXd(str);
+  return to_vector_x<double>(str);
 }
 
 //==============================================================================
@@ -572,7 +221,7 @@ Eigen::Vector3d getValueVec3(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toVector3d(str);
+  return to_vector3d(str);
 }
 
 //==============================================================================
@@ -584,7 +233,7 @@ Eigen::Isometry3d getValueIsometry3d(
 
   std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toIsometry3d(str);
+  return to_isometry3<double>(str);
 }
 
 //==============================================================================
@@ -594,9 +243,10 @@ Eigen::Isometry3d getValueIsometry3dWithExtrinsicRotation(
   assert(parentElement != nullptr);
   assert(!name.empty());
 
-  std::string str = parentElement->FirstChildElement(name.c_str())->GetText();
+  const std::string str
+      = parentElement->FirstChildElement(name.c_str())->GetText();
 
-  return toIsometry3dWithExtrinsicRotation(str);
+  return to_isometry3<double>(str, "extrinsic");
 }
 
 //==============================================================================
@@ -834,7 +484,7 @@ char getAttributeChar(
 {
   const std::string val = getAttributeString(element, attributeName);
 
-  return toChar(val);
+  return common::to_char(val);
 }
 
 //==============================================================================
@@ -843,7 +493,7 @@ Eigen::Vector2i getAttributeVector2i(
 {
   const std::string val = getAttributeString(element, attributeName);
 
-  return toVector2i(val);
+  return to_vector2i(val);
 }
 
 //==============================================================================
@@ -852,7 +502,7 @@ Eigen::Vector2d getAttributeVector2d(
 {
   const std::string val = getAttributeString(element, attributeName);
 
-  return toVector2d(val);
+  return to_vector2d(val);
 }
 
 //==============================================================================
@@ -861,7 +511,7 @@ Eigen::Vector3d getAttributeVector3d(
 {
   const std::string val = getAttributeString(element, attributeName);
 
-  return toVector3d(val);
+  return to_vector3d(val);
 }
 
 //==============================================================================
@@ -870,7 +520,7 @@ Eigen::Vector4d getAttributeVector4d(
 {
   const std::string val = getAttributeString(element, attributeName);
 
-  return toVector4d(val);
+  return to_vector4d(val);
 }
 
 //==============================================================================
@@ -879,7 +529,7 @@ Eigen::Vector6d getAttributeVector6d(
 {
   const std::string val = getAttributeString(element, attributeName);
 
-  return toVector6d(val);
+  return to_vector6d(val);
 }
 
 //==============================================================================
@@ -888,7 +538,7 @@ Eigen::VectorXd getAttributeVectorXd(
 {
   const std::string val = getAttributeString(element, attributeName);
 
-  return toVectorXd(val);
+  return to_vector_x<double>(val);
 }
 
 //==============================================================================

@@ -63,7 +63,7 @@
 #include "dart/io/CompositeResourceRetriever.hpp"
 #include "dart/io/DartResourceRetriever.hpp"
 #include "dart/io/SkelParser.hpp"
-#include "dart/io/XmlHelpers.hpp"
+#include "dart/io/xml_helpers.hpp"
 #include "dart/simulation/World.hpp"
 
 namespace dart {

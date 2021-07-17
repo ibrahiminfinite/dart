@@ -32,9 +32,9 @@
 
 #include "dart/io/mjcf/detail/Site.hpp"
 
-#include "dart/io/XmlHelpers.hpp"
 #include "dart/io/mjcf/detail/Body.hpp"
 #include "dart/io/mjcf/detail/Utils.hpp"
+#include "dart/io/xml_helpers.hpp"
 
 namespace dart {
 namespace io {
