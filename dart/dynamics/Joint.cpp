@@ -337,21 +337,9 @@ const Eigen::Vector6d& Joint::getRelativePrimaryAcceleration() const
 }
 
 //==============================================================================
-void Joint::setPositionLimitEnforced(bool enforced)
-{
-  setLimitEnforcement(enforced);
-}
-
-//==============================================================================
 void Joint::setLimitEnforcement(bool enforced)
 {
   mAspectProperties.mIsPositionLimitEnforced = enforced;
-}
-
-//==============================================================================
-bool Joint::isPositionLimitEnforced() const
-{
-  return areLimitsEnforced();
 }
 
 //==============================================================================

@@ -32,6 +32,8 @@
 
 #include "TerminalCondition.hpp"
 
+#include "dart/dynamics/dynamics.hpp"
+
 #include "State.hpp"
 
 // Macro for functions not implemented yet
@@ -74,8 +76,11 @@ bool TimerCondition::isSatisfied()
 }
 
 //==============================================================================
-BodyContactCondition::BodyContactCondition(State* _state, BodyNode* _body)
-  : TerminalCondition(_state), mBodyNode(_body)
+BodyContactCondition::BodyContactCondition(
+    State* _state, BodyNode* _body, ConstraintSolver* constraintSolver)
+  : TerminalCondition(_state),
+    mBodyNode(_body),
+    mConstraintSolver(constraintSolver)
 {
   assert(_state != nullptr);
   assert(_body != nullptr);
@@ -98,16 +103,12 @@ bool BodyContactCondition::isSatisfied()
     }
   }
 
-  // TODO(JS): Need more elegant condition check method
-  DART_SUPPRESS_DEPRECATED_BEGIN
-  if (mBodyNode->isColliding() > 0)
-    DART_SUPPRESS_DEPRECATED_END
-    {
-      //    dtmsg << "BodyNode [" << mBodyNode->getName() << "] is in contact."
-      //          << std::endl;
-      return true;
-    }
-  else {
+  const CollisionResult& result = mConstraintSolver->getLastCollisionResult();
+  if (result.inCollision(mBodyNode)) {
+    //    dtmsg << "BodyNode [" << mBodyNode->getName() << "] is in contact."
+    //          << std::endl;
+    return true;
+  } else {
     //    dtmsg << "Waiting for BodyNode [" << mBodyNode->getName()
     //          << "] is in contact."
     //          << std::endl;

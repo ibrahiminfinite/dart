@@ -76,11 +76,8 @@ void Linkage(py::module& m)
           },
           ::py::arg("cloneName"))
       .def(
-          "cloneMetaSkeleton",
-          +[](const dart::dynamics::Linkage* self,
-              const std::string& cloneName) -> dart::dynamics::MetaSkeletonPtr {
-            return self->cloneMetaSkeleton(cloneName);
-          },
+          "clone",
+          &dart::dynamics::Linkage::clone,
           ::py::arg("cloneName"))
       .def(
           "isAssembled",

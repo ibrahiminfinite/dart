@@ -49,17 +49,6 @@ namespace dart {
 namespace dynamics {
 
 //==============================================================================
-BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
-    double timeStep,
-    BoxedLcpSolverPtr boxedLcpSolver,
-    BoxedLcpSolverPtr secondaryBoxedLcpSolver)
-  : BoxedLcpConstraintSolver(
-      std::move(boxedLcpSolver), std::move(secondaryBoxedLcpSolver))
-{
-  setTimeStep(timeStep);
-}
-
-//==============================================================================
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver()
   : BoxedLcpConstraintSolver(std::make_shared<DantzigBoxedLcpSolver>())
 {

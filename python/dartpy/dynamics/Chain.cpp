@@ -129,11 +129,8 @@ void Chain(py::module& m)
           },
           ::py::arg("cloneName"))
       .def(
-          "cloneMetaSkeleton",
-          +[](const dart::dynamics::Chain* self,
-              const std::string& cloneName) -> dart::dynamics::MetaSkeletonPtr {
-            return self->cloneMetaSkeleton(cloneName);
-          },
+          "clone",
+          &dart::dynamics::Chain::clone,
           ::py::arg("cloneName"))
       .def(
           "isStillChain", +[](const dart::dynamics::Chain* self) -> bool {

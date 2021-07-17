@@ -56,13 +56,6 @@ namespace dart {
 namespace common {
 
 //==============================================================================
-std::shared_ptr<SharedLibrary> SharedLibrary::create(
-    const boost::filesystem::path& path)
-{
-  return create(path.string());
-}
-
-//==============================================================================
 std::shared_ptr<SharedLibrary> SharedLibrary::create(const std::string& path)
 {
   return detail::SharedLibraryManager::getSingleton().load(path);
@@ -70,16 +63,8 @@ std::shared_ptr<SharedLibrary> SharedLibrary::create(const std::string& path)
 
 //==============================================================================
 SharedLibrary::SharedLibrary(
-    ProtectedConstructionTag, const boost::filesystem::path& canonicalPath)
-  : SharedLibrary(ProtectedConstruction, canonicalPath.string())
-{
-  // Do nothing
-}
-
-//==============================================================================
-SharedLibrary::SharedLibrary(
     ProtectedConstructionTag, const std::string& canonicalPath)
-  : mCanonicalPath(canonicalPath), mPath(canonicalPath), mInstance(nullptr)
+  : mPath(canonicalPath), mInstance(nullptr)
 {
   mInstance = static_cast<DYNLIB_HANDLE>(DYNLIB_LOAD(canonicalPath.c_str()));
 
@@ -99,12 +84,6 @@ SharedLibrary::~SharedLibrary()
     dterr << "[SharedLibrary::~SharedLibrary] Failed to unload library '"
           << mPath << "': " << getLastError() << "\n";
   }
-}
-
-//==============================================================================
-const boost::filesystem::path& SharedLibrary::getCanonicalPath() const
-{
-  return mCanonicalPath;
 }
 
 //==============================================================================

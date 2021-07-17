@@ -48,11 +48,8 @@ void MetaSkeleton(py::module& m)
       dart::dynamics::MetaSkeleton,
       std::shared_ptr<dart::dynamics::MetaSkeleton>>(m, "MetaSkeleton")
       .def(
-          "cloneMetaSkeleton",
-          +[](const dart::dynamics::MetaSkeleton* self,
-              const std::string& cloneName) -> dart::dynamics::MetaSkeletonPtr {
-            return self->cloneMetaSkeleton(cloneName);
-          },
+          "clone",
+          &dart::dynamics::MetaSkeleton::clone,
           ::py::arg("cloneName"))
       .def(
           "cloneMetaSkeleton",

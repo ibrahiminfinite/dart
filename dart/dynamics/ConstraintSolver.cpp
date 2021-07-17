@@ -60,25 +60,6 @@ namespace dynamics {
 using namespace dynamics;
 
 //==============================================================================
-ConstraintSolver::ConstraintSolver(double timeStep)
-  : mCollisionDetector(dynamics::FCLCollisionDetector::create()),
-    mCollisionGroup(mCollisionDetector->createCollisionGroupAsSharedPtr()),
-    mCollisionOption(dynamics::CollisionOption(
-        true, 1000u, std::make_shared<dynamics::BodyNodeCollisionFilter>())),
-    mTimeStep(timeStep)
-{
-  assert(timeStep > 0.0);
-
-  auto cd = std::static_pointer_cast<dynamics::FCLCollisionDetector>(
-      mCollisionDetector);
-
-  cd->setPrimitiveShapeType(dynamics::FCLCollisionDetector::MESH);
-  // TODO(JS): Consider using FCL's primitive shapes once FCL addresses
-  // incorrect contact point computation.
-  // (see: https://github.com/flexible-collision-library/fcl/issues/106)
-}
-
-//==============================================================================
 ConstraintSolver::ConstraintSolver()
   : mCollisionDetector(dynamics::FCLCollisionDetector::create()),
     mCollisionGroup(mCollisionDetector->createCollisionGroupAsSharedPtr()),

@@ -140,12 +140,6 @@ public:
   /// Disconnect all the connections
   void disconnectAll();
 
-  /// Cleanup all the disconnected connections
-  DART_DEPRECATED(6.10)
-  void cleanupConnections();
-  // This explicit connection cleaning is no longer necessary because now a
-  // connection gets removed when it's disconnected.
-
   /// Get the number of connections
   std::size_t getNumConnections() const;
 
@@ -194,12 +188,6 @@ public:
 
   /// Disconnect all the connections
   void disconnectAll();
-
-  /// Cleanup all the disconnected connections
-  DART_DEPRECATED(6.10)
-  void cleanupConnections();
-  // This explicit connection cleaning is no longer necessary because now a
-  // connection gets removed when it's disconnected.
 
   /// Get the number of connections
   std::size_t getNumConnections() const;

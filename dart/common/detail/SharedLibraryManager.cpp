@@ -32,6 +32,7 @@
 
 #include "dart/common/detail/SharedLibraryManager.hpp"
 
+#include <filesystem>
 #include <fstream>
 
 #include "dart/common/Console.hpp"
@@ -40,13 +41,6 @@
 namespace dart {
 namespace common {
 namespace detail {
-
-//==============================================================================
-std::shared_ptr<SharedLibrary> SharedLibraryManager::load(
-    const boost::filesystem::path& path)
-{
-  return load(path.string());
-}
 
 //==============================================================================
 std::shared_ptr<SharedLibrary> SharedLibraryManager::load(
@@ -61,7 +55,7 @@ std::shared_ptr<SharedLibrary> SharedLibraryManager::load(
   }
 
   // Convert the given path to the canonical path
-  const auto canonicalPath = boost::filesystem::canonical(path).string();
+  const auto canonicalPath = std::filesystem::canonical(path).string();
 
   const auto iter = mSharedLibraries.find(canonicalPath);
 
@@ -85,7 +79,6 @@ std::shared_ptr<SharedLibrary> SharedLibraryManager::load(
     return nullptr;
 
   mSharedLibraries[canonicalPath] = newLib;
-  assert(canonicalPath == newLib->getCanonicalPath());
 
   return newLib;
 }
