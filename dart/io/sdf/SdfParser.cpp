@@ -230,13 +230,6 @@ common::ResourceRetrieverPtr getRetriever(
 } // anonymous namespace
 
 //==============================================================================
-simulation::WorldPtr readSdfFile(
-    const common::Uri& uri, const common::ResourceRetrieverPtr& nullOrRetriever)
-{
-  return readWorld(uri, nullOrRetriever);
-}
-
-//==============================================================================
 bool checkVersion(
     const tinyxml2::XMLElement& sdfElement, const common::Uri& uri)
 {
