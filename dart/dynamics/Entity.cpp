@@ -127,12 +127,6 @@ bool Entity::isFrame() const
 }
 
 //==============================================================================
-void Entity::notifyTransformUpdate()
-{
-  dirtyTransform();
-}
-
-//==============================================================================
 void Entity::dirtyTransform()
 {
   mNeedTransformUpdate = true;
@@ -149,12 +143,6 @@ bool Entity::needsTransformUpdate() const
 }
 
 //==============================================================================
-void Entity::notifyVelocityUpdate()
-{
-  dirtyVelocity();
-}
-
-//==============================================================================
 void Entity::dirtyVelocity()
 {
   mNeedVelocityUpdate = true;
@@ -168,12 +156,6 @@ void Entity::dirtyVelocity()
 bool Entity::needsVelocityUpdate() const
 {
   return mNeedVelocityUpdate;
-}
-
-//==============================================================================
-void Entity::notifyAccelerationUpdate()
-{
-  dirtyAcceleration();
 }
 
 //==============================================================================

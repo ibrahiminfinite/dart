@@ -59,7 +59,7 @@
 
 #define SET_FLAG(Y, X)                                                         \
   mTreeCache[Y].mDirty.X = true;                                               \
-  mSkelCache.mDirty.X = true;
+  mSkelCache.mDirty.X = true
 
 #define ON_ALL_TREES(X)                                                        \
   for (std::size_t i = 0; i < mTreeCache.size(); ++i)                          \
@@ -3579,12 +3579,6 @@ void Skeleton::clearInternalForces()
 }
 
 //==============================================================================
-void Skeleton::notifyArticulatedInertiaUpdate(std::size_t _treeIdx)
-{
-  dirtyArticulatedInertia(_treeIdx);
-}
-
-//==============================================================================
 void Skeleton::dirtyArticulatedInertia(std::size_t _treeIdx)
 {
   SET_FLAG(_treeIdx, mArticulatedInertia);
@@ -3595,12 +3589,6 @@ void Skeleton::dirtyArticulatedInertia(std::size_t _treeIdx)
   SET_FLAG(_treeIdx, mCoriolisForces);
   SET_FLAG(_treeIdx, mGravityForces);
   SET_FLAG(_treeIdx, mCoriolisAndGravityForces);
-}
-
-//==============================================================================
-void Skeleton::notifySupportUpdate(std::size_t _treeIdx)
-{
-  dirtySupportPolygon(_treeIdx);
 }
 
 //==============================================================================
