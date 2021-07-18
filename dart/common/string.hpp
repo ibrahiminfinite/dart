@@ -56,6 +56,9 @@ DART_COMMON_API std::string trim_right(
 DART_COMMON_API std::vector<std::string> split(
     const std::string& s, const std::string& delims = " ");
 
+/// Returns the extension given filepath
+DART_COMMON_API std::string get_extension(const std::string& filepath);
+
 DART_COMMON_API std::string to_string(bool v);
 DART_COMMON_API std::string to_string(char v);
 DART_COMMON_API std::string to_string(int v);

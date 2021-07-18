@@ -95,7 +95,7 @@ dart_add_component(
     ${component_name}
   COMPONENT_DEPENDENCY_PACKAGES
     Boost Eigen3
-  COMPONENT_OPTIONAL_DEPENDENCY_PACKAGES
+  COMPONENT_DEPENDENCY_PACKAGES_OPTIONAL
     fmt spdlog
   TARGET_LINK_LIBRARIES_PUBLIC
     ${link_libraries_public}

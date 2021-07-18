@@ -79,14 +79,14 @@ void TetraMesh<S>::computeVertexNormals()
 {
   computeTriangleNormals();
 
-  this->mVertexNormals.clear();
-  this->mVertexNormals.resize(this->m_vertices.size(), Vector3::Zero());
+  this->m_vertex_normals.clear();
+  this->m_vertex_normals.resize(this->m_vertices.size(), Vector3::Zero());
 
   for (auto i = 0u; i < mTriangles.size(); ++i) {
     auto& triangle = mTriangles[i];
-    this->mVertexNormals[triangle[0]] += mTetraNormals[i];
-    this->mVertexNormals[triangle[1]] += mTetraNormals[i];
-    this->mVertexNormals[triangle[2]] += mTetraNormals[i];
+    this->m_vertex_normals[triangle[0]] += mTetraNormals[i];
+    this->m_vertex_normals[triangle[1]] += mTetraNormals[i];
+    this->m_vertex_normals[triangle[2]] += mTetraNormals[i];
   }
 
   this->normalize_vertex_vormals();

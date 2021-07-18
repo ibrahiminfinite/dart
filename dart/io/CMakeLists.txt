@@ -10,6 +10,11 @@
 set(project_name ${PROJECT_NAME})
 set(component_name io)
 
+set(link_libraries_public tinyxml2::tinyxml2)
+if(TARGET assimp)
+  list(APPEND link_libraries_public assimp)
+endif()
+
 # Add component
 dart_add_component(
   PROJECT_NAME
@@ -26,8 +31,10 @@ dart_add_component(
     common math optimization collision dynamics simulation
   COMPONENT_DEPENDENCY_PACKAGES
     tinyxml2
+  COMPONENT_DEPENDENCY_PACKAGES_OPTIONAL
+    assimp
   TARGET_LINK_LIBRARIES_PUBLIC
-    tinyxml2::tinyxml2
+    ${link_libraries_public}
   TARGET_COMPILE_FEATURES_PUBLIC
     cxx_std_17
   SUB_DIRECTORIES

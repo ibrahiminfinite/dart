@@ -64,6 +64,13 @@ const std::string& TriMesh<S>::get_type() const
 
 //==============================================================================
 template <typename S>
+void TriMesh<S>::reserve_triangles(int size)
+{
+  m_triangles.reserve(size);
+}
+
+//==============================================================================
+template <typename S>
 void TriMesh<S>::set_triangles(
     const Vertices& vertices, const Triangles& triangles)
 {
@@ -75,18 +82,32 @@ void TriMesh<S>::set_triangles(
 
 //==============================================================================
 template <typename S>
+void TriMesh<S>::add_triangle(const Triangle& triangle)
+{
+  m_triangles.push_back(triangle);
+}
+
+//==============================================================================
+template <typename S>
+int TriMesh<S>::get_num_triangles() const
+{
+  return m_triangles.size();
+}
+
+//==============================================================================
+template <typename S>
 void TriMesh<S>::compute_vertex_normals()
 {
   compute_triangle_normals();
 
-  this->mVertexNormals.clear();
-  this->mVertexNormals.resize(this->m_vertices.size(), Vector3::Zero());
+  this->m_vertex_normals.clear();
+  this->m_vertex_normals.resize(this->m_vertices.size(), Vector3::Zero());
 
   for (auto i = 0u; i < m_triangles.size(); ++i) {
     auto& triangle = m_triangles[i];
-    this->mVertexNormals[triangle[0]] += m_triangle_normals[i];
-    this->mVertexNormals[triangle[1]] += m_triangle_normals[i];
-    this->mVertexNormals[triangle[2]] += m_triangle_normals[i];
+    this->m_vertex_normals[triangle[0]] += m_triangle_normals[i];
+    this->m_vertex_normals[triangle[1]] += m_triangle_normals[i];
+    this->m_vertex_normals[triangle[2]] += m_triangle_normals[i];
   }
 
   this->normalize_vertex_vormals();

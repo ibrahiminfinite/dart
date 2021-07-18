@@ -54,9 +54,9 @@ DartResourceRetriever::DartResourceRetriever()
   // and install DART from source.
   addDataDirectory(DART_DATA_GLOBAL_PATH);
 
-  // 3. Search the directoy set by the environment variable, DART_DATA_LOCAL_PATH.
-  // Method 2 can fail because some package manager use temporary install
-  // directory (e.g., Launchpad PPA).
+  // 3. Search the directoy set by the environment variable,
+  // DART_DATA_LOCAL_PATH. Method 2 can fail because some package manager use
+  // temporary install directory (e.g., Launchpad PPA).
   const char* dartDataPathEnv = std::getenv("DART_DATA_LOCAL_PATH");
   if (dartDataPathEnv)
     addDataDirectory(dartDataPathEnv);
@@ -80,7 +80,8 @@ bool DartResourceRetriever::exists(const common::Uri& uri)
       dtwarn << "Failed to retrieve a resource from '" << uri.toString()
              << "'. Please make sure you set the environment variable for DART "
              << "data path. For example:\n"
-             << "  $ export DART_DATA_LOCAL_PATH=/usr/local/share/doc/dart/data/\n";
+             << "  $ export "
+                "DART_DATA_LOCAL_PATH=/usr/local/share/doc/dart/data/\n";
     }
   } else {
     if (mLocalRetriever->exists(uri))
@@ -106,10 +107,11 @@ common::ResourcePtr DartResourceRetriever::retrieve(const common::Uri& uri)
         return resource;
     }
 
-    dtwarn << "Failed to retrieve a resource from '" << uri.toString()
-           << "'. Please make sure you set the environment variable for DART "
-           << "data path. For example:\n"
-           << "  $ export DART_DATA_LOCAL_PATH=/usr/local/share/doc/dart/data/\n";
+    dtwarn
+        << "Failed to retrieve a resource from '" << uri.toString()
+        << "'. Please make sure you set the environment variable for DART "
+        << "data path. For example:\n"
+        << "  $ export DART_DATA_LOCAL_PATH=/usr/local/share/doc/dart/data/\n";
   } else {
     if (const auto resource = mLocalRetriever->retrieve(uri))
       return resource;
@@ -137,10 +139,11 @@ std::string DartResourceRetriever::getFilePath(const common::Uri& uri)
         return path;
     }
 
-    dtwarn << "Failed to retrieve a resource from '" << uri.toString()
-           << "'. Please make sure you set the environment variable for "
-           << "DART data path. For example:\n"
-           << "  $ export DART_DATA_LOCAL_PATH=/usr/local/share/doc/dart/data/\n";
+    dtwarn
+        << "Failed to retrieve a resource from '" << uri.toString()
+        << "'. Please make sure you set the environment variable for "
+        << "DART data path. For example:\n"
+        << "  $ export DART_DATA_LOCAL_PATH=/usr/local/share/doc/dart/data/\n";
   } else {
     const auto path = mLocalRetriever->getFilePath(uri);
 

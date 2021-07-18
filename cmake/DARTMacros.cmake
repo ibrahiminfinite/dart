@@ -439,7 +439,7 @@ endfunction()
 
 #===============================================================================
 function(dart_add_component)
-  set(prefix dart_add_component)
+  set(prefix _)
   set(options
     GENERATE_META_HEADER
     GENERATE_EXPORT_HEADER
@@ -465,7 +465,7 @@ function(dart_add_component)
     TARGET_COMPILE_DEFINITIONS_PUBLIC
     COMPONENT_DEPENDENCIES
     COMPONENT_DEPENDENCY_PACKAGES
-    COMPONENT_OPTIONAL_DEPENDENCY_PACKAGES
+    COMPONENT_DEPENDENCY_PACKAGES_OPTIONAL
     SUB_DIRECTORIES
   )
   cmake_parse_arguments(
@@ -473,27 +473,27 @@ function(dart_add_component)
   )
 
   # Shorter variable names for readability
-  set(project_source_dir ${${prefix}_PROJECT_SOURCE_DIR})
-  set(project_binary_dir ${${prefix}_PROJECT_BINARY_DIR})
-  set(component_name ${${prefix}_COMPONENT_NAME})
+  set(project_source_dir ${__PROJECT_SOURCE_DIR})
+  set(project_binary_dir ${__PROJECT_BINARY_DIR})
+  set(component_name ${__COMPONENT_NAME})
   set(org_name dartsim)
-  set(project_name ${${prefix}_PROJECT_NAME})
-  set(project_version_major ${${prefix}_PROJECT_VERSION_MAJOR})
-  set(link_libraries_public ${${prefix}_TARGET_LINK_LIBRARIES_PUBLIC})
-  set(link_libraries_public_skip_checking ${${prefix}_TARGET_LINK_LIBRARIES_PUBLIC_SKIP_CHECKING})
-  set(link_libraries_public_optional ${${prefix}_TARGET_LINK_LIBRARIES_PUBLIC_OPTIONAL})
-  set(link_libraries_private ${${prefix}_TARGET_LINK_LIBRARIES_PRIVATE})
-  set(link_libraries_private_skip_checking ${${prefix}_TARGET_LINK_LIBRARIES_PRIVATE_SKIP_CHECKING})
-  set(link_options_public ${${prefix}_TARGET_LINK_OPTIONS_PUBLIC})
-  set(compile_features_public ${${prefix}_TARGET_COMPILE_FEATURES_PUBLIC})
-  set(compile_options_public ${${prefix}_TARGET_COMPILE_OPTIONS_PUBLIC})
-  set(compile_options_private ${${prefix}_TARGET_COMPILE_OPTIONS_PRIVATE})
-  set(target_compile_definitions_public ${${prefix}_TARGET_COMPILE_DEFINITIONS_PUBLIC})
-  set(dependent_components ${${prefix}_COMPONENT_DEPENDENCIES})
-  set(dependent_packages ${${prefix}_COMPONENT_DEPENDENCY_PACKAGES})
-  set(optional_dependent_packages ${${prefix}_COMPONENT_OPTIONAL_DEPENDENCY_PACKAGES})
+  set(project_name ${__PROJECT_NAME})
+  set(project_version_major ${__PROJECT_VERSION_MAJOR})
+  set(link_libraries_public ${__TARGET_LINK_LIBRARIES_PUBLIC})
+  set(link_libraries_public_skip_checking ${__TARGET_LINK_LIBRARIES_PUBLIC_SKIP_CHECKING})
+  set(link_libraries_public_optional ${__TARGET_LINK_LIBRARIES_PUBLIC_OPTIONAL})
+  set(link_libraries_private ${__TARGET_LINK_LIBRARIES_PRIVATE})
+  set(link_libraries_private_skip_checking ${__TARGET_LINK_LIBRARIES_PRIVATE_SKIP_CHECKING})
+  set(link_options_public ${__TARGET_LINK_OPTIONS_PUBLIC})
+  set(compile_features_public ${__TARGET_COMPILE_FEATURES_PUBLIC})
+  set(compile_options_public ${__TARGET_COMPILE_OPTIONS_PUBLIC})
+  set(compile_options_private ${__TARGET_COMPILE_OPTIONS_PRIVATE})
+  set(target_compile_definitions_public ${__TARGET_COMPILE_DEFINITIONS_PUBLIC})
+  set(dependent_components ${__COMPONENT_DEPENDENCIES})
+  set(dependent_packages ${__COMPONENT_DEPENDENCY_PACKAGES})
+  set(optional_dependent_packages ${__COMPONENT_DEPENDENCY_PACKAGES_OPTIONAL})
   
-  set(sub_directories ${${prefix}_SUB_DIRECTORIES})
+  set(sub_directories ${__SUB_DIRECTORIES})
 
   # Return if the component is specified not to build
   if(NOT DART_BUILD_COMP_${component_name})
@@ -630,7 +630,7 @@ function(dart_add_component)
   )
 
   # Format files
-  if(${prefix}_FORMAT_CODE)
+  if(__FORMAT_CODE)
     dart_format_add(${headers} ${sources})
   endif()
 
@@ -647,7 +647,7 @@ function(dart_add_component)
   )
 
   # Generate a meta header for the component
-  if(${prefix}_GENERATE_META_HEADER)
+  if(__GENERATE_META_HEADER)
     dart_generate_meta_header_from_abs_paths(
       "${CMAKE_CURRENT_BINARY_DIR}/${component_name}.hpp"
       ${project_source_dir}
@@ -662,7 +662,7 @@ function(dart_add_component)
   endif()
 
   # Generate export header for the component
-  if(${prefix}_GENERATE_EXPORT_HEADER)
+  if(__GENERATE_EXPORT_HEADER)
     dart_generate_export_header(
       TARGET_NAME ${target_name}
       INCLUDE_DIR ${project_name}/${component_name}

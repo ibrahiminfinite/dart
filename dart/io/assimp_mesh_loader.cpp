@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -30,34 +30,22 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/math/geometry/geometry.hpp"
+#if DART_HAVE_assimp
+
+  #include "dart/io/assimp_mesh_loader.hpp"
 
 namespace dart {
-namespace math {
+namespace io {
 
-//==============================================================================
-Geometry::Geometry()
-{
-  // Do nothing
-}
+  #if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+template class AssimpMeshLoader<double>;
+  #endif
 
-//==============================================================================
-Geometry::~Geometry()
-{
-  // Do nothing
-}
+  #if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+template class AssimpMeshLoader<float>;
+  #endif
 
-//==============================================================================
-void Geometry::set_name(const std::string& name)
-{
-  m_name = name;
-}
-
-//==============================================================================
-const std::string& Geometry::get_name() const
-{
-  return m_name;
-}
-
-} // namespace math
+} // namespace io
 } // namespace dart
+
+#endif

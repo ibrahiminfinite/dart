@@ -44,9 +44,7 @@ namespace dynamics {
 
 //==============================================================================
 PyramidShape::PyramidShape(double baseWidth, double baseDepth, double height)
-  : mBaseWidth(baseWidth),
-    mBaseDepth(baseDepth),
-    mHeight(height)
+  : mBaseWidth(baseWidth), mBaseDepth(baseDepth), mHeight(height)
 {
   assert(0.0 < baseWidth);
   assert(0.0 < baseDepth);

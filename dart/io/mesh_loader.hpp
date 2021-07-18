@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -30,34 +30,46 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/math/geometry/geometry.hpp"
+#pragma once
+
+#include "dart/common/ResourceRetriever.hpp"
+#include "dart/common/Uri.hpp"
+#include "dart/io/export.hpp"
+#include "dart/math/geometry/tri_mesh.hpp"
 
 namespace dart {
-namespace math {
+namespace io {
 
-//==============================================================================
-Geometry::Geometry()
-{
-  // Do nothing
-}
+template <typename S>
+class MeshLoader {
+public:
+  /// Constructor
+  MeshLoader() = default;
 
-//==============================================================================
-Geometry::~Geometry()
-{
-  // Do nothing
-}
+  /// Destructor
+  virtual ~MeshLoader() = default;
 
-//==============================================================================
-void Geometry::set_name(const std::string& name)
-{
-  m_name = name;
-}
+  /// Loads math::TriMesh given URI and resource retriever
+  virtual std::shared_ptr<math::TriMesh<S>> load(
+      const common::Uri& uri,
+      common::ResourceRetrieverPtr resource_retriever = nullptr)
+      = 0;
 
-//==============================================================================
-const std::string& Geometry::get_name() const
-{
-  return m_name;
-}
+  /// Returns true if the MeshLoader can handle the mesh file format of given
+  /// extension
+  virtual bool can_load_extension(const std::string& extension) const = 0;
+};
 
-} // namespace math
+using MeshLoaderf = MeshLoader<float>;
+using MeshLoaderd = MeshLoader<double>;
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_IO_API MeshLoader<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_IO_API MeshLoader<float>;
+#endif
+
+} // namespace io
 } // namespace dart

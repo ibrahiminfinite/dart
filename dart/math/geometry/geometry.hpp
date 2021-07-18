@@ -96,14 +96,14 @@ public:
   const GeometryType* as() const;
 
   /// Sets the name of this geometry.
-  void setName(const std::string& name);
+  void set_name(const std::string& name);
 
   /// Returns the name of this geometry.
-  const std::string& getName() const;
+  const std::string& get_name() const;
 
 private:
   /// Name of this geometry.
-  std::string mName;
+  std::string m_name;
 };
 
 } // namespace math

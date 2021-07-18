@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -30,34 +30,61 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/math/geometry/geometry.hpp"
+#if DART_HAVE_assimp
+
+  #pragma once
+
+  #include <assimp/scene.h>
+
+  #include "dart/io/mesh_loader.hpp"
+  #include "dart/math/type.hpp"
 
 namespace dart {
-namespace math {
+namespace io {
 
-//==============================================================================
-Geometry::Geometry()
-{
-  // Do nothing
-}
+template <typename S>
+class AssimpMeshLoader : public MeshLoader<S> {
+public:
+  /// Constructor
+  AssimpMeshLoader() = default;
 
-//==============================================================================
-Geometry::~Geometry()
-{
-  // Do nothing
-}
+  /// Destructor
+  ~AssimpMeshLoader() override = default;
 
-//==============================================================================
-void Geometry::set_name(const std::string& name)
-{
-  m_name = name;
-}
+  // Documentation inherited
+  std::shared_ptr<math::TriMesh<S>> load(
+      const common::Uri& uri,
+      common::ResourceRetrieverPtr resource_retriever = nullptr) override;
 
-//==============================================================================
-const std::string& Geometry::get_name() const
-{
-  return m_name;
-}
+  // Documentation inherited
+  bool can_load_extension(const std::string& extension) const override;
 
-} // namespace math
+private:
+  /// Loads math::TriMesh given Assimp scene
+  std::shared_ptr<math::TriMesh<S>> load(const aiScene* ai_scene);
+
+  /// Loads math::TriMesh recursively traveling Assimp nodes
+  void load_recurse(
+      const std::shared_ptr<math::TriMesh<S>>& mesh,
+      const aiScene* ai_scene,
+      const aiNode* ai_node,
+      const math::Isometry3<S>& parent_node_pose);
+};
+
+using AssimpMeshLoaderf = AssimpMeshLoader<float>;
+using AssimpMeshLoaderd = AssimpMeshLoader<double>;
+
+  #if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_IO_API AssimpMeshLoader<double>;
+  #endif
+
+  #if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_IO_API AssimpMeshLoader<float>;
+  #endif
+
+} // namespace io
 } // namespace dart
+
+  #include "dart/io/detail/assimp_mesh_loader_impl.hpp"
+
+#endif

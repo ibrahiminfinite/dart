@@ -56,14 +56,26 @@ public:
   /// Destructor.
   virtual ~Mesh();
 
+  void reserve_vertices(int size);
+
+  void add_vertex(const Vector3& vertex);
+
+  int get_num_vertices() const;
+
   /// Returns true if the mesh contains vertices.
   bool has_vertices() const;
 
-  /// Returns true if the mesh contains vertex normals.
-  bool has_vertex_normals() const;
-
   /// Returns the vertices of the mesh.
   const Vertices& get_vertices() const;
+
+  void reserve_vertex_normals(int size);
+
+  void add_vertex_normal(const Vector3& normal);
+
+  int get_num_vertex_normals() const;
+
+  /// Returns true if the mesh contains vertex normals.
+  bool has_vertex_normals() const;
 
   /// Returns the vertex normals of the mesh.
   const Normals& get_vertex_normals() const;
@@ -94,7 +106,7 @@ protected:
   Vertices m_vertices;
 
   /// Vertex normals of the mesh.
-  Normals mVertexNormals;
+  Normals m_vertex_normals;
 };
 
 using Meshf = Mesh<float>;

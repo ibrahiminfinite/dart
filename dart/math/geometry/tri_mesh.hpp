@@ -62,8 +62,14 @@ public:
 
   const std::string& get_type() const override;
 
+  void reserve_triangles(int size);
+
   /// Sets vertices and triangles.
   void set_triangles(const Vertices& vertices, const Triangles& triangles);
+
+  void add_triangle(const Triangle& triangle);
+
+  int get_num_triangles() const;
 
   /// Computes vertex normals.
   void compute_vertex_normals();

@@ -353,8 +353,10 @@ SkeletonPtr createRigidChain()
   SkeletonPtr chain = Skeleton::create("rigid_chain");
 
   // Add bodies to the chain
-  BodyNode* bn = addRigidBody<FreeJoint>(chain, "rigid box 1", BoxShape::getStaticType());
-  bn = addRigidBody<BallJoint>(chain, "rigid cyl 2", CylinderShape::getStaticType(), bn);
+  BodyNode* bn = addRigidBody<FreeJoint>(
+      chain, "rigid box 1", BoxShape::getStaticType());
+  bn = addRigidBody<BallJoint>(
+      chain, "rigid cyl 2", CylinderShape::getStaticType(), bn);
   addRigidBody<BallJoint>(chain, "rigid box 3", BoxShape::getStaticType(), bn);
 
   setAllColors(chain, dart::Color::Orange());
@@ -367,12 +369,18 @@ SkeletonPtr createRigidRing()
   SkeletonPtr ring = Skeleton::create("rigid_ring");
 
   // Add bodies to the ring
-  BodyNode* bn = addRigidBody<FreeJoint>(ring, "rigid box 1", BoxShape::getStaticType());
-  bn = addRigidBody<BallJoint>(ring, "rigid cyl 2", CylinderShape::getStaticType(), bn);
-  bn = addRigidBody<BallJoint>(ring, "rigid box 3", BoxShape::getStaticType(), bn);
-  bn = addRigidBody<BallJoint>(ring, "rigid cyl 4", CylinderShape::getStaticType(), bn);
-  bn = addRigidBody<BallJoint>(ring, "rigid box 5", BoxShape::getStaticType(), bn);
-  addRigidBody<BallJoint>(ring, "rigid cyl 6", CylinderShape::getStaticType(), bn);
+  BodyNode* bn
+      = addRigidBody<FreeJoint>(ring, "rigid box 1", BoxShape::getStaticType());
+  bn = addRigidBody<BallJoint>(
+      ring, "rigid cyl 2", CylinderShape::getStaticType(), bn);
+  bn = addRigidBody<BallJoint>(
+      ring, "rigid box 3", BoxShape::getStaticType(), bn);
+  bn = addRigidBody<BallJoint>(
+      ring, "rigid cyl 4", CylinderShape::getStaticType(), bn);
+  bn = addRigidBody<BallJoint>(
+      ring, "rigid box 5", BoxShape::getStaticType(), bn);
+  addRigidBody<BallJoint>(
+      ring, "rigid cyl 6", CylinderShape::getStaticType(), bn);
 
   setAllColors(ring, dart::Color::Blue());
 

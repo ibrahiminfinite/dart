@@ -76,8 +76,6 @@ public:
   // Documentation inherited
   const std::vector<const DegreeOfFreedom*> getChainDofs() const override;
 
-  /// \}
-
   //----------------------------------------------------------------------------
   /// \{ \name Jacobian Functions
   //----------------------------------------------------------------------------

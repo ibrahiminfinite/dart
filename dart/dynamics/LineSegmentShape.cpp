@@ -42,8 +42,7 @@ namespace dynamics {
 const Eigen::Vector3d LineSegmentShape::mDummyVertex = Eigen::Vector3d::Zero();
 
 //==============================================================================
-LineSegmentShape::LineSegmentShape(float _thickness)
-  : mThickness(_thickness)
+LineSegmentShape::LineSegmentShape(float _thickness) : mThickness(_thickness)
 {
   if (_thickness <= 0.0f) {
     dtwarn << "[LineSegmentShape::LineSegmentShape] Attempting to set "

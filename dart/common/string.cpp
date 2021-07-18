@@ -103,6 +103,12 @@ std::vector<std::string> split(
 }
 
 //==============================================================================
+std::string get_extension(const std::string& filepath)
+{
+  return filepath.substr(filepath.rfind(".") + 1, filepath.size());
+}
+
+//==============================================================================
 std::string to_string(bool v)
 {
   return fmt::format("{}", v);

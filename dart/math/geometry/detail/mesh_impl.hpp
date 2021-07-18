@@ -46,6 +46,27 @@ Mesh<S>::~Mesh()
 
 //==============================================================================
 template <typename S>
+void Mesh<S>::reserve_vertices(int size)
+{
+  m_vertices.reserve(size);
+}
+
+//==============================================================================
+template <typename S>
+void Mesh<S>::add_vertex(const Vector3& vertex)
+{
+  m_vertices.push_back(vertex);
+}
+
+//==============================================================================
+template <typename S>
+int Mesh<S>::get_num_vertices() const
+{
+  return m_vertices.size();
+}
+
+//==============================================================================
+template <typename S>
 bool Mesh<S>::has_vertices() const
 {
   return !m_vertices.empty();
@@ -53,9 +74,30 @@ bool Mesh<S>::has_vertices() const
 
 //==============================================================================
 template <typename S>
+void Mesh<S>::reserve_vertex_normals(int size)
+{
+  m_vertex_normals.reserve(size);
+}
+
+//==============================================================================
+template <typename S>
+void Mesh<S>::add_vertex_normal(const Vector3& vertex)
+{
+  m_vertex_normals.push_back(vertex);
+}
+
+//==============================================================================
+template <typename S>
+int Mesh<S>::get_num_vertex_normals() const
+{
+  return m_vertex_normals.size();
+}
+
+//==============================================================================
+template <typename S>
 bool Mesh<S>::has_vertex_normals() const
 {
-  return has_vertices() && m_vertices.size() == mVertexNormals.size();
+  return has_vertices() && m_vertices.size() == m_vertex_normals.size();
 }
 
 //==============================================================================
@@ -69,7 +111,7 @@ const typename Mesh<S>::Vertices& Mesh<S>::get_vertices() const
 template <typename S>
 const typename Mesh<S>::Normals& Mesh<S>::get_vertex_normals() const
 {
-  return this->mVertexNormals;
+  return this->m_vertex_normals;
 }
 
 //==============================================================================
@@ -77,7 +119,7 @@ template <typename S>
 void Mesh<S>::clear()
 {
   m_vertices.clear();
-  mVertexNormals.clear();
+  m_vertex_normals.clear();
 }
 
 //==============================================================================
@@ -113,12 +155,12 @@ Mesh<S>& Mesh<S>::operator+=(const Mesh& other)
   // Insert vertex normals if both meshes have normals. Otherwise, clean the
   // vertex normals.
   if ((is_empty() || has_vertex_normals()) && other.has_vertex_normals()) {
-    mVertexNormals.insert(
-        mVertexNormals.end(),
-        other.mVertexNormals.begin(),
-        other.mVertexNormals.end());
+    m_vertex_normals.insert(
+        m_vertex_normals.end(),
+        other.m_vertex_normals.begin(),
+        other.m_vertex_normals.end());
   } else {
-    mVertexNormals.clear();
+    m_vertex_normals.clear();
   }
 
   // Insert vertices
@@ -139,7 +181,7 @@ Mesh<S>::Mesh()
 template <typename S>
 void Mesh<S>::normalize_vertex_vormals()
 {
-  for (auto& normal : mVertexNormals) {
+  for (auto& normal : m_vertex_normals) {
     normal.normalize();
   }
 }
