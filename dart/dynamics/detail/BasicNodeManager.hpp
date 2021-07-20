@@ -41,12 +41,13 @@
 #include "dart/common/Empty.hpp"
 #include "dart/common/NameManager.hpp"
 #include "dart/dynamics/Node.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 namespace detail {
 
-class BasicNodeManagerForBodyNode {
+class DART_DYNAMICS_API BasicNodeManagerForBodyNode {
 public:
   using NodeMap = std::map<std::type_index, std::vector<Node*> >;
   using NodeDestructorSet = std::unordered_set<NodeDestructorPtr>;
@@ -91,7 +92,8 @@ protected:
 };
 
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class BasicNodeManagerForSkeleton : public virtual BasicNodeManagerForBodyNode {
+class DART_DYNAMICS_API BasicNodeManagerForSkeleton
+  : public virtual BasicNodeManagerForBodyNode {
 public:
   using BasicNodeManagerForBodyNode::getNode;
   using BasicNodeManagerForBodyNode::getNumNodes;

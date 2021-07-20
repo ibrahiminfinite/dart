@@ -36,6 +36,7 @@
 #include <nlopt.hpp>
 
 #include "dart/optimization/Solver.hpp"
+#include "dart/optimization/export.hpp"
 
 namespace dart {
 namespace optimization {
@@ -56,7 +57,7 @@ class Problem;
 /// optimization and N/D denotes derivative-free/gradient-based algorithms,
 /// respectively. For the details, please see:
 /// https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/
-class NloptSolver : public Solver {
+class DART_OPTIMIZATION_API NloptSolver : public Solver {
 public:
   enum Algorithm {
     GN_DIRECT = 0,

@@ -38,11 +38,12 @@
 
 #include "dart/config.hpp"
 #include "dart/dynamics/CollisionGroup.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class BulletCollisionGroup : public CollisionGroup {
+class DART_DYNAMICS_API BulletCollisionGroup : public CollisionGroup {
 public:
   friend class BulletCollisionDetector;
 

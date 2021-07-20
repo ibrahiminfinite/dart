@@ -43,6 +43,7 @@
 
 #include "dart/common/ClassWithVirtualBase.hpp"
 #include "dart/common/Subject.hpp"
+#include "dart/gui/export.hpp"
 
 namespace dart {
 
@@ -72,7 +73,7 @@ class Viewer;
 class SaveScreen;
 
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class ViewerAttachment : public virtual ::osg::Group {
+class DART_GUI_API ViewerAttachment : public virtual ::osg::Group {
 public:
   friend class Viewer;
 
@@ -106,7 +107,8 @@ private:
   Viewer* mViewer;
 };
 
-class Viewer : public osgViewer::Viewer, public dart::common::Subject {
+class DART_GUI_API Viewer : public osgViewer::Viewer,
+                            public dart::common::Subject {
 public:
   /// Constructor for dart::gui::osg::Viewer. This will automatically create the
   /// default event handler.

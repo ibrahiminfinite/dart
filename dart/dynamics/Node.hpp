@@ -40,6 +40,7 @@
 #include "dart/common/Subject.hpp"
 #include "dart/common/VersionCounter.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -48,7 +49,7 @@ class BodyNode;
 class Node;
 
 //==============================================================================
-class NodeDestructor final {
+class DART_DYNAMICS_API NodeDestructor final {
 public:
   /// Constructor
   NodeDestructor(Node* _node);
@@ -74,8 +75,8 @@ private:
 /// In most cases, when creating your own custom Node class, you will also want
 /// to inherit from AccessoryNode using CRTP.
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class Node : public virtual common::Subject,
-             public virtual common::VersionCounter {
+class DART_DYNAMICS_API Node : public virtual common::Subject,
+                               public virtual common::VersionCounter {
 public:
   friend class BodyNode;
   friend class Skeleton;

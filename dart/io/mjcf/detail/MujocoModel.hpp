@@ -37,6 +37,7 @@
 
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/common/Uri.hpp"
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Asset.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Default.hpp"
@@ -52,7 +53,7 @@ namespace MjcfParser {
 namespace detail {
 
 /// Main class to parse MJCF model file
-class MujocoModel final {
+class DART_IO_API MujocoModel final {
 public:
   MujocoModel() = default;
 

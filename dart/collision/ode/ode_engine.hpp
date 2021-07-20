@@ -90,7 +90,13 @@ DART_REGISTER_ENGINE_OUT_HEADER(OdeEngine<S>);
 using OdeEnginef = OdeEngine<float>;
 using OdeEngined = OdeEngine<double>;
 
-extern template class OdeEngine<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API OdeEngine<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API OdeEngine<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

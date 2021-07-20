@@ -39,6 +39,7 @@
 #include "dart/common/Platform.hpp"
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/common/Uri.hpp"
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Types.hpp"
 
@@ -47,7 +48,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class Compiler final {
+class DART_IO_API Compiler final {
 public:
   Compiler() = default;
 

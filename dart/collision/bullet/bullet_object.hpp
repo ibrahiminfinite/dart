@@ -34,6 +34,7 @@
 
 #include "dart/collision/bullet/bullet_include.hpp"
 #include "dart/collision/bullet/bullet_type.hpp"
+#include "dart/collision/export.hpp"
 #include "dart/collision/object.hpp"
 #include "dart/math/type.hpp"
 
@@ -77,7 +78,13 @@ private:
 using BulletObjectf = BulletObject<float>;
 using BulletObjectd = BulletObject<double>;
 
-extern template class BulletObject<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API BulletObject<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API BulletObject<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

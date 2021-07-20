@@ -36,12 +36,13 @@
 #include <Eigen/Dense>
 
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// Contact information
-struct Contact {
+struct DART_DYNAMICS_API Contact {
   /// Default constructor
   Contact();
 

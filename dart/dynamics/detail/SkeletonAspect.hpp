@@ -39,6 +39,7 @@
 #include "dart/common/EmbeddedAspect.hpp"
 #include "dart/common/ProxyAspect.hpp"
 #include "dart/common/RequiresAspect.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -51,7 +52,7 @@ namespace detail {
 /// The Properties of this Skeleton which are independent of the components
 /// within the Skeleton, such as its BodyNodes and Joints. This does not
 /// include any Properties of the Skeleton's Aspects.
-struct SkeletonAspectProperties {
+struct DART_DYNAMICS_API SkeletonAspectProperties {
   /// Name of the Skeleton
   std::string mName;
 

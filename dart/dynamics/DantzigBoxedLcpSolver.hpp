@@ -34,11 +34,12 @@
 #define DART_CONSTRAINT_DANTZIGBOXEDLCPSOLVER_HPP_
 
 #include "dart/dynamics/BoxedLcpSolver.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class DantzigBoxedLcpSolver : public BoxedLcpSolver {
+class DART_DYNAMICS_API DantzigBoxedLcpSolver : public BoxedLcpSolver {
 public:
   // Documentation inherited.
   const std::string& getType() const override;

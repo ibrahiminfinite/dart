@@ -35,6 +35,7 @@
 #include <vector>
 
 #include "dart/collision/contact.hpp"
+#include "dart/collision/export.hpp"
 
 namespace dart {
 namespace collision {
@@ -74,7 +75,13 @@ protected:
   std::vector<Contact<S>> m_contacts;
 };
 
-extern template class CollisionResult<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API CollisionResult<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API CollisionResult<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

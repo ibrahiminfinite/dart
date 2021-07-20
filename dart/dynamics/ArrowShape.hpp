@@ -34,11 +34,12 @@
 #define DART_DYNAMICS_ARROWSHAPE_HPP_
 
 #include "dart/dynamics/MeshShape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class ArrowShape : public MeshShape {
+class DART_DYNAMICS_API ArrowShape : public MeshShape {
 public:
   struct Properties {
     /// _radius affects the thickness of the arrow. _headRadiusScale can be

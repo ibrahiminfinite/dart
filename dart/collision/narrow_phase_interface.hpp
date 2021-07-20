@@ -33,6 +33,7 @@
 #pragma once
 
 #include "dart/collision/collision_option.hpp"
+#include "dart/collision/export.hpp"
 #include "dart/collision/object.hpp"
 
 namespace dart {
@@ -44,6 +45,22 @@ bool collide(
     ObjectPtr<S> object2,
     const CollisionOption<S>& option = {},
     CollisionResult<S>* result = nullptr);
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template DART_COLLISION_API bool collide(
+    ObjectPtr<double> object1,
+    ObjectPtr<double> object2,
+    const CollisionOption<double>& option,
+    CollisionResult<double>* result);
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template DART_COLLISION_API bool collide(
+    ObjectPtr<float> object1,
+    ObjectPtr<float> object2,
+    const CollisionOption<float>& option,
+    CollisionResult<float>* result);
+#endif
 
 } // namespace collision
 } // namespace dart

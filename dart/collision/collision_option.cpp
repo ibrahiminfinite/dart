@@ -35,7 +35,13 @@
 namespace dart {
 namespace collision {
 
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
 template struct CollisionOption<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+template struct CollisionOption<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

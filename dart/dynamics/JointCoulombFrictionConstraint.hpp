@@ -34,6 +34,7 @@
 #define DART_CONSTRAINT_JOINTCOULOMBFRICTIONCONSTRAINT_HPP_
 
 #include "dart/dynamics/ConstraintBase.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 
@@ -45,7 +46,7 @@ class Joint;
 namespace dynamics {
 
 /// Joint Coulomb friction constraint
-class JointCoulombFrictionConstraint : public ConstraintBase {
+class DART_DYNAMICS_API JointCoulombFrictionConstraint : public ConstraintBase {
 public:
   /// Constructor
   explicit JointCoulombFrictionConstraint(dynamics::Joint* _joint);

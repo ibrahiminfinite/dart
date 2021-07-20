@@ -37,6 +37,7 @@
 #include <string>
 
 #include "dart/common/Platform.hpp"
+#include "dart/common/export.hpp"
 
 #if DART_OS_LINUX
 
@@ -88,7 +89,7 @@ class SharedLibraryManager;
 } // namespace detail
 
 /// SharedLibrary is a RAII object wrapping a shared library.
-class SharedLibrary {
+class DART_COMMON_API SharedLibrary {
 protected:
   enum ProtectedConstructionTag { ProtectedConstruction };
 

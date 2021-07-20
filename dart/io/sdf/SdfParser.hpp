@@ -35,6 +35,7 @@
 
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/dynamics/Skeleton.hpp"
+#include "dart/io/export.hpp"
 #include "dart/simulation/World.hpp"
 
 namespace dart {
@@ -42,11 +43,11 @@ namespace io {
 
 namespace SdfParser {
 
-simulation::WorldPtr readWorld(
+DART_IO_API simulation::WorldPtr readWorld(
     const common::Uri& uri,
     const common::ResourceRetrieverPtr& retriever = nullptr);
 
-dynamics::SkeletonPtr readSkeleton(
+DART_IO_API dynamics::SkeletonPtr readSkeleton(
     const common::Uri& uri,
     const common::ResourceRetrieverPtr& retriever = nullptr);
 

@@ -39,6 +39,7 @@
 #include "dart/dynamics/Frame.hpp"
 #include "dart/dynamics/Node.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -51,7 +52,7 @@ class InverseKinematics;
 /// EndEffectors to both be used as references for IK modules. This is a pure
 /// abstract class.
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class JacobianNode : public virtual Frame, public Node {
+class DART_DYNAMICS_API JacobianNode : public virtual Frame, public Node {
 public:
   /// Virtual destructor
   virtual ~JacobianNode();

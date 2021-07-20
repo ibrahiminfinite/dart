@@ -36,11 +36,12 @@
 #include <Eigen/Dense>
 
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class CollisionObject {
+class DART_DYNAMICS_API CollisionObject {
 public:
   friend class CollisionGroup;
 

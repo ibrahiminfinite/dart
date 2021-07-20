@@ -36,6 +36,7 @@
 #include <osg/Geode>
 
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/gui/export.hpp"
 #include "dart/gui/osg/ShapeFrameNode.hpp"
 #include "dart/gui/osg/Viewer.hpp"
 
@@ -45,7 +46,7 @@ namespace osg {
 
 /// Attach this to a Viewer in order to visualize the support polygon of a
 /// Skeleton
-class SupportPolygonVisual : public ViewerAttachment {
+class DART_GUI_API SupportPolygonVisual : public ViewerAttachment {
 public:
   /// Visualize the support polygon of an entire Skeleton
   SupportPolygonVisual(

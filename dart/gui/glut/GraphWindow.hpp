@@ -37,6 +37,7 @@
 
 #include <Eigen/Dense>
 
+#include "dart/gui/export.hpp"
 #include "dart/gui/glut/Win2D.hpp"
 
 namespace dart {
@@ -44,7 +45,7 @@ namespace gui {
 namespace glut {
 
 /// \brief
-class GraphWindow : public Win2D {
+class DART_GUI_API GraphWindow : public Win2D {
 public:
   /// \brief
   GraphWindow();

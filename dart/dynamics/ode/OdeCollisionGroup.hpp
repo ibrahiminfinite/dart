@@ -36,11 +36,12 @@
 #include <ode/ode.h>
 
 #include "dart/dynamics/CollisionGroup.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class OdeCollisionGroup : public CollisionGroup {
+class DART_DYNAMICS_API OdeCollisionGroup : public CollisionGroup {
 public:
   friend class OdeCollisionDetector;
 

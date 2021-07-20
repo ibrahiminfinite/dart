@@ -38,6 +38,7 @@
 
 #include "dart/common/ClassWithVirtualBase.hpp"
 #include "dart/common/ResourceRetriever.hpp"
+#include "dart/io/export.hpp"
 
 namespace dart {
 namespace io {
@@ -48,7 +49,8 @@ namespace io {
 /// base URI of every package that you wish to resolve using the
 /// \ref addPackageDirectory method.
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class PackageResourceRetriever : public virtual common::ResourceRetriever {
+class DART_IO_API PackageResourceRetriever
+  : public virtual common::ResourceRetriever {
 public:
   /// Construct a PackageResourceRetriever that uses the specified \a
   /// _localRetriever to load resolved URIs.

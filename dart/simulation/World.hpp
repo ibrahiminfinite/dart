@@ -55,6 +55,7 @@
 #include "dart/dynamics/SmartPointer.hpp"
 #include "dart/simulation/Recording.hpp"
 #include "dart/simulation/SmartPointer.hpp"
+#include "dart/simulation/export.hpp"
 
 namespace dart {
 
@@ -80,7 +81,7 @@ DART_COMMON_DECLARE_SHARED_WEAK(World)
 
 /// class World
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class World : public virtual common::Subject {
+class DART_SIMULATION_API World : public virtual common::Subject {
 public:
   using NameChangedSignal = common::Signal<void(
       const std::string& _oldName, const std::string& _newName)>;

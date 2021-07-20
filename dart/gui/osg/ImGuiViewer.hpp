@@ -35,6 +35,7 @@
 
 #include <memory>
 
+#include "dart/gui/export.hpp"
 #include "dart/gui/osg/Viewer.hpp"
 
 namespace dart {
@@ -45,7 +46,7 @@ class ImGuiHandler;
 class MainMenuWidget;
 class AboutWidget;
 
-class ImGuiViewer : public Viewer {
+class DART_GUI_API ImGuiViewer : public Viewer {
 public:
   /// Constructor for dart::gui::osg::Viewer. This will automatically create the
   /// default event handler.

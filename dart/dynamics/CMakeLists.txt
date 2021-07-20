@@ -33,5 +33,6 @@ dart_add_component(
   SUB_DIRECTORIES
     detail dart fcl bullet ode
   GENERATE_META_HEADER
+  GENERATE_EXPORT_HEADER
   FORMAT_CODE
 )

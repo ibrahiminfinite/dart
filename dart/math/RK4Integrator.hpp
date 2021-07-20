@@ -34,12 +34,13 @@
 #define DART_INTEGRATION_RK4INTEGRATOR_HPP_
 
 #include "dart/math/Integrator.hpp"
+#include "dart/math/export.hpp"
 
 namespace dart {
 namespace math {
 
 /// \brief class RK4Integrator
-class RK4Integrator : public Integrator {
+class DART_MATH_API RK4Integrator : public Integrator {
 public:
   /// \brief Constructor
   RK4Integrator();

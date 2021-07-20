@@ -36,6 +36,7 @@
 #include <Eigen/Dense>
 
 #include "dart/dynamics/DynamicJointConstraint.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/math/MathTypes.hpp"
 
 namespace dart {
@@ -43,7 +44,7 @@ namespace dynamics {
 
 /// BallJointConstraint represents ball joint constraint between a body and the
 /// world or between two bodies
-class BallJointConstraint : public DynamicJointConstraint {
+class DART_DYNAMICS_API BallJointConstraint : public DynamicJointConstraint {
 public:
   /// Constructor that takes one body and the joint position in the world frame
   /// \param[in] _body

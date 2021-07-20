@@ -35,11 +35,13 @@
 
 #include <string>
 
+#include "dart/gui/export.hpp"
+
 namespace dart {
 namespace gui {
 namespace glut {
 
-void drawStringOnScreen(
+DART_GUI_API void drawStringOnScreen(
     float x, float y, const std::string& s, bool bigFont = true);
 
 } // namespace glut

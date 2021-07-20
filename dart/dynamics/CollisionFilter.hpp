@@ -34,6 +34,7 @@
 #define DART_COLLISION_COLLISIONFILTER_HPP_
 
 #include "dart/dynamics/detail/UnorderedPairs.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -41,7 +42,7 @@ namespace dynamics {
 class BodyNode;
 class CollisionObject;
 
-class CollisionFilter {
+class DART_DYNAMICS_API CollisionFilter {
 public:
   /// Destructor.
   virtual ~CollisionFilter();
@@ -52,7 +53,7 @@ public:
       const CollisionObject* object1, const CollisionObject* object2) const = 0;
 };
 
-class CompositeCollisionFilter : public CollisionFilter {
+class DART_DYNAMICS_API CompositeCollisionFilter : public CollisionFilter {
 public:
   /// Adds a collision filter to this CompositeCollisionFilter.
   void addCollisionFilter(const CollisionFilter* filter);
@@ -73,7 +74,7 @@ protected:
   std::unordered_set<const CollisionFilter*> mFilters;
 };
 
-class BodyNodeCollisionFilter : public CollisionFilter {
+class DART_DYNAMICS_API BodyNodeCollisionFilter : public CollisionFilter {
 public:
   /// Add a BodyNode pair to the blacklist.
   void addBodyNodePairToBlackList(

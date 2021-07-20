@@ -36,6 +36,22 @@ namespace dart {
 namespace collision {
 
 //==============================================================================
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+template bool collide(
+    ObjectPtr<double> object1,
+    ObjectPtr<double> object2,
+    const CollisionOption<double>& option,
+    CollisionResult<double>* result);
+#endif
+
+//==============================================================================
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+template bool collide(
+    ObjectPtr<float> object1,
+    ObjectPtr<float> object2,
+    const CollisionOption<float>& option,
+    CollisionResult<float>* result);
+#endif
 
 } // namespace collision
 } // namespace dart

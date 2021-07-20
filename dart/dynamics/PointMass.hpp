@@ -38,6 +38,7 @@
 #include <Eigen/Dense>
 
 #include "dart/dynamics/Entity.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/math/Helpers.hpp"
 
 namespace dart {
@@ -49,7 +50,7 @@ class SoftBodyNode;
 class PointMassNotifier;
 
 ///
-class PointMass : public common::Subject {
+class DART_DYNAMICS_API PointMass : public common::Subject {
 public:
   friend class SoftBodyNode;
 

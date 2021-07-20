@@ -38,6 +38,7 @@
 #include <Eigen/Geometry>
 
 #include "dart/dynamics/Entity.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/math/MathTypes.hpp"
 
 namespace dart {
@@ -54,7 +55,7 @@ namespace dynamics {
 /// so-called "diamond problem". Because of that, the Entity's constructor will
 /// be called directly by the most derived class's constructor.
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class Frame : public virtual Entity {
+class DART_DYNAMICS_API Frame : public virtual Entity {
 public:
   friend class Entity;
   friend class WorldFrame;
@@ -333,7 +334,7 @@ public:
 /// singleton World Frame. This class cannot be instantiated directly: you must
 /// use the Frame::World() function to access it. Only one World Frame exists
 /// in any application.
-class WorldFrame : public Frame {
+class DART_DYNAMICS_API WorldFrame : public Frame {
 public:
   friend class Frame;
 

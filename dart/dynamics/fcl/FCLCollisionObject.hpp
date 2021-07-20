@@ -34,12 +34,13 @@
 #define DART_COLLISION_FCL_FCLCOLLISIONOBJECT_HPP_
 
 #include "dart/dynamics/CollisionObject.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/dynamics/fcl/BackwardCompatibility.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class FCLCollisionObject : public CollisionObject {
+class DART_DYNAMICS_API FCLCollisionObject : public CollisionObject {
 public:
   friend class FCLCollisionDetector;
 

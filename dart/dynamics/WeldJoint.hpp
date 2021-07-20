@@ -38,12 +38,13 @@
 #include <Eigen/Dense>
 
 #include "dart/dynamics/ZeroDofJoint.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// class WeldJoint
-class WeldJoint : public ZeroDofJoint {
+class DART_DYNAMICS_API WeldJoint : public ZeroDofJoint {
 public:
   friend class Skeleton;
 

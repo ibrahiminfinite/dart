@@ -38,6 +38,7 @@
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 
 namespace dart {
@@ -45,7 +46,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-struct WeldAttributes final {
+struct DART_IO_API WeldAttributes final {
   std::optional<std::string> mName;
   bool mActive{true};
   Eigen::Vector2d mSolRef;

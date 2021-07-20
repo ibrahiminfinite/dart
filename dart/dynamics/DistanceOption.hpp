@@ -36,12 +36,14 @@
 #include <cstddef>
 #include <memory>
 
+#include "dart/dynamics/export.hpp"
+
 namespace dart {
 namespace dynamics {
 
 struct DistanceFilter;
 
-struct DistanceOption {
+struct DART_DYNAMICS_API DistanceOption {
   /// Whether to calculate the nearest points.
   ///
   /// The default is false.

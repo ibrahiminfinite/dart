@@ -35,6 +35,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/BodyAttributes.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
@@ -50,7 +51,7 @@ namespace detail {
 
 class Size;
 
-class Body final {
+class DART_IO_API Body final {
 public:
   /// Default constructor.
   Body() = default;

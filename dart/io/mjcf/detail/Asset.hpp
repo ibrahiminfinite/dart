@@ -38,6 +38,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Mesh.hpp"
@@ -49,7 +50,7 @@ namespace detail {
 
 class Body;
 
-class Asset final {
+class DART_IO_API Asset final {
 public:
   /// Default constructor
   Asset() = default;

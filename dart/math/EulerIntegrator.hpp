@@ -34,12 +34,13 @@
 #define DART_INTEGRATION_EULERINTEGRATOR_HPP_
 
 #include "dart/math/Integrator.hpp"
+#include "dart/math/export.hpp"
 
 namespace dart {
 namespace math {
 
 /// \brief class EulerIntegrator
-class EulerIntegrator : public Integrator {
+class DART_MATH_API EulerIntegrator : public Integrator {
 public:
   /// \brief Constructor
   EulerIntegrator();

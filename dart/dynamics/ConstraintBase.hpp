@@ -36,6 +36,7 @@
 #include <cstddef>
 
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 
@@ -70,7 +71,7 @@ struct ConstraintInfo {
 };
 
 /// Constraint is a base class of concrete constraints classes
-class ConstraintBase {
+class DART_DYNAMICS_API ConstraintBase {
 public:
   /// Returns a string representing the constraint type
   virtual const std::string& getType() const;

@@ -33,17 +33,20 @@
 #ifndef DART_DYNAMICS_POINTCLOUDSHAPE_HPP_
 #define DART_DYNAMICS_POINTCLOUDSHAPE_HPP_
 
-#include "dart/dynamics/Shape.hpp"
+#include "dart/config.hpp"
 
 #if DART_HAVE_OCTOMAP
   #include <octomap/Pointcloud.h>
 #endif
 
+#include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
+
 namespace dart {
 namespace dynamics {
 
 /// The PointCloudShape represents point cloud data.
-class PointCloudShape : public Shape {
+class DART_DYNAMICS_API PointCloudShape : public Shape {
 public:
   enum ColorMode {
     /// Use the color specified by the ShapeAspect. This is the default.

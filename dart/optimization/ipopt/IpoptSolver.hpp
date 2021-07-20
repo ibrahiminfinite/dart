@@ -37,6 +37,7 @@
 #include <memory>
 
 #include "dart/optimization/Solver.hpp"
+#include "dart/optimization/export.hpp"
 #include "dart/optimization/ipopt/BackwardCompatibility.hpp"
 #include "dart/optimization/ipopt/ipopt_include.hpp"
 
@@ -47,7 +48,7 @@ class Problem;
 class DartTNLP;
 
 /// \brief class IpoptSolver
-class IpoptSolver : public Solver {
+class DART_OPTIMIZATION_API IpoptSolver : public Solver {
 public:
   /// Default constructor
   IpoptSolver(const Solver::Properties& _properties = Solver::Properties());

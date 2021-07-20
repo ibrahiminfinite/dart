@@ -36,6 +36,7 @@
 #include "dart/common/RequiresAspect.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/PointMass.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -53,7 +54,7 @@ namespace detail {
 class SoftBodyAspect;
 
 //==============================================================================
-struct SoftBodyNodeUniqueState {
+struct DART_DYNAMICS_API SoftBodyNodeUniqueState {
   /// Array of States for PointMasses
   std::vector<PointMass::State> mPointStates;
 
@@ -61,7 +62,7 @@ struct SoftBodyNodeUniqueState {
 };
 
 //==============================================================================
-struct SoftBodyNodeUniqueProperties {
+struct DART_DYNAMICS_API SoftBodyNodeUniqueProperties {
   /// Spring stiffness for vertex deformation restoring spring force of the
   /// point masses
   double mKv;
@@ -102,8 +103,8 @@ struct SoftBodyNodeUniqueProperties {
 };
 
 //==============================================================================
-struct SoftBodyNodeProperties : BodyNode::Properties,
-                                SoftBodyNodeUniqueProperties {
+struct DART_DYNAMICS_API SoftBodyNodeProperties : BodyNode::Properties,
+                                                  SoftBodyNodeUniqueProperties {
   DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(SoftBodyNodeProperties)
 
   SoftBodyNodeProperties(

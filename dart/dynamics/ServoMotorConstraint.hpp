@@ -34,6 +34,7 @@
 #define DART_CONSTRAINT_SERVOMOTORCONSTRAINT_HPP_
 
 #include "dart/dynamics/ConstraintBase.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 
@@ -45,7 +46,7 @@ class Joint;
 namespace dynamics {
 
 /// Servo motor constraint
-class ServoMotorConstraint : public ConstraintBase {
+class DART_DYNAMICS_API ServoMotorConstraint : public ConstraintBase {
 public:
   /// Constructor
   explicit ServoMotorConstraint(dynamics::Joint* joint);

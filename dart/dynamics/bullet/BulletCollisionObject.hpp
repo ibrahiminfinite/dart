@@ -39,13 +39,14 @@
 #include "dart/config.hpp"
 #include "dart/dynamics/CollisionObject.hpp"
 #include "dart/dynamics/bullet/BulletCollisionShape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 class CollisionObject;
 
-class BulletCollisionObject : public CollisionObject {
+class DART_DYNAMICS_API BulletCollisionObject : public CollisionObject {
 public:
   friend class BulletCollisionDetector;
 

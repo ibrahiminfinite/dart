@@ -39,6 +39,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/GeomAttributes.hpp"
 #include "dart/io/mjcf/detail/JointAttributes.hpp"
@@ -50,7 +51,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class Default final {
+class DART_IO_API Default final {
 public:
   /// Default constructor
   Default() = default;
@@ -75,7 +76,7 @@ private:
   WeldAttributes mWeldAttributes;
 };
 
-class Defaults {
+class DART_IO_API Defaults {
 public:
   bool hasDefault(const std::string& className) const;
   const Default* getDefault(const std::string& className) const;

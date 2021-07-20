@@ -35,6 +35,8 @@
 
 #include <memory>
 
+#include "dart/common/export.hpp"
+
 namespace dart {
 namespace common {
 
@@ -42,7 +44,7 @@ namespace signal {
 namespace detail {
 
 /// class ConnectionBodyBase
-class ConnectionBodyBase {
+class DART_COMMON_API ConnectionBodyBase {
 public:
   /// Constructor
   ConnectionBodyBase() = default;

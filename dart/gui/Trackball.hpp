@@ -36,11 +36,13 @@
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
+#include "dart/gui/export.hpp"
+
 namespace dart {
 namespace gui {
 
 /// \brief
-class Trackball {
+class DART_GUI_API Trackball {
 public:
   // To get byte-aligned Eigen vectors
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW

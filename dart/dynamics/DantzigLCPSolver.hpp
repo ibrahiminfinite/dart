@@ -37,6 +37,7 @@
 
 #include "dart/config.hpp"
 #include "dart/dynamics/LCPSolver.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -46,7 +47,7 @@ namespace dynamics {
 ///
 /// DantzigLCPSolver is a LCP solver that uses ODE's implementation of Dantzig
 /// algorithm
-class DantzigLCPSolver : public LCPSolver {
+class DART_DYNAMICS_API DantzigLCPSolver : public LCPSolver {
 public:
   /// Constructor
   explicit DantzigLCPSolver(double _timestep);

@@ -63,7 +63,7 @@ private:
 using Conef = Cone<float>;
 using Coned = Cone<double>;
 
-extern template class Cone<double>;
+extern template class DART_MATH_API Cone<double>;
 
 } // namespace math
 } // namespace dart

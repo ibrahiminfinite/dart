@@ -36,10 +36,12 @@
 #include <Eigen/Eigen>
 #include <ode/ode.h>
 
+#include "dart/dynamics/export.hpp"
+
 namespace dart {
 namespace dynamics {
 
-class OdeTypes {
+class DART_DYNAMICS_API OdeTypes {
 public:
   static Eigen::Vector3d convertVector3(const dVector3& vec);
 };

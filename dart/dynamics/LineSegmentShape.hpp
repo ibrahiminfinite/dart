@@ -34,6 +34,7 @@
 #define DART_DYNAMICS_LINESEGMENTSHAPE_HPP_
 
 #include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -42,7 +43,7 @@ namespace dynamics {
 /// can consist of a single line segment or many interconnected line segments.
 /// Note: LineSegmentShape may NOT be used as a collision shape for BodyNodes,
 /// but it may be used for visualization purposes.
-class LineSegmentShape : public Shape {
+class DART_DYNAMICS_API LineSegmentShape : public Shape {
 public:
   /// Default constructor
   LineSegmentShape(float _thickness = 1.0f);

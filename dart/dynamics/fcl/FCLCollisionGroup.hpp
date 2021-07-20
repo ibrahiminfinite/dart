@@ -34,6 +34,7 @@
 #define DART_COLLISION_FCL_FCLCOLLISIONGROUP_HPP_
 
 #include "dart/dynamics/CollisionGroup.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/dynamics/fcl/BackwardCompatibility.hpp"
 
 namespace dart {
@@ -42,7 +43,7 @@ namespace dynamics {
 class CollisionObject;
 class FCLCollisionObjectUserData;
 
-class FCLCollisionGroup : public CollisionGroup {
+class DART_DYNAMICS_API FCLCollisionGroup : public CollisionGroup {
 public:
   friend class FCLCollisionDetector;
 

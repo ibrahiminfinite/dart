@@ -39,11 +39,12 @@
 #include <Eigen/Dense>
 
 #include "dart/optimization/Function.hpp"
+#include "dart/optimization/export.hpp"
 
 namespace dart {
 namespace optimization {
 
-class MultiObjectiveProblem {
+class DART_OPTIMIZATION_API MultiObjectiveProblem {
 public:
   /// Constructor
   explicit MultiObjectiveProblem(std::size_t dim, std::size_t integerDim = 0u);

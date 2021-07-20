@@ -37,6 +37,7 @@
 
 #include "dart/common/EmbeddedAspect.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -48,7 +49,7 @@ class ShapeFrame;
 
 namespace detail {
 
-struct VisualAspectProperties {
+struct DART_DYNAMICS_API VisualAspectProperties {
   /// Color for the primitive shape
   Eigen::Vector4d mRGBA;
 
@@ -73,7 +74,7 @@ struct VisualAspectProperties {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-struct CollisionAspectProperties {
+struct DART_DYNAMICS_API CollisionAspectProperties {
   /// This object is collidable if true
   bool mCollidable;
 
@@ -84,7 +85,7 @@ struct CollisionAspectProperties {
   virtual ~CollisionAspectProperties() = default;
 };
 
-struct DynamicsAspectProperties {
+struct DART_DYNAMICS_API DynamicsAspectProperties {
   /// Primary coefficient of friction
   double mFrictionCoeff;
 
@@ -140,7 +141,7 @@ struct DynamicsAspectProperties {
   virtual ~DynamicsAspectProperties() = default;
 };
 
-struct ShapeFrameProperties {
+struct DART_DYNAMICS_API ShapeFrameProperties {
   /// Pointer to a shape
   ShapePtr mShape;
 

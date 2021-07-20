@@ -77,7 +77,7 @@ private:
 using Plane3f = Plane3<float>;
 using Plane3d = Plane3<double>;
 
-extern template class Plane3<double>;
+extern template class DART_MATH_API Plane3<double>;
 
 } // namespace math
 } // namespace dart

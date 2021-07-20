@@ -72,7 +72,7 @@ private:
 using Cylinderf = Cylinder<float>;
 using Cylinderd = Cylinder<double>;
 
-extern template class Cylinder<double>;
+extern template class DART_MATH_API Cylinder<double>;
 
 } // namespace math
 } // namespace dart

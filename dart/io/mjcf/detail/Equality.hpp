@@ -37,6 +37,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Weld.hpp"
 
@@ -45,7 +46,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class Equality final {
+class DART_IO_API Equality final {
 public:
   Equality() = default;
 

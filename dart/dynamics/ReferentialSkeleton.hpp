@@ -38,13 +38,14 @@
 
 #include "dart/dynamics/MetaSkeleton.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// ReferentialSkeleton is a base class used to implement Linkage, Group, and
 /// other classes that are used to reference subsections of Skeletons.
-class ReferentialSkeleton : public MetaSkeleton {
+class DART_DYNAMICS_API ReferentialSkeleton : public MetaSkeleton {
 public:
   /// Remove copy operator
   /// TODO(MXG): Consider allowing this

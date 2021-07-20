@@ -38,12 +38,13 @@
 #include <set>
 
 #include "dart/common/detail/ConnectionBody.hpp"
+#include "dart/common/export.hpp"
 
 namespace dart {
 namespace common {
 
 /// class Connection
-class Connection {
+class DART_COMMON_API Connection {
 public:
   /// Default constructor
   Connection();
@@ -88,7 +89,7 @@ private:
 };
 
 /// class ScopedConnection
-class ScopedConnection : public Connection {
+class DART_COMMON_API ScopedConnection : public Connection {
 public:
   /// Default constructor
   ScopedConnection(const Connection& _other);

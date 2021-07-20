@@ -36,6 +36,7 @@
 #include <random>
 
 #include "dart/optimization/Solver.hpp"
+#include "dart/optimization/export.hpp"
 
 namespace dart {
 namespace optimization {
@@ -46,7 +47,7 @@ namespace optimization {
 /// objective function and assigned weights) to solve nonlinear problems. Note
 /// that this is not a good option for Problems with difficult constraint
 /// functions that need to be solved exactly.
-class GradientDescentSolver : public Solver {
+class DART_OPTIMIZATION_API GradientDescentSolver : public Solver {
 public:
   static const std::string Type;
 

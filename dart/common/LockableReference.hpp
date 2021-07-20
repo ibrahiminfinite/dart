@@ -36,6 +36,8 @@
 #include <memory>
 #include <vector>
 
+#include "dart/common/export.hpp"
+
 namespace dart {
 namespace common {
 
@@ -46,7 +48,7 @@ namespace common {
 /// This class is compatible to BasicLockable concept so that it can be used
 /// as a template parameter that requires BasicLockable concept such as
 /// std::lock_guard.
-class LockableReference {
+class DART_COMMON_API LockableReference {
 public:
   /// Default construtor
   constexpr LockableReference() noexcept = default;

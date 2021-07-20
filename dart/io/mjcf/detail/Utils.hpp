@@ -38,6 +38,7 @@
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/simulation/World.hpp"
@@ -49,11 +50,12 @@ namespace detail {
 
 /// Checks if orientation elements (i.e., <quat>, <axisangle>, <euler>,
 /// <xyaxes>, <zaxis>) are properly set in \c element
-Errors checkOrientationValidity(const tinyxml2::XMLElement* element);
+DART_IO_API Errors
+checkOrientationValidity(const tinyxml2::XMLElement* element);
 
 /// Extracts rotation matrix from "pre-parsed" orientation elements and the
 /// compiler settings
-Eigen::Matrix3d compileRotation(
+DART_IO_API Eigen::Matrix3d compileRotation(
     const Eigen::Quaterniond& quat,
     const std::optional<Eigen::Vector4d>& axisAngle,
     const std::optional<Eigen::Vector3d>& euler,
@@ -67,13 +69,13 @@ Eigen::Matrix3d compileRotation(
 /// \param[in] retriever The resource retriever used for the main MJCF model
 /// file
 /// \return Errors occured in hadling <include> elements
-Errors handleInclude(
+DART_IO_API Errors handleInclude(
     tinyxml2::XMLElement* element,
     const common::Uri& baseUri,
     const common::ResourceRetrieverPtr& retriever);
 
 /// Finds all BodyNodes by name
-std::vector<dynamics::BodyNode*> getBodyNodes(
+DART_IO_API std::vector<dynamics::BodyNode*> getBodyNodes(
     const simulation::World& world, const std::string& name);
 
 } // namespace detail

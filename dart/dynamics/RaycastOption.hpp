@@ -36,10 +36,12 @@
 #include <cstddef>
 #include <memory>
 
+#include "dart/dynamics/export.hpp"
+
 namespace dart {
 namespace dynamics {
 
-struct RaycastOption {
+struct DART_DYNAMICS_API RaycastOption {
   /// Constructor
   RaycastOption(bool enableAllHits = false, bool sortByClosest = false);
 

@@ -34,6 +34,7 @@
 #define DART_IO_MJCF_DETAIL_TYPES_HPP_
 
 #include "dart/common/Platform.hpp"
+#include "dart/io/export.hpp"
 
 namespace dart {
 namespace io {

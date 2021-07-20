@@ -74,7 +74,7 @@ private:
 using Cubef = Cube<float>;
 using Cubed = Cube<double>;
 
-extern template class Cube<double>;
+extern template class DART_MATH_API Cube<double>;
 
 } // namespace math
 } // namespace dart

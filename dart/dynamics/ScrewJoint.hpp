@@ -34,12 +34,13 @@
 #define DART_DYNAMICS_SCREWJOINT_HPP_
 
 #include "dart/dynamics/detail/ScrewJointAspect.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// class ScrewJoint
-class ScrewJoint : public detail::ScrewJointBase {
+class DART_DYNAMICS_API ScrewJoint : public detail::ScrewJointBase {
 public:
   friend class Skeleton;
   using UniqueProperties = detail::ScrewJointUniqueProperties;

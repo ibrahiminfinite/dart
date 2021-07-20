@@ -34,12 +34,13 @@
 #define DART_DYNAMICS_PRISMATICJOINT_HPP_
 
 #include "dart/dynamics/detail/PrismaticJointAspect.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// class RevoluteJoint
-class PrismaticJoint : public detail::PrismaticJointBase {
+class DART_DYNAMICS_API PrismaticJoint : public detail::PrismaticJointBase {
 public:
   friend class Skeleton;
   using Base = detail::PrismaticJointBase;

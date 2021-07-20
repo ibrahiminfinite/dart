@@ -41,7 +41,7 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-struct MarkerProperties {
+struct DART_DYNAMICS_API MarkerProperties {
   enum ConstraintType { NO, HARD, SOFT };
 
   Eigen::Vector4d mColor;

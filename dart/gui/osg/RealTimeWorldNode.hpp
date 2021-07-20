@@ -35,13 +35,14 @@
 
 #include <osg/Timer>
 
+#include "dart/gui/export.hpp"
 #include "dart/gui/osg/WorldNode.hpp"
 
 namespace dart {
 namespace gui {
 namespace osg {
 
-class RealTimeWorldNode : public WorldNode {
+class DART_GUI_API RealTimeWorldNode : public WorldNode {
 public:
   /// Construct a world node that will attempt to run a simulation with close
   /// to real-time playback. If a simulation is too computationally expensive,

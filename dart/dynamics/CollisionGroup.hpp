@@ -45,11 +45,12 @@
 #include "dart/dynamics/RaycastOption.hpp"
 #include "dart/dynamics/RaycastResult.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class CollisionGroup {
+class DART_DYNAMICS_API CollisionGroup {
 public:
   /// Constructor
   CollisionGroup(const CollisionDetectorPtr& collisionDetector);

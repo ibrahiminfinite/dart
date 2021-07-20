@@ -36,6 +36,7 @@
 #include <ode/ode.h>
 
 #include "dart/dynamics/CollisionObject.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/dynamics/ode/OdeCollisionDetector.hpp"
 
 namespace dart {
@@ -45,7 +46,7 @@ namespace detail {
 class OdeGeom;
 } // namespace detail
 
-class OdeCollisionObject : public CollisionObject {
+class DART_DYNAMICS_API OdeCollisionObject : public CollisionObject {
 public:
   friend class OdeCollisionDetector;
   friend class OdeCollisionGroup;

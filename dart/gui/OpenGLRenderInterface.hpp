@@ -38,6 +38,7 @@
 
 #include "dart/gui/LoadOpengl.hpp"
 #include "dart/gui/RenderInterface.hpp"
+#include "dart/gui/export.hpp"
 
 namespace dart {
 
@@ -49,7 +50,7 @@ class ShapeFrame;
 } // namespace dynamics
 
 namespace gui {
-class OpenGLRenderInterface : public RenderInterface {
+class DART_GUI_API OpenGLRenderInterface : public RenderInterface {
 public:
   OpenGLRenderInterface()
     : mViewportX(0.0),

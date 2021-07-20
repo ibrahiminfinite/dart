@@ -38,6 +38,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Body.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
@@ -50,7 +51,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class Worldbody final {
+class DART_IO_API Worldbody final {
 public:
   /// Default constructor
   Worldbody() = default;

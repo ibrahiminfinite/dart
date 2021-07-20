@@ -38,6 +38,7 @@
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Types.hpp"
 
@@ -46,7 +47,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-struct JointAttributes final {
+struct DART_IO_API JointAttributes final {
   std::optional<std::string> mName;
 
   JointType mType{JointType::HINGE};

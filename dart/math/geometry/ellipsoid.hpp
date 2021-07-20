@@ -63,7 +63,7 @@ private:
 using Ellipsoidf = Ellipsoid<float>;
 using Ellipsoidd = Ellipsoid<double>;
 
-extern template class Ellipsoid<double>;
+extern template class DART_MATH_API Ellipsoid<double>;
 
 } // namespace math
 } // namespace dart

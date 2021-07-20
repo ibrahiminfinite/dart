@@ -74,7 +74,7 @@ private:
 using Cuboidf = Cuboid<float>;
 using Cuboidd = Cuboid<double>;
 
-extern template class Cuboid<double>;
+extern template class DART_MATH_API Cuboid<double>;
 
 } // namespace math
 } // namespace dart

@@ -36,13 +36,14 @@
 #include <vector>
 
 #include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// MultiSphereConvexHullShape represents the convex hull of a collection of
 /// spheres.
-class MultiSphereConvexHullShape : public Shape {
+class DART_DYNAMICS_API MultiSphereConvexHullShape : public Shape {
 public:
   using Sphere = std::pair<double, Eigen::Vector3d>;
   using Spheres = std::vector<Sphere>;

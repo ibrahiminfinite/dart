@@ -37,6 +37,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/math/MathTypes.hpp"
@@ -48,7 +49,7 @@ namespace detail {
 
 class Body;
 
-class Inertial final {
+class DART_IO_API Inertial final {
 public:
   Inertial() = default;
 

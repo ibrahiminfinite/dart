@@ -39,11 +39,13 @@
 
 #include "dart/common/Resource.hpp"
 #include "dart/common/ResourceRetriever.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class AssimpInputResourceRetrieverAdaptor : public Assimp::IOSystem {
+class DART_DYNAMICS_API AssimpInputResourceRetrieverAdaptor
+  : public Assimp::IOSystem {
 public:
   explicit AssimpInputResourceRetrieverAdaptor(
       const common::ResourceRetrieverPtr& _resourceRetriever);

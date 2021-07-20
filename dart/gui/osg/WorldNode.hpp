@@ -39,6 +39,7 @@
 #include <osg/Group>
 #include <osgShadow/ShadowTechnique>
 
+#include "dart/gui/export.hpp"
 #include "dart/gui/osg/Viewer.hpp"
 
 namespace dart {
@@ -62,7 +63,7 @@ class EntityNode;
 class Viewer;
 
 /// WorldNode class encapsulates a World to be displayed in OpenSceneGraph
-class WorldNode : public ::osg::Group {
+class DART_GUI_API WorldNode : public ::osg::Group {
 public:
   friend class Viewer;
 

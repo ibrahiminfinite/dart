@@ -32,6 +32,8 @@
 
 #pragma once
 
+#include "dart/common/export.hpp"
+
 #define DART_LOG_LEVEL_TRACE 0
 #define DART_LOG_LEVEL_DEBUG 1
 #define DART_LOG_LEVEL_INFO 2
@@ -126,7 +128,7 @@ enum class LogLevel {
 /// Sets log level of the global logger.
 ///
 /// Use LogLevel::OFF to completely turn off logging.
-void set_log_level(LogLevel level);
+DART_COMMON_API void set_log_level(LogLevel level);
 
 /// Logs for a trace message
 template <typename S, typename... Args>

@@ -50,6 +50,21 @@ if(DART_ENABLE_SIMD)
   endif()
 endif()
 
+# Active log level
+set(compile_definitions_public -DDART_ACTIVE_LOG_LEVEL=${DART_ACTIVE_LOG_LEVEL})
+
+# Explicit template instantiation options
+if(DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE)
+  list(APPEND compile_definitions_public -DDART_BUILD_TEMPLATE_CODE_FOR_DOUBLE=1)
+else()
+  list(APPEND compile_definitions_public -DDART_BUILD_TEMPLATE_CODE_FOR_DOUBLE=0)
+endif()
+if(DART_BUILD_TEMPLATE_CODE_FOR_FLOAT)
+  list(APPEND compile_definitions_public -DDART_BUILD_TEMPLATE_CODE_FOR_FLOAT=1)
+else()
+  list(APPEND compile_definitions_public -DDART_BUILD_TEMPLATE_CODE_FOR_FLOAT=0)
+endif()
+
 # CodeCov settings
 # Reference: https://github.com/codecov/example-cpp11-cmake
 if(DART_CODECOV AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
@@ -91,7 +106,7 @@ dart_add_component(
   TARGET_LINK_OPTIONS_PUBLIC
     ${link_options_public}
   TARGET_COMPILE_DEFINITIONS_PUBLIC
-    -DDART_ACTIVE_LOG_LEVEL=${DART_ACTIVE_LOG_LEVEL}
+    ${compile_definitions_public}
   TARGET_COMPILE_FEATURES_PUBLIC
     cxx_std_17
   TARGET_COMPILE_OPTIONS_PUBLIC
@@ -99,5 +114,6 @@ dart_add_component(
   SUB_DIRECTORIES
     detail
   GENERATE_META_HEADER
+  GENERATE_EXPORT_HEADER
   FORMAT_CODE
 )

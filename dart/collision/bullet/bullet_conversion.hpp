@@ -33,6 +33,7 @@
 #pragma once
 
 #include "dart/collision/bullet/bullet_include.hpp"
+#include "dart/collision/export.hpp"
 #include "dart/math/type.hpp"
 
 namespace dart {

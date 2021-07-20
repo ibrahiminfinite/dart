@@ -34,11 +34,12 @@
 #define DART_DYNAMICS_BOXSHAPE_HPP_
 
 #include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class BoxShape : public Shape {
+class DART_DYNAMICS_API BoxShape : public Shape {
 public:
   /// \brief Constructor.
   explicit BoxShape(const Eigen::Vector3d& _size);

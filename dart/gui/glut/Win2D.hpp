@@ -33,6 +33,7 @@
 #ifndef DART_GUI_GLUT_WIN2D_HPP_
 #define DART_GUI_GLUT_WIN2D_HPP_
 
+#include "dart/gui/export.hpp"
 #include "dart/gui/glut/Window.hpp"
 
 namespace dart {
@@ -40,7 +41,7 @@ namespace gui {
 namespace glut {
 
 /// \brief
-class Win2D : public glut::Window {
+class DART_GUI_API Win2D : public glut::Window {
 public:
   /// \brief
   Win2D();

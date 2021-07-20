@@ -37,6 +37,7 @@
 #include <unordered_map>
 
 #include "dart/collision/collision_option.hpp"
+#include "dart/collision/export.hpp"
 #include "dart/collision/object.hpp"
 #include "dart/collision/type.hpp"
 #include "dart/common/Factory.hpp"
@@ -111,7 +112,13 @@ private:
 using Enginef = Engine<float>;
 using Engined = Engine<double>;
 
-extern template class Engine<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API Engine<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API Engine<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

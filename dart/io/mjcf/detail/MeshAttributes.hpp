@@ -38,6 +38,7 @@
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 
 namespace dart {
@@ -47,7 +48,7 @@ namespace detail {
 
 /// Intermediate raw data read from the XML file. For the details, see
 /// http://www.mujoco.org/book/XMLreference.html#mesh
-struct MeshAttributes final {
+struct DART_IO_API MeshAttributes final {
   /// Name of the Asset
   std::optional<std::string> mName;
 

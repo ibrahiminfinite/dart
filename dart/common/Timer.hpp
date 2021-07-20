@@ -35,6 +35,8 @@
 
 #include <string>
 
+#include "dart/common/export.hpp"
+
 #ifdef _WIN32
   #ifdef NOMINMAX
     #include <windows.h>
@@ -58,7 +60,7 @@ namespace common {
 ///
 /// This is a definition of mTimer class.
 /// For measure the time, gettimeofday() api is used
-class Timer {
+class DART_COMMON_API Timer {
 public:
   /// \brief Default constructor
   explicit Timer(const std::string& _name = "Noname Timer");

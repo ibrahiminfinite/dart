@@ -35,6 +35,7 @@
 
 #include "dart/common/SharedLibrary.hpp"
 #include "dart/dynamics/IkFast.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -43,7 +44,7 @@ namespace dynamics {
 ///
 /// The detail of IkFast can be found here:
 /// http://openrave.org/docs/0.8.2/openravepy/ikfast/
-class SharedLibraryIkFast : public IkFast {
+class DART_DYNAMICS_API SharedLibraryIkFast : public IkFast {
 public:
   /// Constructor
   ///

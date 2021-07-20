@@ -88,7 +88,13 @@ private:
 using OdeObjectf = OdeObject<float>;
 using OdeObjectd = OdeObject<double>;
 
-extern template class OdeObject<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API OdeObject<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API OdeObject<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

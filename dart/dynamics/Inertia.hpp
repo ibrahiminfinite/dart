@@ -35,12 +35,13 @@
 
 #include <array>
 
+#include "dart/dynamics/export.hpp"
 #include "dart/math/MathTypes.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class Inertia {
+class DART_DYNAMICS_API Inertia {
 public:
   /// Enumeration for minimal inertia parameters
   enum Param {

@@ -116,7 +116,7 @@ protected:
   Normals mTetraNormals;
 };
 
-extern template class TetraMesh<double>;
+extern template class DART_MATH_API TetraMesh<double>;
 
 using TetraMeshf = TetraMesh<float>;
 using TetraMeshd = TetraMesh<double>;

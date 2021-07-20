@@ -33,5 +33,6 @@ dart_add_component(
   SUB_DIRECTORIES
     nlopt ipopt pagmo
   GENERATE_META_HEADER
+  GENERATE_EXPORT_HEADER
   FORMAT_CODE
 )

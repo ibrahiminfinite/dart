@@ -39,12 +39,13 @@
 #include <Eigen/Dense>
 
 #include "dart/optimization/Function.hpp"
+#include "dart/optimization/export.hpp"
 
 namespace dart {
 namespace optimization {
 
 /// \brief class Problem
-class Problem {
+class DART_OPTIMIZATION_API Problem {
 public:
   /// \brief Constructor
   explicit Problem(std::size_t _dim = 0);

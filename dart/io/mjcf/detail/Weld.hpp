@@ -35,6 +35,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Default.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/WeldAttributes.hpp"
@@ -44,7 +45,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class Weld final {
+class DART_IO_API Weld final {
 public:
   Weld() = default;
 

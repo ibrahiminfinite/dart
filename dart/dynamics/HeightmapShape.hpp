@@ -34,6 +34,7 @@
 #define DART_DYNAMICS_HEIGHTMAPSHAPE_HPP_
 
 #include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {

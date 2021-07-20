@@ -34,11 +34,12 @@
 #define DART_DYNAMICS_SPHERESHAPE_HPP_
 
 #include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class SphereShape : public Shape {
+class DART_DYNAMICS_API SphereShape : public Shape {
 public:
   /// Constructor.
   explicit SphereShape(double radius);

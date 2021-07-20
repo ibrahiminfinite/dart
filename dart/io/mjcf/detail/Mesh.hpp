@@ -36,6 +36,7 @@
 #include <tinyxml2.h>
 
 #include "dart/dynamics/MeshShape.hpp"
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/MeshAttributes.hpp"
@@ -45,7 +46,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class Mesh final {
+class DART_IO_API Mesh final {
 public:
   /// Default constructor
   Mesh() = default;

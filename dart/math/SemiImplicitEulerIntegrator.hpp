@@ -34,12 +34,13 @@
 #define DART_INTEGRATION_SEMIIMPLICITEULERINTEGRATOR_HPP_
 
 #include "dart/math/Integrator.hpp"
+#include "dart/math/export.hpp"
 
 namespace dart {
 namespace math {
 
 /// \brief class SemiImplicitEulerIntegrator
-class SemiImplicitEulerIntegrator : public Integrator {
+class DART_MATH_API SemiImplicitEulerIntegrator : public Integrator {
 public:
   /// \brief Constructor
   SemiImplicitEulerIntegrator();

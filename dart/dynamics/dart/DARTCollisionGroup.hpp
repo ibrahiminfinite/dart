@@ -34,13 +34,14 @@
 #define DART_COLLISION_DART_DARTCOLLISIONGROUP_HPP_
 
 #include "dart/dynamics/CollisionGroup.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 class DARTCollisionObject;
 
-class DARTCollisionGroup : public CollisionGroup {
+class DART_DYNAMICS_API DARTCollisionGroup : public CollisionGroup {
 public:
   friend class DARTCollisionDetector;
 

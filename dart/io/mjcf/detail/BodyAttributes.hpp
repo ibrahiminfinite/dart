@@ -39,6 +39,7 @@
 #include <Eigen/Dense>
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Inertial.hpp"
 #include "dart/math/MathTypes.hpp"
@@ -52,7 +53,7 @@ class Size;
 
 /// Intermediate raw data read from the XML file. For the details, see
 /// http://www.mujoco.org/book/XMLreference.html#body
-struct BodyAttributes final {
+struct DART_IO_API BodyAttributes final {
   /// Name of the body.
   std::optional<std::string> mName;
 

@@ -32,6 +32,7 @@
 
 #pragma once
 
+#include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
 #include "dart/math/type.hpp"
 
@@ -84,7 +85,13 @@ struct Contact {
 using Contactf = Contact<float>;
 using Contactd = Contact<double>;
 
-extern template struct Contact<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template struct DART_COLLISION_API Contact<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template struct DART_COLLISION_API Contact<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

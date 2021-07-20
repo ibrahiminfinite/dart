@@ -82,7 +82,13 @@ private:
   friend class FclGroup<S>;
 };
 
-extern template class FclObject<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API FclObject<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API FclObject<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

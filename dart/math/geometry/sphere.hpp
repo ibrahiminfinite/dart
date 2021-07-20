@@ -82,7 +82,7 @@ private:
 using Spheref = Sphere<float>;
 using Sphered = Sphere<double>;
 
-extern template class Sphere<double>;
+extern template class DART_MATH_API Sphere<double>;
 
 } // namespace math
 } // namespace dart

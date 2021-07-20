@@ -32,6 +32,7 @@
 
 #pragma once
 
+#include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
 
 namespace dart {
@@ -57,7 +58,13 @@ struct CollisionOption {
 using CollisionOptionf = CollisionOption<float>;
 using CollisionOptiond = CollisionOption<double>;
 
-extern template struct CollisionOption<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template struct DART_COLLISION_API CollisionOption<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template struct DART_COLLISION_API CollisionOption<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

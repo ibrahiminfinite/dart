@@ -34,11 +34,12 @@
 #define DART_DYNAMICS_ELLIPSOIDSHAPE_HPP_
 
 #include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class EllipsoidShape : public Shape {
+class DART_DYNAMICS_API EllipsoidShape : public Shape {
 public:
   /// \brief Constructor.
   explicit EllipsoidShape(const Eigen::Vector3d& diameters);

@@ -37,6 +37,7 @@
 #include "dart/collision/bullet/bullet_include.hpp"
 #include "dart/collision/bullet/bullet_type.hpp"
 #include "dart/collision/engine.hpp"
+#include "dart/collision/export.hpp"
 #include "dart/math/SmartPointer.hpp"
 
 namespace dart {
@@ -93,7 +94,13 @@ DART_REGISTER_ENGINE_OUT_HEADER(BulletEngine<S>);
 using BulletEnginef = BulletEngine<float>;
 using BulletEngined = BulletEngine<double>;
 
-extern template class BulletEngine<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API BulletEngine<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API BulletEngine<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

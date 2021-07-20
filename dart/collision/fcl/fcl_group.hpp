@@ -72,7 +72,13 @@ protected:
   std::unique_ptr<FCLCollisionManager> m_broad_phase_alg;
 };
 
-extern template class FclGroup<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API FclGroup<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API FclGroup<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

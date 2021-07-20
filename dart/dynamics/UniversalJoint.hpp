@@ -34,12 +34,13 @@
 #define DART_DYNAMICS_UNIVERSALJOINT_HPP_
 
 #include "dart/dynamics/detail/UniversalJointAspect.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// class UniversalJoint
-class UniversalJoint : public detail::UniversalJointBase {
+class DART_DYNAMICS_API UniversalJoint : public detail::UniversalJointBase {
 public:
   friend class Skeleton;
   using UniqueProperties = detail::UniversalJointUniqueProperties;

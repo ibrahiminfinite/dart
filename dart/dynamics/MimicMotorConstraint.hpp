@@ -34,6 +34,7 @@
 #define DART_CONSTRAINT_MIMICMOTORCONSTRAINT_HPP_
 
 #include "dart/dynamics/ConstraintBase.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 
@@ -45,7 +46,7 @@ class Joint;
 namespace dynamics {
 
 /// Servo motor constraint
-class MimicMotorConstraint : public ConstraintBase {
+class DART_DYNAMICS_API MimicMotorConstraint : public ConstraintBase {
 public:
   /// Constructor
   explicit MimicMotorConstraint(

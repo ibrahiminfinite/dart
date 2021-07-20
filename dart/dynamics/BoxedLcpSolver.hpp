@@ -37,10 +37,12 @@
 
 #include <Eigen/Core>
 
+#include "dart/dynamics/export.hpp"
+
 namespace dart {
 namespace dynamics {
 
-class BoxedLcpSolver {
+class DART_DYNAMICS_API BoxedLcpSolver {
 public:
   /// Destructor
   virtual ~BoxedLcpSolver() = default;

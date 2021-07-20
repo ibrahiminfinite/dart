@@ -39,11 +39,12 @@
 #include <btBulletCollisionCommon.h>
 
 #include "dart/config.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-struct BulletCollisionShape {
+struct DART_DYNAMICS_API BulletCollisionShape {
   std::unique_ptr<btCollisionShape> mCollisionShape;
 
   /// Relative transform of the shape to the collision object

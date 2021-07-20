@@ -38,6 +38,7 @@
 #include <Eigen/Dense>
 
 #include "dart/dynamics/GenericJoint.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -47,7 +48,7 @@ class PrismaticJoint;
 namespace detail {
 
 //==============================================================================
-struct PrismaticJointUniqueProperties {
+struct DART_DYNAMICS_API PrismaticJointUniqueProperties {
   Eigen::Vector3d mAxis;
 
   PrismaticJointUniqueProperties(
@@ -57,8 +58,9 @@ struct PrismaticJointUniqueProperties {
 };
 
 //==============================================================================
-struct PrismaticJointProperties : GenericJoint<math::R1Space>::Properties,
-                                  PrismaticJointUniqueProperties {
+struct DART_DYNAMICS_API PrismaticJointProperties
+  : GenericJoint<math::R1Space>::Properties,
+    PrismaticJointUniqueProperties {
   DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(PrismaticJointProperties)
 
   PrismaticJointProperties(

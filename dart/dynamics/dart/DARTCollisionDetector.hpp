@@ -36,13 +36,14 @@
 #include <vector>
 
 #include "dart/dynamics/CollisionDetector.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 class DARTCollisionObject;
 
-class DARTCollisionDetector : public CollisionDetector {
+class DART_DYNAMICS_API DARTCollisionDetector : public CollisionDetector {
 public:
   using CollisionDetector::createCollisionGroup;
 

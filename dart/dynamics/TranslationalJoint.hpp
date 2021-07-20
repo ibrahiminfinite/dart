@@ -36,12 +36,14 @@
 #include <string>
 
 #include "dart/dynamics/GenericJoint.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// class TranslationalJoint
-class TranslationalJoint : public GenericJoint<math::R3Space> {
+class DART_DYNAMICS_API TranslationalJoint
+  : public GenericJoint<math::R3Space> {
 public:
   friend class Skeleton;
 

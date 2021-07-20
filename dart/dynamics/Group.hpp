@@ -30,15 +30,16 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/dynamics/ReferentialSkeleton.hpp"
-
 #ifndef DART_DYNAMICS_GROUP_HPP_
-  #define DART_DYNAMICS_GROUP_HPP_
+#define DART_DYNAMICS_GROUP_HPP_
+
+#include "dart/dynamics/ReferentialSkeleton.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class Group : public ReferentialSkeleton {
+class DART_DYNAMICS_API Group : public ReferentialSkeleton {
 public:
   /// Create a Group out of a set of BodyNodes. If _includeJoints is true, the
   /// parent Joint of each BodyNode will also be added to the Group. If

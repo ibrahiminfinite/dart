@@ -40,6 +40,7 @@
 #include <Eigen/Dense>
 
 #include "dart/optimization/Population.hpp"
+#include "dart/optimization/export.hpp"
 
 namespace dart {
 namespace optimization {
@@ -54,7 +55,7 @@ class MultiObjectiveProblem;
 /// for various problem types. This base class allows the different
 /// MultiObjectiveSolver implementations to be swapped out with each other
 /// quickly and easily to help with testing, benchmarking, and experimentation.
-class MultiObjectiveSolver {
+class DART_OPTIMIZATION_API MultiObjectiveSolver {
 public:
   /// The MultiObjectiveSolver::Properties class contains Solver parameters that
   /// are common to all MultiObjectiveSolver types. Most (but not necessarily

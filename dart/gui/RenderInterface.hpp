@@ -38,6 +38,7 @@
 #include <Eigen/Dense>
 #include <assimp/scene.h>
 
+#include "dart/gui/export.hpp"
 #include "dart/math/MathTypes.hpp"
 
 namespace dart {
@@ -55,7 +56,7 @@ enum DecoDrawType {
   DT_Max
 };
 
-class RenderInterface {
+class DART_GUI_API RenderInterface {
 public:
   RenderInterface()
   {

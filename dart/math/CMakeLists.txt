@@ -39,5 +39,6 @@ dart_add_component(
   SUB_DIRECTORIES
     detail geometry graph
   GENERATE_META_HEADER
+  GENERATE_EXPORT_HEADER
   FORMAT_CODE
 )

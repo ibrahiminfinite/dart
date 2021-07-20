@@ -38,6 +38,7 @@
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Types.hpp"
 #include "dart/math/MathTypes.hpp"
@@ -49,7 +50,7 @@ namespace detail {
 
 /// Intermediate raw data read from the XML file. For the details, see
 /// http://www.mujoco.org/book/XMLreference.html#geom
-struct GeomAttributes final {
+struct DART_IO_API GeomAttributes final {
   /// Name of the geom
   std::optional<std::string> mName;
 

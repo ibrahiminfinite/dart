@@ -47,6 +47,7 @@
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/io/CompositeResourceRetriever.hpp"
 #include "dart/io/PackageResourceRetriever.hpp"
+#include "dart/io/export.hpp"
 #include "dart/simulation/World.hpp"
 
 namespace urdf {
@@ -74,7 +75,7 @@ namespace io {
 /**
  * @class DartLoader
  */
-class DartLoader {
+class DART_IO_API DartLoader {
 public:
   /// Flags for specifying URDF file parsing policies.
   enum Flags {

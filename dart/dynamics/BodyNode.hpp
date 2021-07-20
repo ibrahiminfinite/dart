@@ -49,6 +49,7 @@
 #include "dart/dynamics/SpecializedNodeManager.hpp"
 #include "dart/dynamics/TemplatedJacobianNode.hpp"
 #include "dart/dynamics/detail/BodyNodeAspect.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/math/Geometry.hpp"
 
 namespace dart {
@@ -70,7 +71,7 @@ class Marker;
 /// BodyNode inherits Frame, and a parent Frame of a BodyNode is the parent
 /// BodyNode of the BodyNode.
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class BodyNode
+class DART_DYNAMICS_API BodyNode
   : public detail::BodyNodeCompositeBase,
     public virtual BodyNodeSpecializedFor<ShapeNode, EndEffector, Marker>,
     public SkeletonRefCountingBase,

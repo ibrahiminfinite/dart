@@ -32,6 +32,7 @@
 
 #pragma once
 
+#include "dart/math/export.hpp"
 #include "dart/math/geometry/convex3.hpp"
 #include "dart/math/type.hpp"
 
@@ -73,7 +74,7 @@ private:
 using Capsulef = Capsule<float>;
 using Capsuled = Capsule<double>;
 
-extern template class Capsule<double>;
+extern template class DART_MATH_API Capsule<double>;
 
 } // namespace math
 } // namespace dart

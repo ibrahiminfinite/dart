@@ -40,13 +40,14 @@
 #include <Eigen/Dense>
 
 #include "dart/optimization/MultiObjectiveProblem.hpp"
+#include "dart/optimization/export.hpp"
 
 namespace dart {
 namespace optimization {
 
 class MultiObjectiveProblem;
 
-class Population {
+class DART_OPTIMIZATION_API Population {
 public:
   /// Constructor
   ///

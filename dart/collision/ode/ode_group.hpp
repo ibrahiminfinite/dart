@@ -69,7 +69,13 @@ private:
   dSpaceID m_ode_space_id;
 };
 
-extern template class OdeGroup<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API OdeGroup<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API OdeGroup<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

@@ -35,6 +35,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 
 namespace dart {
@@ -42,7 +43,7 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class Size final {
+class DART_IO_API Size final {
 public:
   Size() = default;
 

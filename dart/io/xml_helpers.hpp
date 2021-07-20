@@ -39,6 +39,7 @@
 
 #include "dart/common/Console.hpp"
 #include "dart/common/ResourceRetriever.hpp"
+#include "dart/io/export.hpp"
 #include "dart/math/MathTypes.hpp"
 #include "dart/math/type.hpp"
 
@@ -56,13 +57,13 @@ std::string to_string(
 template <typename S, int N>
 math::Vector<S, N> to_vector(const std::string& str);
 
-math::Vector2d to_vector2d(const std::string& str);
-math::Vector3d to_vector3d(const std::string& str);
-math::Vector4d to_vector4d(const std::string& str);
-math::Vector6d to_vector6d(const std::string& str);
+DART_IO_API math::Vector2d to_vector2d(const std::string& str);
+DART_IO_API math::Vector3d to_vector3d(const std::string& str);
+DART_IO_API math::Vector4d to_vector4d(const std::string& str);
+DART_IO_API math::Vector6d to_vector6d(const std::string& str);
 
-math::Vector2i to_vector2i(const std::string& str);
-math::Vector3i to_vector3i(const std::string& str);
+DART_IO_API math::Vector2i to_vector2i(const std::string& str);
+DART_IO_API math::Vector3i to_vector3i(const std::string& str);
 
 template <typename S>
 math::VectorX<S> to_vector_x(const std::string& str);
@@ -80,80 +81,81 @@ math::Isometry3<S> to_isometry3(
     const std::string& str, const std::string& rotation_type = "intrinsic");
 // TODO(JS): Change to return the success
 
-std::string getValueString(
+DART_IO_API std::string getValueString(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-bool getValueBool(
+DART_IO_API bool getValueBool(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-int getValueInt(
+DART_IO_API int getValueInt(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-unsigned int getValueUInt(
+DART_IO_API unsigned int getValueUInt(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-float getValueFloat(
+DART_IO_API float getValueFloat(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-double getValueDouble(
+DART_IO_API double getValueDouble(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-Eigen::Vector2d getValueVector2d(
+DART_IO_API Eigen::Vector2d getValueVector2d(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-Eigen::Vector3d getValueVector3d(
+DART_IO_API Eigen::Vector3d getValueVector3d(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-Eigen::Vector3i getValueVector3i(
+DART_IO_API Eigen::Vector3i getValueVector3i(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-Eigen::Vector6d getValueVector6d(
+DART_IO_API Eigen::Vector6d getValueVector6d(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-Eigen::VectorXd getValueVectorXd(
+DART_IO_API Eigen::VectorXd getValueVectorXd(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-Eigen::Isometry3d getValueIsometry3d(
+DART_IO_API Eigen::Isometry3d getValueIsometry3d(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
-Eigen::Isometry3d getValueIsometry3dWithExtrinsicRotation(
+DART_IO_API Eigen::Isometry3d getValueIsometry3dWithExtrinsicRotation(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
 
 // TODO(JS): Deprecate
-void openXMLFile(
+DART_IO_API void openXMLFile(
     tinyxml2::XMLDocument& doc,
     const common::Uri& uri,
     const common::ResourceRetrieverPtr& retriever = nullptr);
 
-bool readXmlFile(
+DART_IO_API bool readXmlFile(
     tinyxml2::XMLDocument& doc,
     const common::Uri& uri,
     const common::ResourceRetrieverPtr& retrieverOrNullPtr = nullptr);
 
-bool hasElement(
+DART_IO_API bool hasElement(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
 
-const tinyxml2::XMLElement* getElement(
+DART_IO_API const tinyxml2::XMLElement* getElement(
     const tinyxml2::XMLElement* parentElement, const std::string& name);
 
-tinyxml2::XMLElement* getElement(
+DART_IO_API tinyxml2::XMLElement* getElement(
     tinyxml2::XMLElement* parentElement, const std::string& name);
 
-bool hasAttribute(const tinyxml2::XMLElement* element, const char* const name);
+DART_IO_API bool hasAttribute(
+    const tinyxml2::XMLElement* element, const char* const name);
 
-std::string getAttributeString(
+DART_IO_API std::string getAttributeString(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-bool getAttributeBool(
+DART_IO_API bool getAttributeBool(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-int getAttributeInt(
+DART_IO_API int getAttributeInt(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-unsigned int getAttributeUInt(
+DART_IO_API unsigned int getAttributeUInt(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-float getAttributeFloat(
+DART_IO_API float getAttributeFloat(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-double getAttributeDouble(
+DART_IO_API double getAttributeDouble(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-char getAttributeChar(
+DART_IO_API char getAttributeChar(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-Eigen::Vector2i getAttributeVector2i(
+DART_IO_API Eigen::Vector2i getAttributeVector2i(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-Eigen::Vector2d getAttributeVector2d(
+DART_IO_API Eigen::Vector2d getAttributeVector2d(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-Eigen::Vector3d getAttributeVector3d(
+DART_IO_API Eigen::Vector3d getAttributeVector3d(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-Eigen::Vector4d getAttributeVector4d(
+DART_IO_API Eigen::Vector4d getAttributeVector4d(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-Eigen::Vector6d getAttributeVector6d(
+DART_IO_API Eigen::Vector6d getAttributeVector6d(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
-Eigen::VectorXd getAttributeVectorXd(
+DART_IO_API Eigen::VectorXd getAttributeVectorXd(
     const tinyxml2::XMLElement* element, const std::string& attributeName);
 template <std::size_t N>
 Eigen::Matrix<double, N, 1> getAttributeVectorNd(
@@ -270,9 +272,10 @@ using ElementEnumerator = TemplatedElementEnumerator<tinyxml2::XMLElement>;
 using ConstElementEnumerator
     = TemplatedElementEnumerator<const tinyxml2::XMLElement>;
 
-bool copyNode(tinyxml2::XMLNode* destParent, const tinyxml2::XMLNode& src);
+DART_IO_API bool copyNode(
+    tinyxml2::XMLNode* destParent, const tinyxml2::XMLNode& src);
 
-bool copyChildNodes(
+DART_IO_API bool copyChildNodes(
     tinyxml2::XMLNode* destParent, const tinyxml2::XMLNode& src);
 
 } // namespace io

@@ -37,12 +37,14 @@
 
 #include <Eigen/Dense>
 
+#include "dart/dynamics/export.hpp"
+
 namespace dart {
 namespace dynamics {
 
 class CollisionObject;
 
-struct RayHit {
+struct DART_DYNAMICS_API RayHit {
   /// The collision object the ray hit
   const CollisionObject* mCollisionObject;
 
@@ -59,7 +61,7 @@ struct RayHit {
   RayHit();
 };
 
-struct RaycastResult {
+struct DART_DYNAMICS_API RaycastResult {
   /// Clear the result
   void clear();
 

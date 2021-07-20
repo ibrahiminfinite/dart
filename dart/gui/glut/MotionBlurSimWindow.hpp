@@ -45,13 +45,14 @@
 
 #include <Eigen/Dense>
 
+#include "dart/gui/export.hpp"
 #include "dart/gui/glut/SimWindow.hpp"
 
 namespace dart {
 namespace gui {
 namespace glut {
 
-class MotionBlurSimWindow : public glut::SimWindow {
+class DART_GUI_API MotionBlurSimWindow : public glut::SimWindow {
 public:
   /// \brief
   MotionBlurSimWindow();

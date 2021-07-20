@@ -42,15 +42,17 @@
 #include "dart/dynamics/FixedFrame.hpp"
 #include "dart/dynamics/TemplatedJacobianNode.hpp"
 #include "dart/dynamics/detail/ShapeFrameAspect.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 //==============================================================================
-class VisualAspect final : public common::AspectWithVersionedProperties<
-                               VisualAspect,
-                               detail::VisualAspectProperties,
-                               ShapeFrame> {
+class DART_DYNAMICS_API VisualAspect final
+  : public common::AspectWithVersionedProperties<
+        VisualAspect,
+        detail::VisualAspectProperties,
+        ShapeFrame> {
 public:
   using Base = common::AspectWithVersionedProperties<
       VisualAspect,
@@ -109,10 +111,11 @@ public:
 };
 
 //==============================================================================
-class CollisionAspect final : public common::AspectWithVersionedProperties<
-                                  CollisionAspect,
-                                  detail::CollisionAspectProperties,
-                                  ShapeFrame> {
+class DART_DYNAMICS_API CollisionAspect final
+  : public common::AspectWithVersionedProperties<
+        CollisionAspect,
+        detail::CollisionAspectProperties,
+        ShapeFrame> {
 public:
   CollisionAspect(const CollisionAspect&) = delete;
   CollisionAspect(const PropertiesData& properties = PropertiesData());
@@ -126,10 +129,11 @@ public:
 };
 
 //==============================================================================
-class DynamicsAspect final : public common::AspectWithVersionedProperties<
-                                 DynamicsAspect,
-                                 detail::DynamicsAspectProperties,
-                                 ShapeFrame> {
+class DART_DYNAMICS_API DynamicsAspect final
+  : public common::AspectWithVersionedProperties<
+        DynamicsAspect,
+        detail::DynamicsAspectProperties,
+        ShapeFrame> {
 public:
   using Base = common::AspectWithVersionedProperties<
       DynamicsAspect,
@@ -183,9 +187,9 @@ public:
 
 //==============================================================================
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class ShapeFrame : public virtual common::VersionCounter,
-                   public detail::ShapeFrameCompositeBase,
-                   public virtual Frame {
+class DART_DYNAMICS_API ShapeFrame : public virtual common::VersionCounter,
+                                     public detail::ShapeFrameCompositeBase,
+                                     public virtual Frame {
 public:
   friend class BodyNode;
 

@@ -38,13 +38,15 @@
 #include <Eigen/Dense>
 
 #include "dart/dynamics/CollisionDetector.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-int collide(CollisionObject* o1, CollisionObject* o2, CollisionResult& result);
+DART_DYNAMICS_API int collide(
+    CollisionObject* o1, CollisionObject* o2, CollisionResult& result);
 
-int collideBoxBox(
+DART_DYNAMICS_API int collideBoxBox(
     CollisionObject* o1,
     CollisionObject* o2,
     const Eigen::Vector3d& size0,
@@ -53,7 +55,7 @@ int collideBoxBox(
     const Eigen::Isometry3d& T1,
     CollisionResult& result);
 
-int collideBoxSphere(
+DART_DYNAMICS_API int collideBoxSphere(
     CollisionObject* o1,
     CollisionObject* o2,
     const Eigen::Vector3d& size0,
@@ -62,7 +64,7 @@ int collideBoxSphere(
     const Eigen::Isometry3d& T1,
     CollisionResult& result);
 
-int collideSphereBox(
+DART_DYNAMICS_API int collideSphereBox(
     CollisionObject* o1,
     CollisionObject* o2,
     const double& r0,
@@ -71,7 +73,7 @@ int collideSphereBox(
     const Eigen::Isometry3d& T1,
     CollisionResult& result);
 
-int collideSphereSphere(
+DART_DYNAMICS_API int collideSphereSphere(
     CollisionObject* o1,
     CollisionObject* o2,
     const double& r0,
@@ -80,7 +82,7 @@ int collideSphereSphere(
     const Eigen::Isometry3d& c1,
     CollisionResult& result);
 
-int collideCylinderSphere(
+DART_DYNAMICS_API int collideCylinderSphere(
     CollisionObject* o1,
     CollisionObject* o2,
     const double& cyl_rad,
@@ -90,7 +92,7 @@ int collideCylinderSphere(
     const Eigen::Isometry3d& T1,
     CollisionResult& result);
 
-int collideCylinderPlane(
+DART_DYNAMICS_API int collideCylinderPlane(
     CollisionObject* o1,
     CollisionObject* o2,
     const double& cyl_rad,

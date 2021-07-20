@@ -36,13 +36,14 @@
 #include <Eigen/Eigen>
 
 #include "dart/gui/Trackball.hpp"
+#include "dart/gui/export.hpp"
 #include "dart/gui/glut/Window.hpp"
 
 namespace dart {
 namespace gui {
 namespace glut {
 
-class Win3D : public glut::Window {
+class DART_GUI_API Win3D : public glut::Window {
 public:
   Win3D();
 

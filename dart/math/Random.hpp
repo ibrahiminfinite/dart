@@ -37,10 +37,12 @@
 
 #include <Eigen/Core>
 
+#include "dart/math/export.hpp"
+
 namespace dart {
 namespace math {
 
-class Random final {
+class DART_MATH_API Random final {
 public:
   using GeneratorType = std::mt19937;
 

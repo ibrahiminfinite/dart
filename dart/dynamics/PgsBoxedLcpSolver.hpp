@@ -36,12 +36,13 @@
 #include <vector>
 
 #include "dart/dynamics/BoxedLcpSolver.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// Implementation of projected Gauss-Seidel (PGS) LCP solver.
-class PgsBoxedLcpSolver : public BoxedLcpSolver {
+class DART_DYNAMICS_API PgsBoxedLcpSolver : public BoxedLcpSolver {
 public:
   struct Option {
     int mMaxIteration;

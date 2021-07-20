@@ -42,6 +42,7 @@
 #include "dart/common/VersionCounter.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
 #include "dart/dynamics/detail/JointAspect.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/math/MathTypes.hpp"
 
 namespace dart {
@@ -53,9 +54,10 @@ class DegreeOfFreedom;
 
 /// class Joint
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
-class Joint : public virtual common::Subject,
-              public virtual common::VersionCounter,
-              public common::EmbedProperties<Joint, detail::JointProperties> {
+class DART_DYNAMICS_API Joint
+  : public virtual common::Subject,
+    public virtual common::VersionCounter,
+    public common::EmbedProperties<Joint, detail::JointProperties> {
 public:
   using CompositeProperties = common::Composite::Properties;
   using Properties = detail::JointProperties;

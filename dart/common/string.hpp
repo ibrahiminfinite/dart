@@ -34,47 +34,48 @@
 
 #include <string>
 
+#include "dart/common/export.hpp"
 #include "dart/config.hpp"
 
 namespace dart::common {
 
-std::string to_upper(std::string str);
-void to_upper_in_place(std::string& str);
-std::string to_lower(std::string str);
-void to_lower_in_place(std::string& str);
+DART_COMMON_API std::string to_upper(std::string str);
+DART_COMMON_API void to_upper_in_place(std::string& str);
+DART_COMMON_API std::string to_lower(std::string str);
+DART_COMMON_API void to_lower_in_place(std::string& str);
 
-std::string trim(
+DART_COMMON_API std::string trim(
     const std::string& s, const std::string& whitespaces = " \n\r\t");
 
-std::string trim_left(
+DART_COMMON_API std::string trim_left(
     const std::string& s, const std::string& whitespaces = " \n\r\t");
 
-std::string trim_right(
+DART_COMMON_API std::string trim_right(
     const std::string& s, const std::string& whitespaces = " \n\r\t");
 
-std::vector<std::string> split(
+DART_COMMON_API std::vector<std::string> split(
     const std::string& s, const std::string& delims = " ");
 
-std::string to_string(bool v);
-std::string to_string(char v);
-std::string to_string(int v);
-std::string to_string(long v);
-std::string to_string(long long v);
-std::string to_string(unsigned v);
-std::string to_string(unsigned long v);
-std::string to_string(unsigned long long v);
-std::string to_string(float v);
-std::string to_string(double v);
-std::string to_string(long double v);
+DART_COMMON_API std::string to_string(bool v);
+DART_COMMON_API std::string to_string(char v);
+DART_COMMON_API std::string to_string(int v);
+DART_COMMON_API std::string to_string(long v);
+DART_COMMON_API std::string to_string(long long v);
+DART_COMMON_API std::string to_string(unsigned v);
+DART_COMMON_API std::string to_string(unsigned long v);
+DART_COMMON_API std::string to_string(unsigned long long v);
+DART_COMMON_API std::string to_string(float v);
+DART_COMMON_API std::string to_string(double v);
+DART_COMMON_API std::string to_string(long double v);
 
-bool to_bool(const std::string& str);
-char to_char(const std::string& str);
-int to_int(const std::string& str);
-unsigned int to_uint(const std::string& str);
-long to_long(const std::string& str);
-long long to_long_long(const std::string& str);
-float to_float(const std::string& str);
-double to_double(const std::string& str);
+DART_COMMON_API bool to_bool(const std::string& str);
+DART_COMMON_API char to_char(const std::string& str);
+DART_COMMON_API int to_int(const std::string& str);
+DART_COMMON_API unsigned int to_uint(const std::string& str);
+DART_COMMON_API long to_long(const std::string& str);
+DART_COMMON_API long long to_long_long(const std::string& str);
+DART_COMMON_API float to_float(const std::string& str);
+DART_COMMON_API double to_double(const std::string& str);
 
 template <typename S>
 S to_scalar(const std::string& str);

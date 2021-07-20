@@ -67,6 +67,8 @@ private:
 using Polygonf = Polygon<float>;
 using Polygond = Polygon<double>;
 
+extern template class Polygon<double>;
+
 } // namespace math
 } // namespace dart
 

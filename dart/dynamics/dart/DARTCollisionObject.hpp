@@ -36,13 +36,14 @@
 #include <Eigen/Dense>
 
 #include "dart/dynamics/CollisionObject.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 class CollisionObject;
 
-class DARTCollisionObject : public CollisionObject {
+class DART_DYNAMICS_API DARTCollisionObject : public CollisionObject {
 public:
   friend class DARTCollisionDetector;
 

@@ -35,11 +35,12 @@
 #include <string>
 
 #include "dart/math/SmartPointer.hpp"
+#include "dart/math/export.hpp"
 
 namespace dart {
 namespace math {
 
-class Geometry {
+class DART_MATH_API Geometry {
 public:
   /// DataVariance can be used by renderers to determine whether it should
   /// expect data for this geometry to change during each update.

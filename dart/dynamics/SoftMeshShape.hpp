@@ -37,6 +37,7 @@
 #include <assimp/scene.h>
 
 #include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -44,7 +45,7 @@ namespace dynamics {
 class SoftBodyNode;
 
 // TODO(JS): Implement
-class SoftMeshShape : public Shape {
+class DART_DYNAMICS_API SoftMeshShape : public Shape {
 public:
   friend class SoftBodyNode;
 

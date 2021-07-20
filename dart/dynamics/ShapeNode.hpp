@@ -37,6 +37,7 @@
 
 #include "dart/common/Signal.hpp"
 #include "dart/dynamics/detail/ShapeNode.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -45,7 +46,7 @@ class VisualAspect;
 class CollisionAspect;
 class DynamicsAspect;
 
-class ShapeNode : public detail::ShapeNodeCompositeBase {
+class DART_DYNAMICS_API ShapeNode : public detail::ShapeNodeCompositeBase {
 public:
   friend class BodyNode;
 

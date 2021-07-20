@@ -35,6 +35,8 @@
 
 #include <Eigen/Dense>
 
+#include "dart/dynamics/export.hpp"
+
 namespace dart {
 
 namespace dynamics {
@@ -43,7 +45,7 @@ class ShapeFrame;
 
 namespace dynamics {
 
-struct DistanceResult {
+struct DART_DYNAMICS_API DistanceResult {
   /// Minimum \b singed distance between the checked Shape pairs.
   ///
   /// If no shape pair was checked (the collision group was empty or all pairs

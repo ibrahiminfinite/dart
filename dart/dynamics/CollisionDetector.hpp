@@ -47,13 +47,14 @@
 #include "dart/dynamics/RaycastOption.hpp"
 #include "dart/dynamics/RaycastResult.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 class CollisionObject;
 
-class CollisionDetector
+class DART_DYNAMICS_API CollisionDetector
   : public std::enable_shared_from_this<CollisionDetector> {
 public:
   friend class CollisionObject;

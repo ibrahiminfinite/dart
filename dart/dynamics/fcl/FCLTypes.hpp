@@ -35,12 +35,13 @@
 
 #include <Eigen/Dense>
 
+#include "dart/dynamics/export.hpp"
 #include "dart/dynamics/fcl/BackwardCompatibility.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class FCLTypes {
+class DART_DYNAMICS_API FCLTypes {
 public:
 #if !FCL_VERSION_AT_LEAST(0, 6, 0)
   /// Convert Eigen vector3 type to FCL vector3 type

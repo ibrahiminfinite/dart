@@ -39,11 +39,12 @@
 
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/dynamics/Shape.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class MeshShape : public Shape {
+class DART_DYNAMICS_API MeshShape : public Shape {
 public:
   enum ColorMode {
     MATERIAL_COLOR = 0, ///< Use the colors specified by the Mesh's material

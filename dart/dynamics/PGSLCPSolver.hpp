@@ -37,6 +37,7 @@
 
 #include "dart/config.hpp"
 #include "dart/dynamics/LCPSolver.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -45,7 +46,7 @@ namespace dynamics {
 /// PgsBoxedLcpSolver.hpp intead.
 ///
 /// PGSLCPSolver
-class PGSLCPSolver : public LCPSolver {
+class DART_DYNAMICS_API PGSLCPSolver : public LCPSolver {
 public:
   /// Constructor
   explicit PGSLCPSolver(double _timestep);

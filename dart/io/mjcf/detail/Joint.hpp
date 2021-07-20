@@ -35,6 +35,7 @@
 
 #include <tinyxml2.h>
 
+#include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Default.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
@@ -48,7 +49,7 @@ namespace detail {
 
 class Body;
 
-class Joint final {
+class DART_IO_API Joint final {
 public:
   Joint() = default;
 

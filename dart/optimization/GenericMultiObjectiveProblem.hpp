@@ -40,11 +40,13 @@
 
 #include "dart/optimization/Function.hpp"
 #include "dart/optimization/MultiObjectiveProblem.hpp"
+#include "dart/optimization/export.hpp"
 
 namespace dart {
 namespace optimization {
 
-class GenericMultiObjectiveProblem : public MultiObjectiveProblem {
+class DART_OPTIMIZATION_API GenericMultiObjectiveProblem
+  : public MultiObjectiveProblem {
 public:
   /// Constructor
   explicit GenericMultiObjectiveProblem(

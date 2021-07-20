@@ -34,6 +34,7 @@
 
 #include <Eigen/Geometry>
 
+#include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
 #include "dart/math/SmartPointer.hpp"
 #include "dart/math/type.hpp"
@@ -103,7 +104,13 @@ private:
 using Objectf = Object<float>;
 using Objectd = Object<double>;
 
-extern template class Object<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API Object<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API Object<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

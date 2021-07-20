@@ -35,6 +35,7 @@
 
 #include "dart/dynamics/CollisionDetector.hpp"
 #include "dart/dynamics/ConstraintBase.hpp"
+#include "dart/dynamics/export.hpp"
 #include "dart/math/MathTypes.hpp"
 
 namespace dart {
@@ -47,7 +48,7 @@ class Skeleton;
 namespace dynamics {
 
 /// ContactConstraint represents a contact constraint between two bodies
-class ContactConstraint : public ConstraintBase {
+class DART_DYNAMICS_API ContactConstraint : public ConstraintBase {
 public:
   /// Constructor
   ContactConstraint(dynamics::Contact& contact, double timeStep);

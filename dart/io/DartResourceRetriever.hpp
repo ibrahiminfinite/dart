@@ -37,6 +37,7 @@
 #include <vector>
 
 #include "dart/common/ResourceRetriever.hpp"
+#include "dart/io/export.hpp"
 
 namespace dart {
 namespace io {
@@ -61,7 +62,7 @@ namespace io {
 ///    (e.g., Linux: /usr/local/share/doc/dart/data/).
 /// 3) environment variable, DART_DATA_PATH: Path to the data directory
 ///    specified by the user.
-class DartResourceRetriever : public common::ResourceRetriever {
+class DART_IO_API DartResourceRetriever : public common::ResourceRetriever {
 public:
   template <typename... Args>
   static std::shared_ptr<DartResourceRetriever> create(Args&&... args)

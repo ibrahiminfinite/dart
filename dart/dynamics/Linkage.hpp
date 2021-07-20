@@ -36,6 +36,7 @@
 #include <unordered_set>
 
 #include "dart/dynamics/ReferentialSkeleton.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -51,7 +52,7 @@ namespace dynamics {
 /// so that they match whatever assembly they had the last time
 /// Linkage::reassemble() was called (or the assembly that they had when the
 /// Linkage was constructed, if Linkage::reassemble has never been called).
-class Linkage : public ReferentialSkeleton {
+class DART_DYNAMICS_API Linkage : public ReferentialSkeleton {
 public:
   /// The Criteria class is used to specify how a Linkage should be constructed
   struct Criteria {

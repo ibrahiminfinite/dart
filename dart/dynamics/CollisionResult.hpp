@@ -37,6 +37,7 @@
 #include <vector>
 
 #include "dart/dynamics/Contact.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 
@@ -49,7 +50,7 @@ class ShapeFrame;
 
 namespace dynamics {
 
-class CollisionResult {
+class DART_DYNAMICS_API CollisionResult {
 public:
   /// Add one contact
   void addContact(const Contact& contact);

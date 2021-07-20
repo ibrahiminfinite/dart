@@ -113,7 +113,13 @@ DART_REGISTER_ENGINE_OUT_HEADER(FclEngine<S>);
 using FclEnginef = FclEngine<float>;
 using FclEngined = FclEngine<double>;
 
-extern template class FclEngine<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API FclEngine<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API FclEngine<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

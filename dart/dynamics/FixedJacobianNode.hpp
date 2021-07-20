@@ -34,12 +34,14 @@
 #define DART_DYNAMICS_FIXEDJACOBIANNODE_HPP_
 
 #include "dart/dynamics/detail/FixedJacobianNode.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
-class FixedJacobianNode : public detail::FixedJacobianNodeCompositeBase,
-                          public AccessoryNode<FixedJacobianNode> {
+class DART_DYNAMICS_API FixedJacobianNode
+  : public detail::FixedJacobianNodeCompositeBase,
+    public AccessoryNode<FixedJacobianNode> {
 public:
   /// Set the current relative transform of this Fixed Frame
   void setRelativeTransform(const Eigen::Isometry3d& newRelativeTf) override;

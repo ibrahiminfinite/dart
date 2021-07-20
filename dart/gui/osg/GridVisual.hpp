@@ -37,6 +37,7 @@
 #include <osg/LineWidth>
 
 #include "dart/dynamics/SmartPointer.hpp"
+#include "dart/gui/export.hpp"
 #include "dart/gui/osg/ShapeFrameNode.hpp"
 #include "dart/gui/osg/Viewer.hpp"
 
@@ -45,7 +46,7 @@ namespace gui {
 namespace osg {
 
 /// Attach this to a Viewer in order to visualize grid.
-class GridVisual : public ViewerAttachment {
+class DART_GUI_API GridVisual : public ViewerAttachment {
 public:
   enum class PlaneType : unsigned char {
     XY = 0u,

@@ -36,6 +36,8 @@
 #include <string>
 #include <vector>
 
+#include "dart/io/export.hpp"
+
 namespace dart {
 namespace io {
 namespace MjcfParser {
@@ -65,7 +67,7 @@ enum class ErrorCode {
   UNDEFINED_ERROR,
 };
 
-class Error final {
+class DART_IO_API Error final {
 public:
   Error() = default;
   Error(ErrorCode code, const std::string& message);

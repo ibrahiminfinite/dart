@@ -34,6 +34,7 @@
 
 #include <unordered_set>
 
+#include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
 
 namespace dart {
@@ -57,7 +58,13 @@ public:
 using CollisionFilterf = CollisionFilter<float>;
 using CollisionFilterd = CollisionFilter<double>;
 
-extern template class CollisionFilter<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API CollisionFilter<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API CollisionFilter<float>;
+#endif
 
 template <typename S>
 class CompositeCollisionFilter : public CollisionFilter<S> {
@@ -86,7 +93,13 @@ protected:
 using CompositeCollisionFilterf = CompositeCollisionFilter<float>;
 using CompositeCollisionFilterd = CompositeCollisionFilter<double>;
 
-extern template class CompositeCollisionFilter<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API CompositeCollisionFilter<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API CompositeCollisionFilter<float>;
+#endif
 
 } // namespace collision
 } // namespace dart

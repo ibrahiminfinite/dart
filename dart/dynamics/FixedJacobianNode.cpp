@@ -155,7 +155,7 @@ const math::Jacobian& FixedJacobianNode::getJacobianClassicDeriv() const
 FixedJacobianNode::FixedJacobianNode(
     BodyNode* parent, const Eigen::Isometry3d& transform)
   : FixedFrame(parent, transform),
-    detail::FixedJacobianNodeCompositeBase(parent)
+    detail::FixedJacobianNodeCompositeBase(parent, common::NoArgTag::NoArg)
 {
   // Do nothing
 }

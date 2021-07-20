@@ -36,6 +36,7 @@
 #include <string>
 
 #include "dart/dynamics/Joint.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -44,7 +45,7 @@ class BodyNode;
 class Skeleton;
 
 /// class ZeroDofJoint
-class ZeroDofJoint : public Joint {
+class DART_DYNAMICS_API ZeroDofJoint : public Joint {
 public:
   struct Properties : Joint::Properties {
     Properties(const Joint::Properties& _properties = Joint::Properties());

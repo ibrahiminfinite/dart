@@ -76,9 +76,7 @@ endif()
 #===============================================================================
 option(DART_VERBOSE "Whether print detailed information in CMake process" OFF)
 if(MSVC)
-  set(DART_RUNTIME_LIBRARY "/MD" CACHE STRING "BaseName chosen by the user at CMake configure time")
-  set_property(CACHE DART_RUNTIME_LIBRARY PROPERTY STRINGS /MD /MT)
-  option(DART_MSVC_DEFAULT_OPTIONS "Build DART with default Visual Studio options" OFF)
+  option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 else()
   option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 endif()
@@ -113,6 +111,9 @@ option(DART_BUILD_COMP_simulation   "Build component 'simulation'"   ON)
 option(DART_BUILD_COMP_io           "Build component 'io'"           ON)
 option(DART_BUILD_COMP_gui          "Build component 'gui'"          ON)
 option(DART_BUILD_COMP_planning     "Build component 'planning'"     ON)
+
+option(DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE "Build instantiation of template code for double" ON)
+option(DART_BUILD_TEMPLATE_CODE_FOR_FLOAT  "Build instantiation of template code for double" OFF)
 
 #===============================================================================
 # Print intro
@@ -199,6 +200,14 @@ if(MSVC)
     )
   endif()
 
+  if(BUILD_SHARED_LIBS)
+    set(DART_RUNTIME_LIBRARY "/MD" CACHE STRING "BaseName chosen by the user at CMake configure time")
+  else()
+    set(DART_RUNTIME_LIBRARY "/MT" CACHE STRING "BaseName chosen by the user at CMake configure time")
+  endif()
+  set_property(CACHE DART_RUNTIME_LIBRARY PROPERTY STRINGS /MD /MT)
+  option(DART_MSVC_DEFAULT_OPTIONS "Build DART with default Visual Studio options" OFF)
+
   if(DART_TREAT_WARNINGS_AS_ERRORS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
   endif()
@@ -206,8 +215,9 @@ if(MSVC)
   if(NOT DART_MSVC_DEFAULT_OPTIONS)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${DART_RUNTIME_LIBRARY}d /Zi /Gy /W1 /EHsc")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${DART_RUNTIME_LIBRARY} /Zi /GL /Gy /W1 /EHsc")
-  endif(NOT DART_MSVC_DEFAULT_OPTIONS)
+  endif()
   add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_ENABLE_EXTENDED_ALIGNED_STORAGE)
+  # TODO(JS): Resolve following warnings if addressible.
   add_compile_options(/wd4005)
   add_compile_options(/wd4099)
   add_compile_options(/wd4244)
@@ -218,6 +228,9 @@ if(MSVC)
   add_compile_options(/wd4838)
   add_compile_options(/wd4996)
   add_compile_options(/bigobj)
+  add_compile_options(/wd4251)  # TODO(JS): Fix this once PIMPL idion is adopted
+  add_compile_options(/wd4910)
+  add_compile_options(/wd4146)
 
 elseif(CMAKE_COMPILER_IS_GNUCXX)
 

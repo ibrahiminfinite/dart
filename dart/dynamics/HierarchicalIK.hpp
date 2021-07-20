@@ -36,6 +36,7 @@
 #include <unordered_set>
 
 #include "dart/dynamics/InverseKinematics.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -60,7 +61,7 @@ typedef std::vector<std::vector<std::shared_ptr<InverseKinematics> > >
 /// put into the IK modules' Problems. Any additional constraints or objectives
 /// that you want the HierarchicalIK to solve should be put directly into the
 /// HierarchicalIK's Problem.
-class HierarchicalIK : public common::Subject {
+class DART_DYNAMICS_API HierarchicalIK : public common::Subject {
 public:
   /// Virtual destructor
   virtual ~HierarchicalIK() = default;
@@ -326,7 +327,7 @@ public:
 /// The CompositeIK class allows you to specify an arbitrary hierarchy of
 /// InverseKinematics modules for a single Skeleton. Simply add in each IK
 /// module that should be used.
-class CompositeIK : public HierarchicalIK {
+class DART_DYNAMICS_API CompositeIK : public HierarchicalIK {
 public:
   typedef std::unordered_set<std::shared_ptr<InverseKinematics> > ModuleSet;
   typedef std::unordered_set<std::shared_ptr<const InverseKinematics> >
@@ -368,7 +369,7 @@ protected:
 /// The WholeBodyIK class provides an interface for simultaneously solving all
 /// the IK constraints of all BodyNodes and EndEffectors belonging to a single
 /// Skeleton.
-class WholeBodyIK : public HierarchicalIK {
+class DART_DYNAMICS_API WholeBodyIK : public HierarchicalIK {
 public:
   /// Create a WholeBodyIK
   static std::shared_ptr<WholeBodyIK> create(const SkeletonPtr& _skel);

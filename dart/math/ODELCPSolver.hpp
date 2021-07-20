@@ -35,11 +35,13 @@
 
 #include <Eigen/Dense>
 
+#include "dart/math/export.hpp"
+
 namespace dart {
 namespace math {
 
 /// \brief
-class ODELCPSolver {
+class DART_MATH_API ODELCPSolver {
 public:
   /// \brief
   ODELCPSolver();

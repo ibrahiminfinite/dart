@@ -34,12 +34,13 @@
 #define DART_DYNAMICS_REVOLUTEJOINT_HPP_
 
 #include "dart/dynamics/detail/RevoluteJointAspect.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// class RevoluteJoint
-class RevoluteJoint : public detail::RevoluteJointBase {
+class DART_DYNAMICS_API RevoluteJoint : public detail::RevoluteJointBase {
 public:
   friend class Skeleton;
   using UniqueProperties = detail::RevoluteJointUniqueProperties;

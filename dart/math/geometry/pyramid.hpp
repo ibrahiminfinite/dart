@@ -58,7 +58,7 @@ private:
 using Pyramidf = Pyramid<float>;
 using Pyramidd = Pyramid<double>;
 
-extern template class Pyramid<double>;
+extern template class DART_MATH_API Pyramid<double>;
 
 } // namespace math
 } // namespace dart

@@ -34,12 +34,13 @@
 #define DART_DYNAMICS_EULERJOINT_HPP_
 
 #include "dart/dynamics/detail/EulerJointAspect.hpp"
+#include "dart/dynamics/export.hpp"
 
 namespace dart {
 namespace dynamics {
 
 /// class EulerJoint
-class EulerJoint : public detail::EulerJointBase {
+class DART_DYNAMICS_API EulerJoint : public detail::EulerJointBase {
 public:
   friend class Skeleton;
   using AxisOrder = detail::AxisOrder;

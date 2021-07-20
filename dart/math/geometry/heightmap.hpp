@@ -154,7 +154,7 @@ private:
 using Heightmapf = Heightmap<float>;
 using Heightmapd = Heightmap<double>;
 
-extern template class Heightmap<double>;
+extern template class DART_MATH_API Heightmap<double>;
 
 } // namespace math
 } // namespace dart

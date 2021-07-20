@@ -37,13 +37,14 @@
 
 #include "dart/gui/LoadOpengl.hpp"
 #include "dart/gui/RenderInterface.hpp"
+#include "dart/gui/export.hpp"
 
 namespace dart {
 namespace gui {
 namespace glut {
 
 /// \brief
-class Window {
+class DART_GUI_API Window {
 public:
   Window();
   virtual ~Window();

@@ -37,12 +37,13 @@
 
 #include <Eigen/Dense>
 
+#include "dart/io/export.hpp"
 #include "dart/math/MathTypes.hpp"
 
 namespace dart {
 namespace io {
 
-class FileInfoC3D {
+class DART_IO_API FileInfoC3D {
 public:
   FileInfoC3D();
   virtual ~FileInfoC3D()

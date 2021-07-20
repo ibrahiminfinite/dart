@@ -34,6 +34,7 @@
 
 #include "dart/collision/bullet/bullet_include.hpp"
 #include "dart/collision/bullet/bullet_type.hpp"
+#include "dart/collision/export.hpp"
 #include "dart/collision/group.hpp"
 #include "dart/collision/type.hpp"
 
@@ -69,7 +70,13 @@ private:
   //  dSpaceID m_ode_space_id;
 };
 
-extern template class BulletGroup<double>;
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API BulletGroup<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API BulletGroup<float>;
+#endif
 
 } // namespace collision
 } // namespace dart
