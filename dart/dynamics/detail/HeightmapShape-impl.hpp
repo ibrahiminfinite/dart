@@ -45,7 +45,7 @@ namespace dynamics {
 
 //==============================================================================
 template <typename S>
-HeightmapShape<S>::HeightmapShape() : Shape(HEIGHTMAP), mScale(1, 1, 1)
+HeightmapShape<S>::HeightmapShape() : mScale(1, 1, 1)
 {
   static_assert(
       std::is_same<S, float>::value || std::is_same<S, double>::value,

@@ -78,7 +78,7 @@ public:
         return true;
       } else if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Return) {
         if (!mViewer->isRecording())
-          mViewer->record(DART_DATA_PATH "/screencap");
+          mViewer->record(DART_DATA_LOCAL_PATH "/screencap");
         else
           mViewer->pauseRecording();
         return true;

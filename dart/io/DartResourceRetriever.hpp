@@ -60,7 +60,7 @@ namespace io {
 /// 2) Preprocessor, DART_DATA_GLOBAL_PATH: Path to the data directory installed
 ///    in a system directory. The location can be varied depending on OS
 ///    (e.g., Linux: /usr/local/share/doc/dart/data/).
-/// 3) environment variable, DART_DATA_PATH: Path to the data directory
+/// 3) environment variable, DART_DATA_LOCAL_PATH: Path to the data directory
 ///    specified by the user.
 class DART_IO_API DartResourceRetriever : public common::ResourceRetriever {
 public:

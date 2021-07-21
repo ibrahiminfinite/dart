@@ -43,7 +43,7 @@ namespace dynamics {
 
 //==============================================================================
 CapsuleShape::CapsuleShape(double radius, double height)
-  : Shape(CAPSULE), mRadius(radius), mHeight(height)
+  : mRadius(radius), mHeight(height)
 {
   assert(0.0 < radius);
   assert(0.0 < height);

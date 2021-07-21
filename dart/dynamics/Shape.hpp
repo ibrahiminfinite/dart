@@ -55,25 +55,6 @@ public:
   using VersionChangedSignal
       = common::Signal<void(Shape* shape, std::size_t version)>;
 
-  /// \deprecated Deprecated in 6.1. Please use getType() instead.
-  enum ShapeType {
-    SPHERE,
-    BOX,
-    ELLIPSOID,
-    CYLINDER,
-    CAPSULE,
-    CONE,
-    PYRAMID,
-    RECTANGULAR_PYRAMID,
-    PLANE,
-    MULTISPHERE,
-    MESH,
-    SOFT_MESH,
-    LINE_SEGMENT,
-    HEIGHTMAP,
-    UNSUPPORTED
-  };
-
   /// DataVariance can be used by renderers to determine whether it should
   /// expect data for this shape to change during each update.
   enum DataVariance {
@@ -94,10 +75,6 @@ public:
               /// enum is not relevant for primitive shapes)
     DYNAMIC = 0xFF /// All data is subject to changing
   };
-
-  /// \brief Constructor
-  /// \deprecated Deprecated in 6.1. Please use getType() instead.
-  explicit Shape(ShapeType _type);
 
   /// \brief Constructor
   Shape();
@@ -203,10 +180,6 @@ protected:
 
   /// \brief
   static std::atomic_int mCounter;
-
-  /// \deprecated Deprecated in 6.1. Please use getType() instead.
-  /// Type of primitive shpae.
-  ShapeType mType;
 
 private:
   /// Triggered by incrementVersion()

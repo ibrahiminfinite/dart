@@ -44,8 +44,7 @@ namespace dynamics {
 
 //==============================================================================
 PyramidShape::PyramidShape(double baseWidth, double baseDepth, double height)
-  : Shape(PYRAMID),
-    mBaseWidth(baseWidth),
+  : mBaseWidth(baseWidth),
     mBaseDepth(baseDepth),
     mHeight(height)
 {

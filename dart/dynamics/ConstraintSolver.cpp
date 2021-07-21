@@ -45,7 +45,6 @@
 #include "dart/dynamics/Joint.hpp"
 #include "dart/dynamics/JointConstraint.hpp"
 #include "dart/dynamics/JointCoulombFrictionConstraint.hpp"
-#include "dart/dynamics/LCPSolver.hpp"
 #include "dart/dynamics/MimicMotorConstraint.hpp"
 #include "dart/dynamics/ServoMotorConstraint.hpp"
 #include "dart/dynamics/Skeleton.hpp"

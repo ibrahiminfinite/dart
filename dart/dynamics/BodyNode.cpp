@@ -224,8 +224,6 @@ BodyNodeAspectProperties::BodyNodeAspectProperties(
   : mName(name),
     mInertia(inertia),
     mIsCollidable(isCollidable),
-    mFrictionCoeff(DART_DEFAULT_FRICTION_COEFF),
-    mRestitutionCoeff(DART_DEFAULT_RESTITUTION_COEFF),
     mGravityMode(gravityMode)
 {
   // Do nothing
