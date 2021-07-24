@@ -1,5 +1,10 @@
 # Copyright (c) 2011-2021, The DART development contributors
 # All rights reserved.
+#
+# The list of contributors can be found at:
+#   https://github.com/dartsim/dart/blob/main/LICENSE
+#
+# This file is provided under the "BSD-style" License
 
 # TODO(JS): Replace this with FetchContent once CMake minimum increased to 3.11
 
@@ -28,9 +33,6 @@ macro(dart_fetch_git_repo)
   set(FETCH_BINARY_DIR ${${__PROJECT_NAME}_BINARY_DIR})
   set(FETCH_GIT_REPOSITORY ${__GIT_URL})
   set(FETCH_GIT_TAG ${__GIT_TAG})
-
-  message("[DEBUG] ${DART_SOURCE_DIR}/cmake/dart_fetch_at_configure_step.cmake.in")
-  message("[DEBUG] ${__WORKING_DIR}/CMakeLists.txt")
 
   configure_file(
     ${DART_SOURCE_DIR}/cmake/dart_fetch_at_configure_step.cmake.in

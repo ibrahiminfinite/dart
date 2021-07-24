@@ -26,6 +26,8 @@ if(IPOPT_VERSION)
 endif()
 
 dart_add_component_sub_directory(
+  SUB_COMPONENT_NAME
+    ipopt
   COMPONENT_DEPENDENCY_PACKAGES
     IPOPT
   TARGET_LINK_LIBRARIES_PUBLIC

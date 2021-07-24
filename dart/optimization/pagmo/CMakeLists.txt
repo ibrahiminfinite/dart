@@ -14,6 +14,8 @@ if(CMAKE_THREAD_LIBS_INIT)
 endif()
 
 dart_add_component_sub_directory(
+  SUB_COMPONENT_NAME
+    pagmo
   COMPONENT_DEPENDENCY_PACKAGES
     NLOPT pagmo
   TARGET_LINK_LIBRARIES_PUBLIC

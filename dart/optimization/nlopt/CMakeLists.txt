@@ -7,6 +7,8 @@
 # This file is provided under the "BSD-style" License
 
 dart_add_component_sub_directory(
+  SUB_COMPONENT_NAME
+    nlopt
   COMPONENT_DEPENDENCY_PACKAGES
     NLOPT
   TARGET_LINK_LIBRARIES_PUBLIC
