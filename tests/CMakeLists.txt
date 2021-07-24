@@ -7,17 +7,23 @@
 # This file is provided under the "BSD-style" License
 
 # GoogleTest setup
-include_directories(BEFORE SYSTEM ${DART_SOURCE_DIR}/tests/gtest/include)
-include_directories(BEFORE SYSTEM ${DART_SOURCE_DIR}/tests/gtest)
-add_library(gtest STATIC gtest/src/gtest-all.cc)
-add_library(gtest_main STATIC gtest/src/gtest_main.cc)
-target_link_libraries(gtest_main gtest)
-if(NOT WIN32)
-  target_link_libraries(gtest pthread)
-endif()
-set_target_properties(
-  gtest PROPERTIES
-  ARCHIVE_OUTPUT_DIRECTORY ${DART_BINARY_DIR}/lib
+include(dart_fetch_git_repo)
+dart_fetch_git_repo(
+  PROJECT_NAME googletest
+  WORKING_DIR ${CMAKE_CURRENT_BINARY_DIR}/.deps
+  GIT_URL https://github.com/google/googletest.git
+  GIT_TAG release-1.11.0
+)
+# Prevent GoogleTest from overriding our compiler/linker options
+# when building with Visual Studio
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+# Prevent GoogleTest from using PThreads
+set(gtest_disable_pthreads ON CACHE BOOL "" FORCE)
+
+# Adds the targers: gtest, gtest_main, gmock, gmock_main
+add_subdirectory(
+  ${googletest_SOURCE_DIR}
+  ${googletest_BINARY_DIR}
 )
 
 #===============================================================================
