@@ -16,16 +16,17 @@ dart_fetch_git_repo(
   GIT_TAG release-1.11.0
 )
 
-# Prevent GoogleTest from overriding our compiler/linker options
-# when building with Visual Studio
+# Set options
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-# Prevent GoogleTest from using PThreads
 set(gtest_disable_pthreads ON CACHE BOOL "" FORCE)
+set(BUILD_GMOCK ON CACHE BOOL "" FORCE)
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 
 # Adds the targers: gtest, gtest_main, gmock, gmock_main
 add_subdirectory(
   ${googletest_SOURCE_DIR}
   ${googletest_BINARY_DIR}
+  EXCLUDE_FROM_ALL
 )
 
 #===============================================================================
@@ -97,11 +98,11 @@ if(NOT MSVC)
 endif()
 add_subdirectory(unit)
 
-# Print tests
 dart_get_tests(integration_tests "integration")
 dart_get_tests(regression_tests "regression")
 dart_get_tests(unit_tests "TEST_UNIT")
 
+# Print tests
 if(DART_VERBOSE)
   message(STATUS "")
   message(STATUS "[ Tests ]")

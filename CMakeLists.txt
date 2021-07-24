@@ -334,6 +334,12 @@ if(MSVC)
 else()
   add_subdirectory(tests EXCLUDE_FROM_ALL)
 endif()
+# Add a "benchmarks" target to build unit tests.
+if(MSVC)
+  #add_subdirectory(benchmarks)
+else()
+  add_subdirectory(benchmarks EXCLUDE_FROM_ALL)
+endif()
 # Add example subdirectories and an "examples" target.
 if(MSVC)
   # add_subdirectory(examples)
@@ -380,7 +386,7 @@ if(DART_BUILD_EXTRAS)
 endif()
 
 # Add 'ALL' target that builds everything
-set(all_target_candidates tests examples tutorials dartpy dartc)
+set(all_target_candidates tests benchmarks examples tutorials dartpy dartc)
 foreach(target_candidate ${all_target_candidates})
   if(TARGET ${target_candidate})
     list(APPEND all_targets ${target_candidate})
