@@ -54,7 +54,7 @@ public:
 
   /// Creates a new collision detector.
   ///
-  /// @param[in] engine_name: Name of the underlying collision detection engine
+  /// \param[in] engine_name: Name of the underlying collision detection engine
   /// to create.
   static EnginePtr<S> Create(const std::string& engine_name);
 

@@ -33,11 +33,10 @@
 #ifndef DART_COMMON_STLHELPERS_HPP_
 #define DART_COMMON_STLHELPERS_HPP_
 
-#include <cassert>
 #include <cstddef>
 #include <vector>
 
-#include "Memory.hpp"
+#include "dart/common/macro.hpp"
 
 namespace dart {
 namespace common {
@@ -47,7 +46,7 @@ template <typename T>
 static T getVectorObjectIfAvailable(
     std::size_t index, const std::vector<T>& vec)
 {
-  assert(index < vec.size());
+  DART_ASSERT(index < vec.size());
   if (index < vec.size())
     return vec[index];
 

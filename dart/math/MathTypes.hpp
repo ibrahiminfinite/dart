@@ -38,7 +38,7 @@
 
 #include <Eigen/Dense>
 
-#include "dart/common/Memory.hpp"
+#include "dart/common/memory.hpp"
 
 //------------------------------------------------------------------------------
 // Types

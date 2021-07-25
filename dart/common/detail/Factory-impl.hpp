@@ -35,7 +35,7 @@
 
 #include "dart/common/Console.hpp"
 #include "dart/common/Factory.hpp"
-#include "dart/common/Memory.hpp"
+#include "dart/common/memory.hpp"
 
 namespace dart {
 namespace common {

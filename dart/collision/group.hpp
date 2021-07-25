@@ -64,7 +64,7 @@ public:
 protected:
   /// Constructor
   ///
-  /// @param[in] collisionDetector: Collision detector that created this group.
+  /// \param[in] collisionDetector: Collision detector that created this group.
   Group(Engine<S>* engine);
 
   Engine<S>* m_engine;

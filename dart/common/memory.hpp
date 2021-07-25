@@ -30,8 +30,7 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_MEMORY_HPP_
-#define DART_COMMON_MEMORY_HPP_
+#pragma once
 
 #include <map>
 #include <memory>
@@ -56,6 +55,40 @@ using aligned_map = std::map<
     _Tp,
     _Compare,
     Eigen::aligned_allocator<std::pair<const _Key, _Tp>>>;
+
+namespace literals {
+
+constexpr std::size_t operator"" _KiB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1024);
+}
+
+constexpr std::size_t operator"" _KB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1000);
+}
+
+constexpr std::size_t operator"" _MiB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1024 * 1024);
+}
+
+constexpr std::size_t operator"" _MB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1000 * 1000);
+}
+
+constexpr std::size_t operator"" _GiB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1024 * 1024 * 1024);
+}
+
+constexpr std::size_t operator"" _GB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1000 * 1000 * 1000);
+}
+
+} // namespace literals
 
 } // namespace common
 } // namespace dart
@@ -204,6 +237,4 @@ public:                                                                        \
     DART_DEFINE_OBJECT_CREATORS_FOR_PROTECTED_CTOR(class_name)
 #endif
 
-#include "dart/common/detail/Memory-impl.hpp"
-
-#endif // DART_COMMON_MEMORY_HPP_
+#include "dart/common/detail/memory-impl.hpp"

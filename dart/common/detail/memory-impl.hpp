@@ -30,14 +30,14 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_DETAIL_MEMORY_IMPL_HPP_
-#define DART_COMMON_DETAIL_MEMORY_IMPL_HPP_
+#pragma once
 
 #include <memory>
 
 #include <Eigen/Core>
 #include <Eigen/StdVector>
 
+#include "dart/common/memory.hpp"
 #include "dart/config.hpp"
 
 namespace dart {
@@ -55,5 +55,3 @@ std::shared_ptr<_Tp> make_aligned_shared(_Args&&... __args)
 
 } // namespace common
 } // namespace dart
-
-#endif // DART_COMMON_DETAIL_MEMORY_IMPL_HPP_

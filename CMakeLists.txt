@@ -115,6 +115,9 @@ option(DART_BUILD_COMP_planning     "Build component 'planning'"     ON)
 option(DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE "Build instantiation of template code for double" ON)
 option(DART_BUILD_TEMPLATE_CODE_FOR_FLOAT  "Build instantiation of template code for double" OFF)
 
+# Experimental
+option(DART_ENABLE_THREAD_SAFE "Build as thread-safe library" ON)
+
 #===============================================================================
 # Print intro
 #===============================================================================

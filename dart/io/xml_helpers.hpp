@@ -70,10 +70,10 @@ math::VectorX<S> to_vector_x(const std::string& str);
 
 /// Converts string to isometry3
 ///
-/// @param[in] str: String to convert. The expected format is an array of 6
+/// \param[in] str: String to convert. The expected format is an array of 6
 /// numbers distinguished by space. The first three numbers are for position,
 /// and the last three numbers are for orientation.
-/// @param[in] rotation_type: (optional) How to convert 3-D vector to a rotation
+/// \param[in] rotation_type: (optional) How to convert 3-D vector to a rotation
 /// matrix. Supported types are {intrinsic, extrinsic} where the default is
 /// intrinsic.
 template <typename S>
