@@ -20,7 +20,6 @@ RUN apt-get update \
     libassimp-dev \
     libccd-dev \
     libfcl-dev \
-    libboost-all-dev \
     libnlopt-cxx-dev \
     coinor-libipopt-dev \
     libbullet-dev \

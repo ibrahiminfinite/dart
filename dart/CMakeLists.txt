@@ -21,7 +21,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${DART_BINARY_DIR}/lib")
 #===============================================================================
 # dart - common, math, optimization, dynamics, collision,
 #        collision/dart, collision/fcl, simulation, [eigen3, libccd,
-#        fcl, assimp, boost]
+#        fcl, assimp]
 # dart-optimization-ipopt - {dart}, optimization/ipopt, [ipopt]
 # dart-optimization-nlopt - {dart}, optimization/nlopt, [nlopt]
 # dart-collision-bullet - {dart}, collision/bullet, [bullet]
@@ -38,9 +38,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${DART_BINARY_DIR}/lib")
 #
 # external-imgui: OpenGL
 #
-# common: {Boost}, {Eigen3}
-# math: (common), {Boost}, {Eigen3}
-# optimization: (common), (math), {Boost}, {Eigen3}, [NLOPT], [IPOPT], [pagmo]
+# common: {Eigen3}
+# math: (common), {Eigen3}
+# optimization: (common), (math), {Eigen3}, [NLOPT], [IPOPT], [pagmo]
 # collision: <todo>
 # dynamics: (common), (math), (optimization), (collision), {assimp}, {octomap}, [Bullet], {fcl}, [ODE]
 # simulation: (common), (math), (optimization), (collision), (dynamics)

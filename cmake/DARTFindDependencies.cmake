@@ -89,9 +89,6 @@ if(ASSIMP_FOUND)
   unset(CMAKE_REQUIRED_LIBRARIES)
 endif()
 
-# Boost
-dart_find_package(Boost)
-
 # octomap
 dart_find_package(octomap)
 if(MSVC)
@@ -202,30 +199,6 @@ dart_find_package(lz4)  # needed for flann
 dart_find_package(flann)
 
 dart_find_package(tinyxml2)
-
-# Test whether boost algorithm and lexical_cast headers are available.
-include(CheckCXXSourceCompiles)
-set(CMAKE_REQUIRED_FLAGS "-w")
-set(CMAKE_REQUIRED_INCLUDES "${Boost_INCLUDE_DIRS}")
-check_cxx_source_compiles(
-  "
-  #include <boost/algorithm/string.hpp>
-  #include <boost/lexical_cast.hpp>
-  int main()
-  {
-    return 0;
-  }
-  "
-  HAS_BOOST_ALGORITHM_LEXICAL_CAST
-)
-if(HAS_BOOST_ALGORITHM_LEXICAL_CAST)
-  if(DART_VERBOSE)
-    message(STATUS "Looking for Boost algorithm and lexical_cast headers - found")
-  endif()
-else()
-  message(WARNING "Looking for Boost algorithm and lexical_cast headers - NOT found, to use dart-io, please install missing boost headers")
-  return()
-endif()
 
 dart_find_package(urdfdom)
 if(urdfdom_FOUND)

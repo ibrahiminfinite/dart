@@ -11,10 +11,6 @@ set(project_name ${PROJECT_NAME})
 set(component_name common)
 set(component_dependency_packages )
 set(link_libraries_public Eigen3::Eigen)
-if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-  list(APPEND component_dependency_packages Boost)
-  list(APPEND link_libraries_public Boost::boost Boost::system Boost::filesystem)
-endif()
 
 if(TARGET fmt::fmt-header-only)
   list(APPEND link_libraries_public fmt::fmt-header-only)
@@ -103,7 +99,7 @@ dart_add_component(
   COMPONENT_NAME
     ${component_name}
   COMPONENT_DEPENDENCY_PACKAGES
-    Boost Eigen3
+    Eigen3
   COMPONENT_DEPENDENCY_PACKAGES_OPTIONAL
     fmt spdlog
   TARGET_LINK_LIBRARIES_PUBLIC

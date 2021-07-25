@@ -49,7 +49,7 @@ DerivePointerAlignment: false
 DisableFormat:   false
 ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: true
-ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
+ForEachMacros:   [ foreach, Q_FOREACH ]
 # Sort headers by main include file (implicit priority 0),
 # then project and private includes, then system headers
 IncludeCategories:

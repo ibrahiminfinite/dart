@@ -35,19 +35,7 @@
 #include "dart/common/Platform.hpp"
 #include "dart/config.hpp"
 
-#if DART_OS_MACOS
-
-  #include <boost/filesystem.hpp>
-
-namespace dart {
-namespace common {
-namespace filesystem = ::boost::filesystem;
-using error_code = ::boost::system::error_code;
-} // namespace common
-} // namespace dart
-
-// We haven't checked which filesystem to include yet
-#elif !defined(DART_INCLUDE_STD_FILESYSTEM_EXPERIMENTAL)
+#if !defined(DART_INCLUDE_STD_FILESYSTEM_EXPERIMENTAL)
 
   // Check for feature test macro for <filesystem>
   #if defined(__cpp_lib_filesystem)

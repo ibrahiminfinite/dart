@@ -25,7 +25,7 @@ dart_add_component(
   COMPONENT_DEPENDENCIES
     common math
   COMPONENT_DEPENDENCY_PACKAGES
-    Boost Eigen3
+    Eigen3
   TARGET_LINK_LIBRARIES_PUBLIC
     Eigen3::Eigen
   TARGET_COMPILE_FEATURES_PUBLIC
