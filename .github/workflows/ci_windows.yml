@@ -12,7 +12,7 @@ on:
 
 jobs:
   windows:
-    name: Windows
+    name: ${{ matrix.build_type }}
     runs-on: windows-2019
     strategy:
       fail-fast: false

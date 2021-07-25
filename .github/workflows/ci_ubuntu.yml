@@ -12,7 +12,7 @@ on:
 
 jobs:
   ubuntu:
-    name: Ubuntu
+    name: ${{ matrix.os }}.${{ matrix.platform }}.${{ matrix.build_type }}
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
