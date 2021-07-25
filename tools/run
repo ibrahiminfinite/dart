@@ -14,6 +14,7 @@ cleanup_command=""
 use_dev_image=false
 build_mode="Release"
 build_test=true
+build_benchmark=true
 build_example=true
 build_tutorial=true
 build_dartpy=true
@@ -41,6 +42,7 @@ help() {
     -j <num_cores>  Number of cores to use for build. Use -j 1 to disable parallel build. Single core will be used if this option is not specified.
     --dev           Use Docker image for development rather than release image.
     --no-test       Skip building and running tests
+    --no-benchmark  Skip building benchmarks
     --no-example    Skip building examples
     --no-tutorial   Skip building tutorials
     --no-dartpy     Skip building dartpy
@@ -75,6 +77,9 @@ while [ $# -gt 0 ]; do
     ;;
   --no-test)
     build_test=false
+    ;;
+  --no-benchmark)
+    build_benchmark=false
     ;;
   --no-example)
     build_example=false
@@ -111,6 +116,12 @@ if [ "$build_test" = true ]; then
   test_command="&& make -j$num_cores tests && ctest --output-on-failure"
 else
   test_command=""
+fi
+
+if [ "$build_benchmark" = true ]; then
+  benchmark_command="&& make -j$num_cores benchmarks"
+else
+  benchmark_command=""
 fi
 
 if [ "$build_example" = true ]; then
@@ -202,6 +213,7 @@ _build() {
     $codecov_option \
     && make -j$num_cores \
     $test_command \
+    $benchmark_command \
     $example_command \
     $tutorial_command \
     $dartpy_command"
