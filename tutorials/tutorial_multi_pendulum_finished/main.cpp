@@ -52,14 +52,14 @@ const double delta_damping = 1.0;
 using namespace dart::dynamics;
 using namespace dart::simulation;
 
-class MyWindow : public dart::gui::glut::SimWindow {
+class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode {
 public:
-  /// Constructor
-  MyWindow(WorldPtr world)
-    : mBallConstraint(nullptr), mPositiveSign(true), mBodyForce(false)
+  TutorialWorldNode(WorldPtr world)
+    : dart::gui::osg::RealTimeWorldNode(std::move(world)),
+      mBallConstraint(nullptr),
+      mPositiveSign(true),
+      mBodyForce(false)
   {
-    setWorld(world);
-
     // Find the Skeleton named "pendulum" within the World
     mPendulum = world->getSkeleton("pendulum");
 
@@ -160,84 +160,20 @@ public:
     mBallConstraint = nullptr;
   }
 
-  /// Handle keyboard input
-  void keyboard(unsigned char key, int x, int y) override
+  void toggleBodyForce()
   {
-    switch (key) {
-      case '-':
-        changeDirection();
-        break;
-
-      case '1':
-        applyForce(0);
-        break;
-      case '2':
-        applyForce(1);
-        break;
-      case '3':
-        applyForce(2);
-        break;
-      case '4':
-        applyForce(3);
-        break;
-      case '5':
-        applyForce(4);
-        break;
-      case '6':
-        applyForce(5);
-        break;
-      case '7':
-        applyForce(6);
-        break;
-      case '8':
-        applyForce(7);
-        break;
-      case '9':
-        applyForce(8);
-        break;
-      case '0':
-        applyForce(9);
-        break;
-
-      case 'q':
-        changeRestPosition(delta_rest_position);
-        break;
-      case 'a':
-        changeRestPosition(-delta_rest_position);
-        break;
-
-      case 'w':
-        changeStiffness(delta_stiffness);
-        break;
-      case 's':
-        changeStiffness(-delta_stiffness);
-        break;
-
-      case 'e':
-        changeDamping(delta_damping);
-        break;
-      case 'd':
-        changeDamping(-delta_damping);
-        break;
-
-      case 'r': {
-        if (mBallConstraint)
-          removeConstraint();
-        else
-          addConstraint();
-        break;
-      }
-
-      case 'f':
-        mBodyForce = !mBodyForce;
-        break;
-
-      default:
-        SimWindow::keyboard(key, x, y);
-    }
+    mBodyForce = !mBodyForce;
   }
 
-  void timeStepping() override
+  void toggleConstraint()
+  {
+    if (mBallConstraint)
+      removeConstraint();
+    else
+      addConstraint();
+  }
+
+  void customPreStep() override
   {
     // Reset all the shapes to be Blue
     for (std::size_t i = 0; i < mPendulum->getNumBodyNodes(); ++i) {
@@ -292,9 +228,6 @@ public:
         }
       }
     }
-
-    // Step the simulation forward
-    SimWindow::timeStepping();
   }
 
 protected:
@@ -316,6 +249,93 @@ protected:
   /// True if 1-9 should be used to apply a body force. Otherwise, 1-9 will be
   /// used to apply a joint torque.
   bool mBodyForce;
+};
+
+class InputHandler : public ::osgGA::GUIEventHandler {
+public:
+  /// Constructor
+  InputHandler(TutorialWorldNode* node) : mNode(node)
+  {
+    // Do nothing
+  }
+
+  /// Handles key events
+  bool handle(
+      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override
+  {
+    if (::osgGA::GUIEventAdapter::KEYDOWN == ea.getEventType()) {
+      switch (ea.getKey()) {
+        case '-':
+          mNode->changeDirection();
+          return true;
+
+        case '1':
+          mNode->applyForce(0);
+          return true;
+        case '2':
+          mNode->applyForce(1);
+          return true;
+        case '3':
+          mNode->applyForce(2);
+          return true;
+        case '4':
+          mNode->applyForce(3);
+          return true;
+        case '5':
+          mNode->applyForce(4);
+          return true;
+        case '6':
+          mNode->applyForce(5);
+          return true;
+        case '7':
+          mNode->applyForce(6);
+          return true;
+        case '8':
+          mNode->applyForce(7);
+          return true;
+        case '9':
+          mNode->applyForce(8);
+          return true;
+        case '0':
+          mNode->applyForce(9);
+          return true;
+
+        case 'q':
+          mNode->changeRestPosition(delta_rest_position);
+          return true;
+        case 'a':
+          mNode->changeRestPosition(-delta_rest_position);
+          return true;
+
+        case 'w':
+          mNode->changeStiffness(delta_stiffness);
+          return true;
+        case 's':
+          mNode->changeStiffness(-delta_stiffness);
+          return true;
+
+        case 'e':
+          mNode->changeDamping(delta_damping);
+          return true;
+        case 'd':
+          mNode->changeDamping(-delta_damping);
+          return true;
+
+        case 'r':
+          mNode->toggleConstraint();
+          return true;
+
+        case 'f':
+          mNode->toggleBodyForce();
+          return true;
+      }
+    }
+
+    return false;
+  }
+
+protected:
+  TutorialWorldNode* mNode;
 };
 
 void setGeometry(const BodyNodePtr& bn)
@@ -406,7 +426,7 @@ BodyNode* addBody(
   return bn;
 }
 
-int main(int argc, char* argv[])
+int main()
 {
   // Create an empty Skeleton with the name "pendulum"
   SkeletonPtr pendulum = Skeleton::create("pendulum");
@@ -426,8 +446,20 @@ int main(int argc, char* argv[])
   WorldPtr world = World::create();
   world->addSkeleton(pendulum);
 
-  // Create a window for rendering the world and handling user input
-  MyWindow window(world);
+  ::osg::ref_ptr<TutorialWorldNode> node = new TutorialWorldNode(world);
+
+  // Create a viewer for rendering the world and handling user input
+  dart::gui::osg::Viewer viewer;
+  viewer.setWindowTitle("Multi-Pendulum Tutorial");
+
+  // Add tutorial node
+  viewer.addWorldNode(node);
+
+  // Add our custom input handler to the Viewer
+  viewer.addEventHandler(new InputHandler(node.get()));
+
+  // Print out instructions for the viewer
+  std::cout << viewer.getInstructions() << std::endl;
 
   // Print instructions
   std::cout << "space bar: simulation on/off" << std::endl;
@@ -445,8 +477,18 @@ int main(int argc, char* argv[])
   std::cout << "'f': switch between applying joint torques and body forces"
             << std::endl;
 
-  // Initialize glut, initialize the window, and begin the glut event loop
-  glutInit(&argc, argv);
-  window.initWindow(640, 480, "Multi-Pendulum Tutorial");
-  glutMainLoop();
+  // Set up the window
+  viewer.setUpViewInWindow(0, 0, 640, 480);
+
+  // Set up the default viewing position
+  viewer.getCameraManipulator()->setHomePosition(
+      ::osg::Vec3(5.34f, 3.00f, 2.41f), // eye
+      ::osg::Vec3(0.f, 0.f, 0.f),       // center
+      ::osg::Vec3(0.f, 0.f, 1.f));      // up
+
+  // Reset the camera manipulator so that it starts in the new viewing position
+  viewer.setCameraManipulator(viewer.getCameraManipulator());
+
+  // Run the Viewer
+  viewer.run();
 }

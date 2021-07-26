@@ -117,6 +117,9 @@ public:
   /// Destructor
   virtual ~Viewer();
 
+  /// Sets the title of the window.
+  void setWindowTitle(const std::string& title);
+
   /// Capture the current screen in a png file. The filename argument should
   /// include the full path for the file.
   ///

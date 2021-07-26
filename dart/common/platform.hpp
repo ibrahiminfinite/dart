@@ -30,22 +30,60 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "MyWindow.hpp"
+#pragma once
 
-void MyWindow::timeStepping()
-{
-  Eigen::VectorXd damping = computeDamping();
-  mWorld->getSkeleton(0)->setForces(damping);
-  mWorld->step();
-}
+// Operating systems and architectures
+#if defined(__linux__)
 
-Eigen::VectorXd MyWindow::computeDamping()
-{
-  int nDof = mWorld->getSkeleton(0)->getNumDofs();
-  // add damping to each joint; twist-dof has smaller damping
-  Eigen::VectorXd damping = -0.01 * mWorld->getSkeleton(0)->getVelocities();
-  for (int i = 0; i < nDof; i++)
-    if (i % 3 == 1)
-      damping[i] *= 0.1;
-  return damping;
-}
+  #define DART_OS_LINUX 1
+  #if __x86_64__ || __ppc64__
+    #define DART_ARCH_64BITS 1
+  #else
+    #define DART_ARCH_32BITS 1
+  #endif
+
+#elif defined(__APPLE__)
+
+  #define DART_OS_MACOS 1
+  #if __LP64__
+    #define DART_ARCH_64BITS 1
+  #else
+    #define DART_ARCH_32BITS 1
+  #endif
+
+#elif defined(_WIN32)
+
+  #define DART_OS_WINDOWS 1
+  #define DART_ARCH_32BITS 1
+
+#elif defined(_WIN64)
+
+  #define DART_OS_WINDOWS 1
+  #define DART_ARCH_64BITS 1
+
+#else
+
+  #error Unsupported platform.
+
+#endif // if defined(__linux__)
+
+// Define undefined preprocessors as 0
+#ifndef DART_OS_WINDOWS
+  #define DART_OS_WINDOWS 0
+#endif
+
+#ifndef DART_OS_LINUX
+  #define DART_OS_LINUX 0
+#endif
+
+#ifndef DART_OS_MACOS
+  #define DART_OS_MACOS 0
+#endif
+
+#ifndef DART_ARCH_32BITS
+  #define DART_ARCH_32BITS 0
+#endif
+
+#ifndef DART_ARCH_64BITS
+  #define DART_ARCH_64BITS 0
+#endif

@@ -31,7 +31,6 @@ RUN apt-get update \
     liburdfdom-dev \
     libxi-dev \
     libxmu-dev \
-    freeglut3-dev \
     libopenscenegraph-dev \
     && rm -rf /var/lib/apt/lists/*
 

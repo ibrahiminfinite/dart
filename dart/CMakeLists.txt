@@ -28,7 +28,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${DART_BINARY_DIR}/lib")
 # dart-io - {dart}, io, io/sdf, [tinyxml2]
 # dart-io-urdf - {dart-io}, io/urdf, [urdfdom]
 # dart-gui - {dart}, gui, [opengl]
-# dart-gui-glut - {dart-gui}, gui/glut, [glut]
 # dart-gui-osg - {dart-gui}, gui/osg, gui/osg/render, [openscenegraph]
 # dart-planning - {dart}, planning, [flann]
 
@@ -45,7 +44,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${DART_BINARY_DIR}/lib")
 # dynamics: (common), (math), (optimization), (collision), {assimp}, {octomap}, [Bullet], {fcl}, [ODE]
 # simulation: (common), (math), (optimization), (collision), (dynamics)
 # io: (common), (math), (optimization), (collision), (dynamics), (simulation), {tinyxml2}, [urdfdom]
-# gui: (external-imgui), (common), (math), (optimization), (collision), (dynamics), (simulation), (io), {OpenGL}, [GLUT], [OpenSceneGraph]
+# gui: (external-imgui), (common), (math), (optimization), (collision), (dynamics), (simulation), (io), {OpenGL}, [OpenSceneGraph]
 # planning: (common), (math), (optimization), (collision), {flann}, {lz4}
 
 # dart - {dart}

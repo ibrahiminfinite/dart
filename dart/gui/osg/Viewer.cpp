@@ -213,6 +213,16 @@ Viewer::~Viewer()
 }
 
 //==============================================================================
+void Viewer::setWindowTitle(const std::string& title)
+{
+  osgViewer::Viewer::Windows windows;
+  getWindows(windows);
+  if (!windows.empty()) {
+    windows.front()->setWindowName(title);
+  }
+}
+
+//==============================================================================
 void Viewer::captureScreen(const std::string& filename)
 {
   if (filename.empty()) {

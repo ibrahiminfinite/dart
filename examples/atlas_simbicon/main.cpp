@@ -79,9 +79,7 @@ int main()
 
   // Set the window name
   viewer->realize();
-  osgViewer::Viewer::Windows windows;
-  viewer->getWindows(windows);
-  windows.front()->setWindowName("Atlas Simbicon");
+  viewer->setWindowTitle("Atlas Simbicon");
 
   // Adjust the viewpoint of the Viewer
   viewer->getCameraManipulator()->setHomePosition(

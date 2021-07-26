@@ -50,7 +50,6 @@ const int default_push_duration = 1000; // # iterations
 
 const double default_endeffector_offset = 0.05;
 
-using namespace dart::common;
 using namespace dart::dynamics;
 using namespace dart::simulation;
 using namespace dart::math;
@@ -217,15 +216,15 @@ protected:
   Eigen::VectorXd mForces;
 };
 
-class MyWindow : public dart::gui::glut::SimWindow {
+class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode {
 public:
-  MyWindow(const WorldPtr& world)
-    : mTotalAngle(0.0),
+  TutorialWorldNode(WorldPtr world)
+    : dart::gui::osg::RealTimeWorldNode(std::move(world)),
+      mTotalAngle(0.0),
       mHasEverRun(false),
       mForceCountDown(0),
       mPushCountDown(0)
   {
-    setWorld(world);
     mFirstDomino = world->getSkeleton("domino");
     mFloor = world->getSkeleton("floor");
 
@@ -307,42 +306,7 @@ public:
     }
   }
 
-  void keyboard(unsigned char key, int x, int y) override
-  {
-    if (!mHasEverRun) {
-      switch (key) {
-        case 'q':
-          attemptToCreateDomino(default_angle);
-          break;
-        case 'w':
-          attemptToCreateDomino(0.0);
-          break;
-        case 'e':
-          attemptToCreateDomino(-default_angle);
-          break;
-        case 'd':
-          deleteLastDomino();
-          break;
-        case ' ':
-          mHasEverRun = true;
-          break;
-      }
-    } else {
-      switch (key) {
-        case 'f':
-          mForceCountDown = default_force_duration;
-          break;
-
-        case 'r':
-          mPushCountDown = default_push_duration;
-          break;
-      }
-    }
-
-    SimWindow::keyboard(key, x, y);
-  }
-
-  void timeStepping() override
+  void customPreStep() override
   {
     // If the user has pressed the 'f' key, apply a force to the first domino in
     // order to push it over
@@ -362,8 +326,31 @@ public:
     } else {
       mController->setPDForces();
     }
+  }
 
-    SimWindow::timeStepping();
+  Controller* getController()
+  {
+    return mController.get();
+  }
+
+  bool hasEverRun() const
+  {
+    return mHasEverRun;
+  }
+
+  void setHasEverRun(bool value)
+  {
+    mHasEverRun = value;
+  }
+
+  void setForceCountDown(int value)
+  {
+    mForceCountDown = value;
+  }
+
+  void setPushCountDown(int value)
+  {
+    mPushCountDown = value;
   }
 
 protected:
@@ -394,6 +381,57 @@ protected:
   int mPushCountDown;
 
   std::unique_ptr<Controller> mController;
+};
+
+class InputHandler : public ::osgGA::GUIEventHandler {
+public:
+  /// Constructor
+  InputHandler(TutorialWorldNode* node) : mNode(node)
+  {
+    // Do nothing
+  }
+
+  /// Handles key events
+  bool handle(
+      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override
+  {
+    if (::osgGA::GUIEventAdapter::KEYDOWN == ea.getEventType()) {
+      if (!mNode->hasEverRun()) {
+        switch (ea.getKey()) {
+          case 'q':
+            mNode->attemptToCreateDomino(default_angle);
+            return true;
+          case 'w':
+            mNode->attemptToCreateDomino(0.0);
+            return true;
+          case 'e':
+            mNode->attemptToCreateDomino(-default_angle);
+            return true;
+          case 'd':
+            mNode->deleteLastDomino();
+            return true;
+          case ' ':
+            mNode->setHasEverRun(true);
+            return true;
+        }
+      } else {
+        switch (ea.getKey()) {
+          case 'f':
+            mNode->setForceCountDown(default_force_duration);
+            return true;
+
+          case 'r':
+            mNode->setPushCountDown(default_push_duration);
+            return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+protected:
+  TutorialWorldNode* mNode;
 };
 
 SkeletonPtr createDomino()
@@ -468,7 +506,7 @@ SkeletonPtr createManipulator()
   return manipulator;
 }
 
-int main(int argc, char* argv[])
+int main()
 {
   SkeletonPtr domino = createDomino();
   SkeletonPtr floor = createFloor();
@@ -479,7 +517,20 @@ int main(int argc, char* argv[])
   world->addSkeleton(floor);
   world->addSkeleton(manipulator);
 
-  MyWindow window(world);
+  ::osg::ref_ptr<TutorialWorldNode> node = new TutorialWorldNode(world);
+
+  // Create a viewer for rendering the world and handling user input
+  dart::gui::osg::Viewer viewer;
+  viewer.setWindowTitle("Dominos Tutorial");
+
+  // Add tutorial node
+  viewer.addWorldNode(node);
+
+  // Add our custom input handler to the Viewer
+  viewer.addEventHandler(new InputHandler(node.get()));
+
+  // Print out instructions for the viewer
+  std::cout << viewer.getInstructions() << std::endl;
 
   std::cout << "Before simulation has started, you can create new dominoes:"
             << std::endl;
@@ -500,7 +551,18 @@ int main(int argc, char* argv[])
       << std::endl;
   std::cout << "'v': Turn contact force visualization on/off" << std::endl;
 
-  glutInit(&argc, argv);
-  window.initWindow(640, 480, "Dominoes");
-  glutMainLoop();
+  // Set up the window
+  viewer.setUpViewInWindow(0, 0, 640, 480);
+
+  // Set up the default viewing position
+  viewer.getCameraManipulator()->setHomePosition(
+      ::osg::Vec3(5.34f, 3.00f, 2.41f), // eye
+      ::osg::Vec3(0.f, 0.f, 0.f),       // center
+      ::osg::Vec3(0.f, 0.f, 1.f));      // up
+
+  // Reset the camera manipulator so that it starts in the new viewing position
+  viewer.setCameraManipulator(viewer.getCameraManipulator());
+
+  // Run the Viewer
+  viewer.run();
 }

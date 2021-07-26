@@ -218,7 +218,6 @@ if(MSVC)
 endif()
 
 dart_find_package(OpenGL)
-dart_find_package(GLUT)
 
 # Minimum required OSG version
 set(min_osg_version 3.2.3)

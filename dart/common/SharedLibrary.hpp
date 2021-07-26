@@ -36,8 +36,8 @@
 #include <memory>
 #include <string>
 
-#include "dart/common/Platform.hpp"
 #include "dart/common/export.hpp"
+#include "dart/common/platform.hpp"
 
 #if DART_OS_LINUX
 

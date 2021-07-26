@@ -70,7 +70,7 @@ const double default_soft_damping = 5.0;
 using namespace dart::dynamics;
 using namespace dart::simulation;
 using namespace dart::gui;
-using namespace dart::gui::glut;
+using namespace dart::gui::osg;
 
 void setupRing(const SkeletonPtr& /*ring*/)
 {
@@ -87,16 +87,17 @@ void setupRing(const SkeletonPtr& /*ring*/)
   // Lesson 4c
 }
 
-class MyWindow : public SimWindow {
+class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode {
 public:
-  MyWindow(
-      const WorldPtr& world,
+  TutorialWorldNode(
+      WorldPtr world,
       const SkeletonPtr& ball,
       const SkeletonPtr& softBody,
       const SkeletonPtr& hybridBody,
       const SkeletonPtr& rigidChain,
       const SkeletonPtr& rigidRing)
-    : mRandomize(true),
+    : dart::gui::osg::RealTimeWorldNode(std::move(world)),
+      mRandomize(true),
       mRD(),
       mMT(mRD()),
       mDistribution(-1.0, std::nextafter(1.0, 2.0)),
@@ -107,70 +108,46 @@ public:
       mOriginalRigidRing(rigidRing),
       mSkelCount(0)
   {
-    setWorld(world);
+    // Do nothing
   }
 
-  void keyboard(unsigned char key, int x, int y) override
+  void addBall()
   {
-    switch (key) {
-      case '1':
-        addObject(mOriginalBall->cloneSkeleton());
-        break;
+    addObject(mOriginalBall->cloneSkeleton());
+  }
 
-      case '2':
-        addObject(mOriginalSoftBody->cloneSkeleton());
-        break;
+  void addSoftBody()
+  {
+    addObject(mOriginalSoftBody->cloneSkeleton());
+  }
 
-      case '3':
-        addObject(mOriginalHybridBody->cloneSkeleton());
-        break;
+  void addHybridBody()
+  {
+    addObject(mOriginalHybridBody->cloneSkeleton());
+  }
 
-      case '4':
-        addObject(mOriginalRigidChain->cloneSkeleton());
-        break;
+  void addRigidChain()
+  {
+    addObject(mOriginalRigidChain->cloneSkeleton());
+  }
 
-      case '5':
-        addRing(mOriginalRigidRing->cloneSkeleton());
-        break;
+  void addRigidRing()
+  {
+    addObject(mOriginalRigidRing->cloneSkeleton());
+  }
 
-      case 'd':
-        if (mWorld->getNumSkeletons() > 2)
-          removeSkeleton(mWorld->getSkeleton(2));
-        std::cout << "Remaining objects: " << mWorld->getNumSkeletons() - 2
-                  << std::endl;
-        break;
-
-      case 'r':
-        mRandomize = !mRandomize;
-        std::cout << "Randomization: " << (mRandomize ? "on" : "off")
-                  << std::endl;
-        break;
-
-      default:
-        SimWindow::keyboard(key, x, y);
+  void removeSkeleton()
+  {
+    if (mWorld->getNumSkeletons() > 2) {
+      removeSkeleton(mWorld->getSkeleton(2));
     }
+    DART_INFO("Remaining objects: {}", mWorld->getNumSkeletons() - 2);
   }
 
-  void drawWorld() const override
+  void randomize()
   {
-    // Make sure lighting is turned on and that polygons get filled in
-    glEnable(GL_LIGHTING);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-    SimWindow::drawWorld();
-  }
-
-  void displayTimer(int _val) override
-  {
-    // We remove playback and baking, because we want to be able to add and
-    // remove objects during runtime
-    int numIter = mDisplayTimeout / (mWorld->getTimeStep() * 1000);
-    if (mSimulating) {
-      for (int i = 0; i < numIter; i++)
-        timeStepping();
-    }
-    glutPostRedisplay();
-    glutTimerFunc(mDisplayTimeout, refreshTimer, _val);
+    mRandomize = !mRandomize;
+    DART_INFO("Randomization: {}", mRandomize ? "on" : "off");
   }
 
 protected:
@@ -264,6 +241,57 @@ protected:
   /// Keep track of how many Skeletons we spawn to ensure we can give them all
   /// unique names
   std::size_t mSkelCount;
+};
+
+class InputHandler : public ::osgGA::GUIEventHandler {
+public:
+  /// Constructor
+  InputHandler(TutorialWorldNode* node) : mNode(node)
+  {
+    // Do nothing
+  }
+
+  /// Handles key events
+  bool handle(
+      const ::osgGA::GUIEventAdapter& ea, ::osgGA::GUIActionAdapter&) override
+  {
+    if (::osgGA::GUIEventAdapter::KEYDOWN == ea.getEventType()) {
+      switch (ea.getKey()) {
+        case '1':
+          mNode->addBall();
+          return true;
+
+        case '2':
+          mNode->addSoftBody();
+          return true;
+
+        case '3':
+          mNode->addHybridBody();
+          return true;
+
+        case '4':
+          mNode->addRigidChain();
+          return true;
+
+        case '5':
+          mNode->addRigidRing();
+          return true;
+
+        case 'd':
+          mNode->removeSkeleton();
+          return true;
+
+        case 'r':
+          mNode->randomize();
+          return true;
+      }
+    }
+
+    return false;
+  }
+
+protected:
+  TutorialWorldNode* mNode;
 };
 
 /// Add a rigid body with the specified Joint type to a chain
@@ -459,19 +487,32 @@ SkeletonPtr createWall()
   return wall;
 }
 
-int main(int argc, char* argv[])
+int main()
 {
   WorldPtr world = std::make_shared<World>();
   world->addSkeleton(createGround());
   world->addSkeleton(createWall());
 
-  MyWindow window(
+  ::osg::ref_ptr<TutorialWorldNode> node = new TutorialWorldNode(
       world,
       createBall(),
       createSoftBody(),
       createHybridBody(),
       createRigidChain(),
       createRigidRing());
+
+  // Create a viewer for rendering the world and handling user input
+  dart::gui::osg::Viewer viewer;
+  viewer.setWindowTitle("Collisions Tutorial");
+
+  // Add tutorial node
+  viewer.addWorldNode(node);
+
+  // Add our custom input handler to the Viewer
+  viewer.addEventHandler(new InputHandler(node.get()));
+
+  // Print out instructions for the viewer
+  std::cout << viewer.getInstructions() << std::endl;
 
   std::cout << "space bar: simulation on/off" << std::endl;
   std::cout << "'1': toss a rigid ball" << std::endl;
@@ -490,7 +531,18 @@ int main(int argc, char* argv[])
                "the application.\n"
             << std::endl;
 
-  glutInit(&argc, argv);
-  window.initWindow(640, 480, "Collisions");
-  glutMainLoop();
+  // Set up the window
+  viewer.setUpViewInWindow(0, 0, 640, 480);
+
+  // Set up the default viewing position
+  viewer.getCameraManipulator()->setHomePosition(
+      ::osg::Vec3(-3.f, 3.f, 3.f), // eye
+      ::osg::Vec3(0.f, 0.f, 1.f),  // center
+      ::osg::Vec3(0.f, 0.f, 1.f)); // up
+
+  // Reset the camera manipulator so that it starts in the new viewing position
+  viewer.setCameraManipulator(viewer.getCameraManipulator());
+
+  // Run the Viewer
+  viewer.run();
 }

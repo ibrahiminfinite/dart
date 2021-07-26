@@ -43,6 +43,7 @@ namespace dynamics {
 Shape::Shape()
   : mBoundingBox(),
     mVolume(0.0),
+    mIsVolumeDirty(true),
     mID(mCounter++),
     mVariance(STATIC),
     onVersionChanged(mVersionChangedSignal)

@@ -32,7 +32,7 @@
 
 #pragma once
 
-#include "dart/common/Platform.hpp"
+#include "dart/common/platform.hpp"
 #include "dart/config.hpp"
 
 #if !defined(DART_INCLUDE_STD_FILESYSTEM_EXPERIMENTAL)

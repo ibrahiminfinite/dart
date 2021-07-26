@@ -30,31 +30,26 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef EXAMPLES_HYBRIDDYNAMICS_MYWINDOW_HPP_
-#define EXAMPLES_HYBRIDDYNAMICS_MYWINDOW_HPP_
+#pragma once
 
-#include <dart/dart.hpp>
+#include "dart/common/platform.hpp"
 
-/// \brief
-class MyWindow : public dart::gui::glut::SimWindow {
-public:
-  /// \brief
-  MyWindow();
-
-  /// \brief
-  virtual ~MyWindow();
-
-  /// \brief
-  void timeStepping() override;
-
-  /// \brief
-  void drawWorld() const override;
-
-  /// \brief
-  void keyboard(unsigned char _key, int _x, int _y) override;
-
-private:
-  bool mHarnessOn;
-};
-
-#endif // EXAMPLES_HYBRIDDYNAMICS_MYWINDOW_HPP_
+#if DART_OS_WINDOWS
+  #ifdef NOMINMAX
+    #include <windows.h>
+  #else
+    #define NOMINMAX
+    #include <windows.h>
+    #undef NOMINMAX
+  #endif
+  #include <GL/gl.h>
+  #include <GL/glu.h>
+#elif DART_OS_LINUX
+  #include <GL/gl.h>
+  #include <GL/glu.h>
+#elif DART_OS_MACOS
+  #include <OpenGL/gl.h>
+  #include <OpenGL/glu.h>
+#else
+  #error "Load OpenGL Error: Unsupported OS for OpenGL"
+#endif

@@ -36,9 +36,9 @@
 #include <Eigen/Core>
 #include <tinyxml2.h>
 
-#include "dart/common/Platform.hpp"
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/common/Uri.hpp"
+#include "dart/common/platform.hpp"
 #include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Types.hpp"
