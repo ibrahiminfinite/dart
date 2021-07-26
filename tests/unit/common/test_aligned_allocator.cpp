@@ -34,9 +34,9 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/common/Platform.hpp"
 #include "dart/common/aligned_allocator.hpp"
 #include "dart/common/logging.hpp"
+#include "dart/common/platform.hpp"
 
 using namespace dart::common;
 

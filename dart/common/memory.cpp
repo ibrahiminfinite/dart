@@ -34,8 +34,8 @@
 
 #include <cstdlib>
 
-#include "dart/common/Platform.hpp"
 #include "dart/common/compiler.hpp"
+#include "dart/common/platform.hpp"
 
 namespace dart::common {
 
