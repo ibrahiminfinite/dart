@@ -30,35 +30,55 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#pragma once
 
-#include <gtest/gtest.h>
+#include <cstddef>
+#include <cstdint>
+#include <type_traits>
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
-#include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
+// TODO(JS): Consider merging this file into memory.hpp
 
-using namespace dart::common;
+namespace dart::common {
 
-//==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+constexpr std::size_t get_max_alignment()
 {
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
-
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
-
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
+  return alignof(std::max_align_t);
 }
+
+/// Returns whether a number is power of two
+template <typename T>
+constexpr bool is_power_of_two(T x);
+
+/// Returns the next power of two given number
+template <typename T>
+constexpr T next_power_of_2(T x);
+
+/// Returns whether an alignment is valid, which should be a power of two but
+/// not zero.
+constexpr bool is_valid_alignment(std::size_t alignment);
+
+/// Returns log2 for unsigned integers.
+template <typename T>
+constexpr T log2ui(T x);
+
+template <typename T>
+constexpr T log2iu_floor(T x);
+
+template <typename T>
+constexpr T log2ui_ceil(T x);
+
+std::size_t align_offset(
+    std::uintptr_t address, std::size_t alignment) noexcept;
+
+std::size_t align_offset(void* ptr, std::size_t alignment) noexcept;
+
+bool is_aligned(void* ptr, std::size_t alignment) noexcept;
+
+constexpr std::size_t alignment_for(std::size_t size) noexcept;
+
+constexpr std::size_t get_padding(
+    const std::size_t base_address, const std::size_t alignment);
+
+} // namespace dart::common
+
+#include "dart/common/detail/memory_alignment_impl.hpp"

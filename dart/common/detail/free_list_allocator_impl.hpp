@@ -30,35 +30,51 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#pragma once
 
-#include <gtest/gtest.h>
-
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
+#include "dart/common/free_list_allocator.hpp"
 #include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
 
-using namespace dart::common;
+namespace dart::common {
 
 //==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+template <std::size_t Alignment>
+FreeListAllocator<Alignment>::FreeListAllocator(
+    std::shared_ptr<Allocator> base_allocator)
 {
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
-
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
-
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
+  // Set base allocator
+  m_base_allocator = base_allocator ? std::move(base_allocator)
+                                    : std::make_shared<HeapAllocator>();
 }
+
+//==============================================================================
+template <std::size_t Alignment>
+void* FreeListAllocator<Alignment>::allocate(size_t size)
+{
+#if DART_ENABLE_THREAD_SAFE
+  std::lock_guard<std::mutex> lock(m_mutex);
+#endif
+
+  if (size == 0) {
+    DART_DEBUG("Not allowed to allocate zero bytes");
+    return nullptr;
+  }
+
+  return nullptr;
+}
+
+//==============================================================================
+template <std::size_t Alignment>
+void FreeListAllocator<Alignment>::deallocate(void* pointer, std::size_t size)
+{
+#if DART_ENABLE_THREAD_SAFE
+  std::lock_guard<std::mutex> lock(m_mutex);
+#endif
+
+  if (size == 0) {
+    DART_DEBUG("Not allowed to release zero bytes");
+    return;
+  }
+}
+
+} // namespace dart::common

@@ -30,35 +30,38 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#include "dart/common/memory_alignment.hpp"
 
-#include <gtest/gtest.h>
+#include <climits>
+#include <cstddef>
+#include <cstdint>
+#include <type_traits>
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
-#include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
+#include "dart/common/compiler.hpp"
+#include "dart/common/macro.hpp"
 
-using namespace dart::common;
+namespace dart::common {
 
 //==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+std::size_t align_offset(std::uintptr_t address, std::size_t alignment) noexcept
 {
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
-
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
-
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
+  DART_ASSERT(is_valid_alignment(alignment));
+  auto misaligned = address & (alignment - 1);
+  return misaligned != 0 ? (alignment - misaligned) : 0;
 }
+
+//==============================================================================
+std::size_t align_offset(void* ptr, std::size_t alignment) noexcept
+{
+  return align_offset(reinterpret_cast<std::uintptr_t>(ptr), alignment);
+}
+
+//==============================================================================
+bool is_aligned(void* ptr, std::size_t alignment) noexcept
+{
+  DART_ASSERT(is_valid_alignment(alignment));
+  auto address = reinterpret_cast<std::uintptr_t>(ptr);
+  return address % alignment == 0u;
+}
+
+} // namespace dart::common

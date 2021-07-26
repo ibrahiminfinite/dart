@@ -30,35 +30,57 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
-
 #include <gtest/gtest.h>
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
-#include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
+#include "dart/common/allocator.hpp"
+#include "dart/common/free_list_allocator.hpp"
+#include "dart/common/pool_allocator.hpp"
 
 using namespace dart::common;
 
-//==============================================================================
-TEST(AlignedAllocatorTest, Basics)
-{
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
+// template <typename T, std::size_t Alignment = 16>
+// using AlignedVector = std::vector<T, AlignedAllocator<T, Alignment>>;
 
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
+// struct CustomVector3 {
+//  double m_data[3];
+//};
 
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
-}
+////==============================================================================
+// TEST(AllocatorTest, AlignedAllocator) {
+//#ifndef NDEBUG
+//  set_log_level(LogLevel::LL_DEBUG);
+//#endif
+
+//  auto allocator1 = AlignedAllocator<void, 16>();
+//  (void)allocator1;
+//  EXPECT_EQ(allocator1.alignment(), 16);
+
+//  auto allocator2 = AlignedAllocator<int, 32>();
+//  EXPECT_EQ(allocator2.alignment(), 32);
+
+//  AlignedVector<CustomVector3> m_vertices;
+//}
+
+////==============================================================================
+// TEST(AllocatorTest, PoolAllocator) {
+//#ifndef NDEBUG
+//  set_log_level(LogLevel::LL_DEBUG);
+//#endif
+
+//  auto allocator1 = PoolAllocator(8, 8);
+//  (void)allocator1;
+
+//  EXPECT_TRUE(allocator1.allocate(0) == nullptr);
+//}
+
+////==============================================================================
+// TEST(AllocatorTest, FreeListAllocator) {
+//#ifndef NDEBUG
+//  set_log_level(LogLevel::LL_DEBUG);
+//#endif
+
+//  auto allocator1 = FreeListAllocator<16>();
+//  (void)allocator1;
+
+//  EXPECT_TRUE(allocator1.allocate(0) == nullptr);
+//}

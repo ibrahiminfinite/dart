@@ -30,35 +30,82 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#pragma once
 
-#include <gtest/gtest.h>
+#include <cstddef>
+#include <cstdint>
+#include <memory>
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
-#include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
+#include "dart/common/macro.hpp"
+#include "dart/common/memory_alignment.hpp"
 
-using namespace dart::common;
+namespace dart::common::detail {
 
-//==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+std::uintptr_t get_int(void* ptr) noexcept
 {
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
-
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
-
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
+  DART_ASSERT(ptr);
+  std::uintptr_t out;
+  std::memcpy(&out, ptr, sizeof(std::uintptr_t));
+  return out;
 }
+
+void set_int(void* ptr, std::uintptr_t i)
+{
+  DART_ASSERT(ptr);
+  std::memcpy(ptr, &i, sizeof(std::uintptr_t));
+}
+
+inline std::uintptr_t to_int(char* ptr) noexcept
+{
+  return reinterpret_cast<std::uintptr_t>(ptr);
+}
+
+inline char* from_int(std::uintptr_t i) noexcept
+{
+  return reinterpret_cast<char*>(i);
+}
+
+class FreeMemoryList {
+public:
+  FreeMemoryList(std::size_t node_size) noexcept
+  {
+  }
+  //   FreeMemoryList(std::size_t, void* mem, std::size_t size) noexcept;
+
+  void* allocate() noexcept
+  {
+    DART_ASSERT(!is_empty());
+    --m_capacity;
+
+    auto mem = m_first;
+    m_first = from_int(get_int(m_first));
+    return mem;
+  }
+
+  std::size_t get_node_size() const noexcept
+  {
+    return m_node_size;
+  }
+
+  std::size_t get_alignment() const noexcept
+  {
+    return alignment_for(m_node_size);
+  }
+
+  std::size_t get_capacity() const noexcept
+  {
+    return m_capacity;
+  }
+
+  bool is_empty() const noexcept
+  {
+    return (m_first == nullptr);
+  }
+
+private:
+  char* m_first;
+  std::size_t m_node_size;
+  std::size_t m_capacity;
+};
+
+} // namespace dart::common::detail

@@ -30,35 +30,45 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#pragma once
 
-#include <gtest/gtest.h>
+#include <cstdlib>
+#include <type_traits>
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
+#include "dart/common/heap_allocator.hpp"
 #include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
+#include "dart/common/macro.hpp"
 
-using namespace dart::common;
+namespace dart::common {
 
 //==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+constexpr void* HeapAllocator::allocate(std::size_t size, std::size_t alignment)
 {
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
+  if (size == 0) {
+    return nullptr;
+  }
 
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
+  if (alignment == 0) {
+    return std::malloc(size);
+  }
 
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
+  if (size % alignment != 0) {
+    DART_ERROR(
+        "Invalid size to allocate [{}]. The size should be a integer "
+        "multiple of the alignment [{}]",
+        size,
+        alignment);
+    return nullptr;
+  }
+
+  return std::aligned_alloc(alignment, size);
 }
+
+//==============================================================================
+constexpr void HeapAllocator::deallocate(void* pointer, std::size_t size)
+{
+  DART_UNUSED(size);
+  std::free(pointer);
+}
+
+} // namespace dart::common

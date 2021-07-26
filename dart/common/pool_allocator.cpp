@@ -30,35 +30,12 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#include "dart/common/pool_allocator.hpp"
 
-#include <gtest/gtest.h>
-
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
 #include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
 
-using namespace dart::common;
+namespace dart::common {
 
-//==============================================================================
-TEST(AlignedAllocatorTest, Basics)
-{
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
+//
 
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
-
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
-}
+} // namespace dart::common

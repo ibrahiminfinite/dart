@@ -30,35 +30,41 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#include "dart/common/memory_arena.hpp"
 
-#include <gtest/gtest.h>
+#include "dart/common/macro.hpp"
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
-#include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
-
-using namespace dart::common;
+namespace dart::common {
 
 //==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+MemoryBlock::MemoryBlock() noexcept : MemoryBlock(nullptr, std::size_t(0))
 {
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
-
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
-
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
+  // Do nothing
 }
+
+//==============================================================================
+MemoryBlock::MemoryBlock(void* begin, std::size_t size) noexcept
+  : begin(begin), size(size)
+{
+  // Do nothing
+}
+
+//==============================================================================
+MemoryBlock::MemoryBlock(void* begin, void* end) noexcept
+  : MemoryBlock(
+      begin,
+      static_cast<std::size_t>(
+          static_cast<char*>(end) - static_cast<char*>(begin)))
+{
+  DART_ASSERT(begin <= end, "Invalid memory range");
+}
+
+//==============================================================================
+bool MemoryBlock::contains(const void* address) const noexcept
+{
+  auto begin_char = static_cast<const char*>(begin);
+  auto address_char = static_cast<const char*>(address);
+  return begin_char <= address_char && address_char < begin_char + size;
+}
+
+} // namespace dart::common

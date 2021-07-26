@@ -30,35 +30,60 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
-
 #include <gtest/gtest.h>
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
+#include "dart/common/compiler.hpp"
 #include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
+#include "dart/common/memory_alignment.hpp"
 
 using namespace dart::common;
 
 //==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+TEST(MemoryAlignmentTest, UtilityFunctions)
 {
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
+  EXPECT_FALSE(is_power_of_two(0u));
+  EXPECT_TRUE(is_power_of_two(1u));
+  EXPECT_TRUE(is_power_of_two(2u));
+  EXPECT_FALSE(is_power_of_two(3u));
+  EXPECT_TRUE(is_power_of_two(4u));
+  EXPECT_FALSE(is_power_of_two(5u));
+  EXPECT_FALSE(is_power_of_two(6u));
+  EXPECT_FALSE(is_power_of_two(7u));
+  EXPECT_TRUE(is_power_of_two(8u));
+  EXPECT_FALSE(is_power_of_two(9u));
+  EXPECT_FALSE(is_power_of_two(10u));
 
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
+  EXPECT_EQ(next_power_of_2(0u), 1);
+  EXPECT_EQ(next_power_of_2(1u), 1);
+  EXPECT_EQ(next_power_of_2(2u), 2);
+  EXPECT_EQ(next_power_of_2(3u), 4);
+  EXPECT_EQ(next_power_of_2(4u), 4);
+  EXPECT_EQ(next_power_of_2(5u), 8);
+  EXPECT_EQ(next_power_of_2(6u), 8);
+  EXPECT_EQ(next_power_of_2(7u), 8);
+  EXPECT_EQ(next_power_of_2(8u), 8);
+  EXPECT_EQ(next_power_of_2(9u), 16);
+  EXPECT_EQ(next_power_of_2(10u), 16);
 
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
+  EXPECT_EQ(log2ui(1u), 0);
+  EXPECT_EQ(log2ui(2u), 1);
+  EXPECT_EQ(log2ui(3u), 1);
+  EXPECT_EQ(log2ui(4u), 2);
+  EXPECT_EQ(log2ui(5u), 2);
+  EXPECT_EQ(log2ui(6u), 2);
+  EXPECT_EQ(log2ui(7u), 2);
+  EXPECT_EQ(log2ui(8u), 3);
+  EXPECT_EQ(log2ui(9u), 3);
+  EXPECT_EQ(log2ui(10u), 3);
+
+  EXPECT_EQ(log2ui_ceil(1u), 0);
+  EXPECT_EQ(log2ui_ceil(2u), 1);
+  EXPECT_EQ(log2ui_ceil(3u), 2);
+  EXPECT_EQ(log2ui_ceil(4u), 2);
+  EXPECT_EQ(log2ui_ceil(5u), 3);
+  EXPECT_EQ(log2ui_ceil(6u), 3);
+  EXPECT_EQ(log2ui_ceil(7u), 3);
+  EXPECT_EQ(log2ui_ceil(8u), 3);
+  EXPECT_EQ(log2ui_ceil(9u), 4);
+  EXPECT_EQ(log2ui_ceil(10u), 4);
 }

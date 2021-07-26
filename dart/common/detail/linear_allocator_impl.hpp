@@ -30,35 +30,57 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#pragma once
 
-#include <gtest/gtest.h>
-
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
+#include "dart/common/heap_allocator.hpp"
+#include "dart/common/linear_allocator.hpp"
 #include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
+#include "dart/common/memory_alignment.hpp"
 
-using namespace dart::common;
+namespace dart::common {
 
 //==============================================================================
-TEST(AlignedAllocatorTest, Basics)
+constexpr void* LinearAllocator::allocate(
+    std::size_t size, std::size_t alignment)
 {
+  // Allocating zero memory is not allowed
+  if (size == 0) {
+    return nullptr;
+  }
+
+  const std::size_t current_ptr
+      = reinterpret_cast<std::size_t>(m_start_ptr) + m_offset;
+
+  // Compute padding
+  std::size_t padding = 0;
+  if (alignment > 0 && m_offset % alignment != 0) {
+    padding = get_padding(current_ptr, alignment);
+  }
+
+  // Check max capacity
+  if (m_offset + padding + size > m_max_capacity) {
+    DART_DEBUG(
+        "Allocating {} with padding {} exceeds the max capacity {}. Returning "
+        "nullptr.",
+        size,
+        padding,
+        m_max_capacity);
+    return nullptr;
+  }
+
+  m_offset += padding + size;
+
 #ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
+  m_peak = std::max(m_peak, m_offset);
 #endif
 
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
-
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
+  return reinterpret_cast<void*>(current_ptr + padding);
 }
+
+//==============================================================================
+constexpr void LinearAllocator::deallocate(void* ptr, std::size_t size)
+{
+  DART_UNUSED(ptr, size);
+}
+
+} // namespace dart::common

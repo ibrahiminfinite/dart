@@ -30,35 +30,32 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#pragma once
 
-#include <gtest/gtest.h>
-
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
-#include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
-
-using namespace dart::common;
-
-//==============================================================================
-TEST(AlignedAllocatorTest, Basics)
-{
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
+#if DART_ENABLE_THREAD_SAFE
+  #include <mutex>
 #endif
 
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
+#include "dart/common/allocator.hpp"
 
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
+namespace dart::common {
+
+template <std::size_t Alignment = 0u>
+class FreeListAllocator : public Allocator {
+public:
+  FreeListAllocator(std::shared_ptr<Allocator> base_allocator = nullptr);
+
+  void* allocate(std::size_t size) override;
+  void deallocate(void* pointer, std::size_t size) override;
+
+private:
+#if DART_ENABLE_THREAD_SAFE
+  mutable std::mutex m_mutex;
 #endif
-}
+
+  std::shared_ptr<Allocator> m_base_allocator;
+};
+
+} // namespace dart::common
+
+#include "dart/common/detail/free_list_allocator_impl.hpp"

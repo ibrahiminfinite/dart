@@ -30,35 +30,23 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vector>
+#pragma once
 
-#include <gtest/gtest.h>
+#include <memory>
 
-#include "dart/common/Platform.hpp"
-#include "dart/common/aligned_allocator.hpp"
-#include "dart/common/logging.hpp"
-#include "dart/common/platform.hpp"
+namespace dart::common {
 
-using namespace dart::common;
+struct MemoryBlock {
+  void* begin;
+  std::size_t size;
 
-//==============================================================================
-TEST(AlignedAllocatorTest, Basics)
-{
-#ifndef NDEBUG
-  set_log_level(LogLevel::LL_DEBUG);
-#endif
+  MemoryBlock() noexcept;
 
-  // Not allowed to allocate zero size
-  EXPECT_TRUE(AlignedAllocator<int>().allocate(0) == nullptr);
+  MemoryBlock(void* begin, std::size_t size) noexcept;
 
-  // TODO(JS): Fix
-#if DART_OS_LINUX
-  // Check whether the allocated memory is aligned
-  std::vector<int, AlignedAllocator<int>> vec;
-  vec.resize(100);
-  EXPECT_EQ(
-      reinterpret_cast<std::size_t>(vec.data())
-          % vec.get_allocator().alignment(),
-      0);
-#endif
-}
+  MemoryBlock(void* begin, void* end) noexcept;
+
+  bool contains(const void* address) const noexcept;
+};
+
+} // namespace dart::common
