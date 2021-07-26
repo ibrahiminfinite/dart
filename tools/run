@@ -156,6 +156,7 @@ launch() {
   docker run \
     -it \
     --privileged \
+    --network="host" \
     --volume $(pwd):$project_dir \
     -w $project_dir \
     -t $full_image_name \
@@ -169,6 +170,8 @@ clean() {
 
   docker run \
     -it \
+    --privileged \
+    --network="host" \
     --volume $(pwd):$project_dir \
     -w $project_dir/ \
     $full_image_name /bin/bash -c \
@@ -201,7 +204,9 @@ _build() {
 
   docker run \
     -it \
+    --privileged \
     --volume $(pwd):$project_dir \
+    --network="host" \
     -w $project_dir/ \
     $full_image_name /bin/bash -c \
     "mkdir -p $full_build_dir \

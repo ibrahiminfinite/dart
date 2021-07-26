@@ -36,13 +36,15 @@ namespace dart {
 namespace optimization {
 
 //==============================================================================
-std::vector<double> PagmoTypes::convertVector(const Eigen::VectorXd& v) {
+std::vector<double> PagmoTypes::convertVector(const Eigen::VectorXd& v)
+{
   return std::vector<double>(v.data(), v.data() + v.size());
 }
 
 //==============================================================================
 Eigen::Map<const Eigen::VectorXd> PagmoTypes::convertVector(
-    const std::vector<double>& v) {
+    const std::vector<double>& v)
+{
   return Eigen::Map<const Eigen::VectorXd>(
       v.data(), static_cast<int>(v.size()));
 }
@@ -50,7 +52,8 @@ Eigen::Map<const Eigen::VectorXd> PagmoTypes::convertVector(
 //==============================================================================
 Population PagmoTypes::convertPopulation(
     const ::pagmo::population& pagmoPop,
-    std::shared_ptr<MultiObjectiveProblem> problem) {
+    std::shared_ptr<MultiObjectiveProblem> problem)
+{
   Population pop(problem, pagmoPop.size());
 
   const auto& pagmoX = pagmoPop.get_x();
@@ -67,7 +70,8 @@ Population PagmoTypes::convertPopulation(
 
 //==============================================================================
 pagmo::population PagmoTypes::convertPopulation(
-    const Population& pop, const ::pagmo::problem& pagmoProb) {
+    const Population& pop, const ::pagmo::problem& pagmoProb)
+{
   pagmo::population pagmoPop(pagmoProb, pop.getSize());
 
   for (std::size_t i = 0u; i < pagmoPop.size(); ++i) {

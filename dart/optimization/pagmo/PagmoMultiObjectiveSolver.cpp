@@ -50,7 +50,8 @@ namespace optimization {
 //==============================================================================
 PagmoMultiObjectiveSolver::UniqueProperties::UniqueProperties(
     Algorithm algorithm)
-  : mAlgorithm(algorithm) {
+  : mAlgorithm(algorithm)
+{
   // Do nothing
 }
 
@@ -59,33 +60,38 @@ PagmoMultiObjectiveSolver::Properties::Properties(
     const MultiObjectiveSolver::Properties& solverProperties,
     const PagmoMultiObjectiveSolver::UniqueProperties& uniqueProperties)
   : MultiObjectiveSolver::Properties(solverProperties),
-    UniqueProperties(uniqueProperties) {
+    UniqueProperties(uniqueProperties)
+{
   // Do nothing
 }
 
 //==============================================================================
 PagmoMultiObjectiveSolver::PagmoMultiObjectiveSolver(
     const Properties& properties)
-  : MultiObjectiveSolver(properties), mPagmoMultiObjectiveSolverP(properties) {
+  : MultiObjectiveSolver(properties), mPagmoMultiObjectiveSolverP(properties)
+{
   // Do nothing
 }
 
 //==============================================================================
 PagmoMultiObjectiveSolver::PagmoMultiObjectiveSolver(
     std::shared_ptr<MultiObjectiveProblem> problem)
-  : MultiObjectiveSolver(std::move(problem)) {
+  : MultiObjectiveSolver(std::move(problem))
+{
   // Do nothing
 }
 
 //==============================================================================
-PagmoMultiObjectiveSolver::~PagmoMultiObjectiveSolver() {
+PagmoMultiObjectiveSolver::~PagmoMultiObjectiveSolver()
+{
   // Do nothing
 }
 
 //==============================================================================
 #ifdef PAGMO_WITH_NLOPT
 static pagmo::algorithm createNloptCobyla(
-    const PagmoMultiObjectiveSolver::Properties& properties) {
+    const PagmoMultiObjectiveSolver::Properties& properties)
+{
   pagmo::nlopt nlopt("cobyla");
   nlopt.set_maxeval(properties.mIterationsPerEvolution);
   pagmo::algorithm alg(nlopt);
@@ -96,7 +102,8 @@ static pagmo::algorithm createNloptCobyla(
 
 //==============================================================================
 static pagmo::algorithm createMoead(
-    const PagmoMultiObjectiveSolver::Properties& properties) {
+    const PagmoMultiObjectiveSolver::Properties& properties)
+{
   pagmo::algorithm alg(pagmo::moead(properties.mIterationsPerEvolution));
 
   return alg;
@@ -104,7 +111,8 @@ static pagmo::algorithm createMoead(
 
 //==============================================================================
 static pagmo::algorithm createNsga2(
-    const PagmoMultiObjectiveSolver::Properties& properties) {
+    const PagmoMultiObjectiveSolver::Properties& properties)
+{
   pagmo::algorithm alg(pagmo::nsga2(properties.mIterationsPerEvolution));
 
   return alg;
@@ -112,7 +120,8 @@ static pagmo::algorithm createNsga2(
 
 //==============================================================================
 static pagmo::algorithm createPagmoAlgorithm(
-    const PagmoMultiObjectiveSolver::Properties& properties) {
+    const PagmoMultiObjectiveSolver::Properties& properties)
+{
   switch (properties.mAlgorithm) {
 #ifdef PAGMO_WITH_NLOPT
     case PagmoMultiObjectiveSolver::Algorithm::Local_nlopt_COBYLA: {
@@ -131,7 +140,8 @@ static pagmo::algorithm createPagmoAlgorithm(
 }
 
 //==============================================================================
-bool PagmoMultiObjectiveSolver::solve(std::size_t numEvolutions) {
+bool PagmoMultiObjectiveSolver::solve(std::size_t numEvolutions)
+{
   // TODO(JS): Improve performace by re-using prob, archi, and populations.
 
   const std::shared_ptr<MultiObjectiveProblem>& prob = mProperties.mProblem;
@@ -158,53 +168,62 @@ bool PagmoMultiObjectiveSolver::solve(std::size_t numEvolutions) {
 }
 
 //==============================================================================
-std::string PagmoMultiObjectiveSolver::getType() const {
+std::string PagmoMultiObjectiveSolver::getType() const
+{
   return "PagmoMultiObjectiveSolver";
 }
 
 //==============================================================================
-std::shared_ptr<MultiObjectiveSolver> PagmoMultiObjectiveSolver::clone() const {
+std::shared_ptr<MultiObjectiveSolver> PagmoMultiObjectiveSolver::clone() const
+{
   return std::make_shared<PagmoMultiObjectiveSolver>(getSolverProperties());
 }
 
 //==============================================================================
-void PagmoMultiObjectiveSolver::setProperties(const Properties& properties) {
+void PagmoMultiObjectiveSolver::setProperties(const Properties& properties)
+{
   MultiObjectiveSolver::setProperties(properties);
   setProperties(static_cast<const UniqueProperties&>(properties));
 }
 
 //==============================================================================
 void PagmoMultiObjectiveSolver::setProperties(
-    const UniqueProperties& properties) {
+    const UniqueProperties& properties)
+{
   setAlgorithm(properties.mAlgorithm);
 }
 
 //==============================================================================
 PagmoMultiObjectiveSolver::Properties
-PagmoMultiObjectiveSolver::getGradientDescentProperties() const {
+PagmoMultiObjectiveSolver::getGradientDescentProperties() const
+{
   return Properties(getSolverProperties(), mPagmoMultiObjectiveSolverP);
 }
 
 //==============================================================================
-void PagmoMultiObjectiveSolver::copy(const PagmoMultiObjectiveSolver& other) {
+void PagmoMultiObjectiveSolver::copy(const PagmoMultiObjectiveSolver& other)
+{
   setProperties(other.getSolverProperties());
 }
 
 //==============================================================================
 PagmoMultiObjectiveSolver& PagmoMultiObjectiveSolver::operator=(
-    const PagmoMultiObjectiveSolver& other) {
+    const PagmoMultiObjectiveSolver& other)
+{
   copy(other);
   return *this;
 }
 
 //==============================================================================
-void PagmoMultiObjectiveSolver::setAlgorithm(Algorithm alg) {
+void PagmoMultiObjectiveSolver::setAlgorithm(Algorithm alg)
+{
   mPagmoMultiObjectiveSolverP.mAlgorithm = alg;
 }
 
 //==============================================================================
 PagmoMultiObjectiveSolver::Algorithm PagmoMultiObjectiveSolver::getAlgorithm()
-    const {
+    const
+{
   return mPagmoMultiObjectiveSolverP.mAlgorithm;
 }
 

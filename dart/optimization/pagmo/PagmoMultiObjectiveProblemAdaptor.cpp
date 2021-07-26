@@ -40,13 +40,15 @@ namespace optimization {
 //==============================================================================
 PagmoMultiObjectiveProblemAdaptor::PagmoMultiObjectiveProblemAdaptor(
     std::shared_ptr<MultiObjectiveProblem> problem)
-  : mProb(std::move(problem)) {
+  : mProb(std::move(problem))
+{
   assert(mProb);
 }
 
 //==============================================================================
 pagmo::vector_double PagmoMultiObjectiveProblemAdaptor::fitness(
-    const pagmo::vector_double& x) const {
+    const pagmo::vector_double& x) const
+{
   const Eigen::VectorXd val = PagmoTypes::convertVector(x);
 
   assert(mProb.get());
@@ -55,25 +57,29 @@ pagmo::vector_double PagmoMultiObjectiveProblemAdaptor::fitness(
 
 //==============================================================================
 pagmo::vector_double::size_type PagmoMultiObjectiveProblemAdaptor::get_nobj()
-    const {
+    const
+{
   return mProb->getObjectiveDimension();
 }
 
 //==============================================================================
 pagmo::vector_double::size_type PagmoMultiObjectiveProblemAdaptor::get_nec()
-    const {
+    const
+{
   return mProb->getEqConstraintDimension();
 }
 
 //==============================================================================
 pagmo::vector_double::size_type PagmoMultiObjectiveProblemAdaptor::get_nic()
-    const {
+    const
+{
   return mProb->getIneqConstraintDimension();
 }
 
 //==============================================================================
 std::pair<pagmo::vector_double, pagmo::vector_double>
-PagmoMultiObjectiveProblemAdaptor::get_bounds() const {
+PagmoMultiObjectiveProblemAdaptor::get_bounds() const
+{
   const pagmo::vector_double lb
       = PagmoTypes::convertVector(mProb->getLowerBounds());
   const pagmo::vector_double ub
@@ -84,13 +90,15 @@ PagmoMultiObjectiveProblemAdaptor::get_bounds() const {
 
 //==============================================================================
 pagmo::vector_double::size_type PagmoMultiObjectiveProblemAdaptor::get_nix()
-    const {
+    const
+{
   pagmo::vector_double::size_type retval = 0u;
   return retval;
 }
 
 //==============================================================================
-std::string PagmoMultiObjectiveProblemAdaptor::get_name() const {
+std::string PagmoMultiObjectiveProblemAdaptor::get_name() const
+{
   // TODO(JS): Add name field to problem
   return "PagmoMultiObjectiveProblem";
 }

@@ -136,3 +136,8 @@ add_custom_target(
   tests
   DEPENDS ${integration_tests} ${regression_tests} ${unit_tests}
 )
+
+# Add custom target to build all the tests and run the tests
+add_custom_target(tests_and_run COMMAND ${CMAKE_CTEST_COMMAND}
+  DEPENDS ${integration_tests} ${regression_tests} ${unit_tests}
+)

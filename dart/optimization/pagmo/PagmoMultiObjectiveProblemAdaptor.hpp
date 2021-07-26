@@ -91,7 +91,8 @@ protected:
 
 //==============================================================================
 template <typename Archive>
-void PagmoMultiObjectiveProblemAdaptor::serialize(Archive& ar) {
+void PagmoMultiObjectiveProblemAdaptor::serialize(Archive& ar)
+{
   ar(mProb->getSolutionDimension(), mProb->getFitnessDimension());
 }
 

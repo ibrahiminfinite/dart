@@ -30,54 +30,72 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include <algorithm>
+#include <vector>
 
-#include <memory>
+#include <gtest/gtest.h>
 
-#include <Eigen/Core>
-#include <Eigen/StdVector>
+#include "dart/common/logging.hpp"
+#include "dart/common/stack_allocator.hpp"
 
-#include "dart/common/macro.hpp"
-#include "dart/common/memory.hpp"
-
-namespace dart {
-namespace common {
+using namespace dart::common;
 
 //==============================================================================
-template <typename _Tp, typename... _Args>
-std::shared_ptr<_Tp> make_aligned_shared(_Args&&... __args)
+TEST(StackAllocatorTest, ConstructorsAndInitialStates)
 {
-  using _Tp_nc = typename std::remove_const<_Tp>::type;
+#ifndef NDEBUG
+  set_log_level(LogLevel::LL_DEBUG);
+#endif
 
-  return std::allocate_shared<_Tp>(
-      Eigen::aligned_allocator<_Tp_nc>(), std::forward<_Args>(__args)...);
+  auto alloc1 = StackAllocator(0);
+  EXPECT_EQ(alloc1.get_max_capacity(), 0);
+  EXPECT_EQ(alloc1.get_size(), 0);
+  EXPECT_EQ(alloc1.get_begin_address(), nullptr);
+
+  auto alloc2 = StackAllocator(64);
+  EXPECT_EQ(alloc2.get_max_capacity(), 64);
+  EXPECT_EQ(alloc2.get_size(), 0);
+  EXPECT_NE(alloc2.get_begin_address(), nullptr);
 }
 
 //==============================================================================
-constexpr std::size_t get_padding(
-    const std::size_t base_address, const std::size_t alignment)
+TEST(AllocatorTest, TotalSize)
 {
-  if (alignment == 0) {
-    return 0;
-  }
+#ifndef NDEBUG
+  set_log_level(LogLevel::LL_DEBUG);
+#endif
 
-  //
-  // 0       (alignemnt)  (2*alignment)          (multiplier*alignment)
-  // +------------+-------------+-----...----+-------------+--------------
-  //                                            ^          ^
-  //                                            |          |
-  //                                       base_address   aligned_address
-  //                                            |--------->|
-  //                                               padding
-  //
+  std::uintptr_t size;
 
-  const std::size_t multiplier = (base_address / alignment) + 1;
-  const std::size_t aligned_address = multiplier * alignment;
-  DART_ASSERT(aligned_address >= base_address);
-  const std::size_t padding = aligned_address - base_address;
+  auto allocator1 = StackAllocator(0);
+  EXPECT_TRUE(allocator1.allocate(0) == nullptr);
+  EXPECT_TRUE(allocator1.allocate(1) == nullptr);
+  EXPECT_EQ(allocator1.get_size(), 0);
 
-  return padding;
+  auto allocator2 = StackAllocator(8);
+
+  EXPECT_TRUE(allocator2.allocate(0) == nullptr);
+  EXPECT_EQ(allocator2.get_size(), 0);
+  size = allocator2.get_size();
+
+  void* ptr1 = allocator2.allocate(1);
+  EXPECT_TRUE(ptr1 != nullptr);
+  EXPECT_TRUE(is_aligned(ptr1, 0));
+  EXPECT_TRUE(allocator2.get_size() > size);
+  size = allocator2.get_size();
+
+  void* ptr2 = allocator2.allocate(2, 4);
+  EXPECT_TRUE(ptr2 != nullptr);
+  EXPECT_TRUE(is_aligned(ptr2, 4));
+  EXPECT_TRUE(allocator2.get_size() > size);
+  size = allocator2.get_size();
+
+  allocator2.deallocate(ptr2, 2);
+  EXPECT_TRUE(allocator2.get_size() < size);
+  size = allocator2.get_size();
+
+  allocator2.deallocate(ptr1, 1);
+  EXPECT_TRUE(allocator2.get_size() < size);
+  size = allocator2.get_size();
+  EXPECT_TRUE(size == 0);
 }
-
-} // namespace common
-} // namespace dart
