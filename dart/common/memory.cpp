@@ -61,4 +61,15 @@ void aligned_free(void* ptr)
 #endif
 }
 
+//==============================================================================
+bool is_aligned(void* ptr, std::size_t alignment) noexcept
+{
+  if (alignment == 0) {
+    return true;
+  }
+
+  auto address = reinterpret_cast<std::uintptr_t>(ptr);
+  return (address % alignment == 0u);
+}
+
 } // namespace dart::common

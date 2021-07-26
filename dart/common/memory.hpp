@@ -46,6 +46,8 @@ namespace common {
 template <typename _Tp, typename... _Args>
 std::shared_ptr<_Tp> make_aligned_shared(_Args&&... __args);
 
+/// Returns the distance from the base address to the next aligned address of
+/// the base address, so that base_address + padding = aligned_address.
 constexpr std::size_t get_padding(
     const std::size_t base_address, const std::size_t alignment);
 
@@ -64,6 +66,8 @@ DART_COMMON_API void* aligned_alloc(std::size_t alignment, std::size_t size);
 /// \param[in] ptr: A pointer to the memory block that was returned to the
 /// aligned_alloc()
 DART_COMMON_API void aligned_free(void* ptr);
+
+DART_COMMON_API bool is_aligned(void* ptr, std::size_t alignment) noexcept;
 
 // TODO(JS): Move to math component
 template <typename _Tp>
