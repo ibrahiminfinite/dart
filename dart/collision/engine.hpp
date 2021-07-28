@@ -110,16 +110,7 @@ private:
   GroupPtr<S> m_default_group;
 };
 
-using Enginef = Engine<float>;
-using Engined = Engine<double>;
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template class DART_COLLISION_API Engine<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template class DART_COLLISION_API Engine<float>;
-#endif
+DART_TEMPLATE_CLASS_HEADER(COLLISION, Engine)
 
 } // namespace collision
 } // namespace dart

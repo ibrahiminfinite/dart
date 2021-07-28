@@ -30,72 +30,56 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <dart/collision/collision.hpp>
-#include <dart/math/math.hpp>
-#include <gtest/gtest.h>
+#pragma once
 
-using namespace dart;
+#include "dart/collision/dart/dart_group.hpp"
+#include "dart/collision/dart/dart_object.hpp"
+
+namespace dart {
+namespace collision {
 
 //==============================================================================
-template <typename T>
-struct NarrowPhaseTest : public testing::Test
+template <typename S>
+math::Isometry3<S> DartObject<S>::get_pose() const
 {
-  using Type = T;
-};
-
-//==============================================================================
-using Types = testing::Types</*double, */ float>;
-
-//==============================================================================
-TYPED_TEST_SUITE(NarrowPhaseTest, Types);
-
-//==============================================================================
-template <typename EngineT>
-void test_collide(const EngineT& engine)
-{
-  using S = typename EngineT::element_type::S;
-
-  if (!engine) {
-    return;
-  }
-
-  if (engine->get_type() == collision::BulletEngine<S>::GetType()) {
-    return;
-  }
-
-  auto sphere1 = engine->create_sphere_object(0.5);
-  auto sphere2 = engine->create_sphere_object(0.5);
-  ASSERT_TRUE(sphere1);
-  ASSERT_TRUE(sphere2);
-
-  sphere1->set_position(math::Vector3<S>(-1, 0, 0));
-  sphere2->set_position(math::Vector3<S>(1, 0, 0));
-  EXPECT_FALSE(collision::collide(sphere1, sphere2));
-
-  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
-  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
-  EXPECT_TRUE(collision::collide(sphere1, sphere2));
-
-  collision::CollisionOption<S> option;
-  option.enable_contact = true;
-  option.max_num_contacts = 10;
-  collision::CollisionResult<S> result;
-  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
-  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
-  EXPECT_TRUE(collision::collide(sphere1, sphere2, option, &result));
+  return m_pose;
 }
 
 //==============================================================================
-TYPED_TEST(NarrowPhaseTest, Collide)
+template <typename S>
+void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
 {
-  using S = typename TestFixture::Type;
-
-  test_collide(collision::DartEngine<S>::Create());
-  test_collide(collision::FclEngine<S>::Create());
-#if DART_HAVE_ODE
-  test_collide(collision::OdeEngine<S>::Create());
-#endif
-#if DART_HAVE_Bullet
-  test_collide(collision::BulletEngine<S>::Create());
-#endif
+  m_pose = tf;
 }
+
+//==============================================================================
+template <typename S>
+math::Vector3<S> DartObject<S>::get_position() const
+{
+  return m_pose.translation();
+}
+
+//==============================================================================
+template <typename S>
+void DartObject<S>::set_position(const math::Vector3<S>& pos)
+{
+  m_pose.translation() = pos;
+}
+
+//==============================================================================
+template <typename S>
+DartObject<S>::DartObject(DartGroup<S>* group, math::GeometryPtr shape)
+  : Object<S>(group, shape)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename S>
+void DartObject<S>::update_engine_data()
+{
+  // Do nothing
+}
+
+} // namespace collision
+} // namespace dart

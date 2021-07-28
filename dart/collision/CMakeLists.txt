@@ -27,7 +27,7 @@ dart_add_component(
   TARGET_COMPILE_FEATURES_PUBLIC
     cxx_std_17
   SUB_DIRECTORIES
-    detail fcl ode bullet
+    detail dart fcl ode bullet
   GENERATE_META_HEADER
   GENERATE_EXPORT_HEADER
   FORMAT_CODE

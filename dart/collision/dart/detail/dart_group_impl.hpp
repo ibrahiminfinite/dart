@@ -30,72 +30,59 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <dart/collision/collision.hpp>
-#include <dart/math/math.hpp>
-#include <gtest/gtest.h>
+#pragma once
 
-using namespace dart;
+#include "dart/collision/dart/dart_engine.hpp"
+#include "dart/collision/dart/dart_group.hpp"
+#include "dart/collision/dart/dart_object.hpp"
+#include "dart/collision/object.hpp"
+#include "dart/common/logging.hpp"
+#include "dart/common/macro.hpp"
+#include "dart/math/geometry/sphere.hpp"
+
+namespace dart {
+namespace collision {
 
 //==============================================================================
-template <typename T>
-struct NarrowPhaseTest : public testing::Test
+template <typename S>
+DartGroup<S>::DartGroup(Engine<S>* engine) : Group<S>(engine)
 {
-  using Type = T;
-};
-
-//==============================================================================
-using Types = testing::Types</*double, */ float>;
-
-//==============================================================================
-TYPED_TEST_SUITE(NarrowPhaseTest, Types);
-
-//==============================================================================
-template <typename EngineT>
-void test_collide(const EngineT& engine)
-{
-  using S = typename EngineT::element_type::S;
-
-  if (!engine) {
-    return;
-  }
-
-  if (engine->get_type() == collision::BulletEngine<S>::GetType()) {
-    return;
-  }
-
-  auto sphere1 = engine->create_sphere_object(0.5);
-  auto sphere2 = engine->create_sphere_object(0.5);
-  ASSERT_TRUE(sphere1);
-  ASSERT_TRUE(sphere2);
-
-  sphere1->set_position(math::Vector3<S>(-1, 0, 0));
-  sphere2->set_position(math::Vector3<S>(1, 0, 0));
-  EXPECT_FALSE(collision::collide(sphere1, sphere2));
-
-  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
-  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
-  EXPECT_TRUE(collision::collide(sphere1, sphere2));
-
-  collision::CollisionOption<S> option;
-  option.enable_contact = true;
-  option.max_num_contacts = 10;
-  collision::CollisionResult<S> result;
-  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
-  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
-  EXPECT_TRUE(collision::collide(sphere1, sphere2, option, &result));
+  // Do nothing
 }
 
 //==============================================================================
-TYPED_TEST(NarrowPhaseTest, Collide)
+template <typename S>
+DartGroup<S>::~DartGroup()
 {
-  using S = typename TestFixture::Type;
-
-  test_collide(collision::DartEngine<S>::Create());
-  test_collide(collision::FclEngine<S>::Create());
-#if DART_HAVE_ODE
-  test_collide(collision::OdeEngine<S>::Create());
-#endif
-#if DART_HAVE_Bullet
-  test_collide(collision::BulletEngine<S>::Create());
-#endif
+  // Do nothing
 }
+
+//==============================================================================
+template <typename S>
+ObjectPtr<S> DartGroup<S>::create_object(math::GeometryPtr shape)
+{
+  if (!shape) {
+    DART_WARN("Not allowed to create a collision object for a null shape");
+    return nullptr;
+  }
+
+  return std::shared_ptr<DartObject<S>>(
+      new DartObject<S>(this, std::move(shape)));
+}
+
+//==============================================================================
+template <typename S>
+DartEngine<S>* DartGroup<S>::get_mutable_dart_engine()
+{
+  return static_cast<DartEngine<S>*>(this->m_engine);
+}
+
+//==============================================================================
+template <typename S>
+const DartEngine<S>* DartGroup<S>::get_dart_engine() const
+{
+  return static_cast<const DartEngine<S>*>(this->m_engine);
+}
+
+} // namespace collision
+} // namespace dart

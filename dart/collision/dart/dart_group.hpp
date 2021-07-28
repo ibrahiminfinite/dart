@@ -30,12 +30,43 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/dart/dart_object.hpp"
+#pragma once
+
+#include "dart/collision/dart/dart_type.hpp"
+#include "dart/collision/group.hpp"
+#include "dart/collision/type.hpp"
 
 namespace dart {
 namespace collision {
 
-DART_TEMPLATE_CLASS_SOURCE(DartObject)
+template <typename S_>
+class DartGroup : public Group<S_>
+{
+public:
+  using S = S_;
+
+  friend class DartEngine<S>;
+
+  /// Constructor
+  DartGroup(Engine<S>* engine);
+
+  /// Destructor
+  ~DartGroup() override;
+
+  ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+
+protected:
+  DartEngine<S>* get_mutable_dart_engine();
+
+  const DartEngine<S>* get_dart_engine() const;
+
+private:
+  friend class DartObject<S>;
+};
+
+DART_TEMPLATE_CLASS_HEADER(COLLISION, DartGroup)
 
 } // namespace collision
 } // namespace dart
+
+#include "dart/collision/dart/detail/dart_group_impl.hpp"

@@ -30,12 +30,16 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/dart/dart_object.hpp"
+#pragma once
+
+#include "dart/common/SmartPointer.hpp"
 
 namespace dart {
 namespace collision {
 
-DART_TEMPLATE_CLASS_SOURCE(DartObject)
+DART_DEFINE_CLASS_POINTERS_T1(DartEngine);
+DART_DEFINE_CLASS_POINTERS_T1(DartObject);
+DART_DEFINE_CLASS_POINTERS_T1(DartGroup);
 
 } // namespace collision
 } // namespace dart

@@ -32,43 +32,49 @@
 
 #pragma once
 
-#include "dart/collision/Object.hpp"
-#include "dart/collision/dart/BackwardCompatibility.hpp"
+#include "dart/collision/dart/dart_type.hpp"
+#include "dart/collision/object.hpp"
+#include "dart/math/type.hpp"
 
 namespace dart {
 namespace collision {
 
-class DartObject : public Object
+template <typename S_>
+class DartObject : public Object<S_>
 {
 public:
-  const Eigen::Isometry3d& getTransform() const override;
+  using S = S_;
 
-  /// Return FCL collision object
-  dart::collision::dart::Object* getFCLObject();
+  // Documentation inherited
+  math::Isometry3<S> get_pose() const override;
 
-  /// Return FCL collision object
-  const dart::collision::dart::Object* getFCLObject() const;
+  // Documentation inherited
+  void set_pose(const math::Isometry3<S>& tf) override;
+
+  // Documentation inherited
+  math::Vector3<S> get_position() const override;
+
+  // Documentation inherited
+  void set_position(const math::Vector3<S>& pos) override;
 
 protected:
   /// Constructor
-  DartObject(
-      Group* collisionGroup,
-      math::GeometryPtr shape,
-      const std::shared_ptr<dart::collision::dart::CollisionGeometry>&
-          fclCollGeom);
+  DartObject(DartGroup<S>* group, math::GeometryPtr shape);
 
   // Documentation inherited
-  void updateEngineData() override;
-
-protected:
-  DartObject(Group* collisionGroup, math::GeometryPtr shape);
-
-  /// FCL collision object
-  std::unique_ptr<dart::collision::dart::Object> mFCLObject;
+  void update_engine_data() override;
 
 private:
-  friend class FclEngine;
+  friend class DartEngine<S>;
+  friend class DartGroup<S>;
+
+  /// Pose of the collision object
+  math::Isometry3<S> m_pose;
 };
+
+DART_TEMPLATE_CLASS_HEADER(COLLISION, DartObject)
 
 } // namespace collision
 } // namespace dart
+
+#include "dart/collision/dart/detail/dart_object_impl.hpp"

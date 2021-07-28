@@ -46,10 +46,8 @@ class OdeGroup : public Group<S_>
 public:
   using S = S_;
 
-  friend class OdeEngine<S>;
-
   /// Constructor
-  OdeGroup(Engine<S>* engine);
+  explicit OdeGroup(Engine<S>* engine);
 
   /// Destructor
   ~OdeGroup() override;
@@ -64,6 +62,7 @@ protected:
   dSpaceID get_ode_space_id() const;
 
 private:
+  friend class OdeEngine<S>;
   friend class OdeObject<S>;
 
   /// Top-level space for all sub-spaces/collisions

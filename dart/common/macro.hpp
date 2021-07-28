@@ -34,6 +34,8 @@
 
 #include <cassert>
 
+#include "dart/common/logging.hpp"
+
 // DART_NUM_ARGS(<arg1> [, <arg2> [, ...]])
 #define DETAIL_DART_NUM_ARGS(z, a, b, c, d, e, f, cnt, ...) cnt
 #define DART_NUM_ARGS(...)                                                     \
@@ -118,3 +120,7 @@
   #define DART_TEMPLATE_CLASS_SOURCE(class_name)
 
 #endif
+
+#define DART_NOT_IMPLEMENTED                                                   \
+  DART_ERROR("Not implemented: {}:{}", __FILE__, __LINE__);                    \
+  void(0)

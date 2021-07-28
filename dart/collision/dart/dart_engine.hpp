@@ -30,12 +30,59 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/dart/dart_object.hpp"
+#pragma once
+
+#include <map>
+
+#include "dart/collision/dart/dart_type.hpp"
+#include "dart/collision/engine.hpp"
+#include "dart/math/SmartPointer.hpp"
 
 namespace dart {
 namespace collision {
 
-DART_TEMPLATE_CLASS_SOURCE(DartObject)
+template <typename S_>
+class DartEngine : public Engine<S_>
+{
+public:
+  // Type aliases
+  using S = S_;
+
+  static std::shared_ptr<DartEngine> Create();
+
+  /// Constructor
+  ~DartEngine() override;
+
+  // Documentation inherited
+  const std::string& get_type() const override;
+
+  /// Get collision detector type for this class
+  static const std::string& GetType();
+
+  // Documentation inherited
+  GroupPtr<S> create_group() override;
+
+  // Documentation inherited
+  bool collide(
+      ObjectPtr<S> object1,
+      ObjectPtr<S> object2,
+      const CollisionOption<S>& option = {},
+      CollisionResult<S>* result = nullptr) override;
+
+protected:
+  /// Constructor
+  DartEngine() = default;
+
+private:
+  friend class DartGroup<S>;
+
+  DART_REGISTER_ENGINE_IN_HEADER(DartEngine<S>);
+};
+
+DART_REGISTER_ENGINE_OUT_HEADER(DartEngine<S>);
+DART_TEMPLATE_CLASS_HEADER(COLLISION, DartEngine)
 
 } // namespace collision
 } // namespace dart
+
+#include "dart/collision/dart/detail/dart_engine_impl.hpp"

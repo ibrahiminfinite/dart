@@ -74,6 +74,7 @@ protected:
   /// Constructor
   OdeEngine();
 
+  /// Returns ODE world ID.
   dWorldID get_ode_world_id() const;
 
   /// Top-level world for all bodies

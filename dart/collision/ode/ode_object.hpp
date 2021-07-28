@@ -62,7 +62,7 @@ public:
 
 protected:
   /// Constructor
-  OdeObject(OdeGroup<S>* collision_group, math::GeometryPtr shape);
+  OdeObject(OdeGroup<S>* group, math::GeometryPtr shape);
 
   // Documentation inherited
   void update_engine_data() override;

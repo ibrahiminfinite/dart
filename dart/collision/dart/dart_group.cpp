@@ -30,12 +30,12 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/dart/dart_object.hpp"
+#include "dart/collision/dart/dart_group.hpp"
 
 namespace dart {
 namespace collision {
 
-DART_TEMPLATE_CLASS_SOURCE(DartObject)
+DART_TEMPLATE_CLASS_SOURCE(DartGroup)
 
 } // namespace collision
 } // namespace dart
