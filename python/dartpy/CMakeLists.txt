@@ -90,6 +90,13 @@ add_custom_target(install-${DARTPY_MODULE}
   DEPENDS ${install_dartpy_deps}
 )
 
+# Install dartpy module to site-packages directory
+if(DART_INSTALL_DARTPY_BY_INSTALL_TARGET)
+  install(TARGETS ${DARTPY_MODULE}
+    LIBRARY DESTINATION ${PYTHON_SITE_PACKAGES}
+  )
+endif()
+
 list(REMOVE_ITEM dartpy_headers
   ${CMAKE_CURRENT_LIST_DIR}/eigen_geometry_pybind.h
   ${CMAKE_CURRENT_LIST_DIR}/eigen_pybind.h
