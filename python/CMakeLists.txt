@@ -8,7 +8,10 @@
 
 set(DART_DARTPY_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/dartpy")
 
-add_subdirectory(dartpy)
+# Python binding module name
+set(DARTPY_MODULE dartpy)
+
+add_subdirectory(dartpy)  # should be included than any other subdirectories for dartpy target
 add_subdirectory(tests)
 add_subdirectory(examples)
 add_subdirectory(tutorials)

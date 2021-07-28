@@ -1,3 +1,15 @@
+# Copyright (c) 2011-2021, The DART development contributors
+# All rights reserved.
+#
+# The list of contributors can be found at:
+#   https://github.com/dartsim/dart/blob/main/LICENSE
+#
+# This file is provided under the "BSD-style" License
+
+if(NOT TARGET ${DARTPY_MODULE})
+  return()
+endif()
+
 # Make sure pytest is installed
 execute_process(
   COMMAND ${PYTHON_EXECUTABLE} -c "import pytest; print(pytest.__version__)"

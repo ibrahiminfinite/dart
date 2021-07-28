@@ -208,7 +208,6 @@ _build() {
     && cd $full_build_dir \
     $cleanup_command \
     && cmake $project_dir \
-    -DDART_BUILD_DARTPY=ON \
     -DCMAKE_BUILD_TYPE=$build_mode \
     $codecov_option \
     && make -j$num_cores \

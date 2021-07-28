@@ -20,21 +20,7 @@ endif()
 set(PYBIND11_PYTHON_VERSION ${DARTPY_PYTHON_VERSION})
 find_package(pybind11 2.4.3 QUIET)
 if(NOT pybind11_FOUND)
-  message(WARNING "DART_BUILD_DARTPY is ON, but failed to find pybind11 >= "
-    "2.4.3. Disabling dartpy."
-  )
-  return()
-endif()
-if(NOT PYTHONINTERP_FOUND)
-  message(WARNING "DART_BUILD_DARTPY is ON, but failed to find PythonInterp. "
-    "Disabling dartpy."
-  )
-  return()
-endif()
-if(NOT PYTHONLIBS_FOUND)
-  message(WARNING "DART_BUILD_DARTPY is ON, but failed to find PythonLibs. "
-    "Disabling dartpy."
-  )
+  message(WARNING "Disabling dartpy due to missing pybind11 >= 2.4.3.")
   return()
 endif()
 execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
@@ -50,21 +36,18 @@ endif()
 file(GLOB_RECURSE dartpy_headers "*.h" "*.hpp")
 file(GLOB_RECURSE dartpy_sources "*.cpp")
 
-# Python binding module name
-set(pybind_module dartpy)
-
 # Build a Python extension module:
 # pybind11_add_module(<name> [MODULE | SHARED] [EXCLUDE_FROM_ALL]
 #                     [NO_EXTRAS] [SYSTEM] [THIN_LTO] source1 [source2 ...])
 #
-pybind11_add_module(${pybind_module}
+pybind11_add_module(${DARTPY_MODULE}
   MODULE
   ${dartpy_headers}
   ${dartpy_sources}
   EXCLUDE_FROM_ALL
 )
 
-target_include_directories(${pybind_module}
+target_include_directories(${DARTPY_MODULE}
   SYSTEM PUBLIC
     ${PYTHON_INCLUDE_DIRS}
     ${pybind11_INCLUDE_DIRS}
@@ -72,7 +55,7 @@ target_include_directories(${pybind_module}
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(${pybind_module}
+target_link_libraries(${DARTPY_MODULE}
   PUBLIC
     ${PROJECT_NAME}${DART_MAJOR_VERSION}-common
     ${PROJECT_NAME}${DART_MAJOR_VERSION}-math
@@ -86,24 +69,24 @@ target_link_libraries(${pybind_module}
 )
 
 # Remove debug postfix for dartpy
-set_target_properties(${pybind_module} PROPERTIES DEBUG_POSTFIX "")
+set_target_properties(${DARTPY_MODULE} PROPERTIES DEBUG_POSTFIX "")
 
 # Get the path to the bind module
-set(PYBIND_MODULE $<TARGET_FILE:${pybind_module}>)
+set(dartpy_module_path $<TARGET_FILE:${DARTPY_MODULE}>)
 
 # Custom target to install (copy) the bind module. This target may require
 # `sudo` if the destination is a system directory.
-set(install_comment "Installing ${pybind_module}...")
+set(install_comment "Installing ${DARTPY_MODULE}...")
 if(BUILD_SHARED_LIBS)
   string(CONCAT install_comment
     "${install_comment}\n"
-    "NOTE: ${pybind_module} is built against the DART's shared libraries. "
-    "Install the shared libraries to be able to import ${pybind_module}."
+    "NOTE: ${DARTPY_MODULE} is built against the DART's shared libraries. "
+    "Install the shared libraries to be able to import ${DARTPY_MODULE}."
   )
 endif()
-add_custom_target(install-${pybind_module}
+add_custom_target(install-${DARTPY_MODULE}
   COMMENT "${install_comment}"
-  COMMAND ${CMAKE_COMMAND} -E copy ${PYBIND_MODULE} ${PYTHON_SITE_PACKAGES}
+  COMMAND ${CMAKE_COMMAND} -E copy ${dartpy_module_path} ${PYTHON_SITE_PACKAGES}
   DEPENDS ${install_dartpy_deps}
 )
 

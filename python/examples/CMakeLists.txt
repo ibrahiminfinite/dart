@@ -1,3 +1,15 @@
+# Copyright (c) 2011-2021, The DART development contributors
+# All rights reserved.
+#
+# The list of contributors can be found at:
+#   https://github.com/dartsim/dart/blob/main/LICENSE
+#
+# This file is provided under the "BSD-style" License
+
+if(NOT TARGET dartpy)
+  return()
+endif()
+
 #===============================================================================
 # Usage:
 #   dartpy_add_example(example_name) # assumed source is example_name.py
