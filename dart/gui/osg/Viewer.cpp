@@ -51,7 +51,8 @@ namespace dart {
 namespace gui {
 namespace osg {
 
-class SaveScreen : public ::osg::Camera::DrawCallback {
+class SaveScreen : public ::osg::Camera::DrawCallback
+{
 public:
   SaveScreen(Viewer* viewer) : mViewer(viewer), mImage(new ::osg::Image)
   {
@@ -112,7 +113,8 @@ protected:
 };
 
 //==============================================================================
-class ViewerAttachmentCallback : public ::osg::NodeCallback {
+class ViewerAttachmentCallback : public ::osg::NodeCallback
+{
 public:
   virtual void operator()(::osg::Node* node, ::osg::NodeVisitor* nv)
   {

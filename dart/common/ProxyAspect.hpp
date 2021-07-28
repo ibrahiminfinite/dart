@@ -57,7 +57,8 @@ template <class CompositeT, typename StateT, typename PropertiesT>
 class ProxyStateAndPropertiesAspect : public detail::ProxyPropertiesAspect<
                                           ProxyStateAspect<CompositeT, StateT>,
                                           CompositeT,
-                                          PropertiesT> {
+                                          PropertiesT>
+{
 public:
   using State = StateT;
   using Properties = PropertiesT;

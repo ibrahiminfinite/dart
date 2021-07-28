@@ -47,7 +47,8 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-class DART_DYNAMICS_API BasicNodeManagerForBodyNode {
+class DART_DYNAMICS_API BasicNodeManagerForBodyNode
+{
 public:
   using NodeMap = std::map<std::type_index, std::vector<Node*> >;
   using NodeDestructorSet = std::unordered_set<NodeDestructorPtr>;
@@ -81,7 +82,8 @@ public:
 
 protected:
   template <class T>
-  struct type {
+  struct type
+  {
   };
 
   /// Map that retrieves the Nodes of a specified type
@@ -93,7 +95,8 @@ protected:
 
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 class DART_DYNAMICS_API BasicNodeManagerForSkeleton
-  : public virtual BasicNodeManagerForBodyNode {
+  : public virtual BasicNodeManagerForBodyNode
+{
 public:
   using BasicNodeManagerForBodyNode::getNode;
   using BasicNodeManagerForBodyNode::getNumNodes;

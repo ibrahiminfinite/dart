@@ -36,7 +36,8 @@
 
 namespace dart::common {
 
-class DART_COMMON_API HeapAllocator final : public Allocator {
+class DART_COMMON_API HeapAllocator final : public Allocator
+{
 public:
   /// Constructor
   HeapAllocator();

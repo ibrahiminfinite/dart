@@ -42,7 +42,8 @@
 namespace dart {
 namespace math {
 
-class DART_MATH_API Random final {
+class DART_MATH_API Random final
+{
 public:
   using GeneratorType = std::mt19937;
 

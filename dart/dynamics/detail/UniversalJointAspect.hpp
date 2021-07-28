@@ -48,7 +48,8 @@ class UniversalJoint;
 namespace detail {
 
 //==============================================================================
-struct DART_DYNAMICS_API UniversalJointUniqueProperties {
+struct DART_DYNAMICS_API UniversalJointUniqueProperties
+{
   std::array<Eigen::Vector3d, 2> mAxis;
 
   UniversalJointUniqueProperties(
@@ -61,7 +62,8 @@ struct DART_DYNAMICS_API UniversalJointUniqueProperties {
 //==============================================================================
 struct DART_DYNAMICS_API UniversalJointProperties
   : GenericJoint<math::R2Space>::Properties,
-    UniversalJointUniqueProperties {
+    UniversalJointUniqueProperties
+{
   DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(UniversalJointProperties)
 
   UniversalJointProperties(

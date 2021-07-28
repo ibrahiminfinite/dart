@@ -45,9 +45,11 @@ class BodyNode;
 class Skeleton;
 
 /// class ZeroDofJoint
-class DART_DYNAMICS_API ZeroDofJoint : public Joint {
+class DART_DYNAMICS_API ZeroDofJoint : public Joint
+{
 public:
-  struct Properties : Joint::Properties {
+  struct Properties : Joint::Properties
+  {
     Properties(const Joint::Properties& _properties = Joint::Properties());
     virtual ~Properties() = default;
   };

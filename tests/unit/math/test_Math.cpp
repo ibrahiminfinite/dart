@@ -50,11 +50,10 @@ using namespace math;
 #define MATH_TOL 0.000001
 #define MATH_EPS 0.000001
 
-class EigenSE3 {
+class EigenSE3
+{
 public:
-  explicit EigenSE3(const Eigen::Matrix4d& T) : mT(T)
-  {
-  }
+  explicit EigenSE3(const Eigen::Matrix4d& T) : mT(T) {}
 
   /// \brief multiplication operator
   inline EigenSE3 operator*(const EigenSE3& T) const

@@ -43,7 +43,8 @@ namespace math {
 
 /// Base class for meshes.
 template <typename S_>
-class Mesh : public Geometry3<S_> {
+class Mesh : public Geometry3<S_>
+{
 public:
   // Type aliases
   using S = S_;

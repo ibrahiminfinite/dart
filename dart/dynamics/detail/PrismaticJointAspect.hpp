@@ -48,7 +48,8 @@ class PrismaticJoint;
 namespace detail {
 
 //==============================================================================
-struct DART_DYNAMICS_API PrismaticJointUniqueProperties {
+struct DART_DYNAMICS_API PrismaticJointUniqueProperties
+{
   Eigen::Vector3d mAxis;
 
   PrismaticJointUniqueProperties(
@@ -60,7 +61,8 @@ struct DART_DYNAMICS_API PrismaticJointUniqueProperties {
 //==============================================================================
 struct DART_DYNAMICS_API PrismaticJointProperties
   : GenericJoint<math::R1Space>::Properties,
-    PrismaticJointUniqueProperties {
+    PrismaticJointUniqueProperties
+{
   DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(PrismaticJointProperties)
 
   PrismaticJointProperties(

@@ -45,7 +45,8 @@ namespace detail {
 /// expressed in units of degrees or radians. The compiler converts degrees
 /// into radians, and mjModel always uses radians. For URDF models the parser
 /// sets this attribute to "radian" internally, regardless of the XML setting.
-enum class Angle {
+enum class Angle
+{
   /// [Default] Always use for MJCF
   DEGREE = 0,
 
@@ -58,7 +59,8 @@ enum class Angle {
 /// frames. The compiler converts global into local coordinates, and mjModel
 /// always uses local coordinates. For URDF models the parser sets this
 /// attribute to "local" internally, regardless of the XML setting.
-enum class Coordinate {
+enum class Coordinate
+{
   /// [Default]
   LOCAL = 0,
   GLOBAL = 1,
@@ -67,13 +69,15 @@ enum class Coordinate {
 /// This attribute selects the numerical integrator to be used. Currently the
 /// available integrators are the semi-implicit Euler method and the fixed-step
 /// 4-th order Runge Kutta method.
-enum class Integrator {
+enum class Integrator
+{
   /// [Default]
   EULER = 0,
   RK4 = 1,
 };
 
-enum class InertiaFromGeom {
+enum class InertiaFromGeom
+{
 #if DART_OS_WINDOWS
   IFG_FALSE,
   IFG_TRUE,
@@ -85,30 +89,35 @@ enum class InertiaFromGeom {
 #endif
 };
 
-enum class CollisionType {
+enum class CollisionType
+{
   ALL,
   PREDEFINED,
   DYNAMIC,
 };
 
-enum class ConeType {
+enum class ConeType
+{
   PYRAMIDAL,
   ELLIPTIC,
 };
 
-enum class JacobianType {
+enum class JacobianType
+{
   DENSE,
   SPARSE,
   AUTO,
 };
 
-enum class SolverType {
+enum class SolverType
+{
   PGS,
   CG,
   NEWTON,
 };
 
-enum class GeomType {
+enum class GeomType
+{
   PLANE,
   HFIELD,
   /// [Default]
@@ -120,7 +129,8 @@ enum class GeomType {
   MESH,
 };
 
-enum class JointType {
+enum class JointType
+{
   FREE,
   BALL,
   SLIDE,

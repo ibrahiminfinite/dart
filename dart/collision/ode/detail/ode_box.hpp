@@ -42,7 +42,8 @@ namespace collision {
 namespace detail {
 
 template <typename S>
-class OdeBox : public OdeGeom<S> {
+class OdeBox : public OdeGeom<S>
+{
 public:
   /// Constructor
   OdeBox(const OdeObject<S>* parent, const math::Vector3<S>& size);

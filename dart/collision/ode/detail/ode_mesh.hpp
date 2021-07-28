@@ -43,7 +43,8 @@ namespace collision {
 namespace detail {
 
 template <typename S>
-class OdeMesh : public OdeGeom<S> {
+class OdeMesh : public OdeGeom<S>
+{
 public:
   /// Constructor
   OdeMesh(

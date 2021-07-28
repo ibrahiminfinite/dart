@@ -64,7 +64,8 @@ double foo3()
 }
 
 //==============================================================================
-class Viewer {
+class Viewer
+{
 public:
   static void onSignal1Static(int /*_val*/)
   {
@@ -217,7 +218,8 @@ float difference(float x, float y)
 
 // combiner which returns the maximum value returned by all slots
 template <typename T>
-struct signal_maximum {
+struct signal_maximum
+{
   typedef T result_type;
 
   template <typename InputIterator>
@@ -242,7 +244,8 @@ struct signal_maximum {
 
 // combiner which returns the maximum value returned by all slots
 template <typename T>
-struct signal_sum {
+struct signal_sum
+{
   typedef T result_type;
 
   template <typename InputIterator>

@@ -44,11 +44,13 @@ namespace dart {
 namespace dynamics {
 
 /// class WeldJoint
-class DART_DYNAMICS_API WeldJoint : public ZeroDofJoint {
+class DART_DYNAMICS_API WeldJoint : public ZeroDofJoint
+{
 public:
   friend class Skeleton;
 
-  struct Properties : ZeroDofJoint::Properties {
+  struct Properties : ZeroDofJoint::Properties
+  {
     DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(Properties)
 
     Properties(const Joint::Properties& _properties = Joint::Properties());

@@ -42,13 +42,15 @@ namespace dart {
 namespace dynamics {
 
 /// class BallJoint
-class DART_DYNAMICS_API BallJoint : public GenericJoint<math::SO3Space> {
+class DART_DYNAMICS_API BallJoint : public GenericJoint<math::SO3Space>
+{
 public:
   friend class Skeleton;
 
   using Base = GenericJoint<math::SO3Space>;
 
-  struct Properties : Base::Properties {
+  struct Properties : Base::Properties
+  {
     DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(Properties)
 
     Properties(const Base::Properties& properties = Base::Properties());

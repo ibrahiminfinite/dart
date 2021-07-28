@@ -41,7 +41,8 @@ namespace dart {
 namespace collision {
 
 template <typename S_>
-class OdeGroup : public Group<S_> {
+class OdeGroup : public Group<S_>
+{
 public:
   using S = S_;
 

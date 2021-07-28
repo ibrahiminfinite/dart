@@ -37,7 +37,8 @@
 
 #include "Controller.hpp"
 
-class AtlasSimbiconWorldNode : public dart::gui::osg::RealTimeWorldNode {
+class AtlasSimbiconWorldNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   /// Constructor
   AtlasSimbiconWorldNode(

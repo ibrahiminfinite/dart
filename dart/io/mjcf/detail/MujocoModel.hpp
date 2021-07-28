@@ -53,7 +53,8 @@ namespace MjcfParser {
 namespace detail {
 
 /// Main class to parse MJCF model file
-class DART_IO_API MujocoModel final {
+class DART_IO_API MujocoModel final
+{
 public:
   MujocoModel() = default;
 

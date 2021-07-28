@@ -44,7 +44,8 @@ namespace gui {
 namespace osg {
 namespace render {
 
-class WarningShapeNode : public ShapeNode, public ::osg::Node {
+class WarningShapeNode : public ShapeNode, public ::osg::Node
+{
 public:
   WarningShapeNode(
       std::shared_ptr<dart::dynamics::Shape> shape, ShapeFrameNode* parent);

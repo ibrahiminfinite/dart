@@ -35,7 +35,8 @@
 
 using namespace dart::dynamics;
 
-class RecordingWorld : public dart::gui::osg::RealTimeWorldNode {
+class RecordingWorld : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   RecordingWorld(const dart::simulation::WorldPtr& world)
     : dart::gui::osg::RealTimeWorldNode(world)
@@ -124,7 +125,8 @@ public:
     moveTo(mHistory.size() - 1);
   }
 
-  struct State {
+  struct State
+  {
     Skeleton::Configuration mConfig;
     std::vector<dart::common::Composite::State> mAspectStates;
   };
@@ -137,7 +139,8 @@ public:
   std::size_t mCurrentIndex;
 };
 
-class RecordingEventHandler : public osgGA::GUIEventHandler {
+class RecordingEventHandler : public osgGA::GUIEventHandler
+{
 public:
   RecordingEventHandler(RecordingWorld* rec) : mRecWorld(rec)
   {

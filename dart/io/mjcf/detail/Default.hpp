@@ -51,7 +51,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class DART_IO_API Default final {
+class DART_IO_API Default final
+{
 public:
   /// Default constructor
   Default() = default;
@@ -76,7 +77,8 @@ private:
   WeldAttributes mWeldAttributes;
 };
 
-class DART_IO_API Defaults {
+class DART_IO_API Defaults
+{
 public:
   bool hasDefault(const std::string& className) const;
   const Default* getDefault(const std::string& className) const;

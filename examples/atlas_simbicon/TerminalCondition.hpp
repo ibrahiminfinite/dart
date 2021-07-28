@@ -43,7 +43,8 @@ class State;
 
 //==============================================================================
 /// \brief class TerminalCondition
-class TerminalCondition {
+class TerminalCondition
+{
 public:
   /// \brief Constructor
   TerminalCondition(State* _state);
@@ -61,7 +62,8 @@ protected:
 
 //==============================================================================
 /// \brief class TimerCondition
-class TimerCondition : public TerminalCondition {
+class TimerCondition : public TerminalCondition
+{
 public:
   /// \brief Constructor
   TimerCondition(State* _state, double _duration);
@@ -79,7 +81,8 @@ protected:
 
 //==============================================================================
 /// \brief class BodyContactCondition
-class BodyContactCondition : public TerminalCondition {
+class BodyContactCondition : public TerminalCondition
+{
 public:
   /// \brief Constructor
   BodyContactCondition(

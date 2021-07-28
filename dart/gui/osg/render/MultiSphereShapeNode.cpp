@@ -49,7 +49,8 @@ namespace osg {
 namespace render {
 
 //==============================================================================
-class MultiSphereShapeGeode : public ShapeNode, public ::osg::Geode {
+class MultiSphereShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   MultiSphereShapeGeode(
       dart::dynamics::MultiSphereConvexHullShape* shape,
@@ -68,7 +69,8 @@ protected:
 };
 
 //==============================================================================
-class MultiSphereShapeDrawable : public ::osg::Geometry {
+class MultiSphereShapeDrawable : public ::osg::Geometry
+{
 public:
   MultiSphereShapeDrawable(
       dart::dynamics::MultiSphereConvexHullShape* shape,

@@ -46,7 +46,8 @@ namespace dart {
 namespace gui {
 namespace osg {
 
-class DART_GUI_API ImGuiWidget {
+class DART_GUI_API ImGuiWidget
+{
 public:
   /// Constructor
   ImGuiWidget();
@@ -77,7 +78,8 @@ protected:
   bool mIsVisible;
 };
 
-class AboutWidget : public ImGuiWidget {
+class AboutWidget : public ImGuiWidget
+{
 public:
   // Documentation inherited
   void render() override;

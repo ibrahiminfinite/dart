@@ -40,7 +40,8 @@ using namespace dart::math;
 
 const double display_elevation = 0.05;
 
-class RelaxedPosture : public dart::optimization::Function {
+class RelaxedPosture : public dart::optimization::Function
+{
 public:
   RelaxedPosture(
       const Eigen::VectorXd& idealPosture,
@@ -123,9 +124,11 @@ protected:
   Eigen::VectorXd mWeights;
 };
 
-class TeleoperationWorld : public dart::gui::osg::WorldNode {
+class TeleoperationWorld : public dart::gui::osg::WorldNode
+{
 public:
-  enum MoveEnum_t {
+  enum MoveEnum_t
+  {
     MOVE_Q = 0,
     MOVE_W,
     MOVE_E,
@@ -244,7 +247,8 @@ protected:
   bool mAnyMovement;
 };
 
-class InputHandler : public ::osgGA::GUIEventHandler {
+class InputHandler : public ::osgGA::GUIEventHandler
+{
 public:
   InputHandler(
       dart::gui::osg::Viewer* viewer,

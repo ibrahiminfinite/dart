@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-class PyWorldNode : public dart::gui::osg::WorldNode {
+class PyWorldNode : public dart::gui::osg::WorldNode
+{
 public:
   // Inherit the constructors
   using WorldNode::WorldNode;

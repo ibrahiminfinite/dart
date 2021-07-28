@@ -44,7 +44,8 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-class BulletCollisionDispatcher : public btCollisionDispatcher {
+class BulletCollisionDispatcher : public btCollisionDispatcher
+{
 public:
   explicit BulletCollisionDispatcher(btCollisionConfiguration* config);
 

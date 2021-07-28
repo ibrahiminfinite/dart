@@ -43,7 +43,8 @@ namespace dart {
 namespace collision {
 
 template <typename S_>
-class FclEngine : public Engine<S_> {
+class FclEngine : public Engine<S_>
+{
 public:
   // Type aliases
   using S = S_;
@@ -61,7 +62,11 @@ public:
   /// the support alot, but it still returns single contact point for a shape
   /// pair except for box-box collision. For this reason, we recommend using
   /// MESH until FCL fully supports primitive shapes.
-  enum PrimitiveShape { PRIMITIVE = 0, MESH };
+  enum PrimitiveShape
+  {
+    PRIMITIVE = 0,
+    MESH
+  };
 
   /// Whether to use FCL's contact point computation.
   ///
@@ -71,7 +76,11 @@ public:
   /// Warning: FCL's contact computation is not correct. See:
   /// https://github.com/flexible-collision-library/fcl/issues/106
   /// We recommend using DART until it's fixed in FCL.
-  enum ContactPointComputationMethod { FCL = 0, DART };
+  enum ContactPointComputationMethod
+  {
+    FCL = 0,
+    DART
+  };
 
   /// Constructor
   ~FclEngine() override;

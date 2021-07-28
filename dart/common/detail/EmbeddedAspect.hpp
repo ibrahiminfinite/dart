@@ -79,7 +79,8 @@ template <
     = &DefaultSetEmbeddedState<DerivedT, StateT>,
     const StateT& (*getEmbeddedState)(const DerivedT*)
     = &DefaultGetEmbeddedState<DerivedT, StateT> >
-class EmbeddedStateAspect : public BaseT {
+class EmbeddedStateAspect : public BaseT
+{
 public:
   using Base = BaseT;
   using Derived = DerivedT;
@@ -90,7 +91,10 @@ public:
   constexpr static const State& (*GetEmbeddedState)(const Derived*)
       = getEmbeddedState;
 
-  enum DelegateTag { Delegate };
+  enum DelegateTag
+  {
+    Delegate
+  };
 
   EmbeddedStateAspect(const EmbeddedStateAspect&) = delete;
 
@@ -98,7 +102,8 @@ public:
 
   /// Used to identify constructor arguments that can be used as a State
   template <typename T>
-  struct ConvertIfState {
+  struct ConvertIfState
+  {
     using type = typename std::
         conditional<std::is_base_of<StateData, T>::value, StateData, T>::type;
   };
@@ -241,9 +246,13 @@ template <
     = &DefaultSetEmbeddedProperties<DerivedT, PropertiesT>,
     const PropertiesT& (*getEmbeddedProperties)(const DerivedT*)
     = &DefaultGetEmbeddedProperties<DerivedT, PropertiesT> >
-class EmbeddedPropertiesAspect : public BaseT {
+class EmbeddedPropertiesAspect : public BaseT
+{
 protected:
-  enum DelegateTag { Delegate };
+  enum DelegateTag
+  {
+    Delegate
+  };
 
 public:
   using Base = BaseT;
@@ -261,7 +270,8 @@ public:
 
   /// Used to identify constructor arguments that can be used as Properties
   template <typename T>
-  struct ConvertIfProperties {
+  struct ConvertIfProperties
+  {
     using type = typename std::conditional<
         std::is_base_of<PropertiesData, T>::value,
         PropertiesData,

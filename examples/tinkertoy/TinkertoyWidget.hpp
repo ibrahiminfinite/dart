@@ -44,7 +44,8 @@
 
 class TinkertoyWorldNode;
 
-class TinkertoyWidget : public dart::gui::osg::ImGuiWidget {
+class TinkertoyWidget : public dart::gui::osg::ImGuiWidget
+{
 public:
   /// Constructor
   TinkertoyWidget(

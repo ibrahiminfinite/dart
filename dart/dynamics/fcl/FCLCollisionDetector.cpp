@@ -146,7 +146,8 @@ Contact convertContact(
 
 /// Collision data stores the collision request and the result given by
 /// collision algorithm.
-struct FCLCollisionCallbackData {
+struct FCLCollisionCallbackData
+{
   /// FCL collision request
   fcl::CollisionRequest fclRequest;
 
@@ -202,7 +203,8 @@ struct FCLCollisionCallbackData {
   }
 };
 
-struct FCLDistanceCallbackData {
+struct FCLDistanceCallbackData
+{
   /// FCL distance request
   fcl::DistanceRequest fclRequest;
 

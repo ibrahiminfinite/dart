@@ -86,9 +86,7 @@ BallJointConstraint::BallJointConstraint(
 }
 
 //==============================================================================
-BallJointConstraint::~BallJointConstraint()
-{
-}
+BallJointConstraint::~BallJointConstraint() {}
 
 //==============================================================================
 const std::string& BallJointConstraint::getType() const

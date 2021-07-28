@@ -75,7 +75,8 @@ namespace {
 
 using BodyPropPtr = std::shared_ptr<dynamics::BodyNode::Properties>;
 
-struct SDFBodyNode {
+struct SDFBodyNode
+{
   BodyPropPtr properties;
   Eigen::Isometry3d initTransform;
   std::string type;
@@ -84,7 +85,8 @@ struct SDFBodyNode {
 
 using JointPropPtr = std::shared_ptr<dynamics::Joint::Properties>;
 
-struct SDFJoint {
+struct SDFJoint
+{
   JointPropPtr properties;
   std::string parentName;
   std::string childName;
@@ -116,7 +118,13 @@ bool createPair(
     const SDFJoint& newJoint,
     const SDFBodyNode& newBody);
 
-enum NextResult { VALID, CONTINUE, BREAK, CREATE_FREEJOINT_ROOT };
+enum NextResult
+{
+  VALID,
+  CONTINUE,
+  BREAK,
+  CREATE_FREEJOINT_ROOT
+};
 
 NextResult getNextJointAndNodePair(
     BodyMap::iterator& body,

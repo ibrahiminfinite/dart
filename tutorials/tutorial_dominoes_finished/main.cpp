@@ -54,7 +54,8 @@ using namespace dart::dynamics;
 using namespace dart::simulation;
 using namespace dart::math;
 
-class Controller {
+class Controller
+{
 public:
   Controller(const SkeletonPtr& manipulator, const SkeletonPtr& domino)
     : mManipulator(manipulator)
@@ -216,7 +217,8 @@ protected:
   Eigen::VectorXd mForces;
 };
 
-class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode {
+class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   TutorialWorldNode(WorldPtr world)
     : dart::gui::osg::RealTimeWorldNode(std::move(world)),
@@ -383,7 +385,8 @@ protected:
   std::unique_ptr<Controller> mController;
 };
 
-class InputHandler : public ::osgGA::GUIEventHandler {
+class InputHandler : public ::osgGA::GUIEventHandler
+{
 public:
   /// Constructor
   InputHandler(TutorialWorldNode* node) : mNode(node)

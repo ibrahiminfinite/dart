@@ -45,7 +45,8 @@ namespace gui {
 namespace osg {
 namespace render {
 
-class CylinderShapeGeode : public ShapeNode, public ::osg::Geode {
+class CylinderShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   CylinderShapeGeode(
       dart::dynamics::CylinderShape* shape,
@@ -63,7 +64,8 @@ protected:
 };
 
 //==============================================================================
-class CylinderShapeDrawable : public ::osg::ShapeDrawable {
+class CylinderShapeDrawable : public ::osg::ShapeDrawable
+{
 public:
   CylinderShapeDrawable(
       dart::dynamics::CylinderShape* shape,

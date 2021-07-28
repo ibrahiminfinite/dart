@@ -50,7 +50,8 @@ namespace detail {
 
 class Body;
 
-class DART_IO_API Asset final {
+class DART_IO_API Asset final
+{
 public:
   /// Default constructor
   Asset() = default;

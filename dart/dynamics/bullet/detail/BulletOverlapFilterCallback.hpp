@@ -44,7 +44,8 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-struct BulletOverlapFilterCallback : public btOverlapFilterCallback {
+struct BulletOverlapFilterCallback : public btOverlapFilterCallback
+{
   // Constructor
   explicit BulletOverlapFilterCallback(
       const std::shared_ptr<CollisionFilter>& filter = nullptr,

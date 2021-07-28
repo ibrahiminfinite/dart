@@ -50,7 +50,8 @@ class Subject;
 /// dart::sub_ptr is a templated smart pointer that will change itself into a
 /// nullptr when its Subject is destroyed. It offers one of the easiest ways to
 /// take advantage of the Subject/Observer pattern.
-class DART_COMMON_API Observer {
+class DART_COMMON_API Observer
+{
 public:
   friend class Subject;
 

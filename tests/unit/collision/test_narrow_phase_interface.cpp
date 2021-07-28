@@ -38,7 +38,8 @@ using namespace dart;
 
 //==============================================================================
 template <typename T>
-struct NarrowPhaseTest : public testing::Test {
+struct NarrowPhaseTest : public testing::Test
+{
   using Type = T;
 };
 

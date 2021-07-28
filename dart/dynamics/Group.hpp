@@ -39,7 +39,8 @@
 namespace dart {
 namespace dynamics {
 
-class DART_DYNAMICS_API Group : public ReferentialSkeleton {
+class DART_DYNAMICS_API Group : public ReferentialSkeleton
+{
 public:
   /// Create a Group out of a set of BodyNodes. If _includeJoints is true, the
   /// parent Joint of each BodyNode will also be added to the Group. If

@@ -42,7 +42,8 @@ namespace dart {
 namespace collision {
 
 template <typename S_>
-class OdeObject : public Object<S_> {
+class OdeObject : public Object<S_>
+{
 public:
   // Type aliases
   using S = S_;

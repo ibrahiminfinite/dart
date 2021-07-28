@@ -51,9 +51,7 @@ TerminalCondition::TerminalCondition(State* _state) : mState(_state)
 }
 
 //==============================================================================
-TerminalCondition::~TerminalCondition()
-{
-}
+TerminalCondition::~TerminalCondition() {}
 
 //==============================================================================
 TimerCondition::TimerCondition(State* _state, double _duration)
@@ -62,9 +60,7 @@ TimerCondition::TimerCondition(State* _state, double _duration)
 }
 
 //==============================================================================
-TimerCondition::~TimerCondition()
-{
-}
+TimerCondition::~TimerCondition() {}
 
 //==============================================================================
 bool TimerCondition::isSatisfied()
@@ -87,9 +83,7 @@ BodyContactCondition::BodyContactCondition(
 }
 
 //==============================================================================
-BodyContactCondition::~BodyContactCondition()
-{
-}
+BodyContactCondition::~BodyContactCondition() {}
 
 //==============================================================================
 bool BodyContactCondition::isSatisfied()

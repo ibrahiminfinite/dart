@@ -56,7 +56,8 @@ template <typename S>
 class HeightmapShapeGeode;
 
 template <typename S_>
-class HeightmapShapeNode : public ShapeNode, public ::osg::MatrixTransform {
+class HeightmapShapeNode : public ShapeNode, public ::osg::MatrixTransform
+{
 public:
   using S = S_;
 
@@ -77,7 +78,8 @@ protected:
 
 //==============================================================================
 template <typename S>
-class HeightmapShapeDrawable : public ::osg::Geometry {
+class HeightmapShapeDrawable : public ::osg::Geometry
+{
 public:
   using Vector3 = Eigen::Matrix<S, 3, 1>;
 
@@ -117,7 +119,8 @@ private:
 
 //==============================================================================
 template <typename S>
-class HeightmapShapeGeode : public ShapeNode, public ::osg::Geode {
+class HeightmapShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   HeightmapShapeGeode(
       dynamics::HeightmapShape<S>* shape,

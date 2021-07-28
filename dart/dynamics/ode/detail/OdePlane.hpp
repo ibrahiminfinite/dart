@@ -41,7 +41,8 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-class OdePlane : public OdeGeom {
+class OdePlane : public OdeGeom
+{
 public:
   /// Constructor
   OdePlane(

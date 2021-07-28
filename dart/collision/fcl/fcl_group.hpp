@@ -41,7 +41,8 @@ namespace dart {
 namespace collision {
 
 template <typename S_>
-class FclGroup : public Group<S_> {
+class FclGroup : public Group<S_>
+{
 public:
   using S = S_;
   using FCLCollisionManager = FclDynamicAABBTreeCollisionManager<S>;

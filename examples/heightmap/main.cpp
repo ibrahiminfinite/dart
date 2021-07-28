@@ -91,7 +91,8 @@ dynamics::SimpleFramePtr createHeightmapFrame(
   return terrainFrame;
 }
 
-class HeightmapWorld : public gui::osg::WorldNode {
+class HeightmapWorld : public gui::osg::WorldNode
+{
 public:
   explicit HeightmapWorld(simulation::WorldPtr world)
     : gui::osg::WorldNode(std::move(world))
@@ -109,7 +110,8 @@ protected:
 };
 
 template <typename S>
-class HeightmapWidget : public dart::gui::osg::ImGuiWidget {
+class HeightmapWidget : public dart::gui::osg::ImGuiWidget
+{
 public:
   HeightmapWidget(
       dart::gui::osg::ImGuiViewer* viewer,

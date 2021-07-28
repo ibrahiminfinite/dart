@@ -49,7 +49,8 @@ template <
     typename StateDataT,
     class CompositeT = Composite,
     void (*updateState)(DerivedT*) = &NoOp<DerivedT*> >
-class AspectWithState : public BaseT {
+class AspectWithState : public BaseT
+{
 public:
   using Base = BaseT;
   using Derived = DerivedT;
@@ -103,7 +104,8 @@ template <
     typename PropertiesDataT,
     class CompositeT = Composite,
     void (*updateProperties)(DerivedT*) = &NoOp<DerivedT*> >
-class AspectWithVersionedProperties : public BaseT {
+class AspectWithVersionedProperties : public BaseT
+{
 public:
   using Base = BaseT;
   using Derived = DerivedT;

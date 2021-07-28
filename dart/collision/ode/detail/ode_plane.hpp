@@ -40,7 +40,8 @@ namespace collision {
 namespace detail {
 
 template <typename S>
-class OdePlane : public OdeGeom<S> {
+class OdePlane : public OdeGeom<S>
+{
 public:
   /// Constructor
   OdePlane(

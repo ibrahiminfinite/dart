@@ -46,7 +46,8 @@ namespace dynamics {
 /// InverseKinematics module will not get deleted, and will keep the
 /// InverseKinematics reference valid.
 template <class IkType, class JacobianNodePtrT>
-class TemplateInverseKinematicsPtr {
+class TemplateInverseKinematicsPtr
+{
 public:
   template <class, class>
   friend class TemplateInverseKinematicsPtr;
@@ -263,7 +264,8 @@ inline bool operator!=(
 /// you can use lock() to check whether the InverseKinematics module and its
 /// associated JacobianNode still exists.
 template <class InverseKinematicsT, class JacobianNodePtrT>
-class TemplateWeakInverseKinematicsPtr {
+class TemplateWeakInverseKinematicsPtr
+{
 public:
   template <class, class>
   friend class TemplateWeakInverseKinematicsPtr;

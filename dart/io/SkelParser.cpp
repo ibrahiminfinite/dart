@@ -82,12 +82,19 @@ namespace io {
 
 namespace {
 
-enum NextResult { VALID, CONTINUE, BREAK, CREATE_FREEJOINT_ROOT };
+enum NextResult
+{
+  VALID,
+  CONTINUE,
+  BREAK,
+  CREATE_FREEJOINT_ROOT
+};
 
 using BodyPropPtr = std::shared_ptr<dynamics::BodyNode::Properties>;
 using JointPropPtr = std::shared_ptr<dynamics::Joint::Properties>;
 
-struct SkelBodyNode {
+struct SkelBodyNode
+{
   BodyPropPtr properties;
   Eigen::Isometry3d initTransform;
   std::vector<dynamics::Marker::BasicProperties> markers;
@@ -95,7 +102,8 @@ struct SkelBodyNode {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-struct SkelJoint {
+struct SkelJoint
+{
   JointPropPtr properties;
   Eigen::VectorXd position;
   Eigen::VectorXd velocity;
@@ -1544,7 +1552,8 @@ void setDofLimitAttributes(
 //==============================================================================
 // This structure exists to allow a common interface for setting values in
 // GenericJoint::Properties
-struct DofProxy {
+struct DofProxy
+{
   std::size_t index;
   bool valid;
 

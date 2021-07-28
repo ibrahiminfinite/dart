@@ -33,7 +33,8 @@
 #include <benchmark/benchmark.h>
 
 //==============================================================================
-class Empty : public ::benchmark::Fixture {
+class Empty : public ::benchmark::Fixture
+{
 public:
   void SetUp(const ::benchmark::State& /*state*/) override
   {

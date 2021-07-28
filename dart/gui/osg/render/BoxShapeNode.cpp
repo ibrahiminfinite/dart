@@ -45,7 +45,8 @@ namespace gui {
 namespace osg {
 namespace render {
 
-class BoxShapeGeode : public ShapeNode, public ::osg::Geode {
+class BoxShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   BoxShapeGeode(
       const std::shared_ptr<dart::dynamics::BoxShape>& shape,
@@ -62,7 +63,8 @@ protected:
 };
 
 //==============================================================================
-class BoxShapeDrawable : public ::osg::ShapeDrawable {
+class BoxShapeDrawable : public ::osg::ShapeDrawable
+{
 public:
   BoxShapeDrawable(
       dart::dynamics::BoxShape* shape,

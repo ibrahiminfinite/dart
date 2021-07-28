@@ -43,7 +43,8 @@ namespace dart {
 namespace io {
 
 template <typename S>
-class AssimpMeshLoader : public MeshLoader<S> {
+class AssimpMeshLoader : public MeshLoader<S>
+{
 public:
   /// Constructor
   AssimpMeshLoader() = default;

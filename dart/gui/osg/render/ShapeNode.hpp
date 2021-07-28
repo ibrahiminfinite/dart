@@ -56,7 +56,8 @@ class ShapeFrameNode;
 
 namespace render {
 
-class ShapeNode {
+class ShapeNode
+{
 public:
   ShapeNode(
       std::shared_ptr<dart::dynamics::Shape> shape,

@@ -42,7 +42,8 @@
 class State;
 
 /// \brief StateMachine for Atlas robot
-class StateMachine {
+class StateMachine
+{
 public:
   /// \brief Constructor
   explicit StateMachine(const std::string& _name);

@@ -47,7 +47,8 @@ class BodyNode;
 class DART_DYNAMICS_API Marker final : public common::EmbedPropertiesOnTopOf<
                                            Marker,
                                            detail::MarkerProperties,
-                                           FixedJacobianNode> {
+                                           FixedJacobianNode>
+{
 public:
   using ConstraintType = detail::MarkerProperties::ConstraintType;
   static constexpr ConstraintType NO = detail::MarkerProperties::NO;

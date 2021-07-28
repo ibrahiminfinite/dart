@@ -42,7 +42,8 @@ namespace dart {
 namespace math {
 
 template <typename S_>
-class Polygon : public Geometry2 {
+class Polygon : public Geometry2
+{
 public:
   using S = S_;
   using Index = std::size_t;

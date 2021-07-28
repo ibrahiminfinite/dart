@@ -355,7 +355,8 @@ void SimpleFrameShapeDnD::handleDestructionNotification(
 }
 
 //==============================================================================
-class InteractiveFrameMouseEvent : public MouseEventHandler {
+class InteractiveFrameMouseEvent : public MouseEventHandler
+{
 public:
   InteractiveFrameMouseEvent(InteractiveFrame* frame)
     : mFrame(frame), mHighlighting(false)
@@ -451,7 +452,8 @@ protected:
 };
 
 //==============================================================================
-class InteractiveToolDnD : public SimpleFrameDnD {
+class InteractiveToolDnD : public SimpleFrameDnD
+{
 public:
   InteractiveToolDnD(
       Viewer* viewer, InteractiveFrame* frame, InteractiveTool* tool)

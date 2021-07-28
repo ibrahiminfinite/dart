@@ -73,9 +73,7 @@ ServoMotorConstraint::ServoMotorConstraint(dynamics::Joint* joint)
 }
 
 //==============================================================================
-ServoMotorConstraint::~ServoMotorConstraint()
-{
-}
+ServoMotorConstraint::~ServoMotorConstraint() {}
 
 //==============================================================================
 const std::string& ServoMotorConstraint::getType() const

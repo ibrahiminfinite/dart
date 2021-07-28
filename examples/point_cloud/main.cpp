@@ -42,9 +42,11 @@ using namespace dart::math;
 
 static const std::string& robotName = "KR5";
 
-class PointCloudWorld : public gui::osg::RealTimeWorldNode {
+class PointCloudWorld : public gui::osg::RealTimeWorldNode
+{
 public:
-  enum PointSamplingMode {
+  enum PointSamplingMode
+  {
     SAMPLE_ON_ROBOT = 0,
     SAMPLE_IN_BOX = 1,
   };
@@ -284,7 +286,8 @@ protected:
   bool mUpdate{true};
 };
 
-class PointCloudWidget : public dart::gui::osg::ImGuiWidget {
+class PointCloudWidget : public dart::gui::osg::ImGuiWidget
+{
 public:
   PointCloudWidget(
       dart::gui::osg::ImGuiViewer* viewer,

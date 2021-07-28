@@ -48,7 +48,8 @@ namespace gui {
 namespace osg {
 namespace render {
 
-class LineSegmentShapeGeode : public ShapeNode, public ::osg::Geode {
+class LineSegmentShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   LineSegmentShapeGeode(
       std::shared_ptr<dart::dynamics::LineSegmentShape> shape,
@@ -67,7 +68,8 @@ protected:
 };
 
 //==============================================================================
-class LineSegmentShapeDrawable : public ::osg::Geometry {
+class LineSegmentShapeDrawable : public ::osg::Geometry
+{
 public:
   LineSegmentShapeDrawable(
       dart::dynamics::LineSegmentShape* shape,

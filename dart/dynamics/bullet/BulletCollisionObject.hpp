@@ -46,7 +46,8 @@ namespace dynamics {
 
 class CollisionObject;
 
-class DART_DYNAMICS_API BulletCollisionObject : public CollisionObject {
+class DART_DYNAMICS_API BulletCollisionObject : public CollisionObject
+{
 public:
   friend class BulletCollisionDetector;
 

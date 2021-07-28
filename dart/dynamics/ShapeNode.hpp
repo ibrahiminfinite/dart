@@ -46,7 +46,8 @@ class VisualAspect;
 class CollisionAspect;
 class DynamicsAspect;
 
-class DART_DYNAMICS_API ShapeNode : public detail::ShapeNodeCompositeBase {
+class DART_DYNAMICS_API ShapeNode : public detail::ShapeNodeCompositeBase
+{
 public:
   friend class BodyNode;
 

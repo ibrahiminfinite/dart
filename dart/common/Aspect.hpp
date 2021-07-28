@@ -45,7 +45,8 @@ namespace common {
 
 class Composite;
 
-class DART_COMMON_API Aspect {
+class DART_COMMON_API Aspect
+{
 public:
   friend class Composite;
 
@@ -61,7 +62,8 @@ public:
   /// stored in Composite::Properties. Typically Properties are values that
   /// only change rarely if ever, whereas State contains values that might
   /// change as often as every time step.
-  class State : public Cloneable<State> {
+  class State : public Cloneable<State>
+  {
   };
 
   /// Use the MakeState class to easily create a State extension from an
@@ -81,7 +83,8 @@ public:
   /// stored in Composite::Properties. Typically Properties are values that
   /// only change rarely if ever, whereas State contains values that might
   /// change as often as every time step.
-  class Properties : public Cloneable<Properties> {
+  class Properties : public Cloneable<Properties>
+  {
   };
 
   /// Use the MakeProperties class to easily create a Properties extension
@@ -126,7 +129,8 @@ protected:
 
 //==============================================================================
 template <class CompositeType>
-class CompositeTrackingAspect : public Aspect {
+class CompositeTrackingAspect : public Aspect
+{
 public:
   /// Default constructor
   CompositeTrackingAspect();

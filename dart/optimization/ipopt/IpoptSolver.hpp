@@ -48,7 +48,8 @@ class Problem;
 class DartTNLP;
 
 /// \brief class IpoptSolver
-class DART_OPTIMIZATION_API IpoptSolver : public Solver {
+class DART_OPTIMIZATION_API IpoptSolver : public Solver
+{
 public:
   /// Default constructor
   IpoptSolver(const Solver::Properties& _properties = Solver::Properties());
@@ -88,7 +89,8 @@ private:
 };
 
 /// class DartTNLP
-class DartTNLP : public Ipopt::TNLP {
+class DartTNLP : public Ipopt::TNLP
+{
 public:
   friend class IpoptSolver;
 

@@ -43,7 +43,8 @@ namespace dynamics {
 
 class DARTCollisionObject;
 
-class DART_DYNAMICS_API DARTCollisionDetector : public CollisionDetector {
+class DART_DYNAMICS_API DARTCollisionDetector : public CollisionDetector
+{
 public:
   using CollisionDetector::createCollisionGroup;
 

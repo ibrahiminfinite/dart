@@ -45,7 +45,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class DART_IO_API Weld final {
+class DART_IO_API Weld final
+{
 public:
   Weld() = default;
 

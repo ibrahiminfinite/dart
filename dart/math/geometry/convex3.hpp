@@ -40,7 +40,8 @@ namespace dart {
 namespace math {
 
 template <typename S>
-class Convex3 : public Geometry3<S> {
+class Convex3 : public Geometry3<S>
+{
 public:
   using Vector3 = Eigen::Matrix<S, 3, 1>;
 

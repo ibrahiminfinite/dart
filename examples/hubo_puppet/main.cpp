@@ -36,7 +36,8 @@ using namespace dart::math;
 using namespace dart::dynamics;
 using namespace dart::simulation;
 
-class RelaxedPosture : public dart::optimization::Function {
+class RelaxedPosture : public dart::optimization::Function
+{
 public:
   RelaxedPosture(
       const Eigen::VectorXd& idealPosture,
@@ -155,7 +156,8 @@ static inline Eigen::Vector3d flipEuler3Axis(const Eigen::Vector3d& u)
 }
 
 /// The HuboArmIK is based on the derivation of Hubo's arm IK by Matt Zucker.
-class HuboArmIK : public InverseKinematics::Analytical {
+class HuboArmIK : public InverseKinematics::Analytical
+{
 public:
   HuboArmIK(
       InverseKinematics* _ik,
@@ -431,7 +433,8 @@ protected:
   mutable JacobianNode* mWristEnd;
 };
 
-class HuboLegIK : public InverseKinematics::Analytical {
+class HuboLegIK : public InverseKinematics::Analytical
+{
 public:
   /// baseLink should be Body_LHY or Body_RHY
   HuboLegIK(
@@ -674,9 +677,11 @@ protected:
   mutable WeakBodyNodePtr mBaseLink;
 };
 
-class TeleoperationWorld : public dart::gui::osg::WorldNode {
+class TeleoperationWorld : public dart::gui::osg::WorldNode
+{
 public:
-  enum MoveEnum_t {
+  enum MoveEnum_t
+  {
     MOVE_Q = 0,
     MOVE_W,
     MOVE_E,
@@ -803,7 +808,8 @@ protected:
   bool mAnyMovement;
 };
 
-class InputHandler : public ::osgGA::GUIEventHandler {
+class InputHandler : public ::osgGA::GUIEventHandler
+{
 public:
   InputHandler(
       dart::gui::osg::Viewer* viewer,

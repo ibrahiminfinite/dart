@@ -44,7 +44,8 @@ namespace collision {
 
 /// Collision object
 template <typename S_>
-class Object {
+class Object
+{
 public:
   // Type aliases
   using S = S_;

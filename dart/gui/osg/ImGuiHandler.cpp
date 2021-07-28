@@ -59,7 +59,8 @@ namespace osg {
 // thant 511. It actually uses an array of 512 elements. However, OSG has
 // indices greater than that. So here I do a conversion for special keys between
 // ImGui and OSG.
-enum ConvertedKey : int {
+enum ConvertedKey : int
+{
   ConvertedKey_Tab = 257,
   ConvertedKey_Left,
   ConvertedKey_Right,
@@ -139,7 +140,8 @@ int convertFromOSGKey(int key)
 }
 
 //==============================================================================
-struct ImGuiNewFrameCallback : public ::osg::Camera::DrawCallback {
+struct ImGuiNewFrameCallback : public ::osg::Camera::DrawCallback
+{
   ImGuiNewFrameCallback(ImGuiHandler* handler) : mHandler(handler)
   {
     // Do nothing
@@ -155,7 +157,8 @@ private:
 };
 
 //==============================================================================
-struct ImGuiDrawCallback : public ::osg::Camera::DrawCallback {
+struct ImGuiDrawCallback : public ::osg::Camera::DrawCallback
+{
   ImGuiDrawCallback(ImGuiHandler* handler) : mHandler(handler)
   {
     // Do nothing

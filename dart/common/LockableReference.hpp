@@ -48,7 +48,8 @@ namespace common {
 /// This class is compatible to BasicLockable concept so that it can be used
 /// as a template parameter that requires BasicLockable concept such as
 /// std::lock_guard.
-class DART_COMMON_API LockableReference {
+class DART_COMMON_API LockableReference
+{
 public:
   /// Default construtor
   constexpr LockableReference() noexcept = default;
@@ -77,7 +78,8 @@ protected:
 ///
 /// \tparam LockableT The standard C++ Lockable concept object type.
 template <typename LockableT>
-class SingleLockableReference final : public LockableReference {
+class SingleLockableReference final : public LockableReference
+{
 public:
   using Lockable = LockableT;
 
@@ -115,7 +117,8 @@ private:
 ///
 /// \tparam LockableT The standard C++ Lockable concept object type.
 template <typename LockableT>
-class MultiLockableReference final : public LockableReference {
+class MultiLockableReference final : public LockableReference
+{
 public:
   using Lockable = LockableT;
 

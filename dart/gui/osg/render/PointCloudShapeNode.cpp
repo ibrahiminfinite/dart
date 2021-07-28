@@ -53,7 +53,8 @@ namespace osg {
 namespace render {
 
 //==============================================================================
-class BoxDrawable final : public ::osg::ShapeDrawable {
+class BoxDrawable final : public ::osg::ShapeDrawable
+{
 public:
   BoxDrawable(double size, const Eigen::Vector4d& color)
   {
@@ -87,7 +88,8 @@ protected:
 };
 
 //==============================================================================
-class SquareDrawable final : public ::osg::Geometry {
+class SquareDrawable final : public ::osg::Geometry
+{
 public:
   SquareDrawable(double size, const Eigen::Vector4d& color)
   {
@@ -136,7 +138,8 @@ protected:
 };
 
 //==============================================================================
-class CircleDrawable final : public ::osg::Geometry {
+class CircleDrawable final : public ::osg::Geometry
+{
 public:
   CircleDrawable(double size, const Eigen::Vector4d& color)
   {
@@ -194,7 +197,8 @@ protected:
 };
 
 //==============================================================================
-class PointNode : public ::osg::MatrixTransform {
+class PointNode : public ::osg::MatrixTransform
+{
 public:
   PointNode() = default;
 
@@ -210,7 +214,8 @@ public:
 };
 
 //==============================================================================
-class BoxPointNode final : public PointNode {
+class BoxPointNode final : public PointNode
+{
 public:
   BoxPointNode(
       const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color)
@@ -241,7 +246,8 @@ protected:
 
 //==============================================================================
 template <typename T>
-class BillboardPointNode final : public PointNode {
+class BillboardPointNode final : public PointNode
+{
 public:
   BillboardPointNode(
       const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color)
@@ -272,7 +278,8 @@ protected:
 };
 
 //==============================================================================
-class PointNodes : public ::osg::Group {
+class PointNodes : public ::osg::Group
+{
 public:
   PointNodes() = default;
 
@@ -341,7 +348,8 @@ bool shouldUseVisualAspectColor(
 }
 
 //==============================================================================
-class NonVertexPointNodes : public PointNodes {
+class NonVertexPointNodes : public PointNodes
+{
 public:
   NonVertexPointNodes(
       std::shared_ptr<dart::dynamics::PointCloudShape> pointCloudShape,
@@ -429,7 +437,8 @@ protected:
 };
 
 //==============================================================================
-class VertexPointNodes final : public PointNodes {
+class VertexPointNodes final : public PointNodes
+{
 public:
   VertexPointNodes(
       std::shared_ptr<dart::dynamics::PointCloudShape> pointCloudShape,

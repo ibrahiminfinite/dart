@@ -42,7 +42,8 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-class OdeGeom {
+class OdeGeom
+{
 public:
   struct GeomUserData;
 

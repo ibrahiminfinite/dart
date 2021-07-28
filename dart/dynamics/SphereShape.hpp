@@ -39,7 +39,8 @@
 namespace dart {
 namespace dynamics {
 
-class DART_DYNAMICS_API SphereShape : public Shape {
+class DART_DYNAMICS_API SphereShape : public Shape
+{
 public:
   /// Constructor.
   explicit SphereShape(double radius);

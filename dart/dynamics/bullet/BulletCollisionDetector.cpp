@@ -766,7 +766,8 @@ void reportRayHits(
 }
 
 //==============================================================================
-struct FractionLess {
+struct FractionLess
+{
   bool operator()(const RayHit& a, const RayHit& b)
   {
     return a.mFraction < b.mFraction;

@@ -40,7 +40,8 @@
 namespace dart {
 namespace dynamics {
 
-class DART_DYNAMICS_API FCLCollisionObject : public CollisionObject {
+class DART_DYNAMICS_API FCLCollisionObject : public CollisionObject
+{
 public:
   friend class FCLCollisionDetector;
 

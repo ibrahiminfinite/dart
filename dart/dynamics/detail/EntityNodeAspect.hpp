@@ -45,7 +45,8 @@ class EntityNode;
 namespace detail {
 
 //==============================================================================
-struct DART_DYNAMICS_API EntityNodeProperties {
+struct DART_DYNAMICS_API EntityNodeProperties
+{
   /// Name of the Entity/Node
   std::string mName;
 
@@ -63,7 +64,8 @@ using EntityNodeAspectBase
 
 //==============================================================================
 template <class Base, bool isCompositeBase>
-class EntityNodeBase : public Base, public EntityNodeAspectBase<Base> {
+class EntityNodeBase : public Base, public EntityNodeAspectBase<Base>
+{
 public:
   /// Forwarding constructor
   template <typename... Args>
@@ -78,7 +80,8 @@ public:
 //==============================================================================
 template <class Base>
 class EntityNodeBase<Base, true>
-  : public common::CompositeJoiner<EntityNodeAspectBase<Base>, Base> {
+  : public common::CompositeJoiner<EntityNodeAspectBase<Base>, Base>
+{
 public:
   /// Forwarding constructor
   template <typename... Args>

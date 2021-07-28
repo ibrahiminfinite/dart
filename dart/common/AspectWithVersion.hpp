@@ -78,7 +78,8 @@ class AspectWithStateAndVersionedProperties
         DerivedT,
         PropertiesDataT,
         CompositeT,
-        updateProperties> {
+        updateProperties>
+{
 public:
   using Derived = DerivedT;
   using StateData = StateDataT;

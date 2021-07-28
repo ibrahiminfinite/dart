@@ -135,10 +135,9 @@ constexpr std::size_t operator"" _GB(unsigned long long value) noexcept
 #define _DART_DEFINE_OBJECT_CREATOR_FOR_PROTECTED_CTOR(                        \
     class_name, func_name, ptr_type, creator)                                  \
 private:                                                                       \
-  struct private_structure {                                                   \
-    explicit private_structure()                                               \
-    {                                                                          \
-    }                                                                          \
+  struct private_structure                                                     \
+  {                                                                            \
+    explicit private_structure() {}                                            \
   };                                                                           \
                                                                                \
 public:                                                                        \

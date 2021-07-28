@@ -301,9 +301,7 @@ SoftContactConstraint::SoftContactConstraint(
 }
 
 //==============================================================================
-SoftContactConstraint::~SoftContactConstraint()
-{
-}
+SoftContactConstraint::~SoftContactConstraint() {}
 
 //==============================================================================
 const std::string& SoftContactConstraint::getType() const

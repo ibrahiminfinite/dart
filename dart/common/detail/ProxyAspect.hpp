@@ -41,7 +41,8 @@ namespace detail {
 
 //==============================================================================
 template <class BaseT, class CompositeT, typename StateT>
-class ProxyStateAspect : public BaseT {
+class ProxyStateAspect : public BaseT
+{
 public:
   using Base = BaseT;
   using CompositeType = CompositeT;
@@ -104,7 +105,8 @@ protected:
 
 //==============================================================================
 template <class BaseT, class CompositeT, typename PropertiesT>
-class ProxyPropertiesAspect : public BaseT {
+class ProxyPropertiesAspect : public BaseT
+{
 public:
   using Base = BaseT;
   using CompositeType = CompositeT;

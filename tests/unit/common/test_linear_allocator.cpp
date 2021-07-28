@@ -89,7 +89,8 @@ TEST(AllocatorTest, TotalSize)
   EXPECT_TRUE(allocator2.allocate(1) == nullptr);
   EXPECT_EQ(allocator2.get_size(), 4);
 
-  struct DoubleInt {
+  struct DoubleInt
+  {
     int a;
     int b;
   };

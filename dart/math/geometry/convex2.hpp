@@ -40,7 +40,8 @@ namespace dart {
 namespace math {
 
 template <typename S>
-class Convex2 {
+class Convex2
+{
 public:
   using Vector2 = Eigen::Matrix<S, 2, 1>;
   virtual Vector2 getSupport(const Vector2& direction) const = 0;

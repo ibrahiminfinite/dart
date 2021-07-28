@@ -41,7 +41,8 @@
 namespace dart {
 namespace dynamics {
 
-struct DART_DYNAMICS_API RaycastOption {
+struct DART_DYNAMICS_API RaycastOption
+{
   /// Constructor
   RaycastOption(bool enableAllHits = false, bool sortByClosest = false);
 

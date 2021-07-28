@@ -35,7 +35,8 @@
 using namespace dart;
 
 //==============================================================================
-class CustomWorldNode : public dart::gui::osg::RealTimeWorldNode {
+class CustomWorldNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   CustomWorldNode(
       dart::simulation::WorldPtr world,
@@ -167,7 +168,8 @@ protected:
 };
 
 //==============================================================================
-class CustomEventHandler : public osgGA::GUIEventHandler {
+class CustomEventHandler : public osgGA::GUIEventHandler
+{
 public:
   CustomEventHandler(/*Pass in any necessary arguments*/)
   {

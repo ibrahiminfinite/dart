@@ -47,7 +47,8 @@ namespace gui {
 namespace osg {
 namespace render {
 
-class EllipsoidShapeGeode : public ShapeNode, public ::osg::Geode {
+class EllipsoidShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   EllipsoidShapeGeode(
       dart::dynamics::EllipsoidShape* shape,
@@ -66,7 +67,8 @@ protected:
 };
 
 //==============================================================================
-class EllipsoidShapeDrawable : public ::osg::ShapeDrawable {
+class EllipsoidShapeDrawable : public ::osg::ShapeDrawable
+{
 public:
   EllipsoidShapeDrawable(
       dart::dynamics::EllipsoidShape* shape,

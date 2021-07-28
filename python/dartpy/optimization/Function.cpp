@@ -42,7 +42,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-class PyFunction : public dart::optimization::Function {
+class PyFunction : public dart::optimization::Function
+{
 public:
   // Inherit the constructors
   using Function::Function;

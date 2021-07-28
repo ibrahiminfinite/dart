@@ -70,7 +70,8 @@ Contact convertContact(
     OdeCollisionObject* b2,
     const CollisionOption& option);
 
-struct OdeCollisionCallbackData {
+struct OdeCollisionCallbackData
+{
   dContactGeom* contactGeoms;
 
   /// Collision option of DART

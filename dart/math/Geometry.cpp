@@ -1579,7 +1579,8 @@ SupportPolygon computeSupportPolgyon(
 //==============================================================================
 // HullAngle is an internal struct used to facilitate the computation of 2D
 // convex hulls
-struct HullAngle {
+struct HullAngle
+{
   HullAngle(double angle, double distance, std::size_t index)
     : mAngle(angle), mDistance(distance), mIndex(index)
   {
@@ -2000,9 +2001,7 @@ Eigen::Vector2d computeClosestPointOnSupportPolygon(
   return result;
 }
 
-BoundingBox::BoundingBox() : mMin(0, 0, 0), mMax(0, 0, 0)
-{
-}
+BoundingBox::BoundingBox() : mMin(0, 0, 0), mMax(0, 0, 0) {}
 BoundingBox::BoundingBox(const Eigen::Vector3d& min, const Eigen::Vector3d& max)
   : mMin(min), mMax(max)
 {

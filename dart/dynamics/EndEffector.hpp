@@ -55,7 +55,8 @@ class DART_DYNAMICS_API Support final
         detail::SupportStateData,
         detail::SupportPropertiesData,
         EndEffector,
-        &detail::SupportUpdate> {
+        &detail::SupportUpdate>
+{
 public:
   DART_COMMON_ASPECT_STATE_PROPERTY_CONSTRUCTORS(Support)
 
@@ -79,7 +80,8 @@ class DART_DYNAMICS_API EndEffector final
   : public common::EmbedPropertiesOnTopOf<
         EndEffector,
         detail::EndEffectorProperties,
-        detail::EndEffectorCompositeBase> {
+        detail::EndEffectorCompositeBase>
+{
 public:
   friend class Skeleton;
   friend class BodyNode;

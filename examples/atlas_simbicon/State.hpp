@@ -61,7 +61,8 @@ class TerminalCondition;
 
 //==============================================================================
 /// \brief class State
-class State {
+class State
+{
 public:
   /// \brief Constructor
   explicit State(

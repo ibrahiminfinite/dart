@@ -50,7 +50,8 @@ namespace io {
 /// \ref addPackageDirectory method.
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 class DART_IO_API PackageResourceRetriever
-  : public virtual common::ResourceRetriever {
+  : public virtual common::ResourceRetriever
+{
 public:
   /// Construct a PackageResourceRetriever that uses the specified \a
   /// _localRetriever to load resolved URIs.

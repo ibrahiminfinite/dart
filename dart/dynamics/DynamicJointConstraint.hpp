@@ -43,7 +43,8 @@ class BodyNode;
 
 /// Base class for joint constraints that are being created or destructed during
 /// simulation.
-class DART_DYNAMICS_API DynamicJointConstraint : public ConstraintBase {
+class DART_DYNAMICS_API DynamicJointConstraint : public ConstraintBase
+{
 public:
   /// Contructor
   explicit DynamicJointConstraint(dynamics::BodyNode* body);

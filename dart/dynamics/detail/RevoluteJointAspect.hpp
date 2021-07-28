@@ -48,7 +48,8 @@ class RevoluteJoint;
 namespace detail {
 
 //==============================================================================
-struct DART_DYNAMICS_API RevoluteJointUniqueProperties {
+struct DART_DYNAMICS_API RevoluteJointUniqueProperties
+{
   Eigen::Vector3d mAxis;
 
   RevoluteJointUniqueProperties(
@@ -60,7 +61,8 @@ struct DART_DYNAMICS_API RevoluteJointUniqueProperties {
 //==============================================================================
 struct DART_DYNAMICS_API RevoluteJointProperties
   : GenericJoint<math::R1Space>::Properties,
-    RevoluteJointUniqueProperties {
+    RevoluteJointUniqueProperties
+{
   DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(RevoluteJointProperties)
 
   RevoluteJointProperties(

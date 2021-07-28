@@ -43,12 +43,11 @@
 namespace dart {
 namespace io {
 
-class DART_IO_API FileInfoC3D {
+class DART_IO_API FileInfoC3D
+{
 public:
   FileInfoC3D();
-  virtual ~FileInfoC3D()
-  {
-  }
+  virtual ~FileInfoC3D() {}
 
   inline int getNumMarkers() const
   {

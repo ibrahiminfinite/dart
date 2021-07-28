@@ -169,7 +169,8 @@ Eigen::Matrix<double, N, 1> getAttributeVectorNd(
 /// child elements of given parent element. This class is templated to cover
 /// const and non-const tinyxml2::XMLElement types.
 template <typename ElementType>
-class TemplatedElementEnumerator {
+class TemplatedElementEnumerator
+{
 protected:
   using ElementPtr = ElementType*;
   using ElementRef = ElementType&;
@@ -185,9 +186,7 @@ public:
   }
 
   /// Destructor
-  ~TemplatedElementEnumerator()
-  {
-  }
+  ~TemplatedElementEnumerator() {}
 
   /// Set the current element to the next sibling element or to the first child
   /// element of given parent element if it exists; returns success

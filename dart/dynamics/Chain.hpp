@@ -44,9 +44,11 @@ namespace dynamics {
 /// specified BodyNode and include every BodyNode on the way to a target
 /// BodyNode, except it will stop if it encounters a branching (BodyNode with
 /// multiple child BodyNodes) or a FreeJoint.
-class DART_DYNAMICS_API Chain : public Linkage {
+class DART_DYNAMICS_API Chain : public Linkage
+{
 public:
-  struct Criteria {
+  struct Criteria
+  {
     /// Constructor for Chain::Criteria
     Criteria(
         BodyNode* start,
@@ -80,7 +82,10 @@ public:
   /// This enum is used to specify to the create() function that the parent
   /// joint of whichever is upstream of the other should be included in the
   /// Chain that gets generated.
-  enum IncludeUpstreamParentJointTag { IncludeUpstreamParentJoint };
+  enum IncludeUpstreamParentJointTag
+  {
+    IncludeUpstreamParentJoint
+  };
 
   /// Create a Chain given some Chain::Criteria
   static ChainPtr create(

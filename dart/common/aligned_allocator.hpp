@@ -48,13 +48,15 @@ struct AlignedAllocator;
 
 // Specialized for void
 template <std::size_t Alignment>
-struct AlignedAllocator<void, Alignment> {
+struct AlignedAllocator<void, Alignment>
+{
   using pointer = void*;
   using const_pointer = const void*;
   using value_type = void;
 
   template <class U>
-  struct rebind {
+  struct rebind
+  {
     using other = AlignedAllocator<U, Alignment>;
   };
 };
@@ -64,7 +66,8 @@ struct AlignedAllocator<void, Alignment> {
 /// This class is intended to be compatible with std::allocator, so that it can
 /// be used with any STL containers for aligned memory allocation.
 template <typename T, std::size_t Alignment>
-struct AlignedAllocator {
+struct AlignedAllocator
+{
   using value_type = T;
   using pointer = T*;
   using const_pointer = const T*;
@@ -75,7 +78,8 @@ struct AlignedAllocator {
   using propagate_on_container_move_assignment = std::true_type;
 
   template <class U>
-  struct rebind {
+  struct rebind
+  {
     using other = AlignedAllocator<U, Alignment>;
   };
 
@@ -131,7 +135,8 @@ struct AlignedAllocator {
 
 // Specialized for const type
 template <typename T, std::size_t Alignment>
-struct AlignedAllocator<const T, Alignment> {
+struct AlignedAllocator<const T, Alignment>
+{
   using value_type = T;
   using pointer = const T*;
   using const_pointer = const T*;
@@ -142,7 +147,8 @@ struct AlignedAllocator<const T, Alignment> {
   using propagate_on_container_move_assignment = std::true_type;
 
   template <class U>
-  struct rebind {
+  struct rebind
+  {
     typedef AlignedAllocator<U, Alignment> other;
   };
 

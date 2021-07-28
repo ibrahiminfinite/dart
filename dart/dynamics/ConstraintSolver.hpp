@@ -53,7 +53,8 @@ class ShapeNodeCollisionObject;
 namespace dynamics {
 
 /// ConstraintSolver manages constraints and computes constraint impulses
-class DART_DYNAMICS_API ConstraintSolver {
+class DART_DYNAMICS_API ConstraintSolver
+{
 public:
   // TODO(JS): Remove timeStep. The timestep can be set by world when a
   // constraint solver is assigned to a world.

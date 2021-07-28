@@ -43,7 +43,8 @@ namespace dynamics {
 namespace detail {
 
 template <typename S>
-class OdeHeightmap : public OdeGeom {
+class OdeHeightmap : public OdeGeom
+{
 public:
   /// Constructor
   OdeHeightmap(

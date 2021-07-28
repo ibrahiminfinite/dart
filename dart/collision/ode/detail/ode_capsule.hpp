@@ -40,7 +40,8 @@ namespace collision {
 namespace detail {
 
 template <typename S>
-class OdeCapsule : public OdeGeom<S> {
+class OdeCapsule : public OdeGeom<S>
+{
 public:
   /// Constructor
   OdeCapsule(const OdeObject<S>* parent, S radius, S height);

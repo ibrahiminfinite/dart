@@ -41,7 +41,8 @@ namespace dynamics {
 
 //==============================================================================
 template <class Base>
-class CompositeStateNode : public Base {
+class CompositeStateNode : public Base
+{
 public:
   using State = Node::MakeState<common::Composite::State>;
 
@@ -65,7 +66,8 @@ public:
 
 //==============================================================================
 template <class Base>
-class CompositePropertiesNode : public Base {
+class CompositePropertiesNode : public Base
+{
 public:
   using Properties = Node::MakeProperties<common::Composite::Properties>;
 
@@ -90,7 +92,8 @@ public:
 
 //==============================================================================
 template <class Base>
-class CompositeNode : public CompositePropertiesNode<CompositeStateNode<Base>> {
+class CompositeNode : public CompositePropertiesNode<CompositeStateNode<Base>>
+{
 public:
   /// Forwarding constructor
   template <typename... Args>

@@ -42,7 +42,8 @@
 namespace dart {
 namespace dynamics {
 
-class DART_DYNAMICS_API BoxedLcpSolver {
+class DART_DYNAMICS_API BoxedLcpSolver
+{
 public:
   /// Destructor
   virtual ~BoxedLcpSolver() = default;

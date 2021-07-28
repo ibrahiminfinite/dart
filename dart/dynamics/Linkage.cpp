@@ -176,7 +176,8 @@ void Linkage::Criteria::expansionPolicy(
 }
 
 //==============================================================================
-struct Recording {
+struct Recording
+{
   Recording(BodyNode* _node = nullptr, int _count = 0)
     : mNode(_node), mCount(_count)
   {

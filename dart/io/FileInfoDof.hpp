@@ -48,7 +48,8 @@ class Skeleton;
 namespace io {
 
 /// \brief class FileInfoDof
-class DART_IO_API FileInfoDof {
+class DART_IO_API FileInfoDof
+{
 public:
   /// \brief Constructor
   FileInfoDof(dynamics::Skeleton* _skel, double _fps = 120.0);

@@ -41,7 +41,8 @@ namespace dynamics {
 namespace detail {
 
 template <class T>
-class UnorderedPairs {
+class UnorderedPairs
+{
 public:
   /// Adds a pair to this container.
   void addPair(const T* left, const T* right);

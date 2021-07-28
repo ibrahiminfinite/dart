@@ -49,7 +49,8 @@ namespace detail {
 
 class Body;
 
-class DART_IO_API Geom final {
+class DART_IO_API Geom final
+{
 public:
   /// Default constructor
   Geom() = default;

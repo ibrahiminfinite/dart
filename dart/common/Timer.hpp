@@ -45,7 +45,8 @@
     #include <windows.h>
     #undef NOMINMAX
   #endif
-typedef struct {
+typedef struct
+{
   LARGE_INTEGER start;
   LARGE_INTEGER stop;
 } stopWatch;
@@ -60,7 +61,8 @@ namespace common {
 ///
 /// This is a definition of mTimer class.
 /// For measure the time, gettimeofday() api is used
-class DART_COMMON_API Timer {
+class DART_COMMON_API Timer
+{
 public:
   /// \brief Default constructor
   explicit Timer(const std::string& _name = "Noname Timer");

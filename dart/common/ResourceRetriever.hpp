@@ -45,7 +45,8 @@ namespace common {
 
 /// ResourceRetriever provides methods for testing for the existance of and
 /// accessing the content of a resource specified by URI.
-class DART_COMMON_API ResourceRetriever {
+class DART_COMMON_API ResourceRetriever
+{
 public:
   virtual ~ResourceRetriever() = default;
 

@@ -60,7 +60,8 @@ using JointPropPtr = std::shared_ptr<dynamics::Joint::Properties>;
 using ParameterMap = std::map<std::string, double>;
 using BodyNodeColorMap = std::map<dynamics::BodyNode*, Eigen::Vector3d>;
 
-struct VskData {
+struct VskData
+{
   ParameterMap parameterMap;
   BodyNodeColorMap bodyNodeColorMap;
   VskParser::Options options;

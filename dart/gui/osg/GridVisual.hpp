@@ -46,9 +46,11 @@ namespace gui {
 namespace osg {
 
 /// Attach this to a Viewer in order to visualize grid.
-class DART_GUI_API GridVisual : public ViewerAttachment {
+class DART_GUI_API GridVisual : public ViewerAttachment
+{
 public:
-  enum class PlaneType : unsigned char {
+  enum class PlaneType : unsigned char
+  {
     XY = 0u,
     YZ = 1u,
     ZX = 2u,

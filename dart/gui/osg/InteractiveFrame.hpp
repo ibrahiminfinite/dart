@@ -47,9 +47,11 @@ namespace osg {
 
 class InteractiveFrame;
 
-class DART_GUI_API InteractiveTool : public dart::dynamics::SimpleFrame {
+class DART_GUI_API InteractiveTool : public dart::dynamics::SimpleFrame
+{
 public:
-  enum Type {
+  enum Type
+  {
 
     LINEAR = 0, /// Tool for linearly constrained translations
     ANGULAR,    /// Tool for rotations
@@ -105,7 +107,8 @@ protected:
   InteractiveFrame* mInteractiveFrame;
 };
 
-class DART_GUI_API InteractiveFrame : public dart::dynamics::SimpleFrame {
+class DART_GUI_API InteractiveFrame : public dart::dynamics::SimpleFrame
+{
 public:
   DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(InteractiveFrame)
 

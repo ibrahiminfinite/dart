@@ -43,7 +43,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-enum class ErrorCode {
+enum class ErrorCode
+{
   NONE = 0,
 
   FILE_READ,
@@ -67,7 +68,8 @@ enum class ErrorCode {
   UNDEFINED_ERROR,
 };
 
-class DART_IO_API Error final {
+class DART_IO_API Error final
+{
 public:
   Error() = default;
   Error(ErrorCode code, const std::string& message);

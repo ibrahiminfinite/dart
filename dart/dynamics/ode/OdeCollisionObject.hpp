@@ -46,7 +46,8 @@ namespace detail {
 class OdeGeom;
 } // namespace detail
 
-class DART_DYNAMICS_API OdeCollisionObject : public CollisionObject {
+class DART_DYNAMICS_API OdeCollisionObject : public CollisionObject
+{
 public:
   friend class OdeCollisionDetector;
   friend class OdeCollisionGroup;

@@ -35,7 +35,8 @@
 
 using namespace dart;
 
-class FetchWorldNode : public gui::osg::RealTimeWorldNode {
+class FetchWorldNode : public gui::osg::RealTimeWorldNode
+{
 public:
   explicit FetchWorldNode(
       simulation::WorldPtr world,
@@ -65,7 +66,8 @@ protected:
   dynamics::Frame* mInteractiveFrame;
 };
 
-class PointCloudWidget : public dart::gui::osg::ImGuiWidget {
+class PointCloudWidget : public dart::gui::osg::ImGuiWidget
+{
 public:
   PointCloudWidget(
       dart::gui::osg::ImGuiViewer* viewer,

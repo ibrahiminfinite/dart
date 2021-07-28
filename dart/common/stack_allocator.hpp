@@ -41,7 +41,8 @@
 
 namespace dart::common {
 
-class DART_COMMON_API StackAllocator final : public Allocator {
+class DART_COMMON_API StackAllocator final : public Allocator
+{
 public:
   /// Constructor
   StackAllocator(
@@ -76,7 +77,8 @@ public:
   }
 
 private:
-  struct Header {
+  struct Header
+  {
     char padding;
   };
 

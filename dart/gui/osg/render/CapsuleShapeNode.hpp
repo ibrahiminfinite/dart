@@ -50,7 +50,8 @@ namespace render {
 class CapsuleShapeGeode;
 class CapsuleShapeDrawable;
 
-class CapsuleShapeNode : public ShapeNode, public ::osg::Group {
+class CapsuleShapeNode : public ShapeNode, public ::osg::Group
+{
 public:
   CapsuleShapeNode(
       std::shared_ptr<dart::dynamics::CapsuleShape> shape,

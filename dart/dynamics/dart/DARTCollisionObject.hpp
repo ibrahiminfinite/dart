@@ -43,7 +43,8 @@ namespace dynamics {
 
 class CollisionObject;
 
-class DART_DYNAMICS_API DARTCollisionObject : public CollisionObject {
+class DART_DYNAMICS_API DARTCollisionObject : public CollisionObject
+{
 public:
   friend class DARTCollisionDetector;
 

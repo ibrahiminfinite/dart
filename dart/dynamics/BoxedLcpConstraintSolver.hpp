@@ -40,7 +40,8 @@
 namespace dart {
 namespace dynamics {
 
-class DART_DYNAMICS_API BoxedLcpConstraintSolver : public ConstraintSolver {
+class DART_DYNAMICS_API BoxedLcpConstraintSolver : public ConstraintSolver
+{
 public:
   /// Constructos with default primary and secondary LCP solvers, which are
   /// Dantzig and PGS, respectively.

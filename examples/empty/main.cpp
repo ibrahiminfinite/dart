@@ -33,7 +33,8 @@
 #include <dart/dart.hpp>
 
 //==============================================================================
-class CustomWorldNode : public dart::gui::osg::RealTimeWorldNode {
+class CustomWorldNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   CustomWorldNode(const dart::simulation::WorldPtr& world = nullptr)
     : dart::gui::osg::RealTimeWorldNode(world)
@@ -71,7 +72,8 @@ public:
 };
 
 //==============================================================================
-class CustomEventHandler : public osgGA::GUIEventHandler {
+class CustomEventHandler : public osgGA::GUIEventHandler
+{
 public:
   CustomEventHandler(/*Pass in any necessary arguments*/)
   {

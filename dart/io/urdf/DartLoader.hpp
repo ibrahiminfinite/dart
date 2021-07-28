@@ -75,10 +75,12 @@ namespace io {
 /**
  * @class DartLoader
  */
-class DART_IO_API DartLoader {
+class DART_IO_API DartLoader
+{
 public:
   /// Flags for specifying URDF file parsing policies.
-  enum Flags {
+  enum Flags
+  {
     NONE = 0,
 
     /// Parser the root link's joint type to be "fixed" joint when not

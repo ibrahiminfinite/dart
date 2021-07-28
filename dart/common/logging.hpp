@@ -87,7 +87,8 @@ namespace dart {
 namespace common {
 
 /// Log level
-enum class LogLevel {
+enum class LogLevel
+{
   /// The TRACE level designates finer-grained information events than the
   /// DEBUG level.
   ///

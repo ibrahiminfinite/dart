@@ -42,7 +42,8 @@ namespace dynamics {
 class BodyNode;
 class CollisionObject;
 
-class DART_DYNAMICS_API CollisionFilter {
+class DART_DYNAMICS_API CollisionFilter
+{
 public:
   /// Destructor.
   virtual ~CollisionFilter();
@@ -53,7 +54,8 @@ public:
       const CollisionObject* object1, const CollisionObject* object2) const = 0;
 };
 
-class DART_DYNAMICS_API CompositeCollisionFilter : public CollisionFilter {
+class DART_DYNAMICS_API CompositeCollisionFilter : public CollisionFilter
+{
 public:
   /// Adds a collision filter to this CompositeCollisionFilter.
   void addCollisionFilter(const CollisionFilter* filter);
@@ -74,7 +76,8 @@ protected:
   std::unordered_set<const CollisionFilter*> mFilters;
 };
 
-class DART_DYNAMICS_API BodyNodeCollisionFilter : public CollisionFilter {
+class DART_DYNAMICS_API BodyNodeCollisionFilter : public CollisionFilter
+{
 public:
   /// Add a BodyNode pair to the blacklist.
   void addBodyNodePairToBlackList(

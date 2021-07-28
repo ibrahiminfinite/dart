@@ -48,7 +48,8 @@ class Support;
 namespace detail {
 
 //==============================================================================
-struct DART_DYNAMICS_API EndEffectorProperties {
+struct DART_DYNAMICS_API EndEffectorProperties
+{
   /// The default relative transform for the EndEffector. If the relative
   /// transform of the EndEffector is ever changed, you can call
   /// resetRelativeTransform() to return the relative transform to this one.
@@ -62,21 +63,21 @@ struct DART_DYNAMICS_API EndEffectorProperties {
 };
 
 //==============================================================================
-struct DART_DYNAMICS_API SupportStateData {
+struct DART_DYNAMICS_API SupportStateData
+{
   /// Whether or not this EndEffector is currently being used to support the
   /// weight of the robot.
   bool mActive;
 
-  inline SupportStateData(bool active = false) : mActive(active)
-  {
-  }
+  inline SupportStateData(bool active = false) : mActive(active) {}
 
   // To get byte-aligned Eigen vectors
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
 //==============================================================================
-struct DART_DYNAMICS_API SupportPropertiesData {
+struct DART_DYNAMICS_API SupportPropertiesData
+{
   /// A set of points representing the support polygon that can be provided by
   /// the EndEffector. These points must be defined relative to the EndEffector
   /// frame.

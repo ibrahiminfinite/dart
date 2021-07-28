@@ -48,7 +48,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class DART_IO_API Compiler final {
+class DART_IO_API Compiler final
+{
 public:
   Compiler() = default;
 

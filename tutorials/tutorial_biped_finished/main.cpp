@@ -47,7 +47,8 @@ using namespace dart::gui::osg;
 using namespace dart::io;
 using namespace dart::math;
 
-class Controller {
+class Controller
+{
 public:
   /// Constructor
   Controller(const SkeletonPtr& biped) : mBiped(biped), mSpeed(0.0)
@@ -203,7 +204,8 @@ protected:
   double mSpeed;
 };
 
-class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode {
+class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   TutorialWorldNode(WorldPtr world)
     : dart::gui::osg::RealTimeWorldNode(std::move(world)),
@@ -275,7 +277,8 @@ protected:
   bool mPositiveSign;
 };
 
-class InputHandler : public ::osgGA::GUIEventHandler {
+class InputHandler : public ::osgGA::GUIEventHandler
+{
 public:
   /// Constructor
   InputHandler(TutorialWorldNode* node) : mNode(node)

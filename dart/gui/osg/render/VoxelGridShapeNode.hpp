@@ -55,7 +55,8 @@ namespace render {
 class VoxelGridShapeGeode;
 class VoxelNode;
 
-class VoxelGridShapeNode : public ShapeNode, public ::osg::Group {
+class VoxelGridShapeNode : public ShapeNode, public ::osg::Group
+{
 public:
   VoxelGridShapeNode(
       std::shared_ptr<dynamics::VoxelGridShape> shape, ShapeFrameNode* parent);

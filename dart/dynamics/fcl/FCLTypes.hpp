@@ -41,7 +41,8 @@
 namespace dart {
 namespace dynamics {
 
-class DART_DYNAMICS_API FCLTypes {
+class DART_DYNAMICS_API FCLTypes
+{
 public:
 #if !FCL_VERSION_AT_LEAST(0, 6, 0)
   /// Convert Eigen vector3 type to FCL vector3 type

@@ -45,12 +45,14 @@ namespace dynamics {
 
 class CollisionObject;
 
-struct DART_DYNAMICS_API DistanceFilter {
+struct DART_DYNAMICS_API DistanceFilter
+{
   virtual bool needDistance(
       const CollisionObject* object1, const CollisionObject* object2) const = 0;
 };
 
-struct DART_DYNAMICS_API BodyNodeDistanceFilter : DistanceFilter {
+struct DART_DYNAMICS_API BodyNodeDistanceFilter : DistanceFilter
+{
   bool needDistance(
       const CollisionObject* object1,
       const CollisionObject* object2) const override;

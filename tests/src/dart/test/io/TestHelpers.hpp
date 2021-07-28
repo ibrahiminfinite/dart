@@ -38,7 +38,8 @@
 #include "dart/io/io.hpp"
 
 //==============================================================================
-struct TestResource : public dart::common::Resource {
+struct TestResource : public dart::common::Resource
+{
   size_t getSize() override
   {
     return 0;
@@ -61,7 +62,8 @@ struct TestResource : public dart::common::Resource {
 };
 
 //==============================================================================
-struct PresentResourceRetriever : public dart::common::ResourceRetriever {
+struct PresentResourceRetriever : public dart::common::ResourceRetriever
+{
   bool exists(const dart::common::Uri& _uri) override
   {
     mExists.push_back(_uri.toString());
@@ -86,7 +88,8 @@ struct PresentResourceRetriever : public dart::common::ResourceRetriever {
 };
 
 //==============================================================================
-struct AbsentResourceRetriever : public dart::common::ResourceRetriever {
+struct AbsentResourceRetriever : public dart::common::ResourceRetriever
+{
   bool exists(const dart::common::Uri& _uri) override
   {
     mExists.push_back(_uri.toString());

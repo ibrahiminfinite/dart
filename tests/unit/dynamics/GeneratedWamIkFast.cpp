@@ -322,7 +322,8 @@ inline double IKatan2(double fy, double fx)
 }
 
 template <typename T>
-struct CheckValue {
+struct CheckValue
+{
   T value;
   bool valid;
 };
@@ -537,7 +538,8 @@ IKFAST_API int GetIkType()
   return 0x67000001;
 }
 
-class IKSolver {
+class IKSolver
+{
 public:
   IkReal j4, cj4, sj4, htj4, j4mul, j6, cj6, sj6, htj6, j6mul, j9, cj9, sj9,
       htj9, j9mul, j10, cj10, sj10, htj10, j10mul, j11, cj11, sj11, htj11,

@@ -50,7 +50,8 @@ namespace render {
 class BoxShapeGeode;
 class BoxShapeDrawable;
 
-class BoxShapeNode : public ShapeNode, public ::osg::Group {
+class BoxShapeNode : public ShapeNode, public ::osg::Group
+{
 public:
   BoxShapeNode(
       std::shared_ptr<dart::dynamics::BoxShape> shape, ShapeFrameNode* parent);

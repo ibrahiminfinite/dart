@@ -110,7 +110,8 @@ dynamics::SkeletonPtr createFloor()
 }
 
 //==============================================================================
-class CustomWorldNode : public dart::gui::osg::RealTimeWorldNode {
+class CustomWorldNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   explicit CustomWorldNode(const dart::simulation::WorldPtr& world = nullptr)
     : dart::gui::osg::RealTimeWorldNode(world)
@@ -148,7 +149,8 @@ public:
 };
 
 //==============================================================================
-class CustomEventHandler : public osgGA::GUIEventHandler {
+class CustomEventHandler : public osgGA::GUIEventHandler
+{
 public:
   CustomEventHandler(/*Pass in any necessary arguments*/)
   {
@@ -197,7 +199,8 @@ public:
 };
 
 //==============================================================================
-class TestWidget : public dart::gui::osg::ImGuiWidget {
+class TestWidget : public dart::gui::osg::ImGuiWidget
+{
 public:
   /// Constructor
   TestWidget(

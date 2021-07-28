@@ -41,7 +41,8 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-class OdeCylinder : public OdeGeom {
+class OdeCylinder : public OdeGeom
+{
 public:
   /// Constructor
   OdeCylinder(const OdeCollisionObject* parent, double radius, double height);

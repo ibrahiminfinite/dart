@@ -420,7 +420,8 @@ void ConstraintSolver::updateConstraints()
       = std::pair<dynamics::CollisionObject*, dynamics::CollisionObject*>;
 
   // Compare contact pairs while ignoring their order in the pair.
-  struct ContactPairCompare {
+  struct ContactPairCompare
+  {
     ContactPair getSortedPair(const ContactPair& a) const
     {
       if (a.first < a.second)

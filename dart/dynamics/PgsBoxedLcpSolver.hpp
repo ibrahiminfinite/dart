@@ -42,9 +42,11 @@ namespace dart {
 namespace dynamics {
 
 /// Implementation of projected Gauss-Seidel (PGS) LCP solver.
-class DART_DYNAMICS_API PgsBoxedLcpSolver : public BoxedLcpSolver {
+class DART_DYNAMICS_API PgsBoxedLcpSolver : public BoxedLcpSolver
+{
 public:
-  struct Option {
+  struct Option
+  {
     int mMaxIteration;
     double mDeltaXThreshold;
     double mRelativeDeltaXTolerance;

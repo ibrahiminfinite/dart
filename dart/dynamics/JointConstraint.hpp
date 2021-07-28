@@ -51,7 +51,8 @@ namespace dynamics {
 
 /// JointConstraint handles multiple constraints that are defined in the joint
 /// space, such as joint position/velocity limits and servo motor.
-class DART_DYNAMICS_API JointConstraint : public ConstraintBase {
+class DART_DYNAMICS_API JointConstraint : public ConstraintBase
+{
 public:
   /// Constructor
   explicit JointConstraint(dynamics::Joint* joint);

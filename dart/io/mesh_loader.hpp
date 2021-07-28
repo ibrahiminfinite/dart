@@ -41,7 +41,8 @@ namespace dart {
 namespace io {
 
 template <typename S>
-class MeshLoader {
+class MeshLoader
+{
 public:
   /// Constructor
   MeshLoader() = default;

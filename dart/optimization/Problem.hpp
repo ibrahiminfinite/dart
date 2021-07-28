@@ -45,7 +45,8 @@ namespace dart {
 namespace optimization {
 
 /// \brief class Problem
-class DART_OPTIMIZATION_API Problem {
+class DART_OPTIMIZATION_API Problem
+{
 public:
   /// \brief Constructor
   explicit Problem(std::size_t _dim = 0);

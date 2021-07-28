@@ -46,7 +46,8 @@ class SharedLibrary;
 
 namespace detail {
 
-class SharedLibraryManager final : public Singleton<SharedLibraryManager> {
+class SharedLibraryManager final : public Singleton<SharedLibraryManager>
+{
 public:
   /// Loads the shared library with the specified path.
   ///

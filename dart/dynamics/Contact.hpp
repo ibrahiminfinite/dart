@@ -42,7 +42,8 @@ namespace dart {
 namespace dynamics {
 
 /// Contact information
-struct DART_DYNAMICS_API Contact {
+struct DART_DYNAMICS_API Contact
+{
   /// Default constructor
   Contact();
 

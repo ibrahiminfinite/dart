@@ -41,7 +41,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-class GUIEventHandlerNoRef : public osgGA::GUIEventHandler {
+class GUIEventHandlerNoRef : public osgGA::GUIEventHandler
+{
 public:
   using GUIEventHandler::handle;
 
@@ -59,7 +60,8 @@ protected:
   }
 };
 
-class PyGUIEventHandler final : public GUIEventHandlerNoRef {
+class PyGUIEventHandler final : public GUIEventHandlerNoRef
+{
 public:
   // Inherit the constructors
   using GUIEventHandlerNoRef::GUIEventHandler;

@@ -48,7 +48,8 @@ class ScrewJoint;
 namespace detail {
 
 //==============================================================================
-struct DART_DYNAMICS_API ScrewJointUniqueProperties {
+struct DART_DYNAMICS_API ScrewJointUniqueProperties
+{
   /// Rotational axis
   Eigen::Vector3d mAxis;
 
@@ -65,7 +66,8 @@ struct DART_DYNAMICS_API ScrewJointUniqueProperties {
 //==============================================================================
 struct DART_DYNAMICS_API ScrewJointProperties
   : GenericJoint<math::R1Space>::Properties,
-    ScrewJointUniqueProperties {
+    ScrewJointUniqueProperties
+{
   DART_DEFINE_ALIGNED_SHARED_OBJECT_CREATOR(ScrewJointProperties)
 
   ScrewJointProperties(

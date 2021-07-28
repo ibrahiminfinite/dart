@@ -43,7 +43,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class DART_IO_API Size final {
+class DART_IO_API Size final
+{
 public:
   Size() = default;
 

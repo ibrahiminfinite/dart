@@ -53,7 +53,8 @@ class Size;
 
 /// Intermediate raw data read from the XML file. For the details, see
 /// http://www.mujoco.org/book/XMLreference.html#body
-struct DART_IO_API BodyAttributes final {
+struct DART_IO_API BodyAttributes final
+{
   /// Name of the body.
   std::optional<std::string> mName;
 

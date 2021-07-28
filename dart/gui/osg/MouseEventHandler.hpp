@@ -47,13 +47,12 @@ class DefaultEventHandler;
 
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 class DART_GUI_API MouseEventHandler : public virtual dart::common::Subject,
-                                       public virtual dart::common::Observer {
+                                       public virtual dart::common::Observer
+{
 public:
   friend class DefaultEventHandler;
 
-  inline MouseEventHandler() : mEventHandler(nullptr)
-  {
-  }
+  inline MouseEventHandler() : mEventHandler(nullptr) {}
 
   /// Overload this function to set behavior that will get triggered during a
   /// mouse event

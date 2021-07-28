@@ -52,13 +52,16 @@ namespace dynamics {
 /// so that they match whatever assembly they had the last time
 /// Linkage::reassemble() was called (or the assembly that they had when the
 /// Linkage was constructed, if Linkage::reassemble has never been called).
-class DART_DYNAMICS_API Linkage : public ReferentialSkeleton {
+class DART_DYNAMICS_API Linkage : public ReferentialSkeleton
+{
 public:
   /// The Criteria class is used to specify how a Linkage should be constructed
-  struct Criteria {
+  struct Criteria
+  {
     /// The ExpansionPolicy indicates how the collection of BodyNodes should
     /// expand from the starting BodyNode (mStart)
-    enum ExpansionPolicy {
+    enum ExpansionPolicy
+    {
       INCLUDE = 0, ///< Do not expand from the target. Include everything up to
                    ///< the target and then stop.
       EXCLUDE, ///< Do not expand from the target. Include everything up to the
@@ -74,7 +77,8 @@ public:
 
     /// This structure defines targets for the expansion criteria and the
     /// desired behavior for those targets
-    struct Target {
+    struct Target
+    {
       /// Default constructor for Target
       Target(
           BodyNode* _target = nullptr,
@@ -112,7 +116,8 @@ public:
     /// in the Linkage. If mInclusive is set to false, then mTerminal will not
     /// be included in the Linkage. Note that the BodyNode of mStart may be
     /// included as an inclusive terminal, but NOT as an exclusive terminal.
-    struct Terminal {
+    struct Terminal
+    {
       /// Default constructor for Terminal
       Terminal(BodyNode* _terminal = nullptr, bool _inclusive = true);
 

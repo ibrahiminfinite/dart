@@ -41,7 +41,8 @@
 namespace dart {
 namespace dynamics {
 
-class DART_DYNAMICS_API OdeCollisionGroup : public CollisionGroup {
+class DART_DYNAMICS_API OdeCollisionGroup : public CollisionGroup
+{
 public:
   friend class OdeCollisionDetector;
 

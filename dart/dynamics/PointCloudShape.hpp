@@ -46,9 +46,11 @@ namespace dart {
 namespace dynamics {
 
 /// The PointCloudShape represents point cloud data.
-class DART_DYNAMICS_API PointCloudShape : public Shape {
+class DART_DYNAMICS_API PointCloudShape : public Shape
+{
 public:
-  enum ColorMode {
+  enum ColorMode
+  {
     /// Use the color specified by the ShapeAspect. This is the default.
     USE_SHAPE_COLOR = 0,
 
@@ -59,7 +61,8 @@ public:
     BIND_PER_POINT,
   };
 
-  enum PointShapeType {
+  enum PointShapeType
+  {
     BOX = 0,          ///< 3D volumetric box
     BILLBOARD_SQUARE, ///< 2D square always facing the screen
     BILLBOARD_CIRCLE, ///< 2D circle always facing the screen

@@ -44,7 +44,8 @@
 namespace dart {
 namespace dynamics {
 
-struct DART_DYNAMICS_API BulletCollisionShape {
+struct DART_DYNAMICS_API BulletCollisionShape
+{
   std::unique_ptr<btCollisionShape> mCollisionShape;
 
   /// Relative transform of the shape to the collision object

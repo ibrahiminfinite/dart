@@ -51,7 +51,8 @@ template <class CompositeT, typename StateDataT>
 class EmbeddedStateAspect : public detail::EmbeddedStateAspect<
                                 CompositeTrackingAspect<CompositeT>,
                                 EmbeddedStateAspect<CompositeT, StateDataT>,
-                                StateDataT> {
+                                StateDataT>
+{
 public:
   using Base = CompositeTrackingAspect<CompositeT>;
   using Derived = EmbeddedStateAspect<CompositeT, StateDataT>;
@@ -88,7 +89,8 @@ DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 
 template <class DerivedT, typename StateDataT>
 class EmbedState : public virtual common::RequiresAspect<
-                       common::EmbeddedStateAspect<DerivedT, StateDataT> > {
+                       common::EmbeddedStateAspect<DerivedT, StateDataT> >
+{
 public:
   using Derived = DerivedT;
   using Aspect = common::EmbeddedStateAspect<Derived, StateDataT>;
@@ -121,9 +123,9 @@ DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_END
 /// other Composite objects by listing them as the third (and later) template
 /// arguments.
 template <class DerivedT, typename StateDataT, typename... BaseComposites>
-class EmbedStateOnTopOf : public CompositeJoiner<
-                              EmbedState<DerivedT, StateDataT>,
-                              BaseComposites...> {
+class EmbedStateOnTopOf
+  : public CompositeJoiner<EmbedState<DerivedT, StateDataT>, BaseComposites...>
+{
 public:
   using Impl = EmbedState<DerivedT, StateDataT>;
   using Derived = typename Impl::Derived;
@@ -158,7 +160,8 @@ class EmbeddedPropertiesAspect
   : public detail::EmbeddedPropertiesAspect<
         CompositeTrackingAspect<CompositeT>,
         EmbeddedPropertiesAspect<CompositeT, PropertiesDataT>,
-        PropertiesDataT> {
+        PropertiesDataT>
+{
 public:
   using Base = CompositeTrackingAspect<CompositeT>;
   using Derived = EmbeddedPropertiesAspect<CompositeT, PropertiesDataT>;
@@ -197,7 +200,8 @@ DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 template <class DerivedT, typename PropertiesDataT>
 class EmbedProperties
   : public virtual common::RequiresAspect<
-        common::EmbeddedPropertiesAspect<DerivedT, PropertiesDataT> > {
+        common::EmbeddedPropertiesAspect<DerivedT, PropertiesDataT> >
+{
 public:
   using Derived = DerivedT;
   using Aspect = common::EmbeddedPropertiesAspect<Derived, PropertiesDataT>;
@@ -232,7 +236,8 @@ DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_END
 template <class DerivedT, typename PropertiesDataT, typename... CompositeBases>
 class EmbedPropertiesOnTopOf : public CompositeJoiner<
                                    EmbedProperties<DerivedT, PropertiesDataT>,
-                                   CompositeBases...> {
+                                   CompositeBases...>
+{
 public:
   using Impl = EmbedProperties<DerivedT, PropertiesDataT>;
   using Derived = typename Impl::Derived;
@@ -280,7 +285,8 @@ class EmbeddedStateAndPropertiesAspect
             CompositeT,
             StateDataT,
             PropertiesDataT>,
-        PropertiesDataT> {
+        PropertiesDataT>
+{
 public:
   using Derived = EmbeddedStateAndPropertiesAspect<
       CompositeT,
@@ -371,7 +377,8 @@ class EmbedStateAndProperties : public virtual common::RequiresAspect<
                                     common::EmbeddedStateAndPropertiesAspect<
                                         DerivedT,
                                         StateDataT,
-                                        PropertiesDataT> > {
+                                        PropertiesDataT> >
+{
 public:
   using Derived = DerivedT;
   using Aspect = common::
@@ -424,7 +431,8 @@ template <
 class EmbedStateAndPropertiesOnTopOf
   : public CompositeJoiner<
         EmbedStateAndProperties<DerivedT, StateDataT, PropertiesDataT>,
-        CompositeBases...> {
+        CompositeBases...>
+{
 public:
   using Impl = EmbedStateAndProperties<DerivedT, StateDataT, PropertiesDataT>;
   using Derived = typename Impl::Derived;

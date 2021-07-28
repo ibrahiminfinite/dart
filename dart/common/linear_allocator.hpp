@@ -41,7 +41,8 @@
 
 namespace dart::common {
 
-class DART_COMMON_API LinearAllocator final : public Allocator {
+class DART_COMMON_API LinearAllocator final : public Allocator
+{
 public:
   /// Constructor
   LinearAllocator(

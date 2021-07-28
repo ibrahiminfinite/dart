@@ -46,7 +46,8 @@ namespace osg {
 namespace render {
 
 //==============================================================================
-class ConeShapeGeode : public ShapeNode, public ::osg::Geode {
+class ConeShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   ConeShapeGeode(
       dart::dynamics::ConeShape* shape,
@@ -64,7 +65,8 @@ protected:
 };
 
 //==============================================================================
-class ConeShapeDrawable : public ::osg::ShapeDrawable {
+class ConeShapeDrawable : public ::osg::ShapeDrawable
+{
 public:
   ConeShapeDrawable(
       dart::dynamics::ConeShape* shape,

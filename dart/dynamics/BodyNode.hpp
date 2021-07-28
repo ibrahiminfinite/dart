@@ -75,7 +75,8 @@ class DART_DYNAMICS_API BodyNode
   : public detail::BodyNodeCompositeBase,
     public virtual BodyNodeSpecializedFor<ShapeNode, EndEffector, Marker>,
     public SkeletonRefCountingBase,
-    public TemplatedJacobianNode<BodyNode> {
+    public TemplatedJacobianNode<BodyNode>
+{
 public:
   using ColShapeAddedSignal
       = common::Signal<void(const BodyNode*, ConstShapePtr _newColShape)>;

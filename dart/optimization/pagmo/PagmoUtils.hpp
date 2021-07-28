@@ -40,7 +40,8 @@
 namespace dart {
 namespace optimization {
 
-class PagmoTypes {
+class PagmoTypes
+{
 public:
   static std::vector<double> convertVector(const Eigen::VectorXd& v);
 

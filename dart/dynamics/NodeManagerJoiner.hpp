@@ -43,13 +43,15 @@ namespace dynamics {
 //==============================================================================
 /// Declaration of the variadic template
 template <class... OtherBases>
-class NodeManagerJoinerForBodyNode {
+class NodeManagerJoinerForBodyNode
+{
 };
 
 //==============================================================================
 /// Special case of only having 1 class: we do nothing but inherit it.
 template <class Base1>
-class NodeManagerJoinerForBodyNode<Base1> : public Base1 {
+class NodeManagerJoinerForBodyNode<Base1> : public Base1
+{
 };
 
 //==============================================================================
@@ -58,7 +60,8 @@ class NodeManagerJoinerForBodyNode<Base1> : public Base1 {
 /// class solved the diamond-of-death problem for multiple
 /// SpecializedNodeManager inheritance.
 template <class Base1, class Base2>
-class NodeManagerJoinerForBodyNode<Base1, Base2> : public Base1, public Base2 {
+class NodeManagerJoinerForBodyNode<Base1, Base2> : public Base1, public Base2
+{
 public:
   /// Default constructor
   NodeManagerJoinerForBodyNode() = default;
@@ -98,7 +101,8 @@ template <class Base1, class Base2, class... OtherBases>
 class NodeManagerJoinerForBodyNode<Base1, Base2, OtherBases...>
   : public NodeManagerJoinerForBodyNode<
         Base1,
-        NodeManagerJoinerForBodyNode<Base2, OtherBases...> > {
+        NodeManagerJoinerForBodyNode<Base2, OtherBases...> >
+{
 public:
   NodeManagerJoinerForBodyNode() = default;
 
@@ -109,19 +113,22 @@ public:
 //==============================================================================
 /// Declaration of variadic template
 template <class... OtherBases>
-class NodeManagerJoinerForSkeleton {
+class NodeManagerJoinerForSkeleton
+{
 };
 
 //==============================================================================
 /// Special case of only having 1 class: we do nothing but inherit it
 template <class Base1>
-class NodeManagerJoinerForSkeleton<Base1> : public Base1 {
+class NodeManagerJoinerForSkeleton<Base1> : public Base1
+{
 };
 
 //==============================================================================
 template <class Base1, class Base2>
 class NodeManagerJoinerForSkeleton<Base1, Base2>
-  : public NodeManagerJoinerForBodyNode<Base1, Base2> {
+  : public NodeManagerJoinerForBodyNode<Base1, Base2>
+{
 public:
   using Base = NodeManagerJoinerForBodyNode<Base1, Base2>;
   using Base::getNode;
@@ -166,7 +173,8 @@ template <class Base1, class Base2, class... OtherBases>
 class NodeManagerJoinerForSkeleton<Base1, Base2, OtherBases...>
   : public NodeManagerJoinerForSkeleton<
         Base1,
-        NodeManagerJoinerForSkeleton<Base2, OtherBases...> > {
+        NodeManagerJoinerForSkeleton<Base2, OtherBases...> >
+{
 public:
   NodeManagerJoinerForSkeleton() = default;
 

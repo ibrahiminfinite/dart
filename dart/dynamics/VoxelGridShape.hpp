@@ -48,7 +48,8 @@ namespace dart {
 namespace dynamics {
 
 /// VoxelGridShape represents a probabilistic 3D occupancy voxel grid.
-class DART_DYNAMICS_API VoxelGridShape : public Shape {
+class DART_DYNAMICS_API VoxelGridShape : public Shape
+{
 public:
   /// Constructor.
   /// \param[in] resolution Size of voxel. Default is 0.01.

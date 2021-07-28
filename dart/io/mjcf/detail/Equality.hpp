@@ -46,7 +46,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class DART_IO_API Equality final {
+class DART_IO_API Equality final
+{
 public:
   Equality() = default;
 

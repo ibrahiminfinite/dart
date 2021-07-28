@@ -41,7 +41,8 @@ namespace dart {
 namespace collision {
 
 template <typename S_>
-class FclObject : public Object<S_> {
+class FclObject : public Object<S_>
+{
 public:
   // Type aliases
   using S = S_;

@@ -47,11 +47,13 @@ namespace optimization {
 /// objective function and assigned weights) to solve nonlinear problems. Note
 /// that this is not a good option for Problems with difficult constraint
 /// functions that need to be solved exactly.
-class DART_OPTIMIZATION_API GradientDescentSolver : public Solver {
+class DART_OPTIMIZATION_API GradientDescentSolver : public Solver
+{
 public:
   static const std::string Type;
 
-  struct UniqueProperties {
+  struct UniqueProperties
+  {
     /// Value of the fixed step size
     double mStepSize;
 
@@ -109,7 +111,8 @@ public:
         Eigen::VectorXd _ineqConstraintWeights = Eigen::VectorXd());
   };
 
-  struct Properties : Solver::Properties, UniqueProperties {
+  struct Properties : Solver::Properties, UniqueProperties
+  {
     Properties(
         const Solver::Properties& _solverProperties = Solver::Properties(),
         const UniqueProperties& _descentProperties = UniqueProperties());

@@ -44,7 +44,8 @@ namespace io {
 
 float convertDecToFloat(char _bytes[4])
 {
-  union {
+  union
+  {
     char theChars[4];
     float theFloat;
   } p;

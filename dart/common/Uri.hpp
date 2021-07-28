@@ -40,7 +40,8 @@
 namespace dart {
 namespace common {
 
-class DART_COMMON_API UriComponent final {
+class DART_COMMON_API UriComponent final
+{
 public:
   using value_type = std::string;
   using reference_type = value_type&;
@@ -84,7 +85,8 @@ private:
 /// ResourceRetreiver classes rewrite URIs to other types of URIs (e.g, resolve
 /// 'package://' URIs to 'file://' URIs), which is easier to implement if you
 /// have direct access to the URI components.
-struct DART_COMMON_API Uri final {
+struct DART_COMMON_API Uri final
+{
   /// Scheme, e.g. 'http', 'file', 'package'
   UriComponent mScheme;
 

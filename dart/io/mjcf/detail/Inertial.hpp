@@ -49,7 +49,8 @@ namespace detail {
 
 class Body;
 
-class DART_IO_API Inertial final {
+class DART_IO_API Inertial final
+{
 public:
   Inertial() = default;
 
@@ -76,7 +77,8 @@ private:
   Errors compile(const Compiler& compiler);
 
 private:
-  struct Data {
+  struct Data
+  {
     /// Position of the inertial frame.
     Eigen::Vector3d mPos;
 

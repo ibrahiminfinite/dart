@@ -38,7 +38,8 @@ namespace dart {
 namespace math {
 
 template <typename S_>
-class Cone : public Convex3<S_> {
+class Cone : public Convex3<S_>
+{
 public:
   // Type aliases
   using S = S_;

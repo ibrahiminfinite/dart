@@ -46,7 +46,8 @@ class Skeleton;
 //==============================================================================
 /// Declaration of the variadic template
 template <class... OtherSpecNodes>
-class BodyNodeSpecializedFor {
+class BodyNodeSpecializedFor
+{
 };
 
 //==============================================================================
@@ -55,7 +56,8 @@ class BodyNodeSpecializedFor {
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 template <class SpecNode>
 class BodyNodeSpecializedFor<SpecNode>
-  : public virtual detail::BasicNodeManagerForBodyNode {
+  : public virtual detail::BasicNodeManagerForBodyNode
+{
 public:
   /// Default constructor
   BodyNodeSpecializedFor();
@@ -111,13 +113,15 @@ template <class SpecNode1, class... OtherSpecNodes>
 class BodyNodeSpecializedFor<SpecNode1, OtherSpecNodes...>
   : public NodeManagerJoinerForBodyNode<
         common::Virtual<BodyNodeSpecializedFor<SpecNode1> >,
-        common::Virtual<BodyNodeSpecializedFor<OtherSpecNodes...> > > {
+        common::Virtual<BodyNodeSpecializedFor<OtherSpecNodes...> > >
+{
 };
 
 //==============================================================================
 /// Declaration of the variadic template
 template <class... OtherSpecNodes>
-class SkeletonSpecializedFor {
+class SkeletonSpecializedFor
+{
 };
 
 //==============================================================================
@@ -127,7 +131,8 @@ DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 template <class SpecNode>
 class SkeletonSpecializedFor<SpecNode>
   : public virtual detail::BasicNodeManagerForSkeleton,
-    public virtual BodyNodeSpecializedFor<SpecNode> {
+    public virtual BodyNodeSpecializedFor<SpecNode>
+{
 public:
   using BodyNodeSpecializedFor<SpecNode>::getNode;
   using BodyNodeSpecializedFor<SpecNode>::getNumNodes;
@@ -212,7 +217,8 @@ template <class SpecNode1, class... OtherSpecNodes>
 class SkeletonSpecializedFor<SpecNode1, OtherSpecNodes...>
   : public NodeManagerJoinerForSkeleton<
         common::Virtual<SkeletonSpecializedFor<SpecNode1> >,
-        common::Virtual<SkeletonSpecializedFor<OtherSpecNodes...> > > {
+        common::Virtual<SkeletonSpecializedFor<OtherSpecNodes...> > >
+{
 };
 
 } // namespace dynamics

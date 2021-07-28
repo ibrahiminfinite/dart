@@ -36,7 +36,8 @@
 #include "TinkertoyWorldNode.hpp"
 
 //==============================================================================
-class TinkertoyInputHandler : public osgGA::GUIEventHandler {
+class TinkertoyInputHandler : public osgGA::GUIEventHandler
+{
 public:
   TinkertoyInputHandler(
       dart::gui::osg::Viewer* viewer, TinkertoyWorldNode* node)
@@ -93,7 +94,8 @@ public:
 };
 
 //==============================================================================
-class TinkertoyMouseHandler : public dart::gui::osg::MouseEventHandler {
+class TinkertoyMouseHandler : public dart::gui::osg::MouseEventHandler
+{
 public:
   TinkertoyMouseHandler(TinkertoyInputHandler* inputHandler)
     : mInputHandler(inputHandler)

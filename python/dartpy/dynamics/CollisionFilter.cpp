@@ -39,7 +39,8 @@ namespace dart {
 namespace python {
 
 template <class CollisionFilterBase = dart::dynamics::CollisionFilter>
-class PyCollisionFilter : public CollisionFilterBase {
+class PyCollisionFilter : public CollisionFilterBase
+{
 public:
   using CollisionFilterBase::CollisionFilterBase; // Inherit constructors
 

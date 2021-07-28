@@ -66,7 +66,8 @@ namespace osg {
 // and dart::gui::osg, we need to explicitly specify the root namespace osg as
 // ::osg
 
-class DART_GUI_API TrackballManipulator : public ::osgGA::OrbitManipulator {
+class DART_GUI_API TrackballManipulator : public ::osgGA::OrbitManipulator
+{
 public:
   /// Constructor
   TrackballManipulator(int flags = DEFAULT_SETTINGS);

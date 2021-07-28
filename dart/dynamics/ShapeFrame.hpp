@@ -52,7 +52,8 @@ class DART_DYNAMICS_API VisualAspect final
   : public common::AspectWithVersionedProperties<
         VisualAspect,
         detail::VisualAspectProperties,
-        ShapeFrame> {
+        ShapeFrame>
+{
 public:
   using Base = common::AspectWithVersionedProperties<
       VisualAspect,
@@ -115,7 +116,8 @@ class DART_DYNAMICS_API CollisionAspect final
   : public common::AspectWithVersionedProperties<
         CollisionAspect,
         detail::CollisionAspectProperties,
-        ShapeFrame> {
+        ShapeFrame>
+{
 public:
   CollisionAspect(const CollisionAspect&) = delete;
   CollisionAspect(const PropertiesData& properties = PropertiesData());
@@ -133,7 +135,8 @@ class DART_DYNAMICS_API DynamicsAspect final
   : public common::AspectWithVersionedProperties<
         DynamicsAspect,
         detail::DynamicsAspectProperties,
-        ShapeFrame> {
+        ShapeFrame>
+{
 public:
   using Base = common::AspectWithVersionedProperties<
       DynamicsAspect,
@@ -189,7 +192,8 @@ public:
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 class DART_DYNAMICS_API ShapeFrame : public virtual common::VersionCounter,
                                      public detail::ShapeFrameCompositeBase,
-                                     public virtual Frame {
+                                     public virtual Frame
+{
 public:
   friend class BodyNode;
 

@@ -50,7 +50,8 @@ namespace osg {
 namespace render {
 
 //==============================================================================
-class BoxDrawable final : public ::osg::ShapeDrawable {
+class BoxDrawable final : public ::osg::ShapeDrawable
+{
 public:
   BoxDrawable(double size, const Eigen::Vector4d& color)
   {
@@ -84,7 +85,8 @@ protected:
 };
 
 //==============================================================================
-class VoxelNode : public ::osg::MatrixTransform {
+class VoxelNode : public ::osg::MatrixTransform
+{
 public:
   VoxelNode(
       const Eigen::Vector3d& point, double size, const Eigen::Vector4d& color)

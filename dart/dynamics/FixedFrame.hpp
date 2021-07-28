@@ -50,7 +50,8 @@ DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 class DART_DYNAMICS_API FixedFrame
   : public virtual Frame,
     public virtual common::VersionCounter,
-    public common::EmbedProperties<FixedFrame, detail::FixedFrameProperties> {
+    public common::EmbedProperties<FixedFrame, detail::FixedFrameProperties>
+{
 public:
   /// Constructor
   explicit FixedFrame(

@@ -38,7 +38,8 @@ namespace dart {
 namespace math {
 
 template <typename S_>
-class Geometry3 : public Geometry {
+class Geometry3 : public Geometry
+{
 public:
   // Type aliases
   using S = S_;

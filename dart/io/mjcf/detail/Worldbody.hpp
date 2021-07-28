@@ -51,7 +51,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class DART_IO_API Worldbody final {
+class DART_IO_API Worldbody final
+{
 public:
   /// Default constructor
   Worldbody() = default;

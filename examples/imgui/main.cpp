@@ -34,7 +34,8 @@
 #include <dart/external/imgui/imgui.h>
 
 //==============================================================================
-class CustomWorldNode : public dart::gui::osg::WorldNode {
+class CustomWorldNode : public dart::gui::osg::WorldNode
+{
 public:
   CustomWorldNode(const dart::simulation::WorldPtr& world = nullptr)
     : dart::gui::osg::WorldNode(world)
@@ -72,7 +73,8 @@ public:
 };
 
 //==============================================================================
-class CustomEventHandler : public osgGA::GUIEventHandler {
+class CustomEventHandler : public osgGA::GUIEventHandler
+{
 public:
   CustomEventHandler(/*Pass in any necessary arguments*/)
   {
@@ -121,7 +123,8 @@ public:
 };
 
 //==============================================================================
-class TestWidget : public dart::gui::osg::ImGuiWidget {
+class TestWidget : public dart::gui::osg::ImGuiWidget
+{
 public:
   /// Constructor
   TestWidget(

@@ -41,7 +41,8 @@ namespace collision {
 
 /// Contact information of a pair of collision objects
 template <typename S_>
-struct Contact {
+struct Contact
+{
   using S = S_;
 
   /// Default constructor

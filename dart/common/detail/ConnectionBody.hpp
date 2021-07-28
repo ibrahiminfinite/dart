@@ -44,7 +44,8 @@ namespace signal {
 namespace detail {
 
 /// class ConnectionBodyBase
-class DART_COMMON_API ConnectionBodyBase {
+class DART_COMMON_API ConnectionBodyBase
+{
 public:
   /// Constructor
   ConnectionBodyBase() = default;
@@ -60,7 +61,8 @@ public:
 template <typename SignalType>
 class ConnectionBody final
   : public ConnectionBodyBase,
-    public std::enable_shared_from_this<ConnectionBody<SignalType>> {
+    public std::enable_shared_from_this<ConnectionBody<SignalType>>
+{
 public:
   using SlotType = typename SignalType::SlotType;
 
@@ -131,7 +133,8 @@ ConnectionBody<SignalType>::getSlot() const
 
 /// DefaultCombiner -- return the last result
 template <typename T>
-struct DefaultCombiner {
+struct DefaultCombiner
+{
   typedef T result_type;
 
   template <typename InputIterator>

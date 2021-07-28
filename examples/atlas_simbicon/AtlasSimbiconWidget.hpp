@@ -44,7 +44,8 @@
 
 class AtlasSimbiconWorldNode;
 
-class AtlasSimbiconWidget : public dart::gui::osg::ImGuiWidget {
+class AtlasSimbiconWidget : public dart::gui::osg::ImGuiWidget
+{
 public:
   /// Constructor
   AtlasSimbiconWidget(

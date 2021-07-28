@@ -86,7 +86,8 @@ std::pair<aiTextureType, std::size_t> getTextureTypeAndCount(
 
 } // namespace
 
-class osgAiNode : public ShapeNode, public ::osg::MatrixTransform {
+class osgAiNode : public ShapeNode, public ::osg::MatrixTransform
+{
 public:
   osgAiNode(
       dart::dynamics::MeshShape* shape,
@@ -116,7 +117,8 @@ protected:
 };
 
 //==============================================================================
-class MeshShapeGeode : public ShapeNode, public ::osg::Geode {
+class MeshShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   MeshShapeGeode(
       dart::dynamics::MeshShape* shape,
@@ -140,7 +142,8 @@ protected:
 };
 
 //==============================================================================
-class MeshShapeGeometry : public ShapeNode, public ::osg::Geometry {
+class MeshShapeGeometry : public ShapeNode, public ::osg::Geometry
+{
 public:
   MeshShapeGeometry(
       dart::dynamics::MeshShape* shape,

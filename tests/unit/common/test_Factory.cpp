@@ -35,11 +35,24 @@
 
 using namespace dart;
 
-enum ObjectTypeEnum { OT_None, OT_Apple, OT_Banana, OT_Orange };
+enum ObjectTypeEnum
+{
+  OT_None,
+  OT_Apple,
+  OT_Banana,
+  OT_Orange
+};
 
-enum class ObjectTypeEnumClass { None, Apple, Banana, Orange };
+enum class ObjectTypeEnumClass
+{
+  None,
+  Apple,
+  Banana,
+  Orange
+};
 
-class Fruit {
+class Fruit
+{
 public:
   using FactoryEnum = common::Factory<ObjectTypeEnum, Fruit>;
   using FactoryEnumClass = common::Factory<ObjectTypeEnumClass, Fruit>;
@@ -80,7 +93,8 @@ public:
   virtual std::string getName() const = 0;
 };
 
-class Apple : public Fruit {
+class Apple : public Fruit
+{
 public:
   std::string getName() const override
   {
@@ -97,7 +111,8 @@ Apple::RegistrarEnumClass<Apple> Apple::mRegistrarEnumClass{
     ObjectTypeEnumClass::Apple};
 Apple::RegistrarString<Apple> Apple::mRegistrarString{"apple"};
 
-class Banana : public Fruit {
+class Banana : public Fruit
+{
 public:
   std::string getName() const override
   {
@@ -114,7 +129,8 @@ Banana::RegistrarEnumClass<Banana> Banana::mRegistrarEnumClass{
     ObjectTypeEnumClass::Banana};
 Banana::RegistrarString<Banana> Banana::mRegistrarString{"banana"};
 
-class Orange : public Fruit {
+class Orange : public Fruit
+{
 public:
   std::string getName() const override
   {
@@ -131,7 +147,8 @@ Orange::RegistrarEnumClass<Orange> Orange::mRegistrarEnumClass{
     ObjectTypeEnumClass::Orange};
 Orange::RegistrarString<Orange> Orange::mRegistrarString{"orange"};
 
-class City {
+class City
+{
 public:
   using Factory
       = common::Factory<std::string, City, std::shared_ptr<City>, int>;
@@ -146,9 +163,7 @@ public:
     return SingletonFactory::getSingletonPtr();
   }
 
-  City(int year) : mYear(year)
-  {
-  }
+  City(int year) : mYear(year) {}
 
   virtual std::string getName() const = 0;
 
@@ -161,11 +176,10 @@ protected:
   int mYear;
 };
 
-class Atlanta : public City {
+class Atlanta : public City
+{
 public:
-  Atlanta(int year) : City(year)
-  {
-  }
+  Atlanta(int year) : City(year) {}
 
   std::string getName() const override
   {
@@ -177,11 +191,10 @@ public:
 
 City::Registrar<Atlanta> Atlanta::mRegistrar("Atlanta");
 
-class Pittsburgh : public City {
+class Pittsburgh : public City
+{
 public:
-  Pittsburgh(int year) : City(year)
-  {
-  }
+  Pittsburgh(int year) : City(year) {}
 
   std::string getName() const override
   {
@@ -193,11 +206,10 @@ public:
 
 City::Registrar<Pittsburgh> Pittsburgh::mRegistrar("Pittsburgh");
 
-class Seattle : public City {
+class Seattle : public City
+{
 public:
-  Seattle(int year) : City(year)
-  {
-  }
+  Seattle(int year) : City(year) {}
 
   std::string getName() const override
   {

@@ -46,7 +46,8 @@ class NodeDestructor;
 /// ensure that the Node itself does not get deleted. This templated class can
 /// be applied to any class that inherits from dart::dynamics::Node.
 template <class NodeT, class BodyNodeT>
-class TemplateNodePtr {
+class TemplateNodePtr
+{
 public:
   template <class, class>
   friend class TemplateNodePtr;
@@ -54,9 +55,7 @@ public:
   using element_type = NodeT;
 
   /// Default constructor
-  TemplateNodePtr() : mNode(nullptr)
-  {
-  }
+  TemplateNodePtr() : mNode(nullptr) {}
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor
@@ -146,15 +145,14 @@ protected:
 /// whether the Node still exists. If it does exist, it will return a valid
 /// NodePtr. Otherwise it will return a nullptr NodePtr.
 template <class NodeT, class BodyNodeT>
-class TemplateWeakNodePtr {
+class TemplateWeakNodePtr
+{
 public:
   template <class, class>
   friend class TemplateWeakNodePtr;
 
   /// Default constructor
-  TemplateWeakNodePtr() : mNode(nullptr)
-  {
-  }
+  TemplateWeakNodePtr() : mNode(nullptr) {}
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor

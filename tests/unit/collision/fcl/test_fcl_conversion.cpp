@@ -39,7 +39,8 @@ using namespace dart;
 
 //==============================================================================
 template <typename T>
-struct FclConversionTest : public testing::Test {
+struct FclConversionTest : public testing::Test
+{
   using Type = T;
 };
 

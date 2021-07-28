@@ -42,7 +42,8 @@ namespace collision {
 namespace detail {
 
 template <typename S>
-class OdeGeom {
+class OdeGeom
+{
 public:
   struct GeomUserData;
 

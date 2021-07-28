@@ -50,7 +50,8 @@ namespace gui {
 namespace osg {
 namespace render {
 
-class PyramidShapeGeode : public ShapeNode, public ::osg::Geode {
+class PyramidShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   PyramidShapeGeode(
       std::shared_ptr<dart::dynamics::PyramidShape> shape,
@@ -69,7 +70,8 @@ protected:
 };
 
 //==============================================================================
-class PyramidShapeDrawable : public ::osg::Geometry {
+class PyramidShapeDrawable : public ::osg::Geometry
+{
 public:
   PyramidShapeDrawable(
       dart::dynamics::PyramidShape* shape,

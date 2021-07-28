@@ -87,7 +87,8 @@ inline void convMatrix(const Eigen::Isometry3d& T0, dMatrix3& R0)
   R0[11] = T0(2, 3);
 }
 
-struct dContactGeom {
+struct dContactGeom
+{
   dVector3 pos;
   double depth;
 };

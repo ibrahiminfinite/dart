@@ -46,7 +46,8 @@ struct Range;
 
 //==============================================================================
 template <typename MatrixType, int Size, typename Enable = Range<true>>
-struct inverseImpl {
+struct inverseImpl
+{
   static void run(const MatrixType& matrix, MatrixType& result)
   {
     result = matrix.ldlt().solve(MatrixType::Identity());
@@ -55,7 +56,8 @@ struct inverseImpl {
 
 //==============================================================================
 template <typename MatrixType, int Size>
-struct inverseImpl<MatrixType, Size, Range<(0 <= Size && Size <= 4)>> {
+struct inverseImpl<MatrixType, Size, Range<(0 <= Size && Size <= 4)>>
+{
   static void run(const MatrixType& matrix, MatrixType& result)
   {
     result = matrix.inverse();
@@ -64,7 +66,8 @@ struct inverseImpl<MatrixType, Size, Range<(0 <= Size && Size <= 4)>> {
 
 //==============================================================================
 template <typename SpaceT>
-struct toEuclideanPointImpl {
+struct toEuclideanPointImpl
+{
   static typename SpaceT::EuclideanPoint run(
       const typename SpaceT::Point& point)
   {
@@ -74,7 +77,8 @@ struct toEuclideanPointImpl {
 
 //==============================================================================
 template <>
-struct toEuclideanPointImpl<SO3Space> {
+struct toEuclideanPointImpl<SO3Space>
+{
   static typename SO3Space::EuclideanPoint run(
       const typename SO3Space::Point& point)
   {
@@ -84,7 +88,8 @@ struct toEuclideanPointImpl<SO3Space> {
 
 //==============================================================================
 template <>
-struct toEuclideanPointImpl<SE3Space> {
+struct toEuclideanPointImpl<SE3Space>
+{
   static typename SE3Space::EuclideanPoint run(
       const typename SE3Space::Point& point)
   {
@@ -99,7 +104,8 @@ struct toEuclideanPointImpl<SE3Space> {
 
 //==============================================================================
 template <typename SpaceT>
-struct toManifoldPointImpl {
+struct toManifoldPointImpl
+{
   static typename SpaceT::Point run(
       const typename SpaceT::EuclideanPoint& point)
   {
@@ -109,7 +115,8 @@ struct toManifoldPointImpl {
 
 //==============================================================================
 template <>
-struct toManifoldPointImpl<SO3Space> {
+struct toManifoldPointImpl<SO3Space>
+{
   static typename SO3Space::Point run(
       const typename SO3Space::EuclideanPoint& point)
   {
@@ -119,7 +126,8 @@ struct toManifoldPointImpl<SO3Space> {
 
 //==============================================================================
 template <>
-struct toManifoldPointImpl<SE3Space> {
+struct toManifoldPointImpl<SE3Space>
+{
   static typename SE3Space::Point run(
       const typename SE3Space::EuclideanPoint& point)
   {
@@ -134,7 +142,8 @@ struct toManifoldPointImpl<SE3Space> {
 
 //==============================================================================
 template <typename SpaceT>
-struct integratePositionImpl {
+struct integratePositionImpl
+{
   static typename SpaceT::Point run(
       const typename SpaceT::Point& pos,
       const typename SpaceT::Vector& vel,
@@ -146,7 +155,8 @@ struct integratePositionImpl {
 
 //==============================================================================
 template <>
-struct integratePositionImpl<SO3Space> {
+struct integratePositionImpl<SO3Space>
+{
   static typename SO3Space::Point run(
       const typename SO3Space::Point& pos,
       const typename SO3Space::Vector& vel,
@@ -158,7 +168,8 @@ struct integratePositionImpl<SO3Space> {
 
 //==============================================================================
 template <>
-struct integratePositionImpl<SE3Space> {
+struct integratePositionImpl<SE3Space>
+{
   static typename SE3Space::Point run(
       const typename SE3Space::Point& pos,
       const typename SE3Space::Vector& vel,

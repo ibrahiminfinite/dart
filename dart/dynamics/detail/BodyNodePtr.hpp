@@ -45,13 +45,15 @@ namespace dynamics {
 class Skeleton;
 
 //==============================================================================
-struct DART_DYNAMICS_API MutexedWeakSkeletonPtr {
+struct DART_DYNAMICS_API MutexedWeakSkeletonPtr
+{
   std::mutex mMutex;
   std::weak_ptr<const Skeleton> mSkeleton;
 };
 
 //==============================================================================
-class DART_DYNAMICS_API SkeletonRefCountingBase {
+class DART_DYNAMICS_API SkeletonRefCountingBase
+{
 public:
   template <class>
   friend class TemplateBodyNodePtr;
@@ -106,12 +108,11 @@ protected:
 /// the BodyNode (and by extension, its Skeleton) does not get deleted. This
 /// remains true even if the BodyNode is moved into another Skeleton.
 template <class BodyNodeT>
-class TemplateBodyNodePtr {
+class TemplateBodyNodePtr
+{
 public:
   /// Default constructor
-  TemplateBodyNodePtr() : mPtr(nullptr)
-  {
-  }
+  TemplateBodyNodePtr() : mPtr(nullptr) {}
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor
@@ -217,15 +218,14 @@ private:
 /// check whether the BodyNode still exists. If it does exist, it will return a
 /// valid strong BodyNodePtr. Otherwise, it will return a nullptr BodyNodePtr.
 template <class BodyNodeT>
-class TemplateWeakBodyNodePtr {
+class TemplateWeakBodyNodePtr
+{
 public:
   template <class>
   friend class TemplateWeakBodyNodePtr;
 
   /// Default constructor
-  TemplateWeakBodyNodePtr() : mPtr(nullptr)
-  {
-  }
+  TemplateWeakBodyNodePtr() : mPtr(nullptr) {}
 
   /// Typical constructor. _ptr must be a valid pointer (or a nullptr) when
   /// passed to this constructor

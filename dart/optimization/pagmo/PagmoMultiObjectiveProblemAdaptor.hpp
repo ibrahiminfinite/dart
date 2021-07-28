@@ -46,7 +46,8 @@ namespace optimization {
 ///
 /// Please see this for the details:
 /// https://esa.github.io/pagmo2/docs/cpp/problem.html
-class PagmoMultiObjectiveProblemAdaptor {
+class PagmoMultiObjectiveProblemAdaptor
+{
 public:
   /// Default constructor
   PagmoMultiObjectiveProblemAdaptor() = default;

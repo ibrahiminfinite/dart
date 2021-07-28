@@ -129,7 +129,8 @@ void Solver(py::module& m)
       .def_readwrite(
           "mResultFile", &dart::optimization::Solver::Properties::mResultFile);
 
-  class PySolver : public dart::optimization::Solver {
+  class PySolver : public dart::optimization::Solver
+  {
   public:
     // Inherit the constructors
     using Solver::Solver;

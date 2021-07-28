@@ -44,7 +44,8 @@ namespace dynamics {
 
 class CollisionObject;
 
-struct DART_DYNAMICS_API RayHit {
+struct DART_DYNAMICS_API RayHit
+{
   /// The collision object the ray hit
   const CollisionObject* mCollisionObject;
 
@@ -61,7 +62,8 @@ struct DART_DYNAMICS_API RayHit {
   RayHit();
 };
 
-struct DART_DYNAMICS_API RaycastResult {
+struct DART_DYNAMICS_API RaycastResult
+{
   /// Clear the result
   void clear();
 

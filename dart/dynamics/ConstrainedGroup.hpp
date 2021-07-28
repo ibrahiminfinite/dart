@@ -56,7 +56,8 @@ class ConstraintSolver;
 /// ConstrainedGroup is a group of skeletons that interact each other with
 /// constraints
 /// \sa class ConstraintSolver
-class DART_DYNAMICS_API ConstrainedGroup {
+class DART_DYNAMICS_API ConstrainedGroup
+{
 public:
   //----------------------------------------------------------------------------
   // Constructor / Desctructor

@@ -52,7 +52,8 @@ const double delta_damping = 1.0;
 using namespace dart::dynamics;
 using namespace dart::simulation;
 
-class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode {
+class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   TutorialWorldNode(WorldPtr world)
     : dart::gui::osg::RealTimeWorldNode(std::move(world)),
@@ -184,7 +185,8 @@ protected:
   bool mBodyForce;
 };
 
-class InputHandler : public ::osgGA::GUIEventHandler {
+class InputHandler : public ::osgGA::GUIEventHandler
+{
 public:
   /// Constructor
   InputHandler(TutorialWorldNode* node) : mNode(node)

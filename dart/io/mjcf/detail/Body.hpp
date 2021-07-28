@@ -51,7 +51,8 @@ namespace detail {
 
 class Size;
 
-class DART_IO_API Body final {
+class DART_IO_API Body final
+{
 public:
   /// Default constructor.
   Body() = default;

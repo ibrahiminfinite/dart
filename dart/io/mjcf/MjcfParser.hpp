@@ -44,7 +44,8 @@ namespace dart {
 namespace io {
 namespace MjcfParser {
 
-struct DART_IO_API Options {
+struct DART_IO_API Options
+{
   /// Resource retriever. LocalResourceRetriever is used if it's nullptr.
   common::ResourceRetrieverPtr mRetriever;
 

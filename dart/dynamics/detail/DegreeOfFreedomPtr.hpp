@@ -49,7 +49,8 @@ namespace dynamics {
 /// this will trigger and assertion in debug mode, or have a nullptr value if
 /// not in debug mode.
 template <class DegreeOfFreedomT, class BodyNodeT>
-class TemplateDegreeOfFreedomPtr {
+class TemplateDegreeOfFreedomPtr
+{
 public:
   template <class, class>
   friend class TemplateDegreeOfFreedomPtr;
@@ -226,7 +227,8 @@ private:
 /// does exist, it will return a valid strong DegreeOfFreedomPtr. Otherwise it
 /// will return a nullptr DegreeOfFreedomPtr.
 template <class DegreeOfFreedomT, class BodyNodeT>
-class TemplateWeakDegreeOfFreedomPtr {
+class TemplateWeakDegreeOfFreedomPtr
+{
 public:
   template <class, class>
   friend class TemplateWeakDegreeOfFreedomPtr;

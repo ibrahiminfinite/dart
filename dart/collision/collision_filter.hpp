@@ -41,7 +41,8 @@ namespace dart {
 namespace collision {
 
 template <typename S_>
-class CollisionFilter {
+class CollisionFilter
+{
 public:
   // Type aliases
   using S = S_;
@@ -67,7 +68,8 @@ extern template class DART_COLLISION_API CollisionFilter<float>;
 #endif
 
 template <typename S>
-class CompositeCollisionFilter : public CollisionFilter<S> {
+class CompositeCollisionFilter : public CollisionFilter<S>
+{
 public:
   /// Destructor
   ~CompositeCollisionFilter() override = default;

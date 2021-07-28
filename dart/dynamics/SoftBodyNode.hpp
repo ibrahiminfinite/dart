@@ -43,7 +43,8 @@ namespace dynamics {
 ///
 /// This class is implementation of Sumit Jain and C. Karen Liu's paper:
 /// http://www.cc.gatech.edu/graphics/projects/Sumit/homepage/projects/softcontacts/index.html
-class DART_DYNAMICS_API SoftBodyNode : public detail::SoftBodyNodeBase {
+class DART_DYNAMICS_API SoftBodyNode : public detail::SoftBodyNodeBase
+{
 public:
   using UniqueProperties = detail::SoftBodyNodeUniqueProperties;
   using Properties = detail::SoftBodyNodeProperties;
@@ -331,7 +332,8 @@ private:
   void updateInertiaWithPointMass();
 };
 
-class DART_DYNAMICS_API SoftBodyNodeHelper {
+class DART_DYNAMICS_API SoftBodyNodeHelper
+{
 public:
   /// Create a Properties struct for a box-shaped SoftBodyNode with 8
   /// PointMasses

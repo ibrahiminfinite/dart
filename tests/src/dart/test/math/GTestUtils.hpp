@@ -220,7 +220,8 @@ namespace test {
 namespace detail {
 
 template <typename DerivedA, typename DerivedB, typename Enable = void>
-struct EqualsImpl {
+struct EqualsImpl
+{
   static bool run(
       const Eigen::DenseBase<DerivedA>& expected,
       const Eigen::DenseBase<DerivedB>& actual,
@@ -259,7 +260,8 @@ template <typename DerivedA, typename DerivedB>
 struct EqualsImpl<
     DerivedA,
     DerivedB,
-    std::enable_if_t<std::is_integral<typename DerivedA::Scalar>::value>> {
+    std::enable_if_t<std::is_integral<typename DerivedA::Scalar>::value>>
+{
   static bool run(
       const Eigen::DenseBase<DerivedA>& expected,
       const Eigen::DenseBase<DerivedB>& actual,
@@ -328,7 +330,8 @@ inline bool equals(
 }
 
 template <class T, class S>
-struct Case {
+struct Case
+{
   using type = T;
 
   static std::string GetParam()
@@ -338,7 +341,8 @@ struct Case {
 };
 
 template <class TupleType, class TupleParam, std::size_t I>
-struct make_case {
+struct make_case
+{
   static constexpr std::size_t N = std::tuple_size<TupleParam>::value;
 
   using type = Case<
@@ -350,7 +354,8 @@ template <class T1, class T2, class Is>
 struct make_combinations;
 
 template <class TupleType, class TupleParam, std::size_t... Is>
-struct make_combinations<TupleType, TupleParam, std::index_sequence<Is...>> {
+struct make_combinations<TupleType, TupleParam, std::index_sequence<Is...>>
+{
   using tuples
       = std::tuple<typename make_case<TupleType, TupleParam, Is>::type...>;
 };

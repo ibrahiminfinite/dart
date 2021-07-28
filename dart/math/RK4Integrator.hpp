@@ -40,7 +40,8 @@ namespace dart {
 namespace math {
 
 /// \brief class RK4Integrator
-class DART_MATH_API RK4Integrator : public Integrator {
+class DART_MATH_API RK4Integrator : public Integrator
+{
 public:
   /// \brief Constructor
   RK4Integrator();

@@ -47,7 +47,8 @@ namespace dart {
 namespace gui {
 namespace osg {
 
-class WorldNodeCallback : public ::osg::NodeCallback {
+class WorldNodeCallback : public ::osg::NodeCallback
+{
 public:
   virtual void operator()(::osg::Node* node, ::osg::NodeVisitor* nv)
   {

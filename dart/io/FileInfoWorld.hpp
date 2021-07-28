@@ -44,7 +44,8 @@ class Recording;
 namespace io {
 
 /// \brief class FileInfoWorld
-class DART_IO_API FileInfoWorld {
+class DART_IO_API FileInfoWorld
+{
 public:
   /// \brief Constructor
   FileInfoWorld();

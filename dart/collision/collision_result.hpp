@@ -42,7 +42,8 @@ namespace collision {
 
 /// Structure to store the result of narrow phase collision checkings
 template <typename S_>
-class CollisionResult {
+class CollisionResult
+{
 public:
   using S = S_;
 

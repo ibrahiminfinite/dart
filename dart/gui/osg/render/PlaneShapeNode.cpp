@@ -45,7 +45,8 @@ namespace gui {
 namespace osg {
 namespace render {
 
-class PlaneShapeGeode : public ShapeNode, public ::osg::Geode {
+class PlaneShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   PlaneShapeGeode(
       dart::dynamics::PlaneShape* shape,
@@ -63,7 +64,8 @@ protected:
 };
 
 //==============================================================================
-class PlaneShapeDrawable : public ::osg::ShapeDrawable {
+class PlaneShapeDrawable : public ::osg::ShapeDrawable
+{
 public:
   PlaneShapeDrawable(
       dart::dynamics::PlaneShape* shape,

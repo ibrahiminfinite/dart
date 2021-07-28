@@ -40,7 +40,8 @@ namespace dart {
 namespace math {
 
 /// \brief class SemiImplicitEulerIntegrator
-class DART_MATH_API SemiImplicitEulerIntegrator : public Integrator {
+class DART_MATH_API SemiImplicitEulerIntegrator : public Integrator
+{
 public:
   /// \brief Constructor
   SemiImplicitEulerIntegrator();

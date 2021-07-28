@@ -46,7 +46,8 @@ namespace osg {
 namespace render {
 
 //==============================================================================
-class CapsuleShapeGeode : public ShapeNode, public ::osg::Geode {
+class CapsuleShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   CapsuleShapeGeode(
       dart::dynamics::CapsuleShape* shape,
@@ -64,7 +65,8 @@ protected:
 };
 
 //==============================================================================
-class CapsuleShapeDrawable : public ::osg::ShapeDrawable {
+class CapsuleShapeDrawable : public ::osg::ShapeDrawable
+{
 public:
   CapsuleShapeDrawable(
       dart::dynamics::CapsuleShape* shape,

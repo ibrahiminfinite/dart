@@ -51,7 +51,8 @@ namespace render {
 class EllipsoidShapeGeode;
 class EllipsoidShapeDrawable;
 
-class EllipsoidShapeNode : public ShapeNode, public ::osg::MatrixTransform {
+class EllipsoidShapeNode : public ShapeNode, public ::osg::MatrixTransform
+{
 public:
   EllipsoidShapeNode(
       std::shared_ptr<dart::dynamics::EllipsoidShape> shape,

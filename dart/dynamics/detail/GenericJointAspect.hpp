@@ -48,7 +48,8 @@ namespace detail {
 
 //==============================================================================
 template <class ConfigSpaceT>
-struct GenericJointState {
+struct GenericJointState
+{
   constexpr static std::size_t NumDofs = ConfigSpaceT::NumDofs;
   using EuclideanPoint = typename ConfigSpaceT::EuclideanPoint;
   using Vector = typename ConfigSpaceT::Vector;
@@ -83,7 +84,8 @@ struct GenericJointState {
 
 //==============================================================================
 template <class ConfigSpaceT>
-struct GenericJointUniqueProperties {
+struct GenericJointUniqueProperties
+{
   constexpr static std::size_t NumDofs = ConfigSpaceT::NumDofs;
   using EuclideanPoint = typename ConfigSpaceT::EuclideanPoint;
   using Vector = typename ConfigSpaceT::Vector;
@@ -179,7 +181,8 @@ public:
 //==============================================================================
 template <class ConfigSpaceT>
 struct GenericJointProperties : Joint::Properties,
-                                GenericJointUniqueProperties<ConfigSpaceT> {
+                                GenericJointUniqueProperties<ConfigSpaceT>
+{
   GenericJointProperties(
       const Joint::Properties& jointProperties = Joint::Properties(),
       const GenericJointUniqueProperties<ConfigSpaceT>& genericProperties

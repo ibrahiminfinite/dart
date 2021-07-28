@@ -51,7 +51,8 @@ namespace render {
 class SphereShapeGeode;
 class SphereShapeDrawable;
 
-class SphereShapeNode : public ShapeNode, public ::osg::MatrixTransform {
+class SphereShapeNode : public ShapeNode, public ::osg::MatrixTransform
+{
 public:
   SphereShapeNode(
       std::shared_ptr<dart::dynamics::SphereShape> shape,

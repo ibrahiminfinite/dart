@@ -42,7 +42,8 @@ namespace dart {
 namespace dynamics {
 namespace detail {
 
-class OdeMesh : public OdeGeom {
+class OdeMesh : public OdeGeom
+{
 public:
   /// Constructor
   OdeMesh(

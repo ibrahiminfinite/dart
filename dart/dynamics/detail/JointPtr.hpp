@@ -45,7 +45,8 @@ namespace dynamics {
 /// Joint, then this smart pointer will reference the new parent Joint, because
 /// the old one will have been deleted.
 template <class JointT, class BodyNodeT>
-class TemplateJointPtr {
+class TemplateJointPtr
+{
 public:
   template <class, class>
   friend class TemplateJointPtr;
@@ -194,7 +195,8 @@ private:
 /// whether the Joint still exists. If it does exist, it will return a valid
 /// JointPtr. Otherwise it will return a nullptr JointPtr.
 template <class JointT, class BodyNodeT>
-class TemplateWeakJointPtr {
+class TemplateWeakJointPtr
+{
 public:
   template <class, class>
   friend class TemplateWeakJointPtr;

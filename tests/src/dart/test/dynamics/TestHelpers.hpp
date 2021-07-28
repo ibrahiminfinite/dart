@@ -45,7 +45,15 @@ using namespace dart::collision;
 using namespace dart::dynamics;
 
 /// Function headers
-enum TypeOfDOF { DOF_X, DOF_Y, DOF_Z, DOF_ROLL, DOF_PITCH, DOF_YAW };
+enum TypeOfDOF
+{
+  DOF_X,
+  DOF_Y,
+  DOF_Z,
+  DOF_ROLL,
+  DOF_PITCH,
+  DOF_YAW
+};
 
 //==============================================================================
 /// Add an end-effector to the last link of the given robot

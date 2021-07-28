@@ -45,7 +45,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class DART_IO_API Option final {
+class DART_IO_API Option final
+{
 public:
   Option() = default;
 

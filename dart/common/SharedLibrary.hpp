@@ -89,9 +89,13 @@ class SharedLibraryManager;
 } // namespace detail
 
 /// SharedLibrary is a RAII object wrapping a shared library.
-class DART_COMMON_API SharedLibrary {
+class DART_COMMON_API SharedLibrary
+{
 protected:
-  enum ProtectedConstructionTag { ProtectedConstruction };
+  enum ProtectedConstructionTag
+  {
+    ProtectedConstruction
+  };
 
 public:
   /// Creates a SharedLibrary from a path to the shared library.

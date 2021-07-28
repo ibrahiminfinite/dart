@@ -36,14 +36,10 @@ namespace dart {
 namespace math {
 
 //==============================================================================
-SemiImplicitEulerIntegrator::SemiImplicitEulerIntegrator() : Integrator()
-{
-}
+SemiImplicitEulerIntegrator::SemiImplicitEulerIntegrator() : Integrator() {}
 
 //==============================================================================
-SemiImplicitEulerIntegrator::~SemiImplicitEulerIntegrator()
-{
-}
+SemiImplicitEulerIntegrator::~SemiImplicitEulerIntegrator() {}
 
 //==============================================================================
 void SemiImplicitEulerIntegrator::integrate(

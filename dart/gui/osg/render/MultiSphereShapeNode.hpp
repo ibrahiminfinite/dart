@@ -51,7 +51,8 @@ namespace render {
 class MultiSphereShapeGeode;
 class MultiSphereShapeDrawable;
 
-class MultiSphereShapeNode : public ShapeNode, public ::osg::MatrixTransform {
+class MultiSphereShapeNode : public ShapeNode, public ::osg::MatrixTransform
+{
 public:
   MultiSphereShapeNode(
       std::shared_ptr<dart::dynamics::MultiSphereConvexHullShape> shape,

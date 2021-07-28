@@ -40,7 +40,8 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
-class PyRealTimeWorldNodeNode : public dart::gui::osg::RealTimeWorldNode {
+class PyRealTimeWorldNodeNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   // Inherit the constructors
   using RealTimeWorldNode::RealTimeWorldNode;

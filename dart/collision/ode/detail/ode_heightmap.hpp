@@ -42,7 +42,8 @@ namespace collision {
 namespace detail {
 
 template <typename S>
-class OdeHeightmap : public OdeGeom<S> {
+class OdeHeightmap : public OdeGeom<S>
+{
 public:
   /// Constructor
   OdeHeightmap(const OdeObject<S>* parent, const math::Heightmap<S>* data);

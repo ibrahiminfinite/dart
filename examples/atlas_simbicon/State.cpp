@@ -96,9 +96,7 @@ State::State(SkeletonPtr _skeleton, const std::string& _name)
 }
 
 //==============================================================================
-State::~State()
-{
-}
+State::~State() {}
 
 //==============================================================================
 void State::setName(string& _name)

@@ -44,7 +44,8 @@ namespace dart {
 namespace common {
 
 /// class Connection
-class DART_COMMON_API Connection {
+class DART_COMMON_API Connection
+{
 public:
   /// Default constructor
   Connection();
@@ -89,7 +90,8 @@ private:
 };
 
 /// class ScopedConnection
-class DART_COMMON_API ScopedConnection : public Connection {
+class DART_COMMON_API ScopedConnection : public Connection
+{
 public:
   /// Default constructor
   ScopedConnection(const Connection& _other);
@@ -108,7 +110,8 @@ class Signal;
 
 /// Signal implements a signal/slot mechanism
 template <typename _Res, typename... _ArgTypes, template <class> class Combiner>
-class Signal<_Res(_ArgTypes...), Combiner> {
+class Signal<_Res(_ArgTypes...), Combiner>
+{
 public:
   using ResultType = _Res;
   using SlotType = std::function<ResultType(_ArgTypes...)>;
@@ -158,7 +161,8 @@ private:
 
 /// Signal implements a signal/slot mechanism for the slots don't return a value
 template <typename... _ArgTypes>
-class Signal<void(_ArgTypes...)> {
+class Signal<void(_ArgTypes...)>
+{
 public:
   using SlotType = std::function<void(_ArgTypes...)>;
   using SignalType = Signal<void(_ArgTypes...)>;
@@ -209,7 +213,8 @@ private:
 /// private Signal member. In this way you won't have to write forwarding
 /// connect/disconnect boilerplate for your classes.
 template <typename T>
-class SlotRegister {
+class SlotRegister
+{
 public:
   using SlotType = typename T::SlotType;
   using SignalType = typename T::SignalType;

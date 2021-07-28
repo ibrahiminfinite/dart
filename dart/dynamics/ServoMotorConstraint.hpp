@@ -46,7 +46,8 @@ class Joint;
 namespace dynamics {
 
 /// Servo motor constraint
-class DART_DYNAMICS_API ServoMotorConstraint : public ConstraintBase {
+class DART_DYNAMICS_API ServoMotorConstraint : public ConstraintBase
+{
 public:
   /// Constructor
   explicit ServoMotorConstraint(dynamics::Joint* joint);

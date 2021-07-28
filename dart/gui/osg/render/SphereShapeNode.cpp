@@ -48,7 +48,8 @@ namespace gui {
 namespace osg {
 namespace render {
 
-class SphereShapeGeode : public ShapeNode, public ::osg::Geode {
+class SphereShapeGeode : public ShapeNode, public ::osg::Geode
+{
 public:
   SphereShapeGeode(
       dart::dynamics::SphereShape* shape,
@@ -67,7 +68,8 @@ protected:
 };
 
 //==============================================================================
-class SphereShapeDrawable : public ::osg::ShapeDrawable {
+class SphereShapeDrawable : public ::osg::ShapeDrawable
+{
 public:
   SphereShapeDrawable(
       dart::dynamics::SphereShape* shape,

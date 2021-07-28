@@ -50,7 +50,8 @@ namespace detail {
 // This default template definition will be called when AspectOrComposite is
 // an Aspect.
 template <class AspectOrComposite, bool isAspect>
-struct GetAspectImpl {
+struct GetAspectImpl
+{
   using Type = AspectOrComposite;
 };
 
@@ -58,7 +59,8 @@ struct GetAspectImpl {
 // This template specialization will be called when AspectOrComposite is not
 // an Aspect (and is presumably a composite that defines a nested Aspect type).
 template <class AspectOrComposite>
-struct GetAspectImpl<AspectOrComposite, false> {
+struct GetAspectImpl<AspectOrComposite, false>
+{
   // If you get a compiler error that leads you here, then you are trying to
   // ask for the Aspect of an object that is not associated with any Aspect.
   // That means it does not define a nested Aspect type (such as how
@@ -72,7 +74,8 @@ struct GetAspectImpl<AspectOrComposite, false> {
 
 //==============================================================================
 template <class AspectT>
-struct GetAspect {
+struct GetAspect
+{
   using Type =
       typename GetAspectImpl<AspectT, std::is_base_of<Aspect, AspectT>::value>::
           Type;
@@ -80,13 +83,15 @@ struct GetAspect {
 
 //==============================================================================
 template <class AspectT>
-struct GetState {
+struct GetState
+{
   using Type = typename GetAspect<AspectT>::Type::State;
 };
 
 //==============================================================================
 template <class AspectT>
-struct GetProperties {
+struct GetProperties
+{
   using Type = typename GetAspect<AspectT>::Type::Properties;
 };
 
@@ -98,7 +103,8 @@ using CompositePropertiesMap
 
 //==============================================================================
 template <typename MapType, template <class> class GetData>
-class CompositeData : public CloneableMap<MapType> {
+class CompositeData : public CloneableMap<MapType>
+{
 public:
   /// Forwarding constructor
   template <typename... Args>
@@ -177,7 +183,8 @@ template <
     template <class>
     class GetData,
     typename... Aspects>
-class ComposeData {
+class ComposeData
+{
 public:
   ComposeData() = default;
 
@@ -209,9 +216,13 @@ template <
     typename... Remainder>
 struct ComposeData<CompositeType, GetData, AspectT, Remainder...>
   : public GetData<AspectT>::Type,
-    public ComposeData<CompositeType, GetData, Remainder...> {
+    public ComposeData<CompositeType, GetData, Remainder...>
+{
 public:
-  enum DelegateTag { Delegate };
+  enum DelegateTag
+  {
+    Delegate
+  };
 
   using ThisClass = ComposeData<CompositeType, GetData, AspectT, Remainder...>;
   using Base = typename GetData<AspectT>::Type;
@@ -219,7 +230,8 @@ public:
   using AspectType = typename GetAspect<AspectT>::Type;
 
   template <typename Arg>
-  struct ConvertIfData {
+  struct ConvertIfData
+  {
     using Type = typename std::conditional<
         std::is_base_of<typename Base::Data, Arg>::value,
         typename Base::Data,
@@ -227,7 +239,8 @@ public:
   };
 
   template <typename Arg>
-  struct ConvertIfComposite {
+  struct ConvertIfComposite
+  {
     using Type = typename std::conditional<
         std::is_base_of<CompositeType, Arg>::value,
         CompositeType,

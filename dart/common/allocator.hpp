@@ -43,7 +43,8 @@ namespace dart::common {
 ///
 /// \note The derived classes should be thread safe when DART_ENABLE_THREAD_SAFE
 /// is defined to 1
-class DART_COMMON_API Allocator {
+class DART_COMMON_API Allocator
+{
 public:
   /// Constructor
   Allocator() = default;

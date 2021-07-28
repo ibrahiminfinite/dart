@@ -57,7 +57,8 @@ DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 class DART_DYNAMICS_API Joint
   : public virtual common::Subject,
     public virtual common::VersionCounter,
-    public common::EmbedProperties<Joint, detail::JointProperties> {
+    public common::EmbedProperties<Joint, detail::JointProperties>
+{
 public:
   using CompositeProperties = common::Composite::Properties;
   using Properties = detail::JointProperties;
@@ -73,7 +74,8 @@ public:
 
   DART_BAKE_SPECIALIZED_ASPECT_IRREGULAR(Aspect, JointAspect)
 
-  struct ExtendedProperties : Properties {
+  struct ExtendedProperties : Properties
+  {
     /// Composed constructor
     ExtendedProperties(
         const Properties& standardProperties = Properties(),

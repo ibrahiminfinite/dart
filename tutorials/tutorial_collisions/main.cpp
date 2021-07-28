@@ -87,7 +87,8 @@ void setupRing(const SkeletonPtr& /*ring*/)
   // Lesson 4c
 }
 
-class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode {
+class TutorialWorldNode : public dart::gui::osg::RealTimeWorldNode
+{
 public:
   TutorialWorldNode(
       WorldPtr world,
@@ -243,7 +244,8 @@ protected:
   std::size_t mSkelCount;
 };
 
-class InputHandler : public ::osgGA::GUIEventHandler {
+class InputHandler : public ::osgGA::GUIEventHandler
+{
 public:
   /// Constructor
   InputHandler(TutorialWorldNode* node) : mNode(node)
@@ -324,7 +326,12 @@ BodyNode* addRigidBody(
   return bn;
 }
 
-enum SoftShapeType { SOFT_BOX = 0, SOFT_CYLINDER, SOFT_ELLIPSOID };
+enum SoftShapeType
+{
+  SOFT_BOX = 0,
+  SOFT_CYLINDER,
+  SOFT_ELLIPSOID
+};
 
 /// Add a soft body with the specified Joint type to a chain
 template <class JointType>

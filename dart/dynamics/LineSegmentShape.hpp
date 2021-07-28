@@ -43,7 +43,8 @@ namespace dynamics {
 /// can consist of a single line segment or many interconnected line segments.
 /// Note: LineSegmentShape may NOT be used as a collision shape for BodyNodes,
 /// but it may be used for visualization purposes.
-class DART_DYNAMICS_API LineSegmentShape : public Shape {
+class DART_DYNAMICS_API LineSegmentShape : public Shape
+{
 public:
   /// Default constructor
   LineSegmentShape(float _thickness = 1.0f);

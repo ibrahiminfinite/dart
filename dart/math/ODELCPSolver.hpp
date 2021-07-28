@@ -41,7 +41,8 @@ namespace dart {
 namespace math {
 
 /// \brief
-class DART_MATH_API ODELCPSolver {
+class DART_MATH_API ODELCPSolver
+{
 public:
   /// \brief
   ODELCPSolver();

@@ -441,7 +441,12 @@ DART_MATH_API Eigen::Matrix3d parallelAxisTheorem(
     const Eigen::Vector3d& _comShift,
     double _mass);
 
-enum AxisType { AXIS_X = 0, AXIS_Y = 1, AXIS_Z = 2 };
+enum AxisType
+{
+  AXIS_X = 0,
+  AXIS_Y = 1,
+  AXIS_Z = 2
+};
 
 /// Compute a rotation matrix from a vector. One axis of the rotated coordinates
 /// by the rotation matrix matches the input axis where the axis is specified
@@ -551,7 +556,8 @@ DART_MATH_API Eigen::Vector2d computeCentroidOfHull(
 
 /// Intersection_t is returned by the computeIntersection() function to indicate
 /// whether there was a valid intersection between the two line segments
-enum IntersectionResult {
+enum IntersectionResult
+{
 
   INTERSECTING = 0, ///< An intersection was found
   PARALLEL,         ///< The line segments are parallel
@@ -600,7 +606,8 @@ DART_MATH_API Eigen::Vector2d computeClosestPointOnSupportPolygon(
     const SupportPolygon& _support);
 
 // Represents a bounding box with minimum and maximum coordinates.
-class DART_MATH_API BoundingBox {
+class DART_MATH_API BoundingBox
+{
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

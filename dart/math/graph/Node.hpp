@@ -39,7 +39,8 @@
 namespace dart {
 namespace math {
 
-class Node {
+class Node
+{
 public:
   /// Default constructor.
   Node();

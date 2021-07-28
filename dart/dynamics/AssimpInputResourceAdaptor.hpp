@@ -45,7 +45,8 @@ namespace dart {
 namespace dynamics {
 
 class DART_DYNAMICS_API AssimpInputResourceRetrieverAdaptor
-  : public Assimp::IOSystem {
+  : public Assimp::IOSystem
+{
 public:
   explicit AssimpInputResourceRetrieverAdaptor(
       const common::ResourceRetrieverPtr& _resourceRetriever);
@@ -83,7 +84,8 @@ private:
   common::ResourceRetrieverPtr mResourceRetriever;
 };
 
-class AssimpInputResourceAdaptor : public Assimp::IOStream {
+class AssimpInputResourceAdaptor : public Assimp::IOStream
+{
 public:
   explicit AssimpInputResourceAdaptor(const common::ResourcePtr& _resource);
   virtual ~AssimpInputResourceAdaptor();

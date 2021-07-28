@@ -46,7 +46,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-class DART_IO_API Mesh final {
+class DART_IO_API Mesh final
+{
 public:
   /// Default constructor
   Mesh() = default;

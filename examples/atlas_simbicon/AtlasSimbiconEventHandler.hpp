@@ -37,7 +37,8 @@
 
 #include "AtlasSimbiconWorldNode.hpp"
 
-class AtlasSimbiconEventHandler : public osgGA::GUIEventHandler {
+class AtlasSimbiconEventHandler : public osgGA::GUIEventHandler
+{
 public:
   AtlasSimbiconEventHandler(AtlasSimbiconWorldNode* node);
 

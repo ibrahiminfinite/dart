@@ -50,7 +50,8 @@ namespace detail {
 
 /// Intermediate raw data read from the XML file. For the details, see
 /// http://www.mujoco.org/book/XMLreference.html#geom
-struct DART_IO_API GeomAttributes final {
+struct DART_IO_API GeomAttributes final
+{
   /// Name of the geom
   std::optional<std::string> mName;
 

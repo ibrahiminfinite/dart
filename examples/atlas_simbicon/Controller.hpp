@@ -44,7 +44,8 @@ class StateMachine;
 /// Atlas robot
 ///
 /// Reference: http://dl.acm.org/citation.cfm?id=1276509
-class Controller {
+class Controller
+{
 public:
   /// \brief Constructor
   Controller(

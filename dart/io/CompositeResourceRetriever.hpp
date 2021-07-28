@@ -49,7 +49,8 @@ namespace io {
 /// multiple retrievers.
 DART_DECLARE_CLASS_WITH_VIRTUAL_BASE_BEGIN
 class DART_IO_API CompositeResourceRetriever
-  : public virtual common::ResourceRetriever {
+  : public virtual common::ResourceRetriever
+{
 public:
   virtual ~CompositeResourceRetriever() = default;
 

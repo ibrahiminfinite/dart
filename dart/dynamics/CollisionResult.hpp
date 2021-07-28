@@ -50,7 +50,8 @@ class ShapeFrame;
 
 namespace dynamics {
 
-class DART_DYNAMICS_API CollisionResult {
+class DART_DYNAMICS_API CollisionResult
+{
 public:
   /// Add one contact
   void addContact(const Contact& contact);

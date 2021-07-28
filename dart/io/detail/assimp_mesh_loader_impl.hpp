@@ -87,7 +87,8 @@ math::Isometry3<S> convert(const aiMatrix4x4& ai_matrix)
 }
 
 //==============================================================================
-class AssimpInputResourceAdaptor : public Assimp::IOStream {
+class AssimpInputResourceAdaptor : public Assimp::IOStream
+{
 public:
   /**
    * @brief Constructor.
@@ -189,7 +190,8 @@ private:
 
 aiFileIO createFileIO(Assimp::IOSystem* adaptor);
 
-class AssimpInputResourceRetrieverAdaptor : public Assimp::IOSystem {
+class AssimpInputResourceRetrieverAdaptor : public Assimp::IOSystem
+{
 public:
   explicit AssimpInputResourceRetrieverAdaptor(
       const std::shared_ptr<common::ResourceRetriever>& resource_retriever)

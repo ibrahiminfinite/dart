@@ -43,7 +43,8 @@ namespace dynamics {
 
 struct DistanceFilter;
 
-struct DART_DYNAMICS_API DistanceOption {
+struct DART_DYNAMICS_API DistanceOption
+{
   /// Whether to calculate the nearest points.
   ///
   /// The default is false.

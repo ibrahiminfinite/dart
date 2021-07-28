@@ -46,7 +46,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-struct DART_IO_API WeldAttributes final {
+struct DART_IO_API WeldAttributes final
+{
   std::optional<std::string> mName;
   bool mActive{true};
   Eigen::Vector2d mSolRef;

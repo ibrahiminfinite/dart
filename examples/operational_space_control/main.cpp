@@ -36,7 +36,8 @@ using namespace dart::common;
 using namespace dart::dynamics;
 using namespace dart::math;
 
-class OperationalSpaceControlWorld : public dart::gui::osg::WorldNode {
+class OperationalSpaceControlWorld : public dart::gui::osg::WorldNode
+{
 public:
   OperationalSpaceControlWorld(dart::simulation::WorldPtr _world)
     : dart::gui::osg::WorldNode(_world)
@@ -137,7 +138,8 @@ protected:
   Eigen::VectorXd mForces;
 };
 
-class ConstraintEventHandler : public ::osgGA::GUIEventHandler {
+class ConstraintEventHandler : public ::osgGA::GUIEventHandler
+{
 public:
   ConstraintEventHandler(dart::gui::osg::DragAndDrop* dnd = nullptr) : mDnD(dnd)
   {
@@ -236,7 +238,8 @@ public:
   dart::sub_ptr<dart::gui::osg::DragAndDrop> mDnD;
 };
 
-class ShadowEventHandler : public osgGA::GUIEventHandler {
+class ShadowEventHandler : public osgGA::GUIEventHandler
+{
 public:
   ShadowEventHandler(
       OperationalSpaceControlWorld* node, dart::gui::osg::Viewer* viewer)

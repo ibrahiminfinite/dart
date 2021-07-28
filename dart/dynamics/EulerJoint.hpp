@@ -40,7 +40,8 @@ namespace dart {
 namespace dynamics {
 
 /// class EulerJoint
-class DART_DYNAMICS_API EulerJoint : public detail::EulerJointBase {
+class DART_DYNAMICS_API EulerJoint : public detail::EulerJointBase
+{
 public:
   friend class Skeleton;
   using AxisOrder = detail::AxisOrder;

@@ -65,17 +65,14 @@ using namespace dart::dynamics;
 
 //==============================================================================
 /// \brief class SampleObjFunc
-class SampleObjFunc : public Function {
+class SampleObjFunc : public Function
+{
 public:
   /// \brief Constructor
-  SampleObjFunc() : Function()
-  {
-  }
+  SampleObjFunc() : Function() {}
 
   /// \brief Destructor
-  virtual ~SampleObjFunc()
-  {
-  }
+  virtual ~SampleObjFunc() {}
 
   /// \copydoc Function::eval
   double eval(const Eigen::VectorXd& _x) override
@@ -93,17 +90,14 @@ public:
 };
 
 //==============================================================================
-class SampleConstFunc : public Function {
+class SampleConstFunc : public Function
+{
 public:
   /// \brief Constructor
-  SampleConstFunc(double _a, double _b) : Function(), mA(_a), mB(_b)
-  {
-  }
+  SampleConstFunc(double _a, double _b) : Function(), mA(_a), mB(_b) {}
 
   /// \brief Destructor
-  virtual ~SampleConstFunc()
-  {
-  }
+  virtual ~SampleConstFunc() {}
 
   /// \copydoc Function::eval
   double eval(const Eigen::VectorXd& _x) override

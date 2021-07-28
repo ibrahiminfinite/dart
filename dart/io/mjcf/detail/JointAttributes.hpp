@@ -47,7 +47,8 @@ namespace io {
 namespace MjcfParser {
 namespace detail {
 
-struct DART_IO_API JointAttributes final {
+struct DART_IO_API JointAttributes final
+{
   std::optional<std::string> mName;
 
   JointType mType{JointType::HINGE};
