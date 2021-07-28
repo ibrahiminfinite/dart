@@ -2,9 +2,10 @@
 
 coverage:
   ignore:
-    - "test"
+    - "tests"
     - "dart/external"
     - "dart/gui"
+    - "extras/dartc"
 
 comment:
   layout: "diff, flags, files"
