@@ -231,5 +231,5 @@ dart_find_package(OpenSceneGraph)
 # Misc. dependencies
 #--------------------
 
-# Doxygen
-find_package(Doxygen QUIET)
+find_package(Doxygen QUIET MODULE)
+find_package(Sphinx QUIET MODULE)
