@@ -65,8 +65,8 @@ public:
   /// Returns collision detection engine type as a std::string.
   virtual const std::string& get_type() const = 0;
 
-  /// Creates a collision group.
-  virtual GroupPtr<S> create_group() = 0;
+  /// Creates a collision scene.
+  virtual ScenePtr<S> create_scene() = 0;
 
   /// Create an collision object for a geometry type
   template <typename GeometryType, typename... Args>
@@ -105,9 +105,9 @@ private:
 
   static std::unordered_map<std::string, EnginePtr<S>> m_engines;
 
-  Group<S>* get_default_group();
+  Scene<S>* get_default_scene();
 
-  GroupPtr<S> m_default_group;
+  ScenePtr<S> m_default_scene;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, Engine)

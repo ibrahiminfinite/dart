@@ -36,9 +36,9 @@
 #include <optional>
 #include <string>
 
-#include <Eigen/Dense>
 #include <tinyxml2.h>
 
+#include "dart/common/eigen_include.hpp"
 #include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"
 #include "dart/io/mjcf/detail/Inertial.hpp"

@@ -35,14 +35,7 @@
 namespace dart {
 namespace collision {
 
-//==============================================================================
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-template struct Contact<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-template struct Contact<float>;
-#endif
+DART_TEMPLATE_STRUCT_SOURCE(Contact)
 
 } // namespace collision
 } // namespace dart

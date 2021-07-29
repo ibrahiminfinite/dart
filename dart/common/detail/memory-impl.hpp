@@ -34,9 +34,7 @@
 
 #include <memory>
 
-#include <Eigen/Core>
-#include <Eigen/StdVector>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/common/macro.hpp"
 #include "dart/common/memory.hpp"
 

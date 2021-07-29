@@ -44,7 +44,7 @@
 #include <string>
 #include <utility>
 
-#include <Eigen/Dense>
+#include "dart/common/eigen_include.hpp"
 #include "pybind11/eigen.h"
 
 namespace dart {

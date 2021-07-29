@@ -33,9 +33,7 @@
 #ifndef DART_DYNAMICS_DETAIL_JOINTASPECT_HPP_
 #define DART_DYNAMICS_DETAIL_JOINTASPECT_HPP_
 
-#include <Eigen/Core>
-#include <Eigen/Geometry>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/export.hpp"
 
 namespace dart {

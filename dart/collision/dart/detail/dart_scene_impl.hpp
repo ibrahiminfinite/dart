@@ -30,12 +30,59 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/ode/ode_group.hpp"
+#pragma once
+
+#include "dart/collision/dart/dart_engine.hpp"
+#include "dart/collision/dart/dart_object.hpp"
+#include "dart/collision/dart/dart_scene.hpp"
+#include "dart/collision/object.hpp"
+#include "dart/common/logging.hpp"
+#include "dart/common/macro.hpp"
+#include "dart/math/geometry/sphere.hpp"
 
 namespace dart {
 namespace collision {
 
-DART_TEMPLATE_CLASS_SOURCE(OdeGroup)
+//==============================================================================
+template <typename S>
+DartScene<S>::DartScene(Engine<S>* engine) : Scene<S>(engine)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename S>
+DartScene<S>::~DartScene()
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename S>
+ObjectPtr<S> DartScene<S>::create_object(math::GeometryPtr shape)
+{
+  if (!shape) {
+    DART_WARN("Not allowed to create a collision object for a null shape");
+    return nullptr;
+  }
+
+  return std::shared_ptr<DartObject<S>>(
+      new DartObject<S>(this, std::move(shape)));
+}
+
+//==============================================================================
+template <typename S>
+DartEngine<S>* DartScene<S>::get_mutable_dart_engine()
+{
+  return static_cast<DartEngine<S>*>(this->m_engine);
+}
+
+//==============================================================================
+template <typename S>
+const DartEngine<S>* DartScene<S>::get_dart_engine() const
+{
+  return static_cast<const DartEngine<S>*>(this->m_engine);
+}
 
 } // namespace collision
 } // namespace dart

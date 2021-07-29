@@ -32,8 +32,7 @@
 
 #pragma once
 
-#include <Eigen/Core>
-#include <Eigen/Geometry>
+#include "dart/common/eigen_include.hpp"
 
 namespace dart {
 namespace math {

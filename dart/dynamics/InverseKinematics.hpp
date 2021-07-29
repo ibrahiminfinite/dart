@@ -36,8 +36,6 @@
 #include <functional>
 #include <memory>
 
-#include <Eigen/SVD>
-
 #include "dart/common/Signal.hpp"
 #include "dart/common/Subject.hpp"
 #include "dart/common/sub_ptr.hpp"

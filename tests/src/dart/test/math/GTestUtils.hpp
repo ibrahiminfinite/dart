@@ -35,9 +35,9 @@
 
 #include <tuple>
 
-#include <Eigen/Dense>
 #include <gtest/gtest.h>
 
+#include "dart/common/eigen_include.hpp"
 #include "dart/math/Geometry.hpp"
 #include "dart/math/MathTypes.hpp"
 

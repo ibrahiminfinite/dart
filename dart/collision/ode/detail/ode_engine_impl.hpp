@@ -35,8 +35,8 @@
 #include "dart/collision/collision_result.hpp"
 #include "dart/collision/ode/ode_conversion.hpp"
 #include "dart/collision/ode/ode_engine.hpp"
-#include "dart/collision/ode/ode_group.hpp"
 #include "dart/collision/ode/ode_object.hpp"
+#include "dart/collision/ode/ode_scene.hpp"
 #include "dart/common/logging.hpp"
 #include "dart/math/geometry/sphere.hpp"
 
@@ -130,9 +130,9 @@ const std::string& OdeEngine<S>::GetType()
 
 //==============================================================================
 template <typename S>
-GroupPtr<S> OdeEngine<S>::create_group()
+ScenePtr<S> OdeEngine<S>::create_scene()
 {
-  return std::make_shared<OdeGroup<S>>(this);
+  return std::make_shared<OdeScene<S>>(this);
 }
 
 //==============================================================================

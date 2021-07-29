@@ -32,7 +32,7 @@
 
 #include <iostream>
 
-#include <Eigen/Dense>
+#include "dart/common/eigen_include.hpp"
 #include <gtest/gtest.h>
 
 #include "dart/test/TestHelpers.hpp"

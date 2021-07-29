@@ -36,11 +36,10 @@
 #include <string>
 #include <vector>
 
-#include <Eigen/Dense>
-
 #include "dart/common/LockableReference.hpp"
 #include "dart/common/Signal.hpp"
 #include "dart/common/Subject.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/Frame.hpp"
 #include "dart/dynamics/InvalidIndex.hpp"
 #include "dart/dynamics/export.hpp"

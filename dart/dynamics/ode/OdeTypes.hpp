@@ -33,10 +33,10 @@
 #ifndef DART_COLLISION_ODE_ODETYPES_HPP_
 #define DART_COLLISION_ODE_ODETYPES_HPP_
 
-#include <Eigen/Eigen>
 #include <ode/ode.h>
 
 #include "dart/dynamics/export.hpp"
+#include "dart/math/type.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -44,7 +44,7 @@ namespace dynamics {
 class DART_DYNAMICS_API OdeTypes
 {
 public:
-  static Eigen::Vector3d convertVector3(const dVector3& vec);
+  static math::Vector3d convertVector3(const dVector3& vec);
 };
 
 } // namespace dynamics

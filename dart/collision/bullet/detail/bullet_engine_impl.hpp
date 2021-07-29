@@ -34,9 +34,9 @@
 
 #include "dart/collision/bullet/bullet_conversion.hpp"
 #include "dart/collision/bullet/bullet_engine.hpp"
-#include "dart/collision/bullet/bullet_group.hpp"
 #include "dart/collision/bullet/bullet_include.hpp"
 #include "dart/collision/bullet/bullet_object.hpp"
+#include "dart/collision/bullet/bullet_scene.hpp"
 #include "dart/collision/collision_result.hpp"
 #include "dart/common/logging.hpp"
 #include "dart/math/geometry/capsule.hpp"
@@ -177,9 +177,9 @@ const std::string& BulletEngine<S>::GetType()
 
 //==============================================================================
 template <typename S>
-GroupPtr<S> BulletEngine<S>::create_group()
+ScenePtr<S> BulletEngine<S>::create_scene()
 {
-  return std::make_shared<BulletGroup<S>>(this);
+  return std::make_shared<BulletScene<S>>(this);
 }
 
 //==============================================================================
@@ -214,7 +214,7 @@ bool BulletEngine<S>::collide(
     return false;
   }
 
-  auto group = create_group();
+  auto group = create_scene();
 
   // Add bt_object1 and bt_object2
   DART_UNUSED(option, result);

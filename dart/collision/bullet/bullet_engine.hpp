@@ -62,7 +62,7 @@ public:
   static const std::string& GetType();
 
   // Documentation inherited
-  GroupPtr<S> create_group() override;
+  ScenePtr<S> create_scene() override;
 
   // Documentation inherited
   bool collide(
@@ -84,7 +84,7 @@ protected:
       const math::ConstGeometryPtr& shape);
 
 private:
-  friend class BulletGroup<S>;
+  friend class BulletScene<S>;
   friend class BulletObject<S>;
 
   DART_REGISTER_ENGINE_IN_HEADER(BulletEngine<S>);

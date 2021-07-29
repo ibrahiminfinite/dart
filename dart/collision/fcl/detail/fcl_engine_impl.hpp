@@ -35,9 +35,9 @@
 #include "dart/collision/collision_result.hpp"
 #include "dart/collision/fcl/backward_compatibility.hpp"
 #include "dart/collision/fcl/fcl_engine.hpp"
-#include "dart/collision/fcl/fcl_group.hpp"
 #include "dart/collision/fcl/fcl_object.hpp"
 #include "dart/collision/fcl/fcl_primitive_shape_utils.hpp"
+#include "dart/collision/fcl/fcl_scene.hpp"
 #include "dart/common/logging.hpp"
 #include "dart/math/geometry/sphere.hpp"
 
@@ -117,9 +117,9 @@ const std::string& FclEngine<S>::GetType()
 
 //==============================================================================
 template <typename S>
-GroupPtr<S> FclEngine<S>::create_group()
+ScenePtr<S> FclEngine<S>::create_scene()
 {
-  return std::make_shared<FclGroup<S>>(this);
+  return std::make_shared<FclScene<S>>(this);
 }
 
 //==============================================================================

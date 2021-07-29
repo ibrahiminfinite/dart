@@ -36,12 +36,10 @@
 #include <map>
 #include <string>
 
-#include <Eigen/Core>
-#include <Eigen/Geometry>
-
 #include "dart/common/LocalResourceRetriever.hpp"
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/common/Uri.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/Joint.hpp"
 #include "dart/dynamics/Skeleton.hpp"

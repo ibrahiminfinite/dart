@@ -37,8 +37,9 @@
 #include <string>
 #include <vector>
 
-#include <Eigen/Dense>
 #include <dart/dart.hpp>
+
+#include "dart/common/eigen_include.hpp"
 
 #define ATLAS_DEFAULT_KD 1.0 // No more than 1.0
 #define ATLAS_DEFAULT_KP 1e+3

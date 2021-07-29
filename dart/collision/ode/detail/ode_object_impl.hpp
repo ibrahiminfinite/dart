@@ -40,8 +40,8 @@
 #include "dart/collision/ode/detail/ode_plane.hpp"
 #include "dart/collision/ode/detail/ode_sphere.hpp"
 #include "dart/collision/ode/ode_conversion.hpp"
-#include "dart/collision/ode/ode_group.hpp"
 #include "dart/collision/ode/ode_object.hpp"
+#include "dart/collision/ode/ode_scene.hpp"
 #include "dart/math/geometry/capsule.hpp"
 #include "dart/math/geometry/cuboid.hpp"
 #include "dart/math/geometry/cylinder.hpp"
@@ -166,7 +166,7 @@ void OdeObject<S>::set_position(const math::Vector3<S>& pos)
 
 //==============================================================================
 template <typename S>
-OdeObject<S>::OdeObject(OdeGroup<S>* group, math::GeometryPtr shape)
+OdeObject<S>::OdeObject(OdeScene<S>* group, math::GeometryPtr shape)
   : Object<S>(group, shape), m_ode_geom{nullptr}, m_ode_body_id(nullptr)
 {
   // Create detail::OdeGeom according to the shape type.

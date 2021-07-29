@@ -41,8 +41,7 @@
 
 #include <vector>
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/simulation/export.hpp"
 

@@ -32,46 +32,41 @@
 
 #pragma once
 
-#include "dart/collision/group.hpp"
-#include "dart/collision/ode/ode_include.hpp"
-#include "dart/collision/ode/ode_type.hpp"
+#include "dart/collision/dart/dart_type.hpp"
+#include "dart/collision/scene.hpp"
 #include "dart/collision/type.hpp"
 
 namespace dart {
 namespace collision {
 
 template <typename S_>
-class OdeGroup : public Group<S_>
+class DartScene : public Scene<S_>
 {
 public:
   using S = S_;
 
+  friend class DartEngine<S>;
+
   /// Constructor
-  explicit OdeGroup(Engine<S>* engine);
+  DartScene(Engine<S>* engine);
 
   /// Destructor
-  ~OdeGroup() override;
+  ~DartScene() override;
 
   ObjectPtr<S> create_object(math::GeometryPtr shape) override;
 
 protected:
-  OdeEngine<S>* get_mutable_ode_engine();
+  DartEngine<S>* get_mutable_dart_engine();
 
-  const OdeEngine<S>* get_ode_engine() const;
-
-  dSpaceID get_ode_space_id() const;
+  const DartEngine<S>* get_dart_engine() const;
 
 private:
-  friend class OdeEngine<S>;
-  friend class OdeObject<S>;
-
-  /// Top-level space for all sub-spaces/collisions
-  dSpaceID m_ode_space_id;
+  friend class DartObject<S>;
 };
 
-DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeGroup)
+DART_TEMPLATE_CLASS_HEADER(COLLISION, DartScene)
 
 } // namespace collision
 } // namespace dart
 
-#include "dart/collision/ode/detail/ode_group_impl.hpp"
+#include "dart/collision/dart/detail/dart_scene_impl.hpp"

@@ -32,8 +32,8 @@
 
 #pragma once
 
-#include "dart/collision/dart/dart_group.hpp"
 #include "dart/collision/dart/dart_object.hpp"
+#include "dart/collision/dart/dart_scene.hpp"
 
 namespace dart {
 namespace collision {
@@ -68,7 +68,7 @@ void DartObject<S>::set_position(const math::Vector3<S>& pos)
 
 //==============================================================================
 template <typename S>
-DartObject<S>::DartObject(DartGroup<S>* group, math::GeometryPtr shape)
+DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
   : Object<S>(group, shape)
 {
   // Do nothing

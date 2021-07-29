@@ -30,59 +30,12 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
-
-#include "dart/collision/bullet/bullet_engine.hpp"
-#include "dart/collision/bullet/bullet_group.hpp"
-#include "dart/collision/bullet/bullet_object.hpp"
-#include "dart/collision/object.hpp"
-#include "dart/common/logging.hpp"
-#include "dart/common/macro.hpp"
-#include "dart/math/geometry/sphere.hpp"
+#include "dart/collision/dart/dart_scene.hpp"
 
 namespace dart {
 namespace collision {
 
-//==============================================================================
-template <typename S>
-BulletGroup<S>::BulletGroup(Engine<S>* engine) : Group<S>(engine)
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S>
-BulletGroup<S>::~BulletGroup()
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S>
-ObjectPtr<S> BulletGroup<S>::create_object(math::GeometryPtr shape)
-{
-  if (!shape) {
-    DART_WARN("Not allowed to create a collision object for a null shape");
-    return nullptr;
-  }
-
-  return std::shared_ptr<BulletObject<S>>(
-      new BulletObject<S>(this, std::move(shape)));
-}
-
-//==============================================================================
-template <typename S>
-BulletEngine<S>* BulletGroup<S>::get_mutable_bullet_engine()
-{
-  return static_cast<BulletEngine<S>*>(this->m_engine);
-}
-
-//==============================================================================
-template <typename S>
-const BulletEngine<S>* BulletGroup<S>::get_bullet_engine() const
-{
-  return static_cast<const BulletEngine<S>*>(this->m_engine);
-}
+DART_TEMPLATE_CLASS_SOURCE(DartScene)
 
 } // namespace collision
 } // namespace dart

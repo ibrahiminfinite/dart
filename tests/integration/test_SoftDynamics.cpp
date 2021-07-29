@@ -33,7 +33,7 @@
 #include <string>
 #include <vector>
 
-#include <Eigen/Dense>
+#include "dart/common/eigen_include.hpp"
 #include <gtest/gtest.h>
 
 #include "dart/common/Console.hpp"

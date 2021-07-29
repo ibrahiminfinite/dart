@@ -34,6 +34,7 @@
 
 #include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
+#include "dart/common/macro.hpp"
 #include "dart/math/type.hpp"
 
 namespace dart {
@@ -83,16 +84,7 @@ struct Contact
   static bool is_non_zero_normal(const math::Vector3<S>& normal);
 };
 
-using Contactf = Contact<float>;
-using Contactd = Contact<double>;
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template struct DART_COLLISION_API Contact<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template struct DART_COLLISION_API Contact<float>;
-#endif
+DART_TEMPLATE_STRUCT_HEADER(COLLISION, Contact)
 
 } // namespace collision
 } // namespace dart

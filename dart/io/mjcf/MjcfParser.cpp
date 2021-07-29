@@ -36,9 +36,8 @@
 #include <cstddef>
 #include <vector>
 
-#include <Eigen/Dense>
-
 #include "dart/common/common.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/config.hpp"
 #include "dart/dynamics/dynamics.hpp"
 #include "dart/io/CompositeResourceRetriever.hpp"

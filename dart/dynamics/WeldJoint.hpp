@@ -35,8 +35,7 @@
 
 #include <string>
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/ZeroDofJoint.hpp"
 #include "dart/dynamics/export.hpp"
 

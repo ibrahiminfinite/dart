@@ -36,10 +36,10 @@
 #include <iostream>
 #include <sstream>
 
-#include <Eigen/Dense>
 #include <gtest/gtest.h>
 
 #include "dart/common/Console.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/config.hpp"
 #include "dart/dynamics/FreeJoint.hpp"
 #include "dart/dynamics/InverseKinematics.hpp"

@@ -37,8 +37,7 @@
 #include <memory>
 #include <random>
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/optimization/MultiObjectiveProblem.hpp"
 #include "dart/optimization/export.hpp"
 

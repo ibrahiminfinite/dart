@@ -62,7 +62,7 @@ public:
 
 protected:
   /// Constructor
-  OdeObject(OdeGroup<S>* group, math::GeometryPtr shape);
+  OdeObject(OdeScene<S>* group, math::GeometryPtr shape);
 
   // Documentation inherited
   void update_engine_data() override;
@@ -75,7 +75,7 @@ protected:
 
 private:
   friend class OdeEngine<S>;
-  friend class OdeGroup<S>;
+  friend class OdeScene<S>;
 
   /// ODE geom
   std::shared_ptr<detail::OdeGeom<S>> m_ode_geom;

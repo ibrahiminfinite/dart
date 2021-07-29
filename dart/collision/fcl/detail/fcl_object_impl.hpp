@@ -83,10 +83,10 @@ const FclCollisionObject<S>* FclObject<S>::get_fcl_collision_object() const
 //==============================================================================
 template <typename S>
 FclObject<S>::FclObject(
-    Group<S>* collision_group,
+    Scene<S>* collision_scene,
     math::GeometryPtr shape,
     const std::shared_ptr<FclCollisionGeometry<S>>& fcl_coll_geom)
-  : Object<S>(collision_group, shape),
+  : Object<S>(collision_scene, shape),
     m_fcl_collision_object(new FclCollisionObject<S>(fcl_coll_geom))
 {
   assert(fcl_coll_geom);

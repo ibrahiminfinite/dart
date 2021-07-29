@@ -35,8 +35,7 @@
 
 #include <vector>
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/Entity.hpp"
 #include "dart/dynamics/export.hpp"
 #include "dart/math/Helpers.hpp"

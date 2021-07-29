@@ -39,7 +39,7 @@ namespace collision {
 
 DART_DEFINE_CLASS_POINTERS_T1(BulletEngine);
 DART_DEFINE_CLASS_POINTERS_T1(BulletObject);
-DART_DEFINE_CLASS_POINTERS_T1(BulletGroup);
+DART_DEFINE_CLASS_POINTERS_T1(BulletScene);
 
 } // namespace collision
 } // namespace dart

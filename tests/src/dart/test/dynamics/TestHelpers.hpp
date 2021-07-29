@@ -34,8 +34,7 @@
 
 #include <vector>
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/dart.hpp"
 #include "dart/test/math/GTestUtils.hpp"
 

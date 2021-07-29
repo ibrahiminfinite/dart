@@ -37,12 +37,12 @@
 #include <memory>
 #include <vector>
 
-#include <Eigen/Core>
 #include <osgGA/GUIEventHandler>
 
 #include "dart/common/ClassWithVirtualBase.hpp"
 #include "dart/common/Observer.hpp"
 #include "dart/common/Subject.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/gui/export.hpp"
 
 namespace dart {

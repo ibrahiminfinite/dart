@@ -32,9 +32,11 @@
 
 #pragma once
 
-#include <cassert>
-
-#include "dart/collision/group.hpp"
+#include "dart/collision/fcl/fcl_engine.hpp"
+#include "dart/collision/fcl/fcl_object.hpp"
+#include "dart/collision/fcl/fcl_scene.hpp"
+#include "dart/collision/object.hpp"
+#include "dart/common/logging.hpp"
 #include "dart/math/geometry/sphere.hpp"
 
 namespace dart {
@@ -42,34 +44,61 @@ namespace collision {
 
 //==============================================================================
 template <typename S>
-Group<S>::Group(Engine<S>* engine)
-  : m_engine(engine), m_update_automatically(true)
+FclScene<S>::FclScene(Engine<S>* engine)
+  : Scene<S>(engine),
+    m_broad_phase_alg(new FclDynamicAABBTreeCollisionManager<S>())
 {
-  assert(m_engine);
+  // Do nothing
 }
 
 //==============================================================================
 template <typename S>
-Engine<S>* Group<S>::get_mutable_engine()
+ObjectPtr<S> FclScene<S>::create_object(math::GeometryPtr shape)
 {
-  return m_engine;
+  if (!shape) {
+    DART_WARN("Not allowed to create a collision object for a null shape");
+    return nullptr;
+  }
+
+  auto fcl_collision_geometry
+      = get_mutable_fcl_engine()->create_fcl_collision_geometry(shape);
+  if (!fcl_collision_geometry) {
+    DART_WARN("Failed to create FCL collision geometry.");
+    return nullptr;
+  }
+
+  return std::shared_ptr<FclObject<S>>(
+      new FclObject<S>(this, std::move(shape), fcl_collision_geometry));
 }
 
 //==============================================================================
 template <typename S>
-const Engine<S>* Group<S>::get_engine() const
+FclEngine<S>* FclScene<S>::get_mutable_fcl_engine()
 {
-  return m_engine;
+  return static_cast<FclEngine<S>*>(this->m_engine);
 }
 
 //==============================================================================
 template <typename S>
-template <typename... Args>
-ObjectPtr<S> Group<S>::create_sphere_object(Args&&... args)
+const FclEngine<S>* FclScene<S>::get_fcl_engine() const
 {
-  auto geometry
-      = std::make_shared<math::Sphere<S>>(std::forward<Args>(args)...);
-  return create_object(std::move(geometry));
+  return static_cast<const FclEngine<S>*>(this->m_engine);
+}
+
+//==============================================================================
+template <typename S>
+typename FclScene<S>::FCLCollisionManager*
+FclScene<S>::get_fcl_collision_manager()
+{
+  return m_broad_phase_alg.get();
+}
+
+//==============================================================================
+template <typename S>
+const typename FclScene<S>::FCLCollisionManager*
+FclScene<S>::get_fcl_collision_manager() const
+{
+  return m_broad_phase_alg.get();
 }
 
 } // namespace collision

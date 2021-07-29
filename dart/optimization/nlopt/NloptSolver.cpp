@@ -34,10 +34,9 @@
 
 #include <memory>
 
-#include <Eigen/Dense>
-
 #include "dart/common/Console.hpp"
 #include "dart/common/StlHelpers.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/optimization/Function.hpp"
 #include "dart/optimization/Problem.hpp"
 

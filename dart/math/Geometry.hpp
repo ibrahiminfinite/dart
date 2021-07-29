@@ -33,8 +33,7 @@
 #ifndef DART_MATH_GEOMETRY_HPP_
 #define DART_MATH_GEOMETRY_HPP_
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/math/MathTypes.hpp"
 #include "dart/math/constant.hpp"
 #include "dart/math/export.hpp"

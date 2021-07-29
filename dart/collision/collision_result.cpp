@@ -35,13 +35,7 @@
 namespace dart {
 namespace collision {
 
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-template class CollisionResult<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-template class CollisionResult<float>;
-#endif
+DART_TEMPLATE_CLASS_SOURCE(CollisionResult)
 
 } // namespace collision
 } // namespace dart

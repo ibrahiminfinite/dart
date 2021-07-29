@@ -32,8 +32,6 @@
 
 #pragma once
 
-#include <Eigen/Geometry>
-
 #include "dart/math/Geometry.hpp"
 #include "dart/math/geometry/tetra_mesh.hpp"
 

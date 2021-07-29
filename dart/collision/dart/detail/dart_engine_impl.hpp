@@ -34,8 +34,8 @@
 
 #include "dart/collision/collision_result.hpp"
 #include "dart/collision/dart/dart_engine.hpp"
-#include "dart/collision/dart/dart_group.hpp"
 #include "dart/collision/dart/dart_object.hpp"
+#include "dart/collision/dart/dart_scene.hpp"
 #include "dart/common/logging.hpp"
 #include "dart/math/geometry/sphere.hpp"
 
@@ -160,9 +160,9 @@ const std::string& DartEngine<S>::GetType()
 
 //==============================================================================
 template <typename S>
-GroupPtr<S> DartEngine<S>::create_group()
+ScenePtr<S> DartEngine<S>::create_scene()
 {
-  return std::make_shared<DartGroup<S>>(this);
+  return std::make_shared<DartScene<S>>(this);
 }
 
 //==============================================================================

@@ -35,8 +35,6 @@
 
 #include <functional>
 
-#include <Eigen/Geometry>
-
 #include "dart/common/sub_ptr.hpp"
 #include "dart/dynamics/Entity.hpp"
 #include "dart/dynamics/Shape.hpp"
@@ -63,11 +61,9 @@ class DART_GUI_API DragAndDrop : public dart::common::Subject,
 public:
   enum class RotationOption : int
   {
-
     HOLD_MODKEY = 0, // Default setting, hold ctrl key to rotate
     ALWAYS_ON,
     ALWAYS_OFF
-
   };
 
   /// Constructor

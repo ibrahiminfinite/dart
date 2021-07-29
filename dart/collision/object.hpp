@@ -32,10 +32,9 @@
 
 #pragma once
 
-#include <Eigen/Geometry>
-
 #include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
+#include "dart/common/macro.hpp"
 #include "dart/math/SmartPointer.hpp"
 #include "dart/math/type.hpp"
 
@@ -82,7 +81,7 @@ public:
 
 protected:
   /// Contructor
-  Object(Group<S>* group, math::GeometryPtr shape);
+  Object(Scene<S>* group, math::GeometryPtr shape);
 
   /// Update the collision object of the collision detection engine. This
   /// function will be called ahead of every collision checking by
@@ -91,7 +90,7 @@ protected:
 
 protected:
   /// Collision group
-  Group<S>* m_group;
+  Scene<S>* m_scene;
 
   /// Geometry
   const math::GeometryPtr m_geometry;
@@ -99,19 +98,10 @@ protected:
   void* m_user_data = nullptr;
 
 private:
-  friend class Group<S>;
+  friend class Scene<S>;
 };
 
-using Objectf = Object<float>;
-using Objectd = Object<double>;
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template class DART_COLLISION_API Object<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template class DART_COLLISION_API Object<float>;
-#endif
+DART_TEMPLATE_CLASS_HEADER(COLLISION, Object)
 
 } // namespace collision
 } // namespace dart

@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -32,54 +32,8 @@
 
 #pragma once
 
-#include <vector>
-
-#include "dart/collision/contact.hpp"
-#include "dart/collision/export.hpp"
-#include "dart/common/macro.hpp"
-
-namespace dart {
-namespace collision {
-
-/// Structure to store the result of narrow phase collision checkings
-template <typename S_>
-class CollisionResult
-{
-public:
-  using S = S_;
-
-  /// Adds one contact
-  void add_contact(const Contact<S>& contact);
-
-  /// Returns number of contacts
-  int get_num_contacts() const;
-
-  /// Returns the index-th contact
-  Contact<S>& get_mutable_contact(int index);
-
-  /// Returns (const) the index-th contact
-  const Contact<S>& get_contact(int index) const;
-
-  /// Returns contacts
-  const std::vector<Contact<S>>& get_contacts() const;
-
-  /// Returns binary collision result
-  bool is_collision() const;
-
-  /// Implicitly converts this CollisionResult to the value of isCollision()
-  operator bool() const;
-
-  /// Clears all the contacts
-  void clear();
-
-protected:
-  /// List of contact information for each contact
-  std::vector<Contact<S>> m_contacts;
-};
-
-DART_TEMPLATE_CLASS_HEADER(COLLISION, CollisionResult)
-
-} // namespace collision
-} // namespace dart
-
-#include "dart/collision/detail/collision_result_impl.hpp"
+#include <Eigen/Core>
+#include <Eigen/Eigen>
+#include <Eigen/Geometry>
+#include <Eigen/SVD>
+#include <Eigen/StdVector>

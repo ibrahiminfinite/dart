@@ -36,8 +36,7 @@
 #include <iostream>
 #include <memory>
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/optimization/export.hpp"
 
 namespace dart {

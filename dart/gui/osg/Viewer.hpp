@@ -37,12 +37,12 @@
 #include <memory>
 #include <unordered_set>
 
-#include <Eigen/Core>
 #include <osgShadow/ShadowTechnique>
 #include <osgViewer/Viewer>
 
 #include "dart/common/ClassWithVirtualBase.hpp"
 #include "dart/common/Subject.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/gui/export.hpp"
 
 namespace dart {

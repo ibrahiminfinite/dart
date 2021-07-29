@@ -33,11 +33,11 @@
 #ifndef DART_IO_MJCF_DETAIL_COMPILER_HPP_
 #define DART_IO_MJCF_DETAIL_COMPILER_HPP_
 
-#include <Eigen/Core>
 #include <tinyxml2.h>
 
 #include "dart/common/ResourceRetriever.hpp"
 #include "dart/common/Uri.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/common/platform.hpp"
 #include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"

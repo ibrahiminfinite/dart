@@ -35,15 +35,8 @@
 namespace dart {
 namespace collision {
 
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-template class CollisionFilter<double>;
-template class CompositeCollisionFilter<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-template class CollisionFilter<float>;
-template class CompositeCollisionFilter<float>;
-#endif
+DART_TEMPLATE_CLASS_SOURCE(CollisionFilter)
+DART_TEMPLATE_CLASS_SOURCE(CompositeCollisionFilter)
 
 } // namespace collision
 } // namespace dart

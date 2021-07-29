@@ -35,8 +35,8 @@
 #include <cassert>
 
 #include "dart/collision/engine.hpp"
-#include "dart/collision/group.hpp"
 #include "dart/collision/object.hpp"
+#include "dart/collision/scene.hpp"
 
 namespace dart {
 namespace collision {
@@ -59,14 +59,14 @@ Object<S>::~Object()
 template <typename S>
 Engine<S>* Object<S>::get_mutable_engine()
 {
-  return m_group->get_mutable_engine();
+  return m_scene->get_mutable_engine();
 }
 
 //==============================================================================
 template <typename S>
 const Engine<S>* Object<S>::get_engine() const
 {
-  return m_group->get_engine();
+  return m_scene->get_engine();
 }
 
 //==============================================================================
@@ -85,10 +85,10 @@ math::ConstGeometryPtr Object<S>::get_geometry() const
 
 //==============================================================================
 template <typename S>
-Object<S>::Object(Group<S>* collisionGroup, math::GeometryPtr shape)
-  : m_group(collisionGroup), m_geometry(std::move(shape))
+Object<S>::Object(Scene<S>* collisionGroup, math::GeometryPtr shape)
+  : m_scene(collisionGroup), m_geometry(std::move(shape))
 {
-  assert(m_group);
+  assert(m_scene);
   assert(m_geometry);
 }
 

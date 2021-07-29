@@ -61,7 +61,7 @@ public:
   static const std::string& GetType();
 
   // Documentation inherited
-  GroupPtr<S> create_group() override;
+  ScenePtr<S> create_scene() override;
 
   // Documentation inherited
   bool collide(
@@ -81,7 +81,7 @@ protected:
   dWorldID m_ode_world_id;
 
 private:
-  friend class OdeGroup<S>;
+  friend class OdeScene<S>;
   friend class OdeObject<S>;
 
   DART_REGISTER_ENGINE_IN_HEADER(OdeEngine<S>);

@@ -34,31 +34,33 @@
 
 #include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
+#include "dart/common/macro.hpp"
 #include "dart/math/geometry/geometry.hpp"
 
 namespace dart {
 namespace collision {
 
 template <typename S_>
-class Group
+class Scene
 {
 public:
   // Type aliases
   using S = S_;
 
   /// Destructor
-  virtual ~Group() = default;
+  virtual ~Scene() = default;
 
-  /// Return collision detection engine associated with this Group
+  /// Return collision detection engine associated with this Scene
   Engine<S>* get_mutable_engine();
 
   /// Return (const) collision detection engine associated with this
-  /// Group
+  /// Scene
   const Engine<S>* get_engine() const;
 
   /// Creates a collision object.
   virtual ObjectPtr<S> create_object(math::GeometryPtr shape) = 0;
 
+  /// Creates a collision object with sphere
   template <typename... Args>
   ObjectPtr<S> create_sphere_object(Args&&... args);
 
@@ -66,28 +68,20 @@ protected:
   /// Constructor
   ///
   /// \param[in] collisionDetector: Collision detector that created this group.
-  Group(Engine<S>* engine);
+  Scene(Engine<S>* engine);
 
+  /// The parent collision engine that created this scene
   Engine<S>* m_engine;
 
 private:
-  /// Set this to true to have this Group check for updates
+  /// Set this to true to have this Scene check for updates
   /// automatically. Default is true.
   bool m_update_automatically;
 };
 
-using Groupf = Group<float>;
-using Groupd = Group<double>;
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template class DART_COLLISION_API Group<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template class DART_COLLISION_API Group<float>;
-#endif
+DART_TEMPLATE_CLASS_HEADER(COLLISION, Scene)
 
 } // namespace collision
 } // namespace dart
 
-#include "dart/collision/detail/group_impl.hpp"
+#include "dart/collision/detail/scene_impl.hpp"

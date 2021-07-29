@@ -92,7 +92,7 @@ public:
   static const std::string& GetType();
 
   // Documentation inherited
-  GroupPtr<S> create_group() override;
+  ScenePtr<S> create_scene() override;
 
   // Documentation inherited
   bool collide(
@@ -110,7 +110,7 @@ protected:
       const math::ConstGeometryPtr& shape);
 
 private:
-  friend class FclGroup<S>;
+  friend class FclScene<S>;
 
   PrimitiveShape m_primitive_shape_type = PrimitiveShape::PRIMITIVE;
 

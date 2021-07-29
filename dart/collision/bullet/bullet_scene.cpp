@@ -30,18 +30,18 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/bullet/bullet_group.hpp"
+#include "dart/collision/bullet/bullet_scene.hpp"
 
 namespace dart {
 namespace collision {
 
 //==============================================================================
 #if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-template class BulletGroup<double>;
+template class BulletScene<double>;
 #endif
 
 #if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-template class BulletGroup<float>;
+template class BulletScene<float>;
 #endif
 
 } // namespace collision

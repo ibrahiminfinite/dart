@@ -38,7 +38,7 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
-#include <Eigen/Geometry>
+
 #include "dart/math/constant.hpp"
 
 using namespace std;

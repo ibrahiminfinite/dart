@@ -33,8 +33,7 @@
 #ifndef DART_CONSTRAINT_JOINTCONSTRAINT_HPP_
 #define DART_CONSTRAINT_JOINTCONSTRAINT_HPP_
 
-#include <Eigen/Core>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/ConstraintBase.hpp"
 #include "dart/dynamics/export.hpp"
 

@@ -30,19 +30,58 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/fcl/fcl_group.hpp"
+#pragma once
+
+#include "dart/collision/fcl/backward_compatibility.hpp"
+#include "dart/collision/fcl/fcl_type.hpp"
+#include "dart/collision/scene.hpp"
+#include "dart/collision/type.hpp"
 
 namespace dart {
 namespace collision {
 
-//==============================================================================
+template <typename S_>
+class FclScene : public Scene<S_>
+{
+public:
+  using S = S_;
+  using FCLCollisionManager = FclDynamicAABBTreeCollisionManager<S>;
+
+  friend class FclEngine<S>;
+
+  /// Constructor
+  FclScene(Engine<S>* engine);
+
+  /// Destructor
+  ~FclScene() override = default;
+
+  // Documentation inherited
+  ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+
+protected:
+  FclEngine<S>* get_mutable_fcl_engine();
+
+  const FclEngine<S>* get_fcl_engine() const;
+
+  /// Return FCL collision manager that is also a broad-phase algorithm
+  FCLCollisionManager* get_fcl_collision_manager();
+
+  /// Return FCL collision manager that is also a broad-phase algorithm
+  const FCLCollisionManager* get_fcl_collision_manager() const;
+
+  /// FCL broad-phase algorithm
+  std::unique_ptr<FCLCollisionManager> m_broad_phase_alg;
+};
+
 #if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-template class FclGroup<double>;
+extern template class DART_COLLISION_API FclScene<double>;
 #endif
 
 #if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-template class FclGroup<float>;
+extern template class DART_COLLISION_API FclScene<float>;
 #endif
 
 } // namespace collision
 } // namespace dart
+
+#include "dart/collision/fcl/detail/fcl_scene_impl.hpp"

@@ -33,8 +33,7 @@
 #ifndef DART_COLLISION_COLLISIONOBJECT_HPP_
 #define DART_COLLISION_COLLISIONOBJECT_HPP_
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
 #include "dart/dynamics/export.hpp"
 

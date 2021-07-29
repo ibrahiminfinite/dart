@@ -33,8 +33,7 @@
 #ifndef DART_DYNAMICS_DETAIL_MARKERASPECT_HPP_
 #define DART_DYNAMICS_DETAIL_MARKERASPECT_HPP_
 
-#include <Eigen/Core>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/math/Helpers.hpp"
 
 namespace dart {

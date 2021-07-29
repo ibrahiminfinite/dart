@@ -33,8 +33,7 @@
 #ifndef DART_LCPSOLVER_ODELCPSOLVER_HPP_
 #define DART_LCPSOLVER_ODELCPSOLVER_HPP_
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/math/export.hpp"
 
 namespace dart {

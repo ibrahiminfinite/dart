@@ -35,7 +35,7 @@
 #ifndef DART_PLANNING_PATHFOLLOWINGTRAJECTORY_HPP_
 #define DART_PLANNING_PATHFOLLOWINGTRAJECTORY_HPP_
 
-#include <Eigen/Core>
+#include "dart/common/eigen_include.hpp"
 #include "dart/planning/Path.hpp"
 #include "dart/planning/Trajectory.hpp"
 

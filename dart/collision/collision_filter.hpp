@@ -36,6 +36,7 @@
 
 #include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
+#include "dart/common/macro.hpp"
 
 namespace dart {
 namespace collision {
@@ -56,16 +57,7 @@ public:
       const Object<S>* object1, const Object<S>* object2) const = 0;
 };
 
-using CollisionFilterf = CollisionFilter<float>;
-using CollisionFilterd = CollisionFilter<double>;
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template class DART_COLLISION_API CollisionFilter<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template class DART_COLLISION_API CollisionFilter<float>;
-#endif
+DART_TEMPLATE_CLASS_HEADER(COLLISION, CollisionFilter)
 
 template <typename S>
 class CompositeCollisionFilter : public CollisionFilter<S>
@@ -92,16 +84,7 @@ protected:
   std::unordered_set<ConstCollisionFilterPtr<S>> m_filters;
 };
 
-using CompositeCollisionFilterf = CompositeCollisionFilter<float>;
-using CompositeCollisionFilterd = CompositeCollisionFilter<double>;
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template class DART_COLLISION_API CompositeCollisionFilter<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template class DART_COLLISION_API CompositeCollisionFilter<float>;
-#endif
+DART_TEMPLATE_CLASS_HEADER(COLLISION, CompositeCollisionFilter)
 
 } // namespace collision
 } // namespace dart

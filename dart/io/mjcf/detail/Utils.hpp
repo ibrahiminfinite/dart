@@ -35,9 +35,9 @@
 
 #include <optional>
 
-#include <Eigen/Core>
 #include <tinyxml2.h>
 
+#include "dart/common/eigen_include.hpp"
 #include "dart/io/export.hpp"
 #include "dart/io/mjcf/detail/Compiler.hpp"
 #include "dart/io/mjcf/detail/Error.hpp"

@@ -68,7 +68,7 @@ public:
 protected:
   /// Constructor
   FclObject(
-      Group<S>* collision_group,
+      Scene<S>* collision_scene,
       math::GeometryPtr shape,
       const std::shared_ptr<FclCollisionGeometry<S>>& fcl_coll_geom);
 
@@ -80,7 +80,7 @@ protected:
 
 private:
   friend class FclEngine<S>;
-  friend class FclGroup<S>;
+  friend class FclScene<S>;
 };
 
 #if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE

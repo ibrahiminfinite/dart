@@ -32,56 +32,46 @@
 
 #pragma once
 
-#include "dart/collision/fcl/backward_compatibility.hpp"
-#include "dart/collision/fcl/fcl_type.hpp"
-#include "dart/collision/group.hpp"
+#include "dart/collision/ode/ode_include.hpp"
+#include "dart/collision/ode/ode_type.hpp"
+#include "dart/collision/scene.hpp"
 #include "dart/collision/type.hpp"
 
 namespace dart {
 namespace collision {
 
 template <typename S_>
-class FclGroup : public Group<S_>
+class OdeScene : public Scene<S_>
 {
 public:
   using S = S_;
-  using FCLCollisionManager = FclDynamicAABBTreeCollisionManager<S>;
-
-  friend class FclEngine<S>;
 
   /// Constructor
-  FclGroup(Engine<S>* engine);
+  explicit OdeScene(Engine<S>* engine);
 
   /// Destructor
-  ~FclGroup() override = default;
+  ~OdeScene() override;
 
-  // Documentation inherited
   ObjectPtr<S> create_object(math::GeometryPtr shape) override;
 
 protected:
-  FclEngine<S>* get_mutable_fcl_engine();
+  OdeEngine<S>* get_mutable_ode_engine();
 
-  const FclEngine<S>* get_fcl_engine() const;
+  const OdeEngine<S>* get_ode_engine() const;
 
-  /// Return FCL collision manager that is also a broad-phase algorithm
-  FCLCollisionManager* get_fcl_collision_manager();
+  dSpaceID get_ode_space_id() const;
 
-  /// Return FCL collision manager that is also a broad-phase algorithm
-  const FCLCollisionManager* get_fcl_collision_manager() const;
+private:
+  friend class OdeEngine<S>;
+  friend class OdeObject<S>;
 
-  /// FCL broad-phase algorithm
-  std::unique_ptr<FCLCollisionManager> m_broad_phase_alg;
+  /// Top-level space for all sub-spaces/collisions
+  dSpaceID m_ode_space_id;
 };
 
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template class DART_COLLISION_API FclGroup<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template class DART_COLLISION_API FclGroup<float>;
-#endif
+DART_TEMPLATE_CLASS_HEADER(COLLISION, OdeScene)
 
 } // namespace collision
 } // namespace dart
 
-#include "dart/collision/fcl/detail/fcl_group_impl.hpp"
+#include "dart/collision/ode/detail/ode_scene_impl.hpp"

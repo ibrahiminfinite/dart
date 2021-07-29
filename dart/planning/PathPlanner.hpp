@@ -47,7 +47,7 @@
 #include <limits>
 #include <list>
 #include <vector>
-#include <Eigen/Core>
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/planning/RRT.hpp"
 #include "dart/simulation/World.hpp"

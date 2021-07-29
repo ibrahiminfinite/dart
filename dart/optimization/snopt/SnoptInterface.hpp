@@ -10,7 +10,7 @@
 #define DART_OPTIMIZATION_SNOPT_SNOPT_INTERFACE_H
 
 #include <vector>
-#include <Eigen/Dense>
+#include "dart/common/eigen_include.hpp"
 #include "dart/optimization/OptimizationArrayTypes.h"
 
 #ifndef	ZERO

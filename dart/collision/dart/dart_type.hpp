@@ -39,7 +39,7 @@ namespace collision {
 
 DART_DEFINE_CLASS_POINTERS_T1(DartEngine);
 DART_DEFINE_CLASS_POINTERS_T1(DartObject);
-DART_DEFINE_CLASS_POINTERS_T1(DartGroup);
+DART_DEFINE_CLASS_POINTERS_T1(DartScene);
 
 } // namespace collision
 } // namespace dart

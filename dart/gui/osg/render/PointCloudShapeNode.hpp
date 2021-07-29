@@ -33,9 +33,9 @@
 #ifndef DART_GUI_OSG_RENDER_POINTCLOUDSHAPENODE_HPP_
 #define DART_GUI_OSG_RENDER_POINTCLOUDSHAPENODE_HPP_
 
-#include <Eigen/Dense>
 #include <osg/Group>
 
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/PointCloudShape.hpp"
 #include "dart/gui/osg/render/ShapeNode.hpp"
 

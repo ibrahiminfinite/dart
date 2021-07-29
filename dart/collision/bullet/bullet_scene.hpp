@@ -30,12 +30,56 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/dart/dart_group.hpp"
+#pragma once
+
+#include "dart/collision/bullet/bullet_include.hpp"
+#include "dart/collision/bullet/bullet_type.hpp"
+#include "dart/collision/export.hpp"
+#include "dart/collision/scene.hpp"
+#include "dart/collision/type.hpp"
 
 namespace dart {
 namespace collision {
 
-DART_TEMPLATE_CLASS_SOURCE(DartGroup)
+template <typename S_>
+class BulletScene : public Scene<S_>
+{
+public:
+  using S = S_;
+
+  friend class BulletEngine<S>;
+
+  /// Constructor
+  BulletScene(Engine<S>* engine);
+
+  /// Destructor
+  ~BulletScene() override;
+
+  ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+
+protected:
+  BulletEngine<S>* get_mutable_bullet_engine();
+
+  const BulletEngine<S>* get_bullet_engine() const;
+
+  //  dSpaceID get_ode_space_id() const;
+
+private:
+  friend class BulletObject<S>;
+
+  /// Top-level space for all sub-spaces/collisions
+  //  dSpaceID m_ode_space_id;
+};
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
+extern template class DART_COLLISION_API BulletScene<double>;
+#endif
+
+#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
+extern template class DART_COLLISION_API BulletScene<float>;
+#endif
 
 } // namespace collision
 } // namespace dart
+
+#include "dart/collision/bullet/detail/bullet_scene_impl.hpp"

@@ -32,8 +32,7 @@
 
 #pragma once
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/config.hpp"
 
 // clang-format off

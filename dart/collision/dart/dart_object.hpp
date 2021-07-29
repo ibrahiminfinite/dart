@@ -59,14 +59,14 @@ public:
 
 protected:
   /// Constructor
-  DartObject(DartGroup<S>* group, math::GeometryPtr shape);
+  DartObject(DartScene<S>* group, math::GeometryPtr shape);
 
   // Documentation inherited
   void update_engine_data() override;
 
 private:
   friend class DartEngine<S>;
-  friend class DartGroup<S>;
+  friend class DartScene<S>;
 
   /// Pose of the collision object
   math::Isometry3<S> m_pose;

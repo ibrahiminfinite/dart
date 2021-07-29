@@ -36,8 +36,7 @@
 #include <cstddef>
 #include <vector>
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/optimization/Function.hpp"
 #include "dart/optimization/export.hpp"
 

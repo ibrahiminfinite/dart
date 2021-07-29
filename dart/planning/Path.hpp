@@ -36,7 +36,7 @@
 #define DART_PLANNING_PATH_HPP_
 
 #include <list>
-#include <Eigen/Core>
+#include "dart/common/eigen_include.hpp"
 
 namespace dart {
 namespace planning {

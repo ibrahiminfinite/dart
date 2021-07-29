@@ -34,6 +34,7 @@
 
 #include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
+#include "dart/common/macro.hpp"
 
 namespace dart {
 namespace collision {
@@ -56,16 +57,7 @@ struct CollisionOption
   CollisionOption(bool enable_contact = true, int max_num_contacts = 1000);
 };
 
-using CollisionOptionf = CollisionOption<float>;
-using CollisionOptiond = CollisionOption<double>;
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template struct DART_COLLISION_API CollisionOption<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template struct DART_COLLISION_API CollisionOption<float>;
-#endif
+DART_TEMPLATE_STRUCT_HEADER(COLLISION, CollisionOption)
 
 } // namespace collision
 } // namespace dart

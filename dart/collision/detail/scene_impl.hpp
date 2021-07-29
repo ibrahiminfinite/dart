@@ -32,41 +32,45 @@
 
 #pragma once
 
-#include "dart/collision/dart/dart_type.hpp"
-#include "dart/collision/group.hpp"
-#include "dart/collision/type.hpp"
+#include <cassert>
+
+#include "dart/collision/scene.hpp"
+#include "dart/math/geometry/sphere.hpp"
 
 namespace dart {
 namespace collision {
 
-template <typename S_>
-class DartGroup : public Group<S_>
+//==============================================================================
+template <typename S>
+Scene<S>::Scene(Engine<S>* engine)
+  : m_engine(engine), m_update_automatically(true)
 {
-public:
-  using S = S_;
+  assert(m_engine);
+}
 
-  friend class DartEngine<S>;
+//==============================================================================
+template <typename S>
+Engine<S>* Scene<S>::get_mutable_engine()
+{
+  return m_engine;
+}
 
-  /// Constructor
-  DartGroup(Engine<S>* engine);
+//==============================================================================
+template <typename S>
+const Engine<S>* Scene<S>::get_engine() const
+{
+  return m_engine;
+}
 
-  /// Destructor
-  ~DartGroup() override;
-
-  ObjectPtr<S> create_object(math::GeometryPtr shape) override;
-
-protected:
-  DartEngine<S>* get_mutable_dart_engine();
-
-  const DartEngine<S>* get_dart_engine() const;
-
-private:
-  friend class DartObject<S>;
-};
-
-DART_TEMPLATE_CLASS_HEADER(COLLISION, DartGroup)
+//==============================================================================
+template <typename S>
+template <typename... Args>
+ObjectPtr<S> Scene<S>::create_sphere_object(Args&&... args)
+{
+  auto geometry
+      = std::make_shared<math::Sphere<S>>(std::forward<Args>(args)...);
+  return create_object(std::move(geometry));
+}
 
 } // namespace collision
 } // namespace dart
-
-#include "dart/collision/dart/detail/dart_group_impl.hpp"

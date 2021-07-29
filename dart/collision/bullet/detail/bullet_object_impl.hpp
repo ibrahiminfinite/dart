@@ -34,8 +34,8 @@
 
 #include "dart/collision/bullet/bullet_conversion.hpp"
 #include "dart/collision/bullet/bullet_engine.hpp"
-#include "dart/collision/bullet/bullet_group.hpp"
 #include "dart/collision/bullet/bullet_object.hpp"
+#include "dart/collision/bullet/bullet_scene.hpp"
 #include "dart/math/geometry/capsule.hpp"
 #include "dart/math/geometry/cuboid.hpp"
 #include "dart/math/geometry/cylinder.hpp"
@@ -81,7 +81,7 @@ void BulletObject<S>::set_position(const math::Vector3<S>& pos)
 
 //==============================================================================
 template <typename S>
-BulletObject<S>::BulletObject(BulletGroup<S>* group, math::GeometryPtr shape)
+BulletObject<S>::BulletObject(BulletScene<S>* group, math::GeometryPtr shape)
   : Object<S>(group, shape)
 {
   auto engine = group->get_mutable_bullet_engine();

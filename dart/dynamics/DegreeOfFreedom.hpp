@@ -36,10 +36,9 @@
 #include <memory>
 #include <string>
 
-#include <Eigen/Core>
-
 #include "dart/common/ClassWithVirtualBase.hpp"
 #include "dart/common/Subject.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
 #include "dart/dynamics/export.hpp"
 

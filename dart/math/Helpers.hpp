@@ -33,7 +33,6 @@
 #ifndef DART_MATH_HELPERS_HPP_
 #define DART_MATH_HELPERS_HPP_
 
-// Standard Libraries
 #include <cfloat>
 #include <climits>
 #include <cmath>
@@ -43,9 +42,7 @@
 #include <iostream>
 #include <random>
 
-// External Libraries
-#include <Eigen/Dense>
-// Local Headers
+#include "dart/common/eigen_include.hpp"
 #include "dart/math/MathTypes.hpp"
 #include "dart/math/Random.hpp"
 #include "dart/math/constant.hpp"

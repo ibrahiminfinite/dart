@@ -35,7 +35,7 @@
 
 #include <list>
 #include <vector>
-#include <Eigen/Core>
+#include "dart/common/eigen_include.hpp"
 
 #include "dart/simulation/World.hpp"
 

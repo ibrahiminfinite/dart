@@ -35,7 +35,7 @@
 #ifndef DART_PLANNING_TRAJECTORY_HPP_
 #define DART_PLANNING_TRAJECTORY_HPP_
 
-#include <Eigen/Core>
+#include "dart/common/eigen_include.hpp"
 
 namespace dart {
 namespace planning {

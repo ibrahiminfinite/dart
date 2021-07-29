@@ -34,11 +34,11 @@
 
 #include <string>
 
-#include <Eigen/Dense>
 #include <tinyxml2.h>
 
 #include "dart/common/Console.hpp"
 #include "dart/common/ResourceRetriever.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/io/export.hpp"
 #include "dart/math/MathTypes.hpp"
 #include "dart/math/type.hpp"

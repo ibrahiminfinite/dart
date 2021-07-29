@@ -34,8 +34,8 @@
 
 #include "dart/collision/object.hpp"
 #include "dart/collision/ode/ode_engine.hpp"
-#include "dart/collision/ode/ode_group.hpp"
 #include "dart/collision/ode/ode_object.hpp"
+#include "dart/collision/ode/ode_scene.hpp"
 #include "dart/common/logging.hpp"
 #include "dart/common/macro.hpp"
 #include "dart/math/geometry/sphere.hpp"
@@ -45,7 +45,7 @@ namespace collision {
 
 //==============================================================================
 template <typename S>
-OdeGroup<S>::OdeGroup(Engine<S>* engine) : Group<S>(engine)
+OdeScene<S>::OdeScene(Engine<S>* engine) : Scene<S>(engine)
 {
   // This uses an internal data structure that records how each geom overlaps
   // cells in one of several three dimensional grids. Each grid has cubical
@@ -63,14 +63,14 @@ OdeGroup<S>::OdeGroup(Engine<S>* engine) : Group<S>(engine)
 
 //==============================================================================
 template <typename S>
-OdeGroup<S>::~OdeGroup()
+OdeScene<S>::~OdeScene()
 {
   dSpaceDestroy(m_ode_space_id);
 }
 
 //==============================================================================
 template <typename S>
-ObjectPtr<S> OdeGroup<S>::create_object(math::GeometryPtr shape)
+ObjectPtr<S> OdeScene<S>::create_object(math::GeometryPtr shape)
 {
   if (!shape) {
     DART_WARN("Not allowed to create a collision object for a null shape");
@@ -83,21 +83,21 @@ ObjectPtr<S> OdeGroup<S>::create_object(math::GeometryPtr shape)
 
 //==============================================================================
 template <typename S>
-OdeEngine<S>* OdeGroup<S>::get_mutable_ode_engine()
+OdeEngine<S>* OdeScene<S>::get_mutable_ode_engine()
 {
   return static_cast<OdeEngine<S>*>(this->m_engine);
 }
 
 //==============================================================================
 template <typename S>
-const OdeEngine<S>* OdeGroup<S>::get_ode_engine() const
+const OdeEngine<S>* OdeScene<S>::get_ode_engine() const
 {
   return static_cast<const OdeEngine<S>*>(this->m_engine);
 }
 
 //==============================================================================
 template <typename S_>
-dSpaceID OdeGroup<S_>::get_ode_space_id() const
+dSpaceID OdeScene<S_>::get_ode_space_id() const
 {
   return m_ode_space_id;
 }

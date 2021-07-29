@@ -2,7 +2,7 @@
 #ifndef DART_CONFIG_HPP_
 #define DART_CONFIG_HPP_
 
-#include <Eigen/Core>
+#include "dart/common/eigen_include.hpp"
 
 /* Version number */
 #define DART_MAJOR_VERSION @DART_MAJOR_VERSION@

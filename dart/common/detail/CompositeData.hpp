@@ -38,9 +38,8 @@
 #include <typeinfo>
 #include <unordered_set>
 
-#include <Eigen/Core>
-
 #include "dart/common/Aspect.hpp"
+#include "dart/common/eigen_include.hpp"
 
 namespace dart {
 namespace common {

@@ -36,10 +36,8 @@
 #include <cstddef>
 #include <vector>
 
-#include <Eigen/Dense>
-#include <Eigen/StdVector>
-
 #include "dart/common/Console.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/config.hpp"
 #include "dart/dynamics/BallJoint.hpp"
 #include "dart/dynamics/BodyNode.hpp"

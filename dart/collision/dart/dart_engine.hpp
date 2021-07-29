@@ -60,7 +60,7 @@ public:
   static const std::string& GetType();
 
   // Documentation inherited
-  GroupPtr<S> create_group() override;
+  ScenePtr<S> create_scene() override;
 
   // Documentation inherited
   bool collide(
@@ -74,7 +74,7 @@ protected:
   DartEngine() = default;
 
 private:
-  friend class DartGroup<S>;
+  friend class DartScene<S>;
 
   DART_REGISTER_ENGINE_IN_HEADER(DartEngine<S>);
 };

@@ -6,7 +6,7 @@
  */
 
 #include <iostream>
-#include <Eigen/Core>
+#include "dart/common/eigen_include.hpp"
 #include <dart/dart.hpp>
 #include <gtest/gtest.h>
 #if DART_HAVE_FLANN

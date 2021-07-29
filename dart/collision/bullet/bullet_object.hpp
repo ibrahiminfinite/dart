@@ -62,7 +62,7 @@ public:
 
 protected:
   /// Constructor
-  BulletObject(BulletGroup<S>* collision_group, math::GeometryPtr shape);
+  BulletObject(BulletScene<S>* collision_scene, math::GeometryPtr shape);
 
   // Documentation inherited
   void update_engine_data() override;
@@ -71,7 +71,7 @@ protected:
 
 private:
   friend class BulletEngine<S>;
-  friend class BulletGroup<S>;
+  friend class BulletScene<S>;
 
   std::unique_ptr<btCollisionObject> m_bullet_collision_object;
 };

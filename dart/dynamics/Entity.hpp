@@ -36,11 +36,10 @@
 #include <string>
 #include <vector>
 
-#include <Eigen/Core>
-
 #include "dart/common/Composite.hpp"
 #include "dart/common/Signal.hpp"
 #include "dart/common/Subject.hpp"
+#include "dart/common/eigen_include.hpp"
 #include "dart/dynamics/Shape.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
 #include "dart/dynamics/export.hpp"

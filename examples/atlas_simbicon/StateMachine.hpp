@@ -36,8 +36,9 @@
 #include <string>
 #include <vector>
 
-#include <Eigen/Dense>
 #include <dart/dart.hpp>
+
+#include "dart/common/eigen_include.hpp"
 
 class State;
 

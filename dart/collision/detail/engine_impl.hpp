@@ -76,7 +76,7 @@ template <typename S>
 template <typename GeometryType, typename... Args>
 ObjectPtr<S> Engine<S>::create_object(Args&&... args)
 {
-  return get_default_group()->template create_object<GeometryType>(
+  return get_default_scene()->template create_object<GeometryType>(
       std::forward<Args>(args)...);
 }
 
@@ -85,18 +85,18 @@ template <typename S>
 template <typename... Args>
 ObjectPtr<S> Engine<S>::create_sphere_object(Args&&... args)
 {
-  return get_default_group()->create_sphere_object(std::forward<Args>(args)...);
+  return get_default_scene()->create_sphere_object(std::forward<Args>(args)...);
 }
 
 //==============================================================================
 template <typename S>
-Group<S>* Engine<S>::get_default_group()
+Scene<S>* Engine<S>::get_default_scene()
 {
-  if (!m_default_group) {
-    m_default_group = create_group();
+  if (!m_default_scene) {
+    m_default_scene = create_scene();
   }
 
-  return m_default_group.get();
+  return m_default_scene.get();
 }
 
 } // namespace collision

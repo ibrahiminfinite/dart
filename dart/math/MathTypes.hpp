@@ -36,8 +36,7 @@
 #include <map>
 #include <vector>
 
-#include <Eigen/Dense>
-
+#include "dart/common/eigen_include.hpp"
 #include "dart/common/memory.hpp"
 
 //------------------------------------------------------------------------------
