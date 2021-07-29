@@ -64,6 +64,11 @@ public:
   template <typename... Args>
   ObjectPtr<S> create_sphere_object(Args&&... args);
 
+  virtual bool collide(
+      const CollisionOption<S>& option = {},
+      CollisionResult<S>* result = nullptr)
+      = 0;
+
 protected:
   /// Constructor
   ///

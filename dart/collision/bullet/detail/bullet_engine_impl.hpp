@@ -218,6 +218,7 @@ bool BulletEngine<S>::collide(
 
   // Add bt_object1 and bt_object2
   DART_UNUSED(option, result);
+  DART_NOT_IMPLEMENTED;
 
   return false;
 }

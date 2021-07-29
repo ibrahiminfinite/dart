@@ -32,76 +32,23 @@
 
 #pragma once
 
-#include "dart/collision/collision_result.hpp"
+#include "dart/collision/contact_shape.hpp"
 
 namespace dart {
 namespace collision {
 
 //==============================================================================
 template <typename S>
-void CollisionResult<S>::add_contact(const ContactPoint<S>& contact)
+ContactShape<S>::ContactShape() : object1(nullptr), object2(nullptr)
 {
-  m_contacts.push_back(contact);
+  // Do nothing
 }
 
 //==============================================================================
 template <typename S>
-void CollisionResult<S>::add_contact_shape(const ContactShape<S>& contact_shape)
+void ContactShape<S>::add_contact_point(const ContactPoint<S>& point)
 {
-  m_contact_shapes.push_back(contact_shape);
-}
-
-//==============================================================================
-template <typename S>
-int CollisionResult<S>::get_num_contacts() const
-{
-  return m_contacts.size();
-}
-
-//==============================================================================
-template <typename S>
-ContactPoint<S>& CollisionResult<S>::get_mutable_contact(int index)
-{
-  assert(0 <= index && static_cast<std::size_t>(index) < m_contacts.size());
-
-  return m_contacts[index];
-}
-
-//==============================================================================
-template <typename S>
-const ContactPoint<S>& CollisionResult<S>::get_contact(int index) const
-{
-  assert(0 <= index && static_cast<std::size_t>(index) < m_contacts.size());
-
-  return m_contacts[index];
-}
-
-//==============================================================================
-template <typename S>
-const std::vector<ContactPoint<S>>& CollisionResult<S>::get_contacts() const
-{
-  return m_contacts;
-}
-
-//==============================================================================
-template <typename S>
-bool CollisionResult<S>::is_collision() const
-{
-  return !m_contacts.empty();
-}
-
-//==============================================================================
-template <typename S>
-CollisionResult<S>::operator bool() const
-{
-  return is_collision();
-}
-
-//==============================================================================
-template <typename S>
-void CollisionResult<S>::clear()
-{
-  m_contacts.clear();
+  m_contact_points.push_back(point);
 }
 
 } // namespace collision

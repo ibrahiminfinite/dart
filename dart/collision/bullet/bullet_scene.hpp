@@ -57,18 +57,25 @@ public:
 
   ObjectPtr<S> create_object(math::GeometryPtr shape) override;
 
+  // Documentation inherited
+  bool collide(
+      const CollisionOption<S>& option = {},
+      CollisionResult<S>* result = nullptr) override
+  {
+    DART_UNUSED(option, result);
+    DART_NOT_IMPLEMENTED;
+    return false;
+  };
+
 protected:
+  /// Returns the parent collision engine
   BulletEngine<S>* get_mutable_bullet_engine();
 
+  /// Returns the parent collision engine
   const BulletEngine<S>* get_bullet_engine() const;
-
-  //  dSpaceID get_ode_space_id() const;
 
 private:
   friend class BulletObject<S>;
-
-  /// Top-level space for all sub-spaces/collisions
-  //  dSpaceID m_ode_space_id;
 };
 
 #if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE

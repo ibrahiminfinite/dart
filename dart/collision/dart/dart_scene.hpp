@@ -53,7 +53,13 @@ public:
   /// Destructor
   ~DartScene() override;
 
+  // Documentation inherited
   ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+
+  // Documentation inherited
+  bool collide(
+      const CollisionOption<S>& option = {},
+      CollisionResult<S>* result = nullptr) override;
 
 protected:
   DartEngine<S>* get_mutable_dart_engine();

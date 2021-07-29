@@ -42,7 +42,74 @@
 namespace dart {
 namespace collision {
 
-//==============================================================================
+namespace {
+
+//========================================================================================
+template <typename S>
+struct FclCollisionCallbackData
+{
+  FclCollisionRequest<S> fcl_request;
+
+  FclCollisionResult<S> fcl_result;
+
+  CollisionOption<S> option;
+
+  CollisionResult<S>* result = nullptr;
+
+  int num_collision_pairs = 0;
+
+  bool done = false;
+
+  bool found_collision() const
+  {
+    if (result) {
+      return result->is_collision();
+    } else {
+      return (found_collision > 0);
+    }
+  }
+};
+
+//========================================================================================
+template <typename S>
+bool collision_callback(
+    FclCollisionObject<S>* fcl_object1,
+    FclCollisionObject<S>* fcl_object2,
+    void* callback_data)
+{
+  auto fcl_callback_data
+      = static_cast<FclCollisionCallbackData<S>*>(callback_data);
+
+  if (fcl_callback_data->done) {
+    return true;
+  }
+
+  const FclCollisionRequest<S>& fcl_request = fcl_callback_data->fcl_request;
+  FclCollisionResult<S>& fcl_result = fcl_callback_data->fcl_result;
+
+  const CollisionOption<S> option = fcl_callback_data->option;
+  CollisionResult<S>* result = fcl_callback_data->result;
+
+  // Clear previous results
+  fcl_result.clear();
+
+  // Perform narrow-phase detection
+  ::fcl::collide(fcl_object1, fcl_object2, fcl_request, fcl_result);
+
+  if (result) {
+    DART_UNUSED(option);
+    DART_NOT_IMPLEMENTED;
+  } else {
+    DART_UNUSED(option);
+    DART_NOT_IMPLEMENTED;
+  }
+
+  return fcl_callback_data->done;
+}
+
+} // namespace
+
+//========================================================================================
 template <typename S>
 FclScene<S>::FclScene(Engine<S>* engine)
   : Scene<S>(engine),
@@ -51,7 +118,7 @@ FclScene<S>::FclScene(Engine<S>* engine)
   // Do nothing
 }
 
-//==============================================================================
+//========================================================================================
 template <typename S>
 ObjectPtr<S> FclScene<S>::create_object(math::GeometryPtr shape)
 {
@@ -71,21 +138,35 @@ ObjectPtr<S> FclScene<S>::create_object(math::GeometryPtr shape)
       new FclObject<S>(this, std::move(shape), fcl_collision_geometry));
 }
 
-//==============================================================================
+//========================================================================================
+template <typename S>
+bool FclScene<S>::collide(
+    const CollisionOption<S>& option, CollisionResult<S>* result)
+{
+  DART_UNUSED(option, result);
+  DART_ASSERT(m_broad_phase_alg);
+
+  FclCollisionCallbackData<S> fcl_callback_data;
+
+  m_broad_phase_alg->collide(&fcl_callback_data, collision_callback);
+  return false;
+};
+
+//========================================================================================
 template <typename S>
 FclEngine<S>* FclScene<S>::get_mutable_fcl_engine()
 {
   return static_cast<FclEngine<S>*>(this->m_engine);
 }
 
-//==============================================================================
+//========================================================================================
 template <typename S>
 const FclEngine<S>* FclScene<S>::get_fcl_engine() const
 {
   return static_cast<const FclEngine<S>*>(this->m_engine);
 }
 
-//==============================================================================
+//========================================================================================
 template <typename S>
 typename FclScene<S>::FCLCollisionManager*
 FclScene<S>::get_fcl_collision_manager()
@@ -93,7 +174,7 @@ FclScene<S>::get_fcl_collision_manager()
   return m_broad_phase_alg.get();
 }
 
-//==============================================================================
+//========================================================================================
 template <typename S>
 const typename FclScene<S>::FCLCollisionManager*
 FclScene<S>::get_fcl_collision_manager() const

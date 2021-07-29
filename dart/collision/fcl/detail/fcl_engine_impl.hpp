@@ -46,16 +46,10 @@ namespace collision {
 
 //==============================================================================
 template <typename S>
-Contact<S> convert_contact(
-    const FclContact<S>& fcl_contact,
-    FclObject<S>* object1,
-    FclObject<S>* object2,
-    const CollisionOption<S>& option)
+ContactPoint<S> convert_contact(
+    const FclContact<S>& fcl_contact, const CollisionOption<S>& option)
 {
-  Contact<S> contact;
-
-  contact.collision_object1 = object1;
-  contact.collision_object2 = object2;
+  ContactPoint<S> contact;
 
   if (option.enable_contact) {
     contact.point = to_vector3<S>(fcl_contact.pos);
@@ -71,16 +65,21 @@ template <typename S>
 void report_contacts(
     int num_contacts,
     const FclCollisionResult<S>& fcl_result,
-    FclObject<S>* b1,
-    FclObject<S>* b2,
+    FclObject<S>* o1,
+    FclObject<S>* o2,
     const CollisionOption<S>& option,
     CollisionResult<S>& result)
 {
+  ContactShape<S> contact_shape;
+  contact_shape.object1 = o1;
+  contact_shape.object2 = o2;
+
   for (auto i = 0; i < num_contacts; ++i) {
-    result.add_contact(
-        convert_contact(fcl_result.getContact(i), b1, b2, option));
+    contact_shape.add_contact_point(
+        convert_contact(fcl_result.getContact(i), option));
 
     if (result.get_num_contacts() >= option.max_num_contacts) {
+      result.add_contact_shape(contact_shape);
       return;
     }
   }

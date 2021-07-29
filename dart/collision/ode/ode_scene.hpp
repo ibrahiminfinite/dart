@@ -52,7 +52,18 @@ public:
   /// Destructor
   ~OdeScene() override;
 
+  // Documentation inherited
   ObjectPtr<S> create_object(math::GeometryPtr shape) override;
+
+  // Documentation inherited
+  bool collide(
+      const CollisionOption<S>& option = {},
+      CollisionResult<S>* result = nullptr) override
+  {
+    DART_NOT_IMPLEMENTED;
+    DART_UNUSED(option, result);
+    return false;
+  };
 
 protected:
   OdeEngine<S>* get_mutable_ode_engine();

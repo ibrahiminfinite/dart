@@ -59,10 +59,6 @@ void test_collide(const EngineT& engine)
     return;
   }
 
-  if (engine->get_type() == collision::BulletEngine<S>::GetType()) {
-    return;
-  }
-
   auto sphere1 = engine->create_sphere_object(0.5);
   auto sphere2 = engine->create_sphere_object(0.5);
   ASSERT_TRUE(sphere1);

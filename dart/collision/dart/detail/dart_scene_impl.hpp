@@ -72,6 +72,16 @@ ObjectPtr<S> DartScene<S>::create_object(math::GeometryPtr shape)
 
 //==============================================================================
 template <typename S>
+bool DartScene<S>::collide(
+    const CollisionOption<S>& option, CollisionResult<S>* result)
+{
+  DART_UNUSED(option, result);
+  DART_NOT_IMPLEMENTED;
+  return false;
+};
+
+//==============================================================================
+template <typename S>
 DartEngine<S>* DartScene<S>::get_mutable_dart_engine()
 {
   return static_cast<DartEngine<S>*>(this->m_engine);

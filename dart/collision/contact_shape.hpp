@@ -32,53 +32,44 @@
 
 #pragma once
 
+#include <vector>
+
 #include "dart/collision/contact.hpp"
+#include "dart/collision/export.hpp"
+#include "dart/collision/type.hpp"
+#include "dart/common/macro.hpp"
+#include "dart/math/type.hpp"
 
 namespace dart {
 namespace collision {
 
-//==============================================================================
-template <typename S>
-constexpr S ContactPoint<S>::get_normal_epsilon()
+/// Contact information of a pair of collision objects
+template <typename S_>
+class ContactShape
 {
-  return 1e-6;
-}
+public:
+  using S = S_;
 
-//==============================================================================
-template <typename S>
-constexpr S ContactPoint<S>::get_normal_epsilon_squared()
-{
-  return 1e-12;
-}
+  /// Default constructor
+  ContactShape();
 
-//==============================================================================
-template <typename S>
-ContactPoint<S>::ContactPoint()
-  : point(math::Vector3<S>::Zero()),
-    normal(math::Vector3<S>::Zero()),
-    force(math::Vector3<S>::Zero()),
-    depth(0)
-{
-  // TODO(MXG): Consider using NaN instead of zero for uninitialized quantities
-  // Do nothing
-}
+  /// First colliding collision object
+  Object<S>* object1;
 
-//==============================================================================
-template <typename S>
-bool ContactPoint<S>::is_zero_normal(const math::Vector3<S>& normal)
-{
-  if (normal.squaredNorm() < get_normal_epsilon_squared())
-    return true;
-  else
-    return false;
-}
+  /// Second colliding collision object
+  Object<S>* object2;
 
-//==============================================================================
-template <typename S>
-bool ContactPoint<S>::is_non_zero_normal(const math::Vector3<S>& normal)
-{
-  return !is_zero_normal(normal);
-}
+  void add_contact_point(const ContactPoint<S>& point);
+
+protected:
+  std::vector<ContactPoint<S>> m_contact_points;
+
+private:
+};
+
+DART_TEMPLATE_CLASS_HEADER(COLLISION, ContactShape)
 
 } // namespace collision
 } // namespace dart
+
+#include "dart/collision/detail/contact_shape_impl.hpp"

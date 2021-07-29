@@ -42,12 +42,12 @@ namespace collision {
 
 /// Contact information of a pair of collision objects
 template <typename S_>
-struct Contact
+struct ContactPoint
 {
   using S = S_;
 
   /// Default constructor
-  Contact();
+  ContactPoint();
 
   /// Contact point w.r.t. the world frame
   math::Vector3<S> point;
@@ -60,12 +60,6 @@ struct Contact
   /// The contact force acting on bodyNode2 is -force, which is the opposite
   /// direction of the force.
   math::Vector3<S> force;
-
-  /// First colliding collision object
-  Object<S>* collision_object1;
-
-  /// Second colliding collision object
-  Object<S>* collision_object2;
 
   /// Penetration depth
   S depth;
@@ -84,7 +78,7 @@ struct Contact
   static bool is_non_zero_normal(const math::Vector3<S>& normal);
 };
 
-DART_TEMPLATE_STRUCT_HEADER(COLLISION, Contact)
+DART_TEMPLATE_STRUCT_HEADER(COLLISION, ContactPoint)
 
 } // namespace collision
 } // namespace dart

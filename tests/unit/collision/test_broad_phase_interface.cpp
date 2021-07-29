@@ -30,79 +30,71 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include <dart/collision/collision.hpp>
+#include <dart/math/math.hpp>
+#include <gtest/gtest.h>
 
-#include "dart/collision/collision_result.hpp"
-
-namespace dart {
-namespace collision {
+using namespace dart;
 
 //==============================================================================
-template <typename S>
-void CollisionResult<S>::add_contact(const ContactPoint<S>& contact)
+template <typename T>
+struct BroadPhaseTest : public testing::Test
 {
-  m_contacts.push_back(contact);
+  using Type = T;
+};
+
+//==============================================================================
+using Types = testing::Types</*double, */ float>;
+
+//==============================================================================
+TYPED_TEST_SUITE(BroadPhaseTest, Types);
+
+//==============================================================================
+template <typename EngineT>
+void test_scene_collide(const EngineT& engine)
+{
+  using S = typename EngineT::element_type::S;
+
+  if (!engine) {
+    return;
+  }
+
+  auto scene = engine->create_scene();
+  ASSERT_TRUE(scene);
+
+  auto sphere1 = scene->create_sphere_object(0.5);
+  auto sphere2 = scene->create_sphere_object(0.5);
+  ASSERT_TRUE(sphere1);
+  ASSERT_TRUE(sphere2);
+
+  sphere1->set_position(math::Vector3<S>(-1, 0, 0));
+  sphere2->set_position(math::Vector3<S>(1, 0, 0));
+  EXPECT_FALSE(scene->collide());
+
+  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
+  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
+  EXPECT_FALSE(scene->collide());
+
+  //  collision::CollisionOption<S> option;
+  //  option.enable_contact = true;
+  //  option.max_num_contacts = 10;
+  //  collision::CollisionResult<S> result;
+  //  sphere1->set_position(math::Vector3<S>(-0.25, 0, 0));
+  //  sphere2->set_position(math::Vector3<S>(0.25, 0, 0));
+  //  EXPECT_FALSE(scene->collide(option, &result));
 }
 
 //==============================================================================
-template <typename S>
-void CollisionResult<S>::add_contact_shape(const ContactShape<S>& contact_shape)
+TYPED_TEST(BroadPhaseTest, SceneCollide)
 {
-  m_contact_shapes.push_back(contact_shape);
+  using S = typename TestFixture::Type;
+
+  // test_scene_collide(collision::DartEngine<S>::Create());
+  test_scene_collide(collision::FclEngine<S>::Create());
+#if DART_HAVE_ODE
+  test_scene_collide(collision::OdeEngine<S>::Create());
+#endif
+#if DART_HAVE_Bullet
+  test_scene_collide(collision::BulletEngine<S>::Create());
+#endif
 }
-
-//==============================================================================
-template <typename S>
-int CollisionResult<S>::get_num_contacts() const
-{
-  return m_contacts.size();
-}
-
-//==============================================================================
-template <typename S>
-ContactPoint<S>& CollisionResult<S>::get_mutable_contact(int index)
-{
-  assert(0 <= index && static_cast<std::size_t>(index) < m_contacts.size());
-
-  return m_contacts[index];
-}
-
-//==============================================================================
-template <typename S>
-const ContactPoint<S>& CollisionResult<S>::get_contact(int index) const
-{
-  assert(0 <= index && static_cast<std::size_t>(index) < m_contacts.size());
-
-  return m_contacts[index];
-}
-
-//==============================================================================
-template <typename S>
-const std::vector<ContactPoint<S>>& CollisionResult<S>::get_contacts() const
-{
-  return m_contacts;
-}
-
-//==============================================================================
-template <typename S>
-bool CollisionResult<S>::is_collision() const
-{
-  return !m_contacts.empty();
-}
-
-//==============================================================================
-template <typename S>
-CollisionResult<S>::operator bool() const
-{
-  return is_collision();
-}
-
-//==============================================================================
-template <typename S>
-void CollisionResult<S>::clear()
-{
-  m_contacts.clear();
-}
-
-} // namespace collision
-} // namespace dart

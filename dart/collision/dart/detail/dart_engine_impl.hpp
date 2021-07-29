@@ -72,13 +72,17 @@ int collide_sphere_sphere(
     penetration = rsum;
 
     if (result) {
-      Contact<S> contact;
-      contact.collision_object1 = o1;
-      contact.collision_object2 = o2;
+      ContactPoint<S> contact;
       contact.point = point;
       contact.normal = normal;
       contact.depth = penetration;
-      result->add_contact(contact);
+
+      ContactShape<S> contact_shape;
+      contact_shape.object1 = o1;
+      contact_shape.object2 = o2;
+      contact_shape.add_contact_point(contact);
+
+      result->add_contact_shape(contact_shape);
     }
     return 1;
   }
@@ -88,13 +92,17 @@ int collide_sphere_sphere(
   penetration = rsum - normal_sqr;
 
   if (result) {
-    Contact<S> contact;
-    contact.collision_object1 = o1;
-    contact.collision_object2 = o2;
+    ContactPoint<S> contact;
     contact.point = point;
     contact.normal = normal;
     contact.depth = penetration;
-    result->add_contact(contact);
+
+    ContactShape<S> contact_shape;
+    contact_shape.object1 = o1;
+    contact_shape.object2 = o2;
+    contact_shape.add_contact_point(contact);
+
+    result->add_contact_shape(contact_shape);
   }
 
   return 1;

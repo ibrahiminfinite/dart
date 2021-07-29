@@ -30,55 +30,12 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
-
-#include "dart/collision/contact.hpp"
+#include "dart/collision/contact_shape.hpp"
 
 namespace dart {
 namespace collision {
 
-//==============================================================================
-template <typename S>
-constexpr S ContactPoint<S>::get_normal_epsilon()
-{
-  return 1e-6;
-}
-
-//==============================================================================
-template <typename S>
-constexpr S ContactPoint<S>::get_normal_epsilon_squared()
-{
-  return 1e-12;
-}
-
-//==============================================================================
-template <typename S>
-ContactPoint<S>::ContactPoint()
-  : point(math::Vector3<S>::Zero()),
-    normal(math::Vector3<S>::Zero()),
-    force(math::Vector3<S>::Zero()),
-    depth(0)
-{
-  // TODO(MXG): Consider using NaN instead of zero for uninitialized quantities
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S>
-bool ContactPoint<S>::is_zero_normal(const math::Vector3<S>& normal)
-{
-  if (normal.squaredNorm() < get_normal_epsilon_squared())
-    return true;
-  else
-    return false;
-}
-
-//==============================================================================
-template <typename S>
-bool ContactPoint<S>::is_non_zero_normal(const math::Vector3<S>& normal)
-{
-  return !is_zero_normal(normal);
-}
+DART_TEMPLATE_CLASS_SOURCE(ContactShape)
 
 } // namespace collision
 } // namespace dart

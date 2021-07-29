@@ -6,12 +6,11 @@
  */
 
 #include <iostream>
-#include "dart/common/eigen_include.hpp"
 #include <dart/dart.hpp>
 #include <gtest/gtest.h>
 #if DART_HAVE_FLANN
 #  include <flann/flann.hpp>
-#endif // DART_HAVE_FLANN
+#endif
 #include "dart/test/TestHelpers.hpp"
 
 /* *********************************************************************************************

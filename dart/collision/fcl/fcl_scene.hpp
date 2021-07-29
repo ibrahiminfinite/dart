@@ -36,6 +36,7 @@
 #include "dart/collision/fcl/fcl_type.hpp"
 #include "dart/collision/scene.hpp"
 #include "dart/collision/type.hpp"
+#include "dart/common/macro.hpp"
 
 namespace dart {
 namespace collision {
@@ -58,9 +59,16 @@ public:
   // Documentation inherited
   ObjectPtr<S> create_object(math::GeometryPtr shape) override;
 
+  // Documentation inherited
+  bool collide(
+      const CollisionOption<S>& option = {},
+      CollisionResult<S>* result = nullptr) override;
+
 protected:
+  /// Returns FCL engine
   FclEngine<S>* get_mutable_fcl_engine();
 
+  /// Returns FCL engine
   const FclEngine<S>* get_fcl_engine() const;
 
   /// Return FCL collision manager that is also a broad-phase algorithm
@@ -73,13 +81,7 @@ protected:
   std::unique_ptr<FCLCollisionManager> m_broad_phase_alg;
 };
 
-#if DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE
-extern template class DART_COLLISION_API FclScene<double>;
-#endif
-
-#if DART_BUILD_TEMPLATE_CODE_FOR_FLOAT
-extern template class DART_COLLISION_API FclScene<float>;
-#endif
+DART_TEMPLATE_CLASS_HEADER(COLLISION, FclScene)
 
 } // namespace collision
 } // namespace dart

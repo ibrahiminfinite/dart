@@ -35,6 +35,7 @@
 #include <vector>
 
 #include "dart/collision/contact.hpp"
+#include "dart/collision/contact_shape.hpp"
 #include "dart/collision/export.hpp"
 #include "dart/common/macro.hpp"
 
@@ -49,19 +50,22 @@ public:
   using S = S_;
 
   /// Adds one contact
-  void add_contact(const Contact<S>& contact);
+  void add_contact(const ContactPoint<S>& contact);
+
+  /// Adds contact shape for a pair of collision objects
+  void add_contact_shape(const ContactShape<S>& contact_shape);
 
   /// Returns number of contacts
   int get_num_contacts() const;
 
   /// Returns the index-th contact
-  Contact<S>& get_mutable_contact(int index);
+  ContactPoint<S>& get_mutable_contact(int index);
 
   /// Returns (const) the index-th contact
-  const Contact<S>& get_contact(int index) const;
+  const ContactPoint<S>& get_contact(int index) const;
 
   /// Returns contacts
-  const std::vector<Contact<S>>& get_contacts() const;
+  const std::vector<ContactPoint<S>>& get_contacts() const;
 
   /// Returns binary collision result
   bool is_collision() const;
@@ -74,7 +78,9 @@ public:
 
 protected:
   /// List of contact information for each contact
-  std::vector<Contact<S>> m_contacts;
+  std::vector<ContactPoint<S>> m_contacts;
+
+  std::vector<ContactShape<S>> m_contact_shapes;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, CollisionResult)
