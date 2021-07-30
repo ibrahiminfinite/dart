@@ -43,7 +43,7 @@
 #include <osg/Camera>
 #include <osg/RenderInfo>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/external/imgui/imgui.h"
 #include "dart/external/imgui/imgui_impl_opengl2.h"
 #include "dart/gui/osg/ImGuiWidget.hpp"

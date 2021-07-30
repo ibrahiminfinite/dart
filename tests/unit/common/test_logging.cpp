@@ -32,7 +32,7 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/common/logging.hpp"
 
 using namespace dart;

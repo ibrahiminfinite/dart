@@ -36,10 +36,10 @@
 #include <string>
 #include <vector>
 
-#include "dart/common/LockableReference.hpp"
-#include "dart/common/Signal.hpp"
 #include "dart/common/Subject.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/lockable_reference.hpp"
+#include "dart/common/signal.hpp"
 #include "dart/dynamics/Frame.hpp"
 #include "dart/dynamics/InvalidIndex.hpp"
 #include "dart/dynamics/export.hpp"

@@ -30,8 +30,9 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <dart/common/Factory.hpp>
 #include <gtest/gtest.h>
+
+#include "dart/common/factory.hpp"
 
 using namespace dart;
 

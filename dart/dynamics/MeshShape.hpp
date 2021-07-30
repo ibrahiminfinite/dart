@@ -37,7 +37,7 @@
 
 #include <assimp/scene.h>
 
-#include "dart/common/ResourceRetriever.hpp"
+#include "dart/common/resource_retriever.hpp"
 #include "dart/dynamics/Shape.hpp"
 #include "dart/dynamics/export.hpp"
 

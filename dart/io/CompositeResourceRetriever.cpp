@@ -34,8 +34,8 @@
 
 #include <iostream>
 
-#include "dart/common/Console.hpp"
-#include "dart/common/Uri.hpp"
+#include "dart/common/console.hpp"
+#include "dart/common/uri.hpp"
 
 namespace dart {
 namespace io {

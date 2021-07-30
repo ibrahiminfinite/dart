@@ -34,7 +34,7 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/common/Timer.hpp"
+#include "dart/common/timer.hpp"
 #include "dart/dynamics/RevoluteJoint.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/math/Geometry.hpp"

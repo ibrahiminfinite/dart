@@ -36,8 +36,8 @@
 #include <fstream>
 #include <iostream>
 
-#include "dart/common/Console.hpp"
-#include "dart/common/LocalResourceRetriever.hpp"
+#include "dart/common/console.hpp"
+#include "dart/common/local_resource_retriever.hpp"
 #include "dart/config.hpp"
 
 namespace dart {

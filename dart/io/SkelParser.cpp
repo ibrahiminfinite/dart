@@ -36,7 +36,7 @@
 #include <cstddef>
 #include <vector>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/common/eigen_include.hpp"
 #include "dart/config.hpp"
 #include "dart/dynamics/BallJoint.hpp"

@@ -36,7 +36,7 @@
 #include <iostream>
 #include <vector>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/ConstraintBase.hpp"
 #include "dart/dynamics/ConstraintSolver.hpp"
 

@@ -37,8 +37,8 @@
 #include <vector>
 
 #include "dart/common/EmbeddedAspect.hpp"
-#include "dart/common/Signal.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/signal.hpp"
 #include "dart/config.hpp"
 #include "dart/dynamics/Frame.hpp"
 #include "dart/dynamics/Node.hpp"

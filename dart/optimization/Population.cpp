@@ -32,7 +32,7 @@
 
 #include "dart/optimization/Population.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/math/Random.hpp"
 
 namespace dart {

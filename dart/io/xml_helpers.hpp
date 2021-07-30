@@ -36,9 +36,9 @@
 
 #include <tinyxml2.h>
 
-#include "dart/common/Console.hpp"
-#include "dart/common/ResourceRetriever.hpp"
+#include "dart/common/console.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/resource_retriever.hpp"
 #include "dart/io/export.hpp"
 #include "dart/math/MathTypes.hpp"
 #include "dart/math/type.hpp"

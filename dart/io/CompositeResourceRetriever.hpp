@@ -37,7 +37,7 @@
 #include <vector>
 
 #include "dart/common/ClassWithVirtualBase.hpp"
-#include "dart/common/ResourceRetriever.hpp"
+#include "dart/common/resource_retriever.hpp"
 #include "dart/io/export.hpp"
 
 namespace dart {

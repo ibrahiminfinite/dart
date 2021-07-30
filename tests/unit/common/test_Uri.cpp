@@ -32,7 +32,7 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/common/Uri.hpp"
+#include "dart/common/uri.hpp"
 
 using dart::common::Uri;
 

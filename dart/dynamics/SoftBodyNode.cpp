@@ -36,7 +36,7 @@
 #include <string>
 #include <vector>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/Joint.hpp"
 #include "dart/dynamics/PointMass.hpp"
 #include "dart/dynamics/Shape.hpp"

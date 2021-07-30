@@ -38,7 +38,7 @@
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 #include <BulletCollision/Gimpact/btGImpactShape.h>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/config.hpp"
 #include "dart/dynamics/BoxShape.hpp"
 #include "dart/dynamics/CapsuleShape.hpp"

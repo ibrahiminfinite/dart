@@ -32,7 +32,7 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/common/LocalResourceRetriever.hpp"
+#include "dart/common/local_resource_retriever.hpp"
 #include "dart/config.hpp"
 
 using dart::common::LocalResourceRetriever;

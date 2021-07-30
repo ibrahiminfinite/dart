@@ -42,9 +42,9 @@
   #include <assimp/postprocess.h>
   #include <assimp/scene.h>
 
-  #include "dart/common/LocalResourceRetriever.hpp"
-  #include "dart/common/Resource.hpp"
+  #include "dart/common/local_resource_retriever.hpp"
   #include "dart/common/logging.hpp"
+  #include "dart/common/resource.hpp"
   #include "dart/common/string.hpp"
   #include "dart/io/assimp_mesh_loader.hpp"
 

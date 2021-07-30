@@ -36,7 +36,7 @@
 #include <iostream>
 #include <string>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 
 namespace dart {
 namespace common {

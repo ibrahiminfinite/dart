@@ -33,7 +33,7 @@
 #ifndef DART_IO_SDFPARSER_HPP_
 #define DART_IO_SDFPARSER_HPP_
 
-#include "dart/common/ResourceRetriever.hpp"
+#include "dart/common/resource_retriever.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/io/export.hpp"
 #include "dart/simulation/World.hpp"

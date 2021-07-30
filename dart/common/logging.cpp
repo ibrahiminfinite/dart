@@ -37,7 +37,7 @@
 #if DART_HAVE_spdlog
   #include <spdlog/spdlog.h>
 #else
-  #include "dart/common/Console.hpp"
+  #include "dart/common/console.hpp"
 #endif
 
 namespace dart {

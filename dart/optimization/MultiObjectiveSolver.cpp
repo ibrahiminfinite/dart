@@ -34,7 +34,7 @@
 
 #include <fstream>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/optimization/MultiObjectiveProblem.hpp"
 
 namespace dart {

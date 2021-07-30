@@ -40,11 +40,11 @@
 
 #include <tinyxml2.h>
 
-#include "dart/common/Console.hpp"
-#include "dart/common/LocalResourceRetriever.hpp"
-#include "dart/common/ResourceRetriever.hpp"
-#include "dart/common/Uri.hpp"
+#include "dart/common/console.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/local_resource_retriever.hpp"
+#include "dart/common/resource_retriever.hpp"
+#include "dart/common/uri.hpp"
 #include "dart/dynamics/BallJoint.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/BoxShape.hpp"

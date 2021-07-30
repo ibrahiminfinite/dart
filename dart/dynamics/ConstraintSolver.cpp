@@ -34,7 +34,7 @@
 
 #include <algorithm>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/CollisionFilter.hpp"
 #include "dart/dynamics/CollisionGroup.hpp"

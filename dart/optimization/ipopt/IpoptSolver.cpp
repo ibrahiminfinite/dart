@@ -32,7 +32,7 @@
 
 #include "dart/optimization/ipopt/IpoptSolver.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/common/macro.hpp"
 #include "dart/math/Helpers.hpp"
 #include "dart/optimization/Function.hpp"

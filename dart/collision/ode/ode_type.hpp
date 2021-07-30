@@ -32,7 +32,7 @@
 
 #pragma once
 
-#include "dart/common/SmartPointer.hpp"
+#include "dart/common/memory.hpp"
 
 namespace dart {
 namespace collision {

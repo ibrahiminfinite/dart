@@ -32,7 +32,7 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/common/Timer.hpp"
+#include "dart/common/timer.hpp"
 
 using namespace dart::common;
 

@@ -32,7 +32,7 @@
 
 #include "dart/optimization/Function.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 
 namespace dart {
 namespace optimization {

@@ -34,7 +34,7 @@
 
 #if DART_HAVE_OCTOMAP
 
-  #include "dart/common/Console.hpp"
+  #include "dart/common/console.hpp"
   #include "dart/math/Helpers.hpp"
 
 namespace dart {

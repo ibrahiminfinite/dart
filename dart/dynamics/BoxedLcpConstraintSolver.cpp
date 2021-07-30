@@ -38,7 +38,7 @@
   #include <iostream>
 #endif
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/ConstraintBase.hpp"
 #include "dart/dynamics/DantzigBoxedLcpSolver.hpp"
 #include "dart/dynamics/PgsBoxedLcpSolver.hpp"

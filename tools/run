@@ -145,7 +145,7 @@ fi
 full_build_dir=$project_dir$build_dir_prefix$os-$dart_version-$build_mode/
 
 _print_time() {
-    echo "Elapsed time: $(( ${1} / 3600 ))h $(( (${1} / 60) % 60 ))m $(( ${1} % 60 ))s"
+    echo "Total build time: $(( ${1} / 3600 ))h $(( (${1} / 60) % 60 ))m $(( ${1} % 60 ))s"
 }
 
 launch() {
@@ -196,8 +196,6 @@ clean_all() {
 }
 
 _build() {
-  start_time=$(date +%s)
-
   full_image_name=$1
 
   echo "======================================================================="
@@ -207,6 +205,8 @@ _build() {
   echo "======================================================================="
 
   docker pull $full_image_name
+
+  start_time=$(date +%s)
 
   docker run \
     -it \

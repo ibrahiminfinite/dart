@@ -34,7 +34,7 @@
 
 #include <cmath>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/CylinderShape.hpp"
 #include "dart/dynamics/SphereShape.hpp"
 #include "dart/math/Helpers.hpp"

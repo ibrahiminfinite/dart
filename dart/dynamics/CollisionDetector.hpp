@@ -36,8 +36,8 @@
 #include <map>
 #include <vector>
 
-#include "dart/common/Factory.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/factory.hpp"
 #include "dart/dynamics/CollisionOption.hpp"
 #include "dart/dynamics/CollisionResult.hpp"
 #include "dart/dynamics/Contact.hpp"

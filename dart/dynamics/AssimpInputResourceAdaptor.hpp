@@ -37,8 +37,8 @@
 #include <assimp/IOSystem.hpp>
 #include <assimp/cfileio.h>
 
-#include "dart/common/Resource.hpp"
-#include "dart/common/ResourceRetriever.hpp"
+#include "dart/common/resource.hpp"
+#include "dart/common/resource_retriever.hpp"
 #include "dart/dynamics/export.hpp"
 
 namespace dart {

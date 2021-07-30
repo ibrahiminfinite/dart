@@ -38,7 +38,7 @@
 #include "dart/test/TestHelpers.hpp"
 
 #include "dart/dynamics/dart/DARTCollisionDetector.hpp"
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/io/SkelParser.hpp"

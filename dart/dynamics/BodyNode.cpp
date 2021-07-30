@@ -36,8 +36,8 @@
 #include <string>
 #include <vector>
 
-#include "dart/common/Console.hpp"
 #include "dart/common/StlHelpers.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/Chain.hpp"
 #include "dart/dynamics/EndEffector.hpp"
 #include "dart/dynamics/Joint.hpp"

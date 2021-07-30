@@ -36,7 +36,7 @@
 #include <cmath>
 #include <limits>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/BoxShape.hpp"
 #include "dart/dynamics/HeightmapShape.hpp"
 

@@ -47,7 +47,7 @@
 #include <urdf_parser/urdf_parser.h>
 #include <urdf_world/world.h>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 
 const bool debug = false;
 

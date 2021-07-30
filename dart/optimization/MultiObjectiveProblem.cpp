@@ -36,7 +36,7 @@
 #include <limits>
 #include <numeric>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/math/Helpers.hpp"
 #include "dart/optimization/Function.hpp"
 

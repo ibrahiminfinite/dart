@@ -39,7 +39,7 @@
 
 #include "dart/common/ClassWithVirtualBase.hpp"
 #include "dart/common/Empty.hpp"
-#include "dart/common/NameManager.hpp"
+#include "dart/common/name_manager.hpp"
 #include "dart/dynamics/Node.hpp"
 #include "dart/dynamics/export.hpp"
 

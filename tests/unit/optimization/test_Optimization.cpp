@@ -38,7 +38,7 @@
 
 #include <gtest/gtest.h>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/common/eigen_include.hpp"
 #include "dart/config.hpp"
 #include "dart/dynamics/FreeJoint.hpp"

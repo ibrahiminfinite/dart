@@ -6,12 +6,69 @@ on:
   push:
     branches:
       - "**"
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      os:
+        description: "OS: {ubuntu-bionic|ubuntu-focal|ubuntu-impish}"
+        required: true
+        default: "ubuntu-focal"
+      platform:
+        description: "Platform architecture: {linux/amd64, linux/arm64, linux/ppc64le}"
+        required: true
+        default: "linux/amd64"
+      compiler:
+        description: "Compiler: {gcc, clang}"
+        required: true
+        default: "gcc"
+      build_type:
+        description: "Build type: {Release, Debug}"
+        required: true
+        default: "Release"
+      build_dartpy:
+        description: "Build dartpy: {ON, OFF}"
+        required: true
+        default: "ON"
   schedule:
-    # Run every day at 02:00
-    - cron: "0 2 * * 0-6"
+    # Run at 09:00 UTC (02:00 PDT) every other day
+    - cron: "0 9 * * 0/2"
 
 jobs:
-  ubuntu:
+  manual_build:
+    if: github.event_name == 'workflow_dispatch'
+    name: ${{ github.event.inputs.os }}.${{ github.event.inputs.platform }}.${{ github.event.inputs.build_type }}
+    runs-on: ubuntu-latest
+    env:
+      # Hosted on: https://hub.docker.com/repository/docker/dartsim/dart-dev
+      DART_DEV_IMAGE: dartsim/dart-dev
+      DOCKER_TAG: ${{ github.event.inputs.os }}-v7.0
+      PLATFORM: ${{ github.event.inputs.platform }}
+      COMPILER: ${{ github.event.inputs.compiler }}
+      BUILD_TYPE: ${{ github.event.inputs.build_type }}
+      BUILD_DARTPY: "${{ github.event.inputs.build_dartpy }}"
+    steps:
+      # https://github.com/marketplace/actions/docker-setup-qemu
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Pull dev container
+        run: docker pull $DART_DEV_IMAGE:$DOCKER_TAG
+      - name: Build
+        run: |
+          if [ "$CODECOV" = "ON" ]; then
+            ci_env=`bash <(curl -s https://codecov.io/env)`
+          fi
+          docker run \
+            $ci_env -e CI=true \
+            --platform $PLATFORM \
+            --volume $GITHUB_WORKSPACE:$GITHUB_WORKSPACE \
+            --env-file ./.ci/docker/env.list \
+            $DART_DEV_IMAGE:$DOCKER_TAG \
+            /bin/sh -c "cd $GITHUB_WORKSPACE && ./.ci/build.sh"
+
+  schedule_build:
+    if: github.event_name != 'workflow_dispatch'
     name: ${{ matrix.os }}.${{ matrix.platform }}.${{ matrix.build_type }}
     runs-on: ubuntu-20.04
     strategy:

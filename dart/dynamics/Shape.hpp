@@ -36,10 +36,10 @@
 #include <memory>
 
 #include "dart/common/ClassWithVirtualBase.hpp"
-#include "dart/common/Signal.hpp"
 #include "dart/common/Subject.hpp"
 #include "dart/common/VersionCounter.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/signal.hpp"
 #include "dart/dynamics/SmartPointer.hpp"
 #include "dart/dynamics/export.hpp"
 #include "dart/math/Geometry.hpp"

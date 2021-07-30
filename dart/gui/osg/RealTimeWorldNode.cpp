@@ -32,7 +32,7 @@
 
 #include "dart/gui/osg/RealTimeWorldNode.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/simulation/World.hpp"
 
 namespace dart {

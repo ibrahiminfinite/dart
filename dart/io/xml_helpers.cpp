@@ -35,8 +35,8 @@
 #include <iostream>
 #include <vector>
 
-#include "dart/common/Console.hpp"
-#include "dart/common/LocalResourceRetriever.hpp"
+#include "dart/common/console.hpp"
+#include "dart/common/local_resource_retriever.hpp"
 #include "dart/common/string.hpp"
 #include "dart/math/Geometry.hpp"
 #include "dart/math/type.hpp"

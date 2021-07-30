@@ -32,7 +32,7 @@
 
 #include "dart/dynamics/PointCloudShape.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 
 namespace dart {
 namespace dynamics {

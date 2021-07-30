@@ -36,7 +36,7 @@
 #include "dart/common/eigen_include.hpp"
 #include <gtest/gtest.h>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/Joint.hpp"
 #include "dart/dynamics/PointMass.hpp"
 #include "dart/dynamics/Skeleton.hpp"

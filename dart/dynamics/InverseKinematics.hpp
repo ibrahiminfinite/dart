@@ -36,8 +36,8 @@
 #include <functional>
 #include <memory>
 
-#include "dart/common/Signal.hpp"
 #include "dart/common/Subject.hpp"
+#include "dart/common/signal.hpp"
 #include "dart/common/sub_ptr.hpp"
 #include "dart/dynamics/JacobianNode.hpp"
 #include "dart/dynamics/SmartPointer.hpp"

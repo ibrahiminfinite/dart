@@ -34,9 +34,9 @@
 #define DART_DYNAMICS_SHAPEFRAME_HPP_
 
 #include "dart/common/AspectWithVersion.hpp"
-#include "dart/common/Signal.hpp"
 #include "dart/common/SpecializedForAspect.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/signal.hpp"
 #include "dart/dynamics/EllipsoidShape.hpp"
 #include "dart/dynamics/FixedFrame.hpp"
 #include "dart/dynamics/TemplatedJacobianNode.hpp"

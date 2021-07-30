@@ -40,7 +40,7 @@
 #include "dart/collision/export.hpp"
 #include "dart/collision/object.hpp"
 #include "dart/collision/type.hpp"
-#include "dart/common/Factory.hpp"
+#include "dart/common/factory.hpp"
 #include "dart/math/SmartPointer.hpp"
 
 namespace dart {

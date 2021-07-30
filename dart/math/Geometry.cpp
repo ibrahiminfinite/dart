@@ -39,7 +39,7 @@
 #include <iostream>
 #include <vector>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/math/Helpers.hpp"
 
 #define DART_EPSILON 1e-6

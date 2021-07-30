@@ -39,9 +39,9 @@
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
 
-#include "dart/common/Console.hpp"
-#include "dart/common/LocalResourceRetriever.hpp"
-#include "dart/common/Uri.hpp"
+#include "dart/common/console.hpp"
+#include "dart/common/local_resource_retriever.hpp"
+#include "dart/common/uri.hpp"
 #include "dart/config.hpp"
 #include "dart/dynamics/AssimpInputResourceAdaptor.hpp"
 #include "dart/dynamics/BoxShape.hpp"

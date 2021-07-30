@@ -40,8 +40,8 @@
 #include "dart/common/eigen_include.hpp"
 
 // Local Files
-#include "dart/common/LocalResourceRetriever.hpp"
-#include "dart/common/Uri.hpp"
+#include "dart/common/local_resource_retriever.hpp"
+#include "dart/common/uri.hpp"
 #include "dart/dynamics/dynamics.hpp"
 #include "dart/io/CompositeResourceRetriever.hpp"
 #include "dart/io/DartResourceRetriever.hpp"

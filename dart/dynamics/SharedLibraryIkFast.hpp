@@ -33,7 +33,7 @@
 #ifndef DART_DYNAMICS_SHAREDLIBRARYIKFAST_HPP_
 #define DART_DYNAMICS_SHAREDLIBRARYIKFAST_HPP_
 
-#include "dart/common/SharedLibrary.hpp"
+#include "dart/common/shared_library.hpp"
 #include "dart/dynamics/IkFast.hpp"
 #include "dart/dynamics/export.hpp"
 

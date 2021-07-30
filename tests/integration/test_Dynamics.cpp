@@ -37,7 +37,7 @@
 
 #include "dart/test/TestHelpers.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/SimpleFrame.hpp"
 #include "dart/dynamics/Skeleton.hpp"

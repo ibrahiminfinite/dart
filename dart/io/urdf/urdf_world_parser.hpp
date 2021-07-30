@@ -44,8 +44,8 @@
 #include <urdf_model/twist.h>
 #include <urdf_world/world.h>
 
-#include "dart/common/ResourceRetriever.hpp"
-#include "dart/common/Uri.hpp"
+#include "dart/common/resource_retriever.hpp"
+#include "dart/common/uri.hpp"
 #include "dart/io/export.hpp"
 
 namespace dart {

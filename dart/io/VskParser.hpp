@@ -33,8 +33,8 @@
 #ifndef DART_IO_VSKPARSER_HPP_
 #define DART_IO_VSKPARSER_HPP_
 
-#include "dart/common/ResourceRetriever.hpp"
-#include "dart/common/Uri.hpp"
+#include "dart/common/resource_retriever.hpp"
+#include "dart/common/uri.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/io/export.hpp"
 #include "dart/math/constant.hpp"

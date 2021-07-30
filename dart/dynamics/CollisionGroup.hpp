@@ -37,7 +37,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "dart/common/Observer.hpp"
+#include "dart/common/observer.hpp"
 #include "dart/dynamics/CollisionOption.hpp"
 #include "dart/dynamics/CollisionResult.hpp"
 #include "dart/dynamics/DistanceOption.hpp"

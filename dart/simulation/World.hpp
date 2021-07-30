@@ -43,11 +43,11 @@
 #include <string>
 #include <vector>
 
-#include "dart/common/NameManager.hpp"
-#include "dart/common/SmartPointer.hpp"
 #include "dart/common/Subject.hpp"
-#include "dart/common/Timer.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/memory.hpp"
+#include "dart/common/name_manager.hpp"
+#include "dart/common/timer.hpp"
 #include "dart/dynamics/CollisionOption.hpp"
 #include "dart/dynamics/SimpleFrame.hpp"
 #include "dart/dynamics/Skeleton.hpp"

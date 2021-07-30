@@ -35,8 +35,8 @@
 #include <cassert>
 #include <sstream>
 
-#include "dart/common/Console.hpp"
-#include "dart/common/SharedLibrary.hpp"
+#include "dart/common/console.hpp"
+#include "dart/common/shared_library.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 
 namespace dart {

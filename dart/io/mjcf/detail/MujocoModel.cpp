@@ -32,7 +32,7 @@
 
 #include "dart/io/mjcf/detail/MujocoModel.hpp"
 
-#include "dart/common/LocalResourceRetriever.hpp"
+#include "dart/common/local_resource_retriever.hpp"
 #include "dart/io/CompositeResourceRetriever.hpp"
 #include "dart/io/DartResourceRetriever.hpp"
 #include "dart/io/mjcf/detail/Utils.hpp"

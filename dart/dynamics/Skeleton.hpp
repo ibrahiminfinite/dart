@@ -35,8 +35,8 @@
 
 #include <mutex>
 
-#include "dart/common/NameManager.hpp"
 #include "dart/common/VersionCounter.hpp"
+#include "dart/common/name_manager.hpp"
 #include "dart/dynamics/EndEffector.hpp"
 #include "dart/dynamics/HierarchicalIK.hpp"
 #include "dart/dynamics/Joint.hpp"

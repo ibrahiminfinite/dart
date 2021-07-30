@@ -32,7 +32,7 @@
 
 #include "dart/dynamics/ZeroDofJoint.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/math/Helpers.hpp"

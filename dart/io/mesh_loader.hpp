@@ -32,8 +32,8 @@
 
 #pragma once
 
-#include "dart/common/ResourceRetriever.hpp"
-#include "dart/common/Uri.hpp"
+#include "dart/common/resource_retriever.hpp"
+#include "dart/common/uri.hpp"
 #include "dart/io/export.hpp"
 #include "dart/math/geometry/tri_mesh.hpp"
 

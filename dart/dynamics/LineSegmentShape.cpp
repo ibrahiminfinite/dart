@@ -32,7 +32,7 @@
 
 #include "dart/dynamics/LineSegmentShape.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/math/Geometry.hpp"
 
 namespace dart {

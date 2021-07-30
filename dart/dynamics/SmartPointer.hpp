@@ -33,7 +33,7 @@
 #ifndef DART_DYNAMICS_SMARTPOINTER_HPP_
 #define DART_DYNAMICS_SMARTPOINTER_HPP_
 
-#include "dart/common/SmartPointer.hpp"
+#include "dart/common/memory.hpp"
 #include "dart/dynamics/detail/BodyNodePtr.hpp"
 #include "dart/dynamics/detail/DegreeOfFreedomPtr.hpp"
 #include "dart/dynamics/detail/InverseKinematicsPtr.hpp"

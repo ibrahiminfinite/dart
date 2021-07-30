@@ -32,7 +32,7 @@
 
 #include "dart/gui/osg/render/WarningShapeNode.hpp"
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/Entity.hpp"
 #include "dart/dynamics/Shape.hpp"
 #include "dart/gui/osg/ShapeFrameNode.hpp"

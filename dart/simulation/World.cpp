@@ -42,7 +42,7 @@
 #include <string>
 #include <vector>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/dynamics/BoxedLcpConstraintSolver.hpp"
 #include "dart/dynamics/CollisionGroup.hpp"
 #include "dart/dynamics/ConstrainedGroup.hpp"

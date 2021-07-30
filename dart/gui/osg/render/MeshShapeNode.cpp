@@ -40,7 +40,7 @@
 #include <osg/Texture2D>
 #include <osgDB/ReadFile>
 
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/common/filesystem.hpp"
 #include "dart/dynamics/MeshShape.hpp"
 #include "dart/dynamics/SimpleFrame.hpp"

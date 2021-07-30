@@ -36,7 +36,7 @@
 #include <cassert>
 
 #include "dart/common/Aspect.hpp"
-#include "dart/common/Console.hpp"
+#include "dart/common/console.hpp"
 #include "dart/common/macro.hpp"
 
 namespace dart {
