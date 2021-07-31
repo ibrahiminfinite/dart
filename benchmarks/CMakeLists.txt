@@ -12,6 +12,12 @@ if(APPLE)
     message(WARNING "Building benchmarks on macOS Catalina and lower is disabled")
     return()
   endif()
+else()
+  # TODO(JS): Resolve
+  if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    message(WARNING "Building benchmarks for Ubuntu + Clang is disabled")
+    return()
+  endif()
 endif()
 
 # Fetch GoogleTest
