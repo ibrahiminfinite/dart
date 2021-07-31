@@ -6,19 +6,16 @@ on:
   push:
     branches:
       - "**"
-  schedule:
-    # Run at 09:00 UTC (02:00 PDT) every other day
-    - cron: "0 9 * * 0/2"
 
 jobs:
-  windows:
+  build:
     name: ${{ matrix.build_type }}
     runs-on: windows-2019
     strategy:
       fail-fast: false
       matrix:
         toolset: [""]
-        build_type: [Debug, Release]
+        build_type: [Release]
         # build_shared_libs: [ON, OFF]  # TODO(JS): Enable once shared lib build is resolved
         build_shared_libs: [OFF]
     env:

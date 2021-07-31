@@ -6,23 +6,19 @@ on:
   push:
     branches:
       - "**"
-  schedule:
-    # Run at 09:00 UTC (02:00 PDT) every other day
-    - cron: "0 9 * * 0/2"
 
 jobs:
-  # macOS 10.15 (Catalina)
-  catalina_clang_release:
+  build:
     name: ${{ matrix.build_type }}
     runs-on: macos-10.15
     strategy:
       fail-fast: false
       matrix:
-        build_type: [Release, Debug]
+        build_type: [Release]
     env:
       COMPILER: clang
       BUILD_TYPE: ${{ matrix.build_type }}
-      BUILD_DARTPY: "${{ matrix.build_type == 'Debug' && 'OFF' || 'ON' }}"
+      BUILD_DARTPY: ON
     steps:
       - name: Checkout
         uses: actions/checkout@v2
