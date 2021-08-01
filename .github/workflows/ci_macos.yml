@@ -23,6 +23,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Dependencies
+        env:
+          INSTALL_OSG_HEAD: OFF  # To avoid building OSG, until 3.7 is released.
         run: .ci/install_osx.sh
       - name: Build
         run: sudo -E .ci/build.sh
