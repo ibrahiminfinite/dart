@@ -28,6 +28,9 @@ TAGS
 docs/readthedocs/site
 data/screencap/*
 
+# VSCode
+.vs
+
 # Python
 dist/
 *.egg-info

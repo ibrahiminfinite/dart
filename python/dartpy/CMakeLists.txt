@@ -6,6 +6,12 @@
 #
 # This file is provided under the "BSD-style" License
 
+# TODO(JS): Resolve
+if(MSVC)
+  message(WARNING "Disabling dartpy for MSVC")
+  return()
+endif()
+
 if(NOT DARTPY_PYTHON_VERSION)
   set(DARTPY_PYTHON_VERSION 3.4 CACHE STRING "Choose the target Python version (e.g., 3.4, 2.7)" FORCE)
 endif()

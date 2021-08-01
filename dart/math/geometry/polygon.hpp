@@ -54,8 +54,6 @@ public:
 
   const std::string& get_type() const override;
 
-  Vector2 computeCentroid();
-
   /// Generates a convex hull that encloses the trimesh.
   std::shared_ptr<Polygon<S>> generateConvexHull() const;
 
