@@ -17,7 +17,7 @@ jobs:
       matrix:
         # Supported LTS versions
         os: [ubuntu-bionic, ubuntu-focal]
-        build_type: [Debug, Release]
+        build_type: [Release]
         codecov: [OFF]
         check_format: [OFF]
         build_dartpy: [ON]

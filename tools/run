@@ -21,6 +21,8 @@ build_dartpy=true
 codecov_option=""
 num_cores=1
 os_list="ubuntu-bionic ubuntu-focal ubuntu-impish"
+compiler_envs="CC=/usr/bin/gcc CXX=/usr/bin/g++"
+compiler="gcc"
 
 help() {
   cat <<EOF
@@ -48,6 +50,7 @@ help() {
     --no-dartpy     Skip building dartpy
     --codecov       Enable code coverage (experimental)
     --mode <mode>   Build mode. Available <mode>: {Release (default), Debug}
+    --compiler <compiler> Compiler. Available <compiler>: {gcc (default), clang}
 EOF
 }
 
@@ -94,6 +97,10 @@ while [ $# -gt 0 ]; do
     build_mode=$2
     shift
     ;;
+  --compiler)
+    compiler=$2
+    shift
+    ;;
   -j)
     num_cores=$2
     shift
@@ -111,6 +118,10 @@ done
 
 full_image_name_deploy=dartsim/dart:$os-$dart_version
 full_image_name_dev=dartsim/dart-dev:$os-$dart_version
+
+if [ "$compiler" = clang ]; then
+  compiler_envs="CC=/usr/bin/clang CXX=/usr/bin/clang++"
+fi
 
 if [ "$build_test" = true ]; then
   test_command="&& make -j$num_cores tests && ctest --output-on-failure"
@@ -202,6 +213,7 @@ _build() {
   echo " [Build] "
   echo " Docker   : $full_image_name"
   echo " Num cores: $num_cores / $(nproc)"
+  echo " Compiler : $compiler"
   echo "======================================================================="
 
   docker pull $full_image_name
@@ -218,7 +230,8 @@ _build() {
     "mkdir -p $full_build_dir \
     && cd $full_build_dir \
     $cleanup_command \
-    && cmake $project_dir \
+    && $compiler_envs cmake $project_dir \
+    -DDART_VERBOSE=ON \
     -DCMAKE_BUILD_TYPE=$build_mode \
     $codecov_option \
     && make -j$num_cores \

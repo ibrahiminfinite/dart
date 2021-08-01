@@ -10,19 +10,6 @@ if(NOT DARTPY_PYTHON_VERSION)
   set(DARTPY_PYTHON_VERSION 3.4 CACHE STRING "Choose the target Python version (e.g., 3.4, 2.7)" FORCE)
 endif()
 
-# Find pybind11
-#
-# Need to set PYBIND11_PYTHON_VERSION before finding pybind11
-#
-# No need to explicitly call find_package(PythonLibs) nor find_package(PythonInterp) since the package is found when
-# calling find_package(pybind11)
-# See: https://pybind11.readthedocs.io/en/stable/faq.html#inconsistent-detection-of-python-version-in-cmake-and-pybind11
-set(PYBIND11_PYTHON_VERSION ${DARTPY_PYTHON_VERSION})
-find_package(pybind11 2.4.3 QUIET)
-if(NOT pybind11_FOUND)
-  message(WARNING "Disabling dartpy due to missing pybind11 >= 2.4.3.")
-  return()
-endif()
 execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
   "from distutils.sysconfig import get_python_lib;\
   print(get_python_lib(plat_specific=True, prefix=''))"
