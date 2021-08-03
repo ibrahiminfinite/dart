@@ -13,7 +13,7 @@ dart_fetch_git_repo(
   PROJECT_NAME pybind11
   WORKING_DIR ${CMAKE_CURRENT_BINARY_DIR}/.deps
   GIT_URL https://github.com/pybind/pybind11.git
-  GIT_TAG v2.7.0
+  GIT_TAG v2.7.1
 )
 
 # Need to set PYBIND11_PYTHON_VERSION before finding pybind11
