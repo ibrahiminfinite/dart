@@ -206,13 +206,19 @@ clean_all() {
     "rm -rf $project_dir$build_dir_prefix"
 }
 
+if [[ $OSTYPE == 'darwin'* ]]; then
+  num_cores_available=$(sysctl -n hw.logicalcpu)
+else
+  num_cores_available=$(nproc)
+fi
+
 _build() {
   full_image_name=$1
 
   echo "======================================================================="
   echo " [Build] "
   echo " Docker   : $full_image_name"
-  echo " Num cores: $num_cores / $(nproc)"
+  echo " Num cores: $num_cores / $num_cores_available"
   echo " Compiler : $compiler"
   echo "======================================================================="
 
