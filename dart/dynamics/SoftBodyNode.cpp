@@ -43,6 +43,7 @@
 #include "dart/dynamics/Skeleton.hpp"
 #include "dart/dynamics/SoftMeshShape.hpp"
 #include "dart/math/Helpers.hpp"
+#include "dart/math/linear_algebra.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -1225,7 +1226,7 @@ void SoftBodyNode::clearInternalForces()
 void SoftBodyNode::_addPiToArtInertia(
     const Eigen::Vector3d& _p, double _Pi) const
 {
-  Eigen::Matrix3d tmp = math::makeSkewSymmetric(_p);
+  Eigen::Matrix3d tmp = math::skew(_p);
 
   mArtInertia.topLeftCorner<3, 3>() -= _Pi * tmp * tmp;
   mArtInertia.topRightCorner<3, 3>() += _Pi * tmp;
@@ -1240,7 +1241,7 @@ void SoftBodyNode::_addPiToArtInertia(
 void SoftBodyNode::_addPiToArtInertiaImplicit(
     const Eigen::Vector3d& _p, double _ImplicitPi) const
 {
-  Eigen::Matrix3d tmp = math::makeSkewSymmetric(_p);
+  Eigen::Matrix3d tmp = math::skew(_p);
 
   mArtInertiaImplicit.topLeftCorner<3, 3>() -= _ImplicitPi * tmp * tmp;
   mArtInertiaImplicit.topRightCorner<3, 3>() += _ImplicitPi * tmp;

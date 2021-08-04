@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -32,54 +32,47 @@
 
 #pragma once
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include "dart/math/lie_group/se3.hpp"
+#include "dart/math/type.hpp"
 
-namespace dart {
-namespace collision {
+namespace dart::math {
 
-//==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
+template <typename S_>
+class SpatialInertia
 {
-  return m_pose.transformation();
-}
+public:
+  using S = S_;
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
-{
-  m_pose = tf;
-}
+  /// Default constructor
+  SpatialInertia();
 
-//==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
-{
-  return m_pose.translation();
-}
+  template <typename Derived>
+  SpatialInertia(const Eigen::MatrixBase<Derived>& moment, S mass);
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
+  template <typename DerivedA, typename DerivedB>
+  SpatialInertia(
+      const Eigen::MatrixBase<DerivedA>& offset,
+      const Eigen::MatrixBase<DerivedB>& moment,
+      S mass);
 
-//==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
+  template <typename Derived>
+  SpatialInertia(
+      const SE3<S>& T, const Eigen::MatrixBase<Derived>& moment, S mass);
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
-}
+  S operator()(int row, int col) const;
 
-} // namespace collision
-} // namespace dart
+  S& operator()(int row, int col);
+
+  SE3Cotangent<S> operator*(const SE3Tangent<S>& s) const;
+
+  void transform(const SE3<S>& T);
+
+  SpatialInertia<S> transformed(const SE3<S>& T) const;
+
+private:
+  Eigen::Matrix<S, 6, 6> m_matrix;
+};
+
+} // namespace dart::math
+
+#include "dart/math/lie_group/detail/spatial_inertia_impl.hpp"

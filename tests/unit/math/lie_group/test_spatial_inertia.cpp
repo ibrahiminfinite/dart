@@ -30,56 +30,43 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include <gtest/gtest.h>
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include "dart/math/math.hpp"
 
-namespace dart {
-namespace collision {
+using namespace dart;
+using namespace math;
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
+template <typename T>
+struct SpatialInertiaTest : public testing::Test
 {
-  return m_pose.transformation();
+  using Type = T;
+};
+
+//==============================================================================
+using Types = testing::Types<float, double, long double>;
+
+//==============================================================================
+TYPED_TEST_SUITE(SpatialInertiaTest, Types);
+
+//==============================================================================
+TYPED_TEST(SpatialInertiaTest, StaticProperties)
+{
+  using S = typename TestFixture::Type;
+
+  EXPECT_EQ(SE3<S>::SpaceDim, 3);
+  EXPECT_EQ(SE3<S>::GroupDim, 6);
+  EXPECT_EQ(SE3<S>::MatrixDim, 4);
 }
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
+TYPED_TEST(SpatialInertiaTest, Constructors)
 {
-  m_pose = tf;
-}
+  using S = typename TestFixture::Type;
 
-//==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
-{
-  return m_pose.translation();
-}
+  auto I_a = SpatialInertia<S>();
+  DART_UNUSED(I_a);
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
+  SpatialInertia<S>(SE3<S>::Random(), Eigen::Matrix<S, 3, 3>::Random(), 1);
 }
-
-//==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
-}
-
-} // namespace collision
-} // namespace dart

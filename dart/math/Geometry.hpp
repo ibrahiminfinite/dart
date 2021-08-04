@@ -41,12 +41,6 @@
 namespace dart {
 namespace math {
 
-/// \brief
-DART_MATH_API Eigen::Matrix3d makeSkewSymmetric(const Eigen::Vector3d& _v);
-
-/// \brief
-DART_MATH_API Eigen::Vector3d fromSkewSymmetric(const Eigen::Matrix3d& _m);
-
 //------------------------------------------------------------------------------
 /// \brief
 DART_MATH_API Eigen::Quaterniond expToQuat(const Eigen::Vector3d& _v);

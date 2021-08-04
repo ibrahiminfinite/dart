@@ -30,56 +30,78 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include <gtest/gtest.h>
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include "dart/math/math.hpp"
 
-namespace dart {
-namespace collision {
+using namespace dart;
+using namespace math;
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
+template <typename T>
+struct TTest : public testing::Test
 {
-  return m_pose.transformation();
+  using Type = T;
+};
+
+//==============================================================================
+using Types = testing::Types<float, double, long double>;
+
+//==============================================================================
+TYPED_TEST_SUITE(TTest, Types);
+
+//==============================================================================
+template <typename S, int Dim>
+void test_constructors_fixed_size()
+{
+  using RN = R<S, Dim>;
+
+  // Default constructor
+  RN a;
+  EXPECT_EQ(a.dimension(), Dim);
+
+  // Copy constructor
+  RN b = a;
+
+  // Move constructor
+  RN c = std::move(a);
+
+  // From Eigen vectors
+  RN d(Eigen::Matrix<S, Dim, 1>::Random());
+  Eigen::Matrix<S, Dim, 1> vec = Eigen::Matrix<S, Dim, 1>::Random();
+  RN e = std::move(vec);
+  EXPECT_TRUE(e.vector().isApprox(vec));
+
+  // Using static functions
+  RN f = RN::Zero();
+  RN g = RN::Identity();
+  RN h = RN::Random();
 }
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
+TYPED_TEST(TTest, Constructors)
 {
-  m_pose = tf;
-}
+  using S = typename TestFixture::Type;
 
-//==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
-{
-  return m_pose.translation();
-}
+  // Fixed size
+  {
+    // Default constructor
+    RX<S> a;
+    EXPECT_EQ(a.dimension(), 0);
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
+    // Copy constructor
+    RX<S> b = a;
 
-//==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
+    // Move constructor
+    RX<S> c = std::move(a);
+  }
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
+  // Dynamic size
+  test_constructors_fixed_size<S, 0>();
+  test_constructors_fixed_size<S, 1>();
+  test_constructors_fixed_size<S, 2>();
+  test_constructors_fixed_size<S, 3>();
+  test_constructors_fixed_size<S, 4>();
+  test_constructors_fixed_size<S, 5>();
+  test_constructors_fixed_size<S, 6>();
 }
-
-} // namespace collision
-} // namespace dart

@@ -30,30 +30,24 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#include <dart/dart.hpp>
+#include <pybind11/pybind11.h>
 
-#include <cstddef>
-#include <vector>
+namespace py = pybind11;
 
-#include "dart/common/macro.hpp"
+namespace dart::python {
 
-namespace dart {
-namespace common {
-
-//==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
+void py_so3(py::module& m)
 {
-  DART_ASSERT(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+  ::py::class_<math::SO3d>(m, "SO3")
+      .def(::py::init<>())
+      .def("set_identity", &math::SO3d::set_identity)
+      .def("set_random", &math::SO3d::set_random)
+      .def_readonly_static("GroupDim", &math::SO3d::GroupDim)
+      .def_static("Random", &math::SO3d::Random);
 
-  return nullptr;
+  ::py::class_<math::SO3Tangentd>(m, "SO3Tangent").def(::py::init<>());
+  ::py::class_<math::SO3Cotangentd>(m, "SO3Cotangent").def(::py::init<>());
 }
 
-} // namespace common
-} // namespace dart
-
-#endif // DART_COMMON_STLHELPERS_HPP_
+} // namespace dart::python

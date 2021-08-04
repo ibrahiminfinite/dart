@@ -30,56 +30,30 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include <gtest/gtest.h>
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include "dart/math/math.hpp"
 
-namespace dart {
-namespace collision {
-
-//==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
-{
-  return m_pose.transformation();
-}
+using namespace dart;
+using namespace math;
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
+template <typename T>
+struct ProductLieGroupTest : public testing::Test
 {
-  m_pose = tf;
-}
+  using Type = T;
+};
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
-{
-  return m_pose.translation();
-}
+using Types = testing::Types<float, double>;
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
+TYPED_TEST_SUITE(ProductLieGroupTest, Types);
 
 //==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
+TYPED_TEST(ProductLieGroupTest, Constructors)
 {
-  // Do nothing
+  using S = typename TestFixture::Type;
+  S a;
+  DART_UNUSED(a);
 }
-
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
-}
-
-} // namespace collision
-} // namespace dart

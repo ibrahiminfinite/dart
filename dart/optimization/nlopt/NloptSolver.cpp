@@ -34,9 +34,9 @@
 
 #include <memory>
 
-#include "dart/common/StlHelpers.hpp"
 #include "dart/common/console.hpp"
 #include "dart/common/eigen_include.hpp"
+#include "dart/common/stl_utility.hpp"
 #include "dart/optimization/Function.hpp"
 #include "dart/optimization/Problem.hpp"
 

@@ -40,6 +40,7 @@
 #include "dart/common/eigen_include.hpp"
 #include "dart/math/Geometry.hpp"
 #include "dart/math/MathTypes.hpp"
+#include "dart/math/constant.hpp"
 
 //==============================================================================
 #define EXPECT_S_EQ(val1, val2)                                                \
@@ -298,22 +299,63 @@ struct EqualsImpl<
 } // namespace detail
 
 //==============================================================================
+template <typename S>
+S eps_for_diff()
+{
+  if constexpr (std::is_same_v<S, float>) {
+    return 1e-2;
+  } else if constexpr (std::is_same_v<S, double>) {
+    return 1e-3;
+  } else if constexpr (std::is_same_v<S, long double>) {
+    return 1e-4;
+  } else {
+    common::static_assert_no_match();
+    return {};
+  }
+}
+
+//==============================================================================
+template <typename S>
+S tol_for_equals()
+{
+  if constexpr (std::is_same_v<S, float>) {
+    return 1e-3;
+  } else if constexpr (std::is_same_v<S, double>) {
+    return 1e-6;
+  } else if constexpr (std::is_same_v<S, long double>) {
+    return 1e-9;
+  } else {
+    return {};
+  }
+}
+
+//==============================================================================
 /// Returns true if the two matrices are equal within the given bound
 template <typename T1, typename T2>
 bool equals(
     const T1& expected,
     const T2& actual,
-    typename T1::Scalar tol = static_cast<typename T1::Scalar>(1e-5))
+    typename T1::Scalar tol = tol_for_equals<typename T1::Scalar>())
 {
-  return detail::EqualsImpl<T1, T2>::run(expected, actual, tol);
+  const bool result = detail::EqualsImpl<T1, T2>::run(expected, actual, tol);
+  if (!result) {
+    std::cout << "Expected: \n" << expected << std::endl;
+    std::cout << "Actual  : \n" << actual << std::endl;
+  }
+  return result;
 }
 
 //==============================================================================
-inline bool rotationEquals(
-    const Eigen::Matrix3d& rot1, const Eigen::Matrix3d& rot2, double tol = 1e-5)
+template <typename DerivedA, typename DerivedB>
+bool rotationEquals(
+    const Eigen::MatrixBase<DerivedA>& rot1,
+    const Eigen::MatrixBase<DerivedB>& rot2,
+    typename DerivedA::Scalar tol = math::eps<typename DerivedA::Scalar>())
 {
-  const Eigen::Matrix3d rotError = rot1.transpose() * rot2;
-  const Eigen::Vector3d error = dart::math::logMap(rotError);
+  using S = typename DerivedA::Scalar;
+
+  const typename DerivedA::PlainObjectType rotError = rot1.transpose() * rot2;
+  const Eigen::Matrix<S, 3, 1> error = dart::math::logMap(rotError);
   return (error.norm() < tol);
 }
 
@@ -329,6 +371,7 @@ inline bool equals(
   return (norm < tol);
 }
 
+//==============================================================================
 template <class T, class S>
 struct Case
 {
@@ -340,6 +383,7 @@ struct Case
   }
 };
 
+//==============================================================================
 template <class TupleType, class TupleParam, std::size_t I>
 struct make_case
 {
@@ -350,9 +394,11 @@ struct make_case
       typename std::tuple_element<I % N, TupleParam>::type>;
 };
 
+//==============================================================================
 template <class T1, class T2, class Is>
 struct make_combinations;
 
+//==============================================================================
 template <class TupleType, class TupleParam, std::size_t... Is>
 struct make_combinations<TupleType, TupleParam, std::index_sequence<Is...>>
 {
@@ -360,6 +406,7 @@ struct make_combinations<TupleType, TupleParam, std::index_sequence<Is...>>
       = std::tuple<typename make_case<TupleType, TupleParam, Is>::type...>;
 };
 
+//==============================================================================
 template <class TupleTypes, class... Params>
 using Combinations_t = typename make_combinations<
     TupleTypes,

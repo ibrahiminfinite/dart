@@ -6,6 +6,7 @@ coverage:
     - "dart/external"
     - "dart/gui"
     - "extras/dartc"
+    - "python/dartpy"
 
 comment:
   layout: "diff, flags, files"

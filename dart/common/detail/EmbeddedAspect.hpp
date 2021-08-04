@@ -34,7 +34,7 @@
 #define DART_COMMON_DETAIL_EMBEDDEDASPECT_HPP_
 
 #include "dart/common/Aspect.hpp"
-#include "dart/common/StlHelpers.hpp"
+#include "dart/common/stl_utility.hpp"
 
 namespace dart {
 namespace common {

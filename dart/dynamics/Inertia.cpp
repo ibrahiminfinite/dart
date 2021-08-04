@@ -34,6 +34,7 @@
 
 #include "dart/common/console.hpp"
 #include "dart/math/Geometry.hpp"
+#include "dart/math/linear_algebra.hpp"
 
 namespace dart {
 namespace dynamics {
@@ -375,7 +376,7 @@ bool Inertia::operator==(const Inertia& other) const
 // Note: Taken from Springer Handbook, chapter 2.2.11
 void Inertia::computeSpatialTensor()
 {
-  Eigen::Matrix3d C = math::makeSkewSymmetric(mCenterOfMass);
+  Eigen::Matrix3d C = math::skew(mCenterOfMass);
 
   // Top left
   mSpatialTensor.block<3, 3>(0, 0) = getMoment() + mMass * C * C.transpose();

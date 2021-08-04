@@ -41,6 +41,7 @@
 
 #include "dart/common/console.hpp"
 #include "dart/math/Helpers.hpp"
+#include "dart/math/linear_algebra.hpp"
 
 #define DART_EPSILON 1e-6
 
@@ -442,7 +443,7 @@ Eigen::Matrix3d expMapRot(const Eigen::Vector3d& _q)
   double theta = _q.norm();
 
   Eigen::Matrix3d R = Eigen::Matrix3d::Zero();
-  Eigen::Matrix3d qss = math::makeSkewSymmetric(_q);
+  Eigen::Matrix3d qss = math::skew(_q);
   Eigen::Matrix3d qss2 = qss * qss;
 
   if (theta < EPSILON_EXPMAP_THETA)
@@ -459,7 +460,7 @@ Eigen::Matrix3d expMapJac(const Eigen::Vector3d& _q)
   double theta = _q.norm();
 
   Eigen::Matrix3d J = Eigen::Matrix3d::Zero();
-  Eigen::Matrix3d qss = math::makeSkewSymmetric(_q);
+  Eigen::Matrix3d qss = math::skew(_q);
   Eigen::Matrix3d qss2 = qss * qss;
 
   if (theta < EPSILON_EXPMAP_THETA)
@@ -477,9 +478,9 @@ Eigen::Matrix3d expMapJacDot(
   double theta = _q.norm();
 
   Eigen::Matrix3d Jdot = Eigen::Matrix3d::Zero();
-  Eigen::Matrix3d qss = math::makeSkewSymmetric(_q);
+  Eigen::Matrix3d qss = math::skew(_q);
   Eigen::Matrix3d qss2 = qss * qss;
-  Eigen::Matrix3d qdss = math::makeSkewSymmetric(_qdot);
+  Eigen::Matrix3d qdss = math::skew(_qdot);
   double ttdot = _q.dot(_qdot); // theta*thetaDot
   double st = sin(theta);
   double ct = cos(theta);
@@ -659,8 +660,7 @@ Eigen::Matrix6d getAdTMatrix(const Eigen::Isometry3d& T)
 
   AdT.topLeftCorner<3, 3>() = T.linear();
   AdT.topRightCorner<3, 3>().setZero();
-  AdT.bottomLeftCorner<3, 3>()
-      = makeSkewSymmetric(T.translation()) * T.linear();
+  AdT.bottomLeftCorner<3, 3>() = skew(T.translation()) * T.linear();
   AdT.bottomRightCorner<3, 3>() = T.linear();
 
   return AdT;
@@ -1487,20 +1487,6 @@ Eigen::Vector3d fromSkewSymmetric(const Eigen::Matrix3d& _m)
   Eigen::Vector3d ret;
   ret << _m(2, 1), _m(0, 2), _m(1, 0);
   return ret;
-}
-
-Eigen::Matrix3d makeSkewSymmetric(const Eigen::Vector3d& _v)
-{
-  Eigen::Matrix3d result = Eigen::Matrix3d::Zero();
-
-  result(0, 1) = -_v(2);
-  result(1, 0) = _v(2);
-  result(0, 2) = _v(1);
-  result(2, 0) = -_v(1);
-  result(1, 2) = -_v(0);
-  result(2, 1) = _v(0);
-
-  return result;
 }
 
 //==============================================================================

@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -30,56 +30,8 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "dart/math/linear_algebra.hpp"
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+namespace dart::math {
 
-namespace dart {
-namespace collision {
-
-//==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
-{
-  return m_pose.transformation();
-}
-
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
-{
-  m_pose = tf;
-}
-
-//==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
-{
-  return m_pose.translation();
-}
-
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
-
-//==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
-}
-
-} // namespace collision
-} // namespace dart
+} // namespace dart::math

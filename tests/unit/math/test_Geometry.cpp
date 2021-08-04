@@ -43,6 +43,7 @@
 #include "dart/dynamics/WeldJoint.hpp"
 #include "dart/math/Geometry.hpp"
 #include "dart/math/Helpers.hpp"
+#include "dart/math/linear_algebra.hpp"
 #include "dart/simulation/World.hpp"
 #include "dart/test/math/GTestUtils.hpp"
 
@@ -247,7 +248,7 @@ TEST(LIE_GROUP_OPERATORS, EXPONENTIAL_MAPPINGS)
 
     double theta = s.head<3>().norm();
     Eigen::Matrix3d R = Matrix3d::Zero();
-    Eigen::Matrix3d qss = math::makeSkewSymmetric(s.head<3>());
+    Eigen::Matrix3d qss = math::skew(s.head<3>());
     Eigen::Matrix3d qss2 = qss * qss;
     Eigen::Matrix3d P = Eigen::Matrix3d::Zero();
 
@@ -279,7 +280,7 @@ TEST(LIE_GROUP_OPERATORS, EXPONENTIAL_MAPPINGS)
 
     double theta = s.head<3>().norm();
     Eigen::Matrix3d R = Matrix3d::Zero();
-    Eigen::Matrix3d qss = math::makeSkewSymmetric(s.head<3>());
+    Eigen::Matrix3d qss = math::skew(s.head<3>());
     Eigen::Matrix3d qss2 = qss * qss;
     Eigen::Matrix3d P = Eigen::Matrix3d::Zero();
 
@@ -311,7 +312,7 @@ TEST(LIE_GROUP_OPERATORS, EXPONENTIAL_MAPPINGS)
 
     double theta = s.head<3>().norm();
     Eigen::Matrix3d R = Matrix3d::Zero();
-    Eigen::Matrix3d qss = math::makeSkewSymmetric(s.head<3>());
+    Eigen::Matrix3d qss = math::skew(s.head<3>());
     Eigen::Matrix3d qss2 = qss * qss;
     Eigen::Matrix3d P = Eigen::Matrix3d::Zero();
 
@@ -385,7 +386,7 @@ TEST(LIE_GROUP_OPERATORS, ADJOINT_MAPPINGS)
     AdTMatrix.topLeftCorner<3, 3>() = T.linear();
     AdTMatrix.bottomRightCorner<3, 3>() = T.linear();
     AdTMatrix.bottomLeftCorner<3, 3>()
-        = math::makeSkewSymmetric(T.translation()) * T.linear();
+        = math::skew(T.translation()) * T.linear();
     Eigen::Vector6d AdTMatrix_V = AdTMatrix * V;
     for (int j = 0; j < 6; ++j)
       EXPECT_NEAR(AdTV(j), AdTMatrix_V(j), LIE_GROUP_OPT_TOL);
@@ -495,7 +496,7 @@ TEST(LIE_GROUP_OPERATORS, ADJOINT_MAPPINGS)
     AdTMatrix.topLeftCorner<3, 3>() = T.linear();
     AdTMatrix.bottomRightCorner<3, 3>() = T.linear();
     AdTMatrix.bottomLeftCorner<3, 3>()
-        = math::makeSkewSymmetric(T.translation()) * T.linear();
+        = math::skew(T.translation()) * T.linear();
     Eigen::Vector6d AdTTransMatrix_V = AdTMatrix.transpose() * F;
     for (int j = 0; j < 6; ++j)
       EXPECT_NEAR(dAdTF(j), AdTTransMatrix_V(j), LIE_GROUP_OPT_TOL);
@@ -521,7 +522,7 @@ TEST(LIE_GROUP_OPERATORS, ADJOINT_MAPPINGS)
     AdInvTMatrix.topLeftCorner<3, 3>() = InvT.linear();
     AdInvTMatrix.bottomRightCorner<3, 3>() = InvT.linear();
     AdInvTMatrix.bottomLeftCorner<3, 3>()
-        = math::makeSkewSymmetric(InvT.translation()) * InvT.linear();
+        = math::skew(InvT.translation()) * InvT.linear();
     Eigen::Vector6d AdInvTTransMatrix_V = AdInvTMatrix.transpose() * F;
     for (int j = 0; j < 6; ++j)
       EXPECT_NEAR(dAdInvT_F(j), AdInvTTransMatrix_V(j), LIE_GROUP_OPT_TOL);
@@ -554,9 +555,9 @@ TEST(LIE_GROUP_OPERATORS, ADJOINT_MAPPINGS)
 
     //
     Eigen::Matrix6d adV_Matrix = Eigen::Matrix6d::Zero();
-    adV_Matrix.topLeftCorner<3, 3>() = math::makeSkewSymmetric(V.head<3>());
-    adV_Matrix.bottomRightCorner<3, 3>() = math::makeSkewSymmetric(V.head<3>());
-    adV_Matrix.bottomLeftCorner<3, 3>() = math::makeSkewSymmetric(V.tail<3>());
+    adV_Matrix.topLeftCorner<3, 3>() = math::skew(V.head<3>());
+    adV_Matrix.bottomRightCorner<3, 3>() = math::skew(V.head<3>());
+    adV_Matrix.bottomLeftCorner<3, 3>() = math::skew(V.tail<3>());
     Eigen::Vector6d adV_Matrix_W = adV_Matrix * W;
 
     for (int j = 0; j < 6; ++j)
@@ -572,10 +573,9 @@ TEST(LIE_GROUP_OPERATORS, ADJOINT_MAPPINGS)
 
     //
     Eigen::Matrix6d dadV_Matrix = Eigen::Matrix6d::Zero();
-    dadV_Matrix.topLeftCorner<3, 3>() = math::makeSkewSymmetric(V.head<3>());
-    dadV_Matrix.bottomRightCorner<3, 3>()
-        = math::makeSkewSymmetric(V.head<3>());
-    dadV_Matrix.bottomLeftCorner<3, 3>() = math::makeSkewSymmetric(V.tail<3>());
+    dadV_Matrix.topLeftCorner<3, 3>() = math::skew(V.head<3>());
+    dadV_Matrix.bottomRightCorner<3, 3>() = math::skew(V.head<3>());
+    dadV_Matrix.bottomLeftCorner<3, 3>() = math::skew(V.tail<3>());
     Eigen::Vector6d dadV_Matrix_F = dadV_Matrix.transpose() * F;
 
     for (int j = 0; j < 6; ++j)

@@ -34,6 +34,7 @@
 
 #include "dart/collision/dart/dart_type.hpp"
 #include "dart/collision/object.hpp"
+#include "dart/math/lie_group/se3.hpp"
 #include "dart/math/type.hpp"
 
 namespace dart {
@@ -69,7 +70,7 @@ private:
   friend class DartScene<S>;
 
   /// Pose of the collision object
-  math::Isometry3<S> m_pose;
+  math::SE3<S> m_pose;
 };
 
 DART_TEMPLATE_CLASS_HEADER(COLLISION, DartObject)

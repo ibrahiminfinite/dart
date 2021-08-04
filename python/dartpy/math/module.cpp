@@ -39,6 +39,8 @@ namespace python {
 
 void Random(py::module& sm);
 void Geometry(py::module& sm);
+void py_t(py::module& sm);
+void py_so3(py::module& sm);
 
 void dart_math(py::module& m)
 {
@@ -46,6 +48,8 @@ void dart_math(py::module& m)
 
   Random(sm);
   Geometry(sm);
+  py_t(sm);
+  py_so3(sm);
 }
 
 } // namespace python

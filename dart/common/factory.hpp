@@ -37,8 +37,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "dart/common/StlHelpers.hpp"
 #include "dart/common/singleton.hpp"
+#include "dart/common/stl_utility.hpp"
 
 namespace dart {
 namespace common {

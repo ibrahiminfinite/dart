@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -32,54 +32,46 @@
 
 #pragma once
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include <cmath>
 
-namespace dart {
-namespace collision {
+#include "dart/common/logging.hpp"
+#include "dart/math/constant.hpp"
+#include "dart/math/linear_algebra.hpp"
+
+namespace dart::math {
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
+template <typename Derived>
+math::Matrix<typename Derived::Scalar, 3, 3> skew(
+    const math::MatrixBase<Derived>& vec)
 {
-  return m_pose.transformation();
+  using S = typename Derived::Scalar;
+
+  // clang-format off
+  return (math::Matrix<S, 3, 3>() <<
+          0, -vec[2], +vec[1],
+    +vec[2],       0, -vec[0],
+    -vec[1], +vec[0],       0
+  ).finished();
+  // clang-format on
 }
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
+template <typename Derived>
+math::Matrix<typename Derived::Scalar, 3, 1> unskew(
+    const math::MatrixBase<Derived>& mat)
 {
-  m_pose = tf;
+  using S = typename Derived::Scalar;
+
+#ifndef NDEBUG
+  if (std::abs(mat(0, 0)) > eps<S>() || std::abs(mat(1, 1)) > eps<S>()
+      || std::abs(mat(2, 2)) > eps<S>()) {
+    DART_DEBUG("Not skew a symmetric matrix");
+  }
+
+  // TODO(JS): Check skew-symmetry
+#endif
+  return math::Vector3<S>(mat(2, 1), mat(0, 2), mat(1, 0));
 }
 
-//==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
-{
-  return m_pose.translation();
-}
-
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
-
-//==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
-}
-
-} // namespace collision
-} // namespace dart
+} // namespace dart::math

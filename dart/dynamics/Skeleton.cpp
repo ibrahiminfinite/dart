@@ -37,8 +37,8 @@
 #include <string>
 #include <vector>
 
-#include "dart/common/StlHelpers.hpp"
 #include "dart/common/console.hpp"
+#include "dart/common/stl_utility.hpp"
 #include "dart/dynamics/BodyNode.hpp"
 #include "dart/dynamics/DegreeOfFreedom.hpp"
 #include "dart/dynamics/EndEffector.hpp"

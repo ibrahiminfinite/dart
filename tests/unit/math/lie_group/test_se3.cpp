@@ -30,56 +30,94 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include <gtest/gtest.h>
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include "dart/math/math.hpp"
+#include "dart/test/math/GTestUtils.hpp"
 
-namespace dart {
-namespace collision {
+using namespace dart;
+using namespace math;
 
 //==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
+template <typename T>
+struct SE3Test : public testing::Test
 {
-  return m_pose.transformation();
+  using Type = T;
+};
+
+//==============================================================================
+using Types = testing::Types<float, double, long double>;
+
+//==============================================================================
+TYPED_TEST_SUITE(SE3Test, Types);
+
+//==============================================================================
+TYPED_TEST(SE3Test, StaticProperties)
+{
+  using S = typename TestFixture::Type;
+
+  EXPECT_EQ(SE3<S>::SpaceDim, 3);
+  EXPECT_EQ(SE3<S>::GroupDim, 6);
+  EXPECT_EQ(SE3<S>::MatrixDim, 4);
 }
 
 //==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
+TYPED_TEST(SE3Test, Constructors)
 {
-  m_pose = tf;
+  using S = typename TestFixture::Type;
+
+  // Default constructor
+  SE3<S> a;
+
+  // Copy constructor
+  SE3<S> b = a;
+
+  // Move constructor
+  SE3<S> c = std::move(a);
+
+  // From quaternions
+  SE3<S> d(Eigen::Quaternion<S>::Identity(), Eigen::Matrix<S, 3, 1>::Zero());
+  Eigen::Quaternion<S> quat = Eigen::Quaternion<S>::Identity();
+  Eigen::Matrix<S, 3, 1> vec = Eigen::Matrix<S, 3, 1>::Zero();
+  SE3<S> e(std::move(quat), std::move(vec));
+
+  // Using static functions
+  SE3<S> f = SE3<S>::Identity();
+  SE3<S> g = SE3<S>::Random();
+
+  DART_UNUSED(b, c, f, g);
 }
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
+TYPED_TEST(SE3Test, Jacobians)
 {
-  return m_pose.translation();
-}
+  using S = typename TestFixture::Type;
+  const S eps = test::eps_for_diff<S>();
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
+  for (auto i = 0; i < 10; ++i) {
+    const SE3Tangent<S> q = SE3<S>::Random().log();
+    Eigen::Matrix<S, 6, 6> jac_numeric;
+    for (int j = 0; j < 6; ++j) {
+      SE3Tangent<S> q_a = q;
+      q_a[j] -= S(0.5) * eps;
 
-//==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
+      SE3Tangent<S> q_b = q;
+      q_b[j] += S(0.5) * eps;
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
+      const SE3<S> T_a = exp(q_a);
+      const SE3<S> T_b = exp(q_b);
+      const SE3<S> dT_left = T_b * T_a.inverse();
+      const SE3Tangent<S> dT_left_log = log(dT_left);
+      const SE3Algebra<S> dt_dt = dT_left_log.hat() / eps;
+      const SE3Algebra<S> r = dt_dt;
+      for (auto z = 0; z < 6; ++z) {
+        if (std::isnan(r.vee()[z])) {
+          auto log2 = log(dT_left);
+          DART_UNUSED(log2);
+        }
+      }
+      jac_numeric.col(j) = r.vee().vector();
+    }
+    EXPECT_TRUE(test::equals(jac_numeric, q.left_jacobian()));
+  }
 }
-
-} // namespace collision
-} // namespace dart

@@ -35,7 +35,7 @@
 
 #include <cassert>
 
-#include "dart/common/StlHelpers.hpp"
+#include "dart/common/stl_utility.hpp"
 #include "dart/dynamics/Node.hpp"
 
 namespace dart {

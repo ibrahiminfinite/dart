@@ -37,7 +37,7 @@ dart_add_component(
   TARGET_COMPILE_OPTIONS_PUBLIC
     ${compile_options_public}
   SUB_DIRECTORIES
-    detail geometry graph
+    detail geometry graph lie_group
   GENERATE_META_HEADER
   GENERATE_EXPORT_HEADER
   FORMAT_CODE

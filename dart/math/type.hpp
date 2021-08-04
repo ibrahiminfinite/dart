@@ -37,11 +37,16 @@
 namespace dart {
 namespace math {
 
+constexpr int Dynamic = Eigen::Dynamic;
+
+template <typename Derived>
+using MatrixBase = Eigen::MatrixBase<Derived>;
+
 template <typename S>
 using MatrixX = Eigen::Matrix<S, Eigen::Dynamic, Eigen::Dynamic>;
 
-template <typename S, int Dim>
-using Matrix = Eigen::Matrix<S, Dim, Dim>;
+template <typename S, int Rows, int Cols = Rows>
+using Matrix = Eigen::Matrix<S, Rows, Cols>;
 
 template <typename S>
 using Matrix1 = Matrix<S, 1>;
@@ -106,11 +111,11 @@ using Vector5d = Vector5<double>;
 using Vector6d = Vector6<double>;
 using VectorXd = VectorX<double>;
 
-template <typename S>
-using Quaternion = Eigen::Quaternion<S>;
+template <typename S, int Options = 0>
+using Quaternion = Eigen::Quaternion<S, Options>;
 
-template <typename S>
-using Isometry3 = Eigen::Transform<S, 3, Eigen::Isometry>;
+template <typename S, int Options = 0>
+using Isometry3 = Eigen::Transform<S, 3, Eigen::Isometry, Options>;
 
 } // namespace math
 } // namespace dart

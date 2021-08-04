@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -32,54 +32,34 @@
 
 #pragma once
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include "dart/math/lie_group/lie_group.hpp"
+#include "dart/math/type.hpp"
 
-namespace dart {
-namespace collision {
+namespace dart::math {
 
-//==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
+template <typename S, template <typename> class... SubGroups>
+class ProductLieGroup : public LieGroupBase<ProductLieGroup<S, SubGroups...>>
 {
-  return m_pose.transformation();
-}
+public:
+  template <int Index>
+  using MapSubGroup = typename Eigen::internal::traits<
+      ProductLieGroup>::template MapSubGroup<Index>;
 
-//==============================================================================
+  ProductLieGroup() = default;
+
+  ProductLieGroup inverse() const;
+
+  //  template <int Index>
+  //  MapSubGroup<Index> element();
+};
+
 template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
+class ProductLieGroup<S>
 {
-  m_pose = tf;
-}
+public:
+  ProductLieGroup() = default;
+};
 
-//==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
-{
-  return m_pose.translation();
-}
+} // namespace dart::math
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
-
-//==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
-
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
-}
-
-} // namespace collision
-} // namespace dart
+#include "dart/math/lie_group/detail/product_lie_group_impl.hpp"

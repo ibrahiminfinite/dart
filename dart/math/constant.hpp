@@ -33,9 +33,27 @@
 #pragma once
 
 #include <limits>
+#include <type_traits>
+
+#include "dart/common/stl_utility.hpp"
 
 namespace dart {
 namespace math {
+
+template <typename S = double>
+static constexpr S eps()
+{
+  if constexpr (std::is_same_v<S, float>) {
+    return 1e-6;
+  } else if constexpr (std::is_same_v<S, double>) {
+    return 1e-12;
+  } else if constexpr (std::is_same_v<S, long double>) {
+    return 1e-18;
+  } else {
+    common::static_assert_no_match();
+    return {};
+  }
+}
 
 template <typename S = double>
 static constexpr S pi()

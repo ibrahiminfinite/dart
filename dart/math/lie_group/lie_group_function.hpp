@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -32,54 +32,31 @@
 
 #pragma once
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include "dart/math/export.hpp"
+#include "dart/math/lie_group/se3.hpp"
+#include "dart/math/lie_group/so3.hpp"
 
-namespace dart {
-namespace collision {
+namespace dart::math {
 
-//==============================================================================
 template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
-{
-  return m_pose.transformation();
-}
+SO3<S> exp(const SO3Tangent<S>& w);
 
-//==============================================================================
 template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
-{
-  m_pose = tf;
-}
+SE3<S> exp(const SE3Tangent<S>& twist);
 
-//==============================================================================
 template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
-{
-  return m_pose.translation();
-}
+SO3Tangent<S> log(const SO3<S>& r);
 
-//==============================================================================
 template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
+SE3Tangent<S> log(const SE3<S>& r);
 
-//==============================================================================
 template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
+typename SE3<S>::Tangent Ad(const SE3<S>& T, const typename SE3<S>::Tangent& V);
 
-//==============================================================================
 template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
-}
+typename SE3<S>::Tangent ad(
+    const typename SE3<S>::Tangent& s1, const typename SE3<S>::Tangent& s2);
 
-} // namespace collision
-} // namespace dart
+} // namespace dart::math
+
+#include "dart/math/lie_group/detail/lie_group_function_impl.hpp"

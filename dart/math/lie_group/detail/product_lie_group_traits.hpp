@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -32,54 +32,39 @@
 
 #pragma once
 
-#include "dart/collision/dart/dart_object.hpp"
-#include "dart/collision/dart/dart_scene.hpp"
+#include <tuple>
 
-namespace dart {
-namespace collision {
+#include "dart/math/lie_group/lie_group.hpp"
+#include "dart/math/type.hpp"
 
-//==============================================================================
-template <typename S>
-math::Isometry3<S> DartObject<S>::get_pose() const
-{
-  return m_pose.transformation();
-}
+namespace dart::math {
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_pose(const math::Isometry3<S>& tf)
-{
-  m_pose = tf;
-}
+// Forward declaration
+template <typename S, template <typename> class... SubGroups>
+class ProductLieGroup;
+
+} // namespace dart::math
+
+namespace Eigen::internal {
 
 //==============================================================================
-template <typename S>
-math::Vector3<S> DartObject<S>::get_position() const
+template <typename S_, template <typename> class... SubGroups_>
+struct traits<dart::math::ProductLieGroup<S_, SubGroups_...>>
 {
-  return m_pose.translation();
-}
+  static constexpr std::size_t NumSubGroups = sizeof...(SubGroups_);
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::set_position(const math::Vector3<S>& pos)
-{
-  m_pose.mutable_position() = pos;
-}
+  using S = S_;
 
-//==============================================================================
-template <typename S>
-DartObject<S>::DartObject(DartScene<S>* group, math::GeometryPtr shape)
-  : Object<S>(group, shape)
-{
-  // Do nothing
-}
+  using SubGroups = std::tuple<SubGroups_<S>...>;
 
-//==============================================================================
-template <typename S>
-void DartObject<S>::update_engine_data()
-{
-  // Do nothing
-}
+  template <int N>
+  using SubGroup = typename std::tuple_element<N, SubGroups>::type;
 
-} // namespace collision
-} // namespace dart
+  template <int N>
+  using MapSubGroup = Eigen::Map<SubGroup<N>>;
+
+  template <int N>
+  using MapConstSubGroup = Eigen::Map<const SubGroup<N>>;
+};
+
+} // namespace Eigen::internal
