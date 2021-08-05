@@ -26,7 +26,6 @@
   <depend>bullet</depend>
   <depend>eigen</depend>
   <depend>libfcl-dev</depend>
-  <depend>libflann-dev</depend>
   <depend>liburdfdom-dev</depend>
   <depend>libxi-dev</depend>
   <depend>libxmu-dev</depend>

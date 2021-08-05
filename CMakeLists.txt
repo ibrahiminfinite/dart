@@ -110,7 +110,6 @@ option(DART_BUILD_COMP_dynamics     "Build component 'dynamics'"     ON)
 option(DART_BUILD_COMP_simulation   "Build component 'simulation'"   ON)
 option(DART_BUILD_COMP_io           "Build component 'io'"           ON)
 option(DART_BUILD_COMP_gui          "Build component 'gui'"          ON)
-option(DART_BUILD_COMP_planning     "Build component 'planning'"     ON)
 
 option(DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE "Build instantiation of template code for double" ON)
 option(DART_BUILD_TEMPLATE_CODE_FOR_FLOAT  "Build instantiation of template code for double" OFF)

@@ -7,9 +7,7 @@
 DART is an open source library for developing kinematic and dynamic
 applications in robotics and computer animation. DART features two
 main components: a multibody dynamic simulator developed by Georgia
-Tech Graphics Lab and a variety of motion planning algorithms
-developed by Georgia Tech Humanoid Robotics Lab. This document focuses
-only on the dynamic simulator.
+Tech Graphics Lab. This document focuses only on the dynamic simulator.
 
 The multibody dynamics simulator in DART is designed to aid
 development of motion control algorithms. DART uses generalized

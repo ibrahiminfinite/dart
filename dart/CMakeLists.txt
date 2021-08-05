@@ -29,7 +29,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${DART_BINARY_DIR}/lib")
 # dart-io-urdf - {dart-io}, io/urdf, [urdfdom]
 # dart-gui - {dart}, gui, [opengl]
 # dart-gui-osg - {dart-gui}, gui/osg, gui/osg/render, [openscenegraph]
-# dart-planning - {dart}, planning, [flann]
 
 #===============================================================================
 # Components: (dependency component), {external dependency}, [optional external dependency]
@@ -45,7 +44,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${DART_BINARY_DIR}/lib")
 # simulation: (common), (math), (optimization), (collision), (dynamics)
 # io: (common), (math), (optimization), (collision), (dynamics), (simulation), {tinyxml2}, [urdfdom]
 # gui: (external-imgui), (common), (math), (optimization), (collision), (dynamics), (simulation), (io), {OpenGL}, [OpenSceneGraph]
-# planning: (common), (math), (optimization), (collision), {flann}, {lz4}
 
 # dart - {dart}
 # optimization-ipopt - (dart), {dart-optimization-ipopt}
@@ -56,7 +54,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${DART_BINARY_DIR}/lib")
 # gui - (io), {dart-gui}
 # gui-glut - (gui), {dart-gui-glut}
 # gui-osg - (gui), {dart-gui-osg}
-# planning - (dart), {dart-planning}
 
 set(org_name dartsim)
 set(project_name ${PROJECT_NAME})
@@ -87,7 +84,6 @@ dart_add_project(
     simulation
     io
     gui
-    planning
   GENERATE_META_HEADER
 )
 

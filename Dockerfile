@@ -26,7 +26,6 @@ RUN apt-get update \
     liblz4-dev \
     libode-dev \
     liboctomap-dev \
-    libflann-dev \
     libtinyxml2-dev \
     liburdfdom-dev \
     libxi-dev \

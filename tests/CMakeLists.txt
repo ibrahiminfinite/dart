@@ -59,7 +59,6 @@ function(dart_add_test test_type target_name) # ARGN for source files
     ${PROJECT_NAME}${DART_MAJOR_VERSION}-dynamics
     ${PROJECT_NAME}${DART_MAJOR_VERSION}-simulation
     ${PROJECT_NAME}${DART_MAJOR_VERSION}-io
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-planning
     gtest
     gtest_main
   )

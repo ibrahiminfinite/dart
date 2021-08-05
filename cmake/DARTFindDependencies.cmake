@@ -195,9 +195,6 @@ else()
 endif()
 
 # Dependency checks
-dart_find_package(lz4)  # needed for flann
-dart_find_package(flann)
-
 dart_find_package(tinyxml2)
 
 dart_find_package(urdfdom)
