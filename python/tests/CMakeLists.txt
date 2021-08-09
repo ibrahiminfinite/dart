@@ -21,14 +21,12 @@ if(pytest_not_found)
   message(WARNING "Running the tests requires pytest. Please install it manually"
     " (try: ${PYTHON_EXECUTABLE} -m pip install pytest)"
   )
-  set(DARTPY_PYTEST_FOUND FALSE)
+  return()
 elseif(pytest_version VERSION_LESS 3.0)
   message(WARNING "Running the tests requires pytest >= 3.0. Found: ${pytest_version}"
     "Please update it (try: ${PYTHON_EXECUTABLE} -m pip install -U pytest)"
   )
-  set(DARTPY_PYTEST_FOUND FALSE)
-else()
-  set(DARTPY_PYTEST_FOUND TRUE)
+  return()
 endif()
 
 set(dartpy_test_utils

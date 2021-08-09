@@ -34,6 +34,8 @@
 #include <dart/config.hpp>
 #include <pybind11/pybind11.h>
 
+#if DART_HAVE_ODE
+
 namespace py = pybind11;
 
 namespace dart {
@@ -52,3 +54,5 @@ void py_ode_engine(py::module& m)
 
 } // namespace python
 } // namespace dart
+
+#endif

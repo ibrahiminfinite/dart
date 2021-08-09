@@ -29,9 +29,9 @@ file(GLOB_RECURSE dartpy_sources "*.cpp")
 #
 pybind11_add_module(${DARTPY_MODULE}
   MODULE
+  EXCLUDE_FROM_ALL
   ${dartpy_headers}
   ${dartpy_sources}
-  EXCLUDE_FROM_ALL
 )
 
 target_include_directories(${DARTPY_MODULE}
@@ -43,15 +43,8 @@ target_include_directories(${DARTPY_MODULE}
 )
 
 target_link_libraries(${DARTPY_MODULE}
-  PUBLIC
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-common
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-math
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-optimization
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-collision
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-dynamics
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-simulation
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-io
-    ${PROJECT_NAME}${DART_MAJOR_VERSION}-gui
+  PRIVATE
+    ${required_modules}
     ${PYTHON_LIBRARIES}
 )
 

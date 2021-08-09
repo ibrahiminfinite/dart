@@ -58,10 +58,11 @@ void test_collide(const EngineT& engine)
   if (!engine) {
     return;
   }
-
+#if DART_HAVE_BULLET
   if (engine->get_type() == collision::BulletEngine<S>::GetType()) {
     return;
   }
+#endif
 
   auto sphere1 = engine->create_sphere_object(0.5);
   auto sphere2 = engine->create_sphere_object(0.5);

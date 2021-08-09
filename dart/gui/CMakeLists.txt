@@ -26,10 +26,11 @@ dart_add_component(
     external-imgui  # TODO(JS): Make this a private dependency
     common math optimization collision dynamics simulation io
   COMPONENT_DEPENDENCY_PACKAGES
-    OpenGL
+    OpenGL OpenSceneGraph
   TARGET_LINK_LIBRARIES_PUBLIC
     OpenGL::GL
     OpenGL::GLU
+    osg::osg
   TARGET_COMPILE_FEATURES_PUBLIC
     cxx_std_17
   SUB_DIRECTORIES

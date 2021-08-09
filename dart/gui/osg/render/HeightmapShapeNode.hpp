@@ -56,7 +56,8 @@ template <typename S>
 class HeightmapShapeGeode;
 
 template <typename S_>
-class HeightmapShapeNode : public ShapeNode, public ::osg::MatrixTransform
+class DART_GUI_API HeightmapShapeNode : public ShapeNode,
+                                        public ::osg::MatrixTransform
 {
 public:
   using S = S_;

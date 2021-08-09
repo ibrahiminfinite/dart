@@ -54,7 +54,7 @@ class PointCloudShapeBillboardGeode;
 class PointNode;
 class PointNodes;
 
-class PointCloudShapeNode : public ShapeNode, public ::osg::Group
+class DART_GUI_API PointCloudShapeNode : public ShapeNode, public ::osg::Group
 {
 public:
   PointCloudShapeNode(

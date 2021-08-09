@@ -33,6 +33,8 @@
 #include <dart/dart.hpp>
 #include <pybind11/pybind11.h>
 
+#if DART_HAVE_urdfdom
+
 namespace py = pybind11;
 
 namespace dart {
@@ -134,3 +136,5 @@ void DartLoader(py::module& m)
 
 } // namespace python
 } // namespace dart
+
+#endif

@@ -37,7 +37,9 @@ namespace py = pybind11;
 namespace dart {
 namespace python {
 
+#if DART_HAVE_urdfdom
 void DartLoader(py::module& sm);
+#endif
 void SkelParser(py::module& sm);
 void MjcfParser(py::module& sm);
 
@@ -45,7 +47,9 @@ void dart_io(py::module& m)
 {
   auto sm = m.def_submodule("io");
 
+#if DART_HAVE_urdfdom
   DartLoader(sm);
+#endif
   SkelParser(sm);
   MjcfParser(sm);
 }

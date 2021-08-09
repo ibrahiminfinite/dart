@@ -191,7 +191,6 @@ if(BULLET_FOUND)
 else()
   message(WARNING "Looking for Bullet - NOT found, to use dart-collision-bullet, please install libbullet-dev")
   set(DART_HAVE_BULLET FALSE CACHE BOOL "Check if BULLET found." FORCE)
-  return()
 endif()
 
 # Dependency checks
@@ -204,7 +203,6 @@ if(urdfdom_FOUND)
   endif()
 else()
   message(WARNING "Looking for urdfdom - NOT found, to use dart-io-urdf, please install liburdfdom-dev")
-  return()
 endif()
 if(MSVC)
   set(urdfdom_LIBRARIES optimized urdfdom_sensor      debug urdfdom_sensord

@@ -37,6 +37,8 @@
 
 #include <osg/Node>
 
+#include "dart/gui/export.hpp"
+
 namespace dart {
 
 namespace dynamics {
@@ -56,7 +58,7 @@ class ShapeFrameNode;
 
 namespace render {
 
-class ShapeNode
+class DART_GUI_API ShapeNode
 {
 public:
   ShapeNode(
