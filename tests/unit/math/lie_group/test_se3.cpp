@@ -94,7 +94,7 @@ TYPED_TEST(SE3Test, Jacobians)
   using S = typename TestFixture::Type;
   const S eps = test::eps_for_diff<S>();
 
-  for (auto i = 0; i < 10; ++i) {
+  for (auto i = 0; i < 100; ++i) {
     const SE3Tangent<S> q = SE3<S>::Random().log();
     Eigen::Matrix<S, 6, 6> jac_numeric;
     for (int j = 0; j < 6; ++j) {
@@ -107,16 +107,9 @@ TYPED_TEST(SE3Test, Jacobians)
       const SE3<S> T_a = exp(q_a);
       const SE3<S> T_b = exp(q_b);
       const SE3<S> dT_left = T_b * T_a.inverse();
-      const SE3Tangent<S> dT_left_log = log(dT_left);
-      const SE3Algebra<S> dt_dt = dT_left_log.hat() / eps;
-      const SE3Algebra<S> r = dt_dt;
-      for (auto z = 0; z < 6; ++z) {
-        if (std::isnan(r.vee()[z])) {
-          auto log2 = log(dT_left);
-          DART_UNUSED(log2);
-        }
-      }
-      jac_numeric.col(j) = r.vee().vector();
+      const SE3Tangent<S> dt = log(dT_left);
+      const SE3Algebra<S> dt_dt = dt.hat() / eps;
+      jac_numeric.col(j) = dt_dt.vee().vector();
     }
     EXPECT_TRUE(test::equals(jac_numeric, q.left_jacobian()));
   }

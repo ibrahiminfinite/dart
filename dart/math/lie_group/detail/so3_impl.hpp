@@ -531,7 +531,7 @@ typename SO3Tangent<S, Options>::Jacobian SO3Tangent<S, Options>::left_jacobian(
   Jacobian jac;
 
   const S t = m_data.norm();
-  const auto& A = hat().matrix();
+  const auto A = hat().matrix();
   if (t < tolerance) {
     jac.noalias() = Jacobian::Identity() + 0.5 * A;
   } else {
@@ -581,7 +581,7 @@ SO3Tangent<S, Options>::left_jacobian_inverse(S tolerance) const
   Jacobian jac;
 
   const S theta = m_data.norm();
-  const auto& A = hat().matrix();
+  const auto A = hat().matrix();
   if (theta < tolerance) {
     jac.noalias() = Jacobian::Identity() + 0.5 * A;
   } else {

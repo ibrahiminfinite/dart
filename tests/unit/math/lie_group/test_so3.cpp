@@ -131,9 +131,12 @@ TYPED_TEST(SO3Test, Jacobians)
       SO3Tangent<S> q_b = q;
       q_b[j] += S(0.5) * eps;
 
-      const SO3Algebra<S> dR = log(exp(q_b) * exp(q_a).inverse()).hat() / eps;
-      const SO3Algebra<S> r = dR;
-      jac_numeric.col(j) = r.vee().vector();
+      const SO3<S> R_a = exp(q_a);
+      const SO3<S> R_b = exp(q_b);
+      const SO3<S> dR_left = R_b * R_a.inverse();
+      const SO3Tangent<S> dr = log(dR_left);
+      const SO3Algebra<S> dr_dt = dr.hat() / eps;
+      jac_numeric.col(j) = dr_dt.vee().vector();
     }
     EXPECT_TRUE(test::equals(jac_numeric, q.left_jacobian()));
   }
