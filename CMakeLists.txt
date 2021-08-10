@@ -1,7 +1,11 @@
 #===============================================================================
 # CMake settings
 #===============================================================================
-cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
+if(APPLE)
+  cmake_minimum_required(VERSION 3.18.2 FATAL_ERROR)
+else()
+  cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
+endif()
 
 # Use MACOSX_RPATH by default on OS X. This was added in CMake 2.8.12 and
 # became default in CMake 3.0. Explicitly setting this policy is necessary to

@@ -27,6 +27,29 @@ foreach(required_module ${required_modules})
   endif()
 endforeach()
 
+if(CMAKE_VERSION VERSION_LESS "3.12")
+
+  # PythonInterp
+  find_package(PythonInterp ${DARTPY_PYTHON_VERSION} QUIET)
+  if(NOT PythonInterp_FOUND AND NOT PYTHONINTERP_FOUND)
+    message(WARNING "Disabling [dartpy] due to missing [PythonInterp].")
+    return()
+  endif()
+  
+  # PythonLibs
+  find_package(PythonLibs ${DARTPY_PYTHON_VERSION} QUIET)
+  if(NOT PythonLibs_FOUND AND NOT PYTHONLIBS_FOUND)
+    message(WARNING "Disabling [dartpy] due to missing [PythonLibs].")
+    return()
+  endif()
+
+else()
+
+  find_package(Python 3 COMPONENTS Interpreter Development QUIET)
+  set(PYTHON_EXECUTABLE ${Python_EXECUTABLE})
+
+endif()
+
 # Fetch pybind11
 # Check latest release: https://github.com/pybind/pybind11/releases
 include(dart_fetch_git_repo)
@@ -48,20 +71,6 @@ add_subdirectory(
 )
 if(NOT pybind11_FOUND)
   message(WARNING "Disabling [dartpy] due to failure of fetching [pybind11].")
-  return()
-endif()
-
-# PythonInterp
-find_package(PythonInterp ${DARTPY_PYTHON_VERSION} QUIET)
-if(NOT PythonInterp_FOUND AND NOT PYTHONINTERP_FOUND)
-  message(WARNING "Disabling [dartpy] due to missing [PythonInterp].")
-  return()
-endif()
-
-# PythonLibs
-find_package(PythonLibs ${DARTPY_PYTHON_VERSION} QUIET)
-if(NOT PythonLibs_FOUND AND NOT PYTHONLIBS_FOUND)
-  message(WARNING "Disabling [dartpy] due to missing [PythonLibs].")
   return()
 endif()
 
