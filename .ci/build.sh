@@ -52,6 +52,11 @@ if [ -z "$BUILD_TUTORIALS" ]; then
   BUILD_TUTORIALS=ON
 fi
 
+if [ -z "$TEST_INSTALLATION" ]; then
+  echo "Info: Environment variable TEST_INSTALLATION is unset. Using ON by default."
+  TEST_INSTALLATION=ON
+fi
+
 if [ -f /etc/os-release ]; then
   # freedesktop.org and systemd
   . /etc/os-release
@@ -182,10 +187,12 @@ if [ "$CODECOV" = "ON" ]; then
 fi
 
 # DART: build an C++ example using installed DART
-cd $BUILD_DIR/examples/hello_world
-mkdir build && cd build
-cmake ..
-make -j$num_threads
+if [ "$TEST_INSTALLATION" = "ON" ]; then
+  cd $BUILD_DIR/examples/hello_world
+  mkdir build && cd build
+  cmake ..
+  make -j$num_threads
+fi
 
 # dartpy: run a Python example using installed dartpy
 if [ "$BUILD_DARTPY" = "ON" ]; then
