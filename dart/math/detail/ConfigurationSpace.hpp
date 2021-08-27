@@ -51,7 +51,8 @@ struct inverseImpl
 {
   static void run(const MatrixType& matrix, MatrixType& result)
   {
-    result = matrix.ldlt().solve(MatrixType::Identity());
+    //result = matrix.ldlt().solve(MatrixType::Identity());
+    result = matrix.inverse();
   }
 };
 
