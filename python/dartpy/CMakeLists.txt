@@ -9,9 +9,9 @@ execute_process(COMMAND ${PYTHON_EXECUTABLE} -c
   OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
-if(NOT IS_ABSOLUTE PYTHON_SITE_PACKAGES)
-  set(PYTHON_SITE_PACKAGES "${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES}")
-endif()
+# if(NOT IS_ABSOLUTE PYTHON_SITE_PACKAGES)
+#   set(PYTHON_SITE_PACKAGES "${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES}")
+# endif()
 if(NOT PythonInterp_FOUND)
   message(WARNING "DART_BUILD_DARTPY is ON, but failed to find PythonInterp. "
     "Disabling dartpy."
@@ -97,10 +97,13 @@ if(BUILD_SHARED_LIBS)
     "Install the shared libraries to be able to import ${pybind_module}."
   )
 endif()
-add_custom_target(install-${pybind_module}
-  COMMENT "${install_comment}"
-  COMMAND ${CMAKE_COMMAND} -E copy ${PYBIND_MODULE} ${PYTHON_SITE_PACKAGES}
-  DEPENDS ${install_dartpy_deps}
+# add_custom_target(install-${pybind_module}
+#   COMMENT "${install_comment}"
+#   COMMAND ${CMAKE_COMMAND} -E copy ${PYBIND_MODULE} ${PYTHON_SITE_PACKAGES}
+#   DEPENDS ${install_dartpy_deps}
+# )
+install(TARGETS dartpy
+  LIBRARY DESTINATION "${PYTHON_SITE_PACKAGES}"
 )
 
 list(REMOVE_ITEM dartpy_headers
