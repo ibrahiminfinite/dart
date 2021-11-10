@@ -2,6 +2,7 @@
 
 add_subdirectory(common)
 add_subdirectory(math)
+add_subdirectory(optimization)
 add_subdirectory(collision)
 add_subdirectory(multibody)
 add_subdirectory(simulation)
