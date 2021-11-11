@@ -66,6 +66,8 @@ public:
 
   DART_LIE_GROUP_USE_BASE_TYPES;
 
+  static constexpr int tmp = GroupDim;
+
   using Quaternion = typename Base::Quaternion;
   using QuaternionMap = typename Base::QuaternionMap;
   using ConstQuaternionMap = typename Base::ConstQuaternionMap;
