@@ -385,4 +385,10 @@ using Combinations_t = typename make_combinations<
     std::make_index_sequence<
         (std::tuple_size<TupleTypes>::value) * (sizeof...(Params))>>::tuples;
 
+#if DART_ARCH_S390X
+using FloatingTypes = testing::Types<float, double>;
+#else
+using FloatingTypes = testing::Types<float, double, long double>;
+#endif
+
 } // namespace dart::test
