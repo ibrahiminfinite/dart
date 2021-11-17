@@ -32,22 +32,59 @@
 
 #pragma once
 
+#include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
-#include "dart/common/memory.hpp"
+#include "dart/common/macro.hpp"
+#include "dart/math/type.hpp"
 
-namespace dart {
-namespace collision {
+namespace dart::collision {
 
-DART_DEFINE_CLASS_POINTERS_T1(FclEngine);
-DART_DEFINE_CLASS_POINTERS_T1(FclScene);
-DART_DEFINE_CLASS_POINTERS_T1(FclObject);
+/// Contact information of a pair of collision objects
+template <typename Scalar_>
+struct ContactPoint
+{
+  using Scalar = Scalar_;
 
-template <typename Scalar>
-using FclSceneArray = common::DerivedPtrArray<Scene<Scalar>, FclScene<Scalar>>;
+  /// Default constructor
+  ContactPoint();
 
-template <typename Scalar>
-using FclObjectArray
-    = common::DerivedPtrArray<Object<Scalar>, FclObject<Scalar>>;
+  /// Contact point w.r.t. the world frame
+  math::Vector3<Scalar> point;
 
-} // namespace collision
-} // namespace dart
+  /// Contact normal vector from bodyNode2 to bodyNode1 w.r.t. the world frame
+  math::Vector3<Scalar> normal;
+
+  /// Contact force acting on bodyNode1 w.r.t. the world frame
+  ///
+  /// The contact force acting on bodyNode2 is -force, which is the opposite
+  /// direction of the force.
+  math::Vector3<Scalar> force;
+
+  /// First colliding collision object
+  Object<Scalar>* collision_object1;
+
+  /// Second colliding collision object
+  Object<Scalar>* collision_object2;
+
+  /// Penetration depth
+  Scalar depth;
+
+  /// Returns the epsilon to be used for determination of zero-length normal.
+  constexpr static Scalar get_normal_epsilon();
+
+  /// Returns the squired epsilon to be used for determination of zero-length
+  /// normal.
+  constexpr static Scalar get_normal_epsilon_squared();
+
+  /// Returns true if the length of a normal is less than the epsilon.
+  static bool is_zero_normal(const math::Vector3<Scalar>& normal);
+
+  /// Returns !isZeroNormal().
+  static bool is_non_zero_normal(const math::Vector3<Scalar>& normal);
+};
+
+DART_TEMPLATE_STRUCT_HEADER(COLLISION, ContactPoint)
+
+} // namespace dart::collision
+
+#include "dart/collision/detail/contact_point_impl.hpp"

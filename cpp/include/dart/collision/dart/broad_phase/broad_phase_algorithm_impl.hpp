@@ -57,7 +57,8 @@ public:
   bool remove_pair(
       DartObject<Scalar>* object_a, DartObject<Scalar>* object_b) override
   {
-    m_pairs.remove(object_a, object_b);
+    DART_UNUSED(object_a, object_b);
+    // m_pairs.remove(object_a, object_b);
     return false;
   }
 

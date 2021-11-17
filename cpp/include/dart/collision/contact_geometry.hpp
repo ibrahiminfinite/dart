@@ -32,22 +32,26 @@
 
 #pragma once
 
+#include "dart/collision/export.hpp"
 #include "dart/collision/type.hpp"
-#include "dart/common/memory.hpp"
+#include "dart/common/macro.hpp"
+#include "dart/math/type.hpp"
 
-namespace dart {
-namespace collision {
+namespace dart::collision {
 
-DART_DEFINE_CLASS_POINTERS_T1(FclEngine);
-DART_DEFINE_CLASS_POINTERS_T1(FclScene);
-DART_DEFINE_CLASS_POINTERS_T1(FclObject);
+/// Contact information of a pair of collision objects
+template <typename Scalar_>
+struct ContactGeometry
+{
+  using Scalar = Scalar_;
 
-template <typename Scalar>
-using FclSceneArray = common::DerivedPtrArray<Scene<Scalar>, FclScene<Scalar>>;
+  static constexpr int MAX_CONTACT_POINTS = 4;
 
-template <typename Scalar>
-using FclObjectArray
-    = common::DerivedPtrArray<Object<Scalar>, FclObject<Scalar>>;
+  unsigned int contact_point_index_begin;
+};
 
-} // namespace collision
-} // namespace dart
+DART_TEMPLATE_STRUCT_HEADER(COLLISION, ContactGeometry);
+
+} // namespace dart::collision
+
+#include "dart/collision/detail/contact_geometry_impl.hpp"

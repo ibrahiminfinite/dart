@@ -32,59 +32,57 @@
 
 #pragma once
 
-#include "dart/collision/export.hpp"
-#include "dart/collision/type.hpp"
+#include <vector>
+
+#include "dart/collision/dart/dart_type.hpp"
+#include "dart/collision/dart/narrow_phase/type.hpp"
 #include "dart/common/macro.hpp"
-#include "dart/math/type.hpp"
 
-namespace dart::collision {
+namespace dart::collision::detail {
 
-/// Contact information of a pair of collision objects
 template <typename Scalar_>
-struct Contact
+class NarrowPhaseManager
 {
+public:
   using Scalar = Scalar_;
 
-  /// Default constructor
-  Contact();
+  explicit NarrowPhaseManager(
+      common::MemoryAllocator& allocator,
+      CollisionAlgorithmSelector<Scalar>& collision_algorithm_dispatch)
+    : m_collision_algorithm_dispatch(collision_algorithm_dispatch),
+      m_active_algorithms(allocator)
+  {
+    // Do nothing
+  }
 
-  /// Contact point w.r.t. the world frame
-  math::Vector3<Scalar> point;
+  virtual ~NarrowPhaseManager() = default;
 
-  /// Contact normal vector from bodyNode2 to bodyNode1 w.r.t. the world frame
-  math::Vector3<Scalar> normal;
+  virtual void request_collision_check(
+      DartObject<Scalar>* object_a, DartObject<Scalar>* object_b)
+  {
+    DART_UNUSED(object_a, object_b);
+    // 1. Get or create algorithm by the geometry type
 
-  /// Contact force acting on bodyNode1 w.r.t. the world frame
-  ///
-  /// The contact force acting on bodyNode2 is -force, which is the opposite
-  /// direction of the force.
-  math::Vector3<Scalar> force;
+    // 2. Assign the request to the algorithm
+    //    In this step, the concrete manager or the concrete algorithm split the
+    //    job if it's needed.
+  }
 
-  /// First colliding collision object
-  Object<Scalar>* collision_object1;
+  virtual void check_collision()
+  {
+    // Ask all the (active) algorithms to perform collision checking.
+    // It's assumed that the algorithms can run in parallel.
+    for (auto& algorithm : m_active_algorithms) {
+      algorithm->compute_collision_batch(nullptr);
+    }
+  }
 
-  /// Second colliding collision object
-  Object<Scalar>* collision_object2;
-
-  /// Penetration depth
-  Scalar depth;
-
-  /// Returns the epsilon to be used for determination of zero-length normal.
-  constexpr static Scalar get_normal_epsilon();
-
-  /// Returns the squired epsilon to be used for determination of zero-length
-  /// normal.
-  constexpr static Scalar get_normal_epsilon_squared();
-
-  /// Returns true if the length of a normal is less than the epsilon.
-  static bool is_zero_normal(const math::Vector3<Scalar>& normal);
-
-  /// Returns !isZeroNormal().
-  static bool is_non_zero_normal(const math::Vector3<Scalar>& normal);
+protected:
+private:
+  CollisionAlgorithmSelector<Scalar>& m_collision_algorithm_dispatch;
+  common::vector<CollisionAlgorithm<Scalar>*> m_active_algorithms;
 };
 
-DART_TEMPLATE_STRUCT_HEADER(COLLISION, Contact)
+} // namespace dart::collision::detail
 
-} // namespace dart::collision
-
-#include "dart/collision/detail/contact_impl.hpp"
+#include "dart/collision/dart/narrow_phase/collision_algorithm_manager_impl.hpp"

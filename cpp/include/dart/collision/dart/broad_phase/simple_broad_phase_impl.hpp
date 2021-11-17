@@ -40,6 +40,15 @@ namespace dart::collision::detail {
 
 //==============================================================================
 template <typename Scalar>
+SimpleBroadPhaseAlgorithm<Scalar>::SimpleBroadPhaseAlgorithm(
+    common::MemoryAllocator& allocator)
+  : m_objects(allocator)
+{
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar>
 bool SimpleBroadPhaseAlgorithm<Scalar>::add_object(DartObject<Scalar>* object)
 {
   DART_ASSERT(static_cast<int>(m_objects.size()) <= common::max<int>());
@@ -106,6 +115,27 @@ void SimpleBroadPhaseAlgorithm<Scalar>::compute_overlapping_pairs(
         if (callback.remove_pair(object_a, object_b)) {
           return;
         }
+      }
+    }
+  }
+}
+
+//==============================================================================
+template <typename Scalar>
+void SimpleBroadPhaseAlgorithm<Scalar>::compute_overlapping_pairs(
+    Scalar time_step,
+    std::function<void(DartObject<Scalar>*, DartObject<Scalar>*)>&& callback)
+{
+  DART_UNUSED(time_step);
+
+  for (auto it_a = m_objects.cbegin(); it_a != m_objects.cend(); ++it_a) {
+    DartObject<Scalar>* object_a = *it_a;
+    auto it_b = it_a;
+    it_b++;
+    for (; it_b != m_objects.cend(); ++it_b) {
+      DartObject<Scalar>* object_b = *it_b;
+      if (object_a->get_aabb().overlaps(object_b->get_aabb())) {
+        callback(object_a, object_b);
       }
     }
   }

@@ -3,7 +3,7 @@
  * All rights reserved.
  *
  * The list of contributors can be found at:
- *   https://github.com/dartsim/dart/blob/master/LICENSE
+ *   https://github.com/dartsim/dart/blob/main/LICENSE
  *
  * This file is provided under the following "BSD-style" License:
  *   Redistribution and use in source and binary forms, with or
@@ -30,24 +30,34 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "dart/test/common/null_allocator.hpp"
 
-#include "dart/collision/type.hpp"
-#include "dart/common/memory.hpp"
+namespace dart::test {
 
-namespace dart {
-namespace collision {
+//==============================================================================
+void* NullAllocator::allocate(size_t size) noexcept
+{
+  DART_UNUSED(size);
+  return nullptr;
+}
 
-DART_DEFINE_CLASS_POINTERS_T1(FclEngine);
-DART_DEFINE_CLASS_POINTERS_T1(FclScene);
-DART_DEFINE_CLASS_POINTERS_T1(FclObject);
+//==============================================================================
+void* NullAllocator::allocate_aligned(size_t size, size_t alignment) noexcept
+{
+  DART_UNUSED(size, alignment);
+  return nullptr;
+}
 
-template <typename Scalar>
-using FclSceneArray = common::DerivedPtrArray<Scene<Scalar>, FclScene<Scalar>>;
+//==============================================================================
+void NullAllocator::deallocate(void* pointer, size_t size)
+{
+  DART_UNUSED(pointer, size);
+}
 
-template <typename Scalar>
-using FclObjectArray
-    = common::DerivedPtrArray<Object<Scalar>, FclObject<Scalar>>;
+//==============================================================================
+void NullAllocator::deallocate_aligned(void* pointer, size_t size)
+{
+  DART_UNUSED(pointer, size);
+}
 
-} // namespace collision
-} // namespace dart
+} // namespace dart::test

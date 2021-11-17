@@ -32,22 +32,56 @@
 
 #pragma once
 
-#include "dart/collision/type.hpp"
-#include "dart/common/memory.hpp"
+#include "dart/collision/contact_point.hpp"
 
 namespace dart {
 namespace collision {
 
-DART_DEFINE_CLASS_POINTERS_T1(FclEngine);
-DART_DEFINE_CLASS_POINTERS_T1(FclScene);
-DART_DEFINE_CLASS_POINTERS_T1(FclObject);
-
+//==============================================================================
 template <typename Scalar>
-using FclSceneArray = common::DerivedPtrArray<Scene<Scalar>, FclScene<Scalar>>;
+constexpr Scalar ContactPoint<Scalar>::get_normal_epsilon()
+{
+  return 1e-6;
+}
 
+//==============================================================================
 template <typename Scalar>
-using FclObjectArray
-    = common::DerivedPtrArray<Object<Scalar>, FclObject<Scalar>>;
+constexpr Scalar ContactPoint<Scalar>::get_normal_epsilon_squared()
+{
+  return 1e-12;
+}
+
+//==============================================================================
+template <typename Scalar>
+ContactPoint<Scalar>::ContactPoint()
+  : point(math::Vector3<Scalar>::Zero()),
+    normal(math::Vector3<Scalar>::Zero()),
+    force(math::Vector3<Scalar>::Zero()),
+    collision_object1(nullptr),
+    collision_object2(nullptr),
+    depth(0)
+{
+  // TODO(MXG): Consider using NaN instead of zero for uninitialized quantities
+  // Do nothing
+}
+
+//==============================================================================
+template <typename Scalar>
+bool ContactPoint<Scalar>::is_zero_normal(const math::Vector3<Scalar>& normal)
+{
+  if (normal.squaredNorm() < get_normal_epsilon_squared())
+    return true;
+  else
+    return false;
+}
+
+//==============================================================================
+template <typename Scalar>
+bool ContactPoint<Scalar>::is_non_zero_normal(
+    const math::Vector3<Scalar>& normal)
+{
+  return !is_zero_normal(normal);
+}
 
 } // namespace collision
 } // namespace dart

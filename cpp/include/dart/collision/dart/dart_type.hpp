@@ -44,11 +44,11 @@ DART_DEFINE_CLASS_POINTERS_T1(DartScene);
 
 template <typename Scalar>
 using DartSceneArray
-    = common::ArrayForDerivedPtr<Scene<Scalar>, DartScene<Scalar>>;
+    = common::DerivedPtrArray<Scene<Scalar>, DartScene<Scalar>>;
 
 template <typename Scalar>
 using DartObjectArray
-    = common::ArrayForDerivedPtr<Object<Scalar>, DartObject<Scalar>>;
+    = common::DerivedPtrArray<Object<Scalar>, DartObject<Scalar>>;
 
 } // namespace collision
 } // namespace dart

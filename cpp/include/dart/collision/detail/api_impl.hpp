@@ -30,24 +30,37 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include "dart/collision/api.hpp"
+#include "dart/collision/dart/dart_engine.hpp"
+
 #pragma once
 
-#include "dart/collision/type.hpp"
-#include "dart/common/memory.hpp"
+namespace dart::collision {
 
-namespace dart {
-namespace collision {
-
-DART_DEFINE_CLASS_POINTERS_T1(FclEngine);
-DART_DEFINE_CLASS_POINTERS_T1(FclScene);
-DART_DEFINE_CLASS_POINTERS_T1(FclObject);
-
+//==============================================================================
 template <typename Scalar>
-using FclSceneArray = common::DerivedPtrArray<Scene<Scalar>, FclScene<Scalar>>;
+EnginePtr<Scalar> get_default_engine()
+{
+  static std::shared_ptr<DartEngine<Scalar>> engine
+      = DartEngine<Scalar>::Create();
+  return engine;
+}
 
+//==============================================================================
 template <typename Scalar>
-using FclObjectArray
-    = common::DerivedPtrArray<Object<Scalar>, FclObject<Scalar>>;
+Scene<Scalar>* get_default_scene()
+{
+  auto engine = get_default_engine<Scalar>();
+  static auto scene = engine->create_scene();
+  return scene;
+}
 
-} // namespace collision
-} // namespace dart
+//==============================================================================
+template <typename Scalar, typename... Args>
+Object<Scalar>* create_sphere_object(Args&&... args)
+{
+  auto engine = get_default_engine<Scalar>();
+  return engine->create_sphere_object(std::forward<Args>(args)...);
+}
+
+} // namespace dart::collision

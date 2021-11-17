@@ -30,12 +30,12 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/collision/contact.hpp"
+#pragma once
 
-namespace dart {
-namespace collision {
+#include "dart/collision/contact_geometry.hpp"
 
-DART_TEMPLATE_STRUCT_SOURCE(COLLISION, Contact)
+namespace dart::collision {
 
-} // namespace collision
-} // namespace dart
+//==============================================================================
+
+} // namespace dart::collision

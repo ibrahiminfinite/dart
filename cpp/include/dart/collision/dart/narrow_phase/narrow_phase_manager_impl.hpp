@@ -32,22 +32,10 @@
 
 #pragma once
 
-#include "dart/collision/type.hpp"
-#include "dart/common/memory.hpp"
+#include "dart/collision/dart/narrow_phase/narrow_phase_manager.hpp"
 
-namespace dart {
-namespace collision {
+namespace dart::collision::detail {
 
-DART_DEFINE_CLASS_POINTERS_T1(FclEngine);
-DART_DEFINE_CLASS_POINTERS_T1(FclScene);
-DART_DEFINE_CLASS_POINTERS_T1(FclObject);
+//
 
-template <typename Scalar>
-using FclSceneArray = common::DerivedPtrArray<Scene<Scalar>, FclScene<Scalar>>;
-
-template <typename Scalar>
-using FclObjectArray
-    = common::DerivedPtrArray<Object<Scalar>, FclObject<Scalar>>;
-
-} // namespace collision
-} // namespace dart
+} // namespace dart::collision::detail
