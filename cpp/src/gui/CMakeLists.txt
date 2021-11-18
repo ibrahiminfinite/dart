@@ -5,12 +5,14 @@ dart_component_setup(
   COMPONENT_NAME
     gui
   DEPENDENT_COMPONENTS
-    common math rendering
+    common math simulation
   DEPENDENT_PACKAGES_REQUIRED
-    OpenGL GLEW glfw3
+    raylib
   TARGET_LINK_LIBRARIES_PUBLIC
-    OpenGL::GL GLEW::glew glfw imgui::imgui
+    raylib
   TARGET_COMPILE_FEATURES_PUBLIC
   GENERATE_EXPORT_HEADER
   GENERATE_COMPONENT_ALL_HEADER
+  SUB_DIRECTORIES
+    scene
 )

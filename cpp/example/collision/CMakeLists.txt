@@ -6,5 +6,5 @@ dart_build_example(
   TARGET_NAME
     EXAMPLE_${example_name}
   DEPENDENT_COMPONENTS
-    gui
+    collision gui
 )

@@ -50,6 +50,8 @@ public:
 
   void update(double time_step = 1e-3);
 
+  long get_step_count() const;
+
   void set_gravity(const math::Vector3d& gravity);
 
   math::Vector3d& get_gravity() const;

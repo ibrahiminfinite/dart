@@ -28,16 +28,36 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
-#include "dart/rendering/export.hpp"
-#include "dart/rendering/osg_include.hpp"
+#include "dart/collision/scene.hpp"
+#include "dart/gui/scene/scene.hpp"
+#include "dart/simulation/world.hpp"
 
-namespace dart::rendering {
+namespace dart::gui {
 
-class Camera;
-using CameraPtr = std::shared_ptr<Camera>;
+class DART_GUI_API SimulationScene : public Scene
+{
+public:
+  template <typename... Args>
+  static std::shared_ptr<SimulationScene> Create(Args&&... args)
+  {
+    return std::make_shared<SimulationScene>(std::forward<Args>(args)...);
+  }
 
-class Scene;
-using ScenePtr = std::shared_ptr<Scene>;
+  SimulationScene();
 
-} // namespace dart::rendering
+  ~SimulationScene();
+
+  bool set_simulation_world(std::shared_ptr<simulation::World> world);
+
+  void update() override;
+  void render() override;
+
+protected:
+private:
+  struct Implementation;
+  std::unique_ptr<Implementation> m_impl;
+};
+
+} // namespace dart::gui

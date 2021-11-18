@@ -188,6 +188,36 @@ public:
     return coeffs().norm();
   }
 
+  Scalar x() const
+  {
+    return coeffs().x();
+  }
+
+  Scalar y() const
+  {
+    return coeffs().y();
+  }
+
+  Scalar z() const
+  {
+    return coeffs().z();
+  }
+
+  Scalar& x()
+  {
+    return coeffs().x();
+  }
+
+  Scalar& y()
+  {
+    return coeffs().y();
+  }
+
+  Scalar& z()
+  {
+    return coeffs().z();
+  }
+
   using Base::coeffs;
   using Base::data;
 

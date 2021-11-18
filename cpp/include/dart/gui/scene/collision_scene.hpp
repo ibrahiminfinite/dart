@@ -25,10 +25,36 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "imgui_handler.hpp"
+#pragma once
+
+#include <memory>
+#include <string>
+
+#include "dart/collision/scene.hpp"
+#include "dart/gui/scene/scene.hpp"
 
 namespace dart::gui {
 
-//==============================================================================
+class DART_GUI_API CollisionScene : public Scene
+{
+public:
+  template <typename... Args>
+  static std::shared_ptr<CollisionScene> Create(Args&&... args)
+  {
+    return std::make_shared<CollisionScene>(std::forward<Args>(args)...);
+  }
+
+  explicit CollisionScene(std::shared_ptr<collision::Scene<double>> scene);
+
+  ~CollisionScene();
+
+  void update() override;
+  void render() override;
+
+protected:
+private:
+  struct Implementation;
+  std::unique_ptr<Implementation> m_impl;
+};
 
 } // namespace dart::gui

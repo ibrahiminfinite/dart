@@ -25,60 +25,28 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/gui/widget.hpp"
+#include "dart/all.hpp"
 
-namespace dart::gui {
+using namespace dart;
 
-//==============================================================================
-struct Widget::Implementation
+int main()
 {
-  std::string title = "(default)";
-  bool visible = true;
+  // Application configs
+  auto config = gui::ApplicationConfigs();
+  config.headless = false;
 
-  Implementation()
-  {
-    // Do nothing
-  }
-};
+  // Create application
+  auto app = gui::Application::Create(config);
 
-//==============================================================================
-Widget::Widget() : m_impl(std::make_unique<Implementation>())
-{
-  // Do nothing
+  // Create collision::Scene and create gui::CollisionScene to visualize it
+  auto collision_scene = collision::get_default_scene<double>();
+  auto o1 = collision_scene->create_sphere_object(1.0);
+  auto o2 = collision_scene->create_sphere_object(1.5);
+  o1->set_position({1.5, 0, 0});
+  o2->set_position({-1.5, 0, 0});
+  app->create_scene<gui::CollisionScene>(collision_scene);
+
+  app->run(0);
+
+  return 0;
 }
-
-//==============================================================================
-Widget::~Widget()
-{
-  // Do nothing
-}
-
-//==============================================================================
-void Widget::set_title(const std::string& title)
-{
-  m_impl->title = title;
-}
-
-//==============================================================================
-const std::string& Widget::get_title() const
-{
-  return m_impl->title;
-}
-
-//==============================================================================
-void Widget::draw()
-{
-  if (!m_impl->visible) {
-    return;
-  }
-
-  draw_impl();
-}
-
-//==============================================================================
-void Widget::draw_impl()
-{
-  // Do nothing
-}
-
-} // namespace dart::gui

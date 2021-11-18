@@ -5,9 +5,7 @@ add_subdirectory(math)
 add_subdirectory(collision)
 add_subdirectory(multibody)
 add_subdirectory(simulation)
-add_subdirectory(rendering)
 add_subdirectory(gui)
-add_subdirectory(application)
 
 # Generate "all" header file
 dart_property_get(

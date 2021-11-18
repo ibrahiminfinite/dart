@@ -27,41 +27,6 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-
-#include "dart/rendering/export.hpp"
-#include "dart/rendering/osg_include.hpp"
-#include "dart/rendering/type.hpp"
-#include "dart/simulation/world.hpp"
-
-namespace dart::rendering {
-
-class DART_RENDERING_API Scene
-{
-public:
-  template <typename... Args>
-  static std::shared_ptr<Scene> Create(Args&&... args)
-  {
-    return std::make_shared<Scene>(std::forward<Args>(args)...);
-  }
-
-  Scene();
-
-  ~Scene();
-
-  bool set_world(std::shared_ptr<simulation::World> world);
-
-  [[nodiscard]] CameraPtr create_camera();
-
-  [[nodiscard]] osg::ref_ptr<const osg::Group> get_osg_root_node() const;
-
-  [[nodiscard]] osg::ref_ptr<osg::Group> get_mutable_osg_root_node();
-
-protected:
-private:
-  struct Implementation;
-  std::unique_ptr<Implementation> m_impl;
-};
-
-} // namespace dart::rendering
+namespace raylib {
+#include "raylib.h"
+}

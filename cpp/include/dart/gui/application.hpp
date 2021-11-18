@@ -28,28 +28,48 @@
 #pragma once
 
 #include <memory>
-#include <string>
 
-#include "dart/rendering/export.hpp"
-#include "dart/rendering/osg_include.hpp"
+#include "dart/gui/export.hpp"
+#include "dart/gui/scene/scene.hpp"
 
-namespace dart::rendering {
+namespace dart::gui {
 
-class DART_RENDERING_API Image
+struct DART_GUI_API ApplicationConfigs
+{
+  bool headless = false;
+};
+
+class DART_GUI_API Application
 {
 public:
-  Image();
+  template <typename... Args>
+  static std::shared_ptr<Application> Create(Args&&... args)
+  {
+    return std::make_shared<Application>(std::forward<Args>(args)...);
+  }
 
-  ~Image();
+  explicit Application(
+      const ApplicationConfigs& configs = ApplicationConfigs());
 
-  void set_data(
-      const unsigned char* data, int width, int height, int format, int type);
+  ~Application();
 
-  void set_from_osg_image(const osg::Image& image);
+  template <typename SceneType, typename... Args>
+  Scene* create_scene(Args&&... args)
+  {
+    auto new_scene = std::unique_ptr<SceneType>(
+        new SceneType(std::forward<Args>(args)...));
+    SceneType* scene_raw_ptr = new_scene.get();
+    set_scene(std::move(new_scene));
+    return scene_raw_ptr;
+  }
+
+  void run(long num_steps = 0);
 
 private:
+  void set_scene(std::unique_ptr<Scene> scene);
+
   struct Implementation;
   std::unique_ptr<Implementation> m_impl;
 };
 
-} // namespace dart::rendering
+} // namespace dart::gui

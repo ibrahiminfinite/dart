@@ -6,5 +6,7 @@ dart_build_example(
   TARGET_NAME
     EXAMPLE_${example_name}
   DEPENDENT_COMPONENTS
-    gui
+    common
 )
+target_include_directories(EXAMPLE_${example_name} PUBLIC ${RAYLIB_INCLUDE_DIRS})
+target_link_libraries(EXAMPLE_${example_name} PUBLIC ${RAYLIB_LIBRARIES})

@@ -27,10 +27,10 @@
 
 #pragma once
 
-#include "dart/rendering/osg_include.hpp"
+#include "dart/gui/osg_include.hpp"
 
-namespace dart::rendering {
+namespace dart::gui {
 
 //==============================================================================
 
-} // namespace dart::rendering
+} // namespace dart::gui

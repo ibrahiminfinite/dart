@@ -58,6 +58,10 @@ public:
 
   void destroy_object(Object<Scalar>* object);
 
+  int get_object_count() const;
+
+  ConstObjectPtr<Scalar> get_object_by_index(int index) const;
+
   /// Creates a collision object with sphere
   template <typename... Args>
   Object<Scalar>* create_sphere_object(Args&&... args);
@@ -82,6 +86,8 @@ protected:
 
   /// The parent collision engine that created this scene
   Engine<Scalar>* m_engine;
+
+  std::vector<ObjectPtr<Scalar>> m_objects;
 
 private:
   ObjectId m_next_collision_object_id = 0;

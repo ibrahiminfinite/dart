@@ -25,55 +25,52 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "dart/gui/scene/empty_scene.hpp"
 
-#include <memory>
-#include <string>
+#include <unordered_set>
 
-#include "dart/gui/export.hpp"
-#include "dart/gui/glfw_include.hpp"
-#include "dart/math/type.hpp"
+#include "dart/common/logging.hpp"
+#include "dart/common/macro.hpp"
+#include "dart/gui/camera.hpp"
+#include "dart/gui/raylib_include.hpp"
 
 namespace dart::gui {
 
-struct WindowConfig
+//==============================================================================
+struct EmptyScene::Implementation
 {
-  std::string title = "notitle";
-  int width = 800;
-  int height = 600;
-  bool offscreen = false;
-};
+  std::shared_ptr<collision::Scene<double>> collision_scene;
+  std::unordered_set<CameraPtr> cameras;
 
-class DART_GUI_API Window
-{
-public:
-  template <typename... Args>
-  static std::shared_ptr<Window> Create(Args&&... args)
+  Implementation()
   {
-    return std::make_shared<Window>(std::forward<Args>(args)...);
+    // Do nothing
   }
-
-  explicit Window(const WindowConfig& config = WindowConfig());
-  virtual ~Window();
-
-  void make_opengl_context_current();
-  bool should_close() const;
-  void poll_events();
-  void swap_buffers();
-
-  math::Vector2i get_size() const;
-
-  virtual void on_position_changed(int xpos, int ypos);
-  virtual void on_size_changed(int width, int height);
-  virtual void on_refresh();
-
-  std::string get_glsl_version() const;
-
-  GLFWwindow* get_mutable_glfw_window();
-
-private:
-  struct Implementation;
-  std::unique_ptr<Implementation> m_impl;
 };
+
+//==============================================================================
+EmptyScene::EmptyScene() : m_impl(std::make_unique<Implementation>())
+{
+  // Create an empty world
+  // m_impl->collision_scene = simulation::World::Create();
+}
+
+//==============================================================================
+EmptyScene::~EmptyScene()
+{
+  // Do nothing
+}
+
+//==============================================================================
+void EmptyScene::update()
+{
+  // Do nothing
+}
+
+//==============================================================================
+void EmptyScene::render()
+{
+  raylib::DrawText("Empty Scene", 10, 10, 20, raylib::DARKBROWN);
+}
 
 } // namespace dart::gui

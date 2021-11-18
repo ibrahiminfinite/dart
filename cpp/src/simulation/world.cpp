@@ -47,6 +47,8 @@ struct World::Implementation
 
   std::vector<RigidBodyPtr> rigid_bodies;
 
+  long step_count = 0;
+
   Implementation()
   {
     // Do nothing
@@ -102,7 +104,15 @@ void World::update(double time_step)
 
   // Update memory allocator
 
+  m_impl->step_count++;
+
   DART_NOT_IMPLEMENTED;
+}
+
+//==============================================================================
+long World::get_step_count() const
+{
+  return m_impl->step_count;
 }
 
 //==============================================================================

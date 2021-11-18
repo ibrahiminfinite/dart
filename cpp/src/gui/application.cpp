@@ -25,28 +25,24 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/application/simple_simulator.hpp"
+#include "dart/gui/application.hpp"
 
 #include <thread>
 
 #include "dart/common/all.hpp"
 #include "dart/gui/all.hpp"
-#include "dart/rendering/all.hpp"
 #include "dart/simulation/all.hpp"
 
-namespace dart::application {
+namespace dart::gui {
 
 //==============================================================================
-struct SimpleSimulator::Implementation
+struct Application::Implementation
 {
-  SimpleSimulatorConfigs configs;
+  ApplicationConfigs configs;
 
-  std::shared_ptr<simulation::World> world{nullptr};
+  std::shared_ptr<gui::Scene> scene{nullptr};
 
-  std::shared_ptr<rendering::Scene> scene{nullptr};
-  std::shared_ptr<rendering::Camera> camera{nullptr};
-
-  std::shared_ptr<gui::MainWindow> main_window{nullptr};
+  int world_step_count_per_render = 20;
 
   Implementation()
   {
@@ -55,70 +51,79 @@ struct SimpleSimulator::Implementation
 };
 
 //==============================================================================
-SimpleSimulator::SimpleSimulator(const SimpleSimulatorConfigs& configs)
-  : Simulator(configs), m_impl(std::make_unique<Implementation>())
+Application::Application(const ApplicationConfigs& configs)
+  : m_impl(std::make_unique<Implementation>())
 {
+  raylib::SetTraceLogLevel(raylib::LOG_NONE);
+
   // Store configs
   m_impl->configs = configs;
 
-  // Create an empty world
-  m_impl->world = simulation::World::Create();
-
-  // Create scene
-  m_impl->scene = rendering::Scene::Create();
-  m_impl->scene->set_world(m_impl->world);
-
-  // Create camera
-  m_impl->camera = m_impl->scene->create_camera();
+  raylib::SetConfigFlags(
+      raylib::FLAG_MSAA_4X_HINT); // Enable Multi Sampling Anti Aliasing 4x (if
+                                  // available)
 
   // Create main window
   if (m_impl->configs.headless) {
-    m_impl->main_window = nullptr;
+    raylib::SetWindowState(raylib::FLAG_WINDOW_HIDDEN);
   } else {
-    m_impl->main_window = gui::MainWindow::Create();
+    //    m_impl->main_window = gui::MainWindow::Create();
   }
+  raylib::InitWindow(800, 600, "DART GUI Application");
+  raylib::SetWindowState(raylib::FLAG_WINDOW_RESIZABLE);
+  raylib::SetExitKey(raylib::KEY_NULL);
+  raylib::SetTargetFPS(60);
+
+  // Create an empty scene
+  m_impl->scene = EmptyScene::Create();
 }
 
 //==============================================================================
-SimpleSimulator::~SimpleSimulator()
+Application::~Application()
 {
   // Clear resources
-  m_impl->main_window.reset();
-  m_impl->camera.reset();
   m_impl->scene.reset();
-  m_impl->world.reset();
+  raylib::CloseWindow(); // Close window and OpenGL context
 }
 
 //==============================================================================
-void SimpleSimulator::run(long num_steps)
+void Application::run(long num_steps)
 {
-  long steps = 0;
-  while (true) {
-    if (!m_impl->configs.headless) {
-      DART_ASSERT(m_impl->main_window);
-      if (m_impl->main_window->should_close()) {
+  using namespace std::chrono_literals;
+
+  long scene_update_steps = 0;
+
+  while (!raylib::WindowShouldClose()) {
+    raylib::PollInputEvents();
+
+    //    raylib::BeginDrawing();
+    {
+      //      raylib::ClearBackground(raylib::RAYWHITE);
+
+      if (num_steps == 0 || num_steps > scene_update_steps) {
+        for (auto i = 0; i < m_impl->world_step_count_per_render; ++i) {
+          m_impl->scene->update();
+          scene_update_steps++;
+        }
+      }
+      m_impl->scene->render();
+    }
+    //    raylib::EndDrawing();
+
+    if (m_impl->configs.headless) {
+      if (num_steps > 0 && num_steps <= scene_update_steps) {
         break;
       }
     }
 
-    if (num_steps != 0 && steps >= num_steps) {
-      break;
-    }
-
-    // update world (or simulation)
-
-    // update rendering scene
-    m_impl->camera->render();
-
-    if (m_impl->configs.headless) {
-      // m_impl->world->step();
-    } else {
-      DART_ASSERT(m_impl->main_window);
-      m_impl->main_window->update();
-    }
-
-    steps++;
+    std::this_thread::sleep_for(10ms);
   }
 }
 
-} // namespace dart::application
+//==============================================================================
+void Application::set_scene(std::unique_ptr<Scene> scene)
+{
+  m_impl->scene = std::move(scene);
+}
+
+} // namespace dart::gui

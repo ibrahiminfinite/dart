@@ -37,7 +37,7 @@ using WorldPtr = std::shared_ptr<World>;
 class Simulator;
 using SimulatorPtr = std::shared_ptr<Simulator>;
 
-class SimpleSimulator;
-using SimpleSimulatorPtr = std::shared_ptr<SimpleSimulator>;
+class Application;
+using ApplicationPtr = std::shared_ptr<Application>;
 
 } // namespace dart::simulation

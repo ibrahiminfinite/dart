@@ -30,58 +30,31 @@
 #include <memory>
 #include <string>
 
-#include "dart/gui/export.hpp"
-#include "dart/rendering/osg_include.hpp"
+#include "dart/collision/scene.hpp"
+#include "dart/gui/scene/scene.hpp"
 
 namespace dart::gui {
 
-// class DART_GUI_API ImGuiHandler : public osgGA::GUIEventHandler
-//{
-// public:
-//  ImGuiHandler();
+class DART_GUI_API EmptyScene : public Scene
+{
+public:
+  template <typename... Args>
+  static std::shared_ptr<EmptyScene> Create(Args&&... args)
+  {
+    return std::make_shared<EmptyScene>(std::forward<Args>(args)...);
+  }
 
-//  virtual ~ImGuiHandler();
+  EmptyScene();
 
-//  void newFrame(::osg::RenderInfo& renderInfo);
+  ~EmptyScene();
 
-//  void render(::osg::RenderInfo& renderInfo);
+  void update() override;
+  void render() override;
 
-//  void setCameraCallbacks(::osg::Camera* camera);
-
-//  //----------------------------------------------------------------------------
-//  /// \{ \name Widget management
-//  //----------------------------------------------------------------------------
-
-//  /// Returns true if this Viewer contains given widget.
-//  bool hasWidget(const std::shared_ptr<ImGuiWidget>& widget) const;
-
-//  /// Adds given Widget to this Viewer.
-//  void addWidget(
-//      const std::shared_ptr<ImGuiWidget>& widget, bool visible = true);
-
-//  /// Removes given Widget from this Viewer.
-//  void removeWidget(const std::shared_ptr<ImGuiWidget>& widget);
-
-//  /// Removes all the widgets in this Viewer.
-//  void removeAllWidget();
-
-//  /// \}
-
-//  // Documentation inherited.
-//  bool handle(
-//      const osgGA::GUIEventAdapter& eventAdapter,
-//      osgGA::GUIActionAdapter& actionAdapter,
-//      ::osg::Object* object,
-//      ::osg::NodeVisitor* nodeVisitor) override;
-// private:
-//  double mTime;
-
-//  /// Mouse buttons: left, right, middle.
-//  std::array<bool, 3> mMousePressed;
-
-//  float mMouseWheel;
-
-//  std::vector<std::shared_ptr<ImGuiWidget>> mWidgets;
-//};
+protected:
+private:
+  struct Implementation;
+  std::unique_ptr<Implementation> m_impl;
+};
 
 } // namespace dart::gui

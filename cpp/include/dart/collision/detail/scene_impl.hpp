@@ -106,6 +106,20 @@ void Scene<Scalar>::destroy_object(Object<Scalar>* object)
 
 //==============================================================================
 template <typename Scalar>
+int Scene<Scalar>::get_object_count() const
+{
+  return m_objects.size();
+}
+
+//==============================================================================
+template <typename Scalar>
+ConstObjectPtr<Scalar> Scene<Scalar>::get_object_by_index(int index) const
+{
+  return m_objects[index];
+}
+
+//==============================================================================
+template <typename Scalar>
 template <typename... Args>
 Object<Scalar>* Scene<Scalar>::create_sphere_object(Args&&... args)
 {

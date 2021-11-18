@@ -25,18 +25,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/application/simulator.hpp"
+#include "dart/gui/camera.hpp"
 
-#include <thread>
+#include <mutex>
 
 #include "dart/common/logging.hpp"
 #include "dart/common/macro.hpp"
 
-namespace dart::application {
+namespace dart::gui {
 
 //==============================================================================
-struct Simulator::Implementation
+struct Camera::Implementation
 {
+  raylib::Camera raylib_camera;
+
   Implementation()
   {
     // Do nothing
@@ -44,22 +46,27 @@ struct Simulator::Implementation
 };
 
 //==============================================================================
-Simulator::Simulator(const SimulatorConfigs& /*configs*/)
-  : m_impl(std::make_unique<Implementation>())
+Camera::Camera() : m_impl(std::make_unique<Implementation>())
+{
+  m_impl->raylib_camera.fovy = 45.0f;
+  m_impl->raylib_camera.up.y = 1.0f;
+  m_impl->raylib_camera.position = {0, 10, 10};
+  m_impl->raylib_camera.target = {0, 0, 0};
+  m_impl->raylib_camera.projection = raylib::CAMERA_PERSPECTIVE;
+
+  raylib::SetCameraMode(m_impl->raylib_camera, raylib::CAMERA_FREE);
+}
+
+//==============================================================================
+Camera::~Camera()
 {
   // Do nothing
 }
 
 //==============================================================================
-Simulator::~Simulator()
+raylib::Camera& Camera::get_mutable_raylib_camera()
 {
-  // Do nothing
+  return m_impl->raylib_camera;
 }
 
-//==============================================================================
-void Simulator::run(long /*steps*/)
-{
-  // Do nothing
-}
-
-} // namespace dart::application
+} // namespace dart::gui

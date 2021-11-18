@@ -25,35 +25,38 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/gui/scene3d.hpp"
+#pragma once
+
+#include <memory>
+#include <string>
+
+#include "dart/gui/export.hpp"
+#include "dart/gui/type.hpp"
 
 namespace dart::gui {
 
-//==============================================================================
-struct Scene3d::Implementation
+class DART_GUI_API Scene
 {
-  Implementation()
+public:
+  template <typename... Args>
+  static std::shared_ptr<Scene> Create(Args&&... args)
   {
-    // Do nothing
+    return std::make_shared<Scene>(std::forward<Args>(args)...);
   }
+
+  Scene();
+
+  ~Scene();
+
+  virtual void update();
+  virtual void render();
+
+  virtual CameraPtr get_mutable_camera();
+
+protected:
+private:
+  struct Implementation;
+  std::unique_ptr<Implementation> m_impl;
 };
-
-//==============================================================================
-Scene3d::Scene3d() : m_impl(std::make_unique<Implementation>())
-{
-  // Do nothing
-}
-
-//==============================================================================
-Scene3d::~Scene3d()
-{
-  // Do nothing
-}
-
-//==============================================================================
-void Scene3d::draw_impl()
-{
-  // Do nothing
-}
 
 } // namespace dart::gui

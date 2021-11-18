@@ -27,17 +27,29 @@
 
 #pragma once
 
-#include <GL/glew.h> // must be included before any header that includes gl.h
-#include <osg/Camera>
-#include <osg/Light>
-#include <osg/Material>
-#include <osg/MatrixTransform>
-#include <osg/Shape>
-#include <osg/ShapeDrawable>
-#include <osg/Texture2D>
-#include <osgDB/WriteFile>
-#include <osgGA/TrackballManipulator>
-#include <osgViewer/CompositeViewer>
-#include <osgViewer/View>
-#include <osgViewer/Viewer>
-#include <osgViewer/ViewerEventHandlers>
+#include <memory>
+#include <string>
+
+#include "dart/gui/export.hpp"
+#include "dart/gui/raylib_include.hpp"
+#include "dart/gui/type.hpp"
+
+namespace dart::gui {
+
+class DART_GUI_API Camera
+{
+public:
+  Camera();
+
+  ~Camera();
+
+  raylib::Camera& get_mutable_raylib_camera();
+
+protected:
+private:
+  friend class Scene;
+  struct Implementation;
+  std::unique_ptr<Implementation> m_impl;
+};
+
+} // namespace dart::gui

@@ -25,7 +25,56 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "dart/gui/scene/scene.hpp"
 
-#include <GL/glew.h> // must be included before glfw3.h
-#include <GLFW/glfw3.h>
+#include <unordered_set>
+
+#include "dart/common/logging.hpp"
+#include "dart/common/macro.hpp"
+#include "dart/gui/camera.hpp"
+#include "dart/gui/raylib_include.hpp"
+
+namespace dart::gui {
+
+//==============================================================================
+struct Scene::Implementation
+{
+  CameraPtr camera;
+
+  Implementation()
+  {
+    // Do nothing
+  }
+};
+
+//==============================================================================
+Scene::Scene() : m_impl(std::make_unique<Implementation>())
+{
+  m_impl->camera = std::make_shared<Camera>();
+}
+
+//==============================================================================
+Scene::~Scene()
+{
+  // Do nothing
+}
+
+//==============================================================================
+void Scene::update()
+{
+  // Do nothing
+}
+
+//==============================================================================
+void Scene::render()
+{
+  // Do nothing
+}
+
+//==============================================================================
+CameraPtr Scene::get_mutable_camera()
+{
+  return m_impl->camera;
+}
+
+} // namespace dart::gui

@@ -31,7 +31,10 @@ using namespace dart;
 
 int main()
 {
-  auto simulator = application::SimpleSimulator::Create();
-  simulator->run(0);
+  auto config = gui::ApplicationConfigs();
+  config.headless = false;
+
+  auto app = gui::Application::Create(config);
+  app->run(0);
   return 0;
 }
