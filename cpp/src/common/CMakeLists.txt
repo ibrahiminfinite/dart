@@ -33,6 +33,13 @@ else()
   list(APPEND compile_definitions_public -DDART_BUILD_TEMPLATE_CODE_FOR_FLOAT=0)
 endif()
 
+# TODO(JS): Improve
+if(DART_ENABLE_PROFILING)
+  list(APPEND compile_definitions_public -DDART_ENABLE_PROFILING=1)
+else()
+  list(APPEND compile_definitions_public -DDART_ENABLE_PROFILING=0)
+endif()
+
 if(MSVC)
   set(compile_options_public )
 else()

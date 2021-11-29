@@ -66,6 +66,7 @@ dart_option(
 dart_option(DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE "Build instantiation of template code for double" ON)
 dart_option(DART_BUILD_TEMPLATE_CODE_FOR_FLOAT  "Build instantiation of template code for double" OFF)
 dart_option(DART_ENABLE_NATIVE_ARCH  "Wheter to use -march=native" ON)
+dart_option(DART_ENABLE_PROFILING  "Wheter to enable profiling" ON)  # TODO(JS): Change to OFF
 dart_print_options()
 
 if(NOT CMAKE_BUILD_TYPE STREQUAL Debug AND DART_ENABLE_CODECOV)
