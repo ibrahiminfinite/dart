@@ -8,5 +8,9 @@ dart_build_example(
   DEPENDENT_COMPONENTS
     common
 )
-target_include_directories(EXAMPLE_${example_name} PUBLIC ${RAYLIB_INCLUDE_DIRS})
-target_link_libraries(EXAMPLE_${example_name} PUBLIC ${RAYLIB_LIBRARIES})
+if(MSVC)
+  target_include_directories(EXAMPLE_${example_name} PUBLIC ${RAYLIB_INCLUDE_DIRS})
+  target_link_libraries(EXAMPLE_${example_name} PUBLIC ${RAYLIB_LIBRARIES})
+else()
+  target_link_libraries(EXAMPLE_${example_name} PUBLIC raylib)
+endif()
