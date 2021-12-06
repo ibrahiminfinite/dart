@@ -29,8 +29,6 @@
 
 #include <type_traits>
 
-#include <fmt/format.h>
-
 #include "dart/common/logging.hpp"
 #include "dart/common/string.hpp"
 

@@ -25,23 +25,42 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "collision_scene_viewer.hpp"
 
-#include <memory>
-#include <string>
-
-#include "dart/gui/export.hpp"
-#include "dart/gui/image.hpp"
-#include "dart/gui/type.hpp"
-
-namespace dart::gui {
-
-class DART_GUI_API Camera
+//==============================================================================
+CollisionSceneViewer::CollisionSceneViewer(
+    const dart::gui::ViewerConfig& config)
+  : dart::gui::Viewer(config)
 {
-private:
-public:
-protected:
-private:
-};
+  m_collision_scene_node = std::make_unique<CollisionSceneNode>(this);
+  m_root_node->add_child(m_collision_scene_node.get());
 
-} // namespace dart::gui
+  // Grid
+  m_grid_node = std::make_unique<dart::gui::GridNode>();
+  m_root_node->add_child(m_grid_node.get());
+}
+
+//==============================================================================
+CollisionSceneViewer::~CollisionSceneViewer()
+{
+  // Do nothing
+}
+
+//==============================================================================
+void CollisionSceneViewer::set_collision_scene(
+    dart::collision::Scene<double>* scene)
+{
+  m_collision_scene_node->set_scene(scene);
+}
+
+//==============================================================================
+void CollisionSceneViewer::grid_on()
+{
+  m_root_node->add_child(m_grid_node.get());
+}
+
+//==============================================================================
+void CollisionSceneViewer::grid_off()
+{
+  m_root_node->remove_child(m_grid_node.get());
+}

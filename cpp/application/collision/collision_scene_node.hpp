@@ -27,21 +27,22 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
+#include "dart/gui/all.hpp"
+#include "dart/collision/all.hpp"
 
-#include "dart/gui/export.hpp"
-#include "dart/gui/image.hpp"
-#include "dart/gui/type.hpp"
+class CollisionSceneViewer;
 
-namespace dart::gui {
-
-class DART_GUI_API Camera
+class CollisionSceneNode : public dart::gui::Node
 {
-private:
 public:
-protected:
-private:
-};
+  explicit CollisionSceneNode(
+      CollisionSceneViewer* viewer, dart::collision::Scene<double>* scene = nullptr);
 
-} // namespace dart::gui
+  void set_scene(dart::collision::Scene<double>* scene);
+
+  void update();
+
+private:
+  CollisionSceneViewer* m_viewer;
+  dart::collision::Scene<double>* m_scene;
+};

@@ -20,7 +20,7 @@ jobs:
     env:
       BUILD_TYPE: ${{ matrix.build_type }}
       VCPKG_ROOT: "C:/dartsim/vcpkg"
-      VCPKG_BUILD_TAG: v2020.11-1-v7.0-2
+      VCPKG_BUILD_TAG: v8.0_2021.11.14-0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -49,6 +49,7 @@ jobs:
           cmake --build . --config %BUILD_TYPE% --target ALL_BUILD --parallel
           cmake --build . --config %BUILD_TYPE% --target tests --parallel
           ctest --rerun-failed --output-on-failure -C %BUILD_TYPE%
+          cmake --build . --config %BUILD_TYPE% --target dartpy8 --parallel
   build_2022:
     name: ${{ matrix.build_type }}
     runs-on: windows-2022
@@ -61,7 +62,7 @@ jobs:
     env:
       BUILD_TYPE: ${{ matrix.build_type }}
       VCPKG_ROOT: "C:/dartsim/vcpkg"
-      VCPKG_BUILD_TAG: v2020.11-1-v7.0-2
+      VCPKG_BUILD_TAG: v8.0_2021.11.14-0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -90,3 +91,4 @@ jobs:
           cmake --build . --config %BUILD_TYPE% --target ALL_BUILD --parallel
           cmake --build . --config %BUILD_TYPE% --target tests --parallel
           ctest --rerun-failed --output-on-failure -C %BUILD_TYPE%
+          cmake --build . --config %BUILD_TYPE% --target dartpy8 --parallel

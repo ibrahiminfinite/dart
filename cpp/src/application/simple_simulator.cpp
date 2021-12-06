@@ -43,7 +43,7 @@ struct SimpleSimulator::Implementation
   std::shared_ptr<simulation::World> world{nullptr};
 
   std::shared_ptr<gui::Scene> scene{nullptr};
-  std::shared_ptr<gui::Camera> camera{nullptr};
+  // std::shared_ptr<gui::Camera> camera{nullptr};
 
   // std::shared_ptr<gui::MainWindow> main_window{nullptr};
 
@@ -68,7 +68,7 @@ SimpleSimulator::SimpleSimulator(const SimpleSimulatorConfigs& configs)
   m_impl->scene->set_world(m_impl->world);
 
   // Create camera
-  m_impl->camera = m_impl->scene->create_camera();
+  // m_impl->camera = m_impl->scene->create_camera();
 
   // Create main window
   if (m_impl->configs.headless) {

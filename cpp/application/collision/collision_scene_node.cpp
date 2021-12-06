@@ -25,23 +25,33 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "collision_scene_node.hpp"
 
-#include <memory>
-#include <string>
-
-#include "dart/gui/export.hpp"
-#include "dart/gui/image.hpp"
-#include "dart/gui/type.hpp"
-
-namespace dart::gui {
-
-class DART_GUI_API Camera
+//==============================================================================
+CollisionSceneNode::CollisionSceneNode(
+    CollisionSceneViewer* viewer, dart::collision::Scene<double>* scene)
+  : m_viewer(viewer), m_scene(scene)
 {
-private:
-public:
-protected:
-private:
-};
+  DART_ASSERT(m_viewer);
+}
 
-} // namespace dart::gui
+//==============================================================================
+void CollisionSceneNode::set_scene(dart::collision::Scene<double>* scene)
+{
+  if (m_scene == scene) {
+    return;
+  }
+
+  m_scene = scene;
+}
+
+//==============================================================================
+void CollisionSceneNode::update()
+{
+  if (!m_scene) {
+    return;
+  }
+
+  //  std::cout << "[DEBUG] node::update()" << std::endl;
+  //  m_scene->update();
+}

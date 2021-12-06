@@ -25,23 +25,39 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "dart/all.hpp"
 
-#include <memory>
-#include <string>
+#include "collision_scene_node.hpp"
+#include "collision_scene_viewer.hpp"
 
-#include "dart/gui/export.hpp"
-#include "dart/gui/image.hpp"
-#include "dart/gui/type.hpp"
+using namespace dart;
 
-namespace dart::gui {
-
-class DART_GUI_API Camera
+int main()
 {
-private:
-public:
-protected:
-private:
-};
+  auto collision_engine = collision::get_default_engine();
+  auto collision_scene = collision_engine->create_scene();
 
-} // namespace dart::gui
+  auto viewer_config = gui::ViewerConfig();
+  viewer_config.title = "DART collision testbed";
+  viewer_config.offscreen = false;
+
+  auto viewer = CollisionSceneViewer(viewer_config);
+  viewer.set_collision_scene(collision_scene);
+  viewer.set_clear_color(gui::White());
+  viewer.set_key_callback([&](int key, int scancode, int action, int mods) {
+    (void)key;
+    (void)scancode;
+    (void)action;
+    (void)mods;
+    static bool toggle = true;
+    if (toggle) {
+      viewer.grid_on();
+    } else {
+      viewer.grid_off();
+    }
+    toggle = !toggle;
+  });
+  viewer.run();
+
+  return 0;
+}

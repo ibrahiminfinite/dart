@@ -37,7 +37,7 @@
 
 namespace dart::collision {
 
-template <typename Scalar>
+template <typename Scalar = double>
 EnginePtr<Scalar> get_default_engine()
 {
   static std::shared_ptr<DartEngine<Scalar>> engine
@@ -45,7 +45,7 @@ EnginePtr<Scalar> get_default_engine()
   return engine;
 }
 
-template <typename Scalar>
+template <typename Scalar = double>
 Scene<Scalar>* get_default_scene()
 {
   auto engine = get_default_engine<Scalar>();
@@ -53,7 +53,7 @@ Scene<Scalar>* get_default_scene()
   return scene;
 }
 
-template <typename Scalar, typename... Args>
+template <typename Scalar = double, typename... Args>
 Object<Scalar>* create_sphere_object(Args&&... args)
 {
   auto engine = get_default_engine<Scalar>();

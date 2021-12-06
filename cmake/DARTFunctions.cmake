@@ -1314,6 +1314,62 @@ function(dart_build_example)
 
 endfunction()
 
+
+# ==============================================================================
+# cmake-format: off
+# dart_build_application()
+# cmake-format: on
+
+function(dart_build_application)
+  set(prefix _ARG)
+  set(options
+  )
+  set(oneValueArgs
+    TARGET_NAME
+  )
+  set(multiValueArgs
+    DEPENDENT_COMPONENTS
+    INCLUDE_DIRS
+  )
+  cmake_parse_arguments(
+    "${prefix}" "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN}
+  )
+
+  # Get global properties
+  get_property(
+    component_list GLOBAL PROPERTY DART_GLOBAL_PROPERTY_COMPONENT_LIST
+  )
+
+  # Check dependency component
+  foreach(dep_component ${_ARG_DEPENDENT_COMPONENTS})
+    if(NOT ${dep_component} IN_LIST component_list)
+      message(WARNING "Skipped [${_ARG_TARGET_NAME}] due to missing component [${dep_component}].")
+      return()
+    endif()
+  endforeach()
+
+  file(GLOB_RECURSE headers "*.hpp")
+  file(GLOB_RECURSE sources "*.cpp")
+
+  add_executable(${_ARG_TARGET_NAME} EXCLUDE_FROM_ALL ${headers} ${sources})
+
+  foreach(comp ${_ARG_DEPENDENT_COMPONENTS})
+    dart_get_component_target_name(
+      COMPONENT_NAME ${comp}
+      OUTPUT_VAR component_target
+    )
+    list(APPEND component_dependent_component_targets ${component_target})
+  endforeach()
+
+  target_link_libraries(${_ARG_TARGET_NAME} PRIVATE ${component_dependent_component_targets})
+
+  # Add the test target to the list
+  dart_property_add(DART_GLOBAL_PROPERTY_APPLICATION_LIST ${target_name})
+
+  dart_clang_format_add(${header} ${sources})
+
+endfunction()
+
 # ==============================================================================
 function(dart_get_test_list output_var)
   dart_property_get(DART_GLOBAL_PROPERTY_TEST_LIST test_list)

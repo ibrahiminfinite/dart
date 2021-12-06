@@ -25,10 +25,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/gui/scene.hpp"
+#include "dart/gui/node/node.hpp"
 
 #include "dart/common/macro.hpp"
-#include "dart/gui/node/node.hpp"
 
 namespace dart::gui {
 
@@ -36,7 +35,7 @@ namespace dart::gui {
 class NodeUpdateCallback : public ::osg::NodeCallback
 {
 public:
-  NodeUpdateCallback(Scene* parent_node) : m_parent_node(parent_node)
+  NodeUpdateCallback(Node* parent_node) : m_parent_node(parent_node)
   {
     DART_ASSERT(m_parent_node);
   }
@@ -48,25 +47,75 @@ public:
   }
 
 private:
-  Scene* m_parent_node;
+  Node* m_parent_node;
 };
 
 //==============================================================================
-Scene::Scene()
+Node::Node()
+{
+  m_osg_node = new osg::Group();
+  m_osg_node->setUpdateCallback(new NodeUpdateCallback(this));
+}
+
+//==============================================================================
+Node::~Node()
 {
   // Do nothing
 }
 
 //==============================================================================
-void Scene::update()
+void Node::add_child(Node* node)
+{
+  if (!node) {
+    return;
+  }
+
+  auto osg_node = node->get_mutable_osg_node();
+  if (!osg_node) {
+    return;
+  }
+
+  if (m_osg_node->containsNode(osg_node)) {
+    return;
+  }
+
+  m_osg_node->addChild(osg_node);
+}
+
+//==============================================================================
+bool Node::remove_child(Node* node)
+{
+  if (!node) {
+    return false;
+  }
+
+  auto osg_node = node->get_mutable_osg_node();
+  if (!osg_node) {
+    return false;
+  }
+
+  bool success = m_osg_node->removeChild(osg_node);
+
+  std::cout << "Child node is removed" << std::endl;
+  std::cout << "# of children: " << m_osg_node->getNumChildren() << std::endl;
+
+  if (!success) {
+    return false;
+  }
+
+  return true;
+}
+
+//==============================================================================
+void Node::update()
 {
   // Do nothing
 }
 
 //==============================================================================
-Node* Scene::get_mutable_root_node()
+osg::Group* Node::get_mutable_osg_node()
 {
-  return m_root_node.get();
+  return m_osg_node;
 }
 
 } // namespace dart::gui

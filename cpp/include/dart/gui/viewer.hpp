@@ -28,20 +28,62 @@
 #pragma once
 
 #include <memory>
-#include <string>
 
+#include "dart/gui/color.hpp"
 #include "dart/gui/export.hpp"
-#include "dart/gui/image.hpp"
-#include "dart/gui/type.hpp"
+#include "dart/gui/node/node.hpp"
+#include "dart/gui/osg_include.hpp"
 
 namespace dart::gui {
 
-class DART_GUI_API Camera
+struct DART_GUI_API ViewerConfig
 {
-private:
+  int x = 0;
+  int y = 0;
+  int width = 1366;
+  int height = 768;
+  std::string title = "notitle";
+  bool offscreen = false;
+  double target_fps = 60;
+};
+
+class DART_GUI_API Viewer
+{
 public:
+  Viewer(const ViewerConfig& config = ViewerConfig());
+
+  virtual ~Viewer();
+
+  void set_window(
+      int x, int y, int width, int height, unsigned int screenNum = 0);
+
+  void set_clear_color(const Color4d& color);
+
+  void set_target_fps(double fps);
+
+  int run();
+
+  void set_key_callback(
+      std::function<void(int key, int scancode, int action, int mods)>&&
+          callback);
+
+  std::function<void(int key, int scancode, int action, int mods)>&
+  get_key_callback()
+  {
+    return m_key_callback;
+  }
+
 protected:
-private:
+  void set_offscreen();
+
+  ViewerConfig m_config;
+
+  osg::ref_ptr<osgViewer::Viewer> m_osg_viewer;
+
+  std::unique_ptr<Node> m_root_node;
+
+  std::function<void(int key, int scancode, int action, int mods)>
+      m_key_callback;
 };
 
 } // namespace dart::gui

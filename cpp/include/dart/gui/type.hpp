@@ -40,4 +40,7 @@ using CameraPtr = std::shared_ptr<Camera>;
 class Scene;
 using ScenePtr = std::shared_ptr<Scene>;
 
+class Node;
+using NodePtr = std::shared_ptr<Node>;
+
 } // namespace dart::gui

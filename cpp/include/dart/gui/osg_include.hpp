@@ -31,7 +31,9 @@
   #define GL_SILENCE_DEPRECATION
 #endif
 #include <osg/Camera>
+#include <osg/Geode>
 #include <osg/Light>
+#include <osg/LineWidth>
 #include <osg/Material>
 #include <osg/MatrixTransform>
 #include <osg/Shape>

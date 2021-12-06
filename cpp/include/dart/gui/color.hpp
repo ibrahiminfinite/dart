@@ -27,21 +27,38 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-
-#include "dart/gui/export.hpp"
-#include "dart/gui/image.hpp"
-#include "dart/gui/type.hpp"
+#include "dart/math/type.hpp"
 
 namespace dart::gui {
 
-class DART_GUI_API Camera
+template <typename Scalar>
+using Color3 = math::Vector3<Scalar>;
+using Color3f = Color3<float>;
+using Color3d = Color3<double>;
+
+template <typename Scalar>
+using Color4 = math::Vector4<Scalar>;
+using Color4f = Color4<float>;
+using Color4d = Color4<double>;
+
+template <typename Scalar = double>
+Color4<Scalar> White(Scalar alpha = 1)
 {
-private:
-public:
-protected:
-private:
-};
+  return Color4<Scalar>(1, 1, 1, alpha);
+}
+
+template <typename Scalar = double>
+Color4<Scalar> LightGray(Scalar alpha = 1)
+{
+  return Color4<Scalar>(
+      200 / (Scalar)255, 200 / (Scalar)255, 200 / (Scalar)255, alpha);
+}
+
+template <typename Scalar = double>
+Color4<Scalar> Gray(Scalar alpha = 1)
+{
+  return Color4<Scalar>(
+      130 / (Scalar)255, 130 / (Scalar)255, 130 / (Scalar)255, alpha);
+}
 
 } // namespace dart::gui

@@ -27,21 +27,29 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-
 #include "dart/gui/export.hpp"
-#include "dart/gui/image.hpp"
-#include "dart/gui/type.hpp"
+#include "dart/gui/osg_include.hpp"
+#include "dart/math/type.hpp"
 
 namespace dart::gui {
 
-class DART_GUI_API Camera
+class DART_GUI_API Node
 {
-private:
 public:
+  Node();
+
+  virtual ~Node();
+
+  void add_child(Node* node);
+
+  bool remove_child(Node* node);
+
+  virtual void update();
+
+  osg::Group* get_mutable_osg_node();
+
 protected:
-private:
+  osg::ref_ptr<osg::Group> m_osg_node;
 };
 
 } // namespace dart::gui
