@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include "dart/common/eigen_include.hpp"
+#include "dart/external/eigen/eigen.hpp"
 
 namespace dart::math {
 

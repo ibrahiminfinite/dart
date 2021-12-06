@@ -21,6 +21,18 @@ if(OpenMP_FOUND)
   list(APPEND target_link_library_public OpenMP::OpenMP_CXX)
 endif()
 
+# Dependencies
+if(DART_USE_EXTERNAL_fmt)
+  list(APPEND compile_definitions_public -DDART_USE_EXTERNAL_fmt=1)
+else()
+  list(APPEND compile_definitions_public -DDART_USE_EXTERNAL_fmt=0)
+endif()
+if(DART_USE_EXTERNAL_Eigen3)
+  list(APPEND compile_definitions_public -DDART_USE_EXTERNAL_Eigen3=1)
+else()
+  list(APPEND compile_definitions_public -DDART_USE_EXTERNAL_Eigen3=0)
+endif()
+
 # Explicit template instantiation options
 if(DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE)
   list(APPEND compile_definitions_public -DDART_BUILD_TEMPLATE_CODE_FOR_DOUBLE=1)

@@ -35,8 +35,8 @@
 #include <memory>
 #include <vector>
 
-#include "dart/common/eigen_include.hpp"
 #include "dart/common/macro.hpp"
+#include "dart/external/eigen/eigen.hpp"
 #include "dart/math/geometry/geometry2.hpp"
 
 namespace dart::math {

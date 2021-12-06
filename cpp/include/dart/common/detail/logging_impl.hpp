@@ -28,7 +28,7 @@
 #pragma once
 
 #if !(DART_HAVE_spdlog)
-  #include <fmt/format.h>
+  #include "dart/external/fmt/fmt.hpp"
 #endif
 
 #include "dart/common/logging.hpp"

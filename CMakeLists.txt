@@ -66,6 +66,8 @@ dart_option(
 dart_option(DART_BUILD_TEMPLATE_CODE_FOR_DOUBLE "Build instantiation of template code for double" ON)
 dart_option(DART_BUILD_TEMPLATE_CODE_FOR_FLOAT  "Build instantiation of template code for double" OFF)
 dart_option(DART_ENABLE_NATIVE_ARCH  "Wheter to use -march=native" ON)
+dart_option(DART_USE_EXTERNAL_fmt "Whether to use external fmt library instead of bundled" OFF)
+dart_option(DART_USE_EXTERNAL_IMGUI "Whether to use external ImGUI library instead of bundled" OFF)
 dart_print_options()
 
 if(NOT CMAKE_BUILD_TYPE STREQUAL Debug AND DART_ENABLE_CODECOV)
@@ -163,6 +165,8 @@ dart_set_project(
     ${CMAKE_CURRENT_BINARY_DIR}/cpp/include
   SRC_SOURCE_BASE_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/src
+  EXTERNAL_BASE_DIR
+    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/external
 )
 
 # Coverage

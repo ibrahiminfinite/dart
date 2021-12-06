@@ -35,7 +35,7 @@
 #include <map>
 #include <vector>
 
-#include "dart/common/eigen_include.hpp"
+#include "dart/external/eigen/eigen.hpp"
 #include "dart/math/geometry/tri_mesh.hpp"
 
 namespace dart {

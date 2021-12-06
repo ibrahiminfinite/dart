@@ -33,7 +33,7 @@
 #pragma once
 
 #include "dart/collision/fcl/backward_compatibility.hpp"
-#include "dart/common/eigen_include.hpp"
+#include "dart/external/eigen/eigen.hpp"
 
 namespace dart {
 namespace collision {

@@ -29,9 +29,8 @@
 
 #include <algorithm>
 
-#include <fmt/format.h>
-
 #include "dart/common/logging.hpp"
+#include "dart/external/fmt/fmt.hpp"
 
 namespace dart::common {
 

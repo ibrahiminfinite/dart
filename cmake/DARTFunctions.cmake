@@ -219,6 +219,7 @@ function(dart_set_project)
     INCLUDE_SOURCE_BASE_DIR
     INCLUDE_BINARY_BASE_DIR
     SRC_SOURCE_BASE_DIR
+    EXTERNAL_BASE_DIR
   )
   set(multiValueArgs
   )
@@ -237,6 +238,10 @@ function(dart_set_project)
   if(NOT _ARG_SRC_SOURCE_BASE_DIR)
     message(FATAL_ERROR "SRC_SOURCE_BASE_DIR is not set")
   endif()
+
+  if(NOT _ARG_EXTERNAL_BASE_DIR)
+    message(FATAL_ERROR "EXTERNAL_BASE_DIR is not set")
+  endif()
   
   set_property(
     GLOBAL PROPERTY DART_GLOBAL_PROPERTY_PROJECT_BASE_DIR "${_ARG_PROJECT_BASE_DIR}"
@@ -249,6 +254,9 @@ function(dart_set_project)
   )
   set_property(
     GLOBAL PROPERTY DART_GLOBAL_PROPERTY_PROJECT_SRC_SOURCE_BASE_DIR "${_ARG_SRC_SOURCE_BASE_DIR}"
+  )
+  set_property(
+    GLOBAL PROPERTY DART_GLOBAL_PROPERTY_PROJECT_EXTERNAL_BASE_DIR "${_ARG_EXTERNAL_BASE_DIR}"
   )
 
   if(DART_TRACE)
@@ -608,6 +616,9 @@ function(dart_component_setup)
   get_property(
     project_src_source_base_dir GLOBAL PROPERTY DART_GLOBAL_PROPERTY_PROJECT_SRC_SOURCE_BASE_DIR
   )
+  get_property(
+    project_external_base_dir GLOBAL PROPERTY DART_GLOBAL_PROPERTY_PROJECT_EXTERNAL_BASE_DIR
+  )
 
   if(DART_DEBUG OR DART_TRACE)
     message("[DEBUG] ================================================")
@@ -629,6 +640,9 @@ function(dart_component_setup)
 
   # Check required dependencies
   foreach(package ${_ARG_DEPENDENT_PACKAGES_REQUIRED})
+    if(NOT DART_USE_EXTERNAL_${package})
+      continue()
+    endif()
     if(${package}_FOUND)
       if(NOT DART_SKIP_${package})
         list(APPEND _ARG_DEPENDENT_PACKAGES_REQUIRED ${package})
@@ -759,6 +773,7 @@ function(dart_component_setup)
     PUBLIC
       $<BUILD_INTERFACE:${project_include_source_base_dir}>
       $<BUILD_INTERFACE:${project_include_binary_base_dir}>
+      $<BUILD_INTERFACE:${project_external_base_dir}>
       $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}${DART_VERSION_MAJOR}>
   )
 

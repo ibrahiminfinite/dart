@@ -27,37 +27,12 @@
 
 #pragma once
 
-#include <type_traits>
+#if DART_USE_EXTERNAL_fmt
 
-#include "dart/common/logging.hpp"
-#include "dart/common/string.hpp"
+#include <fmt/format.h>
 
-namespace dart::common {
+#else
 
-//==============================================================================
-template <typename S>
-S to_scalar(const std::string& str)
-{
-  if constexpr (std::is_same_v<S, bool>) {
-    return to_bool(str);
-  } else if constexpr (std::is_same_v<S, char>) {
-    return to_char(str);
-  } else if constexpr (std::is_same_v<S, int>) {
-    return to_int(str);
-  } else if constexpr (std::is_same_v<S, unsigned int>) {
-    return to_uint(str);
-  } else if constexpr (std::is_same_v<S, long>) {
-    return to_long(str);
-  } else if constexpr (std::is_same_v<S, long long>) {
-    return to_long_long(str);
-  } else if constexpr (std::is_same_v<S, float>) {
-    return to_float(str);
-  } else if constexpr (std::is_same_v<S, double>) {
-    return to_double(str);
-  } else {
-    DART_ERROR("Unsupported scalar type [{}] to convert to.", typeid(S).name());
-    return 0;
-  }
-}
+#include "dart/external/fmt/bundle/format.h"
 
-} // namespace dart::common
+#endif

@@ -5,10 +5,12 @@
 #===============================================================================
 
 # fmt
-find_package(fmt REQUIRED)
+if(DART_USE_EXTERNAL_fmt)
+  find_package(fmt REQUIRED)
+endif()
 
 # Eigen3
-find_package(Eigen3 3.3.4 REQUIRED CONFIG)
+find_package(Eigen3 3.3.4 CONFIG)
 if(Eigen3_FOUND AND NOT TARGET Eigen3::Eigen)
   if(DART_DEBUG)
     message("Defining Eigen3::Eigen target.")

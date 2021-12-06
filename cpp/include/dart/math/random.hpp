@@ -30,7 +30,7 @@
 
 #include <random>
 
-#include "dart/common/eigen_include.hpp"
+#include "dart/external/eigen/eigen.hpp"
 #include "dart/math/export.hpp"
 
 namespace dart {

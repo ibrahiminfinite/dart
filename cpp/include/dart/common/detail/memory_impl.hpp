@@ -29,9 +29,9 @@
 
 #include <memory>
 
-#include "dart/common/eigen_include.hpp"
 #include "dart/common/macro.hpp"
 #include "dart/common/memory.hpp"
+#include "dart/external/eigen/eigen.hpp"
 
 namespace dart::common {
 

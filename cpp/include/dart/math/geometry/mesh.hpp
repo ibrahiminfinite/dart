@@ -34,7 +34,7 @@
 
 #include <vector>
 
-#include "dart/common/eigen_include.hpp"
+#include "dart/external/eigen/eigen.hpp"
 #include "dart/math/geometry/geometry3.hpp"
 
 namespace dart {

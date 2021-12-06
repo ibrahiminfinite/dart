@@ -32,7 +32,7 @@
 
 #pragma once
 
-#include "dart/common/eigen_include.hpp"
+#include "dart/external/eigen/eigen.hpp"
 
 // clang-format off
 #define FCL_VERSION_AT_LEAST(x,y,z)                                            \

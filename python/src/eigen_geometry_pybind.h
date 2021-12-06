@@ -44,7 +44,7 @@
 #include <string>
 #include <utility>
 
-#include "dart/common/eigen_include.hpp"
+#include "dart/external/eigen/eigen.hpp"
 
 #include "pybind11/eigen.h"
 
