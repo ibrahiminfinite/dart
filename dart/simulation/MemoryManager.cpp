@@ -30,29 +30,31 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/common/MemoryManager.hpp"
+#include "dart/simulation/MemoryManager.hpp"
 
 #ifndef NDEBUG // debug
   #include "dart/common/Logging.hpp"
 #endif
 
-namespace dart::common {
+namespace dart::simulation {
 
 //==============================================================================
 MemoryManager& MemoryManager::GetDefault()
 {
-  static MemoryManager defaultMemoryManager(MemoryAllocator::GetDefault());
+  static MemoryManager defaultMemoryManager(
+      &common::MemoryAllocator::GetDefault());
   return defaultMemoryManager;
 }
 
 //==============================================================================
-MemoryManager::MemoryManager(MemoryAllocator& baseAllocator)
-  : mBaseAllocator(baseAllocator),
-    mFreeListAllocator(mBaseAllocator),
+MemoryManager::MemoryManager(common::MemoryAllocator* baseAllocator)
+  : mBaseAllocator(
+      baseAllocator ? baseAllocator : &common::MemoryAllocator::GetDefault()),
+    mFreeListAllocator(*mBaseAllocator),
 #ifdef NDEBUG
-    mPoolAllocator(mFreeListAllocator)
+    mMultiPoolAllocator(mFreeListAllocator)
 #else
-    mPoolAllocator(mFreeListAllocator.getInternalAllocator())
+    mMultiPoolAllocator(mFreeListAllocator.getInternalAllocator())
 #endif
 {
   // Do nothing
@@ -65,13 +67,13 @@ MemoryManager::~MemoryManager()
 }
 
 //==============================================================================
-MemoryAllocator& MemoryManager::getBaseAllocator()
+common::MemoryAllocator& MemoryManager::getBaseAllocator()
 {
-  return mBaseAllocator;
+  return *mBaseAllocator;
 }
 
 //==============================================================================
-FreeListAllocator& MemoryManager::getFreeListAllocator()
+common::FreeListAllocator& MemoryManager::getFreeListAllocator()
 {
 #ifdef NDEBUG
   return mFreeListAllocator;
@@ -81,12 +83,12 @@ FreeListAllocator& MemoryManager::getFreeListAllocator()
 }
 
 //==============================================================================
-PoolAllocator& MemoryManager::getPoolAllocator()
+common::MultiPoolAllocator& MemoryManager::getMultiPoolAllocator()
 {
 #ifdef NDEBUG
-  return mPoolAllocator;
+  return mMultiPoolAllocator;
 #else
-  return mPoolAllocator.getInternalAllocator();
+  return mMultiPoolAllocator.getInternalAllocator();
 #endif
 }
 
@@ -96,11 +98,11 @@ void* MemoryManager::allocate(Type type, size_t bytes)
   switch (type)
   {
     case Type::Base:
-      return mBaseAllocator.allocate(bytes);
+      return mBaseAllocator->allocate(bytes);
     case Type::Free:
       return mFreeListAllocator.allocate(bytes);
     case Type::Pool:
-      return mPoolAllocator.allocate(bytes);
+      return mMultiPoolAllocator.allocate(bytes);
   }
   return nullptr;
 }
@@ -123,13 +125,13 @@ void MemoryManager::deallocate(Type type, void* pointer, size_t bytes)
   switch (type)
   {
     case Type::Base:
-      mBaseAllocator.deallocate(pointer, bytes);
+      mBaseAllocator->deallocate(pointer, bytes);
       break;
     case Type::Free:
       mFreeListAllocator.deallocate(pointer, bytes);
       break;
     case Type::Pool:
-      mPoolAllocator.deallocate(pointer, bytes);
+      mMultiPoolAllocator.deallocate(pointer, bytes);
       break;
   }
 }
@@ -153,7 +155,7 @@ bool MemoryManager::hasAllocated(void* pointer, size_t size) const noexcept
   if (mFreeListAllocator.hasAllocated(pointer, size))
     return true;
 
-  if (mPoolAllocator.hasAllocated(pointer, size))
+  if (mMultiPoolAllocator.hasAllocated(pointer, size))
     return true;
 
   return false;
@@ -171,9 +173,9 @@ void MemoryManager::print(std::ostream& os, int indent) const
   os << spaces << "free_allocator:\n";
   mFreeListAllocator.print(os, indent + 2);
   os << spaces << "pool_allocator:\n";
-  mPoolAllocator.print(os, indent + 2);
+  mMultiPoolAllocator.print(os, indent + 2);
   os << spaces << "base_allocator:\n";
-  mBaseAllocator.print(os, indent + 2);
+  mBaseAllocator->print(os, indent + 2);
 }
 
 //==============================================================================
@@ -183,4 +185,4 @@ std::ostream& operator<<(std::ostream& os, const MemoryManager& memoryManager)
   return os;
 }
 
-} // namespace dart::common
+} // namespace dart::simulation

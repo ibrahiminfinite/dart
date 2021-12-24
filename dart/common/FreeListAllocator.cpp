@@ -32,9 +32,12 @@
 
 #include "dart/common/FreeListAllocator.hpp"
 
+#include <limits>
+
 #include "dart/common/Console.hpp"
 #include "dart/common/Logging.hpp"
 #include "dart/common/Macros.hpp"
+#include "dart/common/Memory.hpp"
 
 namespace dart::common {
 
@@ -56,16 +59,16 @@ FreeListAllocator::~FreeListAllocator()
   // without deallocating individual memories allocated by this allocator.
   if (mTotalAllocatedSize != 0)
   {
-    MemoryBlockHeader* currBlock = mFirstMemoryBlock;
-    while (currBlock)
+    MemoryBlockHeader* currHeader = mFirstMemoryBlock;
+    while (currHeader)
     {
-      MemoryBlockHeader* currSubBlock = currBlock;
-      MemoryBlockHeader* next = currBlock->mNext;
+      MemoryBlockHeader* currSubBlock = currHeader;
+      MemoryBlockHeader* next = currHeader->mNext;
       size_t sizeToDeallocate = 0;
 
       while (currSubBlock)
       {
-        sizeToDeallocate += currSubBlock->mSize + sizeof(MemoryBlockHeader);
+        sizeToDeallocate += currSubBlock->mSize + currSubBlock->mPadding;
         if (!currSubBlock->mIsNextContiguous)
         {
           next = currSubBlock->mNext;
@@ -74,8 +77,11 @@ FreeListAllocator::~FreeListAllocator()
         currSubBlock = currSubBlock->mNext;
       }
 
-      mBaseAllocator.deallocate(currBlock, sizeToDeallocate);
-      currBlock = next;
+      unsigned char* const blockAddress
+          = reinterpret_cast<unsigned char*>(currHeader) - currHeader->mPadding;
+      mBaseAllocator.deallocate(blockAddress, sizeToDeallocate);
+      currHeader = next;
+      mTotalAllocatedSize -= sizeToDeallocate;
     }
 
     dterr
@@ -84,6 +90,8 @@ FreeListAllocator::~FreeListAllocator()
         << "allocator.\n";
     // TODO(JS): Change to DART_FATAL once the issue of calling spdlog in
     // destructor is resolved.
+
+    DART_ASSERT(mTotalAllocatedSize == 0);
 
     return;
   }
@@ -96,9 +104,13 @@ FreeListAllocator::~FreeListAllocator()
     // are not deallocated
     MemoryBlockHeader* next = curr->mNext;
     const auto size = curr->mSize;
+    const auto padding = curr->mPadding;
 
     curr->~MemoryBlockHeader();
-    mBaseAllocator.deallocate(curr, size + sizeof(MemoryBlockHeader));
+
+    unsigned char* blockAddress
+        = reinterpret_cast<unsigned char*>(curr) - padding;
+    mBaseAllocator.deallocate(blockAddress, size + padding);
 
     curr = next;
   }
@@ -119,6 +131,13 @@ MemoryAllocator& FreeListAllocator::getBaseAllocator()
 //==============================================================================
 void* FreeListAllocator::allocate(size_t bytes) noexcept
 {
+  return allocate_aligned(bytes, 0);
+}
+
+//==============================================================================
+void* FreeListAllocator::allocate_aligned(
+    size_t bytes, size_t alignment) noexcept
+{
   // Not allowed to allocate zero bytes
   if (bytes == 0)
   {
@@ -134,15 +153,19 @@ void* FreeListAllocator::allocate(size_t bytes) noexcept
   // Iterate from the first memory block
   MemoryBlockHeader* curr = mFirstMemoryBlock;
 
+  size_t padding;
+
   // Use free block if available
   if (mFreeBlock)
   {
     // Ensure the free block is not in use
     DART_ASSERT(!mFreeBlock->mIsAllocated);
 
+    padding = getPaddingWithHeader<MemoryBlockHeader>(curr, alignment);
+
     // Use the free block if the requested size is equal to or smaller than
     // the free block
-    if (bytes <= mFreeBlock->mSize)
+    if (bytes + padding <= mFreeBlock->mSize)
     {
       curr = mFreeBlock;
       mFreeBlock = nullptr;
@@ -152,9 +175,11 @@ void* FreeListAllocator::allocate(size_t bytes) noexcept
   // Search for a memory block that is not used and has sufficient free space
   while (curr)
   {
-    if (!curr->mIsAllocated && bytes <= curr->mSize)
+    padding = getPaddingWithHeader<MemoryBlockHeader>(curr, alignment);
+
+    if (!curr->mIsAllocated && bytes + padding <= curr->mSize)
     {
-      curr->split(bytes);
+      curr->split(bytes, padding);
       break;
     }
 
@@ -176,12 +201,16 @@ void* FreeListAllocator::allocate(size_t bytes) noexcept
     curr = mFreeBlock;
     DART_ASSERT(curr->mSize >= bytes);
 
+    padding = getPaddingWithHeader<MemoryBlockHeader>(curr, alignment);
+
     // Split the new memory block for the requested size
-    curr->split(bytes);
+    curr->split(bytes, padding);
   }
 
   // Mark the current block is allocated
   curr->mIsAllocated = true;
+
+  curr->mPadding = padding;
 
   // Set free block if the next block is free
   if (curr->mNext != nullptr && !curr->mNext->mIsAllocated)
@@ -191,7 +220,7 @@ void* FreeListAllocator::allocate(size_t bytes) noexcept
 
   mTotalAllocatedSize += bytes;
 
-  return static_cast<void*>(curr->asCharPtr() + sizeof(MemoryBlockHeader));
+  return static_cast<void*>(curr->asCharPtr() + padding);
 }
 
 //==============================================================================
@@ -208,19 +237,22 @@ void FreeListAllocator::deallocate(void* pointer, size_t bytes)
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);
 
-  unsigned char* block_addr
+  unsigned char* headerAddress
       = static_cast<unsigned char*>(pointer) - sizeof(MemoryBlockHeader);
-  MemoryBlockHeader* block = reinterpret_cast<MemoryBlockHeader*>(block_addr);
-  DART_ASSERT(block->mIsAllocated);
-  block->mIsAllocated = false;
+  MemoryBlockHeader* header
+      = reinterpret_cast<MemoryBlockHeader*>(headerAddress);
+  // unsigned char* blockAddress = static_cast<unsigned char*>(pointer)  -
+  // header->mPadding;
+  DART_ASSERT(header->mIsAllocated);
+  header->mIsAllocated = false;
 
-  MemoryBlockHeader* curr = block;
+  MemoryBlockHeader* curr = header;
 
-  if (block->mPrev != nullptr && !block->mPrev->mIsAllocated
-      && block->mPrev->mIsNextContiguous)
+  if (header->mPrev != nullptr && !header->mPrev->mIsAllocated
+      && header->mPrev->mIsNextContiguous)
   {
-    curr = block->mPrev;
-    block->mPrev->merge(block);
+    curr = header->mPrev;
+    header->mPrev->merge(header);
   }
 
   if (curr->mNext != nullptr && !curr->mNext->mIsAllocated
@@ -231,6 +263,7 @@ void FreeListAllocator::deallocate(void* pointer, size_t bytes)
 
   mFreeBlock = curr;
 
+  DART_ASSERT(mTotalAllocatedSize >= bytes);
   mTotalAllocatedSize -= bytes;
 
   DART_TRACE("Deallocated {} bytes.", bytes);
@@ -309,9 +342,15 @@ FreeListAllocator::MemoryBlockHeader::MemoryBlockHeader(
   : mSize(size),
     mPrev(prev),
     mNext(next),
+    mPadding(0u),
     mIsAllocated(false),
     mIsNextContiguous(isNextContiguous)
 {
+  static_assert(
+      std::max(sizeof(MemoryBlockHeader), alignof(std::max_align_t))
+          <= std::numeric_limits<uint32_t>::max(),
+      "");
+
   if (prev)
   {
     prev->mNext = this;
@@ -337,38 +376,35 @@ const unsigned char* FreeListAllocator::MemoryBlockHeader::asCharPtr() const
 }
 
 //==============================================================================
-void FreeListAllocator::MemoryBlockHeader::split(size_t sizeToSplit)
+void FreeListAllocator::MemoryBlockHeader::split(
+    size_t sizeToSplit, size_t padding)
 {
   DART_ASSERT(sizeToSplit <= mSize);
   DART_ASSERT(!mIsAllocated);
+  DART_ASSERT(sizeToSplit + padding <= mSize);
 
-  if (sizeToSplit + sizeof(MemoryBlockHeader) >= mSize)
+  if (sizeToSplit + padding == mSize)
   {
-    // TODO(JS): Treat this as en error?
     return;
   }
 
   DART_ASSERT(mSize > sizeToSplit);
 
-  unsigned char* new_block_addr
-      = asCharPtr() + sizeof(MemoryBlockHeader) + sizeToSplit;
-  MemoryBlockHeader* new_block
-      = new (static_cast<void*>(new_block_addr)) MemoryBlockHeader(
-          mSize - sizeof(MemoryBlockHeader) - sizeToSplit,
-          this,
-          mNext,
-          mIsNextContiguous);
-  mNext = new_block;
-  if (new_block->mNext)
+  unsigned char* const newBlockAddr = asCharPtr() + padding + sizeToSplit;
+  MemoryBlockHeader* newBlock
+      = new (static_cast<void*>(newBlockAddr)) MemoryBlockHeader(
+          mSize - padding - sizeToSplit, this, mNext, mIsNextContiguous);
+  mNext = newBlock;
+  if (newBlock->mNext)
   {
-    new_block->mNext->mPrev = new_block;
+    newBlock->mNext->mPrev = newBlock;
   }
   DART_ASSERT(mNext != this);
   mIsNextContiguous = true;
   mSize = sizeToSplit;
 
   DART_ASSERT(isValid());
-  DART_ASSERT(new_block->isValid());
+  DART_ASSERT(newBlock->isValid());
 }
 
 //==============================================================================
@@ -381,7 +417,7 @@ void FreeListAllocator::MemoryBlockHeader::merge(MemoryBlockHeader* other)
   DART_ASSERT(!this->mIsAllocated);
   DART_ASSERT(this->mIsNextContiguous);
 
-  mSize += other->mSize + sizeof(MemoryBlockHeader);
+  mSize += other->mSize + other->mPadding;
   mNext = other->mNext;
   if (other->mNext)
   {

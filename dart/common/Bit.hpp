@@ -30,44 +30,23 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#ifndef DART_COMMON_BIT_HPP_
+#define DART_COMMON_BIT_HPP_
 
-#include <cassert>
-#include <cstddef>
-#include <vector>
+namespace dart::common {
 
-#include "dart/common/Memory.hpp"
-#include "dart/common/StlContainers.hpp"
-
-namespace dart {
-namespace common {
-
-//==============================================================================
 template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
-{
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+constexpr bool ispow2(T x) noexcept;
+// TODO(JS): Replace with std::ispow2 once available
 
-  return nullptr;
-}
-
-//==============================================================================
 template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const ::dart::common::vector<T>& vec)
-{
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+constexpr T nextPowerOf2(T x) noexcept;
 
-  return nullptr;
-}
+template <typename T>
+constexpr T nextMultipleOf(T x, T base) noexcept;
 
-} // namespace common
-} // namespace dart
+} // namespace dart::common
 
-#endif // DART_COMMON_STLHELPERS_HPP_
+#include "dart/common/detail/Bit-impl.hpp"
+
+#endif // DART_COMMON_BIT_HPP_

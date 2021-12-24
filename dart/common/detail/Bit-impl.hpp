@@ -30,44 +30,34 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#ifndef DART_COMMON_DETAIL_BIT_IMPL_HPP_
+#define DART_COMMON_DETAIL_BIT_IMPL_HPP_
 
-#include <cassert>
-#include <cstddef>
-#include <vector>
+#include "dart/common/Bit.hpp"
 
-#include "dart/common/Memory.hpp"
-#include "dart/common/StlContainers.hpp"
-
-namespace dart {
-namespace common {
+namespace dart::common {
 
 //==============================================================================
 template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
+constexpr bool ispow2(T x) noexcept
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
-
-  return nullptr;
+  return (x & (x - 1)) == 0;
 }
 
 //==============================================================================
 template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const ::dart::common::vector<T>& vec)
+constexpr T nextPowerOf2(T x) noexcept
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
-
-  return nullptr;
+  return (x & (x - 1)) == 0 ? x : nextPowerOf2((x | (x >> 1)) + 1);
 }
 
-} // namespace common
-} // namespace dart
+//==============================================================================
+template <typename T>
+constexpr T nextMultipleOf(T x, T base) noexcept
+{
+  return x + (base - x % base);
+}
 
-#endif // DART_COMMON_STLHELPERS_HPP_
+} // namespace dart::common
+
+#endif // DART_COMMON_DETAIL_BIT_IMPL_HPP_

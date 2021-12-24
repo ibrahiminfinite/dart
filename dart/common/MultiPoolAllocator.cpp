@@ -30,9 +30,10 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/common/PoolAllocator.hpp"
+#include "dart/common/MultiPoolAllocator.hpp"
 
 #include <cstring>
+#include <limits>
 
 #include "dart/common/Console.hpp"
 #include "dart/common/Logging.hpp"
@@ -41,12 +42,22 @@
 namespace dart::common {
 
 //==============================================================================
-PoolAllocator::PoolAllocator(MemoryAllocator& baseAllocator)
+MultiPoolAllocator::MultiPoolAllocator(MemoryAllocator& baseAllocator)
   : mBaseAllocator(baseAllocator)
 {
   static_assert(
       8 <= sizeof(MemoryUnit),
       "sizeof(MemoryUnit) should be equal to or greater than 8.");
+
+  static_assert(
+      std::numeric_limits<UnitSizes::value_type>::max() >= MAX_UNIT_SIZE,
+      "The value type of UnitSizes must be sufficient to represent "
+      "MAX_UNIT_SIZE.");
+
+  static_assert(
+      std::numeric_limits<MapSizeToHeapIndex::value_type>::max() >= HEAP_COUNT,
+      "The value type of MapSizeToHeapInde must be sufficient to represent "
+      "HEAP_COUNT.");
 
   // Global setting
   if (!mInitialized)
@@ -56,12 +67,13 @@ PoolAllocator::PoolAllocator(MemoryAllocator& baseAllocator)
     {
       mUnitSizes[i] = (i + 1) * 8;
     }
+    DART_ASSERT(mUnitSizes[0] == 8);
+    DART_ASSERT(mUnitSizes[HEAP_COUNT - 1] == MAX_UNIT_SIZE);
 
     auto j = 0u;
-    mMapSizeToHeapIndex[0] = -1;
-    for (auto i = 1u; i <= MAX_UNIT_SIZE; ++i)
+    for (auto i = 0u; i < MAX_UNIT_SIZE; ++i)
     {
-      if (i <= mUnitSizes[j])
+      if (i < mUnitSizes[j])
       {
         mMapSizeToHeapIndex[i] = j;
       }
@@ -71,10 +83,11 @@ PoolAllocator::PoolAllocator(MemoryAllocator& baseAllocator)
       }
     }
 
+    DART_ASSERT(j == HEAP_COUNT - 1u);
     mInitialized = true;
   }
 
-  mCurrentMemoryBlockIndex = 0;
+  mNumAllocatedMemoryBlocks = 0;
 
   mMemoryBlocksSize = 64;
   mMemoryBlocks = mBaseAllocator.allocateAs<MemoryBlock>(mMemoryBlocksSize);
@@ -85,39 +98,40 @@ PoolAllocator::PoolAllocator(MemoryAllocator& baseAllocator)
 }
 
 //==============================================================================
-PoolAllocator::~PoolAllocator()
+MultiPoolAllocator::~MultiPoolAllocator()
 {
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);
 
-  for (int i = 0; i < mCurrentMemoryBlockIndex; ++i)
+  for (int i = 0; i < mNumAllocatedMemoryBlocks; ++i)
   {
     mBaseAllocator.deallocate(mMemoryBlocks[i].mMemoryUnits, BLOCK_SIZE);
   }
+
   mBaseAllocator.deallocate(
       mMemoryBlocks, mMemoryBlocksSize * sizeof(MemoryBlock));
 }
 
 //==============================================================================
-const MemoryAllocator& PoolAllocator::getBaseAllocator() const
+const MemoryAllocator& MultiPoolAllocator::getBaseAllocator() const
 {
   return mBaseAllocator;
 }
 
 //==============================================================================
-MemoryAllocator& PoolAllocator::getBaseAllocator()
+MemoryAllocator& MultiPoolAllocator::getBaseAllocator()
 {
   return mBaseAllocator;
 }
 
 //==============================================================================
-int PoolAllocator::getNumAllocatedMemoryBlocks() const
+int MultiPoolAllocator::getNumAllocatedMemoryBlocks() const
 {
-  return mCurrentMemoryBlockIndex;
+  return mNumAllocatedMemoryBlocks;
 }
 
 //==============================================================================
-void* PoolAllocator::allocate(size_t bytes) noexcept
+void* MultiPoolAllocator::allocate(size_t bytes) noexcept
 {
   // Cannot allocate zero bytes
   if (bytes == 0)
@@ -130,7 +144,7 @@ void* PoolAllocator::allocate(size_t bytes) noexcept
   if (bytes > MAX_UNIT_SIZE)
   {
     DART_TRACE(
-        "Cannot allocate memory of size > {} using PoolAllocator.",
+        "Cannot allocate memory of size > {} using MultiPoolAllocator.",
         MAX_UNIT_SIZE);
     return mBaseAllocator.allocate(bytes);
   }
@@ -146,7 +160,7 @@ void* PoolAllocator::allocate(size_t bytes) noexcept
     return unit;
   }
 
-  if (mCurrentMemoryBlockIndex == mMemoryBlocksSize)
+  if (mNumAllocatedMemoryBlocks == mMemoryBlocksSize)
   {
     MemoryBlock* currentMemoryBlocks = mMemoryBlocks;
     mMemoryBlocksSize += 64;
@@ -154,12 +168,12 @@ void* PoolAllocator::allocate(size_t bytes) noexcept
     std::memcpy(
         mMemoryBlocks,
         currentMemoryBlocks,
-        mCurrentMemoryBlockIndex * sizeof(MemoryBlock));
+        mNumAllocatedMemoryBlocks * sizeof(MemoryBlock));
     std::memset(
-        mMemoryBlocks + mCurrentMemoryBlockIndex, 0, 64 * sizeof(MemoryBlock));
+        mMemoryBlocks + mNumAllocatedMemoryBlocks, 0, 64 * sizeof(MemoryBlock));
   }
 
-  MemoryBlock* newBlock = mMemoryBlocks + mCurrentMemoryBlockIndex;
+  MemoryBlock* newBlock = mMemoryBlocks + mNumAllocatedMemoryBlocks;
   newBlock->mMemoryUnits
       = static_cast<MemoryUnit*>(mBaseAllocator.allocate(BLOCK_SIZE));
   const size_t unitSize = mUnitSizes[heapIndex];
@@ -184,13 +198,13 @@ void* PoolAllocator::allocate(size_t bytes) noexcept
   lastUnit->mNext = nullptr;
 
   mFreeMemoryUnits[heapIndex] = newBlock->mMemoryUnits->mNext;
-  mCurrentMemoryBlockIndex++;
+  mNumAllocatedMemoryBlocks++;
 
   return newBlock->mMemoryUnits;
 }
 
 //==============================================================================
-void PoolAllocator::deallocate(void* pointer, size_t bytes)
+void MultiPoolAllocator::deallocate(void* pointer, size_t bytes)
 {
   // Cannot deallocate nullptr or zero bytes
   if (pointer == nullptr || bytes == 0)
@@ -206,7 +220,7 @@ void PoolAllocator::deallocate(void* pointer, size_t bytes)
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);
 
-  const int heapIndex = mMapSizeToHeapIndex[bytes];
+  const auto& heapIndex = mMapSizeToHeapIndex[bytes];
 
   MemoryUnit* releasedUnit = static_cast<MemoryUnit*>(pointer);
   releasedUnit->mNext = mFreeMemoryUnits[heapIndex];
@@ -214,14 +228,14 @@ void PoolAllocator::deallocate(void* pointer, size_t bytes)
 }
 
 //==============================================================================
-void PoolAllocator::print(std::ostream& os, int indent) const
+void MultiPoolAllocator::print(std::ostream& os, int indent) const
 {
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);
 
   if (indent == 0)
   {
-    os << "[PoolAllocator]\n";
+    os << "[MultiPoolAllocator]\n";
   }
   const std::string spaces(indent, ' ');
   if (indent != 0)
@@ -229,7 +243,7 @@ void PoolAllocator::print(std::ostream& os, int indent) const
     os << spaces << "type: " << getType() << "\n";
   }
   os << spaces << "allocated_memory_block_count: " << mMemoryBlocksSize << "\n";
-  os << spaces << "current_memory_blocks_count: " << mCurrentMemoryBlockIndex
+  os << spaces << "current_memory_blocks_count: " << mNumAllocatedMemoryBlocks
      << "\n";
   os << spaces << "base_allocator:\n";
   mBaseAllocator.print(os, indent + 2);

@@ -62,11 +62,25 @@ using namespace dynamics;
 
 //==============================================================================
 ConstraintSolver::ConstraintSolver(double timeStep)
-  : mCollisionDetector(collision::FCLCollisionDetector::create()),
+  : mFreeListAllocator(common::MemoryAllocator::GetDefault()),
+    mMultiPoolAllocator(common::MemoryAllocator::GetDefault()),
+    //mContactConstraintPool(common::MemoryAllocator::GetDefault()),
+    mJointConstraintPool(common::MemoryAllocator::GetDefault()),
+    mCollisionDetector(collision::FCLCollisionDetector::create()),
     mCollisionGroup(mCollisionDetector->createCollisionGroupAsSharedPtr()),
     mCollisionOption(collision::CollisionOption(
         true, 1000u, std::make_shared<collision::BodyNodeCollisionFilter>())),
+    mCollisionResult(),
     mTimeStep(timeStep),
+    mSkeletons(mFreeListAllocator),
+    mContactConstraints(mFreeListAllocator),
+    mSoftContactConstraints(mFreeListAllocator),
+    mJointConstraints(mFreeListAllocator),
+    mMimicMotorConstraints(mFreeListAllocator),
+    mJointCoulombFrictionConstraints(mFreeListAllocator),
+    mManualConstraints(mFreeListAllocator),
+    mActiveConstraints(mFreeListAllocator),
+    mConstrainedGroups(mFreeListAllocator),
     mContactSurfaceHandler(std::make_shared<DefaultContactSurfaceHandler>())
 {
   assert(timeStep > 0.0);
@@ -82,11 +96,35 @@ ConstraintSolver::ConstraintSolver(double timeStep)
 
 //==============================================================================
 ConstraintSolver::ConstraintSolver()
-  : mCollisionDetector(collision::FCLCollisionDetector::create()),
+  : ConstraintSolver(
+      common::MemoryAllocator::GetDefault(),
+      common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
+
+//==============================================================================
+ConstraintSolver::ConstraintSolver(
+    common::MemoryAllocator& freeListAllocator,
+    common::MemoryAllocator& poolAllocator)
+  : mFreeListAllocator(freeListAllocator),
+    mMultiPoolAllocator(poolAllocator),
+    //mContactConstraintPool(freeListAllocator),
+    mJointConstraintPool(freeListAllocator),
+    mCollisionDetector(collision::FCLCollisionDetector::create()),
     mCollisionGroup(mCollisionDetector->createCollisionGroupAsSharedPtr()),
     mCollisionOption(collision::CollisionOption(
         true, 1000u, std::make_shared<collision::BodyNodeCollisionFilter>())),
     mTimeStep(0.001),
+    mSkeletons(mFreeListAllocator),
+    mContactConstraints(mFreeListAllocator),
+    mSoftContactConstraints(mFreeListAllocator),
+    mJointConstraints(mFreeListAllocator),
+    mMimicMotorConstraints(mFreeListAllocator),
+    mJointCoulombFrictionConstraints(mFreeListAllocator),
+    mManualConstraints(mFreeListAllocator),
+    mActiveConstraints(mFreeListAllocator),
+    mConstrainedGroups(mFreeListAllocator),
     mContactSurfaceHandler(std::make_shared<DefaultContactSurfaceHandler>())
 {
   auto cd = std::static_pointer_cast<collision::FCLCollisionDetector>(
@@ -96,6 +134,33 @@ ConstraintSolver::ConstraintSolver()
   // TODO(JS): Consider using FCL's primitive shapes once FCL addresses
   // incorrect contact point computation.
   // (see: https://github.com/flexible-collision-library/fcl/issues/106)
+}
+
+//==============================================================================
+ConstraintSolver::~ConstraintSolver()
+{
+  // Clean up resources
+
+//  for (auto* constraint : mContactConstraints)
+//    mMultiPoolAllocator.destroy(constraint);
+//  mContactConstraints.clear();
+
+  for (auto* constraint : mSoftContactConstraints)
+    mMultiPoolAllocator.destroy(constraint);
+  mSoftContactConstraints.clear();
+
+  for (auto* constraint : mJointConstraints)
+    // mMultiPoolAllocator.destroy(constraint);
+    common::aligned_free(constraint);
+  mJointConstraints.clear();
+
+  for (auto* constraint : mMimicMotorConstraints)
+    mMultiPoolAllocator.destroy(constraint);
+  mMimicMotorConstraints.clear();
+
+  for (auto* constraint : mJointCoulombFrictionConstraints)
+    mMultiPoolAllocator.destroy(constraint);
+  mJointCoulombFrictionConstraints.clear();
 }
 
 //==============================================================================
@@ -120,14 +185,15 @@ void ConstraintSolver::addSkeleton(const SkeletonPtr& skeleton)
 }
 
 //==============================================================================
-void ConstraintSolver::addSkeletons(const std::vector<SkeletonPtr>& skeletons)
+void ConstraintSolver::addSkeletons(
+    const common::vector<SkeletonPtr>& skeletons)
 {
   for (const auto& skeleton : skeletons)
     addSkeleton(skeleton);
 }
 
 //==============================================================================
-const std::vector<SkeletonPtr>& ConstraintSolver::getSkeletons() const
+const common::vector<SkeletonPtr>& ConstraintSolver::getSkeletons() const
 {
   return mSkeletons;
 }
@@ -229,18 +295,15 @@ std::vector<ConstraintBasePtr> ConstraintSolver::getConstraints()
   // Return a copy of constraint list not to expose the implementation detail
   // that the constraint pointers are held in a vector, in case we want to
   // change this implementation in the future.
-  return mManualConstraints;
+  return std::vector<ConstraintBasePtr>(
+      mManualConstraints.begin(), mManualConstraints.end());
 }
 
 //==============================================================================
 std::vector<ConstConstraintBasePtr> ConstraintSolver::getConstraints() const
 {
-  std::vector<ConstConstraintBasePtr> constraints;
-  constraints.reserve(mManualConstraints.size());
-  for (auto& constraint : mManualConstraints)
-    constraints.push_back(constraint);
-
-  return constraints;
+  return std::vector<ConstConstraintBasePtr>(
+      mManualConstraints.begin(), mManualConstraints.end());
 }
 
 //==============================================================================
@@ -473,7 +536,7 @@ void ConstraintSolver::updateConstraints()
     manualConstraint->update();
 
     if (manualConstraint->isActive())
-      mActiveConstraints.push_back(manualConstraint);
+      mActiveConstraints.push_back(manualConstraint.get());
   }
 
   //----------------------------------------------------------------------------
@@ -484,9 +547,13 @@ void ConstraintSolver::updateConstraints()
   mCollisionGroup->collide(mCollisionOption, &mCollisionResult);
 
   // Destroy previous contact constraints
-  mContactConstraints.clear();
+//  for (auto* constraint : mContactConstraints)
+//    mMultiPoolAllocator.destroy(constraint);
+//  mContactConstraints.clear();
 
   // Destroy previous soft contact constraints
+  for (auto* constraint : mSoftContactConstraints)
+    mMultiPoolAllocator.destroy(constraint);
   mSoftContactConstraints.clear();
 
   // Create a mapping of contact pairs to the number of contacts between them
@@ -510,7 +577,8 @@ void ConstraintSolver::updateConstraints()
     }
   };
 
-  std::map<ContactPair, size_t, ContactPairCompare> contactPairMap;
+  common::map<ContactPair, size_t, ContactPairCompare> contactPairMap(
+      mFreeListAllocator);
   std::vector<collision::Contact*> contacts;
 
   // Create new contact constraints
@@ -545,8 +613,9 @@ void ConstraintSolver::updateConstraints()
 
     if (isSoftContact(contact))
     {
-      mSoftContactConstraints.push_back(
-          std::make_shared<SoftContactConstraint>(contact, mTimeStep));
+      auto* constraint = mMultiPoolAllocator.construct<SoftContactConstraint>(
+          contact, mTimeStep);
+      mSoftContactConstraints.push_back(constraint);
     }
     else
     {
@@ -574,24 +643,35 @@ void ConstraintSolver::updateConstraints()
     contactConstraint->update();
 
     if (contactConstraint->isActive())
-      mActiveConstraints.push_back(contactConstraint);
+      mActiveConstraints.push_back(contactConstraint.get());
   }
 
   // Add the new soft contact constraints to dynamic constraint list
-  for (const auto& softContactConstraint : mSoftContactConstraints)
+  for (auto* constraint : mSoftContactConstraints)
   {
-    softContactConstraint->update();
-
-    if (softContactConstraint->isActive())
-      mActiveConstraints.push_back(softContactConstraint);
+    constraint->update();
+    if (constraint->isActive())
+      mActiveConstraints.push_back(constraint);
   }
 
   //----------------------------------------------------------------------------
   // Update automatic constraints: joint constraints
   //----------------------------------------------------------------------------
-  // Destroy previous joint constraints
+
+  // Destroy previous constraints
+  for (auto* constraint : mJointConstraints)
+    // mMultiPoolAllocator.destroy(constraint);
+    common::aligned_free(constraint);
   mJointConstraints.clear();
+
+  // Destroy previous constraints
+  for (auto* constraint : mMimicMotorConstraints)
+    mMultiPoolAllocator.destroy(constraint);
   mMimicMotorConstraints.clear();
+
+  // Destroy previous constraints
+  for (auto* constraint : mJointCoulombFrictionConstraints)
+    mMultiPoolAllocator.destroy(constraint);
   mJointCoulombFrictionConstraints.clear();
 
   // Create new joint constraints
@@ -610,8 +690,10 @@ void ConstraintSolver::updateConstraints()
       {
         if (joint->getCoulombFriction(j) != 0.0)
         {
-          mJointCoulombFrictionConstraints.push_back(
-              std::make_shared<JointCoulombFrictionConstraint>(joint));
+          auto* constraint
+              = mMultiPoolAllocator.construct<JointCoulombFrictionConstraint>(
+                  joint);
+          mJointCoulombFrictionConstraints.push_back(constraint);
           break;
         }
       }
@@ -619,44 +701,57 @@ void ConstraintSolver::updateConstraints()
       if (joint->areLimitsEnforced()
           || joint->getActuatorType() == dynamics::Joint::SERVO)
       {
-        mJointConstraints.push_back(std::make_shared<JointConstraint>(joint));
+        // void* ptr = common::aligned_alloc(16, sizeof(JointConstraint));
+        //        void* ptr = std::malloc(sizeof(JointConstraint));
+        //        std::cout << "std::alignment_of<JointConstraint>::value: "
+        //                  << std::alignment_of<JointConstraint>::value <<
+        //                  std::endl;
+        //        auto* c
+        //            =
+        //            common::MemoryAllocator::constructAt<JointConstraint>(ptr,
+        //            joint);
+        auto* c = mJointConstraintPool.construct(joint);
+        mJointConstraints.push_back(c);
+        //        auto* constraint
+        //            =
+        //            mMultiPoolAllocator.construct_aligned<JointConstraint>(16,
+        //            joint);
+        //        mJointConstraints.push_back(constraint);
       }
 
       if (joint->getActuatorType() == dynamics::Joint::MIMIC
           && joint->getMimicJoint())
       {
-        mMimicMotorConstraints.push_back(std::make_shared<MimicMotorConstraint>(
+        auto* constraint = mMultiPoolAllocator.construct<MimicMotorConstraint>(
             joint,
             joint->getMimicJoint(),
             joint->getMimicMultiplier(),
-            joint->getMimicOffset()));
+            joint->getMimicOffset());
+        mMimicMotorConstraints.push_back(constraint);
       }
     }
   }
 
   // Add active joint limit
-  for (auto& jointLimitConstraint : mJointConstraints)
+  for (auto* constraint : mJointConstraints)
   {
-    jointLimitConstraint->update();
-
-    if (jointLimitConstraint->isActive())
-      mActiveConstraints.push_back(jointLimitConstraint);
+    constraint->update();
+    if (constraint->isActive())
+      mActiveConstraints.push_back(constraint);
   }
 
-  for (auto& mimicMotorConstraint : mMimicMotorConstraints)
+  for (auto* constraint : mMimicMotorConstraints)
   {
-    mimicMotorConstraint->update();
-
-    if (mimicMotorConstraint->isActive())
-      mActiveConstraints.push_back(mimicMotorConstraint);
+    constraint->update();
+    if (constraint->isActive())
+      mActiveConstraints.push_back(constraint);
   }
 
-  for (auto& jointFrictionConstraint : mJointCoulombFrictionConstraints)
+  for (auto* constraint : mJointCoulombFrictionConstraints)
   {
-    jointFrictionConstraint->update();
-
-    if (jointFrictionConstraint->isActive())
-      mActiveConstraints.push_back(jointFrictionConstraint);
+    constraint->update();
+    if (constraint->isActive())
+      mActiveConstraints.push_back(constraint);
   }
 }
 
@@ -696,10 +791,10 @@ void ConstraintSolver::buildConstrainedGroups()
     if (found)
       continue;
 
-    ConstrainedGroup newConstGroup;
+    ConstrainedGroup newConstGroup(mFreeListAllocator);
     newConstGroup.mRootSkeleton = skel;
     skel->mUnionIndex = mConstrainedGroups.size();
-    mConstrainedGroups.push_back(newConstGroup);
+    mConstrainedGroups.emplace_back(std::move(newConstGroup));
   }
 
   // Add active constraints to constrained groups

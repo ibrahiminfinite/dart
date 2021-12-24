@@ -79,6 +79,58 @@ using aligned_map = std::map<
 
 #endif
 
+[[nodiscard]] bool isValidAlignement(size_t bytes, size_t alignment);
+
+/// A portable function to allocate memory on a specified alignment boundary.
+///
+/// \param[in] alignment: The alignment value, which must be an integer power
+/// of 2.
+/// \param[in] bytes: Size of the requested memory allocation.
+/// \returns A pointer to the memory block that was allocated or nullptr if the
+/// operation failed. The pointer is a multiple of alignment.
+[[nodiscard]] void* aligned_alloc(size_t alignment, size_t bytes);
+
+/// A portable function to releases a block of memory that was allocated with
+/// aligned_alloc()
+///
+/// \param[in] pointer: A pointer to the memory block that was returned to the
+/// aligned_alloc()
+void aligned_free(void* pointer);
+
+template <std::size_t Alignment>
+[[nodiscard]] constexpr std::size_t getPadding(void* basePointer);
+
+/// Returns the distance from the base address to the next aligned address of
+/// the base address, so that base_address + padding = aligned_address.
+[[nodiscard]] constexpr std::size_t getPadding(
+    void* basePointer, std::size_t alignment);
+
+template <typename HeaderT>
+[[nodiscard]] constexpr std::size_t getPaddingWithHeader(
+    void* basePointer, std::size_t alignment);
+
+namespace literals {
+
+/// Kibibytes (1024^1 bytes)
+constexpr std::size_t operator"" _KiB(unsigned long long value) noexcept;
+
+/// Kilobytes (1000^1 bytes)
+constexpr std::size_t operator"" _KB(unsigned long long value) noexcept;
+
+/// Mibibytes (1024^2 bytes)
+constexpr std::size_t operator"" _MiB(unsigned long long value) noexcept;
+
+/// Megabytes (1000^2 bytes)
+constexpr std::size_t operator"" _MB(unsigned long long value) noexcept;
+
+/// Gibibytes (1024^3 bytes)
+constexpr std::size_t operator"" _GiB(unsigned long long value) noexcept;
+
+/// Gigabytes (1000^3 bytes)
+constexpr std::size_t operator"" _GB(unsigned long long value) noexcept;
+
+} // namespace literals
+
 } // namespace common
 } // namespace dart
 

@@ -30,7 +30,7 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <dart/common/PoolAllocator.hpp>
+#include <dart/common/MultiPoolAllocator.hpp>
 #include <gtest/gtest.h>
 
 #include "TestHelpers.hpp"
@@ -39,14 +39,14 @@ using namespace dart;
 using namespace common;
 
 //==============================================================================
-TEST(PoolAllocatorTest, Constructors)
+TEST(MultiPoolAllocatorTest, Constructors)
 {
-  auto a = PoolAllocator::Debug();
+  auto a = MultiPoolAllocator::Debug();
   EXPECT_EQ(
       &a.getInternalAllocator().getBaseAllocator(),
       &MemoryAllocator::GetDefault());
 
-  auto b = PoolAllocator::Debug(MemoryAllocator::GetDefault());
+  auto b = MultiPoolAllocator::Debug(MemoryAllocator::GetDefault());
   EXPECT_EQ(
       &b.getInternalAllocator().getBaseAllocator(),
       &MemoryAllocator::GetDefault());
@@ -58,9 +58,9 @@ TEST(PoolAllocatorTest, Constructors)
 }
 
 //==============================================================================
-TEST(PoolAllocatorTest, Allocate)
+TEST(MultiPoolAllocatorTest, Allocate)
 {
-  auto a = PoolAllocator::Debug();
+  auto a = MultiPoolAllocator::Debug();
   EXPECT_TRUE(a.isEmpty());
 
   // Cannot allocate 0 bytes

@@ -30,44 +30,59 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#ifndef DART_CONSTRAINT_DETAIL_CONSTRAINEDGROUP_IMPL_HPP_
+#define DART_CONSTRAINT_DETAIL_CONSTRAINEDGROUP_IMPL_HPP_
 
-#include <cassert>
-#include <cstddef>
-#include <vector>
+#include "dart/constraint/ConstrainedGroup.hpp"
 
-#include "dart/common/Memory.hpp"
-#include "dart/common/StlContainers.hpp"
-
-namespace dart {
-namespace common {
+namespace dart::constraint {
 
 //==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
+template <typename Func>
+void ConstrainedGroup::eachConstraint(Func func)
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
-
-  return nullptr;
+  if constexpr (std::is_same_v<
+                    std::invoke_result_t<Func, ConstraintBase*>,
+                    bool>)
+  {
+    for (auto constraint : mConstraints2)
+    {
+      if (!func(constraint))
+        return;
+    }
+  }
+  else
+  {
+    for (auto constraint : mConstraints2)
+    {
+      func(constraint);
+    }
+  }
 }
 
 //==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const ::dart::common::vector<T>& vec)
+template <typename Func>
+void ConstrainedGroup::eachConstraint(Func func) const
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
-
-  return nullptr;
+  if constexpr (std::is_same_v<
+                    std::invoke_result_t<Func, const ConstraintBase*>,
+                    bool>)
+  {
+    for (auto constraint : mConstraints2)
+    {
+      if (!func(constraint))
+        return;
+    }
+  }
+  else
+  {
+    for (auto constraint : mConstraints2)
+    {
+      func(constraint);
+    }
+  }
 }
 
-} // namespace common
-} // namespace dart
+} // namespace dart::constraint
 
-#endif // DART_COMMON_STLHELPERS_HPP_
+#endif // DART_CONSTRAINT_DETAIL_CONSTRAINEDGROUP_IMPL_HPP_

@@ -33,10 +33,9 @@
 #include "dart/constraint/ConstrainedGroup.hpp"
 
 #include <algorithm>
-#include <iostream>
-#include <vector>
 
 #include "dart/common/Console.hpp"
+#include "dart/common/Macros.hpp"
 #include "dart/constraint/ConstraintBase.hpp"
 #include "dart/constraint/ConstraintSolver.hpp"
 
@@ -44,10 +43,24 @@ namespace dart {
 namespace constraint {
 
 //==============================================================================
-ConstrainedGroup::ConstrainedGroup() {}
+ConstrainedGroup::ConstrainedGroup()
+  : ConstrainedGroup(common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
 
 //==============================================================================
-ConstrainedGroup::~ConstrainedGroup() {}
+ConstrainedGroup::ConstrainedGroup(common::MemoryAllocator& memoryAllocator)
+  : mMemoryAllocator(memoryAllocator), mConstraints2(mMemoryAllocator)
+{
+  // Do nothing
+}
+
+//==============================================================================
+ConstrainedGroup::~ConstrainedGroup()
+{
+  // Do nothing
+}
 
 //==============================================================================
 void ConstrainedGroup::addConstraint(const ConstraintBasePtr& _constraint)
@@ -62,9 +75,20 @@ void ConstrainedGroup::addConstraint(const ConstraintBasePtr& _constraint)
 }
 
 //==============================================================================
+void ConstrainedGroup::addConstraint(ConstraintBase* constraint)
+{
+  DART_ASSERT(constraint, "Attempted to add nullptr.");
+  DART_ASSERT(
+      !hasConstraint(constraint), "Attempted to add a duplicate constraint.");
+  DART_ASSERT(constraint->isActive());
+
+  mConstraints2.push_back(constraint);
+}
+
+//==============================================================================
 std::size_t ConstrainedGroup::getNumConstraints() const
 {
-  return mConstraints.size();
+  return mConstraints2.size();
 }
 
 //==============================================================================
@@ -82,6 +106,20 @@ ConstConstraintBasePtr ConstrainedGroup::getConstraint(std::size_t _index) const
 }
 
 //==============================================================================
+ConstraintBase* ConstrainedGroup::getConstraint2(std::size_t index)
+{
+  DART_ASSERT(index < mConstraints2.size());
+  return mConstraints2[index];
+}
+
+//==============================================================================
+const ConstraintBase* ConstrainedGroup::getConstraint2(std::size_t index) const
+{
+  DART_ASSERT(index < mConstraints2.size());
+  return mConstraints2[index];
+}
+
+//==============================================================================
 void ConstrainedGroup::removeConstraint(const ConstraintBasePtr& _constraint)
 {
   assert(_constraint != nullptr && "Attempted to add nullptr.");
@@ -95,18 +133,39 @@ void ConstrainedGroup::removeConstraint(const ConstraintBasePtr& _constraint)
 }
 
 //==============================================================================
-void ConstrainedGroup::removeAllConstraints()
+void ConstrainedGroup::removeConstraint(const ConstraintBase* constraint)
 {
-  mConstraints.clear();
+  DART_ASSERT(constraint, "Attempted to add nullptr.");
+  DART_ASSERT(
+      hasConstraint(constraint),
+      "Attempted to remove not existing constraint.");
+
+  mConstraints2.erase(
+      remove(mConstraints2.begin(), mConstraints2.end(), constraint),
+      mConstraints2.end());
 }
 
 //==============================================================================
+void ConstrainedGroup::removeAllConstraints()
+{
+  mConstraints.clear();
+  mConstraints2.clear();
+}
+
 #ifndef NDEBUG
+//==============================================================================
 bool ConstrainedGroup::containConstraint(
     const ConstConstraintBasePtr& _constraint) const
 {
   return std::find(mConstraints.begin(), mConstraints.end(), _constraint)
          != mConstraints.end();
+}
+
+//==============================================================================
+bool ConstrainedGroup::hasConstraint(const ConstraintBase* constraint) const
+{
+  return std::find(mConstraints2.begin(), mConstraints2.end(), constraint)
+         != mConstraints2.end();
 }
 #endif
 
@@ -115,8 +174,8 @@ std::size_t ConstrainedGroup::getTotalDimension() const
 {
   std::size_t totalDim = 0;
 
-  for (std::size_t i = 0; i < mConstraints.size(); ++i)
-    totalDim += mConstraints[i]->getDimension();
+  for (std::size_t i = 0; i < mConstraints2.size(); ++i)
+    totalDim += mConstraints2[i]->getDimension();
 
   return totalDim;
 }

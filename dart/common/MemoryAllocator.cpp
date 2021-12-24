@@ -40,8 +40,28 @@ namespace dart::common {
 //==============================================================================
 MemoryAllocator& MemoryAllocator::GetDefault()
 {
+#ifdef NDEBUG // release
   static CAllocator defaultAllocator;
+#else // debug
+  //  static CAllocator::Debug defaultAllocator;
+  static CAllocator defaultAllocator;
+#endif
   return defaultAllocator;
+}
+
+//==============================================================================
+void* MemoryAllocator::allocate_aligned(size_t bytes, size_t alignment) noexcept
+{
+  (void)bytes;
+  (void)alignment;
+  return nullptr;
+}
+
+//==============================================================================
+void MemoryAllocator::deallocate_aligned(void* pointer, size_t bytes)
+{
+  (void)pointer;
+  (void)bytes;
 }
 
 //==============================================================================

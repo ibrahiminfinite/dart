@@ -35,14 +35,7 @@
   (EIGEN_MAJOR_VERSION < y || (EIGEN_MAJOR_VERSION <= y && \
   EIGEN_MINOR_VERSION <= z))))
 
-// Detect the compiler
-#if defined(__clang__)
-  #define DART_COMPILER_CLANG
-#elif defined(__GNUC__) || defined(__GNUG__)
-  #define DART_COMPILER_GCC
-#elif defined(_MSC_VER)
-  #define DART_COMPILER_MSVC
-#endif
+// Preprocessors of DART_COMPILER_* are moved to dart/common/Compilers.hpp
 
 #cmakedefine01 BUILD_TYPE_DEBUG
 #cmakedefine01 BUILD_TYPE_RELEASE

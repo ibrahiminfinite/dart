@@ -37,13 +37,13 @@
 
 #define DART_STRING_TYPE(type_name)                                            \
   /** Returns type string. */                                                  \
-  [[nodiscard]] static const std::string& getStaticType()                      \
+  [[nodiscard]] static const ::std::string& getStaticType()                    \
   {                                                                            \
-    static const std::string type = #type_name;                                \
+    static const ::std::string type = #type_name;                              \
     return type;                                                               \
   }                                                                            \
                                                                                \
-  [[nodiscard]] const std::string& getType() const override                    \
+  [[nodiscard]] const ::std::string& getType() const override                  \
   {                                                                            \
     return getStaticType();                                                    \
   }                                                                            \

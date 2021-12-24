@@ -54,10 +54,16 @@ public:
   /// Destructor
   virtual ~MemoryAllocator() = default;
 
+  // Delete copy/move constructor/operater
+  MemoryAllocator(const MemoryAllocator&) = delete;
+  MemoryAllocator(MemoryAllocator&&) = delete;
+  MemoryAllocator& operator=(const MemoryAllocator&) = delete;
+  MemoryAllocator& operator=(MemoryAllocator&&) = delete;
+
   /// Returns type string.
   [[nodiscard]] virtual const std::string& getType() const = 0;
 
-  /// Allocates \c size bytes of uninitialized storage.
+  /// Allocates \c size bytes of uninitialized and unaligned storage.
   ///
   /// \param[in] bytes: The byte size to allocate sotrage for.
   /// \return On success, the pointer to the beginning of newly allocated
@@ -65,6 +71,17 @@ public:
   /// \return On failure, a null pointer
   [[nodiscard]] virtual void* allocate(size_t bytes) noexcept = 0;
   // TODO(JS): Make this constexpr once migrated to C++20
+
+  /// Allocates \c size bytes of uninitialized and aligned storage.
+  ///
+  /// \param[in] bytes: The byte size to allocate sotrage for.
+  /// \param[in] alignment: Alignment size.
+  /// \return On success, the pointer to the beginning of newly allocated
+  /// memory.
+  /// \return On failure, a null pointer
+  [[nodiscard]] virtual void* allocate_aligned(
+      size_t bytes, size_t alignment) noexcept;
+  // TODO(JS): Make this pure virtual
 
   /// Allocates object(s) without calling the constructor.
   ///
@@ -75,11 +92,19 @@ public:
   [[nodiscard]] T* allocateAs(size_t n = 1) noexcept;
 
   /// Deallocates the storage referenced by the pointer \c p, which must be a
-  /// pointer obtained by an earlier cal to allocate().
+  /// pointer obtained by an earlier call to allocate().
   ///
   /// \param[in] pointer: Pointer obtained from allocate().
   /// \param[in] bytes: The bytes of the allocated memory.
   virtual void deallocate(void* pointer, size_t bytes) = 0;
+  // TODO(JS): Make this constexpr once migrated to C++20
+
+  /// Deallocates the storage referenced by the pointer \c p, which must be a
+  /// pointer obtained by an earlier call to allocate_aligned().
+  ///
+  /// \param[in] pointer: Pointer obtained from allocate_aligned().
+  /// \param[in] bytes: The bytes of the allocated memory.
+  virtual void deallocate_aligned(void* pointer, size_t bytes);
   // TODO(JS): Make this constexpr once migrated to C++20
 
   /// Allocates uninitialized storage and constructs an object of type T to the
@@ -92,11 +117,36 @@ public:
   template <typename T, typename... Args>
   [[nodiscard]] T* construct(Args&&... args) noexcept;
 
+  /// Allocates uninitialized and aligned storage, and constructs an object of
+  /// type T to the allocated storage.
+  ///
+  /// \tparam T: The object type to construct.
+  /// \tparam Args...: The argument types to pass to the object constructor.
+  ///
+  /// \param[in] alignment: Alignment size.
+  /// \param[in] args: The constructor arguments to use.
   template <typename T, typename... Args>
-  [[nodiscard]] T* constructAt(void* pointer, Args&&... args);
+  [[nodiscard]] T* construct_aligned(size_t alignment, Args&&... args) noexcept;
 
+  /// Constructs an object of type T at a specific address.
+  ///
+  /// \tparam T: The object type to construct.
+  /// \tparam Args...: The argument types to pass to the object constructor.
+  ///
+  /// \param[in] pointer: The address to call the constructer at.
+  /// \param[in] args: The constructor arguments to use.
   template <typename T, typename... Args>
-  [[nodiscard]] T* constructAt(T* pointer, Args&&... args);
+  [[nodiscard]] static T* constructAt(void* pointer, Args&&... args);
+
+  /// Constructs an object of type T at a specific address.
+  ///
+  /// \tparam T: The object type to construct.
+  /// \tparam Args...: The argument types to pass to the object constructor.
+  ///
+  /// \param[in] pointer: The address to call the constructer at.
+  /// \param[in] args: The constructor arguments to use.
+  template <typename T, typename... Args>
+  [[nodiscard]] static T* constructAt(T* pointer, Args&&... args);
 
   /// Calls the destructor of the object and deallocate the storage.
   template <typename T>

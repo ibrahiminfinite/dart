@@ -32,10 +32,19 @@
 
 #include "MyWindow.hpp"
 
-MyWindow::MyWindow() : SimWindow() {}
+//==============================================================================
+MyWindow::MyWindow() : SimWindow()
+{
+  // Do nothing
+}
 
-MyWindow::~MyWindow() {}
+//==============================================================================
+MyWindow::~MyWindow()
+{
+  // Do nothing
+}
 
+//==============================================================================
 void MyWindow::drawWorld() const
 {
   glEnable(GL_LIGHTING);
@@ -44,9 +53,10 @@ void MyWindow::drawWorld() const
   SimWindow::drawWorld();
 }
 
-void MyWindow::keyboard(unsigned char _key, int _x, int _y)
+//==============================================================================
+void MyWindow::keyboard(unsigned char key, int x, int y)
 {
-  switch (_key)
+  switch (key)
   {
     case ' ': // use space key to play or stop the motion
       mSimulating = !mSimulating;
@@ -74,29 +84,30 @@ void MyWindow::keyboard(unsigned char _key, int _x, int _y)
       break;
     }
     default:
-      Win3D::keyboard(_key, _x, _y);
+      Win3D::keyboard(key, x, y);
   }
   glutPostRedisplay();
 }
 
+//==============================================================================
 void MyWindow::spawnCube(
-    const Eigen::Vector3d& _position,
-    const Eigen::Vector3d& _size,
-    double _mass)
+    const Eigen::Vector3d& position, const Eigen::Vector3d& size, double mass)
 {
+  static size_t index = 0;
+
   dart::dynamics::SkeletonPtr newCubeSkeleton
-      = dart::dynamics::Skeleton::create();
+      = dart::dynamics::Skeleton::create(
+          "skeleton (" + std::to_string(index++) + ")");
 
   dart::dynamics::BodyNode::Properties body;
   body.mName = "cube_link";
-  body.mInertia.setMass(_mass);
-  body.mInertia.setMoment(
-      dart::dynamics::BoxShape::computeInertia(_size, _mass));
-  dart::dynamics::ShapePtr newBoxShape(new dart::dynamics::BoxShape(_size));
+  body.mInertia.setMass(mass);
+  body.mInertia.setMoment(dart::dynamics::BoxShape::computeInertia(size, mass));
+  dart::dynamics::ShapePtr newBoxShape(new dart::dynamics::BoxShape(size));
 
   dart::dynamics::FreeJoint::Properties joint;
   joint.mName = "cube_joint";
-  joint.mT_ParentBodyToJoint = Eigen::Translation3d(_position);
+  joint.mT_ParentBodyToJoint = Eigen::Translation3d(position);
 
   auto pair
       = newCubeSkeleton->createJointAndBodyNodePair<dart::dynamics::FreeJoint>(

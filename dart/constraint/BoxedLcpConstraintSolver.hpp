@@ -63,13 +63,36 @@ public:
 
   /// Constructos with default primary and secondary LCP solvers, which are
   /// Dantzig and PGS, respectively.
+  ///
+  /// \deprecated Use \c BoxedLcpConstraintSolver(common::MemoryAllocator&
+  /// memoryAllocator) instead
+  DART_DEPRECATED(6.13)
   BoxedLcpConstraintSolver();
+
+  /// Constructos with default primary and secondary LCP solvers, which are
+  /// Dantzig and PGS, respectively.
+  explicit BoxedLcpConstraintSolver(
+      common::MemoryAllocator& freeListAllocator,
+      common::MemoryAllocator& poolAllocator);
 
   /// Constructors with specific primary LCP solver.
   ///
   /// \param[in] boxedLcpSolver The primary boxed LCP solver. When nullptr is
   /// passed, which is discouraged, Dantzig solver will be used.
-  BoxedLcpConstraintSolver(BoxedLcpSolverPtr boxedLcpSolver);
+  ///
+  /// \deprecated Use \c BoxedLcpConstraintSolver(BoxedLcpSolverPtr
+  /// boxedLcpSolver, common::MemoryAllocator& memoryAllocator) instead
+  DART_DEPRECATED(6.13)
+  explicit BoxedLcpConstraintSolver(BoxedLcpSolverPtr boxedLcpSolver);
+
+  /// Constructors with specific primary LCP solver.
+  ///
+  /// \param[in] boxedLcpSolver The primary boxed LCP solver. When nullptr is
+  /// passed, which is discouraged, Dantzig solver will be used.
+  explicit BoxedLcpConstraintSolver(
+      BoxedLcpSolverPtr boxedLcpSolver,
+      common::MemoryAllocator& freeListAllocator,
+      common::MemoryAllocator& poolAllocator);
 
   /// Constructs with specific primary and secondary LCP solvers.
   ///
@@ -77,9 +100,26 @@ public:
   /// passed, which is discouraged, Dantzig solver will be used.
   /// \param[in] secondaryBoxedLcpSolver The secondary boxed-LCP solver. Pass
   /// nullptr to disable using secondary LCP solver.
-  BoxedLcpConstraintSolver(
+  ///
+  /// \deprecated Use \c BoxedLcpConstraintSolver(BoxedLcpSolverPtr
+  /// boxedLcpSolver, BoxedLcpSolverPtr secondaryBoxedLcpSolver,
+  /// common::MemoryAllocator& memoryAllocator) instead
+  DART_DEPRECATED(6.13)
+  explicit BoxedLcpConstraintSolver(
       BoxedLcpSolverPtr boxedLcpSolver,
       BoxedLcpSolverPtr secondaryBoxedLcpSolver);
+
+  /// Constructs with specific primary and secondary LCP solvers.
+  ///
+  /// \param[in] boxedLcpSolver The primary boxed LCP solver. When nullptr is
+  /// passed, which is discouraged, Dantzig solver will be used.
+  /// \param[in] secondaryBoxedLcpSolver The secondary boxed-LCP solver. Pass
+  /// nullptr to disable using secondary LCP solver.
+  explicit BoxedLcpConstraintSolver(
+      BoxedLcpSolverPtr boxedLcpSolver,
+      BoxedLcpSolverPtr secondaryBoxedLcpSolver,
+      common::MemoryAllocator& freeListAllocator,
+      common::MemoryAllocator& poolAllocator);
 
   /// Sets boxed LCP (BLCP) solver
   ///

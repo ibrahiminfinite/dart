@@ -33,6 +33,7 @@
 #ifndef DART_COMMON_DEPRECATED_HPP_
 #define DART_COMMON_DEPRECATED_HPP_
 
+#include "dart/common/Compiler.hpp"
 #include "dart/config.hpp"
 
 //==============================================================================

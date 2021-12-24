@@ -30,8 +30,8 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_MEMORYMANAGER_HPP_
-#define DART_COMMON_MEMORYMANAGER_HPP_
+#ifndef DART_SIMULATION_MEMORYMANAGER_HPP_
+#define DART_SIMULATION_MEMORYMANAGER_HPP_
 
 #ifndef NDEBUG
   #include <mutex>
@@ -39,9 +39,9 @@
 #include <iostream>
 
 #include "dart/common/FreeListAllocator.hpp"
-#include "dart/common/PoolAllocator.hpp"
+#include "dart/common/MultiPoolAllocator.hpp"
 
-namespace dart::common {
+namespace dart::simulation {
 
 /// A composite memory allocator that contains various memory allocators that
 /// are optimized for different use cases.
@@ -63,20 +63,19 @@ public:
   ///
   /// \param[in] baseAllocator: (optional) The most low level allocator to be
   /// used by all the underlying memory allocators.
-  explicit MemoryManager(
-      MemoryAllocator& baseAllocator = MemoryAllocator::GetDefault());
+  explicit MemoryManager(common::MemoryAllocator* baseAllocator = nullptr);
 
   /// Destructor
   ~MemoryManager();
 
   /// Returns the base allocator
-  [[nodiscard]] MemoryAllocator& getBaseAllocator();
+  [[nodiscard]] common::MemoryAllocator& getBaseAllocator();
 
   /// Returns the free list allocator
-  [[nodiscard]] FreeListAllocator& getFreeListAllocator();
+  [[nodiscard]] common::FreeListAllocator& getFreeListAllocator();
 
   /// Returns the pool allocator
-  [[nodiscard]] PoolAllocator& getPoolAllocator();
+  [[nodiscard]] common::MultiPoolAllocator& getMultiPoolAllocator();
 
   /// Allocates \c size bytes of uninitialized storage.
   ///
@@ -95,7 +94,7 @@ public:
   /// \return On failure, a null pointer
   [[nodiscard]] void* allocateUsingFree(size_t bytes);
 
-  /// Allocates \c size bytes of uninitialized storage using PoolAllocator.
+  /// Allocates \c size bytes of uninitialized storage using MultiPoolAllocator.
   ///
   /// \param[in] bytes: The byte size to allocate sotrage for.
   /// \return On success, the pointer to the beginning of newly allocated
@@ -104,7 +103,7 @@ public:
   [[nodiscard]] void* allocateUsingPool(size_t bytes);
 
   /// Deallocates the storage referenced by the pointer \c p, which must be a
-  /// pointer obtained by an earlier cal to allocate().
+  /// pointer obtained by an earlier call to allocate().
   ///
   /// \param[in] type: The memory allocator type.
   /// \param[in] pointer: Pointer obtained from allocate().
@@ -132,7 +131,7 @@ public:
   template <typename T, typename... Args>
   [[nodiscard]] T* constructUsingFree(Args&&... args) noexcept;
 
-  /// Allocates uninitialized storage using PoolAllocator and constructs an
+  /// Allocates uninitialized storage using MultiPoolAllocator and constructs an
   /// object of type T to the allocated storage.
   template <typename T, typename... Args>
   [[nodiscard]] T* constructUsingPool(Args&&... args) noexcept;
@@ -147,7 +146,7 @@ public:
   void destroyUsingFree(T* pointer) noexcept;
 
   /// Calls the destructor of the object and deallocate the storage using
-  /// PoolAllocator.
+  /// MultiPoolAllocator.
   template <typename T>
   void destroyUsingPool(T* pointer) noexcept;
 
@@ -165,25 +164,25 @@ public:
 
 private:
   /// The base allocator to allocate memory chunck.
-  MemoryAllocator& mBaseAllocator;
+  common::MemoryAllocator* mBaseAllocator;
 
 #ifdef NDEBUG
   /// The free list allocator.
-  FreeListAllocator mFreeListAllocator;
+  common::FreeListAllocator mFreeListAllocator;
 
   /// The pool allocator.
-  PoolAllocator mPoolAllocator;
+  common::MultiPoolAllocator mMultiPoolAllocator;
 #else
   /// The free list allocator.
-  FreeListAllocator::Debug mFreeListAllocator;
+  common::FreeListAllocator::Debug mFreeListAllocator;
 
   /// The pool allocator.
-  PoolAllocator::Debug mPoolAllocator;
+  common::MultiPoolAllocator::Debug mMultiPoolAllocator;
 #endif
 };
 
-} // namespace dart::common
+} // namespace dart::simulation
 
-#include "dart/common/detail/MemoryManager-impl.hpp"
+#include "dart/simulation/detail/MemoryManager-impl.hpp"
 
-#endif // DART_COMMON_MEMORYMANAGER_HPP_
+#endif // DART_SIMULATION_MEMORYMANAGER_HPP_

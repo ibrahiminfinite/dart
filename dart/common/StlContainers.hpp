@@ -30,44 +30,50 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#ifndef DART_COMMON_STLCONTAINERS_HPP_
+#define DART_COMMON_STLCONTAINERS_HPP_
 
-#include <cassert>
-#include <cstddef>
+#include <map>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
-#include "dart/common/Memory.hpp"
-#include "dart/common/StlContainers.hpp"
+#include "dart/common/StlAllocator.hpp"
 
-namespace dart {
-namespace common {
+namespace dart::common {
 
-//==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
-{
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+template <class T, class Allocator = StlAllocator<T>>
+using vector = std::vector<T, StlAllocator<T>>;
 
-  return nullptr;
-}
+template <
+    class Key,
+    class Compare = std::less<Key>,
+    class Allocator = StlAllocator<Key>>
+using set = std::set<Key, Compare, Allocator>;
 
-//==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const ::dart::common::vector<T>& vec)
-{
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+template <
+    class Key,
+    class Hash = std::hash<Key>,
+    class KeyEqual = std::equal_to<Key>,
+    class Allocator = StlAllocator<Key>>
+using unordered_set = std::unordered_set<Key, Hash, KeyEqual, Allocator>;
 
-  return nullptr;
-}
+template <
+    class Key,
+    class T,
+    class Compare = std::less<Key>,
+    class Allocator = StlAllocator<std::pair<const Key, T>>>
+using map = std::map<Key, T, Compare, Allocator>;
 
-} // namespace common
-} // namespace dart
+template <
+    class Key,
+    class T,
+    class Hash = std::hash<Key>,
+    class KeyEqual = std::equal_to<Key>,
+    class Allocator = StlAllocator<std::pair<const Key, T>>>
+using unordered_map = std::unordered_map<Key, T, Hash, KeyEqual, Allocator>;
 
-#endif // DART_COMMON_STLHELPERS_HPP_
+} // namespace dart::common
+
+#endif // DART_COMMON_STLCONTAINERS_HPP_

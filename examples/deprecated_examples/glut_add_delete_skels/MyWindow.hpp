@@ -36,27 +36,26 @@
 #include <dart/dart.hpp>
 #include <dart/gui/gui.hpp>
 
-/// \brief
 class MyWindow : public dart::gui::glut::SimWindow
 {
 public:
-  /// \brief
+  /// Default constructor
   MyWindow();
 
-  /// \brief
-  virtual ~MyWindow();
+  /// Destructor
+  ~MyWindow() override;
 
-  /// \brief
+  // Documentation inherited
   void drawWorld() const override;
 
-  /// \brief
+  // Documentation inherited
   void keyboard(unsigned char _key, int _x, int _y) override;
 
-  /// \brief
+  /// Spawns a cube
   void spawnCube(
-      const Eigen::Vector3d& _position = Eigen::Vector3d(0.0, 1.0, 0.0),
-      const Eigen::Vector3d& _size = Eigen::Vector3d(0.1, 0.1, 0.1),
-      double _mass = 0.1);
+      const Eigen::Vector3d& position = Eigen::Vector3d(0.0, 1.0, 0.0),
+      const Eigen::Vector3d& size = Eigen::Vector3d(0.1, 0.1, 0.1),
+      double mass = 0.1);
 };
 
 #endif // EXAMPLES_ADDDELETESKELS_MYWINDOW_HPP_

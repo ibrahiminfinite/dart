@@ -54,14 +54,31 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver,
     BoxedLcpSolverPtr secondaryBoxedLcpSolver)
   : BoxedLcpConstraintSolver(
-      std::move(boxedLcpSolver), std::move(secondaryBoxedLcpSolver))
+      std::move(boxedLcpSolver),
+      std::move(secondaryBoxedLcpSolver),
+      common::MemoryAllocator::GetDefault(),
+      common::MemoryAllocator::GetDefault())
 {
   setTimeStep(timeStep);
 }
 
 //==============================================================================
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver()
-  : BoxedLcpConstraintSolver(std::make_shared<DantzigBoxedLcpSolver>())
+  : BoxedLcpConstraintSolver(
+      common::MemoryAllocator::GetDefault(),
+      common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
+
+//==============================================================================
+BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
+    common::MemoryAllocator& freeListAllocator,
+    common::MemoryAllocator& poolAllocator)
+  : BoxedLcpConstraintSolver(
+      std::make_shared<DantzigBoxedLcpSolver>(),
+      freeListAllocator,
+      poolAllocator)
 {
   // Do nothing
 }
@@ -70,7 +87,23 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver()
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver)
   : BoxedLcpConstraintSolver(
-      std::move(boxedLcpSolver), std::make_shared<PgsBoxedLcpSolver>())
+      std::move(boxedLcpSolver),
+      common::MemoryAllocator::GetDefault(),
+      common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
+
+//==============================================================================
+BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
+    BoxedLcpSolverPtr boxedLcpSolver,
+    common::MemoryAllocator& freeListAllocator,
+    common::MemoryAllocator& poolAllocator)
+  : BoxedLcpConstraintSolver(
+      std::move(boxedLcpSolver),
+      std::make_shared<PgsBoxedLcpSolver>(),
+      freeListAllocator,
+      poolAllocator)
 {
   // Do nothing
 }
@@ -78,7 +111,22 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
 //==============================================================================
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver, BoxedLcpSolverPtr secondaryBoxedLcpSolver)
-  : ConstraintSolver()
+  : BoxedLcpConstraintSolver(
+      boxedLcpSolver,
+      secondaryBoxedLcpSolver,
+      common::MemoryAllocator::GetDefault(),
+      common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
+
+//==============================================================================
+BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
+    BoxedLcpSolverPtr boxedLcpSolver,
+    BoxedLcpSolverPtr secondaryBoxedLcpSolver,
+    common::MemoryAllocator& freeListAllocator,
+    common::MemoryAllocator& poolAllocator)
+  : ConstraintSolver(freeListAllocator, poolAllocator)
 {
   if (boxedLcpSolver)
   {
@@ -172,7 +220,7 @@ void BoxedLcpConstraintSolver::solveConstrainedGroup(ConstrainedGroup& group)
   mOffset[0] = 0;
   for (std::size_t i = 1; i < numConstraints; ++i)
   {
-    const ConstraintBasePtr& constraint = group.getConstraint(i - 1);
+    const ConstraintBase* constraint = group.getConstraint2(i - 1);
     assert(constraint->getDimension() > 0);
     mOffset[i] = mOffset[i - 1] + constraint->getDimension();
   }
@@ -182,7 +230,7 @@ void BoxedLcpConstraintSolver::solveConstrainedGroup(ConstrainedGroup& group)
   constInfo.invTimeStep = 1.0 / mTimeStep;
   for (std::size_t i = 0; i < numConstraints; ++i)
   {
-    const ConstraintBasePtr& constraint = group.getConstraint(i);
+    ConstraintBase* constraint = group.getConstraint2(i);
 
     constInfo.x = mX.data() + mOffset[i];
     constInfo.lo = mLo.data() + mOffset[i];
@@ -211,14 +259,15 @@ void BoxedLcpConstraintSolver::solveConstrainedGroup(ConstrainedGroup& group)
       for (std::size_t k = i + 1; k < numConstraints; ++k)
       {
         index = nSkip * (mOffset[i] + j) + mOffset[k];
-        group.getConstraint(k)->getVelocityChange(mA.data() + index, false);
+        group.getConstraint2(k)->getVelocityChange(mA.data() + index, false);
       }
 
       // Filling symmetric part of A matrix
       for (std::size_t k = 0; k < i; ++k)
       {
         const int indexI = mOffset[i] + j;
-        for (std::size_t l = 0; l < group.getConstraint(k)->getDimension(); ++l)
+        for (std::size_t l = 0; l < group.getConstraint2(k)->getDimension();
+             ++l)
         {
           const int indexJ = mOffset[k] + l;
           mA(indexI, indexJ) = mA(indexJ, indexI);
@@ -303,7 +352,7 @@ void BoxedLcpConstraintSolver::solveConstrainedGroup(ConstrainedGroup& group)
   // Apply constraint impulses
   for (std::size_t i = 0; i < numConstraints; ++i)
   {
-    const ConstraintBasePtr& constraint = group.getConstraint(i);
+    ConstraintBase* constraint = group.getConstraint2(i);
     constraint->applyImpulse(mX.data() + mOffset[i]);
     constraint->excite();
   }

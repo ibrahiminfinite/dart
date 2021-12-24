@@ -58,7 +58,17 @@ public:
   };
 
   /// Default constructor
-  explicit StlAllocator(
+  ///
+  /// This constructor allows implicit conversion from MemmoryAllocator on
+  /// purpose so that it can be used for constructing STL containers with
+  /// MemoryAllocator.
+  ///
+  /// Example code:
+  /// \code{.cpp}
+  /// MultiPoolAllocator alloc;
+  /// std::vector<int, StlAllocator<int>> vec(alloc);
+  /// \endcode
+  StlAllocator(
       MemoryAllocator& baseAllocator = MemoryAllocator::GetDefault()) noexcept;
 
   /// Copy constructor
@@ -81,7 +91,7 @@ public:
   [[nodiscard]] pointer allocate(size_type n, const void* hint = 0);
 
   /// Deallocates the storage referenced by the pointer \c p, which must be a
-  /// pointer obtained by an earlier cal to allocate().
+  /// pointer obtained by an earlier call to allocate().
   ///
   /// \param[in] pointer: Pointer obtained from allocate().
   /// \param[in] n: Number of objects earlier passed to allocate().

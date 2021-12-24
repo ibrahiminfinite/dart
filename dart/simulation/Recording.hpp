@@ -43,6 +43,8 @@
 
 #include <Eigen/Dense>
 
+#include "dart/common/Deprecated.hpp"
+#include "dart/common/StlContainers.hpp"
 #include "dart/dynamics/Skeleton.hpp"
 
 namespace dart {
@@ -58,7 +60,11 @@ class Recording
 {
 public:
   /// \brief Create Recording with a list of skeletons
-  explicit Recording(const std::vector<dynamics::SkeletonPtr>& _skeletons);
+  DART_DEPRECATED(6.13)
+  explicit Recording(const std::vector<dynamics::SkeletonPtr>& skeletons);
+
+  /// \brief Create Recording with a list of skeletons
+  explicit Recording(const common::vector<dynamics::SkeletonPtr>& skeletons);
 
   /// \brief Create Recording with a list of number of dofs
   explicit Recording(const std::vector<int>& _skelDofs);
@@ -102,7 +108,12 @@ public:
   void addState(const Eigen::VectorXd& _state);
 
   /// \brief Update list for number of generalized coordinates
+  DART_DEPRECATED(6.13)
   void updateNumGenCoords(const std::vector<dynamics::SkeletonPtr>& _skeletons);
+
+  /// \brief Update list for number of generalized coordinates
+  void updateNumGenCoords(
+      const common::vector<dynamics::SkeletonPtr>& skeletons);
 
 private:
   /// \brief Baked states

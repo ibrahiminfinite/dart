@@ -30,78 +30,63 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_DETAIL_MEMORYMANAGER_IMPL_HPP_
-#define DART_COMMON_DETAIL_MEMORYMANAGER_IMPL_HPP_
+#include "dart/common/Memory.hpp"
 
-#include "dart/common/MemoryManager.hpp"
+#include "dart/common/Bit.hpp"
+#include "dart/common/Compiler.hpp"
+#include "dart/common/Logging.hpp"
+#include "dart/common/Macros.hpp"
 
 namespace dart::common {
 
 //==============================================================================
-template <typename T, typename... Args>
-T* MemoryManager::construct(Type type, Args&&... args) noexcept
+bool isValidAlignement(size_t bytes, size_t alignment)
 {
-  // Allocate new memory for a new object (without calling the constructor)
-  void* object = allocate(type, sizeof(T));
-  if (!object)
+  if (alignment == 0)
   {
-    return nullptr;
+    return true;
   }
 
-  // Call constructor. Return nullptr if failed.
-  try
+  if (alignment < sizeof(void*))
   {
-    new (object) T(std::forward<Args>(args)...);
-  }
-  catch (...)
-  {
-    deallocate(type, object, sizeof(T));
-    return nullptr;
+    DART_DEBUG("Alignment '{}' must be greater than sizeof(void*).", alignment);
+    return false;
   }
 
-  return reinterpret_cast<T*>(object);
-}
-
-//==============================================================================
-template <typename T, typename... Args>
-T* MemoryManager::constructUsingFree(Args&&... args) noexcept
-{
-  return construct<T, Args...>(Type::Free, std::forward<Args>(args)...);
-}
-
-//==============================================================================
-template <typename T, typename... Args>
-T* MemoryManager::constructUsingPool(Args&&... args) noexcept
-{
-  return construct<T, Args...>(Type::Pool, std::forward<Args>(args)...);
-}
-
-//==============================================================================
-template <typename T>
-void MemoryManager::destroy(Type type, T* object) noexcept
-{
-  if (!object)
+  if (!ispow2(alignment))
   {
-    return;
+    DART_DEBUG("Alignment '{}' must be a power of 2.", alignment);
+    return false;
   }
-  object->~T();
-  deallocate(type, object, sizeof(T));
+
+  if (bytes % alignment != 0)
+  {
+    DART_DEBUG(
+        "Size '{}' must be a multiple of alignment '{}'.", bytes, alignment);
+    return false;
+  }
+
+  return true;
 }
 
 //==============================================================================
-template <typename T>
-void MemoryManager::destroyUsingFree(T* pointer) noexcept
+void* aligned_alloc(size_t alignment, size_t bytes)
 {
-  destroy(Type::Free, pointer);
+#if DART_COMPILER_MSVC
+  return _aligned_malloc(bytes, alignment);
+#else
+  return std::aligned_alloc(alignment, bytes);
+#endif
 }
 
 //==============================================================================
-template <typename T>
-void MemoryManager::destroyUsingPool(T* pointer) noexcept
+void aligned_free(void* pointer)
 {
-  destroy(Type::Pool, pointer);
+#if DART_COMPILER_MSVC
+  return _aligned_free(pointer);
+#else
+  return std::free(pointer);
+#endif
 }
 
 } // namespace dart::common
-
-#endif // DART_COMMON_DETAIL_MEMORYMANAGER_IMPL_HPP_

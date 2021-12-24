@@ -59,11 +59,11 @@ DantzigLCPSolver::~DantzigLCPSolver()
 }
 
 //==============================================================================
-void DantzigLCPSolver::solve(ConstrainedGroup* _group)
+void DantzigLCPSolver::solve(ConstrainedGroup* group)
 {
   // Build LCP terms by aggregating them from constraints
-  std::size_t numConstraints = _group->getNumConstraints();
-  std::size_t n = _group->getTotalDimension();
+  std::size_t numConstraints = group->getNumConstraints();
+  std::size_t n = group->getTotalDimension();
 
   // If there is no constraint, then just return.
   if (0u == n)
@@ -91,7 +91,7 @@ void DantzigLCPSolver::solve(ConstrainedGroup* _group)
   //  std::cout << "offset[" << 0 << "]: " << offset[0] << std::endl;
   for (std::size_t i = 1; i < numConstraints; ++i)
   {
-    const ConstraintBasePtr& constraint = _group->getConstraint(i - 1);
+    const ConstraintBase* constraint = group->getConstraint2(i - 1);
     assert(constraint->getDimension() > 0);
     offset[i] = offset[i - 1] + constraint->getDimension();
     //    std::cout << "offset[" << i << "]: " << offset[i] << std::endl;
@@ -102,7 +102,7 @@ void DantzigLCPSolver::solve(ConstrainedGroup* _group)
   constInfo.invTimeStep = 1.0 / mTimeStep;
   for (std::size_t i = 0; i < numConstraints; ++i)
   {
-    const ConstraintBasePtr& constraint = _group->getConstraint(i);
+    ConstraintBase* constraint = group->getConstraint2(i);
 
     constInfo.x = x + offset[i];
     constInfo.lo = lo + offset[i];
@@ -131,13 +131,13 @@ void DantzigLCPSolver::solve(ConstrainedGroup* _group)
       for (std::size_t k = i + 1; k < numConstraints; ++k)
       {
         index = nSkip * (offset[i] + j) + offset[k];
-        _group->getConstraint(k)->getVelocityChange(A + index, false);
+        group->getConstraint2(k)->getVelocityChange(A + index, false);
       }
 
       // Filling symmetric part of A matrix
       for (std::size_t k = 0; k < i; ++k)
       {
-        for (std::size_t l = 0; l < _group->getConstraint(k)->getDimension();
+        for (std::size_t l = 0; l < group->getConstraint2(k)->getDimension();
              ++l)
         {
           int index1 = nSkip * (offset[i] + j) + offset[k] + l;
@@ -172,7 +172,7 @@ void DantzigLCPSolver::solve(ConstrainedGroup* _group)
   // Apply constraint impulses
   for (std::size_t i = 0; i < numConstraints; ++i)
   {
-    const ConstraintBasePtr& constraint = _group->getConstraint(i);
+    ConstraintBase* constraint = group->getConstraint2(i);
     constraint->applyImpulse(x + offset[i]);
     constraint->excite();
   }

@@ -30,44 +30,17 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#include "dart/common/ObjectPool.hpp"
 
-#include <cassert>
-#include <cstddef>
-#include <vector>
+#include <cstring>
+#include <limits>
 
-#include "dart/common/Memory.hpp"
-#include "dart/common/StlContainers.hpp"
+#include "dart/common/Console.hpp"
+#include "dart/common/Logging.hpp"
+#include "dart/common/Macros.hpp"
 
-namespace dart {
-namespace common {
+namespace dart::common {
 
 //==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
-{
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
 
-  return nullptr;
-}
-
-//==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const ::dart::common::vector<T>& vec)
-{
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
-
-  return nullptr;
-}
-
-} // namespace common
-} // namespace dart
-
-#endif // DART_COMMON_STLHELPERS_HPP_
+} // namespace dart::common

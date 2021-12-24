@@ -30,44 +30,71 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#include <dart/simulation/MemoryManager.hpp>
+#include <gtest/gtest.h>
 
-#include <cassert>
-#include <cstddef>
-#include <vector>
+#include "TestHelpers.hpp"
 
-#include "dart/common/Memory.hpp"
-#include "dart/common/StlContainers.hpp"
-
-namespace dart {
-namespace common {
+using namespace dart;
+using namespace common;
+using namespace simulation;
 
 //==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
+TEST(MemoryManagerTest, BaseAllocator)
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+  auto mm = MemoryManager();
+  auto& baseAllocator = mm.getBaseAllocator();
+  auto& freeListAllocator = mm.getFreeListAllocator();
+  auto& poolAllocator = mm.getMultiPoolAllocator();
 
-  return nullptr;
+  EXPECT_EQ(&freeListAllocator.getBaseAllocator(), &baseAllocator);
+  EXPECT_EQ(&poolAllocator.getBaseAllocator(), &freeListAllocator);
 }
 
 //==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const ::dart::common::vector<T>& vec)
+TEST(MemoryManagerTest, Allocate)
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+  auto mm = MemoryManager();
 
-  return nullptr;
+  // Cannot allocate 0 bytes
+  EXPECT_EQ(mm.allocateUsingFree(0), nullptr);
+  EXPECT_EQ(mm.allocateUsingPool(0), nullptr);
+
+  // Allocate 1 byte using FreeListAllocator
+  auto ptr1 = mm.allocateUsingFree(1);
+  EXPECT_NE(ptr1, nullptr);
+#ifndef NDEBUG
+  EXPECT_TRUE(mm.hasAllocated(ptr1, 1));
+  EXPECT_FALSE(mm.hasAllocated(nullptr, 1));
+  EXPECT_FALSE(mm.hasAllocated(ptr1, 1 * 2));
+#endif
+
+  // Allocate 1 byte using MultiPoolAllocator
+  auto ptr2 = mm.allocateUsingPool(1);
+  EXPECT_NE(ptr2, nullptr);
+#ifndef NDEBUG
+  EXPECT_TRUE(mm.hasAllocated(ptr2, 1));
+  EXPECT_FALSE(mm.hasAllocated(nullptr, 1));
+  EXPECT_FALSE(mm.hasAllocated(ptr2, 1 * 2));
+#endif
+
+  // Deallocate all
+  mm.deallocateUsingFree(ptr1, 1);
+  mm.deallocateUsingPool(ptr2, 1);
 }
 
-} // namespace common
-} // namespace dart
+//==============================================================================
+TEST(MemoryManagerTest, MemoryLeak)
+{
+  auto a = MemoryManager();
 
-#endif // DART_COMMON_STLHELPERS_HPP_
+  // Allocate small memory
+  auto ptr1 = a.allocateUsingPool(1);
+  EXPECT_NE(ptr1, nullptr);
+
+  // Allocate small memory
+  auto ptr2 = a.allocateUsingFree(1);
+  EXPECT_NE(ptr2, nullptr);
+
+  // Expect that MemoryManager complains that not all the memory is deallocated
+}

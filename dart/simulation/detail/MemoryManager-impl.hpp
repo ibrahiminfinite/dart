@@ -30,44 +30,78 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#ifndef DART_SIMULATION_DETAIL_MEMORYMANAGER_IMPL_HPP_
+#define DART_SIMULATION_DETAIL_MEMORYMANAGER_IMPL_HPP_
 
-#include <cassert>
-#include <cstddef>
-#include <vector>
+#include "dart/simulation/MemoryManager.hpp"
 
-#include "dart/common/Memory.hpp"
-#include "dart/common/StlContainers.hpp"
-
-namespace dart {
-namespace common {
+namespace dart::simulation {
 
 //==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
+template <typename T, typename... Args>
+T* MemoryManager::construct(Type type, Args&&... args) noexcept
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+  // Allocate new memory for a new object (without calling the constructor)
+  void* object = allocate(type, sizeof(T));
+  if (!object)
+  {
+    return nullptr;
+  }
 
-  return nullptr;
+  // Call constructor. Return nullptr if failed.
+  try
+  {
+    new (object) T(std::forward<Args>(args)...);
+  }
+  catch (...)
+  {
+    deallocate(type, object, sizeof(T));
+    return nullptr;
+  }
+
+  return reinterpret_cast<T*>(object);
+}
+
+//==============================================================================
+template <typename T, typename... Args>
+T* MemoryManager::constructUsingFree(Args&&... args) noexcept
+{
+  return construct<T, Args...>(Type::Free, std::forward<Args>(args)...);
+}
+
+//==============================================================================
+template <typename T, typename... Args>
+T* MemoryManager::constructUsingPool(Args&&... args) noexcept
+{
+  return construct<T, Args...>(Type::Pool, std::forward<Args>(args)...);
 }
 
 //==============================================================================
 template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const ::dart::common::vector<T>& vec)
+void MemoryManager::destroy(Type type, T* object) noexcept
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
-
-  return nullptr;
+  if (!object)
+  {
+    return;
+  }
+  object->~T();
+  deallocate(type, object, sizeof(T));
 }
 
-} // namespace common
-} // namespace dart
+//==============================================================================
+template <typename T>
+void MemoryManager::destroyUsingFree(T* pointer) noexcept
+{
+  destroy(Type::Free, pointer);
+}
 
-#endif // DART_COMMON_STLHELPERS_HPP_
+//==============================================================================
+template <typename T>
+void MemoryManager::destroyUsingPool(T* pointer) noexcept
+{
+  destroy(Type::Pool, pointer);
+}
+
+} // namespace dart::simulation
+
+#endif // DART_SIMULATION_DETAIL_MEMORYMANAGER_IMPL_HPP_

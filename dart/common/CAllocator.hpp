@@ -34,6 +34,7 @@
 #define DART_COMMON_CALLOCATOR_HPP_
 
 #include "dart/common/MemoryAllocator.hpp"
+#include "dart/common/MemoryAllocatorDebugger.hpp"
 
 namespace dart::common {
 
@@ -42,6 +43,8 @@ namespace dart::common {
 class CAllocator : public MemoryAllocator
 {
 public:
+  using Debug = MemoryAllocatorDebugger<CAllocator>;
+
   /// Constructor
   CAllocator() noexcept;
 
@@ -54,7 +57,14 @@ public:
   [[nodiscard]] void* allocate(size_t bytes) noexcept override;
 
   // Documentation inherited
+  [[nodiscard]] void* allocate_aligned(
+      size_t bytes, size_t alignment) noexcept override;
+
+  // Documentation inherited
   void deallocate(void* pointer, size_t bytes) override;
+
+  // Documentation inherited
+  void deallocate_aligned(void* pointer, size_t bytes) override;
 
   // Documentation inherited
   void print(std::ostream& os = std::cout, int indent = 0) const override;

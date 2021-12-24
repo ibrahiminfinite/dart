@@ -39,9 +39,12 @@
 
 #include "dart/collision/CollisionDetector.hpp"
 #include "dart/common/Deprecated.hpp"
+#include "dart/common/ObjectPool.hpp"
+#include "dart/common/StlContainers.hpp"
 #include "dart/constraint/ConstrainedGroup.hpp"
 #include "dart/constraint/ConstraintBase.hpp"
 #include "dart/constraint/SmartPointer.hpp"
+#include "dart/simulation/MemoryManager.hpp"
 
 namespace dart {
 
@@ -63,13 +66,17 @@ public:
   /// such as dart::simulation::World when the solver added.
   DART_DEPRECATED(6.8)
   explicit ConstraintSolver(double timeStep);
-
   // TODO(JS): Remove timeStep. The timestep can be set by world when a
   // constraint solver is assigned to a world.
-  // Deprecate
 
   /// Default constructor
+  DART_DEPRECATED(6.13)
   ConstraintSolver();
+
+  /// Default constructor
+  explicit ConstraintSolver(
+      common::MemoryAllocator& memoryAllocator,
+      common::MemoryAllocator& poolAllocator);
 
   /// Copy constructor
   // TODO: implement copy constructor since this class contains a pointer to
@@ -77,16 +84,16 @@ public:
   ConstraintSolver(const ConstraintSolver& other) = delete;
 
   /// Destructor
-  virtual ~ConstraintSolver() = default;
+  virtual ~ConstraintSolver();
 
   /// Add single skeleton
   void addSkeleton(const dynamics::SkeletonPtr& skeleton);
 
   /// Add mutiple skeletons
-  void addSkeletons(const std::vector<dynamics::SkeletonPtr>& skeletons);
+  void addSkeletons(const common::vector<dynamics::SkeletonPtr>& skeletons);
 
   /// Returns all the skeletons added to this ConstraintSolver.
-  const std::vector<dynamics::SkeletonPtr>& getSkeletons() const;
+  const common::vector<dynamics::SkeletonPtr>& getSkeletons() const;
 
   /// Remove single skeleton
   void removeSkeleton(const dynamics::SkeletonPtr& skeleton);
@@ -268,6 +275,16 @@ protected:
 
   using CollisionDetector = collision::CollisionDetector;
 
+  /// Free list memory allocator
+  common::MemoryAllocator& mFreeListAllocator;
+
+  /// Pool memory allocator
+  common::MemoryAllocator& mMultiPoolAllocator;
+
+  //common::ObjectPool<ContactConstraint> mContactConstraintPool;
+
+  common::ObjectPool<JointConstraint> mJointConstraintPool;
+
   /// Collision detector
   collision::CollisionDetectorPtr mCollisionDetector;
 
@@ -284,32 +301,32 @@ protected:
   double mTimeStep;
 
   /// Skeleton list
-  std::vector<dynamics::SkeletonPtr> mSkeletons;
+  common::vector<dynamics::SkeletonPtr> mSkeletons;
 
   /// Contact constraints those are automatically created
-  std::vector<ContactConstraintPtr> mContactConstraints;
+  common::vector<ContactConstraintPtr> mContactConstraints;
 
   /// Soft contact constraints those are automatically created
-  std::vector<SoftContactConstraintPtr> mSoftContactConstraints;
+  common::vector<SoftContactConstraint*> mSoftContactConstraints;
 
   /// Joint limit constraints those are automatically created
-  std::vector<JointConstraintPtr> mJointConstraints;
+  common::vector<JointConstraint*> mJointConstraints;
 
   /// Mimic motor constraints those are automatically created
-  std::vector<MimicMotorConstraintPtr> mMimicMotorConstraints;
+  common::vector<MimicMotorConstraint*> mMimicMotorConstraints;
 
   /// Joint Coulomb friction constraints those are automatically created
-  std::vector<JointCoulombFrictionConstraintPtr>
+  common::vector<JointCoulombFrictionConstraint*>
       mJointCoulombFrictionConstraints;
 
   /// Constraints that manually added
-  std::vector<ConstraintBasePtr> mManualConstraints;
+  common::vector<ConstraintBasePtr> mManualConstraints;
 
   /// Active constraints
-  std::vector<ConstraintBasePtr> mActiveConstraints;
+  common::vector<ConstraintBase*> mActiveConstraints;
 
   /// Constraint group list
-  std::vector<ConstrainedGroup> mConstrainedGroups;
+  common::vector<ConstrainedGroup> mConstrainedGroups;
 
   /// Factory for ContactSurfaceParams for each contact
   ContactSurfaceHandlerPtr mContactSurfaceHandler;

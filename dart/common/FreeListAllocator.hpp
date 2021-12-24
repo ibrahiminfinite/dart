@@ -64,7 +64,7 @@ public:
   /// \param[in] initialAllocation: (optional) Bytes to initially allocate.
   explicit FreeListAllocator(
       MemoryAllocator& baseAllocator = MemoryAllocator::GetDefault(),
-      size_t initialAllocation = 1048576 /* 1 MB */);
+      size_t initialAllocation = 4 * 1048576 /* 4 MB */);
 
   /// Destructor
   ~FreeListAllocator() override;
@@ -79,6 +79,10 @@ public:
 
   // Documentation inherited
   [[nodiscard]] void* allocate(size_t bytes) noexcept override;
+
+  // Documentation inherited
+  [[nodiscard]] void* allocate_aligned(
+      size_t bytes, size_t alignment) noexcept override;
 
   // Documentation inherited
   void deallocate(void* pointer, size_t bytes) override;
@@ -98,6 +102,8 @@ private:
     /// Pointer to next memory block
     MemoryBlockHeader* mNext;
 
+    uint32_t mPadding;
+
     /// Whether this block is used
     bool mIsAllocated;
 
@@ -112,23 +118,23 @@ private:
         bool isNextContiguous);
 
     /// Casts to size_t
-    size_t asSizeT() const;
+    [[nodiscard]] size_t asSizeT() const;
 
     /// Casts to unsigned char*
-    unsigned char* asCharPtr();
+    [[nodiscard]] unsigned char* asCharPtr();
 
     /// Casts to const unsigned char*
-    const unsigned char* asCharPtr() const;
+    [[nodiscard]] const unsigned char* asCharPtr() const;
 
     /// Splits the memory block
-    void split(size_t sizeToSplit);
+    void split(size_t sizeToSplit, size_t padding);
 
     /// Merges this memory block with the given memory block
     void merge(MemoryBlockHeader* other);
 
 #ifndef NDEBUG
     /// [Debug only] Returns whether this memory block is valid
-    bool isValid() const;
+    [[nodiscard]] bool isValid() const;
 #endif
   };
 

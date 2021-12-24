@@ -37,18 +37,46 @@
 
 #include "MyWindow.hpp"
 
+using namespace dart;
+using namespace constraint;
+using namespace dynamics;
+using namespace simulation;
+
+SkeletonPtr createGround()
+{
+  // Create a Skeleton to represent the ground
+  SkeletonPtr ground = Skeleton::create("ground");
+  Eigen::Isometry3d tf(Eigen::Isometry3d::Identity());
+  double thickness = 0.01;
+  tf.translation() = Eigen::Vector3d(0, -thickness / 2.0 - 0.975, 0);
+  WeldJoint::Properties joint;
+  joint.mT_ParentBodyToJoint = tf;
+  ground->createJointAndBodyNodePair<WeldJoint>(nullptr, joint);
+  ShapePtr groundShape
+      = std::make_shared<BoxShape>(Eigen::Vector3d(10, thickness, 10));
+
+  auto shapeNode = ground->getBodyNode(0)
+                       ->createShapeNodeWith<
+                           VisualAspect,
+                           CollisionAspect,
+                           DynamicsAspect>(groundShape);
+  shapeNode->getVisualAspect()->setColor(dart::Color::Blue(0.2));
+
+  return ground;
+}
+
 int main(int argc, char* argv[])
 {
-  // create and initialize the world
-  dart::simulation::WorldPtr myWorld
-      = dart::utils::SkelParser::readWorld("dart://sample/skel/ground.skel");
-  assert(myWorld != nullptr);
-  Eigen::Vector3d gravity(0.0, -9.81, 0.0);
-  myWorld->setGravity(gravity);
+  // Create and initialize the world
+  auto world = World::create();
+  world->setGravity(0.0, -9.81, 0.0);
+
+  // Create ground
+  world->addSkeleton(createGround());
 
   // create a window and link it to the world
   MyWindow window;
-  window.setWorld(myWorld);
+  window.setWorld(world);
 
   std::cout << "space bar: simulation on/off" << std::endl;
   std::cout << "'q': spawn a random cube" << std::endl;

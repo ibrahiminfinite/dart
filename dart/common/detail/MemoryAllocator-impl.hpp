@@ -58,11 +58,36 @@ T* MemoryAllocator::construct(Args&&... args) noexcept
   // Call constructor. Return nullptr if failed.
   try
   {
-    new (object) T(std::forward<Args>(args)...);
+    ::new (object) T(std::forward<Args>(args)...);
   }
   catch (...)
   {
     deallocate(object, sizeof(T));
+    return nullptr;
+  }
+
+  return reinterpret_cast<T*>(object);
+}
+
+//==============================================================================
+template <typename T, typename... Args>
+T* MemoryAllocator::construct_aligned(size_t alignment, Args&&... args) noexcept
+{
+  // Allocate new memory for a new object (without calling the constructor)
+  void* object = allocate_aligned(alignment, sizeof(T));
+  if (!object)
+  {
+    return nullptr;
+  }
+
+  // Call constructor. Return nullptr if failed.
+  try
+  {
+    ::new (object) T(std::forward<Args>(args)...);
+  }
+  catch (...)
+  {
+    deallocate_aligned(object, sizeof(T));
     return nullptr;
   }
 

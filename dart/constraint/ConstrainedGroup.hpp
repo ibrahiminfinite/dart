@@ -36,8 +36,9 @@
 #include <memory>
 #include <vector>
 
-#include <Eigen/Dense>
-
+#include "dart/common/Deprecated.hpp"
+#include "dart/common/MemoryAllocator.hpp"
+#include "dart/common/StlContainers.hpp"
 #include "dart/constraint/SmartPointer.hpp"
 
 namespace dart {
@@ -48,7 +49,6 @@ class Skeleton;
 
 namespace constraint {
 
-struct ConstraintInfo;
 class ConstraintBase;
 class ConstraintSolver;
 
@@ -63,7 +63,11 @@ public:
   //----------------------------------------------------------------------------
 
   /// Default contructor
+  DART_DEPRECATED(6.13)
   ConstrainedGroup();
+
+  /// Contructor
+  explicit ConstrainedGroup(common::MemoryAllocator& memoryAllocator);
 
   /// Destructor
   virtual ~ConstrainedGroup();
@@ -73,25 +77,52 @@ public:
   //----------------------------------------------------------------------------
 
   /// Add constraint
+  DART_DEPRECATED(6.13)
   void addConstraint(const ConstraintBasePtr& _constraint);
 
+  /// Add constraint
+  void addConstraint(ConstraintBase* constraint);
+  // Note that it's the responsibility of the owner of ConstrainedGroup to
+  // manage the lifetime of this class and ConstraintBases that are passed
+  // to this class.
+
   /// Return number of constraints in this constrained group
-  std::size_t getNumConstraints() const;
+  [[nodiscard]] std::size_t getNumConstraints() const;
 
   /// Return a constraint
-  ConstraintBasePtr getConstraint(std::size_t _index);
+  DART_DEPRECATED(6.13)
+  [[nodiscard]] ConstraintBasePtr getConstraint(std::size_t _index);
 
   /// Return a constraint
-  ConstConstraintBasePtr getConstraint(std::size_t _index) const;
+  DART_DEPRECATED(6.13)
+  [[nodiscard]] ConstConstraintBasePtr getConstraint(std::size_t _index) const;
+
+  /// Return a constraint
+  [[nodiscard]] ConstraintBase* getConstraint2(std::size_t index);
+  // TODO(JS): In the next major release, rename this to getConstraint
+
+  /// Return a constraint
+  [[nodiscard]] const ConstraintBase* getConstraint2(std::size_t index) const;
+  // TODO(JS): In the next major release, rename this to getConstraint
+
+  template <typename Func>
+  void eachConstraint(Func func);
+
+  template <typename Func>
+  void eachConstraint(Func func) const;
 
   /// Remove constraint
+  DART_DEPRECATED(6.13)
   void removeConstraint(const ConstraintBasePtr& _constraint);
+
+  /// Remove constraint
+  void removeConstraint(const ConstraintBase* constraint);
 
   /// Remove all constraints
   void removeAllConstraints();
 
   /// Get total dimension of contraints in this group
-  std::size_t getTotalDimension() const;
+  [[nodiscard]] std::size_t getTotalDimension() const;
 
   //----------------------------------------------------------------------------
   // Friendship
@@ -102,17 +133,31 @@ public:
 private:
 #ifndef NDEBUG
   /// Return true if _constraint is contained
-  bool containConstraint(const ConstConstraintBasePtr& _constraint) const;
+  [[nodiscard]] bool containConstraint(
+      const ConstConstraintBasePtr& _constraint) const;
+
+  /// Return true if _constraint is contained
+  [[nodiscard]] bool hasConstraint(const ConstraintBase* constraint) const;
 #endif
+
+  /// Memory allocator
+  common::MemoryAllocator& mMemoryAllocator;
 
   /// List of constraints
   std::vector<ConstraintBasePtr> mConstraints;
+  // TODO(JS): In the next major release, replace this with mConstraints2
 
-  ///
+  /// List of constraints
+  common::vector<ConstraintBase*> mConstraints2;
+  // TODO(JS): In the next major release, rename this to mConstraints
+
+  /// The key skeleton used for grouping constraints
   std::shared_ptr<dynamics::Skeleton> mRootSkeleton;
 };
 
 } // namespace constraint
 } // namespace dart
+
+#include "dart/constraint/detail/ConstrainedGroup-impl.hpp"
 
 #endif // DART_CONSTRAINT_CONSTRAINEDGROUP_HPP_

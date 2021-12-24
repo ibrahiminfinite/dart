@@ -35,6 +35,7 @@
 #include "dart/common/Console.hpp"
 #include "dart/common/Logging.hpp"
 #include "dart/common/Macros.hpp"
+#include "dart/common/Memory.hpp"
 
 namespace dart::common {
 
@@ -63,10 +64,36 @@ void* CAllocator::allocate(size_t bytes) noexcept
 }
 
 //==============================================================================
+void* CAllocator::allocate_aligned(size_t bytes, size_t alignment) noexcept
+{
+  if (bytes == 0)
+  {
+    return nullptr;
+  }
+
+#ifndef NDEBUG
+  if (!isValidAlignement(bytes, alignment))
+  {
+    return nullptr;
+  }
+#endif
+
+  return common::aligned_alloc(alignment, bytes);
+}
+
+//==============================================================================
 void CAllocator::deallocate(void* pointer, size_t bytes)
 {
   DART_UNUSED(bytes);
   std::free(pointer);
+  DART_TRACE("Deallocated.");
+}
+
+//==============================================================================
+void CAllocator::deallocate_aligned(void* pointer, size_t bytes)
+{
+  DART_UNUSED(bytes);
+  common::aligned_free(pointer);
   DART_TRACE("Deallocated.");
 }
 

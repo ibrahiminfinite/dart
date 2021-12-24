@@ -53,6 +53,8 @@ namespace constraint {
 class JointConstraint : public ConstraintBase
 {
 public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   /// Constructor
   explicit JointConstraint(dynamics::Joint* joint);
 

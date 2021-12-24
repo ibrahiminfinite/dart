@@ -30,7 +30,8 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <dart/common/MemoryManager.hpp>
+#include <dart/common/StlContainers.hpp>
+#include <dart/dart.hpp>
 #include <gtest/gtest.h>
 
 #include "TestHelpers.hpp"
@@ -39,61 +40,16 @@ using namespace dart;
 using namespace common;
 
 //==============================================================================
-TEST(MemoryManagerTest, BaseAllocator)
+TEST(StlContainersTest, StdVector)
 {
-  auto mm = MemoryManager();
-  auto& baseAllocator = mm.getBaseAllocator();
-  auto& freeListAllocator = mm.getFreeListAllocator();
-  auto& poolAllocator = mm.getPoolAllocator();
+  auto free = FreeListAllocator::Debug();
+  auto pool = MultiPoolAllocator::Debug(free);
 
-  EXPECT_EQ(&freeListAllocator.getBaseAllocator(), &baseAllocator);
-  EXPECT_EQ(&poolAllocator.getBaseAllocator(), &freeListAllocator);
-}
-
-//==============================================================================
-TEST(MemoryManagerTest, Allocate)
-{
-  auto mm = MemoryManager();
-
-  // Cannot allocate 0 bytes
-  EXPECT_EQ(mm.allocateUsingFree(0), nullptr);
-  EXPECT_EQ(mm.allocateUsingPool(0), nullptr);
-
-  // Allocate 1 byte using FreeListAllocator
-  auto ptr1 = mm.allocateUsingFree(1);
-  EXPECT_NE(ptr1, nullptr);
-#ifndef NDEBUG
-  EXPECT_TRUE(mm.hasAllocated(ptr1, 1));
-  EXPECT_FALSE(mm.hasAllocated(nullptr, 1));
-  EXPECT_FALSE(mm.hasAllocated(ptr1, 1 * 2));
-#endif
-
-  // Allocate 1 byte using PoolAllocator
-  auto ptr2 = mm.allocateUsingPool(1);
-  EXPECT_NE(ptr2, nullptr);
-#ifndef NDEBUG
-  EXPECT_TRUE(mm.hasAllocated(ptr2, 1));
-  EXPECT_FALSE(mm.hasAllocated(nullptr, 1));
-  EXPECT_FALSE(mm.hasAllocated(ptr2, 1 * 2));
-#endif
-
-  // Deallocate all
-  mm.deallocateUsingFree(ptr1, 1);
-  mm.deallocateUsingPool(ptr2, 1);
-}
-
-//==============================================================================
-TEST(MemoryManagerTest, MemoryLeak)
-{
-  auto a = MemoryManager();
-
-  // Allocate small memory
-  auto ptr1 = a.allocateUsingPool(1);
-  EXPECT_NE(ptr1, nullptr);
-
-  // Allocate small memory
-  auto ptr2 = a.allocateUsingFree(1);
-  EXPECT_NE(ptr2, nullptr);
-
-  // Expect that MemoryManager complains that not all the memory is deallocated
+  common::vector<int> vec(pool);
+  EXPECT_EQ(vec.capacity(), 0);
+  vec.reserve(1);
+  EXPECT_EQ(vec.capacity(), 1);
+  vec.reserve(2);
+  EXPECT_EQ(vec.capacity(), 2);
+  vec.get_allocator().print();
 }

@@ -37,6 +37,7 @@
 
 #include <Eigen/Core>
 
+#include "dart/common/Macros.hpp"
 #include "dart/config.hpp"
 
 #if EIGEN_VERSION_AT_LEAST(3, 2, 1) && EIGEN_VERSION_AT_MOST(3, 2, 8)
@@ -70,6 +71,133 @@ std::unique_ptr<T> make_unique(Args&&... args)
 {
   return std::make_unique<T>(std::forward<Args>(args)...);
 }
+
+//==============================================================================
+template <std::size_t Alignment>
+constexpr std::size_t getPadding(void* basePointer)
+{
+  if constexpr (Alignment == 0)
+  {
+    return 0;
+  }
+
+  //
+  // 0       (Alignment)  (2*Alignment)          (multiplier*Alignment)
+  // +------------+-------------+-----...----+-------------+--------------
+  //                                            ^          ^
+  //                                            |          |
+  //                                       base_address   aligned_address
+  //                                            |--------->|
+  //                                               padding
+  //
+
+  const std::size_t baseAddress = reinterpret_cast<std::size_t>(basePointer);
+  const std::size_t multiplier = (baseAddress / Alignment) + 1;
+  const std::size_t alignedAddress = multiplier * Alignment;
+  assert(alignedAddress >= baseAddress);
+  const std::size_t padding = alignedAddress - baseAddress;
+
+  return padding;
+}
+
+//==============================================================================
+constexpr std::size_t getPadding(void* basePointer, std::size_t alignment)
+{
+  if (alignment == 0)
+  {
+    return 0;
+  }
+
+  //
+  // 0       (alignment)  (2*alignment)          (multiplier*alignment)
+  // +------------+-------------+-----...----+-------------+--------------
+  //                                            ^          ^
+  //                                            |          |
+  //                                       base_address   aligned_address
+  //                                            |--------->|
+  //                                               padding
+  //
+
+  const std::size_t baseAddress = reinterpret_cast<std::size_t>(basePointer);
+  const std::size_t multiplier = (baseAddress / alignment) + 1;
+  const std::size_t alignedAddress = multiplier * alignment;
+  assert(alignedAddress >= baseAddress);
+  const std::size_t padding = alignedAddress - baseAddress;
+
+  return padding;
+}
+
+//==============================================================================
+template <typename HeaderT>
+constexpr std::size_t getPaddingWithHeader(
+    void* baseAddress, std::size_t alignment)
+{
+  if (alignment == 0)
+  {
+    return sizeof(HeaderT);
+  }
+
+  std::size_t padding = getPadding(baseAddress, alignment);
+  std::size_t neededSpace = sizeof(HeaderT);
+
+  if (padding < neededSpace)
+  {
+    neededSpace -= padding;
+
+    if (neededSpace % alignment == 0)
+    {
+      padding += alignment * (neededSpace / alignment);
+    }
+    else
+    {
+      padding += alignment * (1 + (neededSpace / alignment));
+    }
+  }
+
+  DART_ASSERT(padding >= sizeof(HeaderT));
+
+  return padding;
+}
+
+namespace literals {
+
+//==============================================================================
+constexpr std::size_t operator"" _KiB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1024);
+}
+
+//==============================================================================
+constexpr std::size_t operator"" _KB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1000);
+}
+
+//==============================================================================
+constexpr std::size_t operator"" _MiB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1024 * 1024);
+}
+
+//==============================================================================
+constexpr std::size_t operator"" _MB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1000 * 1000);
+}
+
+//==============================================================================
+constexpr std::size_t operator"" _GiB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1024 * 1024 * 1024);
+}
+
+//==============================================================================
+constexpr std::size_t operator"" _GB(unsigned long long value) noexcept
+{
+  return std::size_t(value * 1000 * 1000 * 1000);
+}
+
+} // namespace literals
 
 } // namespace common
 } // namespace dart
