@@ -232,7 +232,7 @@ public:
 
   /// Get a vector of const DegreesOfFreedom for this MetaSkeleton
   ///
-  /// \deprecated Use eachBodyNode() instead.
+  /// \deprecated Use eachDof() instead.
   DART_DEPRECATED(6.13)
   virtual std::vector<const DegreeOfFreedom*> getDofs() const = 0;
 

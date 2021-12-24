@@ -41,17 +41,18 @@
 
 #include <set>
 #include <string>
-#include <vector>
 
 #include <Eigen/Dense>
 
 #include "dart/collision/CollisionOption.hpp"
 #include "dart/common/NameManager.hpp"
 #include "dart/common/SmartPointer.hpp"
+#include "dart/common/StlContainers.hpp"
 #include "dart/common/Subject.hpp"
 #include "dart/constraint/SmartPointer.hpp"
 #include "dart/dynamics/SimpleFrame.hpp"
 #include "dart/dynamics/Skeleton.hpp"
+#include "dart/simulation/MemoryManager.hpp"
 #include "dart/simulation/Recording.hpp"
 #include "dart/simulation/SmartPointer.hpp"
 
@@ -83,7 +84,7 @@ class World : public virtual common::Subject
 {
 public:
   using NameChangedSignal = common::Signal<void(
-      const std::string& _oldName, const std::string& _newName)>;
+      const std::string& oldName, const std::string& newName)>;
 
   /// Creates World as shared_ptr
   template <typename... Args>
@@ -97,7 +98,9 @@ public:
   static std::shared_ptr<World> create(const std::string& name = "world");
 
   /// Constructor
-  World(const std::string& _name = "world");
+  explicit World(
+      const std::string& name = "world",
+      common::MemoryAllocator* memoryAllocator = nullptr);
 
   /// Destructor
   virtual ~World();
@@ -150,11 +153,13 @@ public:
   std::string addSkeleton(const dynamics::SkeletonPtr& _skeleton);
 
   /// Remove a skeleton from this world
-  void removeSkeleton(const dynamics::SkeletonPtr& _skeleton);
+  void removeSkeleton(const dynamics::SkeletonPtr& skeleton);
 
   /// Remove all the skeletons in this world, and return a set of shared
   /// pointers to them, in case you want to recycle them
   std::set<dynamics::SkeletonPtr> removeAllSkeletons();
+  // TODO(JS): In the next major release, change this function to
+  // common::set<dynamics::SimpleFramePtr> removeAllSimpleFrames();
 
   /// Returns whether this World contains a Skeleton.
   bool hasSkeleton(const dynamics::ConstSkeletonPtr& skeleton) const;
@@ -183,6 +188,8 @@ public:
   /// Remove all SimpleFrames in this world, and return a set of shared
   /// pointers to them, in case you want to recycle them
   std::set<dynamics::SimpleFramePtr> removeAllSimpleFrames();
+  // TODO(JS): In the next major release, change this function to
+  // common::set<dynamics::SimpleFramePtr> removeAllSimpleFrames();
 
   //--------------------------------------------------------------------------
   // Collision checking
@@ -326,31 +333,34 @@ protected:
   /// Register when a SimpleFrame's name is changed
   void handleSimpleFrameNameChange(const dynamics::Entity* _entity);
 
+  /// Memory manager
+  MemoryManager mMemoryManager;
+
   /// Name of this World
   std::string mName;
 
   /// Skeletons in this world
-  std::vector<dynamics::SkeletonPtr> mSkeletons;
+  common::vector<dynamics::SkeletonPtr> mSkeletons;
 
-  std::map<dynamics::ConstMetaSkeletonPtr, dynamics::SkeletonPtr>
+  common::map<dynamics::ConstMetaSkeletonPtr, dynamics::SkeletonPtr>
       mMapForSkeletons;
 
   /// Connections for noticing changes in Skeleton names
   /// TODO(MXG): Consider putting this functionality into NameManager
-  std::vector<common::Connection> mNameConnectionsForSkeletons;
+  common::vector<common::Connection> mNameConnectionsForSkeletons;
 
   /// NameManager for keeping track of Skeletons
   dart::common::NameManager<dynamics::SkeletonPtr> mNameMgrForSkeletons;
 
   /// Entities in this world
-  std::vector<dynamics::SimpleFramePtr> mSimpleFrames;
+  common::vector<dynamics::SimpleFramePtr> mSimpleFrames;
 
   /// Connections for noticing changes in Frame names
   /// TODO(MXG): Consider putting this functionality into NameManager
-  std::vector<common::Connection> mNameConnectionsForSimpleFrames;
+  common::vector<common::Connection> mNameConnectionsForSimpleFrames;
 
   /// Map from raw SimpleFrame pointers to their shared_ptrs
-  std::map<const dynamics::SimpleFrame*, dynamics::SimpleFramePtr>
+  common::map<const dynamics::SimpleFrame*, dynamics::SimpleFramePtr>
       mSimpleFrameToShared;
 
   /// NameManager for keeping track of Entities
@@ -360,7 +370,7 @@ protected:
   ///
   /// For example, if this world has three skeletons and their dof are
   /// 6, 1 and 2 then the mIndices goes like this: [0 6 7].
-  std::vector<int> mIndices;
+  common::vector<int> mIndices;
 
   /// Gravity
   Eigen::Vector3d mGravity;

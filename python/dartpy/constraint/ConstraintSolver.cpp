@@ -54,7 +54,7 @@ void ConstraintSolver(py::module& m)
       .def(
           "addSkeletons",
           +[](dart::constraint::ConstraintSolver* self,
-              const std::vector<dart::dynamics::SkeletonPtr>& skeletons) {
+              const common::vector<dart::dynamics::SkeletonPtr>& skeletons) {
             self->addSkeletons(skeletons);
           },
           ::py::arg("skeletons"))

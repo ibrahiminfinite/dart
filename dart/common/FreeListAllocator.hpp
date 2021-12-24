@@ -64,7 +64,7 @@ public:
   /// \param[in] initialAllocation: (optional) Bytes to initially allocate.
   explicit FreeListAllocator(
       MemoryAllocator& baseAllocator = MemoryAllocator::GetDefault(),
-      size_t initialAllocation = 1048576 /* 1 MB */);
+      size_t initialAllocation = 4 * 1048576 /* 4 MB */);
 
   /// Destructor
   ~FreeListAllocator() override;

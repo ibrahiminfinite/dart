@@ -85,6 +85,8 @@ FreeListAllocator::~FreeListAllocator()
     // TODO(JS): Change to DART_FATAL once the issue of calling spdlog in
     // destructor is resolved.
 
+    mTotalAllocatedSize = 0;
+
     return;
   }
 
@@ -119,6 +121,12 @@ MemoryAllocator& FreeListAllocator::getBaseAllocator()
 //==============================================================================
 void* FreeListAllocator::allocate(size_t bytes) noexcept
 {
+  if (bytes == 1536)
+  {
+    int a = 10;
+    (void)a;
+  }
+
   // Not allowed to allocate zero bytes
   if (bytes == 0)
   {
@@ -231,6 +239,7 @@ void FreeListAllocator::deallocate(void* pointer, size_t bytes)
 
   mFreeBlock = curr;
 
+  DART_ASSERT(mTotalAllocatedSize >= bytes);
   mTotalAllocatedSize -= bytes;
 
   DART_TRACE("Deallocated {} bytes.", bytes);

@@ -30,25 +30,27 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "dart/common/MemoryManager.hpp"
+#include "dart/simulation/MemoryManager.hpp"
 
 #ifndef NDEBUG // debug
   #include "dart/common/Logging.hpp"
 #endif
 
-namespace dart::common {
+namespace dart::simulation {
 
 //==============================================================================
 MemoryManager& MemoryManager::GetDefault()
 {
-  static MemoryManager defaultMemoryManager(MemoryAllocator::GetDefault());
+  static MemoryManager defaultMemoryManager(
+      &common::MemoryAllocator::GetDefault());
   return defaultMemoryManager;
 }
 
 //==============================================================================
-MemoryManager::MemoryManager(MemoryAllocator& baseAllocator)
-  : mBaseAllocator(baseAllocator),
-    mFreeListAllocator(mBaseAllocator),
+MemoryManager::MemoryManager(common::MemoryAllocator* baseAllocator)
+  : mBaseAllocator(
+      baseAllocator ? baseAllocator : &common::MemoryAllocator::GetDefault()),
+    mFreeListAllocator(*mBaseAllocator),
 #ifdef NDEBUG
     mPoolAllocator(mFreeListAllocator)
 #else
@@ -65,13 +67,13 @@ MemoryManager::~MemoryManager()
 }
 
 //==============================================================================
-MemoryAllocator& MemoryManager::getBaseAllocator()
+common::MemoryAllocator& MemoryManager::getBaseAllocator()
 {
-  return mBaseAllocator;
+  return *mBaseAllocator;
 }
 
 //==============================================================================
-FreeListAllocator& MemoryManager::getFreeListAllocator()
+common::FreeListAllocator& MemoryManager::getFreeListAllocator()
 {
 #ifdef NDEBUG
   return mFreeListAllocator;
@@ -81,7 +83,7 @@ FreeListAllocator& MemoryManager::getFreeListAllocator()
 }
 
 //==============================================================================
-PoolAllocator& MemoryManager::getPoolAllocator()
+common::PoolAllocator& MemoryManager::getPoolAllocator()
 {
 #ifdef NDEBUG
   return mPoolAllocator;
@@ -96,7 +98,7 @@ void* MemoryManager::allocate(Type type, size_t bytes)
   switch (type)
   {
     case Type::Base:
-      return mBaseAllocator.allocate(bytes);
+      return mBaseAllocator->allocate(bytes);
     case Type::Free:
       return mFreeListAllocator.allocate(bytes);
     case Type::Pool:
@@ -123,7 +125,7 @@ void MemoryManager::deallocate(Type type, void* pointer, size_t bytes)
   switch (type)
   {
     case Type::Base:
-      mBaseAllocator.deallocate(pointer, bytes);
+      mBaseAllocator->deallocate(pointer, bytes);
       break;
     case Type::Free:
       mFreeListAllocator.deallocate(pointer, bytes);
@@ -173,7 +175,7 @@ void MemoryManager::print(std::ostream& os, int indent) const
   os << spaces << "pool_allocator:\n";
   mPoolAllocator.print(os, indent + 2);
   os << spaces << "base_allocator:\n";
-  mBaseAllocator.print(os, indent + 2);
+  mBaseAllocator->print(os, indent + 2);
 }
 
 //==============================================================================
@@ -183,4 +185,4 @@ std::ostream& operator<<(std::ostream& os, const MemoryManager& memoryManager)
   return os;
 }
 
-} // namespace dart::common
+} // namespace dart::simulation

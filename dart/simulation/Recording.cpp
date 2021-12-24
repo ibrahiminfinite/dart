@@ -53,6 +53,13 @@ Recording::Recording(const std::vector<dynamics::SkeletonPtr>& _skeletons)
 }
 
 //==============================================================================
+Recording::Recording(const common::vector<dynamics::SkeletonPtr>& skeletons)
+{
+  for (const auto& skeleton : skeletons)
+    mNumGenCoordsForSkeletons.push_back(skeleton->getNumDofs());
+}
+
+//==============================================================================
 Recording::Recording(const std::vector<int>& _skelDofs)
 {
   for (std::size_t i = 0; i < _skelDofs.size(); i++)
@@ -144,6 +151,15 @@ void Recording::updateNumGenCoords(
   mNumGenCoordsForSkeletons.clear();
   for (std::size_t i = 0; i < _skeletons.size(); ++i)
     mNumGenCoordsForSkeletons.push_back(_skeletons[i]->getNumDofs());
+}
+
+//==============================================================================
+void Recording::updateNumGenCoords(
+    const common::vector<dynamics::SkeletonPtr>& skeletons)
+{
+  mNumGenCoordsForSkeletons.clear();
+  for (const auto& skeleton : skeletons)
+    mNumGenCoordsForSkeletons.push_back(skeleton->getNumDofs());
 }
 
 } // namespace simulation

@@ -30,8 +30,8 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_MEMORYMANAGER_HPP_
-#define DART_COMMON_MEMORYMANAGER_HPP_
+#ifndef DART_SIMULATION_MEMORYMANAGER_HPP_
+#define DART_SIMULATION_MEMORYMANAGER_HPP_
 
 #ifndef NDEBUG
   #include <mutex>
@@ -41,7 +41,7 @@
 #include "dart/common/FreeListAllocator.hpp"
 #include "dart/common/PoolAllocator.hpp"
 
-namespace dart::common {
+namespace dart::simulation {
 
 /// A composite memory allocator that contains various memory allocators that
 /// are optimized for different use cases.
@@ -63,20 +63,19 @@ public:
   ///
   /// \param[in] baseAllocator: (optional) The most low level allocator to be
   /// used by all the underlying memory allocators.
-  explicit MemoryManager(
-      MemoryAllocator& baseAllocator = MemoryAllocator::GetDefault());
+  explicit MemoryManager(common::MemoryAllocator* baseAllocator = nullptr);
 
   /// Destructor
   ~MemoryManager();
 
   /// Returns the base allocator
-  [[nodiscard]] MemoryAllocator& getBaseAllocator();
+  [[nodiscard]] common::MemoryAllocator& getBaseAllocator();
 
   /// Returns the free list allocator
-  [[nodiscard]] FreeListAllocator& getFreeListAllocator();
+  [[nodiscard]] common::FreeListAllocator& getFreeListAllocator();
 
   /// Returns the pool allocator
-  [[nodiscard]] PoolAllocator& getPoolAllocator();
+  [[nodiscard]] common::PoolAllocator& getPoolAllocator();
 
   /// Allocates \c size bytes of uninitialized storage.
   ///
@@ -165,25 +164,25 @@ public:
 
 private:
   /// The base allocator to allocate memory chunck.
-  MemoryAllocator& mBaseAllocator;
+  common::MemoryAllocator* mBaseAllocator;
 
 #ifdef NDEBUG
   /// The free list allocator.
-  FreeListAllocator mFreeListAllocator;
+  common::FreeListAllocator mFreeListAllocator;
 
   /// The pool allocator.
-  PoolAllocator mPoolAllocator;
+  common::PoolAllocator mPoolAllocator;
 #else
   /// The free list allocator.
-  FreeListAllocator::Debug mFreeListAllocator;
+  common::FreeListAllocator::Debug mFreeListAllocator;
 
   /// The pool allocator.
-  PoolAllocator::Debug mPoolAllocator;
+  common::PoolAllocator::Debug mPoolAllocator;
 #endif
 };
 
-} // namespace dart::common
+} // namespace dart::simulation
 
-#include "dart/common/detail/MemoryManager-impl.hpp"
+#include "dart/simulation/detail/MemoryManager-impl.hpp"
 
-#endif // DART_COMMON_MEMORYMANAGER_HPP_
+#endif // DART_SIMULATION_MEMORYMANAGER_HPP_

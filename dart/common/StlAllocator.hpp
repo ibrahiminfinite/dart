@@ -58,7 +58,17 @@ public:
   };
 
   /// Default constructor
-  explicit StlAllocator(
+  ///
+  /// This constructor allows implicit conversion from MemmoryAllocator on
+  /// purpose so that it can be used for constructing STL containers with
+  /// MemoryAllocator.
+  ///
+  /// Example code:
+  /// \code{.cpp}
+  /// PoolAllocator alloc;
+  /// std::vector<int, StlAllocator<int>> vec(alloc);
+  /// \endcode
+  StlAllocator(
       MemoryAllocator& baseAllocator = MemoryAllocator::GetDefault()) noexcept;
 
   /// Copy constructor

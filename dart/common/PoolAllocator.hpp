@@ -123,7 +123,7 @@ private:
   int mMemoryBlocksSize;
 
   /// The count of the allocated memory blocks in use.
-  int mCurrentMemoryBlockIndex;
+  int mNumAllocatedMemoryBlocks;
 
   /// List of free memory units.
   ///

@@ -61,11 +61,22 @@ using namespace dynamics;
 
 //==============================================================================
 ConstraintSolver::ConstraintSolver(double timeStep)
-  : mCollisionDetector(collision::FCLCollisionDetector::create()),
+  : mMemoryAllocator(common::MemoryAllocator::GetDefault()),
+    mCollisionDetector(collision::FCLCollisionDetector::create()),
     mCollisionGroup(mCollisionDetector->createCollisionGroupAsSharedPtr()),
     mCollisionOption(collision::CollisionOption(
         true, 1000u, std::make_shared<collision::BodyNodeCollisionFilter>())),
-    mTimeStep(timeStep)
+    mCollisionResult(),
+    mTimeStep(timeStep),
+    mSkeletons(mMemoryAllocator),
+    mContactConstraints(mMemoryAllocator),
+    mSoftContactConstraints(mMemoryAllocator),
+    mJointConstraints(mMemoryAllocator),
+    mMimicMotorConstraints(mMemoryAllocator),
+    mJointCoulombFrictionConstraints(mMemoryAllocator),
+    mManualConstraints(mMemoryAllocator),
+    mActiveConstraints(mMemoryAllocator),
+    mConstrainedGroups(mMemoryAllocator)
 {
   assert(timeStep > 0.0);
 
@@ -80,11 +91,28 @@ ConstraintSolver::ConstraintSolver(double timeStep)
 
 //==============================================================================
 ConstraintSolver::ConstraintSolver()
-  : mCollisionDetector(collision::FCLCollisionDetector::create()),
+  : ConstraintSolver(common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
+
+//==============================================================================
+ConstraintSolver::ConstraintSolver(common::MemoryAllocator& memoryManager)
+  : mMemoryAllocator(memoryManager),
+    mCollisionDetector(collision::FCLCollisionDetector::create()),
     mCollisionGroup(mCollisionDetector->createCollisionGroupAsSharedPtr()),
     mCollisionOption(collision::CollisionOption(
         true, 1000u, std::make_shared<collision::BodyNodeCollisionFilter>())),
-    mTimeStep(0.001)
+    mTimeStep(0.001),
+    mSkeletons(mMemoryAllocator),
+    mContactConstraints(mMemoryAllocator),
+    mSoftContactConstraints(mMemoryAllocator),
+    mJointConstraints(mMemoryAllocator),
+    mMimicMotorConstraints(mMemoryAllocator),
+    mJointCoulombFrictionConstraints(mMemoryAllocator),
+    mManualConstraints(mMemoryAllocator),
+    mActiveConstraints(mMemoryAllocator),
+    mConstrainedGroups(mMemoryAllocator)
 {
   auto cd = std::static_pointer_cast<collision::FCLCollisionDetector>(
       mCollisionDetector);
@@ -117,14 +145,15 @@ void ConstraintSolver::addSkeleton(const SkeletonPtr& skeleton)
 }
 
 //==============================================================================
-void ConstraintSolver::addSkeletons(const std::vector<SkeletonPtr>& skeletons)
+void ConstraintSolver::addSkeletons(
+    const common::vector<SkeletonPtr>& skeletons)
 {
   for (const auto& skeleton : skeletons)
     addSkeleton(skeleton);
 }
 
 //==============================================================================
-const std::vector<SkeletonPtr>& ConstraintSolver::getSkeletons() const
+const common::vector<SkeletonPtr>& ConstraintSolver::getSkeletons() const
 {
   return mSkeletons;
 }
@@ -226,18 +255,15 @@ std::vector<ConstraintBasePtr> ConstraintSolver::getConstraints()
   // Return a copy of constraint list not to expose the implementation detail
   // that the constraint pointers are held in a vector, in case we want to
   // change this implementation in the future.
-  return mManualConstraints;
+  return std::vector<ConstraintBasePtr>(
+      mManualConstraints.begin(), mManualConstraints.end());
 }
 
 //==============================================================================
 std::vector<ConstConstraintBasePtr> ConstraintSolver::getConstraints() const
 {
-  std::vector<ConstConstraintBasePtr> constraints;
-  constraints.reserve(mManualConstraints.size());
-  for (auto& constraint : mManualConstraints)
-    constraints.push_back(constraint);
-
-  return constraints;
+  return std::vector<ConstConstraintBasePtr>(
+      mManualConstraints.begin(), mManualConstraints.end());
 }
 
 //==============================================================================
@@ -505,7 +531,8 @@ void ConstraintSolver::updateConstraints()
     }
   };
 
-  std::map<ContactPair, size_t, ContactPairCompare> contactPairMap;
+  common::map<ContactPair, size_t, ContactPairCompare> contactPairMap(
+      mMemoryAllocator);
 
   // Create new contact constraints
   for (auto i = 0u; i < mCollisionResult.getNumContacts(); ++i)

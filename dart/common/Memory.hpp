@@ -52,6 +52,12 @@ template <typename T, typename... Args>
 DART_DEPRECATED(6.9)
 std::unique_ptr<T> make_unique(Args&&... args);
 
+template <typename T, typename... Args>
+std::shared_ptr<T> make_shared(Args&&... args)
+{
+  return std::make_shared<T>(std::forward<Args>(args)...);
+}
+
 #if EIGEN_VERSION_AT_LEAST(3, 2, 1) && EIGEN_VERSION_AT_MOST(3, 2, 8)
 
 template <typename _Tp>

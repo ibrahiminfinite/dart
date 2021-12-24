@@ -30,44 +30,61 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_STLHELPERS_HPP_
-#define DART_COMMON_STLHELPERS_HPP_
+#include <dart/common/StlContainers.hpp>
+#include <dart/dart.hpp>
+#include <gtest/gtest.h>
 
-#include <cassert>
-#include <cstddef>
-#include <vector>
+#include "TestHelpers.hpp"
 
-#include "dart/common/Memory.hpp"
-#include "dart/common/StlContainers.hpp"
+using namespace dart;
+using namespace common;
 
-namespace dart {
-namespace common {
+struct TestClass
+{
+  TestClass() : onNameChanged(mNameChangedSignal) {}
+  using NameChangedSignal = common::Signal<void()>;
+  NameChangedSignal mNameChangedSignal;
+  common::SlotRegister<NameChangedSignal> onNameChanged;
+};
 
 //==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const std::vector<T>& vec)
+TEST(StlContainersTest, Signal)
 {
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+  auto free = FreeListAllocator::Debug();
+  auto pool = PoolAllocator::Debug(free);
 
-  return nullptr;
+  auto testClass = TestClass();
+
+  common::vector<common::Connection> vec(pool);
+
+  for (auto i = 0; i < 32; ++i)
+  {
+    auto connect = testClass.onNameChanged.connect([]() {});
+    vec.push_back(std::move(connect));
+  }
 }
 
 //==============================================================================
-template <typename T>
-static T getVectorObjectIfAvailable(
-    std::size_t index, const ::dart::common::vector<T>& vec)
-{
-  assert(index < vec.size());
-  if (index < vec.size())
-    return vec[index];
+// TEST(StlContainersTest, StdVector)
+//{
+//  auto free = FreeListAllocator::Debug();
+//  auto pool = PoolAllocator::Debug(free);
 
-  return nullptr;
-}
+//  common::vector<int> vec(pool);
+////  EXPECT_EQ(vec.capacity(), 0);
+////  vec.reserve(1);
+////  EXPECT_EQ(vec.capacity(), 1);
+////  vec.reserve(2);
+////  EXPECT_EQ(vec.capacity(), 2);
+//  //vec.get_allocator().print();
 
-} // namespace common
-} // namespace dart
+//  for (auto i = 0u; i < 1000u; ++i)
+//    vec.push_back(0);
 
-#endif // DART_COMMON_STLHELPERS_HPP_
+//  vec.clear();
+
+//  for (auto i = 0u; i < 100000u; ++i)
+//    vec.push_back(0);
+
+//  vec.get_allocator().print();
+//}

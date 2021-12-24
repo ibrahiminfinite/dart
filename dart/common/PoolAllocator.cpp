@@ -74,7 +74,7 @@ PoolAllocator::PoolAllocator(MemoryAllocator& baseAllocator)
     mInitialized = true;
   }
 
-  mCurrentMemoryBlockIndex = 0;
+  mNumAllocatedMemoryBlocks = 0;
 
   mMemoryBlocksSize = 64;
   mMemoryBlocks = mBaseAllocator.allocateAs<MemoryBlock>(mMemoryBlocksSize);
@@ -90,10 +90,11 @@ PoolAllocator::~PoolAllocator()
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);
 
-  for (int i = 0; i < mCurrentMemoryBlockIndex; ++i)
+  for (int i = 0; i < mNumAllocatedMemoryBlocks; ++i)
   {
     mBaseAllocator.deallocate(mMemoryBlocks[i].mMemoryUnits, BLOCK_SIZE);
   }
+
   mBaseAllocator.deallocate(
       mMemoryBlocks, mMemoryBlocksSize * sizeof(MemoryBlock));
 }
@@ -113,7 +114,7 @@ MemoryAllocator& PoolAllocator::getBaseAllocator()
 //==============================================================================
 int PoolAllocator::getNumAllocatedMemoryBlocks() const
 {
-  return mCurrentMemoryBlockIndex;
+  return mNumAllocatedMemoryBlocks;
 }
 
 //==============================================================================
@@ -146,7 +147,7 @@ void* PoolAllocator::allocate(size_t bytes) noexcept
     return unit;
   }
 
-  if (mCurrentMemoryBlockIndex == mMemoryBlocksSize)
+  if (mNumAllocatedMemoryBlocks == mMemoryBlocksSize)
   {
     MemoryBlock* currentMemoryBlocks = mMemoryBlocks;
     mMemoryBlocksSize += 64;
@@ -154,12 +155,12 @@ void* PoolAllocator::allocate(size_t bytes) noexcept
     std::memcpy(
         mMemoryBlocks,
         currentMemoryBlocks,
-        mCurrentMemoryBlockIndex * sizeof(MemoryBlock));
+        mNumAllocatedMemoryBlocks * sizeof(MemoryBlock));
     std::memset(
-        mMemoryBlocks + mCurrentMemoryBlockIndex, 0, 64 * sizeof(MemoryBlock));
+        mMemoryBlocks + mNumAllocatedMemoryBlocks, 0, 64 * sizeof(MemoryBlock));
   }
 
-  MemoryBlock* newBlock = mMemoryBlocks + mCurrentMemoryBlockIndex;
+  MemoryBlock* newBlock = mMemoryBlocks + mNumAllocatedMemoryBlocks;
   newBlock->mMemoryUnits
       = static_cast<MemoryUnit*>(mBaseAllocator.allocate(BLOCK_SIZE));
   const size_t unitSize = mUnitSizes[heapIndex];
@@ -184,7 +185,7 @@ void* PoolAllocator::allocate(size_t bytes) noexcept
   lastUnit->mNext = nullptr;
 
   mFreeMemoryUnits[heapIndex] = newBlock->mMemoryUnits->mNext;
-  mCurrentMemoryBlockIndex++;
+  mNumAllocatedMemoryBlocks++;
 
   return newBlock->mMemoryUnits;
 }
@@ -229,7 +230,7 @@ void PoolAllocator::print(std::ostream& os, int indent) const
     os << spaces << "type: " << getType() << "\n";
   }
   os << spaces << "allocated_memory_block_count: " << mMemoryBlocksSize << "\n";
-  os << spaces << "current_memory_blocks_count: " << mCurrentMemoryBlockIndex
+  os << spaces << "current_memory_blocks_count: " << mNumAllocatedMemoryBlocks
      << "\n";
   os << spaces << "base_allocator:\n";
   mBaseAllocator.print(os, indent + 2);

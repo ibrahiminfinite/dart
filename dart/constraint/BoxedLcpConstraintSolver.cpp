@@ -54,14 +54,25 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver,
     BoxedLcpSolverPtr secondaryBoxedLcpSolver)
   : BoxedLcpConstraintSolver(
-      std::move(boxedLcpSolver), std::move(secondaryBoxedLcpSolver))
+      std::move(boxedLcpSolver),
+      std::move(secondaryBoxedLcpSolver),
+      common::MemoryAllocator::GetDefault())
 {
   setTimeStep(timeStep);
 }
 
 //==============================================================================
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver()
-  : BoxedLcpConstraintSolver(std::make_shared<DantzigBoxedLcpSolver>())
+  : BoxedLcpConstraintSolver(common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
+
+//==============================================================================
+BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
+    common::MemoryAllocator& memoryAllocator)
+  : BoxedLcpConstraintSolver(
+      std::make_shared<DantzigBoxedLcpSolver>(), memoryAllocator)
 {
   // Do nothing
 }
@@ -70,7 +81,18 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver()
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver)
   : BoxedLcpConstraintSolver(
-      std::move(boxedLcpSolver), std::make_shared<PgsBoxedLcpSolver>())
+      std::move(boxedLcpSolver), common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
+
+//==============================================================================
+BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
+    BoxedLcpSolverPtr boxedLcpSolver, common::MemoryAllocator& memoryAllocator)
+  : BoxedLcpConstraintSolver(
+      std::move(boxedLcpSolver),
+      std::make_shared<PgsBoxedLcpSolver>(),
+      memoryAllocator)
 {
   // Do nothing
 }
@@ -78,7 +100,20 @@ BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
 //==============================================================================
 BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
     BoxedLcpSolverPtr boxedLcpSolver, BoxedLcpSolverPtr secondaryBoxedLcpSolver)
-  : ConstraintSolver()
+  : BoxedLcpConstraintSolver(
+      boxedLcpSolver,
+      secondaryBoxedLcpSolver,
+      common::MemoryAllocator::GetDefault())
+{
+  // Do nothing
+}
+
+//==============================================================================
+BoxedLcpConstraintSolver::BoxedLcpConstraintSolver(
+    BoxedLcpSolverPtr boxedLcpSolver,
+    BoxedLcpSolverPtr secondaryBoxedLcpSolver,
+    common::MemoryAllocator& memoryAllocator)
+  : ConstraintSolver(memoryAllocator)
 {
   if (boxedLcpSolver)
   {
