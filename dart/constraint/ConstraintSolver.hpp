@@ -39,6 +39,7 @@
 
 #include "dart/collision/CollisionDetector.hpp"
 #include "dart/common/Deprecated.hpp"
+#include "dart/common/StlContainers.hpp"
 #include "dart/constraint/ConstrainedGroup.hpp"
 #include "dart/constraint/ConstraintBase.hpp"
 #include "dart/constraint/SmartPointer.hpp"
@@ -83,10 +84,10 @@ public:
   void addSkeleton(const dynamics::SkeletonPtr& skeleton);
 
   /// Add mutiple skeletons
-  void addSkeletons(const std::vector<dynamics::SkeletonPtr>& skeletons);
+  void addSkeletons(const common::vector<dynamics::SkeletonPtr>& skeletons);
 
   /// Returns all the skeletons added to this ConstraintSolver.
-  const std::vector<dynamics::SkeletonPtr>& getSkeletons() const;
+  const common::vector<dynamics::SkeletonPtr>& getSkeletons() const;
 
   /// Remove single skeleton
   void removeSkeleton(const dynamics::SkeletonPtr& skeleton);
@@ -188,8 +189,12 @@ protected:
   // TODO(JS): Docstring
   virtual void solveConstrainedGroup(ConstrainedGroup& group) = 0;
 
-  /// Check if the skeleton is contained in this solver
+  /// Checks if the skeleton is contained in this solver
+  DART_DEPRECATED(6.13)
   bool containSkeleton(const dynamics::ConstSkeletonPtr& skeleton) const;
+
+  /// Checks if the skeleton is contained in this solver
+  bool hasSkeleton(const dynamics::ConstSkeletonPtr& skeleton) const;
 
   /// Add skeleton if the constraint is not contained in this solver
   bool checkAndAddSkeleton(const dynamics::SkeletonPtr& skeleton);
@@ -230,7 +235,7 @@ protected:
   double mTimeStep;
 
   /// Skeleton list
-  std::vector<dynamics::SkeletonPtr> mSkeletons;
+  common::vector<dynamics::SkeletonPtr> mSkeletons;
 
   /// Contact constraints those are automatically created
   std::vector<ContactConstraintPtr> mContactConstraints;
