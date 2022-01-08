@@ -1001,11 +1001,11 @@ public:
   friend class ShapeNode;
   friend class EndEffector;
 
-protected:
-  struct DataCache;
-
   /// Constructor called by create()
   Skeleton(const AspectPropertiesData& _properties);
+
+protected:
+  struct DataCache;
 
   /// Setup this Skeleton with its shared_ptr
   void setPtr(const SkeletonPtr& _ptr);
