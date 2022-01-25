@@ -50,7 +50,7 @@ MemoryAllocator& MemoryAllocator::GetDefault()
 }
 
 //==============================================================================
-void* MemoryAllocator::allocate_aligned(size_t bytes, size_t alignment) noexcept
+void* MemoryAllocator::allocateAligned(size_t bytes, size_t alignment) noexcept
 {
   (void)bytes;
   (void)alignment;
@@ -58,7 +58,7 @@ void* MemoryAllocator::allocate_aligned(size_t bytes, size_t alignment) noexcept
 }
 
 //==============================================================================
-void MemoryAllocator::deallocate_aligned(void* pointer, size_t bytes)
+void MemoryAllocator::deallocateAligned(void* pointer, size_t bytes)
 {
   (void)pointer;
   (void)bytes;

@@ -64,7 +64,7 @@ using namespace dynamics;
 ConstraintSolver::ConstraintSolver(double timeStep)
   : mFreeListAllocator(common::MemoryAllocator::GetDefault()),
     mMultiPoolAllocator(common::MemoryAllocator::GetDefault()),
-    //mContactConstraintPool(common::MemoryAllocator::GetDefault()),
+    // mContactConstraintPool(common::MemoryAllocator::GetDefault()),
     mJointConstraintPool(common::MemoryAllocator::GetDefault()),
     mCollisionDetector(collision::FCLCollisionDetector::create()),
     mCollisionGroup(mCollisionDetector->createCollisionGroupAsSharedPtr()),
@@ -109,7 +109,7 @@ ConstraintSolver::ConstraintSolver(
     common::MemoryAllocator& poolAllocator)
   : mFreeListAllocator(freeListAllocator),
     mMultiPoolAllocator(poolAllocator),
-    //mContactConstraintPool(freeListAllocator),
+    // mContactConstraintPool(freeListAllocator),
     mJointConstraintPool(freeListAllocator),
     mCollisionDetector(collision::FCLCollisionDetector::create()),
     mCollisionGroup(mCollisionDetector->createCollisionGroupAsSharedPtr()),
@@ -141,9 +141,9 @@ ConstraintSolver::~ConstraintSolver()
 {
   // Clean up resources
 
-//  for (auto* constraint : mContactConstraints)
-//    mMultiPoolAllocator.destroy(constraint);
-//  mContactConstraints.clear();
+  //  for (auto* constraint : mContactConstraints)
+  //    mMultiPoolAllocator.destroy(constraint);
+  //  mContactConstraints.clear();
 
   for (auto* constraint : mSoftContactConstraints)
     mMultiPoolAllocator.destroy(constraint);
@@ -547,9 +547,9 @@ void ConstraintSolver::updateConstraints()
   mCollisionGroup->collide(mCollisionOption, &mCollisionResult);
 
   // Destroy previous contact constraints
-//  for (auto* constraint : mContactConstraints)
-//    mMultiPoolAllocator.destroy(constraint);
-//  mContactConstraints.clear();
+  //  for (auto* constraint : mContactConstraints)
+  //    mMultiPoolAllocator.destroy(constraint);
+  //  mContactConstraints.clear();
 
   // Destroy previous soft contact constraints
   for (auto* constraint : mSoftContactConstraints)

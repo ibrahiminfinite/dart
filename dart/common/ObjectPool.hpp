@@ -33,11 +33,11 @@
 #ifndef DART_COMMON_OBJECTPOOL_HPP_
 #define DART_COMMON_OBJECTPOOL_HPP_
 
-#include <array>
 #include <mutex>
 
 #include "dart/common/MemoryAllocator.hpp"
 #include "dart/common/MemoryAllocatorDebugger.hpp"
+#include "dart/common/detail/ObjectMemoryStack.hpp"
 
 namespace dart::common {
 
@@ -52,18 +52,17 @@ public:
   /// Constructor
   ///
   /// \param[in] baseAllocator: (optional) Base memory allocator.
-  /// \param[in] initialAllocation: (optional) Bytes to initially allocate.
   explicit ObjectPool(
-      MemoryAllocator& baseAllocator = MemoryAllocator::GetDefault());
+      MemoryAllocator& allocator = MemoryAllocator::GetDefault());
 
   /// Destructor
   ~ObjectPool();
 
   /// Returns the base allocator
-  [[nodiscard]] const MemoryAllocator& getBaseAllocator() const;
+  [[nodiscard]] const MemoryAllocator& getMemoryAllocator() const;
 
   /// Returns the base allocator
-  [[nodiscard]] MemoryAllocator& getBaseAllocator();
+  [[nodiscard]] MemoryAllocator& getMemoryAllocator();
 
   template <typename... Args>
   [[nodiscard]] T* construct(Args&&... args) noexcept;
@@ -78,43 +77,16 @@ private:
   // Documentation inherited
   void deallocate(void* pointer);
 
-  struct MemoryUnit
-  {
-    /// Pointer to next memory block
-    MemoryUnit* mNext;
-  };
-
-  struct MemoryBlock
-  {
-    /// Pointer to the first memory unit
-    MemoryUnit* mMemoryUnits;
-
-    size_t mSize;
-  };
-
-  /// The base allocator to allocate memory chunk
-  MemoryAllocator& mBaseAllocator;
+  /// The base memory allocator to allocate memory chunk
+  MemoryAllocator& mMemoryAllocator;
 
   /// Mutex for for mNumAllocatedMemoryBlocks, mNumMemoryBlocks,
   /// mFreeMemoryUnits, and mAllocatedMemoryBlocks.
   mutable std::mutex mMutex;
 
-  /// The array of memory blocks.
-  ///
-  /// This array is a placeholder of allocated memory blocks. Initially this
-  /// contains nullptr as the elements.
-  MemoryBlock* mMemoryBlocks;
+  T* const mFront;
 
-  /// The size of mMemoryBlocks.
-  ///
-  /// This is simply the current size of mMemoryBlocks. The value doesn't mean
-  /// the actual count of the allocated memory blocks.
-  int mMemoryBlocksSize;
-
-  /// The count of the allocated memory blocks in use.
-  int mNumAllocatedMemoryBlocks;
-
-  MemoryUnit* mFreeMemoryUnit;
+  detail::ObjectMemoryStack<T> mFreeObjects;
 };
 
 } // namespace dart::common

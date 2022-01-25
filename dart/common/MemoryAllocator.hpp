@@ -79,7 +79,7 @@ public:
   /// \return On success, the pointer to the beginning of newly allocated
   /// memory.
   /// \return On failure, a null pointer
-  [[nodiscard]] virtual void* allocate_aligned(
+  [[nodiscard]] virtual void* allocateAligned(
       size_t bytes, size_t alignment) noexcept;
   // TODO(JS): Make this pure virtual
 
@@ -91,6 +91,10 @@ public:
   template <typename T>
   [[nodiscard]] T* allocateAs(size_t n = 1) noexcept;
 
+  template <typename T>
+  [[nodiscard]] T* allocateAlignedAs(
+      size_t n = 1, size_t alignment = std::alignment_of_v<T>) noexcept;
+
   /// Deallocates the storage referenced by the pointer \c p, which must be a
   /// pointer obtained by an earlier call to allocate().
   ///
@@ -100,11 +104,11 @@ public:
   // TODO(JS): Make this constexpr once migrated to C++20
 
   /// Deallocates the storage referenced by the pointer \c p, which must be a
-  /// pointer obtained by an earlier call to allocate_aligned().
+  /// pointer obtained by an earlier call to allocateAligned().
   ///
-  /// \param[in] pointer: Pointer obtained from allocate_aligned().
+  /// \param[in] pointer: Pointer obtained from allocateAligned().
   /// \param[in] bytes: The bytes of the allocated memory.
-  virtual void deallocate_aligned(void* pointer, size_t bytes);
+  virtual void deallocateAligned(void* pointer, size_t bytes);
   // TODO(JS): Make this constexpr once migrated to C++20
 
   /// Allocates uninitialized storage and constructs an object of type T to the

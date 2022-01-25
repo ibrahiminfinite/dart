@@ -30,46 +30,17 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DART_COMMON_CALLOCATOR_HPP_
-#define DART_COMMON_CALLOCATOR_HPP_
+#include <dart/common/ObjectPool.hpp>
+#include <gtest/gtest.h>
 
-#include "dart/common/MemoryAllocator.hpp"
-#include "dart/common/MemoryAllocatorDebugger.hpp"
+#include "TestHelpers.hpp"
 
-namespace dart::common {
+using namespace dart;
+using namespace common;
 
-/// A stateless memory allocator (in release mode) that uses std::malloc and
-/// std::free for memory allocation and deallocation.
-class CAllocator : public MemoryAllocator
+//==============================================================================
+TEST(ObjectPoolTest, Constructors)
 {
-public:
-  using Debug = MemoryAllocatorDebugger<CAllocator>;
-
-  /// Constructor
-  CAllocator() noexcept;
-
-  /// Destructor
-  ~CAllocator() override;
-
-  DART_STRING_TYPE(CAllocator);
-
-  // Documentation inherited
-  [[nodiscard]] void* allocate(size_t bytes) noexcept override;
-
-  // Documentation inherited
-  [[nodiscard]] void* allocateAligned(
-      size_t bytes, size_t alignment) noexcept override;
-
-  // Documentation inherited
-  void deallocate(void* pointer, size_t bytes) override;
-
-  // Documentation inherited
-  void deallocateAligned(void* pointer, size_t bytes) override;
-
-  // Documentation inherited
-  void print(std::ostream& os = std::cout, int indent = 0) const override;
-};
-
-} // namespace dart::common
-
-#endif // DART_COMMON_CALLOCATOR_HPP_
+  auto pool = ObjectPool<double>();
+  pool.print();
+}

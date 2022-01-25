@@ -64,7 +64,7 @@ void* CAllocator::allocate(size_t bytes) noexcept
 }
 
 //==============================================================================
-void* CAllocator::allocate_aligned(size_t bytes, size_t alignment) noexcept
+void* CAllocator::allocateAligned(size_t bytes, size_t alignment) noexcept
 {
   if (bytes == 0)
   {
@@ -90,7 +90,7 @@ void CAllocator::deallocate(void* pointer, size_t bytes)
 }
 
 //==============================================================================
-void CAllocator::deallocate_aligned(void* pointer, size_t bytes)
+void CAllocator::deallocateAligned(void* pointer, size_t bytes)
 {
   DART_UNUSED(bytes);
   common::aligned_free(pointer);

@@ -32,6 +32,7 @@
 
 #include <cstring>
 #include <limits>
+#include <type_traits>
 
 #include "dart/common/Console.hpp"
 #include "dart/common/Logging.hpp"
@@ -39,25 +40,33 @@
 #include "dart/common/Memory.hpp"
 #include "dart/common/ObjectPool.hpp"
 
+#define DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE 4
+
 namespace dart::common {
 
 //==============================================================================
 template <typename T>
-ObjectPool<T>::ObjectPool(MemoryAllocator& baseAllocator)
-  : mBaseAllocator(baseAllocator)
+ObjectPool<T>::ObjectPool(MemoryAllocator& allocator)
+  : mMemoryAllocator(allocator),
+    mFront(mMemoryAllocator.allocateAlignedAs<T>(
+        DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE))
 {
   static_assert(
-      8 <= sizeof(MemoryUnit),
-      "sizeof(MemoryUnit) should be equal to or greater than 8.");
+      sizeof(T) >= sizeof(void*),
+      "The type size cannot be less than sizeof(void*).");
 
-  mNumAllocatedMemoryBlocks = 0;
+  if (!mFront)
+  {
+    DART_WARN("Not able to allocate base memory.");
+    return;
+  }
 
-  mMemoryBlocksSize = 64;
-  mMemoryBlocks = mBaseAllocator.allocateAs<MemoryBlock>(mMemoryBlocksSize);
-  const size_t allocatedSize = mMemoryBlocksSize * sizeof(MemoryBlock);
-  std::memset(mMemoryBlocks, 0, allocatedSize);
-
-  mFreeMemoryUnit = nullptr;
+  T* it = mFront + DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE - 1;
+  for (; it != mFront; --it)
+  {
+    mFreeObjects.push(it);
+  }
+  mFreeObjects.push(it);
 }
 
 //==============================================================================
@@ -67,28 +76,25 @@ ObjectPool<T>::~ObjectPool()
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);
 
-  for (int i = 0; i < mNumAllocatedMemoryBlocks; ++i)
+  if (mFront)
   {
-    mBaseAllocator.deallocate(
-        mMemoryBlocks[i].mMemoryUnits, mMemoryBlocks[i].mSize);
+    mMemoryAllocator.deallocateAligned(
+        mFront, sizeof(T) * DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE);
   }
-
-  mBaseAllocator.deallocate(
-      mMemoryBlocks, mMemoryBlocksSize * sizeof(MemoryBlock));
 }
 
 //==============================================================================
 template <typename T>
-const MemoryAllocator& ObjectPool<T>::getBaseAllocator() const
+const MemoryAllocator& ObjectPool<T>::getMemoryAllocator() const
 {
-  return mBaseAllocator;
+  return mMemoryAllocator;
 }
 
 //==============================================================================
 template <typename T>
-MemoryAllocator& ObjectPool<T>::getBaseAllocator()
+MemoryAllocator& ObjectPool<T>::getMemoryAllocator()
 {
-  return mBaseAllocator;
+  return mMemoryAllocator;
 }
 
 //==============================================================================
@@ -133,73 +139,14 @@ void ObjectPool<T>::print(std::ostream& os, int indent) const
     // os << spaces << "type: " << getType() << "\n";
   }
   os << spaces << "base_allocator:\n";
-  mBaseAllocator.print(os, indent + 2);
+  mMemoryAllocator.print(os, indent + 2);
 }
 
 //==============================================================================
 template <typename T>
 void* ObjectPool<T>::allocate() noexcept
 {
-  constexpr size_t unitSize = sizeof(T);
-
-  // Lock the mutex
-  std::lock_guard<std::mutex> lock(mMutex);
-
-  if (MemoryUnit* unit = mFreeMemoryUnit)
-  {
-    mFreeMemoryUnit = unit->mNext;
-    return unit;
-  }
-
-  if (mNumAllocatedMemoryBlocks == mMemoryBlocksSize)
-  {
-    MemoryBlock* currentMemoryBlocks = mMemoryBlocks;
-    mMemoryBlocksSize += 64;
-    mMemoryBlocks = mBaseAllocator.allocateAs<MemoryBlock>(mMemoryBlocksSize);
-    std::memcpy(
-        mMemoryBlocks,
-        currentMemoryBlocks,
-        mNumAllocatedMemoryBlocks * sizeof(MemoryBlock));
-    std::memset(
-        mMemoryBlocks + mNumAllocatedMemoryBlocks, 0, 64 * sizeof(MemoryBlock));
-  }
-
-  MemoryBlock* newBlock = mMemoryBlocks + mNumAllocatedMemoryBlocks;
-
-  const auto bytesToAllocate = 8 * unitSize /* + std::alignment_of_v<T>*/;
-  void* startPointer = mBaseAllocator.allocate_aligned(
-      bytesToAllocate, std::alignment_of_v<T>);
-  const size_t startAddress = reinterpret_cast<size_t>(startPointer);
-
-  void* memoryUnitsBegin = reinterpret_cast<void*>(startAddress);
-  char* memoryUnitsBeginChar = static_cast<char*>(memoryUnitsBegin);
-
-  newBlock->mMemoryUnits = static_cast<MemoryUnit*>(memoryUnitsBegin);
-
-  const size_t unitCount = bytesToAllocate / unitSize;
-  // TODO(JS): Replace unitCount with 8 and then mNextSize;
-
-  DART_ASSERT(unitCount > 0);
-
-  for (size_t i = 0u; i < unitCount - 1; ++i)
-  {
-    void* unitPointer = static_cast<void*>(memoryUnitsBeginChar + unitSize * i);
-    void* nextUnitPointer
-        = static_cast<void*>(memoryUnitsBeginChar + unitSize * (i + 1));
-    MemoryUnit* unit = static_cast<MemoryUnit*>(unitPointer);
-    MemoryUnit* nextUnit = static_cast<MemoryUnit*>(nextUnitPointer);
-    unit->mNext = nextUnit;
-  }
-
-  void* lastUnitPointer
-      = static_cast<void*>(memoryUnitsBeginChar + unitSize * (unitCount - 1));
-  MemoryUnit* lastUnit = static_cast<MemoryUnit*>(lastUnitPointer);
-  lastUnit->mNext = nullptr;
-
-  mFreeMemoryUnit = newBlock->mMemoryUnits->mNext;
-  mNumAllocatedMemoryBlocks++;
-
-  return newBlock->mMemoryUnits;
+  return nullptr;
 }
 
 //==============================================================================

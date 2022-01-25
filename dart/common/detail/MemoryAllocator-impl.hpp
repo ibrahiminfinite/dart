@@ -45,6 +45,13 @@ T* MemoryAllocator::allocateAs(size_t n) noexcept
 }
 
 //==============================================================================
+template <typename T>
+T* MemoryAllocator::allocateAlignedAs(size_t n, size_t alignment) noexcept
+{
+  return static_cast<T*>(allocateAligned(n * sizeof(T), alignment));
+}
+
+//==============================================================================
 template <typename T, typename... Args>
 T* MemoryAllocator::construct(Args&&... args) noexcept
 {
@@ -74,7 +81,7 @@ template <typename T, typename... Args>
 T* MemoryAllocator::construct_aligned(size_t alignment, Args&&... args) noexcept
 {
   // Allocate new memory for a new object (without calling the constructor)
-  void* object = allocate_aligned(alignment, sizeof(T));
+  void* object = allocateAligned(alignment, sizeof(T));
   if (!object)
   {
     return nullptr;
@@ -87,7 +94,7 @@ T* MemoryAllocator::construct_aligned(size_t alignment, Args&&... args) noexcept
   }
   catch (...)
   {
-    deallocate_aligned(object, sizeof(T));
+    deallocateAligned(object, sizeof(T));
     return nullptr;
   }
 

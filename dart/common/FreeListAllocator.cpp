@@ -131,11 +131,11 @@ MemoryAllocator& FreeListAllocator::getBaseAllocator()
 //==============================================================================
 void* FreeListAllocator::allocate(size_t bytes) noexcept
 {
-  return allocate_aligned(bytes, 0);
+  return allocateAligned(bytes, 0);
 }
 
 //==============================================================================
-void* FreeListAllocator::allocate_aligned(
+void* FreeListAllocator::allocateAligned(
     size_t bytes, size_t alignment) noexcept
 {
   // Not allowed to allocate zero bytes

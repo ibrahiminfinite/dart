@@ -81,7 +81,7 @@ public:
   [[nodiscard]] void* allocate(size_t bytes) noexcept override;
 
   // Documentation inherited
-  [[nodiscard]] void* allocate_aligned(
+  [[nodiscard]] void* allocateAligned(
       size_t bytes, size_t alignment) noexcept override;
 
   // Documentation inherited

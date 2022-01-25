@@ -281,7 +281,7 @@ protected:
   /// Pool memory allocator
   common::MemoryAllocator& mMultiPoolAllocator;
 
-  //common::ObjectPool<ContactConstraint> mContactConstraintPool;
+  // common::ObjectPool<ContactConstraint> mContactConstraintPool;
 
   common::ObjectPool<JointConstraint> mJointConstraintPool;
 
