@@ -43,7 +43,7 @@ using namespace common;
 TEST(StlContainersTest, StdVector)
 {
   auto free = FreeListAllocator::Debug();
-  auto pool = MultiPoolAllocator::Debug(free);
+  auto pool = PoolAllocator::Debug(free);
 
   common::vector<int> vec(pool);
   EXPECT_EQ(vec.capacity(), 0);

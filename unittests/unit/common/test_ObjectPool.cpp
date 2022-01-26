@@ -30,6 +30,7 @@
  *   POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <dart/common/CAllocator.hpp>
 #include <dart/common/ObjectPool.hpp>
 #include <gtest/gtest.h>
 
@@ -41,6 +42,17 @@ using namespace common;
 //==============================================================================
 TEST(ObjectPoolTest, Constructors)
 {
-  auto pool = ObjectPool<double>();
+  auto allocator = CAllocator::Debug();
+  auto pool = ObjectPool<double>(allocator);
   pool.print();
+
+  auto o1 = pool.construct();
+  EXPECT_TRUE(o1 != nullptr);
+
+  //  EXPECT_TRUE(pool.construct() != nullptr);
+  //  EXPECT_TRUE(pool.construct() != nullptr);
+  //  EXPECT_TRUE(pool.construct() != nullptr);
+  //  EXPECT_TRUE(pool.construct() != nullptr);
+  //  EXPECT_TRUE(pool.construct() != nullptr);
+  pool.destroy(o1);
 }

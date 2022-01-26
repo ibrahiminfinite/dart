@@ -138,7 +138,7 @@ public:
     mSize = 0;
   }
 
-  #ifndef NDEBUG
+#ifndef NDEBUG
   void printList() const
   {
     Node* head = mHead;
@@ -148,11 +148,83 @@ public:
       head = head->next;
     }
   }
-  #endif
+#endif
 
 private:
   Node* mHead{nullptr};
   size_t mSize{0};
+};
+
+template <typename ObjectType>
+class ObjectMemoryBlock
+{
+public:
+  ObjectMemoryBlock(size_t num_objects, MemoryAllocator& MemoryAllocator)
+    : mMemoryAllocator(MemoryAllocator), m_next_arena(nullptr)
+  {
+    assert(num_objects > 0);
+    m_storage = mMemoryAllocator.allocateAlignedAs<ObjectType>(num_objects);
+    m_num_objects = num_objects;
+  }
+
+  ObjectMemoryBlock(const ObjectMemoryBlock& other) = delete;
+  ObjectMemoryBlock& operator=(const ObjectMemoryBlock& other) = delete;
+
+  ~ObjectMemoryBlock()
+  {
+    if (m_storage)
+    {
+      mMemoryAllocator.deallocateAligned(
+          m_storage, sizeof(ObjectType) * m_num_objects);
+    }
+  }
+
+  bool is_valid() const
+  {
+    return (m_storage != nullptr);
+  }
+
+  char* get_ptr() const
+  {
+    return m_storage;
+  }
+
+  size_t get_capacity() const
+  {
+    return m_num_objects;
+  }
+
+  void set_next_arena(ObjectMemoryBlock* arena)
+  {
+    assert(m_next_arena == nullptr && arena != nullptr);
+    m_next_arena = arena;
+  }
+
+  ObjectMemoryBlock* get_mutable_next_arena()
+  {
+    return m_next_arena;
+  }
+
+  const ObjectMemoryBlock* get_next_arena() const
+  {
+    return m_next_arena;
+  }
+
+  const ObjectType* get_first_item() const
+  {
+    return &(m_storage[0]);
+  }
+
+  ObjectType* get_last_item() const
+  {
+    return &(m_storage[m_num_objects - 1]);
+  }
+
+private:
+  MemoryAllocator& mMemoryAllocator;
+  ObjectType* m_storage{nullptr};
+  size_t m_num_objects;
+  ObjectMemoryBlock* m_next_arena{nullptr};
 };
 
 } // namespace dart::common::detail

@@ -67,15 +67,19 @@ public:
   template <typename... Args>
   [[nodiscard]] T* construct(Args&&... args) noexcept;
 
+  void destroy(T* object) noexcept;
+
   // Documentation inherited
   void print(std::ostream& os = std::cout, int indent = 0) const;
 
 private:
   // Documentation inherited
-  [[nodiscard]] void* allocate() noexcept;
+  [[nodiscard]] T* allocate() noexcept;
 
   // Documentation inherited
-  void deallocate(void* pointer);
+  void deallocate(T* pointer);
+
+  bool createMemoryBlock(size_t requestedSize);
 
   /// The base memory allocator to allocate memory chunk
   MemoryAllocator& mMemoryAllocator;
@@ -84,7 +88,9 @@ private:
   /// mFreeMemoryUnits, and mAllocatedMemoryBlocks.
   mutable std::mutex mMutex;
 
-  T* const mFront;
+  detail::ObjectMemoryBlock<T>* mFirstMemoryBlock{nullptr};
+
+  detail::ObjectMemoryBlock<T>* mLastMemoryBlock{nullptr};
 
   detail::ObjectMemoryStack<T> mFreeObjects;
 };

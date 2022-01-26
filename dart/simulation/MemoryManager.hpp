@@ -75,7 +75,7 @@ public:
   [[nodiscard]] common::FreeListAllocator& getFreeListAllocator();
 
   /// Returns the pool allocator
-  [[nodiscard]] common::MultiPoolAllocator& getMultiPoolAllocator();
+  [[nodiscard]] common::PoolAllocator& getMultiPoolAllocator();
 
   /// Allocates \c size bytes of uninitialized storage.
   ///
@@ -177,7 +177,7 @@ private:
   common::FreeListAllocator::Debug mFreeListAllocator;
 
   /// The pool allocator.
-  common::MultiPoolAllocator::Debug mMultiPoolAllocator;
+  common::PoolAllocator::Debug mMultiPoolAllocator;
 #endif
 };
 

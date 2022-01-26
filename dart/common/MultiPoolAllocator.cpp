@@ -42,7 +42,7 @@
 namespace dart::common {
 
 //==============================================================================
-MultiPoolAllocator::MultiPoolAllocator(MemoryAllocator& baseAllocator)
+PoolAllocator::PoolAllocator(MemoryAllocator& baseAllocator)
   : mBaseAllocator(baseAllocator)
 {
   static_assert(
@@ -98,7 +98,7 @@ MultiPoolAllocator::MultiPoolAllocator(MemoryAllocator& baseAllocator)
 }
 
 //==============================================================================
-MultiPoolAllocator::~MultiPoolAllocator()
+PoolAllocator::~PoolAllocator()
 {
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);
@@ -113,25 +113,25 @@ MultiPoolAllocator::~MultiPoolAllocator()
 }
 
 //==============================================================================
-const MemoryAllocator& MultiPoolAllocator::getBaseAllocator() const
+const MemoryAllocator& PoolAllocator::getBaseAllocator() const
 {
   return mBaseAllocator;
 }
 
 //==============================================================================
-MemoryAllocator& MultiPoolAllocator::getBaseAllocator()
+MemoryAllocator& PoolAllocator::getBaseAllocator()
 {
   return mBaseAllocator;
 }
 
 //==============================================================================
-int MultiPoolAllocator::getNumAllocatedMemoryBlocks() const
+int PoolAllocator::getNumAllocatedMemoryBlocks() const
 {
   return mNumAllocatedMemoryBlocks;
 }
 
 //==============================================================================
-void* MultiPoolAllocator::allocate(size_t bytes) noexcept
+void* PoolAllocator::allocate(size_t bytes) noexcept
 {
   // Cannot allocate zero bytes
   if (bytes == 0)
@@ -204,7 +204,7 @@ void* MultiPoolAllocator::allocate(size_t bytes) noexcept
 }
 
 //==============================================================================
-void MultiPoolAllocator::deallocate(void* pointer, size_t bytes)
+void PoolAllocator::deallocate(void* pointer, size_t bytes)
 {
   // Cannot deallocate nullptr or zero bytes
   if (pointer == nullptr || bytes == 0)
@@ -228,7 +228,7 @@ void MultiPoolAllocator::deallocate(void* pointer, size_t bytes)
 }
 
 //==============================================================================
-void MultiPoolAllocator::print(std::ostream& os, int indent) const
+void PoolAllocator::print(std::ostream& os, int indent) const
 {
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);

@@ -88,9 +88,29 @@ public:
   void deallocate(void* pointer, size_t bytes) override;
 
   // Documentation inherited
+  void deallocateAligned(void* pointer, size_t bytes) override;
+
+  // Documentation inherited
   void print(std::ostream& os = std::cout, int indent = 0) const override;
 
 private:
+  struct FreeBlockHeader
+  {
+    /// Memory block size in bytes
+    size_t mSize;
+  };
+
+  struct AllocatedBlockHeader
+  {
+    /// Memory block size in bytes
+    size_t mSize;
+
+    uint32_t mPadding;
+
+    /// Whether the next memory block is contiguous
+    bool mIsNextContiguous;
+  };
+
   struct MemoryBlockHeader
   {
     /// Memory block size in bytes

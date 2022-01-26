@@ -109,6 +109,7 @@ public:
   /// \param[in] pointer: Pointer obtained from allocateAligned().
   /// \param[in] bytes: The bytes of the allocated memory.
   virtual void deallocateAligned(void* pointer, size_t bytes);
+  // TODO(JS): Make this pure virtual
   // TODO(JS): Make this constexpr once migrated to C++20
 
   /// Allocates uninitialized storage and constructs an object of type T to the
@@ -130,7 +131,7 @@ public:
   /// \param[in] alignment: Alignment size.
   /// \param[in] args: The constructor arguments to use.
   template <typename T, typename... Args>
-  [[nodiscard]] T* construct_aligned(size_t alignment, Args&&... args) noexcept;
+  [[nodiscard]] T* constructAligned(size_t alignment, Args&&... args) noexcept;
 
   /// Constructs an object of type T at a specific address.
   ///

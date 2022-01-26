@@ -47,26 +47,26 @@ namespace dart::common {
 //==============================================================================
 template <typename T>
 ObjectPool<T>::ObjectPool(MemoryAllocator& allocator)
-  : mMemoryAllocator(allocator),
-    mFront(mMemoryAllocator.allocateAlignedAs<T>(
-        DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE))
+  : mMemoryAllocator(allocator)
 {
   static_assert(
       sizeof(T) >= sizeof(void*),
       "The type size cannot be less than sizeof(void*).");
 
-  if (!mFront)
-  {
-    DART_WARN("Not able to allocate base memory.");
-    return;
-  }
+  //  if (!mFront)
+  //  {
+  //    DART_WARN("Not able to allocate base memory.");
+  //    return;
+  //  }
 
-  T* it = mFront + DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE - 1;
-  for (; it != mFront; --it)
-  {
-    mFreeObjects.push(it);
-  }
-  mFreeObjects.push(it);
+  //  T* it = mFront + DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE - 1;
+  //  for (; it != mFront; --it)
+  //  {
+  //    mFreeObjects.push(it);
+  //  }
+  //  mFreeObjects.push(it);
+
+  createMemoryBlock(DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE);
 }
 
 //==============================================================================
@@ -76,11 +76,23 @@ ObjectPool<T>::~ObjectPool()
   // Lock the mutex
   std::lock_guard<std::mutex> lock(mMutex);
 
-  if (mFront)
+  if (!mFirstMemoryBlock)
   {
-    mMemoryAllocator.deallocateAligned(
-        mFront, sizeof(T) * DART_OBJECT_POOL_DEFAULT_INITIAL_SIZE);
+    DART_ASSERT(!mLastMemoryBlock);
+    DART_ASSERT(!mFreeObjects.isEmpty());
+    return;
   }
+
+  auto* it = mFirstMemoryBlock;
+  while (it)
+  {
+    auto* next = it->get_mutable_next_arena();
+    mMemoryAllocator.destroy(it);
+    it = next;
+  }
+
+  mFirstMemoryBlock = nullptr;
+  mLastMemoryBlock = nullptr;
 }
 
 //==============================================================================
@@ -102,7 +114,7 @@ template <typename T>
 template <typename... Args>
 T* ObjectPool<T>::construct(Args&&... args) noexcept
 {
-  void* pointer = allocate();
+  T* pointer = allocate();
   if (!pointer)
   {
     return nullptr;
@@ -120,6 +132,19 @@ T* ObjectPool<T>::construct(Args&&... args) noexcept
   }
 
   return reinterpret_cast<T*>(pointer);
+}
+
+//==============================================================================
+template <typename T>
+void ObjectPool<T>::destroy(T* object) noexcept
+{
+  if (!object)
+  {
+    return;
+  }
+
+  object->~T();
+  deallocate(object);
 }
 
 //==============================================================================
@@ -144,14 +169,37 @@ void ObjectPool<T>::print(std::ostream& os, int indent) const
 
 //==============================================================================
 template <typename T>
-void* ObjectPool<T>::allocate() noexcept
+T* ObjectPool<T>::allocate() noexcept
 {
-  return nullptr;
+  // Lock the mutex
+  std::lock_guard<std::mutex> lock(mMutex);
+
+  if (mFreeObjects.isEmpty())
+  {
+    const bool success = createMemoryBlock(4);
+    if (!success)
+    {
+      return nullptr;
+    }
+  }
+
+  T* object = mFreeObjects.pop();
+
+#ifndef NDEBUG // debug mode
+  if (!object)
+  {
+    DART_DEBUG("Failed to allocate memory for {}.", typeid(T).name());
+  }
+#endif
+
+  // DART_ASSERT(object);
+
+  return object;
 }
 
 //==============================================================================
 template <typename T>
-void ObjectPool<T>::deallocate(void* pointer)
+void ObjectPool<T>::deallocate(T* pointer)
 {
   // Cannot deallocate nullptr
   if (pointer == nullptr)
@@ -159,9 +207,50 @@ void ObjectPool<T>::deallocate(void* pointer)
     return;
   }
 
-  // sizeof(T);
+  // Lock the mutex
+  std::lock_guard<std::mutex> lock(mMutex);
+  mFreeObjects.push(std::move(pointer));
+}
 
-  DART_NOT_IMPLEMENTED;
+//==============================================================================
+template <typename T>
+bool ObjectPool<T>::createMemoryBlock(size_t requestedSize)
+{
+  DART_ASSERT(requestedSize > 0);
+
+  detail::ObjectMemoryBlock<T>* newBlock
+      = mMemoryAllocator.construct<detail::ObjectMemoryBlock<T>>(
+          requestedSize, mMemoryAllocator);
+  if (!newBlock)
+  {
+    return false;
+  }
+
+  if (!newBlock->is_valid())
+  {
+    mMemoryAllocator.destroy(newBlock);
+    return false;
+  }
+
+  if (!mFirstMemoryBlock)
+  {
+    mFirstMemoryBlock = newBlock;
+  }
+  else if (mLastMemoryBlock)
+  {
+    mLastMemoryBlock->set_next_arena(newBlock);
+  }
+  mLastMemoryBlock = newBlock;
+
+  const T* firstObjct = newBlock->get_first_item();
+  T* it = newBlock->get_last_item();
+  for (; it != firstObjct; --it)
+  {
+    mFreeObjects.push(it);
+  }
+  mFreeObjects.push(it);
+
+  return true;
 }
 
 } // namespace dart::common

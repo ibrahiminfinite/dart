@@ -41,12 +41,12 @@ using namespace common;
 //==============================================================================
 TEST(MultiPoolAllocatorTest, Constructors)
 {
-  auto a = MultiPoolAllocator::Debug();
+  auto a = PoolAllocator::Debug();
   EXPECT_EQ(
       &a.getInternalAllocator().getBaseAllocator(),
       &MemoryAllocator::GetDefault());
 
-  auto b = MultiPoolAllocator::Debug(MemoryAllocator::GetDefault());
+  auto b = PoolAllocator::Debug(MemoryAllocator::GetDefault());
   EXPECT_EQ(
       &b.getInternalAllocator().getBaseAllocator(),
       &MemoryAllocator::GetDefault());
@@ -60,7 +60,7 @@ TEST(MultiPoolAllocatorTest, Constructors)
 //==============================================================================
 TEST(MultiPoolAllocatorTest, Allocate)
 {
-  auto a = MultiPoolAllocator::Debug();
+  auto a = PoolAllocator::Debug();
   EXPECT_TRUE(a.isEmpty());
 
   // Cannot allocate 0 bytes

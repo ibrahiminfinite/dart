@@ -83,7 +83,7 @@ common::FreeListAllocator& MemoryManager::getFreeListAllocator()
 }
 
 //==============================================================================
-common::MultiPoolAllocator& MemoryManager::getMultiPoolAllocator()
+common::PoolAllocator& MemoryManager::getMultiPoolAllocator()
 {
 #ifdef NDEBUG
   return mMultiPoolAllocator;

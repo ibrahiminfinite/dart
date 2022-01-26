@@ -270,6 +270,14 @@ void FreeListAllocator::deallocate(void* pointer, size_t bytes)
 }
 
 //==============================================================================
+void FreeListAllocator::deallocateAligned(void* pointer, size_t bytes)
+{
+  (void)pointer;
+  (void)bytes;
+  DART_NOT_IMPLEMENTED;
+}
+
+//==============================================================================
 bool FreeListAllocator::allocateMemoryBlock(size_t sizeToAllocate)
 {
   // Allocate memory chunck for header and the actual requested size

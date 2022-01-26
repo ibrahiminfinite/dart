@@ -43,22 +43,22 @@ namespace dart::common {
 
 /// Memory allocator optimized for allocating many objects of the same or
 /// similar sizes
-class MultiPoolAllocator : public MemoryAllocator
+class PoolAllocator : public MemoryAllocator
 {
 public:
-  using Debug = MemoryAllocatorDebugger<MultiPoolAllocator>;
+  using Debug = MemoryAllocatorDebugger<PoolAllocator>;
 
   /// Constructor
   ///
   /// \param[in] baseAllocator: (optional) Base memory allocator.
   /// \param[in] initialAllocation: (optional) Bytes to initially allocate.
-  explicit MultiPoolAllocator(
+  explicit PoolAllocator(
       MemoryAllocator& baseAllocator = MemoryAllocator::GetDefault());
 
   /// Destructor
-  ~MultiPoolAllocator() override;
+  ~PoolAllocator() override;
 
-  DART_STRING_TYPE(MultiPoolAllocator);
+  DART_STRING_TYPE(PoolAllocator);
 
   /// Returns the base allocator
   [[nodiscard]] const MemoryAllocator& getBaseAllocator() const;
