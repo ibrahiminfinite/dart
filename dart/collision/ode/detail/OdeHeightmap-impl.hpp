@@ -64,8 +64,8 @@ void setOdeHeightfieldDetails(
       odeHeightfieldId,
       heights,
       0,
-      (width - 1) * scale.x(),  // width (in meters)
-      (height - 1) * scale.y(), // height (in meters)
+      (width ) * scale.x(),  // width (in meters) removed -1
+      (height ) * scale.y(), // height (in meters) removed -1
       width,                    // width (sampling size)
       height,                   // height (sampling size)
       scale.z(),                // vertical scaling
