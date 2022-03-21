@@ -1,0 +1,11 @@
+In file included from [01m[K/home/dark/sources/dart/dart/dynamics/HeightmapShape.hpp:190[m[K,
+                 from [01m[K/home/dark/sources/dart/dart/collision/ode/detail/OdeHeightmap.hpp:39[m[K,
+                 from [01m[K/home/dark/sources/dart/dart/collision/ode/OdeCollisionObject.cpp:41[m[K:
+[01m[K/home/dark/sources/dart/dart/dynamics/detail/HeightmapShape-impl.hpp:[m[K In member function ‘[01m[KEigen::Matrix3d dart::dynamics::HeightmapShape<S_>::computeInertia(double) const[m[K’:
+[01m[K/home/dark/sources/dart/dart/dynamics/detail/HeightmapShape-impl.hpp:195:20:[m[K [01;31m[Kerror: [m[Kincomplete type ‘[01m[Kdart::dynamics::BoxShape[m[K’ used in nested name specifier
+  195 |   return BoxShape::[01;31m[KcomputeInertia[m[K(getBoundingBox().computeFullExtents(), mass);
+      |                    [01;31m[K^~~~~~~~~~~~~~[m[K
+make[2]: *** [dart/collision/ode/CMakeFiles/dart-collision-ode.dir/build.make:89: dart/collision/ode/CMakeFiles/dart-collision-ode.dir/OdeCollisionObject.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:2488: dart/collision/ode/CMakeFiles/dart-collision-ode.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:141: all] Error 2

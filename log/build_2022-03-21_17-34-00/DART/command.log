@@ -1,0 +1,2 @@
+Invoking command in '/home/dark/sources/dart/build/DART': /usr/bin/cmake --build /home/dark/sources/dart/build/DART -- -j16 -l16
+Invoked command in '/home/dark/sources/dart/build/DART' returned '2': /usr/bin/cmake --build /home/dark/sources/dart/build/DART -- -j16 -l16

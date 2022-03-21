@@ -1,0 +1,95 @@
+[0.344s] DEBUG:colcon:Command line arguments: ['/home/dark/.local/bin/colcon', 'build']
+[0.344s] DEBUG:colcon:Parsed command line arguments: Namespace(ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7ffb7d4bd7c0>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=16, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7ffb7d4bd7c0>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7ffb7d4bdca0>)
+[0.359s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.359s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.359s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.359s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.359s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.359s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.359s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/dark/sources/dart'
+[0.359s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.360s] INFO:colcon.colcon_metadata.metadata.colcon_pkg:Setting name 'DART' of package '.' from colcon.pkg
+[0.360s] DEBUG:colcon.colcon_core.package_identification:Package '.' with type 'None' and name 'DART'
+[0.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.361s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.384s] DEBUG:colcon.colcon_core.package_identification:Package '.' with type 'ros.cmake' and name 'DART'
+[0.384s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.384s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.384s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.384s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.384s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.408s] INFO:colcon.colcon_metadata.metadata.colcon_pkg:Updating descriptor of package '.' from colcon.pkg: {'name': 'DART', 'dependencies': ['BULLET_PHYSICS', 'ODE']}
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'cmake_args' from command line to 'None'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'cmake_target' from command line to 'None'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'cmake_clean_cache' from command line to 'False'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'cmake_clean_first' from command line to 'False'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'cmake_force_configure' from command line to 'False'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'ament_cmake_args' from command line to 'None'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'catkin_cmake_args' from command line to 'None'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'DART' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.416s] DEBUG:colcon.colcon_core.verb:Building package 'DART' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/dark/sources/dart/build/DART', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/dark/sources/dart/install/DART', 'merge_install': False, 'path': '/home/dark/sources/dart', 'symlink_install': False, 'test_result_base': None}
+[0.418s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.428s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.428s] INFO:colcon.colcon_ros.task.cmake.build:Building ROS package in '/home/dark/sources/dart' with build type 'cmake'
+[0.429s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/dark/sources/dart'
+[0.435s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.435s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.435s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.447s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/dark/sources/dart/build/DART': /usr/bin/cmake --build /home/dark/sources/dart/build/DART -- -j16 -l16
+[229.981s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/dark/sources/dart/build/DART' returned '0': /usr/bin/cmake --build /home/dark/sources/dart/build/DART -- -j16 -l16
+[230.176s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/dark/sources/dart/build/DART': /usr/bin/cmake --install /home/dark/sources/dart/build/DART
+[230.261s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/dark/sources/dart/build/DART' returned '0': /usr/bin/cmake --install /home/dark/sources/dart/build/DART
+[230.347s] Level 1:colcon.colcon_core.shell:create_environment_hook('DART', 'pkg_config_path')
+[230.372s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/dark/sources/dart/install/DART/share/DART/hook/pkg_config_path.ps1'
+[230.388s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/dark/sources/dart/install/DART/share/DART/hook/pkg_config_path.dsv'
+[230.390s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/dark/sources/dart/install/DART/share/DART/hook/pkg_config_path.sh'
+[230.398s] Level 1:colcon.colcon_core.shell:create_environment_hook('DART', 'pkg_config_path_multiarch')
+[230.402s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/dark/sources/dart/install/DART/share/DART/hook/pkg_config_path_multiarch.ps1'
+[230.402s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/dark/sources/dart/install/DART/share/DART/hook/pkg_config_path_multiarch.dsv'
+[230.402s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/dark/sources/dart/install/DART/share/DART/hook/pkg_config_path_multiarch.sh'
+[230.404s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(DART)
+[230.426s] Level 1:colcon.colcon_core.environment:checking '/home/dark/sources/dart/install/DART' for CMake module files
+[230.426s] Level 1:colcon.colcon_core.environment:checking '/home/dark/sources/dart/install/DART' for CMake config files
+[230.428s] Level 1:colcon.colcon_core.shell:create_environment_hook('DART', 'cmake_prefix_path')
+[230.431s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/dark/sources/dart/install/DART/share/DART/hook/cmake_prefix_path.ps1'
+[230.431s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/dark/sources/dart/install/DART/share/DART/hook/cmake_prefix_path.dsv'
+[230.432s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/dark/sources/dart/install/DART/share/DART/hook/cmake_prefix_path.sh'
+[230.434s] Level 1:colcon.colcon_core.environment:checking '/home/dark/sources/dart/install/DART/lib'
+[230.434s] Level 1:colcon.colcon_core.shell:create_environment_hook('DART', 'ld_library_path_lib')
+[230.437s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/dark/sources/dart/install/DART/share/DART/hook/ld_library_path_lib.ps1'
+[230.438s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/dark/sources/dart/install/DART/share/DART/hook/ld_library_path_lib.dsv'
+[230.438s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/dark/sources/dart/install/DART/share/DART/hook/ld_library_path_lib.sh'
+[230.438s] Level 1:colcon.colcon_core.environment:checking '/home/dark/sources/dart/install/DART/bin'
+[230.438s] Level 1:colcon.colcon_core.environment:checking '/home/dark/sources/dart/install/DART/lib/pkgconfig/DART.pc'
+[230.439s] Level 1:colcon.colcon_core.environment:checking '/home/dark/sources/dart/install/DART/lib/python3.8/site-packages'
+[230.443s] INFO:colcon.colcon_core.shell:Creating package script '/home/dark/sources/dart/install/DART/share/DART/package.ps1'
+[230.444s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/dark/sources/dart/install/DART/share/DART/package.dsv'
+[230.445s] INFO:colcon.colcon_core.shell:Creating package script '/home/dark/sources/dart/install/DART/share/DART/package.sh'
+[230.446s] INFO:colcon.colcon_core.shell:Creating package script '/home/dark/sources/dart/install/DART/share/DART/package.bash'
+[230.447s] INFO:colcon.colcon_core.shell:Creating package script '/home/dark/sources/dart/install/DART/share/DART/package.zsh'
+[230.448s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/dark/sources/dart/install/DART/share/colcon-core/packages/DART)
+[230.453s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[230.454s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[230.454s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[230.454s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[230.492s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[230.492s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[230.493s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[230.598s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[230.604s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/dark/sources/dart/install/local_setup.ps1'
+[230.605s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/dark/sources/dart/install/_local_setup_util_ps1.py'
+[230.607s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/dark/sources/dart/install/setup.ps1'
+[230.612s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/dark/sources/dart/install/local_setup.sh'
+[230.612s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/dark/sources/dart/install/_local_setup_util_sh.py'
+[230.613s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/dark/sources/dart/install/setup.sh'
+[230.617s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/dark/sources/dart/install/local_setup.bash'
+[230.618s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/dark/sources/dart/install/setup.bash'
+[230.621s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/dark/sources/dart/install/local_setup.zsh'
+[230.621s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/dark/sources/dart/install/setup.zsh'

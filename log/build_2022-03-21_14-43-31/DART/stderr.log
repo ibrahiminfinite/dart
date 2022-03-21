@@ -1,0 +1,35 @@
+CMake Warning at cmake/DARTMacros.cmake:145 (message):
+  Looking for doxygen - NOT found, to use generating API documentation,
+  please install doxygen
+Call Stack (most recent call first):
+  cmake/DARTFindDependencies.cmake:128 (dart_check_optional_package)
+  CMakeLists.txt:153 (include)
+
+
+CMake Warning at cmake/DARTMacros.cmake:145 (message):
+  Looking for ipopt - NOT found, to use dart-optimizer-ipopt, please install
+  ipopt
+Call Stack (most recent call first):
+  dart/optimizer/ipopt/CMakeLists.txt:3 (dart_check_optional_package)
+
+
+CMake Warning at cmake/DARTMacros.cmake:145 (message):
+  Looking for nlopt - NOT found, to use dart-optimizer-nlopt, please install
+  nlopt
+Call Stack (most recent call first):
+  dart/optimizer/nlopt/CMakeLists.txt:3 (dart_check_optional_package)
+
+
+CMake Warning at cmake/DARTMacros.cmake:145 (message):
+  Looking for pagmo - NOT found, to use dart-optimizer-pagmo, please install
+  pagmo
+Call Stack (most recent call first):
+  dart/optimizer/pagmo/CMakeLists.txt:3 (dart_check_optional_package)
+
+
+CMake Warning at cmake/DARTMacros.cmake:145 (message):
+  Looking for flann - NOT found, to use dart-planning, please install flann
+Call Stack (most recent call first):
+  dart/planning/CMakeLists.txt:3 (dart_check_optional_package)
+
+

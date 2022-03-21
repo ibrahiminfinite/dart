@@ -1,0 +1,1214 @@
+[  1%] Built target dart-external-odelcpsolver
+[  3%] Built target dart-external-lodepng
+[  5%] Built target dart-external-imgui
+[ 44%] Built target dart
+[35m[1mScanning dependencies of target dart-collision-bullet[0m
+[35m[1mScanning dependencies of target dart-collision-ode[0m
+[35m[1mScanning dependencies of target dart-utils[0m
+[ 44%] [32mBuilding CXX object dart/collision/bullet/CMakeFiles/dart-collision-bullet.dir/BulletCollisionDetector.cpp.o[0m
+[ 44%] [32mBuilding CXX object dart/collision/ode/CMakeFiles/dart-collision-ode.dir/OdeCollisionObject.cpp.o[0m
+[ 45%] [32mBuilding CXX object dart/utils/CMakeFiles/dart-utils.dir/mjcf/MjcfParser.cpp.o[0m
+[ 45%] [32mBuilding CXX object dart/utils/CMakeFiles/dart-utils.dir/VskParser.cpp.o[0m
+[ 45%] [32m[1mLinking CXX shared library ../../../lib/libdart-collision-ode.so[0m
+[ 49%] Built target dart-collision-ode
+[ 49%] [32m[1mLinking CXX shared library ../../../lib/libdart-collision-bullet.so[0m
+[ 50%] Built target dart-collision-bullet
+[ 50%] [32m[1mLinking CXX shared library ../../lib/libdart-utils.so[0m
+[ 59%] Built target dart-utils
+[ 59%] [32m[1mLinking CXX shared library ../../../lib/libdart-utils-urdf.so[0m
+[ 59%] [32m[1mLinking CXX shared library ../../lib/libdart-gui.so[0m
+[ 59%] Built target dart-utils-urdf
+[ 62%] Built target dart-gui
+[35m[1mScanning dependencies of target dart-gui-osg[0m
+[ 62%] [32mBuilding CXX object dart/gui/osg/CMakeFiles/dart-gui-osg.dir/ShapeFrameNode.cpp.o[0m
+[ 62%] [32m[1mLinking CXX shared library ../../../lib/libdart-gui-osg.so[0m
+[ 71%] Built target dart-gui-osg
+[35m[1mScanning dependencies of target dartpy[0m
+[ 71%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/CollisionFilter.cpp.o[0m
+[ 71%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/CollisionGroup.cpp.o[0m
+[ 71%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/CollisionResult.cpp.o[0m
+[ 71%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/CollisionDetector.cpp.o[0m
+[ 71%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/CollisionObject.cpp.o[0m
+[ 72%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/CollisionOption.cpp.o[0m
+[ 72%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/Contact.cpp.o[0m
+[ 72%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/DARTCollisionDetector.cpp.o[0m
+[ 72%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/DARTCollisionGroup.cpp.o[0m
+[ 74%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/DistanceResult.cpp.o[0m
+[ 74%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/DistanceOption.cpp.o[0m
+[ 74%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/FCLCollisionGroup.cpp.o[0m
+[ 74%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/FCLCollisionDetector.cpp.o[0m
+[ 74%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/common/Composite.cpp.o[0m
+[ 74%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/RaycastOption.cpp.o[0m
+[ 76%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/collision/RaycastResult.cpp.o[0m
+[ 76%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/common/Observer.cpp.o[0m
+[ 76%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/common/Resource.cpp.o[0m
+[ 76%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/common/ResourceRetriever.cpp.o[0m
+[ 77%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/common/Subject.cpp.o[0m
+[ 77%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/common/Uri.cpp.o[0m
+[ 77%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/BoxedLcpConstraintSolver.cpp.o[0m
+[ 77%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/BoxedLcpSolver.cpp.o[0m
+[ 77%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/ConstraintBase.cpp.o[0m
+[ 77%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/ConstraintSolver.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/DynamicJointConstraint.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/DantzigBoxedLcpSolver.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/JointConstraint.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/JointCoulombFrictionConstraint.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/constraint/PgsBoxedLcpSolver.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/BallJoint.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/BodyNode.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Chain.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/DegreeOfFreedom.cpp.o[0m
+[ 79%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Entity.cpp.o[0m
+[ 81%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/EulerJoint.cpp.o[0m
+[ 81%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Frame.cpp.o[0m
+[ 81%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/FreeJoint.cpp.o[0m
+[ 81%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/GenericJoint.cpp.o[0m
+[ 81%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Inertia.cpp.o[0m
+[ 81%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/InverseKinematics.cpp.o[0m
+[ 83%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/JacobianNode.cpp.o[0m
+[ 83%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Joint.cpp.o[0m
+[ 83%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Linkage.cpp.o[0m
+[ 83%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/MetaSkeleton.cpp.o[0m
+[ 83%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Node.cpp.o[0m
+[ 83%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/PlanarJoint.cpp.o[0m
+[ 84%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/PrismaticJoint.cpp.o[0m
+[ 84%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/ReferentialSkeleton.cpp.o[0m
+[ 84%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/RevoluteJoint.cpp.o[0m
+[ 84%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/ScrewJoint.cpp.o[0m
+[ 84%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Shape.cpp.o[0m
+[ 84%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/ShapeFrame.cpp.o[0m
+[ 86%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/ShapeNode.cpp.o[0m
+[ 86%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/SimpleFrame.cpp.o[0m
+[ 86%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/Skeleton.cpp.o[0m
+[ 86%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/TranslationalJoint.cpp.o[0m
+[ 86%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/TranslationalJoint2D.cpp.o[0m
+[ 86%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/UniversalJoint.cpp.o[0m
+[ 88%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/WeldJoint.cpp.o[0m
+[ 88%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/dynamics/ZeroDofJoint.cpp.o[0m
+[ 88%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/DragAndDrop.cpp.o[0m
+[ 89%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/GUIEventHandler.cpp.o[0m
+[ 89%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/GridVisual.cpp.o[0m
+[ 89%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/ImGuiHandler.cpp.o[0m
+[ 89%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/ImGuiViewer.cpp.o[0m
+[ 89%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/ImGuiWidget.cpp.o[0m
+[ 89%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/InteractiveFrame.cpp.o[0m
+[ 91%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/RealTimeWorldNode.cpp.o[0m
+[ 91%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/ShadowTechnique.cpp.o[0m
+[ 91%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/Viewer.cpp.o[0m
+[ 91%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/ViewerAttachment.cpp.o[0m
+[ 91%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/gui/osg/WorldNode.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/math/Geometry.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/math/Random.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/optimizer/Function.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/optimizer/GradientDescentSolver.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/optimizer/NloptSolver.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/optimizer/Problem.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/utils/SkelParser.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/simulation/World.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/utils/SdfParser.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/utils/MjcfParser.cpp.o[0m
+[ 93%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/utils/DartLoader.cpp.o[0m
+[ 96%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/optimizer/Solver.cpp.o[0m
+[ 96%] [32mBuilding CXX object python/dartpy/CMakeFiles/dartpy.dir/utils/ResourceRetriever.cpp.o[0m
+[ 96%] [32m[1mLinking CXX shared module dartpy.cpython-38-x86_64-linux-gnu.so[0m
+[100%] Built target dartpy
+-- Install configuration: "Release"
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-imguiComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-lodepngComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-odelcpsolverComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindEigen3.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/Findccd.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindccd.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/Findfcl.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindfcl.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/Findassimp.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindassimp.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindBoost.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindoctomap.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_dartComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/FindODE.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindODE.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_collision-odeComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindBullet.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_collision-bulletComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/Findtinyxml2.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindtinyxml2.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_utilsComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindurdfdom.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_utils-urdfComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindOpenGL.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindGLUT.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_guiComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTFindOpenSceneGraph.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_gui-osgComponent.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTConfig.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/DARTConfigVersion.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/pkgconfig/dart.pc
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/package.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/dof
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/dof/simMotion1.dof
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/dof/simMotion.dof
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/dof/fixedHand.dof
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/dof/init_Tpose.dof
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/dof/same.dof
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/dof/RHand.dof
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/fixedHand.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/YunfeiSKEL003.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/chainwhipa.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/simpleHand.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/fullbody1.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/collisiontest.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/ground1.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/manipulator.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/YutingEuler.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/sphere.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/ground.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/Chain.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/jellyfishMan.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/cube2.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/cube.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/sphere2.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/sphere1.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/nunchuck.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/fullbody.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/nunchuck1.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/cube1.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel_old/mobilManipulator.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/test
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/test/include_main.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/test/default.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/test/include_default.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/humanoid.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/r_wheel_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/upperarm_roll_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/shoulder_lift_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/wrist_flex_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/shoulder_pan_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/laser_link.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/torso_lift_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/head_pan_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/bellows_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/torso_fixed_link.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/elbow_flex_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/estop_link.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/head_tilt_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/l_wheel_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/forearm_roll_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/wrist_roll_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/gripper_link.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/fetch/base_link_collision.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/stls/.get
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/fetch
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/fetch/pick_and_place.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/fetch/slide.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/fetch/reach.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/fetch/shared.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/fetch/robot.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/fetch/push.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/textures
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/textures/block.png
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/robotics/textures/block_hidden.png
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/half_cheetah.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/humanoidstandup.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/ant.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/LICENSE.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/hopper.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/point.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/inverted_double_pendulum.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/thrower.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/reacher.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/striker.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/pusher.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/walker2d.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/inverted_pendulum.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/mjcf/openai/swimmer.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/other
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/other/torus2.tris
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/other/torus2.path
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/other/torus1.tris
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/other/torus1.path
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/humanJointLimits
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/humanJointLimits/neuralnets
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/humanJointLimits/neuralnets/net-lleg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/humanJointLimits/neuralnets/net-larm
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/joint_limit.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/shapes.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/freeChain.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/skateboard.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/fullbody1.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/spheres.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/soft_open_chain.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/vehicle.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/kima_human_left_leg.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/kima_human_left_arm.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/kima_human_edited.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/head.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/pelvis.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/abdomen.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/r-clavicle.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/l-foot.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/thorax.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/kima/l-clavicle.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/mesh_collision.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/biped.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/sphere.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/ground.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/cube.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/chain.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/two_cubes.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/empty.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/double_pendulum_ball_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/translational_joints.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_drop_sphere.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_single_body.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/drop_unrotated_box.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_articulated_bodies_10bodies.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/double_pendulum_with_base.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/gazebo
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/gazebo/drop_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/gazebo/force_torque_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/gazebo/force_torque_test2.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/double_pendulum_euler_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/tree_structure.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_drop_box_offset.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/single_pendulum_ball_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/joint_limit_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/drop_BENCHMARK.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_single_pendulum.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/tree_structure_ball_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/file_info_world_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/collision_of_prescribed_joints_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/planar_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/chainwhipa.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/joint_actuator_type_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/serial_chain_BENCHMARK.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/spheres.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/simple_tree_structure.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/single_pendulum.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/box_stacking.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/ball_joints.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/serial_chain_ball_joint_20.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_drop_box.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/dof_attribute_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/double_pendulum.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/hybrid_dynamics_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/SimplePendulum.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/serial_chain_ball_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_drop_low_stiffness.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_double_pendulum.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/serial_chain_eulerxyz_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/simple_tree_structure_ball_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/joint_dynamics_elements_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/empty.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/single_pendulum_euler_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/joint_friction_test.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/boxes.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_shapes.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/tree_structure_euler_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/simple_tree_structure_euler_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_articulated_bodies.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/free_joints.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/serial_chain_ball_joint_40.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/drop.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/serial_chain_revolute_joint.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/test/test_adaptive_deformable.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/softBodies.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/cubes.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/bullet_collision.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/skel/soft_cubes.skel
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/vsk
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/vsk/Nick01.vsk
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/vsk/SehoonVSK3.vsk
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/vsk/test
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/vsk/test/empty.vsk
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/vsk/Yuting.vsk
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/double_pendulum.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/benchmark.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/quad.sdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/utorso_pack.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_uglut.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/ground.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_lleg.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/head.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_hand.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/utorso.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_talus.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_lglut.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/utorso_mod.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_farm.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/utorso.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/head_camera.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_scap.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/atlas_v3.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_uarm.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_larm.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_uleg.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_lleg.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_scap.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_uleg.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/head.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/utorso_mod.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_clav.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/pelvis.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_lleg.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_uleg.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_larm.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_talus.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_uglut.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/pelvis.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_hand.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_larm.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_hand.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_talus.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_clav.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/atlas_v3_no_head.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_lglut.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_uarm.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_foot.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_foot.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_larm.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_scap.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/atlas_v3_no_head.sdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_foot.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_talus.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_farm.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_lglut.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/mtorso.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/ltorso.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_farm.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_farm.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/ltorso.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_foot.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_uleg.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_uarm.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_uarm.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_clav.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_scap.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_lglut.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/head_camera.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_hand.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_lleg.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/utorso_pack.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/atlas_v3_no_head_soft_feet.sdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/mtorso.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_clav.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/l_uglut.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/atlas/r_uglut.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/double_pendulum_with_base.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials/textures
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials/textures/drc_extremities_diffuse.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials/textures/torso_diffuse_unplugged.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials/textures/extremities_diffuse_unplugged.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials/textures/drc_labels_1.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials/textures/drc_torso_head_diffuse.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials/textures/right_leg_diffuse_unplugged.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/materials/textures/atlas_cage_and_camera_diffuse_flat.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/test
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/test/force_torque_test2.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/test/force_torque_test.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/test/test_issue1583.model
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/test/single_bodynode_skeleton.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/test/test_issue1596.model
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/test/test_skeleton_joint.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/ground.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/sdf/empty.world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/c3d
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/c3d/squat.c3d
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/c3d/nick_freeform_001.c3d
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/test
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/test/hello_world.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/obj
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/obj/Body_Hip.obj
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/obj/BoxSmall.obj
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/obj/foot.obj
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/etc
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/etc/fort.4
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/screencap
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/screencap/.KEEP
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/package.xml
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_REP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LSY_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LSP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LHR_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LHY_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RF1.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LF3.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LWP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RSP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RWY_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LF2.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RSY_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_TSY_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RAR_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LAR_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_NK2.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_NK1_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LF1.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LWR_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RKP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_Torso_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LSR_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RWP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RAP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RSR_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LHP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RHR_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LAP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RF3.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RF2.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LEP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_NKY_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RHP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LWY_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RWR_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_RHY_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/meshes/convhull_LKP_merged.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/drchubo/drchubo.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/wam.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam7.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam3.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam_base.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam1.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam_base.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam5_collision.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam4.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam5.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam6.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam5.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam2.dae
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam3_collision.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam1.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam4.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam3.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam2.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam6_collision.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam1_collision.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam4_collision.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam2_collision.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam_base_collision.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam7.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam7_collision.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/wam/wam6.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/images
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/images/forearm_256x.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/images/upperarm_128x.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/images/lpu_128x.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/images/wrist_yaw_128x.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/images/shoulder_256x.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/wam/meshes/images/base_gray_128x.jpg
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/ground.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/meshes
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/meshes/bicep.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/meshes/forearm.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/meshes/wrist.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/meshes/elbow.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/meshes/shoulder.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/meshes/base_link.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/meshes/palm.STL
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/KR5/KR5 sixx R650.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/joint_properties.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/primitive_geometry.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/missing_package.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/missing_mesh.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/invalid_mesh.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/invalid.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/invalid_mesh.stl
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/testWorld.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/data/urdf/test/issue838.urdf
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/biped_stand
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/biped_stand/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/biped_stand/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/biped_stand/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/soft_bodies
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/soft_bodies/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/soft_bodies/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/soft_bodies/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/hello_world
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/hello_world/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/hello_world/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/hello_world/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/tinkertoy
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/tinkertoy/TinkertoyWorldNode.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/tinkertoy/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/tinkertoy/TinkertoyWorldNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/tinkertoy/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/tinkertoy/TinkertoyWidget.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/tinkertoy/TinkertoyWidget.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/tinkertoy/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/operational_space_control
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/operational_space_control/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/operational_space_control/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/operational_space_control/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/fetch
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/fetch/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/fetch/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/fetch/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/empty
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/empty/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/empty/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/empty/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/imgui
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/imgui/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/imgui/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/imgui/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/drag_and_drop
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/drag_and_drop/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/drag_and_drop/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/drag_and_drop/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/box_stacking
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/box_stacking/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/box_stacking/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/box_stacking/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/TerminalCondition.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/AtlasSimbiconEventHandler.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/StateMachine.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/AtlasSimbiconWorldNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/AtlasSimbiconEventHandler.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/Controller.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/State.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/State.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/Controller.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/StateMachine.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/AtlasSimbiconWidget.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/TerminalCondition.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/AtlasSimbiconWorldNode.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_simbicon/AtlasSimbiconWidget.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/point_cloud
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/point_cloud/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/point_cloud/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/point_cloud/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/heightmap
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/heightmap/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/heightmap/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/heightmap/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/speed_test
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/speed_test/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/speed_test/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/speed_test/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/hubo_puppet
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/hubo_puppet/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/hubo_puppet/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/hubo_puppet/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/rigid_shapes
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/rigid_shapes/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/rigid_shapes/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/rigid_shapes/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/InputHandler.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/Helpers.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/WamWorld.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/ikfast
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/ikfast/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/ikfast/ikfast71.Transform6D.4_6_9_10_11_12_f8.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/osgWamIkFast.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/Helpers.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/InputHandler.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/WamWorld.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/wam_ikfast/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_puppet
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_puppet/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_puppet/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/atlas_puppet/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hybrid_dynamics
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hybrid_dynamics/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hybrid_dynamics/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hybrid_dynamics/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hybrid_dynamics/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hybrid_dynamics/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_simple_frames
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_simple_frames/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_simple_frames/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_simple_frames/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_joint_constraints
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_joint_constraints/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_joint_constraints/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_joint_constraints/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_joint_constraints/Controller.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_joint_constraints/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_joint_constraints/Controller.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_joint_constraints/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_shapes
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_shapes/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_shapes/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_shapes/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_shapes/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_shapes/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_add_delete_skels
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_add_delete_skels/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_add_delete_skels/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_add_delete_skels/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_add_delete_skels/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_add_delete_skels/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_cubes
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_cubes/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_cubes/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_cubes/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_cubes/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_cubes/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_mixed_chain
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_mixed_chain/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_mixed_chain/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_mixed_chain/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_mixed_chain/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_mixed_chain/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_vehicle
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_vehicle/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_vehicle/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_vehicle/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_vehicle/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_vehicle/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_operational_space_control
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_operational_space_control/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_operational_space_control/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_operational_space_control/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_operational_space_control/Controller.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_operational_space_control/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_operational_space_control/Controller.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_operational_space_control/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_loop
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_loop/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_loop/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_loop/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_loop/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_loop/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_biped_stand
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_biped_stand/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_biped_stand/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_biped_stand/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_biped_stand/Controller.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_biped_stand/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_biped_stand/Controller.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_biped_stand/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_human_joint_limits
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_human_joint_limits/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_human_joint_limits/HumanLegJointLimitConstraint.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_human_joint_limits/HumanArmJointLimitConstraint.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_human_joint_limits/humanJointLimits.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_human_joint_limits/HumanLegJointLimitConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_human_joint_limits/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_human_joint_limits/HumanArmJointLimitConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_soft_bodies
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_soft_bodies/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_soft_bodies/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_soft_bodies/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_soft_bodies/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_soft_bodies/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hardcoded_design
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hardcoded_design/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hardcoded_design/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hardcoded_design/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hardcoded_design/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_hardcoded_design/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_chain
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_chain/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_chain/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_chain/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_chain/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_rigid_chain/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/TerminalCondition.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/Humanoid.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/Humanoid.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/StateMachine.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/MyWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/MyWindow.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/Controller.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/State.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/Main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/State.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/Controller.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/StateMachine.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/TerminalCondition.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/examples/deprecated_examples/glut_atlas_simbicon/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_dominoes
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_dominoes/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_dominoes/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_dominoes/README
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_collisions_finished
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_collisions_finished/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_collisions_finished/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_collisions_finished/README
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_collisions
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_collisions/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_collisions/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_collisions/README
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_biped_finished
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_biped_finished/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_biped_finished/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_biped_finished/README
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_multi_pendulum_finished
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_multi_pendulum_finished/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_multi_pendulum_finished/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_multi_pendulum_finished/README
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_biped
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_biped/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_biped/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_biped/README
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_multi_pendulum
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_multi_pendulum/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_multi_pendulum/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_multi_pendulum/README
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_dominoes_finished
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_dominoes_finished/CMakeLists.txt
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_dominoes_finished/main.cpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/tutorial_dominoes_finished/README
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/doc/dart/tutorials/README.md
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_dartTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_dartTargets-release.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/config.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart.so.6.12
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dart.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/convhull_3d/convhull_3d.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-imguiTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-imguiTargets-release.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-imgui.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-imgui.so.6.12
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-imgui.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/imgui/imconfig.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/imgui/imgui.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/imgui/imgui_impl_opengl2.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/imgui/imgui_internal.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/imgui/imstb_rectpack.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/imgui/imstb_textedit.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/imgui/imstb_truetype.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/ikfast/ikfast.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-lodepngTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-lodepngTargets-release.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-lodepng.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-lodepng.so.6.12
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-lodepng.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/lodepng/lodepng.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-odelcpsolverTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_external-odelcpsolverTargets-release.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-odelcpsolver.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-odelcpsolver.so.6.12
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-external-odelcpsolver.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/odelcpsolver/common.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/odelcpsolver/error.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/odelcpsolver/lcp.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/odelcpsolver/matrix.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/odelcpsolver/misc.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/external/odelcpsolver/odeconfig.h
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Aspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/AspectWithVersion.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/ClassWithVirtualBase.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Cloneable.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Composite.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/CompositeJoiner.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Console.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Deprecated.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/EmbeddedAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Empty.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Factory.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/LocalResource.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/LocalResourceRetriever.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/LockableReference.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Memory.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/NameManager.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Observer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Optional.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Platform.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/ProxyAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/RequiresAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Resource.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/ResourceRetriever.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/SharedLibrary.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Signal.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Singleton.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/SmartPointer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/SpecializedForAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/StlHelpers.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Subject.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Timer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Uri.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/VersionCounter.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/Virtual.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/sub_ptr.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/common.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/AlignedAllocator.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/Aspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/AspectWithVersion.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/Cloneable.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/Composite.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/CompositeData.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/CompositeJoiner.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/ConnectionBody.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/EmbeddedAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/Factory-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/LockableReference-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/Memory-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/NameManager.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/NoOp.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/ProxyAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/RequiresAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/SharedLibraryManager.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/Signal.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/Singleton-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/SpecializedForAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/TemplateJoinerDispatchMacro.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/common/detail/sub_ptr.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/ConfigurationSpace.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/Constants.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/Geometry.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/Helpers.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/Icosphere.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/MathTypes.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/Mesh.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/Random.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/TriMesh.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/math.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/detail/ConfigurationSpace.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/detail/Geometry-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/detail/Icosphere-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/detail/Mesh-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/detail/Random-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/math/detail/TriMesh-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/integration/EulerIntegrator.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/integration/Integrator.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/integration/RK4Integrator.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/integration/SemiImplicitEulerIntegrator.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/integration/integration.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/lcpsolver/Lemke.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/lcpsolver/ODELCPSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/lcpsolver/lcpsolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/Function.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/GenericMultiObjectiveProblem.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/GradientDescentSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/MultiObjectiveProblem.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/MultiObjectiveSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/Population.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/Problem.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/Solver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/optimizer/optimizer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/ArrowShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/AssimpInputResourceAdaptor.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/BallJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/BodyNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/BoxShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Branch.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/CapsuleShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Chain.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/CompositeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/ConeShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/CylinderShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/DegreeOfFreedom.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/EllipsoidShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/EndEffector.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Entity.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/EntityNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/EulerJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/FixedFrame.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/FixedJacobianNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Frame.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/FreeJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/GenericJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Group.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/HeightmapShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/HierarchicalIK.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/IkFast.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Inertia.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/InvalidIndex.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/InverseKinematics.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/JacobianNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Joint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/LineSegmentShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Linkage.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Marker.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/MeshShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/MetaSkeleton.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/MultiSphereConvexHullShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/MultiSphereShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Node.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/NodeManagerJoiner.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/PlanarJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/PlaneShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/PointCloudShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/PointMass.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/PrismaticJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/PyramidShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/ReferentialSkeleton.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/RevoluteJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/ScrewJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Shape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/ShapeFrame.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/ShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/SharedLibraryIkFast.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/SimpleFrame.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/Skeleton.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/SmartPointer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/SoftBodyNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/SoftMeshShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/SpecializedNodeManager.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/SphereShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/TemplatedJacobianNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/TranslationalJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/TranslationalJoint2D.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/UniversalJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/VoxelGridShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/WeldJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/ZeroDofJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/dynamics.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/BasicNodeManager.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/BodyNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/BodyNodeAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/BodyNodePtr.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/CompositeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/DegreeOfFreedomPtr.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/EndEffectorAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/EntityNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/EntityNodeAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/EulerJointAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/FixedFrameAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/FixedJacobianNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/GenericJoint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/GenericJointAspect.hpp
+-- Installing: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/HeightmapShape-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/InverseKinematics.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/InverseKinematicsPtr.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/JointAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/JointPtr.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/MarkerAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/Node.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/NodeManagerJoiner.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/NodePtr.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/PlanarJointAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/PrismaticJointAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/RevoluteJointAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/ScrewJointAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/Shape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/ShapeFrameAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/ShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/Skeleton.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/SkeletonAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/SoftBodyNodeAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/SpecializedNodeManager.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/TemplatedJacobianNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/TranslationalJoint2DAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/dynamics/detail/UniversalJointAspect.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/CollisionDetector.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/CollisionFilter.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/CollisionGroup.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/CollisionObject.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/CollisionOption.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/CollisionResult.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/Contact.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/DistanceFilter.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/DistanceOption.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/DistanceResult.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/Option.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/RaycastOption.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/RaycastResult.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/Result.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/SmartPointer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/collision.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/detail/CollisionDetector.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/detail/CollisionGroup.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/detail/Contact-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/detail/UnorderedPairs.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/dart/DARTCollide.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/dart/DARTCollisionDetector.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/dart/DARTCollisionGroup.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/dart/DARTCollisionObject.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/dart/dart.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/fcl/BackwardCompatibility.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/fcl/CollisionShapes.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/fcl/FCLCollisionDetector.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/fcl/FCLCollisionGroup.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/fcl/FCLCollisionObject.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/fcl/FCLTypes.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/fcl/tri_tri_intersection_test.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/fcl/fcl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_collision-odeTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_collision-odeTargets-release.cmake
+-- Installing: /home/dark/sources/dart/install/DART/lib/libdart-collision-ode.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-collision-ode.so.6.12
+-- Set runtime path of "/home/dark/sources/dart/install/DART/lib/libdart-collision-ode.so.6.12.1" to ""
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-collision-ode.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/ode/OdeCollisionDetector.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/ode/OdeCollisionGroup.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/ode/OdeCollisionObject.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/ode/OdeTypes.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/ode/ode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_collision-bulletTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_collision-bulletTargets-release.cmake
+-- Installing: /home/dark/sources/dart/install/DART/lib/libdart-collision-bullet.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-collision-bullet.so.6.12
+-- Set runtime path of "/home/dark/sources/dart/install/DART/lib/libdart-collision-bullet.so.6.12.1" to ""
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-collision-bullet.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/bullet/BulletCollisionDetector.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/bullet/BulletCollisionGroup.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/bullet/BulletCollisionObject.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/bullet/BulletCollisionShape.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/bullet/BulletInclude.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/bullet/BulletTypes.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/collision/bullet/bullet.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/BalanceConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/BallJointConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/BoxedLcpConstraintSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/BoxedLcpSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/ConstrainedGroup.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/ConstraintBase.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/ConstraintSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/ContactConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/DantzigBoxedLcpSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/DantzigLCPSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/DynamicJointConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/JointConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/JointCoulombFrictionConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/JointLimitConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/LCPSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/MimicMotorConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/PGSLCPSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/PgsBoxedLcpSolver.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/ServoMotorConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/SmartPointer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/SoftContactConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/WeldJointConstraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/constraint.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/constraint/detail/BoxedLcpSolver-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/simulation/Recording.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/simulation/SmartPointer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/simulation/World.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/simulation/simulation.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/simulation/detail/World-impl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_utilsTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_utilsTargets-release.cmake
+-- Installing: /home/dark/sources/dart/install/DART/lib/libdart-utils.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-utils.so.6.12
+-- Set runtime path of "/home/dark/sources/dart/install/DART/lib/libdart-utils.so.6.12.1" to ""
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-utils.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/C3D.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/CompositeResourceRetriever.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/DartResourceRetriever.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/FileInfoC3D.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/FileInfoDof.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/FileInfoWorld.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/PackageResourceRetriever.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/SkelParser.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/VskParser.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/XmlHelpers.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/utils.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/mjcf/MjcfParser.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/mjcf/mjcf.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/sdf/SdfParser.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/sdf/sdf.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/urdf/BackwardCompatibility.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_utils-urdfTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_utils-urdfTargets-release.cmake
+-- Installing: /home/dark/sources/dart/install/DART/lib/libdart-utils-urdf.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-utils-urdf.so.6.12
+-- Set runtime path of "/home/dark/sources/dart/install/DART/lib/libdart-utils-urdf.so.6.12.1" to ""
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-utils-urdf.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/urdf/DartLoader.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/urdf/URDFTypes.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/urdf/urdf_world_parser.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/utils/urdf/urdf.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_guiTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_guiTargets-release.cmake
+-- Installing: /home/dark/sources/dart/install/DART/lib/libdart-gui.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-gui.so.6.12
+-- Set runtime path of "/home/dark/sources/dart/install/DART/lib/libdart-gui.so.6.12.1" to ""
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-gui.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/GLFuncs.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/GlutWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/GraphWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/LoadGlut.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/LoadOpengl.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/MotionBlurSimWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/OpenGLRenderInterface.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/RenderInterface.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/SimWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/SoftSimWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/Trackball.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/Win2D.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/Win3D.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/gui.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/GLUTFuncs.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/GraphWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/LoadGlut.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/MotionBlurSimWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/SimWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/SoftSimWindow.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/Win2D.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/Win3D.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/Window.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/glut/glut.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_gui-osgTargets.cmake
+-- Up-to-date: /home/dark/sources/dart/install/DART/share/dart/cmake/dart_gui-osgTargets-release.cmake
+-- Installing: /home/dark/sources/dart/install/DART/lib/libdart-gui-osg.so.6.12.1
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-gui-osg.so.6.12
+-- Set runtime path of "/home/dark/sources/dart/install/DART/lib/libdart-gui-osg.so.6.12.1" to ""
+-- Up-to-date: /home/dark/sources/dart/install/DART/lib/libdart-gui-osg.so
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/DefaultEventHandler.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/DragAndDrop.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/GridVisual.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/ImGuiHandler.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/ImGuiViewer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/ImGuiWidget.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/InteractiveFrame.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/MouseEventHandler.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/RealTimeWorldNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/ShapeFrameNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/SupportPolygonVisual.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/TrackballManipulator.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/Utils.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/Viewer.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/WorldNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/osg.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/BoxShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/CapsuleShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/ConeShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/CylinderShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/EllipsoidShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/HeightmapShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/LineSegmentShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/MeshShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/MultiSphereShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/PlaneShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/PointCloudShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/PyramidShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/ShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/SoftMeshShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/SphereShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/VoxelGridShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/WarningShapeNode.hpp
+-- Up-to-date: /home/dark/sources/dart/install/DART/include/dart/gui/osg/render/render.hpp
+-- Installing: /home/dark/sources/dart/install/DART/lib/python3/dist-packages/dartpy.cpython-38-x86_64-linux-gnu.so
+-- Set runtime path of "/home/dark/sources/dart/install/DART/lib/python3/dist-packages/dartpy.cpython-38-x86_64-linux-gnu.so" to ""

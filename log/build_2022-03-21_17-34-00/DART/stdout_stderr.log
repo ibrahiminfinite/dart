@@ -1,0 +1,26 @@
+[  1%] Built target dart-external-lodepng
+[  3%] Built target dart-external-odelcpsolver
+[  5%] Built target dart-external-imgui
+[ 44%] Built target dart
+[35m[1mScanning dependencies of target dart-collision-bullet[0m
+[35m[1mScanning dependencies of target dart-collision-ode[0m
+[35m[1mScanning dependencies of target dart-utils[0m
+[ 44%] [32mBuilding CXX object dart/collision/bullet/CMakeFiles/dart-collision-bullet.dir/BulletCollisionDetector.cpp.o[0m
+[ 44%] [32mBuilding CXX object dart/collision/ode/CMakeFiles/dart-collision-ode.dir/OdeCollisionObject.cpp.o[0m
+[ 45%] [32mBuilding CXX object dart/utils/CMakeFiles/dart-utils.dir/mjcf/MjcfParser.cpp.o[0m
+[ 45%] [32mBuilding CXX object dart/utils/CMakeFiles/dart-utils.dir/VskParser.cpp.o[0m
+In file included from [01m[K/home/dark/sources/dart/dart/dynamics/HeightmapShape.hpp:190[m[K,
+                 from [01m[K/home/dark/sources/dart/dart/collision/ode/detail/OdeHeightmap.hpp:39[m[K,
+                 from [01m[K/home/dark/sources/dart/dart/collision/ode/OdeCollisionObject.cpp:41[m[K:
+[01m[K/home/dark/sources/dart/dart/dynamics/detail/HeightmapShape-impl.hpp:[m[K In member function ‘[01m[KEigen::Matrix3d dart::dynamics::HeightmapShape<S_>::computeInertia(double) const[m[K’:
+[01m[K/home/dark/sources/dart/dart/dynamics/detail/HeightmapShape-impl.hpp:195:20:[m[K [01;31m[Kerror: [m[Kincomplete type ‘[01m[Kdart::dynamics::BoxShape[m[K’ used in nested name specifier
+  195 |   return BoxShape::[01;31m[KcomputeInertia[m[K(getBoundingBox().computeFullExtents(), mass);
+      |                    [01;31m[K^~~~~~~~~~~~~~[m[K
+make[2]: *** [dart/collision/ode/CMakeFiles/dart-collision-ode.dir/build.make:89: dart/collision/ode/CMakeFiles/dart-collision-ode.dir/OdeCollisionObject.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:2488: dart/collision/ode/CMakeFiles/dart-collision-ode.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[ 45%] [32m[1mLinking CXX shared library ../../../lib/libdart-collision-bullet.so[0m
+[ 47%] Built target dart-collision-bullet
+[ 47%] [32m[1mLinking CXX shared library ../../lib/libdart-utils.so[0m
+[ 55%] Built target dart-utils
+make: *** [Makefile:141: all] Error 2

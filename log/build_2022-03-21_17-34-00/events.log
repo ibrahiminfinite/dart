@@ -1,0 +1,175 @@
+[0.000000] (-) TimerEvent: {}
+[0.000101] (DART) JobQueued: {'identifier': 'DART', 'dependencies': OrderedDict()}
+[0.000157] (DART) JobStarted: {'identifier': 'DART'}
+[0.014323] (DART) JobProgress: {'identifier': 'DART', 'progress': 'cmake'}
+[0.015538] (DART) JobProgress: {'identifier': 'DART', 'progress': 'build'}
+[0.015629] (DART) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/dark/sources/dart/build/DART', '--', '-j16', '-l16'], 'cwd': '/home/dark/sources/dart/build/DART', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_IN:en'), ('USER', 'dark'), ('SSH_AGENT_PID', '1907'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('HOME', '/home/dark'), ('OLDPWD', '/home/dark'), ('DESKTOP_SESSION', 'ubuntu'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1737'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('LOGNAME', 'dark'), ('JOURNAL_STREAM', '8:54508'), ('_', '/home/dark/.local/bin/colcon'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'dark'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('WINDOWPATH', '2'), ('PATH', '/home/dark/.local/bin:/home/dark/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/night:@/tmp/.ICE-unix/1942,unix/night:/tmp/.ICE-unix/1942'), ('INVOCATION_ID', '4630c80787174a0a861c0301d2fd4c7a'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/dc39b7b0_45c8_4436_938f_f1a9f90b1b00'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('LANG', 'en_IN'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.98'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/dark/sources/dart/build/DART'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('COLCON', '1'), ('VTE_VERSION', '6003')]), 'shell': False}
+[0.098625] (DART) StdoutLine: {'line': b'[  1%] Built target dart-external-lodepng\n'}
+[0.098928] (DART) StdoutLine: {'line': b'[  3%] Built target dart-external-odelcpsolver\n'}
+[0.099462] (-) TimerEvent: {}
+[0.101982] (DART) StdoutLine: {'line': b'[  5%] Built target dart-external-imgui\n'}
+[0.199580] (-) TimerEvent: {}
+[0.250972] (DART) StdoutLine: {'line': b'[ 44%] Built target dart\n'}
+[0.271972] (DART) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dart-collision-bullet\x1b[0m\n'}
+[0.273260] (DART) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dart-collision-ode\x1b[0m\n'}
+[0.283618] (DART) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target dart-utils\x1b[0m\n'}
+[0.299711] (-) TimerEvent: {}
+[0.301455] (DART) StdoutLine: {'line': b'[ 44%] \x1b[32mBuilding CXX object dart/collision/bullet/CMakeFiles/dart-collision-bullet.dir/BulletCollisionDetector.cpp.o\x1b[0m\n'}
+[0.307204] (DART) StdoutLine: {'line': b'[ 44%] \x1b[32mBuilding CXX object dart/collision/ode/CMakeFiles/dart-collision-ode.dir/OdeCollisionObject.cpp.o\x1b[0m\n'}
+[0.342489] (DART) StdoutLine: {'line': b'[ 45%] \x1b[32mBuilding CXX object dart/utils/CMakeFiles/dart-utils.dir/mjcf/MjcfParser.cpp.o\x1b[0m\n'}
+[0.342933] (DART) StdoutLine: {'line': b'[ 45%] \x1b[32mBuilding CXX object dart/utils/CMakeFiles/dart-utils.dir/VskParser.cpp.o\x1b[0m\n'}
+[0.399824] (-) TimerEvent: {}
+[0.500220] (-) TimerEvent: {}
+[0.600634] (-) TimerEvent: {}
+[0.701115] (-) TimerEvent: {}
+[0.801765] (-) TimerEvent: {}
+[0.902208] (-) TimerEvent: {}
+[1.002592] (-) TimerEvent: {}
+[1.102945] (-) TimerEvent: {}
+[1.203262] (-) TimerEvent: {}
+[1.303583] (-) TimerEvent: {}
+[1.403893] (-) TimerEvent: {}
+[1.504208] (-) TimerEvent: {}
+[1.604528] (-) TimerEvent: {}
+[1.704859] (-) TimerEvent: {}
+[1.805220] (-) TimerEvent: {}
+[1.905591] (-) TimerEvent: {}
+[2.005969] (-) TimerEvent: {}
+[2.106258] (-) TimerEvent: {}
+[2.206608] (-) TimerEvent: {}
+[2.306938] (-) TimerEvent: {}
+[2.407253] (-) TimerEvent: {}
+[2.507594] (-) TimerEvent: {}
+[2.541761] (DART) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/dark/sources/dart/dart/dynamics/HeightmapShape.hpp:190\x1b[m\x1b[K,\n'}
+[2.541931] (DART) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/dark/sources/dart/dart/collision/ode/detail/OdeHeightmap.hpp:39\x1b[m\x1b[K,\n'}
+[2.541992] (DART) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/dark/sources/dart/dart/collision/ode/OdeCollisionObject.cpp:41\x1b[m\x1b[K:\n'}
+[2.542060] (DART) StderrLine: {'line': b'\x1b[01m\x1b[K/home/dark/sources/dart/dart/dynamics/detail/HeightmapShape-impl.hpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[KEigen::Matrix3d dart::dynamics::HeightmapShape<S_>::computeInertia(double) const\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[2.542141] (DART) StderrLine: {'line': b'\x1b[01m\x1b[K/home/dark/sources/dart/dart/dynamics/detail/HeightmapShape-impl.hpp:195:20:\x1b[m\x1b[K \x1b[01;31m\x1b[Kerror: \x1b[m\x1b[Kincomplete type \xe2\x80\x98\x1b[01m\x1b[Kdart::dynamics::BoxShape\x1b[m\x1b[K\xe2\x80\x99 used in nested name specifier\n'}
+[2.542203] (DART) StderrLine: {'line': b'  195 |   return BoxShape::\x1b[01;31m\x1b[KcomputeInertia\x1b[m\x1b[K(getBoundingBox().computeFullExtents(), mass);\n'}
+[2.542253] (DART) StderrLine: {'line': b'      |                    \x1b[01;31m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[2.607730] (-) TimerEvent: {}
+[2.708062] (-) TimerEvent: {}
+[2.808368] (-) TimerEvent: {}
+[2.908683] (-) TimerEvent: {}
+[3.008985] (-) TimerEvent: {}
+[3.055881] (DART) StderrLine: {'line': b'make[2]: *** [dart/collision/ode/CMakeFiles/dart-collision-ode.dir/build.make:89: dart/collision/ode/CMakeFiles/dart-collision-ode.dir/OdeCollisionObject.cpp.o] Error 1\n'}
+[3.056142] (DART) StderrLine: {'line': b'make[1]: *** [CMakeFiles/Makefile2:2488: dart/collision/ode/CMakeFiles/dart-collision-ode.dir/all] Error 2\n'}
+[3.056205] (DART) StderrLine: {'line': b'make[1]: *** Waiting for unfinished jobs....\n'}
+[3.109110] (-) TimerEvent: {}
+[3.209402] (-) TimerEvent: {}
+[3.309724] (-) TimerEvent: {}
+[3.410087] (-) TimerEvent: {}
+[3.510403] (-) TimerEvent: {}
+[3.610726] (-) TimerEvent: {}
+[3.711076] (-) TimerEvent: {}
+[3.811401] (-) TimerEvent: {}
+[3.911695] (-) TimerEvent: {}
+[4.012000] (-) TimerEvent: {}
+[4.112347] (-) TimerEvent: {}
+[4.212687] (-) TimerEvent: {}
+[4.313029] (-) TimerEvent: {}
+[4.413356] (-) TimerEvent: {}
+[4.513670] (-) TimerEvent: {}
+[4.613975] (-) TimerEvent: {}
+[4.714310] (-) TimerEvent: {}
+[4.814641] (-) TimerEvent: {}
+[4.914937] (-) TimerEvent: {}
+[5.015265] (-) TimerEvent: {}
+[5.047389] (DART) StdoutLine: {'line': b'[ 45%] \x1b[32m\x1b[1mLinking CXX shared library ../../../lib/libdart-collision-bullet.so\x1b[0m\n'}
+[5.115386] (-) TimerEvent: {}
+[5.143519] (DART) StdoutLine: {'line': b'[ 47%] Built target dart-collision-bullet\n'}
+[5.215512] (-) TimerEvent: {}
+[5.315780] (-) TimerEvent: {}
+[5.416087] (-) TimerEvent: {}
+[5.516393] (-) TimerEvent: {}
+[5.616690] (-) TimerEvent: {}
+[5.717000] (-) TimerEvent: {}
+[5.817312] (-) TimerEvent: {}
+[5.917631] (-) TimerEvent: {}
+[6.017955] (-) TimerEvent: {}
+[6.118265] (-) TimerEvent: {}
+[6.218592] (-) TimerEvent: {}
+[6.318871] (-) TimerEvent: {}
+[6.419200] (-) TimerEvent: {}
+[6.519511] (-) TimerEvent: {}
+[6.619820] (-) TimerEvent: {}
+[6.720115] (-) TimerEvent: {}
+[6.820411] (-) TimerEvent: {}
+[6.920747] (-) TimerEvent: {}
+[7.021047] (-) TimerEvent: {}
+[7.121338] (-) TimerEvent: {}
+[7.221633] (-) TimerEvent: {}
+[7.321930] (-) TimerEvent: {}
+[7.422226] (-) TimerEvent: {}
+[7.522508] (-) TimerEvent: {}
+[7.622805] (-) TimerEvent: {}
+[7.723123] (-) TimerEvent: {}
+[7.823418] (-) TimerEvent: {}
+[7.923719] (-) TimerEvent: {}
+[8.024023] (-) TimerEvent: {}
+[8.124313] (-) TimerEvent: {}
+[8.224631] (-) TimerEvent: {}
+[8.324927] (-) TimerEvent: {}
+[8.425227] (-) TimerEvent: {}
+[8.525521] (-) TimerEvent: {}
+[8.625814] (-) TimerEvent: {}
+[8.726066] (-) TimerEvent: {}
+[8.826335] (-) TimerEvent: {}
+[8.926666] (-) TimerEvent: {}
+[9.026959] (-) TimerEvent: {}
+[9.127256] (-) TimerEvent: {}
+[9.227568] (-) TimerEvent: {}
+[9.327900] (-) TimerEvent: {}
+[9.428249] (-) TimerEvent: {}
+[9.528572] (-) TimerEvent: {}
+[9.628855] (-) TimerEvent: {}
+[9.729131] (-) TimerEvent: {}
+[9.829402] (-) TimerEvent: {}
+[9.929673] (-) TimerEvent: {}
+[10.029946] (-) TimerEvent: {}
+[10.130202] (-) TimerEvent: {}
+[10.230480] (-) TimerEvent: {}
+[10.330789] (-) TimerEvent: {}
+[10.431057] (-) TimerEvent: {}
+[10.531347] (-) TimerEvent: {}
+[10.631659] (-) TimerEvent: {}
+[10.731944] (-) TimerEvent: {}
+[10.832228] (-) TimerEvent: {}
+[10.932497] (-) TimerEvent: {}
+[11.032750] (-) TimerEvent: {}
+[11.133001] (-) TimerEvent: {}
+[11.233269] (-) TimerEvent: {}
+[11.333531] (-) TimerEvent: {}
+[11.433806] (-) TimerEvent: {}
+[11.534070] (-) TimerEvent: {}
+[11.634323] (-) TimerEvent: {}
+[11.734579] (-) TimerEvent: {}
+[11.834819] (-) TimerEvent: {}
+[11.935067] (-) TimerEvent: {}
+[12.035316] (-) TimerEvent: {}
+[12.135566] (-) TimerEvent: {}
+[12.235811] (-) TimerEvent: {}
+[12.336058] (-) TimerEvent: {}
+[12.436309] (-) TimerEvent: {}
+[12.536570] (-) TimerEvent: {}
+[12.636829] (-) TimerEvent: {}
+[12.737079] (-) TimerEvent: {}
+[12.837334] (-) TimerEvent: {}
+[12.937603] (-) TimerEvent: {}
+[13.037907] (-) TimerEvent: {}
+[13.138191] (-) TimerEvent: {}
+[13.238476] (-) TimerEvent: {}
+[13.338796] (-) TimerEvent: {}
+[13.439075] (-) TimerEvent: {}
+[13.539359] (-) TimerEvent: {}
+[13.639620] (-) TimerEvent: {}
+[13.739884] (-) TimerEvent: {}
+[13.742511] (DART) StdoutLine: {'line': b'[ 47%] \x1b[32m\x1b[1mLinking CXX shared library ../../lib/libdart-utils.so\x1b[0m\n'}
+[13.840006] (-) TimerEvent: {}
+[13.901173] (DART) StdoutLine: {'line': b'[ 55%] Built target dart-utils\n'}
+[13.902387] (DART) StderrLine: {'line': b'make: *** [Makefile:141: all] Error 2\n'}
+[13.904255] (DART) CommandEnded: {'returncode': 2}
+[13.940162] (-) TimerEvent: {}
+[14.040808] (-) TimerEvent: {}
+[14.105611] (DART) JobEnded: {'identifier': 'DART', 'rc': 2}
+[14.116523] (-) EventReactorShutdown: {}

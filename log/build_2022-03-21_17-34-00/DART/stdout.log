@@ -1,0 +1,15 @@
+[  1%] Built target dart-external-lodepng
+[  3%] Built target dart-external-odelcpsolver
+[  5%] Built target dart-external-imgui
+[ 44%] Built target dart
+[35m[1mScanning dependencies of target dart-collision-bullet[0m
+[35m[1mScanning dependencies of target dart-collision-ode[0m
+[35m[1mScanning dependencies of target dart-utils[0m
+[ 44%] [32mBuilding CXX object dart/collision/bullet/CMakeFiles/dart-collision-bullet.dir/BulletCollisionDetector.cpp.o[0m
+[ 44%] [32mBuilding CXX object dart/collision/ode/CMakeFiles/dart-collision-ode.dir/OdeCollisionObject.cpp.o[0m
+[ 45%] [32mBuilding CXX object dart/utils/CMakeFiles/dart-utils.dir/mjcf/MjcfParser.cpp.o[0m
+[ 45%] [32mBuilding CXX object dart/utils/CMakeFiles/dart-utils.dir/VskParser.cpp.o[0m
+[ 45%] [32m[1mLinking CXX shared library ../../../lib/libdart-collision-bullet.so[0m
+[ 47%] Built target dart-collision-bullet
+[ 47%] [32m[1mLinking CXX shared library ../../lib/libdart-utils.so[0m
+[ 55%] Built target dart-utils

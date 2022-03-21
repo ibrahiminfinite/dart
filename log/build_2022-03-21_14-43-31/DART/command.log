@@ -1,0 +1,6 @@
+Invoking command in '/home/dark/sources/dart/build/DART': /usr/bin/cmake /home/dark/sources/dart -DCMAKE_INSTALL_PREFIX=/home/dark/sources/dart/install/DART
+Invoked command in '/home/dark/sources/dart/build/DART' returned '0': /usr/bin/cmake /home/dark/sources/dart -DCMAKE_INSTALL_PREFIX=/home/dark/sources/dart/install/DART
+Invoking command in '/home/dark/sources/dart/build/DART': /usr/bin/cmake --build /home/dark/sources/dart/build/DART -- -j16 -l16
+Invoked command in '/home/dark/sources/dart/build/DART' returned '0': /usr/bin/cmake --build /home/dark/sources/dart/build/DART -- -j16 -l16
+Invoking command in '/home/dark/sources/dart/build/DART': /usr/bin/cmake --install /home/dark/sources/dart/build/DART
+Invoked command in '/home/dark/sources/dart/build/DART' returned '0': /usr/bin/cmake --install /home/dark/sources/dart/build/DART
